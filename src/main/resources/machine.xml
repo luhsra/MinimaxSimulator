@@ -1,0 +1,18 @@
+<!-- currently unused
+<machine>
+
+	<alu name="alu" />
+
+	<multiplexer name="muxA" />
+	<multiplexer name="muxB" />
+	<multiplexer name="mdr-select" in-pins="2" />
+
+	<memory name="memory" />
+
+	<register name="mar" label="MAR" />
+	<register name="mdr" label="MDR" />
+	<register name="ir" label="IR" />
+	<register name="pc" label="PC" />
+
+</machine>
+-->

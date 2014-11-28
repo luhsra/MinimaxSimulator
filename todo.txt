@@ -1,0 +1,5 @@
+- Fenster (JFrames) herauslösbar machen
+- In der Steuertabelle kopieren/ausschneiden/einfügen/verschieben
+- Jumps an Labels gebunden wandern mit, wenn Zeilen verschoben werden
+- Label für Programmende
+- Klassenstruktur aufräumen
