@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Field;
+import java.nio.file.Paths;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -233,15 +234,16 @@ public class Application
 
 	private static void setupLogger()
 	{
-		final InputStream inputStream = Application.class.getResourceAsStream("logging.properties");
-		try
-		{
-			LogManager.getLogManager().readConfiguration(inputStream);
-		}
-		catch (final IOException e)
-		{
-			throw new Error("Cannot initialize logging", e);
-		}
+		final InputStream inputStream = Application.class.getResourceAsStream("/logging.properties");
+
+        try
+        {
+            LogManager.getLogManager().readConfiguration(inputStream);
+        }
+        catch (final IOException e)
+        {
+            throw new Error("Cannot initialize logging", e);
+        }
 
 		_log = Logger.getLogger(Application.class.getName());
 	}
