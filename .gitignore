@@ -13,3 +13,6 @@ hs_err_pid*
 .settings
 .classpath
 .project
+
+#IntelliJ
+.idea
