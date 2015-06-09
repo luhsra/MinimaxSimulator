@@ -12,9 +12,9 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineD
 import de.uni_hannover.sra.minimax_simulator.ui.render.DefaultRenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.render.SpriteCanvas;
 
-public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements MachineDisplayListener
-{
-	public final static Font	FONT	= new Font("SanfSerif", Font.PLAIN, 17);
+public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements MachineDisplayListener {
+
+	public final static Font	FONT	= new Font("SansSerif", Font.PLAIN, 17);
 
 	private final Machine		_machine;
 
@@ -25,8 +25,9 @@ public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements Mach
 		setEnvironment(new DefaultRenderEnvironment(FONT, this.getFontMetrics(FONT)));
 		setSpriteFactory(new DefaultSpriteFactory());
 
-		for (SpriteOwner sprite : _machine.getDisplay().getAllSpriteOwners())
-			setSprite(sprite);
+		for (SpriteOwner sprite : _machine.getDisplay().getAllSpriteOwners()) {
+            setSprite(sprite);
+        }
 
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		updatePreferredSize();
@@ -67,5 +68,9 @@ public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements Mach
 	public void onSpriteOwnerChanged(SpriteOwner spriteOwner)
 	{
 		setSprite(spriteOwner);
+	}
+
+	public int getWidth() {
+		return _machine.getDisplay().getDimension().toAWT().width;
 	}
 }

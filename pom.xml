@@ -4,7 +4,7 @@
 
   <groupId>de.uni_hannover.sra.minimax_simulator</groupId>
   <artifactId>minimax_simulator</artifactId>
-  <version>1.0.0</version>
+  <version>0.8.4</version>
   <packaging>jar</packaging>
   <name>Minimax Simulator</name>
 
@@ -20,12 +20,16 @@
 
   <developers>
     <developer>
-      <name>Sebastian Niemann</name>
-      <email>niemann@sra.uni-hannover.de</email>
+          <name>Philipp Rohde</name>
+          <email>rohde@sra.uni-hannover.de</email>
     </developer>
     <developer>
-      <name>Martin Lück</name>
-      <email>lueck@sra.uni-hannover.de</email>
+        <name>Sebastian Niemann</name>
+        <email>niemann@sra.uni-hannover.de</email>
+    </developer>
+    <developer>
+        <name>Martin Lück</name>
+        <email>lueck@sra.uni-hannover.de</email>
     </developer>
   </developers>
 

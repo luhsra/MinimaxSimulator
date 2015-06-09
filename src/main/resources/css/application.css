@@ -1,0 +1,12 @@
+.button {
+    -fx-background-radius: 8;
+}
+
+.context-menu {
+    -fx-background-radius: 8;
+}
+
+.menu-item:focused {
+    -fx-background-radius: 8;
+}
+
