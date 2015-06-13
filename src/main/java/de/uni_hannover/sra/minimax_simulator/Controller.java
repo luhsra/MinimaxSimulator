@@ -1,11 +1,13 @@
 package de.uni_hannover.sra.minimax_simulator;
 
+import de.uni_hannover.sra.minimax_simulator.gui.MemoryView;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -63,6 +65,9 @@ public class Controller {
     public ScrollPane panel_machine_overview;
     public Canvas canvas;
 
+    @FXML
+    private MemoryView embeddedMemoryViewController;
+
     public void exitApplication(ActionEvent ae) {
         Platform.exit();
     }
@@ -108,6 +113,8 @@ public class Controller {
         panel_machine_overview.setContent(swingNode);
 
         drawCanvas();           // CANVAS TEST
+
+        embeddedMemoryViewController.fillMemTable();
 
         // TODO: create project data
     }
