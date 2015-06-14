@@ -44,7 +44,7 @@
                                     </rowConstraints>
                                     <children>
                                         <Button mnemonicParsing="false" text="" GridPane.halignment="CENTER"
-                                                GridPane.valignment="CENTER">
+                                                GridPane.valignment="CENTER" onAction="#firstPage" fx:id="btnFirstPage">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/skip-left.png"/>
@@ -52,7 +52,7 @@
                                             </graphic>
                                         </Button>
                                         <Button mnemonicParsing="false" text="" GridPane.columnIndex="1"
-                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER" onAction="#prevPage" fx:id="btnPrevPage">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/step-left.png"/>
@@ -60,7 +60,7 @@
                                             </graphic>
                                         </Button>
                                         <Button mnemonicParsing="false" text="" GridPane.columnIndex="3"
-                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER" onAction="#nextPage" fx:id="btnNextPage">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/step-right.png"/>
@@ -68,24 +68,24 @@
                                             </graphic>
                                         </Button>
                                         <Button mnemonicParsing="false" text="" GridPane.columnIndex="4"
-                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER" onAction="#lastPage" fx:id="btnLastPage">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/skip-right.png"/>
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <TextField GridPane.columnIndex="2"/>
+                                        <TextField GridPane.columnIndex="2" fx:id="txtAddressField"/>
                                     </children>
                                     <padding>
                                         <Insets bottom="10.0" top="10.0"/>
                                     </padding>
                                 </GridPane>
-                                <TableView prefHeight="519.0" prefWidth="563.0" fx:id="memTable">
+                                <TableView prefHeight="412.0" prefWidth="558.0" fx:id="memTable">
                                     <columns>
                                         <TableColumn fx:id="col_adr" prefWidth="143.0" resizable="false" text="Adresse"/>
                                         <TableColumn fx:id="col_dec" prefWidth="189.0" resizable="false" text="Dezimal"/>
-                                        <TableColumn fx:id="col_hex" prefWidth="231.0" resizable="false" text="Hexadezimal"/>
+                                        <TableColumn fx:id="col_hex" prefWidth="229.0" resizable="false" text="Hexadezimal"/>
                                     </columns>
                                 </TableView>
                             </children>

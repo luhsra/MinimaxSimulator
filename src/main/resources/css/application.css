@@ -10,3 +10,6 @@
     -fx-background-radius: 8;
 }
 
+#col_hex, #col_adr {
+    -fx-alignment: CENTER;
+}

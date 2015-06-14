@@ -115,7 +115,7 @@ public class FxMainController {
 
         drawCanvas();           // CANVAS TEST
 
-        embeddedMemoryViewController.fillMemTable();
+        embeddedMemoryViewController.initMemTable();
 
         // TODO: create project data
     }
