@@ -1,5 +1,6 @@
-package de.uni_hannover.sra.minimax_simulator;
+package de.uni_hannover.sra.minimax_simulator.gui;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.gui.MemoryView;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
@@ -26,7 +27,7 @@ import java.util.List;
  *
  */
 
-public class Controller {
+public class FxMainController {
 
     public Menu menuProject;
     public MenuItem project_new;

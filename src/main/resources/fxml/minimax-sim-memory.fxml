@@ -83,9 +83,9 @@
                                 </GridPane>
                                 <TableView prefHeight="519.0" prefWidth="563.0" fx:id="memTable">
                                     <columns>
-                                        <TableColumn fx:id="cl_adr" prefWidth="143.0" resizable="false" text="Adresse"/>
-                                        <TableColumn fx:id="cl_dec" prefWidth="189.0" resizable="false" text="Dezimal"/>
-                                        <TableColumn fx:id="cl_hex" prefWidth="231.0" resizable="false" text="Hexadezimal"/>
+                                        <TableColumn fx:id="col_adr" prefWidth="143.0" resizable="false" text="Adresse"/>
+                                        <TableColumn fx:id="col_dec" prefWidth="189.0" resizable="false" text="Dezimal"/>
+                                        <TableColumn fx:id="col_hex" prefWidth="231.0" resizable="false" text="Hexadezimal"/>
                                     </columns>
                                 </TableView>
                             </children>

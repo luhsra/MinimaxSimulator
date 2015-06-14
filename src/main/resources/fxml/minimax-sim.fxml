@@ -19,7 +19,7 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0"
           prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml"
-          fx:controller="de.uni_hannover.sra.minimax_simulator.Controller">
+          fx:controller="de.uni_hannover.sra.minimax_simulator.gui.FxMainController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
     </columnConstraints>
