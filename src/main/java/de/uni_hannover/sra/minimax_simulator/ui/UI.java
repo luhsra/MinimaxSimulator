@@ -32,9 +32,9 @@ public class UI
 
 	private UI()
 	{
-		initLaf("Nimbus");
+		//initLaf("Nimbus");
 	}
-
+/*
 	private void initLaf(String name)
 	{
 		// Set the Look and feel
@@ -67,7 +67,7 @@ public class UI
 				+ ", falling back to default: " + lafName);
 		}
 	}
-
+*/
 	/**
 	 * Schedule asynchronous execution of the {@link Runnable} in the Swing event dispatch thread.
 	 * 

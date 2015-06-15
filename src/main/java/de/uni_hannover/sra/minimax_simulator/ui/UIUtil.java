@@ -38,6 +38,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.FillLayout;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.JWaitingDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.util.SwingWorkerCompletionWaiter;
 
+// TODO: conversion to JavaFX
 public class UIUtil
 {
 	/**

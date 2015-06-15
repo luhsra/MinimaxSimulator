@@ -1,20 +1,26 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
+import static com.google.common.base.Preconditions.*;
+
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
+import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryImportWorker;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ScrollEvent;
+import javafx.stage.FileChooser;
+import javafx.util.StringConverter;
+
+import java.io.File;
+import java.text.ParseException;
 
 
 /**
@@ -39,6 +45,8 @@ public class MemoryView{
     private int	_page;
     private int	_cachedPageStart;
 
+    private static FileChooser fc;
+
     @FXML
     private TableView<MemoryTableModel> memTable;
 
@@ -48,6 +56,9 @@ public class MemoryView{
     private TableColumn<MemoryTableModel, String> col_dec;
     @FXML
     private TableColumn<MemoryTableModel, String> col_hex;
+
+    @FXML
+    private Spinner spinnerStartAddress;
 
     public void initialize() {
         _page = _cachedPageStart = 0;
@@ -84,6 +95,52 @@ public class MemoryView{
                 // Ignore malformed input
             }
         });
+
+        fc = new FileChooser();
+    }
+
+    public void initMemoryView() {
+        mMemory = Main.getWorkspace().getProject().getMachine().getMemory();
+        _addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
+
+        initSpinner();
+        initMemTable();
+    }
+
+    private void initSpinner() {
+        int spinnerMin = mMemory.getMinAddress();
+        int spinnerMax = mMemory.getMaxAddress();
+        SpinnerValueFactory.IntegerSpinnerValueFactory spinnerFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(spinnerMin, spinnerMax);
+        spinnerFactory.setWrapAround(true);
+        spinnerFactory.setConverter(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer value) {
+                return (value == null) ? "" : String.format(_addressFormatString, value);
+            }
+
+            @Override
+            public Integer fromString(String text) {
+                if (text == null || text.isEmpty())
+                    return null;
+
+                try
+                {
+                    Long l = Long.valueOf(text, 16);
+                    int value = l.intValue();
+                    if (value < mMemory.getMinAddress())
+                        value = mMemory.getMinAddress();
+                    else if (value > mMemory.getMaxAddress())
+                        value = mMemory.getMaxAddress();
+                    return value;
+                }
+                catch (NumberFormatException nfe)
+                {
+                    nfe.printStackTrace();
+                }
+                return null;
+            }
+        });
+        spinnerStartAddress.setValueFactory(spinnerFactory);
     }
 
     private void selectAddress(int address) {
@@ -123,10 +180,8 @@ public class MemoryView{
     @FXML
     private TextField txtAddressField;
 
-    public void initMemTable() {
+    private void initMemTable() {
         System.out.println("initializing memory table");
-        mMemory = Main.getWorkspace().getProject().getMachine().getMemory();
-        _addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
         int addressRange = mMemory.getMaxAddress() - mMemory.getMinAddress();
         _pageCount = (addressRange - 1) / _pageSize + 1;
 
@@ -156,8 +211,10 @@ public class MemoryView{
     private Button btnClear;
 
     public void clearMem() {
-        // TODO: Clear the memory
+        // TODO: warning dialog
         System.out.println("clearing memory");
+        mMemory.getMemoryState().zero();
+        //updateMemTable();
     }
 
     @FXML
@@ -192,6 +249,41 @@ public class MemoryView{
         _page = newPage;
         _cachedPageStart = _page * _pageSize + mMemory.getMinAddress();
 
+        updateMemTable();
+    }
+
+    @FXML
+    private TextField txtImport;
+    private File _currentFile;
+
+    @FXML
+    private Spinner<Integer> spinnerSize;
+
+    public void openImportDialog() {
+        File selFile = fc.showOpenDialog(Main.getPrimaryStage());
+
+        if (selFile == null) {
+            txtImport.setText("");
+            return;
+        }
+        _currentFile = selFile;
+        txtImport.setText(selFile.getAbsoluteFile().toString());
+
+        int length = (int) Math.min(Integer.MAX_VALUE, selFile.length());
+        System.out.println("Größe der Datei: " + length);
+
+        SpinnerValueFactory<Integer> sizeValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, length);
+        sizeValueFactory.setWrapAround(true);
+        sizeValueFactory.setValue(length);
+        spinnerSize.setValueFactory(sizeValueFactory);
+    }
+
+    public void importMemory() {
+        // TODO: Sicherheitsabfrage usw.
+        int address = Integer.parseInt(spinnerStartAddress.getValue().toString());
+        int size = (int) _currentFile.length();
+        UIUtil.executeWorker(new MemoryImportWorker(mMemory, address, size,
+                _currentFile), "Bitte warten", "Importiere...");
         updateMemTable();
     }
 

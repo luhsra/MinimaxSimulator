@@ -19,23 +19,29 @@ public class Main extends javafx.application.Application {
     static final FXMLLoader loader = new FXMLLoader();
     static final private String version = "JavaFX Alpha 1";
 
+    private static Stage primaryStage;
+
     private static Workspace _workspace;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/minimax-sim.fxml"));
-        primaryStage.setTitle("Minimax-Simulator ("+version+")");
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("Minimax-Simulator ("+version+")");
 
         // set application icon
-        primaryStage.getIcons().add(new Image("/images/nuvola/cpu.png"));
-        primaryStage.getIcons().add(new Image("/images/nuvola/cpu-big.png"));
+        this.primaryStage.getIcons().add(new Image("/images/nuvola/cpu.png"));
+        this.primaryStage.getIcons().add(new Image("/images/nuvola/cpu-big.png"));
 
         Scene scene = new Scene(root, 1200, 675);
         scene.getStylesheets().add("css/application.css");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        this.primaryStage.setScene(scene);
+        this.primaryStage.show();
     }
 
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     public static void main(String[] args) {
         _workspace = new Workspace();
