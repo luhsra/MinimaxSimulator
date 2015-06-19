@@ -2,6 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.gui.util;
 
 import com.google.common.io.ByteStreams;
 import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
@@ -9,6 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
@@ -66,20 +68,21 @@ public class MemoryImportWorker implements Runnable
 		}
 		catch (IOException ioe)
 		{
-			// TODO: create the following dialog at FX application thread
-/*			Alert fne = new Alert(Alert.AlertType.ERROR);
-			fne.setTitle("Fehler");
-			fne.setHeaderText(null);
-			fne.setContentText("Die Datei " + _file.getPath() + " existiert nicht mehr oder kann nicht gelesen werden.");
-			fne.showAndWait();			*/
-			UI.invokeInEDT(new Runnable()
-			{
+			// TODO: convert UI and UIUtil to JavaFX; this was UI.invokeInEDT()
+			javafx.application.Platform.runLater(new Runnable() {
 				@Override
-				public void run()
-				{
-/*					JOptionPane.showMessageDialog(Application.getMainWindow(),
-						_res.format("file-not-existing", _file.getPath()),
-						_res.get("error"), JOptionPane.ERROR_MESSAGE);						*/
+				public void run() {
+					Alert fne = new Alert(Alert.AlertType.ERROR);
+					fne.setTitle("Fehler");
+					fne.setHeaderText(null);
+					fne.setContentText("Die Datei " + _file.getPath() + " existiert nicht mehr oder kann nicht gelesen werden.");
+					// get the stage of the dialog and add the app icon to it
+					Stage stage = (Stage) fne.getDialogPane().getScene().getWindow();
+					stage.getIcons().addAll(Main.getAppIcon());
+					// FIXME: delete if issue with long texts in linux is resolved
+					fne.setResizable(true);
+
+					fne.showAndWait();
 				}
 			});
 		}
@@ -139,13 +142,21 @@ public class MemoryImportWorker implements Runnable
 //			final String title = _res.get("warning");
 //			final String message = _res.format("bytes-truncated", Util.toHex(maxAddress, width, true), truncated);
 
-			UI.invokeInEDT(new Runnable()
-			{
+			// TODO: convert UI and UIUtil to JavaFX; this was UI.invokeInEDT()
+			javafx.application.Platform.runLater(new Runnable() {
 				@Override
-				public void run()
-				{
-//					JOptionPane.showMessageDialog(Application.getMainWindow(),
-//						message, title, JOptionPane.WARNING_MESSAGE);
+				public void run() {
+					Alert trunc = new Alert(Alert.AlertType.WARNING);
+					trunc.setTitle("Warnung");
+					trunc.setHeaderText(null);
+					trunc.setContentText("Die maximale Adresse ist "+Util.toHex(maxAddress, width, true)+". Es wurde(n) "+truncated+" Byte(s) am Ende der Datei abgeschnitten.");
+					// get the stage of the dialog and add the app icon to it
+					Stage stage = (Stage) trunc.getDialogPane().getScene().getWindow();
+					stage.getIcons().addAll(Main.getAppIcon());
+					// FIXME: delete if issue with long texts in linux is resolved
+					trunc.setResizable(true);
+
+					trunc.showAndWait();
 				}
 			});
 		}
