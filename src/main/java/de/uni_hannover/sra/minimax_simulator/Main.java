@@ -1,6 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator;
 
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -41,6 +42,10 @@ public class Main extends javafx.application.Application {
 
     public static Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public static ObservableList<Image> getAppIcon() {
+        return primaryStage.getIcons();
     }
 
     public static void main(String[] args) {

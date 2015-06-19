@@ -8,6 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemorySta
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
+import javafx.scene.control.Alert;
 
 import javax.swing.*;
 import java.io.File;
@@ -65,6 +66,12 @@ public class MemoryImportWorker implements Runnable
 		}
 		catch (IOException ioe)
 		{
+			// TODO: create the following dialog at FX application thread
+/*			Alert fne = new Alert(Alert.AlertType.ERROR);
+			fne.setTitle("Fehler");
+			fne.setHeaderText(null);
+			fne.setContentText("Die Datei " + _file.getPath() + " existiert nicht mehr oder kann nicht gelesen werden.");
+			fne.showAndWait();			*/
 			UI.invokeInEDT(new Runnable()
 			{
 				@Override

@@ -14,13 +14,18 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.Optional;
 
 
 /**
@@ -279,12 +284,26 @@ public class MemoryView{
     }
 
     public void importMemory() {
-        // TODO: Sicherheitsabfrage usw.
-        int address = Integer.parseInt(spinnerStartAddress.getValue().toString());
-        int size = (int) _currentFile.length();
-        UIUtil.executeWorker(new MemoryImportWorker(mMemory, address, size,
-                _currentFile), "Bitte warten", "Importiere...");
-        updateMemTable();
+
+        // TODO: partieller Import
+
+        Alert memoryOverride = new Alert(AlertType.CONFIRMATION);
+        memoryOverride.setTitle("Überschreiben bestätigen");
+        memoryOverride.setHeaderText(null);
+        memoryOverride.setContentText("Dies überschreibt bestehende Speicherinhalte. Fortfahren?");
+        memoryOverride.initStyle(StageStyle.UTILITY);
+        // get the stage of the dialog and add the app icon to it
+        Stage stage = (Stage) memoryOverride.getDialogPane().getScene().getWindow();
+        stage.getIcons().addAll(Main.getAppIcon());
+
+        Optional<ButtonType> result = memoryOverride.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            int address = Integer.parseInt(spinnerStartAddress.getValue().toString());
+            int size = (int) _currentFile.length();
+            UIUtil.executeWorker(new MemoryImportWorker(mMemory, address, size,
+                    _currentFile), "Bitte warten", "Importiere...");
+            updateMemTable();
+        }
     }
 
     public static class MemoryTableModel {
