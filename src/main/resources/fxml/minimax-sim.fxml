@@ -174,7 +174,7 @@
             </menus>
         </MenuBar>
         <TabPane id="tabpane" fx:id="tabpane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS"
-                 GridPane.rowIndex="1">
+                 GridPane.rowIndex="1" visible="false">
             <tabs>
                 <Tab fx:id="tab_overview" text="Übersicht">
                     <graphic>

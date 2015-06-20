@@ -107,7 +107,13 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Button mnemonicParsing="false" onAction="#importMemory" text="Importieren" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                        <Button fx:id="btnImportMem" mnemonicParsing="false" onAction="#importMemory" text="Importieren" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" disable="true">
+                                            <graphic>
+                                                <ImageView>
+                                                    <Image url="/images/fugue/blue-document-export.png" />
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
                                         <TextField fx:id="txtImport" editable="false" onMouseClicked="#openImportDialog" GridPane.columnIndex="1">
                                             <GridPane.margin>
                                                 <Insets left="15.0" right="15.0" />
@@ -190,7 +196,52 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Button mnemonicParsing="false" text="Exportieren" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                        <Button fx:id="btnExportMem" mnemonicParsing="false" text="Exportieren" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.columnSpan="2" onAction="#exportMemory" disable="true">
+                                            <graphic>
+                                                <ImageView>
+                                                    <Image url="/images/fugue/blue-document-import.png" />
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                    <Label text="Datei:">
+                                        <GridPane.margin>
+                                            <Insets left="5.0" />
+                                        </GridPane.margin>
+                                        <font>
+                                            <Font size="12.0" />
+                                        </font>
+                                    </Label>
+                                        <TextField fx:id="txtExport" editable="false" onMouseClicked="#openExportDialog" GridPane.columnIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="15.0" right="15.0" />
+                                            </GridPane.margin>
+                                        </TextField>
+                                    <Label text="von Adresse:" GridPane.rowIndex="1">
+                                        <GridPane.margin>
+                                            <Insets left="5.0" />
+                                        </GridPane.margin>
+                                        <font>
+                                            <Font size="12.0" />
+                                        </font>
+                                    </Label>
+                                    <Label text="bis Adresse:" GridPane.rowIndex="2">
+                                        <GridPane.margin>
+                                            <Insets left="5.0" />
+                                        </GridPane.margin>
+                                        <font>
+                                            <Font size="12.0" />
+                                        </font>
+                                    </Label>
+                                    <Spinner fx:id="spinnerExportStartAddress" prefHeight="26.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <GridPane.margin>
+                                            <Insets left="15.0" right="15.0" />
+                                        </GridPane.margin>
+                                    </Spinner>
+                                    <Spinner fx:id="spinnerExportEndAddress" prefHeight="26.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <GridPane.margin>
+                                            <Insets left="15.0" right="15.0" />
+                                        </GridPane.margin>
+                                    </Spinner>
                                     </children>
                                 </GridPane>
                             </children>
@@ -209,7 +260,13 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                                            <Button fx:id="btnClear" mnemonicParsing="false" onAction="#clearMem" text="Leeren..." GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                            <Button fx:id="btnClear" mnemonicParsing="false" onAction="#clearMem" text="Leeren..." GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                <graphic>
+                                                    <ImageView>
+                                                        <Image url="/images/fugue/blue-document.png" />
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
                            </children>
                         </GridPane>
                             </children>

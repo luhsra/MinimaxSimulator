@@ -3,6 +3,8 @@ package de.uni_hannover.sra.minimax_simulator.gui;
 import static com.google.common.base.Preconditions.*;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryExportWorker;
+import de.uni_hannover.sra.minimax_simulator.gui.util.MemorySpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
@@ -112,40 +114,20 @@ public class MemoryView{
         initMemTable();
     }
 
+    @FXML
+    Spinner spinnerExportStartAddress;
+    @FXML
+    Spinner spinnerExportEndAddress;
+
+    // all spinners need to have their own value factory
     private void initSpinner() {
-        int spinnerMin = mMemory.getMinAddress();
-        int spinnerMax = mMemory.getMaxAddress();
-        SpinnerValueFactory.IntegerSpinnerValueFactory spinnerFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(spinnerMin, spinnerMax);
-        spinnerFactory.setWrapAround(true);
-        spinnerFactory.setConverter(new StringConverter<Integer>() {
-            @Override
-            public String toString(Integer value) {
-                return (value == null) ? "" : String.format(_addressFormatString, value);
-            }
+        spinnerStartAddress.setValueFactory(new MemorySpinnerValueFactory(mMemory));
 
-            @Override
-            public Integer fromString(String text) {
-                if (text == null || text.isEmpty())
-                    return null;
+        spinnerExportStartAddress.setValueFactory(new MemorySpinnerValueFactory(mMemory));
 
-                try
-                {
-                    Long l = Long.valueOf(text, 16);
-                    int value = l.intValue();
-                    if (value < mMemory.getMinAddress())
-                        value = mMemory.getMinAddress();
-                    else if (value > mMemory.getMaxAddress())
-                        value = mMemory.getMaxAddress();
-                    return value;
-                }
-                catch (NumberFormatException nfe)
-                {
-                    nfe.printStackTrace();
-                }
-                return null;
-            }
-        });
-        spinnerStartAddress.setValueFactory(spinnerFactory);
+        MemorySpinnerValueFactory expEndFactory = new MemorySpinnerValueFactory(mMemory);
+        spinnerExportEndAddress.setValueFactory(expEndFactory);
+        spinnerExportEndAddress.getValueFactory().setValue(expEndFactory.getMax());
     }
 
     private void selectAddress(int address) {
@@ -269,12 +251,15 @@ public class MemoryView{
 
     @FXML
     private TextField txtImport;
-    private File _currentFile;
+    private File _currentImportFile;
+    private File _currentExportFile;
 
     @FXML
     private Spinner<Integer> spinnerSize;
     @FXML
     private CheckBox cb_partialImport;
+    @FXML
+    private Button btnImportMem;
 
     public void openImportDialog() {
         File selFile = fc.showOpenDialog(Main.getPrimaryStage());
@@ -282,7 +267,7 @@ public class MemoryView{
         if (selFile == null) {
             return;
         }
-        _currentFile = selFile;
+        _currentImportFile = selFile;
         txtImport.setText(selFile.getAbsoluteFile().toString());
 
         int length = (int) Math.min(Integer.MAX_VALUE, selFile.length());
@@ -294,6 +279,7 @@ public class MemoryView{
         spinnerSize.setValueFactory(sizeValueFactory);
 
         cb_partialImport.setDisable(false);
+        btnImportMem.setDisable(false);
     }
 
     public void cbPartialImportAction() {
@@ -302,7 +288,7 @@ public class MemoryView{
         }
         else {
             spinnerSize.setDisable(true);
-            spinnerSize.getValueFactory().setValue((int)_currentFile.length());
+            spinnerSize.getValueFactory().setValue((int)_currentImportFile.length());
         }
     }
 
@@ -320,9 +306,59 @@ public class MemoryView{
             int address = Integer.parseInt(spinnerStartAddress.getValue().toString());
             int size = spinnerSize.getValue();
             UIUtil.executeWorker(new MemoryImportWorker(mMemory, address, size,
-                    _currentFile), "Bitte warten", "Importiere...");
+                    _currentImportFile), "Bitte warten", "Importiere...");
             updateMemTable();
         }
+    }
+
+    @FXML
+    private TextField txtExport;
+
+    public void openExportDialog() {
+        File selFile = fc.showSaveDialog(Main.getPrimaryStage());
+
+        if (selFile == null) {
+            return;
+        }
+
+/*          this is not needed because the file chooser itself checks if the file already exists and asks for confirmation to override
+
+            else if (selFile.exists()) {
+            Alert fileOverride = new Alert(AlertType.CONFIRMATION);
+            fileOverride.setTitle("Überschreiben bestätigen");
+            fileOverride.setHeaderText(null);
+            fileOverride.setContentText("Die Datei "+selFile.getPath()+" ist schon vorhanden und wird beim Exportieren überschrieben. Trotzdem auswählen?");
+            fileOverride.initStyle(StageStyle.UTILITY);
+            // for setting the icon of the application to the dialog
+            fileOverride.initOwner(Main.getPrimaryStage());
+
+            // FIXME: delete if issue with long texts in linux is resolved
+            fileOverride.setResizable(true);
+
+            Optional<ButtonType> override = fileOverride.showAndWait();
+            if (override.get() != ButtonType.OK) {
+                return;
+            }
+        }           */
+        _currentExportFile = selFile;
+        txtExport.setText(selFile.getAbsoluteFile().toString());
+        btnExportMem.setDisable(false);
+    }
+
+    @FXML
+    private Button btnExportMem;
+
+    public void exportMemory() {
+        Integer fromAddress = (Integer) spinnerExportStartAddress.getValue();
+        Integer toAddress = (Integer) spinnerExportEndAddress.getValue();
+
+        if (fromAddress == null || toAddress == null) {
+            return;
+        }
+
+        UIUtil.executeWorker(new MemoryExportWorker(mMemory, fromAddress, toAddress,
+                _currentExportFile), "Bitte warten", "Exportiere...");
+
     }
 
     public static class MemoryTableModel {
