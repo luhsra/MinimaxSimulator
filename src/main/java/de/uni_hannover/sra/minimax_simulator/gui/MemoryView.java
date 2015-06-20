@@ -216,10 +216,20 @@ public class MemoryView{
     private Button btnClear;
 
     public void clearMem() {
-        // TODO: warning dialog
-        System.out.println("clearing memory");
-        mMemory.getMemoryState().zero();
-        //updateMemTable();
+        Alert memoryClear = new Alert(AlertType.CONFIRMATION);
+        memoryClear.setTitle("Zurücksetzen bestätigen");
+        memoryClear.setHeaderText(null);
+        memoryClear.setContentText("Damit wird der Speicher auf Null zurückgesetzt. Fortfahren?");
+        memoryClear.initStyle(StageStyle.UTILITY);
+        // for setting the icon of the application to the dialog
+        memoryClear.initOwner(Main.getPrimaryStage());
+
+        Optional<ButtonType> result = memoryClear.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            System.out.println("clearing memory");
+            mMemory.getMemoryState().zero();
+            updateMemTable();
+        }
     }
 
     @FXML
