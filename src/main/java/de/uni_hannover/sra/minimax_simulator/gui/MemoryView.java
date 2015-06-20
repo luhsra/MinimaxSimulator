@@ -263,12 +263,13 @@ public class MemoryView{
 
     @FXML
     private Spinner<Integer> spinnerSize;
+    @FXML
+    private CheckBox cb_partialImport;
 
     public void openImportDialog() {
         File selFile = fc.showOpenDialog(Main.getPrimaryStage());
 
         if (selFile == null) {
-            txtImport.setText("");
             return;
         }
         _currentFile = selFile;
@@ -281,12 +282,21 @@ public class MemoryView{
         sizeValueFactory.setWrapAround(true);
         sizeValueFactory.setValue(length);
         spinnerSize.setValueFactory(sizeValueFactory);
+
+        cb_partialImport.setDisable(false);
+    }
+
+    public void cbPartialImportAction() {
+        if (cb_partialImport.isSelected()) {
+            spinnerSize.setDisable(false);
+        }
+        else {
+            spinnerSize.setDisable(true);
+            spinnerSize.getValueFactory().setValue((int)_currentFile.length());
+        }
     }
 
     public void importMemory() {
-
-        // TODO: partieller Import
-
         Alert memoryOverride = new Alert(AlertType.CONFIRMATION);
         memoryOverride.setTitle("Überschreiben bestätigen");
         memoryOverride.setHeaderText(null);
@@ -298,7 +308,7 @@ public class MemoryView{
         Optional<ButtonType> result = memoryOverride.showAndWait();
         if (result.get() == ButtonType.OK) {
             int address = Integer.parseInt(spinnerStartAddress.getValue().toString());
-            int size = (int) _currentFile.length();
+            int size = spinnerSize.getValue();
             UIUtil.executeWorker(new MemoryImportWorker(mMemory, address, size,
                     _currentFile), "Bitte warten", "Importiere...");
             updateMemTable();

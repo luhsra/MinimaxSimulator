@@ -148,7 +148,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <CheckBox mnemonicParsing="false" text="Partieller Import" GridPane.columnIndex="1" disable="true">
+                                    <CheckBox fx:id="cb_partialImport" mnemonicParsing="false" text="Partieller Import" GridPane.columnIndex="1" disable="true" onAction="#cbPartialImportAction">
                                        <font>
                                           <Font size="12.0" />
                                        </font>
