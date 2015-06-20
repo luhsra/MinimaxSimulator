@@ -292,9 +292,8 @@ public class MemoryView{
         memoryOverride.setHeaderText(null);
         memoryOverride.setContentText("Dies überschreibt bestehende Speicherinhalte. Fortfahren?");
         memoryOverride.initStyle(StageStyle.UTILITY);
-        // get the stage of the dialog and add the app icon to it
-        Stage stage = (Stage) memoryOverride.getDialogPane().getScene().getWindow();
-        stage.getIcons().addAll(Main.getAppIcon());
+        // for setting the icon of the application to the dialog
+        memoryOverride.initOwner(Main.getPrimaryStage());
 
         Optional<ButtonType> result = memoryOverride.showAndWait();
         if (result.get() == ButtonType.OK) {

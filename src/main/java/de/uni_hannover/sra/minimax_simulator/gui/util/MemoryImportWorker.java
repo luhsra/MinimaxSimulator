@@ -10,9 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.scene.control.Alert;
-import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -68,17 +66,15 @@ public class MemoryImportWorker implements Runnable
 		}
 		catch (IOException ioe)
 		{
-			// TODO: convert UI and UIUtil to JavaFX; this was UI.invokeInEDT()
-			javafx.application.Platform.runLater(new Runnable() {
+			UI.invokeInFAT(new Runnable() {
 				@Override
 				public void run() {
 					Alert fne = new Alert(Alert.AlertType.ERROR);
 					fne.setTitle("Fehler");
 					fne.setHeaderText(null);
 					fne.setContentText("Die Datei " + _file.getPath() + " existiert nicht mehr oder kann nicht gelesen werden.");
-					// get the stage of the dialog and add the app icon to it
-					Stage stage = (Stage) fne.getDialogPane().getScene().getWindow();
-					stage.getIcons().addAll(Main.getAppIcon());
+					// for setting the icon of the application to the dialog
+					fne.initOwner(Main.getPrimaryStage());
 					// FIXME: delete if issue with long texts in linux is resolved
 					fne.setResizable(true);
 
@@ -142,17 +138,15 @@ public class MemoryImportWorker implements Runnable
 //			final String title = _res.get("warning");
 //			final String message = _res.format("bytes-truncated", Util.toHex(maxAddress, width, true), truncated);
 
-			// TODO: convert UI and UIUtil to JavaFX; this was UI.invokeInEDT()
-			javafx.application.Platform.runLater(new Runnable() {
+			UI.invokeInFAT(new Runnable() {
 				@Override
 				public void run() {
 					Alert trunc = new Alert(Alert.AlertType.WARNING);
 					trunc.setTitle("Warnung");
 					trunc.setHeaderText(null);
-					trunc.setContentText("Die maximale Adresse ist "+Util.toHex(maxAddress, width, true)+". Es wurde(n) "+truncated+" Byte(s) am Ende der Datei abgeschnitten.");
-					// get the stage of the dialog and add the app icon to it
-					Stage stage = (Stage) trunc.getDialogPane().getScene().getWindow();
-					stage.getIcons().addAll(Main.getAppIcon());
+					trunc.setContentText("Die maximale Adresse ist " + Util.toHex(maxAddress, width, true) + ". Es wurde(n) " + truncated + " Byte(s) am Ende der Datei abgeschnitten.");
+					// for setting the icon of the application to the dialog
+					trunc.initOwner(Main.getPrimaryStage());
 					// FIXME: delete if issue with long texts in linux is resolved
 					trunc.setResizable(true);
 
