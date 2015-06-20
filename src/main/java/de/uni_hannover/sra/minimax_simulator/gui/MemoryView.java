@@ -9,6 +9,8 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMe
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryImportWorker;
+import de.uni_hannover.sra.minimax_simulator.ui.common.DoubleClickListener;
+import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -19,6 +21,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -177,6 +181,43 @@ public class MemoryView{
         col_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
         updateMemTable();
+/*
+        memTable.addEventHandler(new DoubleClickListener()
+        {
+            @Override
+            public void doubleClicked(MouseEvent e)
+            {
+                MemoryTableModel mtm = memTable.getSelectionModel().getSelectedItem();
+                checkNotNull(mtm);
+                int address = Integer.parseInt(mtm.getAddress());
+                int row = 0;//memTable.getSelectionModel();
+                if (row == -1)
+                    return;
+
+                // open edit dialog
+                new MemoryUpdateDialog(address, mMemory).setVisible(true);
+            }
+        }); */
+
+        memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                    if(mouseEvent.getClickCount() == 2){
+                        System.out.println("Double clicked");
+                        MemoryTableModel mtm = memTable.getSelectionModel().getSelectedItem();
+                        checkNotNull(mtm);
+                        int address = Integer.parseInt(mtm.getAddress());
+                        int row = 0;//memTable.getSelectionModel();
+                        if (row == -1)
+                            return;
+
+                        // open edit dialog
+                        new MemoryUpdateDialog(address, mMemory).setVisible(true);
+                    }
+                }
+            }
+        });
     }
 
     private void updateMemTable() {

@@ -14,6 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.AbstractDocumentListener;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 
+//TODO: convert to JavaFX
 public abstract class ValueUpdateDialog extends JDialog
 {
 	protected enum Mode

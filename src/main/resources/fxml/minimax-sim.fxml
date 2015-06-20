@@ -32,7 +32,7 @@
             <menus>
                 <Menu id="menuProject" fx:id="menuProject" mnemonicParsing="false" text="Projekt">
                     <items>
-                        <MenuItem id="project_new" fx:id="project_new" mnemonicParsing="false" onAction="#newProject"
+                        <MenuItem id="project_new" fx:id="project_new" mnemonicParsing="true" onAction="#newProject"
                                   text="Neu">
                             <graphic>
                                 <ImageView>
@@ -40,7 +40,7 @@
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem id="project_open" fx:id="project_open" mnemonicParsing="false" onAction="#openProject"
+                        <MenuItem id="project_open" fx:id="project_open" mnemonicParsing="true" onAction="#openProject"
                                   text="Öffnen">
                             <graphic>
                                 <ImageView>
@@ -49,7 +49,7 @@
                             </graphic>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem id="project_save" fx:id="project_save" disable="true" mnemonicParsing="false"
+                        <MenuItem id="project_save" fx:id="project_save" disable="true" mnemonicParsing="true"
                                   onAction="#saveProject" text="Speichern">
                             <graphic>
                                 <ImageView>
@@ -77,10 +77,10 @@
                             </graphic>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem id="project_clos" fx:id="project_close" disable="true" mnemonicParsing="false"
+                        <MenuItem id="project_clos" fx:id="project_close" disable="true" mnemonicParsing="true"
                                   onAction="#closeProject" text="Schließen"/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem id="exitApplication" fx:id="exitApplication" mnemonicParsing="false"
+                        <MenuItem id="exitApplication" fx:id="exitApplication" mnemonicParsing="true"
                                   onAction="#exitApplication" text="Beenden">
                             <graphic>
                                 <ImageView>
@@ -92,7 +92,7 @@
                 </Menu>
                 <Menu id="menuView" fx:id="menuView" mnemonicParsing="false" text="Ansicht">
                     <items>
-                        <MenuItem id="view_overview" fx:id="view_overview" disable="true" mnemonicParsing="false"
+                        <MenuItem id="view_overview" fx:id="view_overview" disable="true" mnemonicParsing="true"
                                   onAction="#openViewOverview" text="Übersicht">
                             <graphic>
                                 <ImageView>
@@ -108,7 +108,7 @@
                                     <Image url="/images/fugue/processor.png"/>
                                 </ImageView>
                             </graphic>
-                            <MenuItem id="view_conf_alu" fx:id="view_conf_alu" mnemonicParsing="false"
+                            <MenuItem id="view_conf_alu" fx:id="view_conf_alu" mnemonicParsing="true"
                                       text="ALU-Operationen">
                                 <graphic>
                                     <ImageView>
@@ -116,7 +116,7 @@
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
-                            <MenuItem id="view_conf_reg" fx:id="view_conf_reg" mnemonicParsing="false"
+                            <MenuItem id="view_conf_reg" fx:id="view_conf_reg" mnemonicParsing="true"
                                       text="Register-Erweiterungen">
                                 <graphic>
                                     <ImageView>
@@ -124,7 +124,7 @@
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
-                            <MenuItem id="view_conf_mux" fx:id="view_conf_mux" mnemonicParsing="false"
+                            <MenuItem id="view_conf_mux" fx:id="view_conf_mux" mnemonicParsing="true"
                                       text="Multiplexer-Anschlüsse">
                                 <graphic>
                                     <ImageView>
@@ -132,7 +132,7 @@
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
-                            <MenuItem id="view_conf_signal" fx:id="view_conf_signal" mnemonicParsing="false"
+                            <MenuItem id="view_conf_signal" fx:id="view_conf_signal" mnemonicParsing="true"
                                       text="Steuertabelle">
                                 <graphic>
                                     <ImageView>
@@ -142,7 +142,7 @@
                             </MenuItem>
                         </Menu>
                         <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem id="view_memory" fx:id="view_memory" disable="true" mnemonicParsing="false"
+                        <MenuItem id="view_memory" fx:id="view_memory" disable="true" mnemonicParsing="true"
                                   text="Speicher">
                             <graphic>
                                 <ImageView>
@@ -150,7 +150,7 @@
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem id="view_debugger" fx:id="view_debugger" disable="true" mnemonicParsing="false"
+                        <MenuItem id="view_debugger" fx:id="view_debugger" disable="true" mnemonicParsing="true"
                                   text="Debugger">
                             <graphic>
                                 <ImageView>
@@ -198,7 +198,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <fx:include fx:id="embeddedMemoryView" source="minimax-sim-memory.fxml" />
+
                             </children>
                         </AnchorPane>
                     </content>
@@ -220,7 +220,11 @@
                         </ImageView>
                     </graphic>
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <fx:include fx:id="embeddedMemoryView" source="minimax-sim-memory.fxml" />
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
                 <Tab fx:id="tab_debugger" text="Debugger">
