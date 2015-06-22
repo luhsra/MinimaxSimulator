@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.gui.util;
 
 import com.google.common.io.ByteStreams;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
@@ -31,10 +30,10 @@ public class MemoryImportWorker implements Runnable
 	private final int			_effectiveByteCount;
 
 	private final File			_file;
-	//private final TextResource	_res;
+	private final TextResource	_res;
 
 	public MemoryImportWorker(MachineMemory memory, int addressStart, int byteCount,
-							  File file)
+							  File file, TextResource res)
 	{
 		_memory = memory;
 		_addressStart = addressStart;
@@ -49,7 +48,7 @@ public class MemoryImportWorker implements Runnable
 		checkArgument(_effectiveByteCount <= Integer.MAX_VALUE, "Too many bytes to import: " + _effectiveByteCount);
 
 		_file = file;
-		//_res = res;
+		_res = res;
 	}
 
 	@Override
@@ -70,9 +69,9 @@ public class MemoryImportWorker implements Runnable
 				@Override
 				public void run() {
 					Alert fne = new Alert(Alert.AlertType.ERROR);
-					fne.setTitle("Fehler");
+					fne.setTitle(_res.get("memory.import.error"));
 					fne.setHeaderText(null);
-					fne.setContentText("Die Datei " + _file.getPath() + " existiert nicht mehr oder kann nicht gelesen werden.");
+					fne.setContentText(_res.format("memory.import.file-not-existing", _file.getPath()));
 					// for setting the icon of the application to the dialog
 					fne.initOwner(Main.getPrimaryStage());
 					// FIXME: delete if issue with long texts in linux is resolved
@@ -142,9 +141,9 @@ public class MemoryImportWorker implements Runnable
 				@Override
 				public void run() {
 					Alert trunc = new Alert(Alert.AlertType.WARNING);
-					trunc.setTitle("Warnung");
+					trunc.setTitle(_res.get("memory.import.warning"));
 					trunc.setHeaderText(null);
-					trunc.setContentText("Die maximale Adresse ist " + Util.toHex(maxAddress, width, true) + ". Es wurde(n) " + truncated + " Byte(s) am Ende der Datei abgeschnitten.");
+					trunc.setContentText(_res.format("memory.import.bytes-truncated", Util.toHex(maxAddress, width, true), truncated));
 					// for setting the icon of the application to the dialog
 					trunc.initOwner(Main.getPrimaryStage());
 					// FIXME: delete if issue with long texts in linux is resolved

@@ -77,7 +77,7 @@
                             </graphic>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem id="project_clos" fx:id="project_close" disable="true" mnemonicParsing="true"
+                        <MenuItem id="project_close" fx:id="project_close" disable="true" mnemonicParsing="true"
                                   onAction="#closeProject" text="Schließen"/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
                         <MenuItem id="exitApplication" fx:id="exitApplication" mnemonicParsing="true"
@@ -116,7 +116,7 @@
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
-                            <MenuItem id="view_conf_reg" fx:id="view_conf_reg" mnemonicParsing="true"
+                            <MenuItem id="view_conf_register" fx:id="view_conf_reg" mnemonicParsing="true"
                                       text="Register-Erweiterungen">
                                 <graphic>
                                     <ImageView>
@@ -247,7 +247,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
                     </content>
                 </Tab>
-                <Tab fx:id="tab_reg" text="Register-Erweiterungen">
+                <Tab fx:id="tab_reg" id="tab_register" text="Register-Erweiterungen">
                     <graphic>
                         <ImageView>
                             <Image url="/images/fugue/database.png"/>

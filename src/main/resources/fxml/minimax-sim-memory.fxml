@@ -18,7 +18,7 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.sra.minimax_simulator.gui.MemoryView">
     <children>
-        <TitledPane animated="false" collapsible="false" prefHeight="590.0" prefWidth="600.0" text="Speicher">
+        <TitledPane id="memtable.title" fx:id="paneMemory" animated="false" collapsible="false" prefHeight="590.0" prefWidth="600.0" text="Speicher">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="286.0">
                     <children>
@@ -72,9 +72,9 @@
                                 </GridPane>
                                 <TableView fx:id="memTable" prefHeight="412.0" prefWidth="558.0">
                                     <columns>
-                                        <TableColumn fx:id="col_adr" prefWidth="143.0" resizable="false" text="Adresse" />
-                                        <TableColumn fx:id="col_dec" prefWidth="189.0" resizable="false" text="Dezimal" />
-                                        <TableColumn fx:id="col_hex" prefWidth="229.0" resizable="false" text="Hexadezimal" />
+                                        <TableColumn id="memtable.address" fx:id="col_adr" prefWidth="143.0" resizable="false" text="Adresse" />
+                                        <TableColumn id="memtable.dec" fx:id="col_dec" prefWidth="189.0" resizable="false" text="Dezimal" />
+                                        <TableColumn id="memtable.hex" fx:id="col_hex" prefWidth="229.0" resizable="false" text="Hexadezimal" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -91,7 +91,7 @@
         </TitledPane>
         <VBox prefHeight="610.0" prefWidth="600.0" spacing="15.0">
             <children>
-                <TitledPane animated="false" collapsible="false" text="Import">
+                <TitledPane id="memory.import.title" fx:id="paneImport" animated="false" collapsible="false" text="Import">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -107,7 +107,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Button fx:id="btnImportMem" mnemonicParsing="false" onAction="#importMemory" text="Importieren" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" disable="true">
+                                        <Button id="memory.import.button.label" fx:id="btnImportMem" mnemonicParsing="false" onAction="#importMemory" text="Importieren" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" disable="true">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/blue-document-export.png" />
@@ -119,7 +119,7 @@
                                                 <Insets left="15.0" right="15.0" />
                                             </GridPane.margin>
                                         </TextField>
-                              <Label text="Datei:">
+                              <Label id="memory.import.file" fx:id="lblImportFile" text="Datei:">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
@@ -127,7 +127,7 @@
                                     <Font size="12.0" />
                                  </font>
                               </Label>
-                              <Label text="Zieladresse:" GridPane.rowIndex="1">
+                              <Label id="memory.import.address" fx:id="lblTargetAddress" text="Zieladresse:" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
@@ -135,7 +135,7 @@
                                     <Font size="12.0" />
                                  </font>
                               </Label>
-                              <Label text="Anzahl in Bytes:" GridPane.rowIndex="2">
+                              <Label id="memory.import.bytescount" fx:id="lblByteCount" text="Anzahl in Bytes:" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
@@ -157,7 +157,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <CheckBox fx:id="cb_partialImport" disable="true" mnemonicParsing="false" onAction="#cbPartialImportAction" text="Partieller Import" GridPane.columnIndex="1">
+                                    <CheckBox id="memory.import.partial" fx:id="cb_partialImport" disable="true" mnemonicParsing="false" onAction="#cbPartialImportAction" text="Partieller Import" GridPane.columnIndex="1">
                                        <font>
                                           <Font size="12.0" />
                                        </font>
@@ -181,7 +181,7 @@
                         <Insets />
                     </VBox.margin>
                 </TitledPane>
-                <TitledPane animated="false" collapsible="false" prefHeight="204.0" prefWidth="600.0" text="Export">
+                <TitledPane id="memory.export.title" fx:id="paneExport" animated="false" collapsible="false" prefHeight="204.0" prefWidth="600.0" text="Export">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -196,14 +196,14 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Button fx:id="btnExportMem" mnemonicParsing="false" text="Exportieren" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.columnSpan="2" onAction="#exportMemory" disable="true">
+                                        <Button id="memory.export.button.label" fx:id="btnExportMem" mnemonicParsing="false" text="Exportieren" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.columnSpan="2" onAction="#exportMemory" disable="true">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/blue-document-import.png" />
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                    <Label text="Datei:">
+                                    <Label id="memory.export.file" fx:id="lblExportFile" text="Datei:">
                                         <GridPane.margin>
                                             <Insets left="5.0" />
                                         </GridPane.margin>
@@ -216,7 +216,7 @@
                                                 <Insets left="15.0" right="15.0" />
                                             </GridPane.margin>
                                         </TextField>
-                                    <Label text="von Adresse:" GridPane.rowIndex="1">
+                                    <Label id="memory.export.address-from" fx:id="lblFromAddress" text="von Adresse:" GridPane.rowIndex="1">
                                         <GridPane.margin>
                                             <Insets left="5.0" />
                                         </GridPane.margin>
@@ -224,7 +224,7 @@
                                             <Font size="12.0" />
                                         </font>
                                     </Label>
-                                    <Label text="bis Adresse:" GridPane.rowIndex="2">
+                                    <Label id="memory.export.address-to" fx:id="lblToAddress" text="bis Adresse:" GridPane.rowIndex="2">
                                         <GridPane.margin>
                                             <Insets left="5.0" />
                                         </GridPane.margin>
@@ -248,7 +248,7 @@
                         </AnchorPane>
                     </content>
                 </TitledPane>
-                <TitledPane animated="false" collapsible="false" prefHeight="80.0" prefWidth="600.0" text="Leeren">
+                <TitledPane id="memory.clear.title" fx:id="paneClear" animated="false" collapsible="false" prefHeight="80.0" prefWidth="600.0" text="Leeren">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="598.0">
                             <children>
@@ -260,7 +260,7 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                                            <Button fx:id="btnClear" mnemonicParsing="false" onAction="#clearMem" text="Leeren..." GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                            <Button id="memory.clear.button.label" fx:id="btnClear" mnemonicParsing="false" onAction="#clearMem" text="Leeren..." GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                 <graphic>
                                                     <ImageView>
                                                         <Image url="/images/fugue/blue-document.png" />

@@ -3,6 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.gui;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.gui.MemoryView;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
+import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import javafx.application.Platform;
@@ -72,7 +73,21 @@ public class FxMainController {
     @FXML
     private MemoryView embeddedMemoryViewController;
 
+    private TextResource _res;
+
+    /*
+     *
+     *      opening tabs in one method using the ActionEvent.getSource() to find out which one should be opened
+     *
+     */
+
     public void initialize() {
+       _res = Main.getTextResource("application");
+        this.setShortcuts();
+        this.setLocalizedTexts();
+    }
+
+    private void setShortcuts() {
         // menu: project
         this.project_new.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
         this.project_open.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
@@ -92,7 +107,53 @@ public class FxMainController {
         this.view_conf_signal.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN));
     }
 
-    public void exitApplication(ActionEvent ae) {
+    private void setLocalizedTexts() {
+        TextResource res = Main.getTextResource("menu");
+        // menu: project
+        menuProject.setText(res.get("project"));
+        final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(project_new, project_open, project_save, project_saveas, project_export_schematics, project_export_signal, project_close));
+        for (MenuItem mi : projectMenu) {
+            String id = mi.getId().substring(8);
+            mi.setText(res.get("project."+id.replace("_", "-")));
+        }
+        exitApplication.setText(res.get("project.exit"));
+
+        // menu: view
+        menuView.setText(res.get("view"));
+        final List<MenuItem> viewMenu = new ArrayList<>(Arrays.asList(view_overview, view_memory, view_debugger));
+        for (MenuItem mi : viewMenu) {
+            String id = mi.getId().substring(5);
+            mi.setText(res.get("view.project."+id));
+        }
+
+        // menu: machine configuration
+        menuMachineConfiguration.setText(res.get("view.machine"));
+        final List<MenuItem> confMenu = new ArrayList<>(Arrays.asList(view_conf_alu, view_conf_mux, view_conf_reg, view_conf_signal));
+        for (MenuItem mi : confMenu) {
+            String id = mi.getId().substring(10);
+            mi.setText(res.get("view.machine."+id));
+        }
+
+        // menu: help
+        menuHelp.setText(res.get("help"));
+        help_about.setText(res.get("help.info"));
+
+        // tabs
+        res = Main.getTextResource("project");
+        final List<Tab> tabsProject = new ArrayList<>(Arrays.asList(tab_debugger, tab_memory, tab_overview));
+        for (Tab tab : tabsProject) {
+            String id = tab.getId();
+            tab.setText(res.get(id.replace("_", ".")+".title"));
+        }
+        res = Main.getTextResource("machine");
+        final List<Tab> tabsMachine = new ArrayList<>(Arrays.asList(tab_alu, tab_mux, tab_reg, tab_signal));
+        for (Tab tab : tabsMachine) {
+            String id = tab.getId();
+            tab.setText(res.get(id.replace("_", ".") + ".title"));
+        }
+    }
+
+    public void exitApplication() {
         Platform.exit();
     }
 
@@ -108,7 +169,7 @@ public class FxMainController {
                     throw e;
                 }
             }
-        }, "Bitte warten...", "Neues Projekt wird erstellt...");
+        }, _res.get("wait.title"), _res.get("wait.project.new"));
         final SwingNode swingNode = new SwingNode();
         SwingUtilities.invokeLater(new Runnable() {
             @Override

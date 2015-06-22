@@ -1,6 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.gui.util;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
@@ -9,7 +8,6 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import javafx.scene.control.Alert;
 
-import javax.swing.*;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,18 +21,18 @@ public class MemoryExportWorker implements Runnable
 	private final MachineMemory	_memory;
 
 	private final File			_file;
-	//private final TextResource	_res;
+	private final TextResource	_res;
 
 	private final int			_fromAddress;
 	private final int			_toAddress;
 
 	public MemoryExportWorker(MachineMemory memory, int fromAddress, int toAddress,
-							  File file)
+							  File file, TextResource res)
 	{
 		_memory = memory;
 
 		_file = file;
-		//_res = res;
+		_res = res;
 
 		_fromAddress = fromAddress;
 		_toAddress = toAddress;
@@ -59,9 +57,9 @@ public class MemoryExportWorker implements Runnable
 				@Override
 				public void run() {
 					Alert fnw = new Alert(Alert.AlertType.ERROR);
-					fnw.setTitle("Fehler");
+					fnw.setTitle(_res.get("memory.export.error"));
 					fnw.setHeaderText(null);
-					fnw.setContentText("Die Datei "+_file.getPath()+" kann nicht zum Schreiben geöffnet werden.");
+					fnw.setContentText(_res.format("memory.export.write-error", _file.getPath()));
 					// for setting the icon of the application to the dialog
 					fnw.initOwner(Main.getPrimaryStage());
 					// FIXME: delete if issue with long texts in linux is resolved

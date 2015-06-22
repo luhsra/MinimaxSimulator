@@ -7,9 +7,9 @@ import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryExportWorker;
 import de.uni_hannover.sra.minimax_simulator.gui.util.MemorySpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
+import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryImportWorker;
-import de.uni_hannover.sra.minimax_simulator.ui.common.DoubleClickListener;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,17 +20,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.StringConverter;
 
 import java.io.File;
-import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -40,14 +39,7 @@ import java.util.Optional;
  * @author Philipp Rohde
  */
 public class MemoryView{
-/*
-    @FXML
-    private Button memBtn;
 
-    public void memBtnClicked() {
-        System.out.println("The MemBtn was clicked!");
-    }
-*/
     private String _addressFormatString;
     private static MachineMemory mMemory;
 
@@ -57,6 +49,8 @@ public class MemoryView{
     private int	_cachedPageStart;
 
     private static FileChooser fc;
+
+    private TextResource _res;
 
     @FXML
     private TableView<MemoryTableModel> memTable;
@@ -72,6 +66,8 @@ public class MemoryView{
     private Spinner spinnerStartAddress;
 
     public void initialize() {
+        _res = Main.getTextResource("project");
+
         _page = _cachedPageStart = 0;
 
         memTable.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
@@ -108,6 +104,42 @@ public class MemoryView{
         });
 
         fc = new FileChooser();
+
+        setLocalizedTexts();
+    }
+
+    @FXML
+    private TitledPane paneMemory;
+    @FXML
+    private Label lblImportFile;
+    @FXML
+    private Label lblTargetAddress;
+    @FXML
+    private Label lblByteCount;
+    @FXML
+    private TitledPane paneImport;
+    @FXML
+    private TitledPane paneExport;
+    @FXML
+    private Label lblExportFile;
+    @FXML
+    private Label lblFromAddress;
+    @FXML
+    private Label lblToAddress;
+    @FXML
+    private TitledPane paneClear;
+
+    private void setLocalizedTexts() {
+        final List<TableColumn> tableColumns = new ArrayList<>(Arrays.asList(col_adr, col_dec, col_hex));
+        for (TableColumn col : tableColumns) {
+            col.setText(_res.get(col.getId()));
+        }
+
+        final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneMemory, btnImportMem, lblImportFile, lblTargetAddress, lblByteCount, cb_partialImport, paneImport, paneExport, btnExportMem, lblExportFile,
+                lblFromAddress, lblToAddress, paneClear, btnClear));
+        for (Labeled con : controls) {
+            con.setText(_res.get(con.getId()));
+        }
     }
 
     public void initMemoryView() {
@@ -181,23 +213,6 @@ public class MemoryView{
         col_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
         updateMemTable();
-/*
-        memTable.addEventHandler(new DoubleClickListener()
-        {
-            @Override
-            public void doubleClicked(MouseEvent e)
-            {
-                MemoryTableModel mtm = memTable.getSelectionModel().getSelectedItem();
-                checkNotNull(mtm);
-                int address = Integer.parseInt(mtm.getAddress());
-                int row = 0;//memTable.getSelectionModel();
-                if (row == -1)
-                    return;
-
-                // open edit dialog
-                new MemoryUpdateDialog(address, mMemory).setVisible(true);
-            }
-        }); */
 
         memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
@@ -208,9 +223,7 @@ public class MemoryView{
                         MemoryTableModel mtm = memTable.getSelectionModel().getSelectedItem();
                         checkNotNull(mtm);
                         int address = Integer.parseInt(mtm.getAddress());
-                        int row = 0;//memTable.getSelectionModel();
-                        if (row == -1)
-                            return;
+                        checkNotNull(address);
 
                         // open edit dialog
                         new MemoryUpdateDialog(address, mMemory).setVisible(true);
@@ -240,9 +253,9 @@ public class MemoryView{
 
     public void clearMem() {
         Alert memoryClear = new Alert(AlertType.CONFIRMATION);
-        memoryClear.setTitle("Zurücksetzen bestätigen");
+        memoryClear.setTitle(_res.get("memory.clear.confirm.title"));
         memoryClear.setHeaderText(null);
-        memoryClear.setContentText("Damit wird der Speicher auf Null zurückgesetzt. Fortfahren?");
+        memoryClear.setContentText(_res.get("memory.clear.confirm.message"));
         memoryClear.initStyle(StageStyle.UTILITY);
         // for setting the icon of the application to the dialog
         memoryClear.initOwner(Main.getPrimaryStage());
@@ -250,6 +263,7 @@ public class MemoryView{
         Optional<ButtonType> result = memoryClear.showAndWait();
         if (result.get() == ButtonType.OK) {
             System.out.println("clearing memory");
+            //TODO: process dialog
             mMemory.getMemoryState().zero();
             updateMemTable();
         }
@@ -312,7 +326,7 @@ public class MemoryView{
         txtImport.setText(selFile.getAbsoluteFile().toString());
 
         int length = (int) Math.min(Integer.MAX_VALUE, selFile.length());
-        System.out.println("Größe der Datei: " + length);
+        //System.out.println("Größe der Datei: " + length);
 
         SpinnerValueFactory<Integer> sizeValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, length);
         sizeValueFactory.setWrapAround(true);
@@ -335,9 +349,9 @@ public class MemoryView{
 
     public void importMemory() {
         Alert memoryOverride = new Alert(AlertType.CONFIRMATION);
-        memoryOverride.setTitle("Überschreiben bestätigen");
+        memoryOverride.setTitle(_res.get("memory.import.confirm.title"));
         memoryOverride.setHeaderText(null);
-        memoryOverride.setContentText("Dies überschreibt bestehende Speicherinhalte. Fortfahren?");
+        memoryOverride.setContentText(_res.get("memory.import.confirm.message"));
         memoryOverride.initStyle(StageStyle.UTILITY);
         // for setting the icon of the application to the dialog
         memoryOverride.initOwner(Main.getPrimaryStage());
@@ -347,7 +361,7 @@ public class MemoryView{
             int address = Integer.parseInt(spinnerStartAddress.getValue().toString());
             int size = spinnerSize.getValue();
             UIUtil.executeWorker(new MemoryImportWorker(mMemory, address, size,
-                    _currentImportFile), "Bitte warten", "Importiere...");
+                    _currentImportFile, _res), _res.get("memory.import.wait.title"), _res.get("memory.import.wait.message"));
             updateMemTable();
         }
     }
@@ -398,7 +412,7 @@ public class MemoryView{
         }
 
         UIUtil.executeWorker(new MemoryExportWorker(mMemory, fromAddress, toAddress,
-                _currentExportFile), "Bitte warten", "Exportiere...");
+                _currentExportFile, _res), _res.get("memory.export.wait.title"), _res.get("memory.export.wait.message"));
 
     }
 
