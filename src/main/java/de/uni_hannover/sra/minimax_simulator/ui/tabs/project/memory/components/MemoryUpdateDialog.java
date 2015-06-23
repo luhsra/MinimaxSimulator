@@ -5,9 +5,11 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMe
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.ValueUpdateDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.ValueUpdateDialogFX;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
+import javafx.scene.image.ImageView;
 
-public class MemoryUpdateDialog extends ValueUpdateDialog
+public class MemoryUpdateDialog extends ValueUpdateDialogFX
 {
 	private final MachineMemory	_memory;
 	private final int			_address;
@@ -24,12 +26,13 @@ public class MemoryUpdateDialog extends ValueUpdateDialog
 		_messageLabel.setText(res.format("message",
 			Util.toHex(address, memory.getAddressWidth(), true)));
 
-		_swapMode.setIcon(Icons.getInstance().get(res.get("swapmode.icon")));
+//		_swapMode.setIcon(Icons.getInstance().get(res.get("swapmode.icon")));
+		_swapMode.setGraphic(new ImageView("./images/"+res.get("swapmode.icon")));
 		_okButton.setText(res.get("ok"));
-		_cancelButton.setText(res.get("cancel"));
+//		_cancelButton.setText(res.get("cancel"));
 
-		pack();
-		setLocationRelativeTo(null);
+//		pack();
+//		setLocationRelativeTo(null);
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import javax.swing.JProgressBar;
 import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 
+@Deprecated
 public final class JWaitingDialog extends JDialog
 {
 	private final JLabel _message;

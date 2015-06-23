@@ -227,7 +227,8 @@ public class MemoryView{
                         checkNotNull(address);
 
                         // open edit dialog
-                        new MemoryUpdateDialog(address, mMemory).setVisible(true);
+                        //new MemoryUpdateDialog(address, mMemory).setVisible(true);
+                        new MemoryUpdateDialog(address, mMemory).showAndWait();
                     }
                 }
             }

@@ -238,7 +238,7 @@ public class MemoryView extends JPanel implements Disposable, ListSelectionListe
 					return;
 
 				// open edit dialog
-				new MemoryUpdateDialog(_model.rowToAddress(row), memory).setVisible(true);
+				//new MemoryUpdateDialog(_model.rowToAddress(row), memory).setVisible(true);
 			}
 		});
 	}
