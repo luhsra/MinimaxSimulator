@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
 import java.awt.event.KeyEvent;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -30,6 +32,7 @@ import javax.swing.border.TitledBorder;
 import com.google.common.base.Throwables;
 
 import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
@@ -37,8 +40,12 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 import de.uni_hannover.sra.minimax_simulator.ui.common.FillLayout;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.JWaitingDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.util.SwingWorkerCompletionWaiter;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.*;
 
-// TODO: conversion to JavaFX
 public class UIUtil
 {
 	/**
@@ -46,6 +53,7 @@ public class UIUtil
 	 * 
 	 * @param dialog
 	 */
+	//TODO: convert to JavaFX
 	public static void closeOnEscapePressed(final JDialog dialog)
 	{
 		JRootPane rootPane = dialog.getRootPane();
@@ -54,11 +62,9 @@ public class UIUtil
 		KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
 
 		im.put(ks, "UiUtilsEscape");
-		actionMap.put("UiUtilsEscape", new AbstractAction()
-		{
+		actionMap.put("UiUtilsEscape", new AbstractAction() {
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				dialog.dispose();
 			}
 		});
@@ -71,18 +77,15 @@ public class UIUtil
 	 * @param component
 	 * @param runner
 	 */
+	@Deprecated
 	public static void runOnRemoval(final JComponent component, Runnable runner)
 	{
 		final Runnable runner0 = checkNotNull(runner);
-		component.addHierarchyListener(new HierarchyListener()
-		{
+		component.addHierarchyListener(new HierarchyListener() {
 			@Override
-			public void hierarchyChanged(HierarchyEvent arg0)
-			{
-				if ((arg0.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED) != 0)
-				{
-					if (!arg0.getComponent().isDisplayable())
-					{
+			public void hierarchyChanged(HierarchyEvent arg0) {
+				if ((arg0.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED) != 0) {
+					if (!arg0.getComponent().isDisplayable()) {
 						runner0.run();
 						component.removeHierarchyListener(this);
 					}
@@ -97,6 +100,7 @@ public class UIUtil
 	 * 
 	 * @param component
 	 */
+	@Deprecated
 	public static <T extends JComponent & Disposable> void disposeOnRemoval(
 			final T component)
 	{
@@ -115,6 +119,7 @@ public class UIUtil
 	 * 
 	 * @param component
 	 */
+	@Deprecated
 	public static void disposeOnRemoval(final JComponent component,
 			final Disposable disposable)
 	{
@@ -135,6 +140,7 @@ public class UIUtil
 	 * @return <code>true</code>, if the project is already saved or the user confirmed to discard
 	 *         pending changes, otherwise <code>false</code>
 	 */
+	//TODO: convert to JavaFX
 	public static boolean confirmCloseProject()
 	{
 		if (Application.getWorkspace().isUnsaved())
@@ -154,6 +160,7 @@ public class UIUtil
 	 * @return <code>true</code>, if the project is already saved or the user confirmed to discard
 	 *         pending changes, otherwise <code>false</code>
 	 */
+	//TODO: convert to JavaFX
 	public static boolean confirmCloseProjectAndExit()
 	{
 		if (Application.getWorkspace().isUnsaved())
@@ -166,6 +173,7 @@ public class UIUtil
 		return true;
 	}
 
+	//TODO: convert to JavaFX
 	public static boolean confirmOverwriteFile(String filename)
 	{
 		TextResource res = Application.getTextResource("application");
@@ -194,13 +202,12 @@ public class UIUtil
 	 * 
 	 * @param t
 	 */
+	@Deprecated
 	public static void throwInEDT(final Throwable t)
 	{
-		EventQueue.invokeLater(new Runnable()
-		{
+		EventQueue.invokeLater(new Runnable() {
 			@Override
-			public void run()
-			{
+			public void run() {
 				Throwables.propagate(t);
 			}
 		});
@@ -242,49 +249,70 @@ public class UIUtil
 	 * @param cancelAction
 	 *            the {@link Runnable} to execute if the user chooses to cancel the computation
 	 */
+	//TODO: conversion to JavaFX; finished?
 	public static void executeWorker(final Runnable runnable, String waitingTitle,
 			String waitingMessage, Runnable cancelAction)
 	{
-		final JWaitingDialog waitDialog = new JWaitingDialog(Application.getMainWindow(),
-			waitingTitle, waitingMessage, cancelAction);
 
-		final SwingWorker<Void, Void> importWorker = new SwingWorker<Void, Void>()
-		{
+		final Alert waitingDialog = new Alert(Alert.AlertType.NONE);
+		waitingDialog.setTitle(waitingTitle);
+
+		ButtonType btnTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.OK_DONE);
+		waitingDialog.getButtonTypes().setAll(btnTypeCancel);
+
+		ProgressBar pb = new ProgressBar(-1);
+		pb.setPrefWidth(300.0);
+		waitingDialog.getDialogPane().setContent(pb);
+		waitingDialog.setContentText(waitingMessage);
+
+		// for setting the icon of the application to the dialog
+		waitingDialog.initOwner(Main.getPrimaryStage());
+
+		Task<Void> task = new Task<Void>() {
 			@Override
-			protected Void doInBackground()
-			{
+			protected Void call() throws Exception {
+//				Thread.sleep(5*1000);
 				runnable.run();
 				return null;
 			}
 		};
 
-		importWorker.addPropertyChangeListener(new SwingWorkerCompletionWaiter()
-		{
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
-			public void run()
+			public void handle(WorkerStateEvent t)
 			{
-				try
-				{
-					// to retrieve possible exceptions
-					importWorker.get();
-				}
-				catch (final Throwable t)
-				{
-					// Some hack: In modal dialogs, no exception handler is called because
-					// a dialog-exclusive EDT is started.
-					// Therefore return to the main EDT and process the exception there.
-					throwInEDT(t);
-				}
-				finally
-				{
-					waitDialog.dispose();
+				waitingDialog.close();
+			}
+		});
+
+		task.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent t)
+			{
+				if (cancelAction != null) {
+					cancelAction.run();
 				}
 			}
 		});
-		importWorker.execute();
-		waitDialog.setVisible(true);
+
+		Thread th = new Thread(task);
+		th.setDaemon(false);
+		th.start();
+
+		Optional<ButtonType> result = waitingDialog.showAndWait();
+		try {
+			ButtonType bt = result.get();
+			if (bt == btnTypeCancel) {
+				task.cancel(true);
+				System.out.println("canceled...");
+			}
+		} catch (NoSuchElementException e) {
+			// result.get() throws this exception if the dialog is closed via the close method
+		}
+
 	}
 
+	//TODO: Conversion to JavaFX
 	private static boolean confirmCloseProject(String message, String title)
 	{
 		int result = JOptionPane.showConfirmDialog(Application.getMainWindow(), message,
@@ -304,30 +332,35 @@ public class UIUtil
 		}
 	}
 
+	@Deprecated
 	public static JButton loadButton(ResourceBundle res, String key)
 	{
 		return new JButton(res.getString(key + ".label"), Icons.getInstance().get(
 			res.getString(key + ".icon")));
 	}
 
+	@Deprecated
 	public static JButton loadButton(TextResource res, String key)
 	{
 		return new JButton(res.get(key + ".label"), Icons.getInstance().get(
 			res.get(key + ".icon")));
 	}
 
+	@Deprecated
 	public static Border createGroupBorder(String title)
 	{
 		return new TitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
 			title, TitledBorder.LEFT, TitledBorder.TOP);
 	}
 
+	@Deprecated
 	public static Border createTitledBevelBorder(String title)
 	{
 		return new TitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED),
 			title, TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
 	}
 
+	@Deprecated
 	public static JPanel wrapInTitledGroupScroller(JComponent comp, String title)
 	{
 		JScrollPane scroller = new JScrollPane(comp);
@@ -339,6 +372,7 @@ public class UIUtil
 		return panel;
 	}
 
+	@Deprecated
 	public static JPanel wrapInTitledGroupPanel(JComponent comp, String title)
 	{
 		JPanel panel = new JPanel();
@@ -348,6 +382,7 @@ public class UIUtil
 		return panel;
 	}
 
+	@Deprecated
 	public static JPanel wrapInTitledBevelPanel(JComponent comp, String title)
 	{
 		JPanel panel = new JPanel();
@@ -357,6 +392,7 @@ public class UIUtil
 		return panel;
 	}
 
+	@Deprecated
 	public static JPanel wrapInBorderPanel(JComponent comp, Border border, String title)
 	{
 		JPanel panel = new JPanel();
@@ -366,12 +402,14 @@ public class UIUtil
 		return panel;
 	}
 
+	@Deprecated
 	public static void doEnable(JComponent component)
 	{
 		if (!component.isEnabled())
 			component.setEnabled(true);
 	}
 
+	@Deprecated
 	public static void doEnable(JComponent... components)
 	{
 		for (JComponent comp : components)
@@ -379,12 +417,14 @@ public class UIUtil
 				comp.setEnabled(true);
 	}
 
+	@Deprecated
 	public static void doDisable(JComponent component)
 	{
 		if (component.isEnabled())
 			component.setEnabled(false);
 	}
 
+	@Deprecated
 	public static void doDisable(JComponent... components)
 	{
 		for (JComponent comp : components)
@@ -392,16 +432,19 @@ public class UIUtil
 				comp.setEnabled(false);
 	}
 
+	@Deprecated
 	public static void doEnable(boolean enabled, JComponent component)
 	{
 		if (component.isEnabled() != enabled)
 			component.setEnabled(enabled);
 	}
 
+	@Deprecated
 	public static void doEnable(boolean enabled, JComponent... components)
 	{
 		for (JComponent comp : components)
 			if (comp.isEnabled() != enabled)
 				comp.setEnabled(enabled);
 	}
+
 }

@@ -214,6 +214,7 @@ public class MemoryView{
 
         updateMemTable();
 
+        //TODO: BUGFIX for addresses containing chars
         memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
