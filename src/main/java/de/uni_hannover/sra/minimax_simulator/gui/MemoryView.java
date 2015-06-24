@@ -10,6 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemorySta
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryImportWorker;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FxDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
@@ -254,16 +255,8 @@ public class MemoryView{
     private Button btnClear;
 
     public void clearMem() {
-        Alert memoryClear = new Alert(AlertType.CONFIRMATION);
-        memoryClear.setTitle(_res.get("memory.clear.confirm.title"));
-        memoryClear.setHeaderText(null);
-        memoryClear.setContentText(_res.get("memory.clear.confirm.message"));
-        memoryClear.initStyle(StageStyle.UTILITY);
-        // for setting the icon of the application to the dialog
-        memoryClear.initOwner(Main.getPrimaryStage());
-
-        Optional<ButtonType> result = memoryClear.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        FxDialog memoryClear = new FxDialog(AlertType.CONFIRMATION, _res.get("memory.clear.confirm.title"), _res.get("memory.clear.confirm.message"));
+        if (memoryClear.getChoice() == ButtonType.OK) {
             System.out.println("clearing memory");
             //TODO: process dialog
             mMemory.getMemoryState().zero();
@@ -350,16 +343,8 @@ public class MemoryView{
     }
 
     public void importMemory() {
-        Alert memoryOverride = new Alert(AlertType.CONFIRMATION);
-        memoryOverride.setTitle(_res.get("memory.import.confirm.title"));
-        memoryOverride.setHeaderText(null);
-        memoryOverride.setContentText(_res.get("memory.import.confirm.message"));
-        memoryOverride.initStyle(StageStyle.UTILITY);
-        // for setting the icon of the application to the dialog
-        memoryOverride.initOwner(Main.getPrimaryStage());
-
-        Optional<ButtonType> result = memoryOverride.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        FxDialog memoryOverride = new FxDialog(AlertType.CONFIRMATION, _res.get("memory.import.confirm.title"), _res.get("memory.import.confirm.message"));
+        if (memoryOverride.getChoice() == ButtonType.OK) {
             int address = Integer.parseInt(spinnerStartAddress.getValue().toString());
             int size = spinnerSize.getValue();
             UIUtil.executeWorker(new MemoryImportWorker(mMemory, address, size,

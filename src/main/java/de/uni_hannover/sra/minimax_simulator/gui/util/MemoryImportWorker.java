@@ -7,8 +7,9 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMe
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FxDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -68,12 +69,7 @@ public class MemoryImportWorker implements Runnable
 			UI.invokeInFAT(new Runnable() {
 				@Override
 				public void run() {
-					Alert fne = new Alert(Alert.AlertType.ERROR);
-					fne.setTitle(_res.get("memory.import.error"));
-					fne.setHeaderText(null);
-					fne.setContentText(_res.format("memory.import.file-not-existing", _file.getPath()));
-					// for setting the icon of the application to the dialog
-					fne.initOwner(Main.getPrimaryStage());
+					FxDialog fne = new FxDialog(AlertType.ERROR, _res.get("memory.import.error"), _res.format("memory.import.file-not-existing", _file.getPath()));
 					// FIXME: delete if issue with long texts in linux is resolved
 					fne.setResizable(true);
 
@@ -134,18 +130,11 @@ public class MemoryImportWorker implements Runnable
 		{
 			int maxAddress = _memory.getMaxAddress();
 			int width = _memory.getAddressWidth();
-//			final String title = _res.get("warning");
-//			final String message = _res.format("bytes-truncated", Util.toHex(maxAddress, width, true), truncated);
 
 			UI.invokeInFAT(new Runnable() {
 				@Override
 				public void run() {
-					Alert trunc = new Alert(Alert.AlertType.WARNING);
-					trunc.setTitle(_res.get("memory.import.warning"));
-					trunc.setHeaderText(null);
-					trunc.setContentText(_res.format("memory.import.bytes-truncated", Util.toHex(maxAddress, width, true), truncated));
-					// for setting the icon of the application to the dialog
-					trunc.initOwner(Main.getPrimaryStage());
+					FxDialog trunc = new FxDialog(AlertType.WARNING, _res.get("memory.import.warning"), _res.format("memory.import.bytes-truncated", Util.toHex(maxAddress, width, true), truncated));
 					// FIXME: delete if issue with long texts in linux is resolved
 					trunc.setResizable(true);
 

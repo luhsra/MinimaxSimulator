@@ -1,37 +1,28 @@
 package de.uni_hannover.sra.minimax_simulator.ui.common.dialogs;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
-import de.uni_hannover.sra.minimax_simulator.ui.common.AbstractDocumentListener;
-import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.StageStyle;
-import net.miginfocom.swing.MigLayout;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public abstract class ValueUpdateDialogFX extends Alert
+public abstract class FxValueUpdateDialog extends Alert
 {
 	protected enum Mode
 	{
 		HEX
 		{
 			@Override
-			public String toString(ValueUpdateDialogFX instance, Integer value)
+			public String toString(FxValueUpdateDialog instance, Integer value)
 			{
 				return String.format(instance._hexFormat, value);
 			}
@@ -55,7 +46,7 @@ public abstract class ValueUpdateDialogFX extends Alert
 		DEC
 		{
 			@Override
-			public String toString(ValueUpdateDialogFX instance, Integer value)
+			public String toString(FxValueUpdateDialog instance, Integer value)
 			{
 				return Integer.toString(value);
 			}
@@ -74,7 +65,7 @@ public abstract class ValueUpdateDialogFX extends Alert
 			}
 		};
 
-		public abstract String toString(ValueUpdateDialogFX instance, Integer value);
+		public abstract String toString(FxValueUpdateDialog instance, Integer value);
 
 		public abstract Integer decode(String value);
 	}
@@ -106,7 +97,7 @@ public abstract class ValueUpdateDialogFX extends Alert
 	private Mode					_mode;
 
 	// TODO: show current mode
-	public ValueUpdateDialogFX(int currentValue)
+	public FxValueUpdateDialog(int currentValue)
 	{
 		super(AlertType.NONE);
 
@@ -165,7 +156,6 @@ public abstract class ValueUpdateDialogFX extends Alert
 
 		this.setResultConverter(dialogButton -> {
 			if (dialogButton.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-				System.out.println("HEY THERE");
 				Integer value = _mode.decode(_field.getText());
 				if (value != null) {
 					setValue(value.intValue());

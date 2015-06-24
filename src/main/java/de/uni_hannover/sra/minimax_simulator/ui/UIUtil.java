@@ -32,13 +32,12 @@ import javax.swing.border.TitledBorder;
 import com.google.common.base.Throwables;
 
 import de.uni_hannover.sra.minimax_simulator.Application;
-import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 import de.uni_hannover.sra.minimax_simulator.ui.common.FillLayout;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.JWaitingDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FxWaitingDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.util.SwingWorkerCompletionWaiter;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -254,24 +253,12 @@ public class UIUtil
 			String waitingMessage, Runnable cancelAction)
 	{
 
-		final Alert waitingDialog = new Alert(Alert.AlertType.NONE);
-		waitingDialog.setTitle(waitingTitle);
-
-		ButtonType btnTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.OK_DONE);
-		waitingDialog.getButtonTypes().setAll(btnTypeCancel);
-
-		ProgressBar pb = new ProgressBar(-1);
-		pb.setPrefWidth(300.0);
-		waitingDialog.getDialogPane().setContent(pb);
-		waitingDialog.setContentText(waitingMessage);
-
-		// for setting the icon of the application to the dialog
-		waitingDialog.initOwner(Main.getPrimaryStage());
+		FxWaitingDialog waitingDialog = new FxWaitingDialog(waitingTitle, waitingMessage);
 
 		Task<Void> task = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-//				Thread.sleep(5*1000);
+				Thread.sleep(5*1000);
 				runnable.run();
 				return null;
 			}
@@ -299,15 +286,9 @@ public class UIUtil
 		th.setDaemon(false);
 		th.start();
 
-		Optional<ButtonType> result = waitingDialog.showAndWait();
-		try {
-			ButtonType bt = result.get();
-			if (bt == btnTypeCancel) {
-				task.cancel(true);
-				System.out.println("canceled...");
-			}
-		} catch (NoSuchElementException e) {
-			// result.get() throws this exception if the dialog is closed via the close method
+		if (waitingDialog.isCanceled()) {
+			task.cancel(true);
+			System.out.println("canceled...");
 		}
 
 	}
