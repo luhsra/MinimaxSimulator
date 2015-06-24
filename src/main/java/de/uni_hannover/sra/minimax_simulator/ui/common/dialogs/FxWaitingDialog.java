@@ -1,5 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.common.dialogs;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ProgressBar;
@@ -17,7 +19,9 @@ public class FxWaitingDialog extends FxDialog {
     public FxWaitingDialog(String waitingTitle, String waitingMessage) {
         super(AlertType.NONE, waitingTitle, waitingMessage);
 
-        btnTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.OK_DONE);
+        TextResource res = Main.getTextResource("project").using("memory.update");
+
+        btnTypeCancel = new ButtonType(res.get("cancel"), ButtonBar.ButtonData.OK_DONE);
         this.getButtonTypes().setAll(btnTypeCancel);
 
         ProgressBar pb = new ProgressBar(-1);

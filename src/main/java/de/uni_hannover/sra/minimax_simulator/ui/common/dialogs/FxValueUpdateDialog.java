@@ -1,6 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.common.dialogs;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -10,12 +11,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-
-public abstract class FxValueUpdateDialog extends Alert
+public abstract class FxValueUpdateDialog extends FxDialog
 {
 	protected enum Mode
 	{
@@ -70,63 +66,52 @@ public abstract class FxValueUpdateDialog extends Alert
 		public abstract Integer decode(String value);
 	}
 
-	private class OkAction implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e)
-		{
-			Integer value = _mode.decode(_field.getText());
-			if (value != null)
-			{
-				setValue(value.intValue());
-				//dispose();
-				close();
-			}
-		}
-	}
-
 	protected abstract void setValue(int value);
 
 	protected final Label			_messageLabel;
+	protected final Label			_modeLabel;
 	protected final Button 			_swapMode;
 	protected final Button			_okButton;
 	protected final ButtonType		_okButtonType;
 	protected final String			_hexFormat;
 	protected final TextField 		_field;
 
+	protected final TextResource	_res;
+
 	private Mode					_mode;
 
 	// TODO: show current mode
 	public FxValueUpdateDialog(int currentValue)
 	{
-		super(AlertType.NONE);
+		super(AlertType.NONE, null, null);
 
-		// for setting the icon of the application to the dialog
-		this.initOwner(Main.getPrimaryStage());
+		_res = Main.getTextResource("project").using("memory.update");
 
 		_hexFormat = Util.createHexFormatString(32, false);
 		_mode = Mode.DEC;
-
-		this.setHeaderText(null);
 
 		_field = new TextField();
 
 		_field.setText(_mode.toString(this, currentValue));
 
 		_swapMode = new Button();
+		_swapMode.setTooltip(new Tooltip(_res.get("swapmode.tooltip")));
 
 		_messageLabel = new Label();
 
-		_okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+		_okButtonType = new ButtonType(_res.get("ok"), ButtonBar.ButtonData.OK_DONE);
 
+		_modeLabel = new Label();
+		updateLabelMode(_mode);
 		//UIUtil.closeOnEscapePressed(this);
 
 		GridPane pane = new GridPane();
 		pane.setHgap(10);
 		pane.setVgap(10);
 		pane.add(_messageLabel, 0, 0, 2, 1);
-		pane.add(_field, 0, 1);
-		pane.add(_swapMode, 1, 1);
+		pane.add(_field, 0, 2);
+		pane.add(_swapMode, 1, 2);
+		pane.add(_modeLabel, 0, 1, 2, 1);
 
 		this.getDialogPane().setContent(pane);
 		this.getDialogPane().getButtonTypes().addAll(_okButtonType, ButtonType.CANCEL);
@@ -137,6 +122,7 @@ public abstract class FxValueUpdateDialog extends Alert
 				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 					Mode newMode = _mode == Mode.DEC ? Mode.HEX : Mode.DEC;
 					updateTextFieldMode(newMode);
+					updateLabelMode(newMode);
 				}
 			}
 		});
@@ -176,5 +162,16 @@ public abstract class FxValueUpdateDialog extends Alert
 			value = Integer.valueOf(0);
 		_mode = mode;
 		_field.setText(_mode.toString(this, value));
+	}
+
+	private void updateLabelMode(Mode mode) {
+		String currentMode = _res.get("mode.label") + " ";
+		if (_mode == Mode.DEC) {
+			currentMode += _res.get("mode.dec");
+		}
+		else if (_mode == Mode.HEX) {
+			currentMode += _res.get("mode.hex");
+		}
+		_modeLabel.setText(currentMode);
 	}
 }
