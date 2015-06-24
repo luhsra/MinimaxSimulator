@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
 import java.awt.event.KeyEvent;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -23,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingWorker;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -37,13 +34,10 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 import de.uni_hannover.sra.minimax_simulator.ui.common.FillLayout;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FxWaitingDialog;
-import de.uni_hannover.sra.minimax_simulator.ui.util.SwingWorkerCompletionWaiter;
-import javafx.concurrent.Service;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXWaitingDialog;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.*;
 
 public class UIUtil
 {
@@ -253,7 +247,7 @@ public class UIUtil
 			String waitingMessage, Runnable cancelAction)
 	{
 
-		FxWaitingDialog waitingDialog = new FxWaitingDialog(waitingTitle, waitingMessage);
+		FXWaitingDialog waitingDialog = new FXWaitingDialog(waitingTitle, waitingMessage);
 
 		Task<Void> task = new Task<Void>() {
 			@Override

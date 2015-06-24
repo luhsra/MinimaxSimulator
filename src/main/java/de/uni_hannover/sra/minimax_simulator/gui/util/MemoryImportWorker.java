@@ -1,13 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.gui.util;
 
 import com.google.common.io.ByteStreams;
-import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FxDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.scene.control.Alert.AlertType;
 
@@ -69,7 +68,7 @@ public class MemoryImportWorker implements Runnable
 			UI.invokeInFAT(new Runnable() {
 				@Override
 				public void run() {
-					FxDialog fne = new FxDialog(AlertType.ERROR, _res.get("memory.import.error"), _res.format("memory.import.file-not-existing", _file.getPath()));
+					FXDialog fne = new FXDialog(AlertType.ERROR, _res.get("memory.import.error"), _res.format("memory.import.file-not-existing", _file.getPath()));
 					// FIXME: delete if issue with long texts in linux is resolved
 					fne.setResizable(true);
 
@@ -134,7 +133,7 @@ public class MemoryImportWorker implements Runnable
 			UI.invokeInFAT(new Runnable() {
 				@Override
 				public void run() {
-					FxDialog trunc = new FxDialog(AlertType.WARNING, _res.get("memory.import.warning"), _res.format("memory.import.bytes-truncated", Util.toHex(maxAddress, width, true), truncated));
+					FXDialog trunc = new FXDialog(AlertType.WARNING, _res.get("memory.import.warning"), _res.format("memory.import.bytes-truncated", Util.toHex(maxAddress, width, true), truncated));
 					// FIXME: delete if issue with long texts in linux is resolved
 					trunc.setResizable(true);
 

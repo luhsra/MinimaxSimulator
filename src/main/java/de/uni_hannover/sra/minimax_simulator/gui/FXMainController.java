@@ -31,7 +31,7 @@ import java.util.List;
  *
  */
 
-public class FxMainController {
+public class FXMainController {
 
     public Menu menuProject;
     public MenuItem project_new;

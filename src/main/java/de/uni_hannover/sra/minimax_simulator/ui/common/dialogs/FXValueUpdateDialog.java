@@ -11,14 +11,14 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-public abstract class FxValueUpdateDialog extends FxDialog
+public abstract class FXValueUpdateDialog extends FXDialog
 {
 	protected enum Mode
 	{
 		HEX
 		{
 			@Override
-			public String toString(FxValueUpdateDialog instance, Integer value)
+			public String toString(FXValueUpdateDialog instance, Integer value)
 			{
 				return String.format(instance._hexFormat, value);
 			}
@@ -42,7 +42,7 @@ public abstract class FxValueUpdateDialog extends FxDialog
 		DEC
 		{
 			@Override
-			public String toString(FxValueUpdateDialog instance, Integer value)
+			public String toString(FXValueUpdateDialog instance, Integer value)
 			{
 				return Integer.toString(value);
 			}
@@ -61,7 +61,7 @@ public abstract class FxValueUpdateDialog extends FxDialog
 			}
 		};
 
-		public abstract String toString(FxValueUpdateDialog instance, Integer value);
+		public abstract String toString(FXValueUpdateDialog instance, Integer value);
 
 		public abstract Integer decode(String value);
 	}
@@ -81,7 +81,7 @@ public abstract class FxValueUpdateDialog extends FxDialog
 	private Mode					_mode;
 
 	// TODO: show current mode
-	public FxValueUpdateDialog(int currentValue)
+	public FXValueUpdateDialog(int currentValue)
 	{
 		super(AlertType.NONE, null, null);
 

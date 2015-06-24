@@ -1,12 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.gui.util;
 
-import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FxDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
 import javafx.scene.control.Alert.AlertType;
 
 import java.io.*;
@@ -57,7 +56,7 @@ public class MemoryExportWorker implements Runnable
 			UI.invokeInFAT(new Runnable() {
 				@Override
 				public void run() {
-					FxDialog fnw = new FxDialog(AlertType.ERROR, _res.get("memory.export.error"), _res.format("memory.export.write-error", _file.getPath()));
+					FXDialog fnw = new FXDialog(AlertType.ERROR, _res.get("memory.export.error"), _res.format("memory.export.write-error", _file.getPath()));
 					// FIXME: delete if issue with long texts in linux is resolved
 					fnw.setResizable(true);
 

@@ -1,11 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components;
 
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FxValueUpdateDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXValueUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.scene.image.ImageView;
 
-public class MemoryUpdateDialog extends FxValueUpdateDialog
+public class MemoryUpdateDialog extends FXValueUpdateDialog
 {
 	private final MachineMemory	_memory;
 	private final int			_address;

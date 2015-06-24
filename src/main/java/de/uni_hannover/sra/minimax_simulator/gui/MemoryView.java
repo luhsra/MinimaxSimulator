@@ -10,7 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemorySta
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryImportWorker;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FxDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,13 +25,11 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.FileChooser;
-import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -255,7 +253,7 @@ public class MemoryView{
     private Button btnClear;
 
     public void clearMem() {
-        FxDialog memoryClear = new FxDialog(AlertType.CONFIRMATION, _res.get("memory.clear.confirm.title"), _res.get("memory.clear.confirm.message"));
+        FXDialog memoryClear = new FXDialog(AlertType.CONFIRMATION, _res.get("memory.clear.confirm.title"), _res.get("memory.clear.confirm.message"));
         if (memoryClear.getChoice() == ButtonType.OK) {
             System.out.println("clearing memory");
             //TODO: process dialog
@@ -343,7 +341,7 @@ public class MemoryView{
     }
 
     public void importMemory() {
-        FxDialog memoryOverride = new FxDialog(AlertType.CONFIRMATION, _res.get("memory.import.confirm.title"), _res.get("memory.import.confirm.message"));
+        FXDialog memoryOverride = new FXDialog(AlertType.CONFIRMATION, _res.get("memory.import.confirm.title"), _res.get("memory.import.confirm.message"));
         if (memoryOverride.getChoice() == ButtonType.OK) {
             int address = Integer.parseInt(spinnerStartAddress.getValue().toString());
             int size = spinnerSize.getValue();

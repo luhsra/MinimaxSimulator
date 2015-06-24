@@ -10,13 +10,13 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
- * Created by philipp on 24.06.15.
+ * @author Philipp Rohde
  */
-public class FxWaitingDialog extends FxDialog {
+public class FXWaitingDialog extends FXDialog {
 
     private final ButtonType btnTypeCancel;
 
-    public FxWaitingDialog(String waitingTitle, String waitingMessage) {
+    public FXWaitingDialog(String waitingTitle, String waitingMessage) {
         super(AlertType.NONE, waitingTitle, waitingMessage);
 
         TextResource res = Main.getTextResource("project").using("memory.update");
@@ -34,7 +34,7 @@ public class FxWaitingDialog extends FxDialog {
 
     @Override
     public ButtonType getChoice() {
-        throw new UnsupportedOperationException("Method getChoice() not supported for FxWaitingDialog, use isCanceled() instead.");
+        throw new UnsupportedOperationException("Method getChoice() not supported for FXWaitingDialog, use isCanceled() instead.");
     }
 
     public boolean isCanceled() {

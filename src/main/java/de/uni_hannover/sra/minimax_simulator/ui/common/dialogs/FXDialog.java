@@ -9,9 +9,9 @@ import java.util.Optional;
 /**
  * Created by philipp on 24.06.15.
  */
-public class FxDialog extends Alert {
+public class FXDialog extends Alert {
 
-    public FxDialog(AlertType alertType, String title, String message) {
+    public FXDialog(AlertType alertType, String title, String message) {
         super(alertType);
         this.setTitle(title);
         this.setHeaderText(null);
