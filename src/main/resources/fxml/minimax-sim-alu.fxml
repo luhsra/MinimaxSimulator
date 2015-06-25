@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.sra.minimax_simulator.gui.AluView">
+    <children>
+        <TitledPane id="alu.added.title" fx:id="paneAddedOP" animated="false" collapsible="false" prefHeight="590.0" prefWidth="350.0" text="Hinzugefügte Operationen">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="320.0">
+                    <children>
+                          <TableView fx:id="tableAdded" prefHeight="548.0" prefWidth="333.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <columns>
+                                  <TableColumn fx:id="col_added_opcode" prefWidth="90.0" resizable="false" text="OpCode" />
+                                  <TableColumn fx:id="col_added_op" prefWidth="221.0" resizable="false" text="Operation" />
+                              </columns>
+                          </TableView>
+                    </children>
+                </AnchorPane>
+            </content>
+            <padding>
+                <Insets left="15.0" top="15.0" />
+            </padding>
+         <HBox.margin>
+            <Insets bottom="15.0" />
+         </HBox.margin>
+        </TitledPane>
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+              <VBox maxHeight="50.0" prefHeight="100.0" prefWidth="100.0" spacing="15.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <opaqueInsets>
+                      <Insets />
+                  </opaqueInsets>
+                  <padding>
+                      <Insets bottom="15.0" left="30.0" right="15.0" top="15.0" />
+                  </padding>
+               <children>
+                  <Button fx:id="btnMoveUp" mnemonicParsing="false" text="">
+                      <graphic>
+                          <ImageView>
+                              <Image url="/images/fugue/arrow-090.png" />
+                          </ImageView>
+                      </graphic>
+                  </Button>
+                  <Button fx:id="btnMoveDown" mnemonicParsing="false" text="">
+                      <graphic>
+                          <ImageView>
+                              <Image url="/images/fugue/arrow-270.png" />
+                          </ImageView>
+                      </graphic>
+                  </Button>
+               </children>
+              </VBox>
+         </children>
+      </GridPane>
+      <TitledPane id="alu.selected.title" fx:id="paneSelectedOP" animated="false" collapsible="false" prefHeight="590.0" prefWidth="450.0" text="Ausgewählte Operation">
+        <content>
+          <AnchorPane>
+               <children>
+                  <GridPane prefHeight="530.0" prefWidth="435.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="443.0" minHeight="10.0" prefHeight="383.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="97.0" minHeight="0.0" prefHeight="67.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <VBox maxHeight="50.0" prefHeight="200.0" prefWidth="50.0" spacing="5.0" GridPane.columnSpan="2">
+                           <children>
+                              <Label id="alu.rt.title" fx:id="lblRT" text="RT-Notation" />
+                              <TextField fx:id="txtRT" editable="false"/>
+                           </children>
+                           <GridPane.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </GridPane.margin>
+                        </VBox>
+                        <VBox maxHeight="400.0" prefHeight="300.0" prefWidth="100.0" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="15.0" right="15.0" top="10.0" />
+                           </GridPane.margin>
+                           <children>
+                              <Label id="alu.description.title" fx:id="lblDescription" text="Beschreibung" />
+                              <TextArea fx:id="txtDescription" minWidth="300.0" prefHeight="300.0" prefWidth="200.0" editable="false"/>
+                           </children>
+                        </VBox>
+                        <Button id="alu.button.add" fx:id="btnAdd" mnemonicParsing="false" text="hinzufügen" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <Button id="alu.button.remove" fx:id="btnRemove" mnemonicParsing="false" text="entfernen" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </content>
+         <padding>
+            <Insets top="15.0" />
+         </padding>
+      </TitledPane>
+      <TitledPane id="alu.available.title" fx:id="paneAvailableOP" animated="false" collapsible="false" prefHeight="590.0" prefWidth="260.0" text="Verfügbare Operationen">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="240.0">
+               <children>
+                  <TableView fx:id="tableAvailable" prefHeight="548.0" prefWidth="240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <columns>
+                        <TableColumn fx:id="col_available_op" prefWidth="220.0" resizable="false" text="Operation" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </content>
+         <padding>
+            <Insets left="15.0" top="15.0" />
+         </padding>
+      </TitledPane>
+    </children>
+</HBox>

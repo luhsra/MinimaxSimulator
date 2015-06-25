@@ -72,6 +72,8 @@ public class FXMainController {
 
     @FXML
     private MemoryView embeddedMemoryViewController;
+    @FXML
+    private AluView embeddedAluViewController;
 
     private TextResource _res;
 
@@ -200,6 +202,7 @@ public class FXMainController {
         drawCanvas();           // CANVAS TEST
 
         embeddedMemoryViewController.initMemoryView();
+        embeddedAluViewController.initAluView();
 
         // TODO: create project data
     }

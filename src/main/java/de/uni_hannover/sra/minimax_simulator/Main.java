@@ -47,6 +47,7 @@ public class Main extends javafx.application.Application {
         Scene scene = new Scene(root, 1200, 675);
         scene.getStylesheets().add("css/application.css");
         _primaryStage.setScene(scene);
+        _primaryStage.setResizable(false);
         _primaryStage.show();
     }
 
