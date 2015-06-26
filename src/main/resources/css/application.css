@@ -3,6 +3,10 @@
     /*-fx-faint-focus-color: transparent; */
 }
 
+.mnemonic-underline {
+    -fx-stroke: -fx-text-base-color;
+}
+
 .button {
     -fx-background-radius: 8;
 }
@@ -12,12 +16,30 @@
     -fx-background-insets: 0, 1, 2;
 }
 
+/*
+.menu-button:openvertically .label {
+    -fx-text-fill: whitesmoke;
+}
+
+.menu-button:openvertically .label .mnemonic-underline {
+    -fx-stroke: whitesmoke;
+}
+*/
 .context-menu {
     -fx-background-radius: 8;
 }
 
 .menu-item:focused {
     -fx-background-radius: 8;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: whitesmoke;
+}
+
+.menu-item:focused .label .mnemonic-underline {
+    -fx-stroke: whitesmoke;
 }
 
 #memtable_dec, #memtable_hex, #memtable_address {

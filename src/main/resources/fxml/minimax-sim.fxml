@@ -17,155 +17,137 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0"
-          prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml"
-          fx:controller="de.uni_hannover.sra.minimax_simulator.gui.FXMainController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.sra.minimax_simulator.gui.FXMainController">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="30.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="30.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
         <MenuBar>
             <menus>
-                <Menu id="menuProject" fx:id="menuProject" mnemonicParsing="false" text="Projekt">
+                <Menu id="project" fx:id="menuProject" mnemonicParsing="false" text="Projekt">
                     <items>
-                        <MenuItem id="project_new" fx:id="project_new" mnemonicParsing="true" onAction="#newProject"
-                                  text="Neu">
+                        <MenuItem id="project_new" fx:id="project_new" mnemonicParsing="false" onAction="#newProject" text="Neu">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/document.png"/>
+                                    <Image url="/images/fugue/document.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem id="project_open" fx:id="project_open" mnemonicParsing="true" onAction="#openProject"
-                                  text="Öffnen">
+                        <MenuItem id="project_open" fx:id="project_open" mnemonicParsing="false" onAction="#openProject" text="Öffnen">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/folder-open-document.png"/>
+                                    <Image url="/images/fugue/folder-open-document.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem id="project_save" fx:id="project_save" disable="true" mnemonicParsing="true"
-                                  onAction="#saveProject" text="Speichern">
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem id="project_save" fx:id="project_save" disable="true" mnemonicParsing="false" onAction="#saveProject" text="Speichern">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/disk-black.png"/>
+                                    <Image url="/images/fugue/disk-black.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem id="project_saveas" fx:id="project_saveas" disable="true" mnemonicParsing="false"
-                                  onAction="#saveProjectAs" text="Speichern unter"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem id="project_export_schematics" fx:id="project_export_schematics" disable="true"
-                                  mnemonicParsing="false" onAction="#exportSchematics" text="Schema exportieren">
+                        <MenuItem id="project_saveas" fx:id="project_saveas" disable="true" mnemonicParsing="false" onAction="#saveProjectAs" text="Speichern unter" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem id="project_export-schematics" fx:id="project_export_schematics" disable="true" mnemonicParsing="false" onAction="#exportSchematics" text="Schema exportieren">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/picture-arrow.png"/>
+                                    <Image url="/images/fugue/picture-arrow.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem id="project_export_signal" fx:id="project_export_signal" disable="true"
-                                  mnemonicParsing="false" onAction="#exportSignal" text="Steuertabelle exportieren">
+                        <MenuItem id="project_export-signal" fx:id="project_export_signal" disable="true" mnemonicParsing="false" onAction="#exportSignal" text="Steuertabelle exportieren">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/binary-arrow.png"/>
+                                    <Image url="/images/fugue/binary-arrow.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem id="project_close" fx:id="project_close" disable="true" mnemonicParsing="true"
-                                  onAction="#closeProject" text="Schließen"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem id="exitApplication" fx:id="exitApplication" mnemonicParsing="true"
-                                  onAction="#exitApplication" text="Beenden">
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem id="project_close" fx:id="project_close" disable="true" mnemonicParsing="false" onAction="#closeProject" text="Schließen" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem id="project_exit" fx:id="exitApplication" mnemonicParsing="false" onAction="#exitApplication" text="Beenden">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/door-open-in.png"/>
+                                    <Image url="/images/fugue/door-open-in.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
                     </items>
                 </Menu>
-                <Menu id="menuView" fx:id="menuView" mnemonicParsing="false" text="Ansicht">
+                <Menu id="view" fx:id="menuView" mnemonicParsing="false" text="Ansicht">
                     <items>
-                        <MenuItem id="view_overview" fx:id="view_overview" disable="true" mnemonicParsing="true"
-                                  onAction="#openViewOverview" text="Übersicht">
+                        <MenuItem id="view_project_overview" fx:id="view_overview" disable="true" mnemonicParsing="false" onAction="#openViewOverview" text="Übersicht">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/application-text-image.png"/>
+                                    <Image url="/images/fugue/application-text-image.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <Menu id="menuMachineConfiguration" fx:id="menuMachineConfiguration" disable="true"
-                              mnemonicParsing="false" text="Maschinen-Konfiguration">
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <Menu id="view_machine" fx:id="menuMachineConfiguration" disable="true" mnemonicParsing="false" text="Maschinen-Konfiguration">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/processor.png"/>
+                                    <Image url="/images/fugue/processor.png" />
                                 </ImageView>
                             </graphic>
-                            <MenuItem id="view_conf_alu" fx:id="view_conf_alu" mnemonicParsing="true"
-                                      text="ALU-Operationen">
+                            <MenuItem id="view_machine_alu" fx:id="view_conf_alu" mnemonicParsing="false" text="ALU-Operationen">
                                 <graphic>
                                     <ImageView>
-                                        <Image url="/images/fugue/function.png"/>
+                                        <Image url="/images/fugue/function.png" />
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
-                            <MenuItem id="view_conf_register" fx:id="view_conf_reg" mnemonicParsing="true"
-                                      text="Register-Erweiterungen">
+                            <MenuItem id="view_machine_register" fx:id="view_conf_reg" mnemonicParsing="false" text="Register-Erweiterungen">
                                 <graphic>
                                     <ImageView>
-                                        <Image url="/images/fugue/database.png"/>
+                                        <Image url="/images/fugue/database.png" />
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
-                            <MenuItem id="view_conf_mux" fx:id="view_conf_mux" mnemonicParsing="true"
-                                      text="Multiplexer-Anschlüsse">
+                            <MenuItem id="view_machine_mux" fx:id="view_conf_mux" mnemonicParsing="false" text="Multiplexer-Anschlüsse">
                                 <graphic>
                                     <ImageView>
-                                        <Image url="/images/fugue/node-select-all2.png"/>
+                                        <Image url="/images/fugue/node-select-all2.png" />
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
-                            <MenuItem id="view_conf_signal" fx:id="view_conf_signal" mnemonicParsing="true"
-                                      text="Steuertabelle">
+                            <MenuItem id="view_machine_signal" fx:id="view_conf_signal" mnemonicParsing="false" text="Steuertabelle">
                                 <graphic>
                                     <ImageView>
-                                        <Image url="/images/fugue/binary.png"/>
+                                        <Image url="/images/fugue/binary.png" />
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
                         </Menu>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem id="view_memory" fx:id="view_memory" disable="true" mnemonicParsing="true"
-                                  text="Speicher">
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem id="view_project_memory" fx:id="view_memory" disable="true" mnemonicParsing="false" text="Speicher">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/memory.png"/>
+                                    <Image url="/images/fugue/memory.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem id="view_debugger" fx:id="view_debugger" disable="true" mnemonicParsing="true"
-                                  text="Debugger">
+                        <MenuItem id="view_project_debugger" fx:id="view_debugger" disable="true" mnemonicParsing="false" text="Debugger">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/bug.png"/>
+                                    <Image url="/images/fugue/bug.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
                     </items>
                 </Menu>
-                <Menu id="menuHelp" fx:id="menuHelp" mnemonicParsing="false" text="?">
+                <Menu id="help" fx:id="menuHelp" mnemonicParsing="false" text="?">
                     <items>
-                        <MenuItem id="help_about" fx:id="help_about" mnemonicParsing="false" text="Über">
+                        <MenuItem id="help_info" fx:id="help_about" mnemonicParsing="false" text="Über">
                             <graphic>
                                 <ImageView>
-                                    <Image url="/images/fugue/question-frame.png"/>
+                                    <Image url="/images/fugue/question-frame.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
@@ -173,23 +155,18 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <TabPane id="tabpane" fx:id="tabpane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS"
-                 GridPane.rowIndex="1" visible="false">
+        <TabPane id="tabpane" fx:id="tabpane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS" visible="false" GridPane.rowIndex="1">
             <tabs>
                 <Tab fx:id="tab_overview" text="Übersicht">
                     <graphic>
                         <ImageView>
-                            <Image url="/images/fugue/application-text-image.png"/>
+                            <Image url="/images/fugue/application-text-image.png" />
                         </ImageView>
                     </graphic>
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <ScrollPane id="panel_machine_overview" fx:id="panel_machine_overview"
-                                            hbarPolicy="NEVER" minHeight="-Infinity" minWidth="-Infinity"
-                                            prefHeight="610.0" prefWidth="1200.0" vbarPolicy="ALWAYS"
-                                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                <ScrollPane id="panel_machine_overview" fx:id="panel_machine_overview" hbarPolicy="NEVER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="1200.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -206,17 +183,17 @@
                 <Tab fx:id="tab_signal" text="Steuertabelle">
                     <graphic>
                         <ImageView>
-                            <Image url="/images/fugue/binary.png"/>
+                            <Image url="/images/fugue/binary.png" />
                         </ImageView>
                     </graphic>
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
                 <Tab fx:id="tab_memory" text="Speicher">
                     <graphic>
                         <ImageView>
-                            <Image url="/images/fugue/memory.png"/>
+                            <Image url="/images/fugue/memory.png" />
                         </ImageView>
                     </graphic>
                     <content>
@@ -230,17 +207,17 @@
                 <Tab fx:id="tab_debugger" text="Debugger">
                     <graphic>
                         <ImageView>
-                            <Image url="/images/fugue/bug.png"/>
+                            <Image url="/images/fugue/bug.png" />
                         </ImageView>
                     </graphic>
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
                 <Tab fx:id="tab_alu" text="ALU-Operationen">
                     <graphic>
                         <ImageView>
-                            <Image url="/images/fugue/function.png"/>
+                            <Image url="/images/fugue/function.png" />
                         </ImageView>
                     </graphic>
                     <content>
@@ -251,24 +228,24 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab fx:id="tab_reg" id="tab_register" text="Register-Erweiterungen">
+                <Tab id="tab_register" fx:id="tab_reg" text="Register-Erweiterungen">
                     <graphic>
                         <ImageView>
-                            <Image url="/images/fugue/database.png"/>
+                            <Image url="/images/fugue/database.png" />
                         </ImageView>
                     </graphic>
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
                 <Tab fx:id="tab_mux" text="Multiplexer-Anschlüsse">
                     <graphic>
                         <ImageView>
-                            <Image url="/images/fugue/node-select-all2.png"/>
+                            <Image url="/images/fugue/node-select-all2.png" />
                         </ImageView>
                     </graphic>
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
             </tabs>

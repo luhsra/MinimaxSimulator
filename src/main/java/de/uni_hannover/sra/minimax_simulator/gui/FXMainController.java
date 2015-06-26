@@ -112,33 +112,62 @@ public class FXMainController {
     private void setLocalizedTexts() {
         TextResource res = Main.getTextResource("menu");
         // menu: project
+
         menuProject.setText(res.get("project"));
-        final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(project_new, project_open, project_save, project_saveas, project_export_schematics, project_export_signal, project_close));
+//        final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(project_new, project_open, project_save, project_saveas, project_export_schematics, project_export_signal, project_close, exitApplication));
+        final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(project_new, project_open, project_save, project_saveas, project_export_schematics, project_export_signal, project_close, exitApplication,
+                view_overview, view_memory, view_debugger, view_conf_alu, view_conf_mux, view_conf_reg, view_conf_signal, help_about));
         for (MenuItem mi : projectMenu) {
-            String id = mi.getId().substring(8);
-            mi.setText(res.get("project."+id.replace("_", "-")));
+            String id = mi.getId().replace("_", ".");
+            String mne = res.get(id + ".mne");
+            //String text = res.get("project."+id.replace("_", "-")).replaceFirst(mne, "_"+mne);
+            //String text = res.get("project."+id.replace("_", "-")).replaceFirst("", "_"+"");
+
+            String text = res.get(id);
+            if (!mne.isEmpty()) {
+                text = text.replaceFirst(mne, "_"+mne);
+                mi.setMnemonicParsing(true);
+            }
+
+            mi.setText(text);
         }
-        exitApplication.setText(res.get("project.exit"));
+
+        final List<Menu> allMenus = new ArrayList<>(Arrays.asList(menuProject, menuView, menuHelp));
+        for (Menu m : allMenus) {
+            String id = m.getId().replace("_", ".");
+            String mne = res.get(id + ".mne");
+
+            String text = res.get(id);
+            if (!mne.isEmpty()) {
+                text = text.replaceFirst(mne, "_"+mne);
+                m.setMnemonicParsing(true);
+            }
+
+            m.setText(text);
+        }
+//        exitApplication.setText(res.get("project.exit"));
+
+  //      System.out.println("new: " + project_new.getText() + "  - close: " + project_close.getText());
 
         // menu: view
-        menuView.setText(res.get("view"));
+/*        menuView.setText(res.get("view"));
         final List<MenuItem> viewMenu = new ArrayList<>(Arrays.asList(view_overview, view_memory, view_debugger));
         for (MenuItem mi : viewMenu) {
             String id = mi.getId().substring(5);
             mi.setText(res.get("view.project."+id));
         }
-
+*/
         // menu: machine configuration
-        menuMachineConfiguration.setText(res.get("view.machine"));
+/*        menuMachineConfiguration.setText(res.get("view.machine"));
         final List<MenuItem> confMenu = new ArrayList<>(Arrays.asList(view_conf_alu, view_conf_mux, view_conf_reg, view_conf_signal));
         for (MenuItem mi : confMenu) {
             String id = mi.getId().substring(10);
             mi.setText(res.get("view.machine."+id));
         }
-
+*/
         // menu: help
         menuHelp.setText(res.get("help"));
-        help_about.setText(res.get("help.info"));
+        //help_about.setText(res.get("help.info"));
 
         // tabs
         res = Main.getTextResource("project");
