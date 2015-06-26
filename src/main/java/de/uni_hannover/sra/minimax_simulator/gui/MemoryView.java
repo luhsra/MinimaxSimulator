@@ -198,20 +198,14 @@ public class MemoryView{
 
         updateMemTable();
 
-        //TODO: BUGFIX for addresses containing chars
         memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
                     if(mouseEvent.getClickCount() == 2){
                         System.out.println("Double clicked");
-                        MemoryTableModel mtm = memTable.getSelectionModel().getSelectedItem();
-                        checkNotNull(mtm);
-                        int address = Integer.parseInt(mtm.getAddress());
-                        checkNotNull(address);
-
+                        int address = memTable.getSelectionModel().getSelectedIndex() + _cachedPageStart;
                         // open edit dialog
-                        //new MemoryUpdateDialog(address, mMemory).setVisible(true);
                         new MemoryUpdateDialog(address, mMemory).showAndWait();
                     }
                 }
