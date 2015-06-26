@@ -1,5 +1,15 @@
+.root {
+    -fx-focus-color: transparent;
+    /*-fx-faint-focus-color: transparent; */
+}
+
 .button {
     -fx-background-radius: 8;
+}
+
+.button:focused {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0, 1, 2;
 }
 
 .context-menu {
@@ -10,6 +20,16 @@
     -fx-background-radius: 8;
 }
 
-#col_hex, #col_adr {
+#memtable_dec, #memtable_hex, #memtable_address {
     -fx-alignment: CENTER;
+}
+
+#alu_addedOP_code {
+    -fx-padding: 0 0 0 10;
+    -fx-font-family: monospace;
+}
+
+#alu_rt_notation {
+    -fx-font-family: monospace;
+    -fx-font-size: 14px;
 }

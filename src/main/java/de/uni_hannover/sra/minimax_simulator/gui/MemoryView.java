@@ -37,6 +37,7 @@ import java.util.List;
  *
  * @author Philipp Rohde
  */
+//TODO: spinners editable
 public class MemoryView{
 
     private String _addressFormatString;
@@ -69,19 +70,6 @@ public class MemoryView{
 
         _page = _cachedPageStart = 0;
 
-        memTable.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent scrollEvent) {
-                double deltaY = scrollEvent.getDeltaY();
-                if (deltaY > 0) {
-                    prevPage();
-                }
-                else {
-                    nextPage();
-                }
-            }
-        });
-
         txtAddressField.textProperty().addListener((observable, oldValue, newValue) -> {
             String text = newValue.trim();
             if (text.isEmpty()) {
@@ -90,14 +78,11 @@ public class MemoryView{
             if (text.startsWith("0x")) {
                 text = text.substring(2);
             }
-            try
-            {
+            try {
                 int value = Integer.parseInt(text, 16);
                 System.out.println("select address: " + value);
                 selectAddress(value);
-            }
-            catch (NumberFormatException nfe)
-            {
+            } catch (NumberFormatException nfe) {
                 // Ignore malformed input
             }
         });
@@ -131,13 +116,13 @@ public class MemoryView{
     private void setLocalizedTexts() {
         final List<TableColumn> tableColumns = new ArrayList<>(Arrays.asList(col_adr, col_dec, col_hex));
         for (TableColumn col : tableColumns) {
-            col.setText(_res.get(col.getId()));
+            col.setText(_res.get(col.getId().replace("_", ".")));
         }
 
         final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneMemory, btnImportMem, lblImportFile, lblTargetAddress, lblByteCount, cb_partialImport, paneImport, paneExport, btnExportMem, lblExportFile,
                 lblFromAddress, lblToAddress, paneClear, btnClear));
         for (Labeled con : controls) {
-            con.setText(_res.get(con.getId()));
+            con.setText(_res.get(con.getId().replace("_", ".")));
         }
     }
 
@@ -232,6 +217,18 @@ public class MemoryView{
                 }
             }
         });
+
+        memTable.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent scrollEvent) {
+                double deltaY = scrollEvent.getDeltaY();
+                if (deltaY > 0) {
+                    prevPage();
+                } else {
+                    nextPage();
+                }
+            }
+        });
     }
 
     private void updateMemTable() {
@@ -242,7 +239,6 @@ public class MemoryView{
         MemoryState mState = mMemory.getMemoryState();
         for (int i = 0; i < _pageSize; i++) {
             int value = mState.getInt(_cachedPageStart + i);
-            //System.out.println("loading data for address: " + _cachedPageStart + i);
             data.add(new MemoryTableModel(String.format(_addressFormatString, _cachedPageStart + i), String.valueOf(value), String.format("0x%08X", value)));
         }
 
@@ -256,7 +252,6 @@ public class MemoryView{
         FXDialog memoryClear = new FXDialog(AlertType.CONFIRMATION, _res.get("memory.clear.confirm.title"), _res.get("memory.clear.confirm.message"));
         if (memoryClear.getChoice() == ButtonType.OK) {
             System.out.println("clearing memory");
-            //TODO: process dialog
             mMemory.getMemoryState().zero();
             updateMemTable();
         }
