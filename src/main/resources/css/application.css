@@ -16,7 +16,15 @@
     -fx-background-insets: 0, 1, 2;
 }
 
-/*
+.menu-bar {
+    -fx-background-color: linear-gradient(from 0px 0px to 0px 50px, gray, darkgray 50%, dimgray 99%, white);
+}
+
+.menu-bar .label {
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
 .menu-button:openvertically .label {
     -fx-text-fill: whitesmoke;
 }
@@ -24,16 +32,17 @@
 .menu-button:openvertically .label .mnemonic-underline {
     -fx-stroke: whitesmoke;
 }
-*/
+
 .context-menu {
     -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, gray, darkgray 50%, dimgray 99%, white);
 }
 
 .menu-item:focused {
     -fx-background-radius: 8;
     -fx-text-fill: -fx-text-base-color;
 }
-
+/*
 .menu-item:focused .label {
     -fx-text-fill: whitesmoke;
 }
@@ -41,7 +50,7 @@
 .menu-item:focused .label .mnemonic-underline {
     -fx-stroke: whitesmoke;
 }
-
+*/
 #memtable_dec, #memtable_hex, #memtable_address {
     -fx-alignment: CENTER;
 }
