@@ -1,5 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
+import com.google.common.collect.ImmutableMap;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.gui.MemoryView;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
@@ -20,9 +21,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * The controller for the JavaFX GUI.
@@ -77,6 +76,8 @@ public class FXMainController {
 
     private TextResource _res;
 
+    private Map<String, Tab> tabMap;
+
     /*
      *
      *      opening tabs in one method using the ActionEvent.getSource() to find out which one should be opened
@@ -87,6 +88,16 @@ public class FXMainController {
        _res = Main.getTextResource("application");
         this.setShortcuts();
         this.setLocalizedTexts();
+
+       this.tabMap = ImmutableMap.<String, Tab>builder()
+                .put("view_project_overview",   tab_overview)
+                .put("view_machine_alu", tab_alu)
+                .put("view_machine_register",   tab_reg)
+                .put("view_machine_mux",        tab_mux)
+                .put("view_machine_signal",     tab_signal)
+                .put("view_project_memory",     tab_memory)
+                .put("view_project_debugger", tab_debugger)
+                .build();
     }
 
     private void setShortcuts() {
@@ -298,10 +309,30 @@ public class FXMainController {
 
     }
 
-    public void openViewOverview() {
-        tabpane.getTabs().add(0, tab_overview);
-        tabpane.getSelectionModel().select(tab_overview);
-    }
+    public void openTab(ActionEvent ae) {
 
+        if (!(ae.getSource() instanceof MenuItem)) {
+            return;
+        }
+
+        MenuItem caller = (MenuItem) ae.getSource();
+        String id = caller.getId();
+
+        Tab toAdd = tabMap.get(id);
+
+        if (toAdd == null) {
+            return;
+        }
+
+        if (!tabpane.getTabs().contains(toAdd)) {
+            if (toAdd.equals(tab_overview)) {
+                tabpane.getTabs().add(0, tab_overview);
+            }
+            else {
+                tabpane.getTabs().add(toAdd);
+            }
+        }
+        tabpane.getSelectionModel().select(toAdd);
+    }
 
 }

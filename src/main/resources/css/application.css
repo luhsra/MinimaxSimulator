@@ -29,6 +29,14 @@
     -fx-text-fill: whitesmoke;
 }
 
+.menu:hover {
+    -fx-background-radius: 30px;
+}
+
+.menu:showing {
+    -fx-background-radius: 30px;
+}
+
 .menu-button:openvertically .label .mnemonic-underline {
     -fx-stroke: whitesmoke;
 }

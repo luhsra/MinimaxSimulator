@@ -82,7 +82,7 @@
                 </Menu>
                 <Menu id="view" fx:id="menuView" mnemonicParsing="false" text="Ansicht">
                     <items>
-                        <MenuItem id="view_project_overview" fx:id="view_overview" disable="true" mnemonicParsing="false" onAction="#openViewOverview" text="Übersicht">
+                        <MenuItem id="view_project_overview" fx:id="view_overview" disable="true" mnemonicParsing="false" onAction="#openTab" text="Übersicht">
                             <graphic>
                                 <ImageView>
                                     <Image url="/images/fugue/application-text-image.png" />
@@ -96,28 +96,28 @@
                                     <Image url="/images/fugue/processor.png" />
                                 </ImageView>
                             </graphic>
-                            <MenuItem id="view_machine_alu" fx:id="view_conf_alu" mnemonicParsing="false" text="ALU-Operationen">
+                            <MenuItem id="view_machine_alu" fx:id="view_conf_alu" mnemonicParsing="false" onAction="#openTab" text="ALU-Operationen">
                                 <graphic>
                                     <ImageView>
                                         <Image url="/images/fugue/function.png" />
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
-                            <MenuItem id="view_machine_register" fx:id="view_conf_reg" mnemonicParsing="false" text="Register-Erweiterungen">
+                            <MenuItem id="view_machine_register" fx:id="view_conf_reg" mnemonicParsing="false" onAction="#openTab" text="Register-Erweiterungen">
                                 <graphic>
                                     <ImageView>
                                         <Image url="/images/fugue/database.png" />
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
-                            <MenuItem id="view_machine_mux" fx:id="view_conf_mux" mnemonicParsing="false" text="Multiplexer-Anschlüsse">
+                            <MenuItem id="view_machine_mux" fx:id="view_conf_mux" mnemonicParsing="false" onAction="#openTab" text="Multiplexer-Anschlüsse">
                                 <graphic>
                                     <ImageView>
                                         <Image url="/images/fugue/node-select-all2.png" />
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
-                            <MenuItem id="view_machine_signal" fx:id="view_conf_signal" mnemonicParsing="false" text="Steuertabelle">
+                            <MenuItem id="view_machine_signal" fx:id="view_conf_signal" mnemonicParsing="false" onAction="#openTab" text="Steuertabelle">
                                 <graphic>
                                     <ImageView>
                                         <Image url="/images/fugue/binary.png" />
@@ -126,14 +126,14 @@
                             </MenuItem>
                         </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem id="view_project_memory" fx:id="view_memory" disable="true" mnemonicParsing="false" text="Speicher">
+                        <MenuItem id="view_project_memory" fx:id="view_memory" disable="true" mnemonicParsing="false" onAction="#openTab" text="Speicher">
                             <graphic>
                                 <ImageView>
                                     <Image url="/images/fugue/memory.png" />
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem id="view_project_debugger" fx:id="view_debugger" disable="true" mnemonicParsing="false" text="Debugger">
+                        <MenuItem id="view_project_debugger" fx:id="view_debugger" disable="true" mnemonicParsing="false" onAction="#openTab" text="Debugger">
                             <graphic>
                                 <ImageView>
                                     <Image url="/images/fugue/bug.png" />
@@ -214,7 +214,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
-                <Tab fx:id="tab_alu" text="ALU-Operationen">
+                <Tab id="tab_alu" fx:id="tab_alu" text="ALU-Operationen">
                     <graphic>
                         <ImageView>
                             <Image url="/images/fugue/function.png" />
