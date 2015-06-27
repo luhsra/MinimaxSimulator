@@ -144,7 +144,7 @@
                 </Menu>
                 <Menu id="help" fx:id="menuHelp" mnemonicParsing="false" text="?">
                     <items>
-                        <MenuItem id="help_info" fx:id="help_about" mnemonicParsing="false" text="Über">
+                        <MenuItem id="help_info" fx:id="help_about" mnemonicParsing="false" onAction="#openInfo" text="Über">
                             <graphic>
                                 <ImageView>
                                     <Image url="/images/fugue/question-frame.png" />

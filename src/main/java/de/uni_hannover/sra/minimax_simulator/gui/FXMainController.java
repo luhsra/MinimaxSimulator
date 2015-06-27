@@ -6,6 +6,7 @@ import de.uni_hannover.sra.minimax_simulator.gui.MemoryView;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXAboutDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
@@ -333,6 +334,10 @@ public class FXMainController {
             }
         }
         tabpane.getSelectionModel().select(toAdd);
+    }
+
+    public void openInfo() {
+        new FXAboutDialog().showAndWait();
     }
 
 }

@@ -28,8 +28,6 @@ public class FXWaitingDialog extends FXDialog {
         pb.setPrefWidth(300.0);
 
         this.getDialogPane().setContent(pb);
-        this.setTitle(waitingTitle);
-        this.setContentText(waitingMessage);
     }
 
     @Override
