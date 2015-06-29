@@ -20,7 +20,7 @@ public class MemoryUpdateDialog extends FXValueUpdateDialog
 		_messageLabel.setText(_res.format("message",
 			Util.toHex(address, memory.getAddressWidth(), true)));
 
-		_swapMode.setGraphic(new ImageView("./images/"+_res.get("swapmode.icon")));
+		_swapMode.setGraphic(new ImageView("images/"+_res.get("swapmode.icon")));
 	}
 
 	@Override

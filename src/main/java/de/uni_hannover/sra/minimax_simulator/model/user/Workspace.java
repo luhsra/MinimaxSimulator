@@ -119,9 +119,9 @@ public class Workspace extends ListenerContainer<WorkspaceListener>
 	{
 		if (_currentProject != null)
 			closeProject();
-
+		System.out.println("DEBUG: call NewProjectBuilder().buildProject()");
 		_currentProject = new NewProjectBuilder().buildProject();
-
+		System.out.println("DEBUG: call NewProjectBuilder().buildProject() succeeded");
 		for (WorkspaceListener l : getListeners())
 			l.onProjectOpened(_currentProject);
 	}

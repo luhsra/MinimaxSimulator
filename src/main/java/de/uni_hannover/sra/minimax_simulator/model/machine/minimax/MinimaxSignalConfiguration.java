@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
@@ -78,14 +79,18 @@ public class MinimaxSignalConfiguration implements SignalConfiguration,
 
 	public MinimaxSignalConfiguration(MachineConfiguration config)
 	{
+		System.out.println("DEBUG: create two ArrayLists");
 		_signalTypes = new ArrayList<SignalType>();
 		_listeners = new ArrayList<SignalConfigListener>();
+		System.out.println("DEBUG: create two ArrayLists succeeded");
 
 		_config = config;
-
+		System.out.println("DEBUG: set listener");
 		_config.addMachineConfigListener(this);
-
+		System.out.println("DEBUG: set listener succeeded");
+		System.out.println("DEBUG: call updateSignals()");
 		updateSignals();
+		System.out.println("DEBUG: call updateSignals() succeeded");
 	}
 
 	@Override
@@ -125,7 +130,7 @@ public class MinimaxSignalConfiguration implements SignalConfiguration,
 
 		SignalType signal;
 
-		TextResource res = Application.getTextResource("signal");
+		TextResource res = Main.getTextResource("signal");
 
 		// ALU select signals
 		signal = new MuxInputSignalType(BaseControlPort.ALU_SELECT_A.name(), res.get("col.aluselA"),

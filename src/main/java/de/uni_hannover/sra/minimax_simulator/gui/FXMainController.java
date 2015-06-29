@@ -208,12 +208,13 @@ public class FXMainController {
                 try {
                     Main.getWorkspace().newProject();
                 } catch (RuntimeException e) {
+                    System.out.println("EXCEPTION DURING PROJECT CREATION");
                     Main.getWorkspace().closeProject();
                     throw e;
                 }
             }
         }, _res.get("wait.title"), _res.get("wait.project.new"));
-        final SwingNode swingNode = new SwingNode();
+/*        final SwingNode swingNode = new SwingNode();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -226,14 +227,14 @@ public class FXMainController {
                 swingNode.setContent(_machineView);
             }
         });
-        while (swingNode.getContent() == null) {
+        while (swingNode.getContent() == null) {        */
             /*  We have to wait for the SwingUtilities thread to set the content of the swingNode
              *  because otherwise there will be a null pointer exception. Also it is not possible
              *  to add the swingNode to the JavaFX pane inside the SwingUtilities thread.
              *
              *  This is necessary until the MachineSchematics are converted to JavaFX.
              */
-        }
+/*        }
         double widthSchematics = swingNode.getContent().getWidth();
         double widthViewport = panel_machine_overview.getViewportBounds().getWidth();
         double insetLeft = (widthViewport - widthSchematics) / 2;
@@ -241,7 +242,7 @@ public class FXMainController {
         panel_machine_overview.setContent(swingNode);
 
         drawCanvas();           // CANVAS TEST
-
+*/
         embeddedMemoryViewController.initMemoryView();
         embeddedAluViewController.initAluView();
 

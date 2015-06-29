@@ -1,5 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.user;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.BaseControlPort;
 import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
@@ -16,7 +17,7 @@ public class NewProjectBuilder implements ProjectBuilder
 	@Override
 	public Project buildProject()
 	{
-		ResourceBundleLoader res = Application.getResourceLoader();
+		ResourceBundleLoader res = Main.getResourceLoader();
 
 		MachineConfigurationBuilder mb = new MachineConfigurationBuilder();
 		MachineConfiguration conf = mb.loadDefaultValues(
@@ -24,9 +25,9 @@ public class NewProjectBuilder implements ProjectBuilder
 
 		SignalTable table = new DefaultSignalTable();
 		createDefaultProgram(table);
-
+		System.out.println("DEBUG: call new Project()");
 		Project project = new Project(conf, new ProjectConfiguration(), table);
-
+		System.out.println("DEBUG: call new Project() succeeded");
 		return project;
 	}
 

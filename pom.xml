@@ -1,112 +1,116 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>de.uni_hannover.sra.minimax_simulator</groupId>
-  <artifactId>minimax_simulator</artifactId>
-  <version>0.8.4</version>
-  <packaging>jar</packaging>
-  <name>Minimax Simulator</name>
+    <groupId>de.uni_hannover.sra.minimax_simulator</groupId>
+    <artifactId>minimax_simulator</artifactId>
+    <version>0.8.4</version>
+    <packaging>jar</packaging>
+    <name>Minimax Simulator</name>
 
-  <description>GUI-based Minimax Simulator</description>
-  <url>http://www.sra.uni-hannover.de/</url>
+    <description>GUI-based Minimax Simulator</description>
+    <url>http://www.sra.uni-hannover.de/</url>
 
-  <licenses>
-    <license>
-      <name>The MIT License (MIT)</name>
-      <url>http://opensource.org/licenses/MIT</url>
-    </license>
-  </licenses>
+    <licenses>
+        <license>
+            <name>The MIT License (MIT)</name>
+            <url>http://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
 
-  <developers>
-    <developer>
-          <name>Philipp Rohde</name>
-          <email>rohde@sra.uni-hannover.de</email>
-    </developer>
-    <developer>
-        <name>Sebastian Niemann</name>
-        <email>niemann@sra.uni-hannover.de</email>
-    </developer>
-    <developer>
-        <name>Martin Lück</name>
-        <email>lueck@sra.uni-hannover.de</email>
-    </developer>
-  </developers>
+    <organization>
+        <name>Leibniz Universität Hannover, Institut für Systems Engineering, FG SRA</name>
+        <url>http://www.sra.uni-hannover.de/</url>
+    </organization>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <developers>
+        <developer>
+            <id>karianna</id>
+            <name>Philipp Rohde</name>
+            <email>rohde@sra.uni-hannover.de</email>
+        </developer>
+        <developer>
+            <name>Sebastian Niemann</name>
+            <email>niemann@sra.uni-hannover.de</email>
+        </developer>
+        <developer>
+            <name>Martin Lück</name>
+            <email>lueck@sra.uni-hannover.de</email>
+        </developer>
+    </developers>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>18.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jdom</groupId>
-      <artifactId>jdom2</artifactId>
-      <version>2.0.5</version>
-    </dependency>
-    <dependency>
-      <groupId>com.miglayout</groupId>
-      <artifactId>miglayout</artifactId>
-      <version>3.7.4</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit-dep</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.hamcrest</groupId>
-          <artifactId>hamcrest-core</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-library</artifactId>
-      <version>1.2.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyyy-MM-dd' 'HH:mm:ss</maven.build.timestamp.format>
+    </properties>
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.1</version>
-          <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
-          </configuration>
-        </plugin>
-	    <plugin>
-	      <artifactId>maven-assembly-plugin</artifactId>
-	      <configuration>
-	        <descriptorRefs>
-	          <descriptorRef>jar-with-dependencies</descriptorRef>
-	        </descriptorRefs>
-	        <archive>
-	          <manifest>
-	            <mainClass>de.uni_hannover.sra.minimax_simulator.Application</mainClass>
-	          </manifest>
-	        </archive>
-	      </configuration>
-	    </plugin>
-      </plugins>
-    </pluginManagement>
-	<resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*</include>
-        </includes>
-      </resource>
-    </resources>
-  </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom2</artifactId>
+            <version>2.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout</artifactId>
+            <version>3.7.4</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <configuration>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                        <archive>
+                            <index>true</index>
+                            <manifest>
+                                <mainClass>de.uni_hannover.sra.minimax_simulator.Main</mainClass>
+                            </manifest>
+                            <manifestEntries>
+                                <Implementation-Name>${project.name}</Implementation-Name>
+                                <Implementation-Version>${project.version}</Implementation-Version>
+                                <Additional-Author>Martin Lück, Philipp Rohde</Additional-Author>
+                                <Additional-Company>${project.organization.name}</Additional-Company>
+                                <Built-By>${user.name}</Built-By>
+                                <Build-Jdk>${java.version}</Build-Jdk>
+                                <Build-Time>${maven.build.timestamp}</Build-Time>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>

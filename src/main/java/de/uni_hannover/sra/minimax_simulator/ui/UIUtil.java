@@ -252,7 +252,7 @@ public class UIUtil
 		Task<Void> task = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				Thread.sleep(5*1000);
+				//Thread.sleep(5*1000);
 				runnable.run();
 				return null;
 			}

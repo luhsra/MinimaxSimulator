@@ -41,8 +41,8 @@ public class Main extends javafx.application.Application {
         _primaryStage.setTitle("Minimax-Simulator ("+version+")");
 
         // set application icon
-        _primaryStage.getIcons().add(new Image("/images/nuvola/cpu.png"));
-        _primaryStage.getIcons().add(new Image("/images/nuvola/cpu-big.png"));
+        _primaryStage.getIcons().add(new Image("images/nuvola/cpu.png"));
+        _primaryStage.getIcons().add(new Image("images/nuvola/cpu-big.png"));
 
         Scene scene = new Scene(root, 1200, 675);
         scene.getStylesheets().add("css/application.css");
@@ -82,7 +82,7 @@ public class Main extends javafx.application.Application {
             }           */
             System.out.println("Locale:" + locale);
             _resourceLoader = new DefaultResourceBundleLoader(
-                    new PropertyResourceControl("./text/"), locale);
+                    new PropertyResourceControl("text/"), locale);
         }
         return _resourceLoader;
     }

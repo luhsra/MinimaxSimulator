@@ -12,6 +12,10 @@ import java.util.regex.Pattern;
 
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 
+/*
+ * According to http://stackoverflow.com/questions/1272648/reading-my-own-jars-manifest
+ * this is probably possible with less complexity
+ */
 public class Version
 {
 	private boolean _isJar = false;
@@ -124,19 +128,19 @@ public class Version
 		{
 			_buildJdk = buildJdk;
 		}
-		else
+/*		else
 		{
 			buildJdk = attrs.getValue("Created-By");
 			if (buildJdk != null)
 			{
 				_buildJdk = buildJdk;
 			}
-		}
+		}	*/
 	}
 
 	private void setBuildTime(Attributes attrs)
 	{
-		String buildTime = attrs.getValue("Implementation-Time");
+		String buildTime = attrs.getValue("Build-Time");
 		if (buildTime != null)
 		{
 			_buildTime = buildTime;

@@ -35,20 +35,25 @@ public class Project
 
 		_machineConfiguration = checkNotNull(machineConfig);
 		_projectConfiguration = checkNotNull(projectConfig);
-
+		System.out.println("DEBUG: call new MinimaxSignalConf");
 		_signalConfig = new MinimaxSignalConfiguration(_machineConfiguration);
+		System.out.println("DEBUG: call new MinimaxSignalConf succeeded");
+		System.out.println("DEBUG: call new MST");
 		_signalTable = new MachineSignalTable(signalTable, _machineConfiguration,
 			new MinimaxSignalDescription(_machineConfiguration), _signalConfig);
-
+		System.out.println("DEBUG: call new MST succeeded");
+		System.out.println("DEBUG: call new MinimaxMachine");
 		MinimaxMachine minimax = new MinimaxMachine();
 		_machine = minimax;
 		_machineConfiguration.addMachineConfigListener(new MachineConfigurator(_machine,
 			_machineConfiguration));
-
+		System.out.println("DEBUG: call new MinimaxMachine succeeded");
+		System.out.println("DEBUG: call some adds");
 		MinimaxSimulation simulation = new MinimaxSimulation(minimax, _signalTable);
 		_simulation = simulation;
 		_machineConfiguration.addMachineConfigListener(simulation);
 		_signalConfig.addSignalConfigListener(simulation);
+		System.out.println("DEBUG: call some adds succeeded");
 	}
 
 	public MachineConfiguration getMachineConfiguration()

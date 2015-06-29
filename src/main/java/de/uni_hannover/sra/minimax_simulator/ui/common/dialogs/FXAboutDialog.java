@@ -27,7 +27,7 @@ public class FXAboutDialog extends FXDialog {
 
     private final ButtonType btnTypeOK;
     private final TextResource _res;
-    private final Version version = new Version(Main.class);        // works only with JAR files
+    private final Version ver = new Version(Main.class);        // works only with JAR files
 
     public FXAboutDialog() {
         super(AlertType.NONE, "Info", null);
@@ -40,8 +40,8 @@ public class FXAboutDialog extends FXDialog {
         grid.setPadding(new Insets(10));
         grid.setVgap(10);
         grid.setHgap(20);
-        Image luh = new Image("./images/luh/luh.png");
-        Image sra = new Image("./images/luh/sra.png");
+        Image luh = new Image("images/luh/luh.png");
+        Image sra = new Image("images/luh/sra.png");
 
         ImageView luhIV = new ImageView();
         luhIV.setImage(luh);
@@ -59,9 +59,9 @@ public class FXAboutDialog extends FXDialog {
         VBox vb = new VBox();
         vb.setPadding(new Insets(15, 0, 15, 0));
         vb.setSpacing(5);
-        Label version = new Label("Version: HAVE TO READ VERSION INFO FROM MANIFEST");
-        Label build = new Label(_res.format("build", "GET DATE", "READ JDK VERSION FROM MANIFEST"));
-        Label authors = new Label("Authors: READ AUTHORS FROM MANIFEST");
+        Label version = new Label("Version: " + ver.getVersionNumber());
+        Label build = new Label(_res.format("build", ver.getBuildTime() , ver.getBuildJdk()));
+        Label authors = new Label(_res.format("author", ver.getAuthorName()));
         vb.getChildren().addAll(version, build, authors);
 
         Label university = new Label("Leibniz Universität Hannover, Institut für Systems Engineering, FG System- und Rechnerarchitektur");
