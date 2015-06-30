@@ -4,7 +4,11 @@ import com.google.common.collect.ImmutableMap;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.gui.MemoryView;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
+import de.uni_hannover.sra.minimax_simulator.model.user.Project;
+import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
+import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXAboutDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
@@ -22,6 +26,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.*;
 
 /**
@@ -31,7 +36,7 @@ import java.util.*;
  *
  */
 
-public class FXMainController {
+public class FXMainController implements WorkspaceListener {
 
     public Menu menuProject;
     public MenuItem project_new;
@@ -79,6 +84,9 @@ public class FXMainController {
 
     private Map<String, Tab> tabMap;
 
+    private static String _versionString;
+    private static final Workspace _ws = Main.getWorkspace();
+
     /*
      *
      *      opening tabs in one method using the ActionEvent.getSource() to find out which one should be opened
@@ -86,6 +94,10 @@ public class FXMainController {
      */
 
     public void initialize() {
+
+        _versionString = Main.getVersionString();
+        _ws.addListener(this);
+
        _res = Main.getTextResource("application");
         this.setShortcuts();
         this.setLocalizedTexts();
@@ -341,4 +353,45 @@ public class FXMainController {
         new FXAboutDialog().showAndWait();
     }
 
+    private String getProjectName() {
+        System.out.println("get project file");
+        File file = Main.getWorkspace().getCurrentProjectFile();
+        System.out.println("got project file");
+        if (file == null)
+        {
+            System.out.println("file was null");
+            return _res.get("project.unnamed");
+        }
+        System.out.println("file was not null");
+        return file.getName();
+    }
+
+    private void setApplicationTitle(String newTitle) {
+        UI.invokeInFAT(new Runnable() {
+            @Override
+            public void run() {
+                Main.getPrimaryStage().setTitle(newTitle);
+            }
+        });
+    }
+
+    @Override
+    public void onProjectOpened(Project project) {
+        setApplicationTitle(_res.format("title.open-project", _versionString, getProjectName()));
+    }
+
+    @Override
+    public void onProjectSaved(Project project) {
+        setApplicationTitle(_res.format("title.open-project", _versionString, getProjectName()));
+    }
+
+    @Override
+    public void onProjectClosed(Project project) {
+        setApplicationTitle(_res.format("title", _versionString));
+    }
+
+    @Override
+    public void onProjectDirty(Project project) {
+        setApplicationTitle(_res.format("title.open-unsaved-project", _versionString, getProjectName()));
+    }
 }

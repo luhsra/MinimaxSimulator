@@ -232,6 +232,8 @@ public class AluView {
             int lastItem = tableAdded.getItems().size()-1;
             tableAdded.getSelectionModel().select(lastItem);
             tableAdded.getSelectionModel().focus(lastItem);
+
+            Main.getWorkspace().setProjectUnsaved();
         }
     }
 
@@ -254,6 +256,8 @@ public class AluView {
 
             tableAvailable.getSelectionModel().select(index);
             tableAvailable.getSelectionModel().focus(index);
+
+            Main.getWorkspace().setProjectUnsaved();
         }
     }
 
@@ -291,6 +295,8 @@ public class AluView {
         updateAddedTable();
         tableAdded.getSelectionModel().select(index2);
         //_addedTable.getSelectionModel().setSelectionInterval(index2, index2);
+
+        Main.getWorkspace().setProjectUnsaved();
     }
 
     public static class AddedAluOpTableModel {

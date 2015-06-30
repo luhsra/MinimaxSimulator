@@ -33,12 +33,18 @@ public class Main extends javafx.application.Application {
     private static Workspace _workspace;
     private static ResourceBundleLoader _resourceLoader;
 
+    private static Version _version;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        _version = new Version(this.getClass());
+
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/minimax-sim.fxml"));
         _primaryStage = primaryStage;
-        _primaryStage.setTitle("Minimax-Simulator ("+version+")");
+        TextResource res = _resourceLoader.getTextResource("application");
+        _primaryStage.setTitle(res.format("title", _version.getVersionNumber()));
 
         // set application icon
         _primaryStage.getIcons().add(new Image("images/nuvola/cpu.png"));
@@ -113,5 +119,11 @@ public class Main extends javafx.application.Application {
     public static Workspace getWorkspace()
     {
         return _workspace;
+    }
+
+    public static String getVersionString()
+    {
+        //return _version.getModuleName() + " " + _version.getVersionNumber();
+        return _version.getVersionNumber();
     }
 }
