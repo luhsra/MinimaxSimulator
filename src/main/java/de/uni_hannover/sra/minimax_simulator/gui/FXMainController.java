@@ -79,6 +79,8 @@ public class FXMainController implements WorkspaceListener {
     private MemoryView embeddedMemoryViewController;
     @FXML
     private AluView embeddedAluViewController;
+    @FXML
+    private MuxView embeddedMuxViewController;
 
     private TextResource _res;
 
@@ -86,12 +88,6 @@ public class FXMainController implements WorkspaceListener {
 
     private static String _versionString;
     private static final Workspace _ws = Main.getWorkspace();
-
-    /*
-     *
-     *      opening tabs in one method using the ActionEvent.getSource() to find out which one should be opened
-     *
-     */
 
     public void initialize() {
 
@@ -257,6 +253,7 @@ public class FXMainController implements WorkspaceListener {
 */
         embeddedMemoryViewController.initMemoryView();
         embeddedAluViewController.initAluView();
+        embeddedMuxViewController.initMuxView();
 
         // TODO: create project data
     }
