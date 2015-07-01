@@ -30,6 +30,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -206,7 +207,10 @@ public class MemoryView{
                         System.out.println("Double clicked");
                         int address = memTable.getSelectionModel().getSelectedIndex() + _cachedPageStart;
                         // open edit dialog
-                        new MemoryUpdateDialog(address, mMemory).showAndWait();
+                        Optional<ButtonType> result = new MemoryUpdateDialog(address, mMemory).showAndWait();
+                        if (result.get() == ButtonType.OK) {
+                            updateMemTable();
+                        }
                     }
                 }
             }

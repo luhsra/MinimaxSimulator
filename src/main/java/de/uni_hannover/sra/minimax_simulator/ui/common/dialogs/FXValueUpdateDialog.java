@@ -145,9 +145,10 @@ public abstract class FXValueUpdateDialog extends FXDialog
 				Integer value = _mode.decode(_field.getText());
 				if (value != null) {
 					setValue(value.intValue());
+					return ButtonType.OK;
 				}
 			}
-			return null;
+			return ButtonType.CANCEL;
 		});
 
 	}
