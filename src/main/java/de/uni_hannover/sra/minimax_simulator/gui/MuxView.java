@@ -2,35 +2,38 @@ package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
-import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import de.uni_hannover.sra.minimax_simulator.gui.common.NullAwareIntFormatter;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.*;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.util.StringConverter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
- * FXController of the MuxView
+ * <b>FXController of the MuxView</b><br>
+ * <br>
+ * This controller handles every GUI interaction with the multiplexer {@link Tab}.
  *
  * @author Philipp Rohde
  */
 public class MuxView {
 
     private TextResource _res;
-    //private TextResource _resAlu;
-
     private MachineConfiguration _config;
 
     @FXML
@@ -41,27 +44,43 @@ public class MuxView {
     private TitledPane paneSelectedConnection;
 
     @FXML
-    private TableView<AddedAluOpTableModel> tableMuxA;
+    private TableView<MuxTableModel> tableMuxA;
     @FXML
-    private TableColumn<AddedAluOpTableModel, String> col_mux_a_code;
+    private TableColumn<MuxTableModel, String> col_mux_a_code;
     @FXML
-    private TableColumn<AddedAluOpTableModel, String> col_mux_a_source;
+    private TableColumn<MuxTableModel, String> col_mux_a_source;
     @FXML
-    private TableColumn<AddedAluOpTableModel, String> col_mux_a_extended;
+    private TableColumn<MuxTableModel, String> col_mux_a_extended;
+    @FXML
+    private Button btnMoveUpMuxA;
+    @FXML
+    private Button btnMoveDownMuxA;
+    @FXML
+    private Button btnNewMuxA;
+    @FXML
+    private Button btnRemoveMuxA;
 
     @FXML
-    private TableView<AddedAluOpTableModel> tableMuxB;
+    private TableView<MuxTableModel> tableMuxB;
     @FXML
-    private TableColumn<AddedAluOpTableModel, String> col_mux_b_code;
+    private TableColumn<MuxTableModel, String> col_mux_b_code;
     @FXML
-    private TableColumn<AddedAluOpTableModel, String> col_mux_b_source;
+    private TableColumn<MuxTableModel, String> col_mux_b_source;
     @FXML
-    private TableColumn<AddedAluOpTableModel, String> col_mux_b_extended;
+    private TableColumn<MuxTableModel, String> col_mux_b_extended;
+    @FXML
+    private Button btnMoveUpMuxB;
+    @FXML
+    private Button btnMoveDownMuxB;
+    @FXML
+    private Button btnNewMuxB;
+    @FXML
+    private Button btnRemoveMuxB;
 
     @FXML
     private RadioButton radioRegister;
     @FXML
-    private ChoiceBox cbRegister;
+    private ComboBox<MuxInput> cbRegister;
     @FXML
     private RadioButton radioConstant;
     @FXML
@@ -69,100 +88,250 @@ public class MuxView {
     @FXML
     private Label lblHex;
     @FXML
-    private Spinner spinnerDec;
+    private Spinner<Integer> spinnerDec;
     @FXML
-    private Spinner spinnerHex;
+    private Spinner<Integer> spinnerHex;
+    @FXML
+    private Button btnSave;
 
+    private ToggleGroup tgroup = new ToggleGroup();
+
+    /**
+     * This method is called during application start up and initializes the MuxView
+     * as much as possible without having any project data.
+     */
     public void initialize() {
         _res = Main.getTextResource("machine").using("mux");
         setLocalizedTexts();
+
+
+        radioRegister.setToggleGroup(tgroup);
+        radioConstant.setToggleGroup(tgroup);
     }
 
+    /**
+     * Sets localized texts from resource for the GUI elements.
+     */
     private void setLocalizedTexts() {
         paneMuxA.setText(_res.format("table.title", "A"));
         paneMuxB.setText(_res.format("table.title", "B"));
-        final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneSelectedConnection, radioRegister, radioConstant, lblDec, lblHex));
+        final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneSelectedConnection, radioRegister, radioConstant, lblDec, lblHex, btnSave));
         for (Labeled con : controls) {
             con.setText(_res.get(con.getId().replace("_", ".")));
         }
     }
 
+    /**
+     * This method is called from the main controller if a new project was created or a opened.
+     * It initializes the two multiplexer {@link TableView}s as well as the register {@link ComboBox} because they need project data.
+     */
     public void initMuxView() {
         _config = Main.getWorkspace().getProject().getMachineConfiguration();
         initTableMuxA();
         initTableMuxB();
+
+        cbRegister.setItems(FXCollections.observableArrayList(_config.getAvailableSources()));
+        // set a new string converter for the combo box, otherwise the toString method of MuxInput would be used
+        cbRegister.setConverter(new StringConverter<MuxInput>() {
+            @Override
+            public String toString(MuxInput muxInput) {
+                if (muxInput == null) {
+                    return null;
+                } else {
+                    return muxInput.getName();
+                }
+            }
+
+            @Override
+            public MuxInput fromString(String muxInputString) {
+                return null;
+            }
+        });
+
+        cbRegister.valueProperty().addListener((obs, oldValue, newValue) ->
+                updateSaveButton());
+
+        tgroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
+
+                RadioButton chk = (RadioButton) t1.getToggleGroup().getSelectedToggle();
+                boolean disable;
+                if (chk.equals(radioRegister)) {
+                    disable = true;
+                } else if (chk.equals(radioConstant)) {
+                    disable = false;
+                } else {
+                    return;
+                }
+                cbRegister.setDisable(!disable);
+                lblDec.setDisable(disable);
+                lblHex.setDisable(disable);
+                spinnerHex.setDisable(disable);
+                spinnerDec.setDisable(disable);
+
+                updateSaveButton();
+            }
+        });
+
+        initSpinners();
+
     }
 
+    /**
+     * Sets up two synchronous spinners with different value representation.
+     */
+    private void initSpinners() {
+        SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE);
+        valueFactory.setWrapAround(true);
+
+        spinnerHex.setValueFactory(valueFactory);
+        spinnerDec.setValueFactory(valueFactory);
+        spinnerDec.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.DEC));
+        spinnerHex.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.HEX));
+
+        valueFactory.setValue(0);
+
+        spinnerDec.valueProperty().addListener((obs, oldValue, newValue) ->
+                updateSaveButton());
+    }
+
+    /**
+     * Initializes the {@link TableView} for multiplexer A.
+     */
     private void initTableMuxA() {
-        // TODO
+        col_mux_a_code.setCellValueFactory(new PropertyValueFactory<>("code"));
+        col_mux_a_source.setCellValueFactory(new PropertyValueFactory<>("source"));
+        col_mux_a_extended.setCellValueFactory(new PropertyValueFactory<>("extended"));
+
+        tableMuxA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                disableMuxControls(true);
+                setSelectedConnection(newSelection.getMuxInput());
+                if (tableMuxA.getSelectionModel().getSelectedIndex() == 0) {
+                    btnMoveUpMuxA.setDisable(true);
+                }
+                else if (tableMuxA.getSelectionModel().getSelectedIndex() == tableMuxA.getItems().size()-1) {
+                    btnMoveDownMuxA.setDisable(true);
+                }
+            }
+        });
 
         removeTableHeader(tableMuxA);
         updateTableMuxA();
     }
 
+    /**
+     * Updates the {@link TableView} for multiplexer A.
+     */
     private void updateTableMuxA() {
-        ObservableList<AddedAluOpTableModel> data = FXCollections.observableArrayList();
+        ObservableList<MuxTableModel> data = FXCollections.observableArrayList();
 
-        for (AluOperation op : _config.getAluOperations()) {
-            data.add(new AddedAluOpTableModel(op, _config));
+        final List<MuxInput> muxInputList = _config.getMuxSources(MuxType.A);
+        int size = muxInputList.size();
+
+        for (int i = 0; i < size; i++) {
+            MuxInput muxInput = muxInputList.get(i);
+            data.add(new MuxTableModel(muxInput, i, size));
         }
 
-        final int size = _config.getAluOperations().size()-1;
-
-        data.forEach((model) -> {
-            int pos = _config.getAluOperations().indexOf(model.getAluOP());
-            model.setOpcode(Util.toBinaryAddress(pos, size));
-        });
-
-        //tableMuxA.setItems(data);
+        tableMuxA.setItems(data);
     }
 
+    /**
+     * Initializes the {@link TableView} for multiplexer B.
+     */
     private void initTableMuxB() {
-/*        col_available_op.setCellValueFactory(new PropertyValueFactory<>("op"));
+        col_mux_b_code.setCellValueFactory(new PropertyValueFactory<>("code"));
+        col_mux_b_source.setCellValueFactory(new PropertyValueFactory<>("source"));
+        col_mux_b_extended.setCellValueFactory(new PropertyValueFactory<>("extended"));
 
-        tableAvailable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        if (!tableAvailable.getSelectionModel().getSelectedItems().isEmpty()) {
-                            addOperation();
-                        }
-                    }
+        tableMuxB.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                disableMuxControls(false);
+                setSelectedConnection(newSelection.getMuxInput());
+                if (tableMuxB.getSelectionModel().getSelectedIndex() == 0) {
+                    btnMoveUpMuxB.setDisable(true);
+                }
+                else if (tableMuxB.getSelectionModel().getSelectedIndex() == tableMuxB.getItems().size()-1) {
+                    btnMoveDownMuxB.setDisable(true);
                 }
             }
         });
-
-        tableAvailable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                tableAdded.getSelectionModel().clearSelection();
-                AluOperation op = newSelection.getAluOP();
-                txtRT.setText(ALU_RESULT + op.getRtNotation(_resAlu));
-                txtDescription.setText(op.getDescription(_resAlu));
-
-                btnAdd.setDisable(false);
-                btnRemove.setDisable(true);
-                btnMoveDown.setDisable(true);
-                btnMoveUp.setDisable(true);
-            }
-        });     */
 
         removeTableHeader(tableMuxB);
         updateTableMuxB();
     }
 
+    /**
+     * Updates the {@link TableView} for multiplexer B.
+     */
     private void updateTableMuxB() {
-        ObservableList<AvailableAluOpTableModel> data = FXCollections.observableArrayList();
+        ObservableList<MuxTableModel> data = FXCollections.observableArrayList();
 
-        for (AluOperation op : AluOperation.values()) {
-            if (!_config.getAluOperations().contains(op)) {
-                data.add(new AvailableAluOpTableModel(op));
-            }
+        final List<MuxInput> muxInputList = _config.getMuxSources(MuxType.B);
+        int size = muxInputList.size();
+
+        for (int i = 0; i < size; i++) {
+            MuxInput muxInput = muxInputList.get(i);
+            data.add(new MuxTableModel(muxInput, i, size));
         }
 
-        //tableMuxB.setItems(data);
+        tableMuxB.setItems(data);
     }
 
+    /**
+     * Sets the information of the given {@link MuxInput} to the GUI components of the {@link TitledPane} for the selected connection.
+     *
+     * @param muxInput
+     *          the {@link MuxInput} for which the data should be displayed
+     */
+    private void setSelectedConnection(MuxInput muxInput) {
+        if (muxInput instanceof RegisterMuxInput) {
+            radioRegister.setDisable(false);
+            radioConstant.setDisable(false);
+            radioRegister.setSelected(true);
+            cbRegister.getSelectionModel().select(muxInput);
+        } else if (muxInput instanceof ConstantMuxInput) {
+            radioRegister.setDisable(false);
+            radioConstant.setDisable(false);
+            radioConstant.setSelected(true);
+            spinnerDec.getValueFactory().setValue(((ConstantMuxInput) muxInput).getConstant());
+        }
+
+    }
+
+    /**
+     * This method is called if the selection of one of the two multiplexer {@link TableView}s is changed.
+     * It clears the selection of the other table and disables/enables the move up/down buttons for each table.
+     *
+     * @param isMuxA
+     *          whether the selected multiplexer is multiplexer A or not
+     */
+    private void disableMuxControls(boolean isMuxA) {
+        if (isMuxA) {
+            tableMuxB.getSelectionModel().clearSelection();
+        }
+        else {
+            tableMuxA.getSelectionModel().clearSelection();
+        }
+
+        btnSave.setDisable(false);
+        btnMoveDownMuxA.setDisable(!isMuxA);
+        btnMoveUpMuxA.setDisable(!isMuxA);
+        btnMoveDownMuxB.setDisable(isMuxA);
+        btnMoveUpMuxB.setDisable(isMuxA);
+        btnRemoveMuxA.setDisable(!isMuxA);
+        btnRemoveMuxB.setDisable(isMuxA);
+    }
+
+    /**
+     * Removes the table header of a {@link TableView} by looking up the TableHeaderRow and making it invisible.
+     *
+     * @param table
+     *          the {@link TableView} for that the header should be removed
+     */
+    //TODO: move to something like tableUtils
     private void removeTableHeader(TableView table) {
         Pane header = (Pane) table.lookup("TableHeaderRow");
         header.setMaxHeight(0);
@@ -171,124 +340,388 @@ public class MuxView {
         header.setVisible(false);
     }
 
-    @FXML
-    private Button btnMoveUpMuxA;
-    @FXML
-    private Button btnMoveDownMuxA;
-    @FXML
-    private Button btnMoveUpMuxB;
-    @FXML
-    private Button btnMoveDownMuxB;
-    @FXML
-    private Button btnNewMuxA;
-    @FXML
-    private Button btnRemoveMuxA;
-    @FXML
-    private Button btnNewMuxB;
-    @FXML
-    private Button btnRemoveMuxB;
+    /**
+     * Moves the currently selected source of the currently selected multiplexer.
+     * It moves the source up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
+     * The selected multiplexer is identified by the caller object.
+     *
+     * @param ae
+     *          the {@link ActionEvent} calling the method
+     */
+    public void moveSource(ActionEvent ae) {
 
-    public void moveOperation(ActionEvent ae) {
-/*
-        if (tableAdded.getSelectionModel().getSelectedItems().isEmpty()) {
+        if (tableMuxA.getSelectionModel().getSelectedItems().isEmpty() && tableMuxB.getSelectionModel().getSelectedItems().isEmpty()) {
             return;
         }
 
         Object caller = ae.getSource();
         int difference = 0;
-        if (caller.equals(btnMoveUp)) {
+
+        if (caller.equals(btnMoveUpMuxA) || caller.equals(btnMoveUpMuxB)) {
             difference = -1;
         }
-        else if (caller.equals(btnMoveDown)) {
+        else if (caller.equals(btnMoveDownMuxA) || caller.equals(btnMoveDownMuxB)) {
             difference = 1;
         }
+
+        MuxType mux = null;
+        if (caller.equals(btnMoveUpMuxA) || caller.equals(btnMoveDownMuxA)) {
+            mux = MuxType.A;
+        }
+        else if (caller.equals(btnMoveUpMuxB) || caller.equals(btnMoveDownMuxB)) {
+            mux = MuxType.B;
+        }
+        if (mux == null) {
+            return;
+        }
+
+        int index1;
+        int size;
+        if (mux == MuxType.A) {
+            index1 = tableMuxA.getSelectionModel().getSelectedIndex();
+            size = tableMuxA.getItems().size();
+        }
         else {
-            return;
+            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
+            index1 = tableMuxB.getSelectionModel().getSelectedIndex();
+            size = tableMuxB.getItems().size();
         }
 
-        int index1 = tableAdded.getSelectionModel().getSelectedIndex();
         int index2 = index1 + difference;
-        if (index2 < 0 || index2 >= tableAdded.getItems().size()) {
+        if (index2 < 0 || index2 >= size) {
             return;
         }
 
-        // Move operations in model and adapt selection
-        _config.exchangeAluOperations(index1, index2);
-        updateAddedTable();
-        tableAdded.getSelectionModel().select(index2);
-        //_addedTable.getSelectionModel().setSelectionInterval(index2, index2);
+        // Move one up
+        _config.exchangeMuxSources(mux, index1, index2);
+        Main.getWorkspace().setProjectUnsaved();
 
-        Main.getWorkspace().setProjectUnsaved();    */
+        if (mux == MuxType.A) {
+            updateTableMuxA();
+            tableMuxA.getSelectionModel().select(index2);
+        }
+        else {
+            updateTableMuxB();
+            tableMuxB.getSelectionModel().select(index2);
+        }
+
+        updateSaveButton();
     }
 
-    //TODO: change to mux
-    public static class AddedAluOpTableModel {
-        private final SimpleStringProperty opcode;
-        private final SimpleStringProperty op;
-        private final AluOperation aluOP;
+    /**
+     * Deletes the currently selected source from multiplexer A.
+     */
+    public void deleteSourceFromA() {
+        deleteSource(MuxType.A);
+    }
 
-        private AddedAluOpTableModel(AluOperation aluOP, MachineConfiguration config) {
-            this.aluOP = aluOP;
+    /**
+     * Deletes the currently selected source from multiplexer B.
+     */
+    public void deleteSourceFromB() {
+        deleteSource(MuxType.B);
+    }
 
-            int size = config.getAluOperations().size()-1;
-            int pos = config.getAluOperations().indexOf(aluOP);
-            this.opcode = new SimpleStringProperty(Util.toBinaryAddress(pos, size));
+    /**
+     * Deletes the currently selected source from the given multiplexer.
+     *
+     * @param mux
+     *          the multiplexer for which the source should be deleted
+     */
+    private void deleteSource(MuxType mux) {
+        int index = -1;
 
-            this.op = new SimpleStringProperty(aluOP.getOperationName());
+        if (mux == MuxType.A) {
+            index = tableMuxA.getSelectionModel().getSelectedIndex();
+        }
+        else {
+            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
+            index = tableMuxB.getSelectionModel().getSelectedIndex();
         }
 
-        public String getOpcode() {
-            return opcode.get();
+        FXDialog delete = new FXDialog(Alert.AlertType.CONFIRMATION, _res.get("delete-dialog.title"), _res.format("delete-dialog.message", mux.name()));
+        Optional<ButtonType> result = delete.showAndWait();
+        if (result.get() != ButtonType.OK) {
+            return;
         }
 
-        public SimpleStringProperty opcodeProperty() {
-            return opcode;
+        _config.removeMuxSource(mux, index);
+
+        if (mux == MuxType.A) {
+            updateTableMuxA();
+            if (!tableMuxA.getItems().isEmpty()) {
+                tableMuxA.getSelectionModel().select(Math.min(tableMuxA.getItems().size(), index-1));
+            }
+        }
+        else {
+            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
+            updateTableMuxB();
+            if (!tableMuxB.getItems().isEmpty()) {
+                tableMuxB.getSelectionModel().select(Math.min(tableMuxB.getItems().size(), index-1));
+            }
         }
 
-        public void setOpcode(String opcode) {
-            this.opcode.set(opcode);
-        }
+        Main.getWorkspace().setProjectUnsaved();
+    }
 
-        public String getOp() {
-            return op.get();
-        }
+    /**
+     * Adds a new default source to mulitplexer A.
+     */
+    public void addSourceToA() {
+        addSource(MuxType.A);
+    }
 
-        public SimpleStringProperty opProperty() {
-            return op;
-        }
+    /**
+     * Adds a new default source to multiplexer B.
+     */
+    public void addSourceToB() {
+        addSource(MuxType.B);
+    }
 
-        public void setOp(String op) {
-            this.op.set(op);
+    /**
+     * Adds a new default source to the given multiplexer.
+     *
+     * @param mux
+     *          the multiplexer for which the source should be added
+     */
+    private void addSource(MuxType mux) {
+        _config.addMuxSource(mux, createDefaultMuxSource());
+        if (mux == MuxType.A) {
+            tableMuxA.getSelectionModel().select(tableMuxA.getItems().size()-1);
+            updateTableMuxA();
         }
-
-        public AluOperation getAluOP() {
-            return aluOP;
+        else {
+            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
+            tableMuxB.getSelectionModel().select(tableMuxB.getItems().size()-1);
+            updateTableMuxB();
         }
     }
 
-    public static class AvailableAluOpTableModel {
-        private final SimpleStringProperty op;
-        private final AluOperation aluOP;
+    /**
+     * Creates a default multiplexer source. The default is a {@link ConstantMuxInput} with value zero.
+     *
+     * @return
+     *          the default {@link MuxInput}
+     */
+    private MuxInput createDefaultMuxSource()
+    {
+        return new ConstantMuxInput(0);
+    }
 
-        private AvailableAluOpTableModel(AluOperation aluOP) {
-            this.aluOP = aluOP;
-            this.op = new SimpleStringProperty(aluOP.getOperationName());
+    /**
+     * This method is called from the save {@link Button} and updates the selected multiplexer source at the {@link MachineConfiguration}.<br>
+     * <br>
+     * The selected source and multiplexer are identified via the {@link SelectionModel} of the two multiplexer {@link TableView}s.
+     */
+    public void updateMuxInput() {
+        int index = -1;
+        MuxType mux = null;
+
+        if (!tableMuxA.getSelectionModel().getSelectedItems().isEmpty()) {
+            mux = MuxType.A;
+            index = tableMuxA.getSelectionModel().getSelectedIndex();
+        }
+        else if (!tableMuxB.getSelectionModel().getSelectedItems().isEmpty()) {
+            mux = MuxType.B;
+            index = tableMuxB.getSelectionModel().getSelectedIndex();
         }
 
-        public String getOp() {
-            return op.get();
+        if (index == -1 || mux == null) {
+            return;
         }
 
-        public SimpleStringProperty opProperty() {
-            return op;
+        MuxInput input;
+        if (radioConstant.isSelected())
+        {
+            Object i = spinnerDec.getValue();
+            if (i instanceof Integer)
+                input = new ConstantMuxInput((Integer) spinnerDec.getValue());
+            else
+                return;
+        }
+        else if (radioRegister.isSelected())
+        {
+            Object register = cbRegister.getSelectionModel().getSelectedItem();
+            if (register instanceof MuxInput)
+                input = (MuxInput) register;
+            else
+                return;
+        }
+        else
+            return;
+
+        _config.setMuxSource(mux, index, input);
+
+        if (mux == MuxType.A) {
+            updateTableMuxA();
+        }
+        else {
+            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
+            updateTableMuxB();
+        }
+    }
+
+    /**
+     * Checks if the save {@link Button} should be enabled and updates the disableProperty.
+     */
+    protected void updateSaveButton()
+    {
+        boolean isValid = isInputValid();
+        boolean isUnsaved = isUnsaved();
+
+        boolean saveEnabled = isValid && isUnsaved;
+        if (btnSave.isDisable() == saveEnabled)
+            btnSave.setDisable(!saveEnabled);
+    }
+
+    /**
+     * Checks whether the input of the currently selected source type is valid. The source types are register and constant.
+     *
+     * @return
+     *          whether the input of either the register or constant is valid
+     */
+    private boolean isInputValid()
+    {
+        if (radioConstant.isSelected())
+        {
+            if (spinnerDec.getValue() == null) {
+                return false;
+            }
+            return true;
+        }
+        else if (radioRegister.isSelected())
+        {
+            if (cbRegister.getSelectionModel().getSelectedItem() == null) {
+                return false;
+            }
+            return true;
         }
 
-        public void setOp(String op) {
-            this.op.set(op);
+        return false;
+    }
+
+    /**
+     * Checks if the selected source from one of the {@link TableView}s was modified.
+     *
+     * @return
+     *          whether the selected source is modified
+     */
+    private boolean isUnsaved()
+    {
+
+        MuxInput source = null;
+        if (!tableMuxA.getSelectionModel().getSelectedItems().isEmpty()) {
+            source = tableMuxA.getSelectionModel().getSelectedItem().getMuxInput();
+        }
+        else if (!tableMuxB.getSelectionModel().getSelectedItems().isEmpty()) {
+            source = tableMuxB.getSelectionModel().getSelectedItem().getMuxInput();
         }
 
-        public AluOperation getAluOP() {
-            return aluOP;
+        if (source == null) {
+            return false;
+        }
+        else if (source instanceof ConstantMuxInput && !radioConstant.isSelected()) {
+            return true;
+        }
+        else if (source instanceof RegisterMuxInput && !radioRegister.isSelected()) {
+            return true;
+        }
+        else if (source instanceof NullMuxInput && (radioConstant.isSelected() || radioRegister.isSelected())) {
+            return true;
+        }
+        else if (source instanceof ConstantMuxInput)
+        {
+            Integer value = ((ConstantMuxInput) source).getConstant();
+            if (!value.equals(spinnerDec.getValue())) {
+                return true;
+            }
+        }
+        else if (source instanceof RegisterMuxInput)
+        {
+            // comparison by object always is false so I used the String comparison
+            String srcName = source.getName();
+            String selectedName = "";
+            try {
+                selectedName = cbRegister.getSelectionModel().getSelectedItem().getName();
+            }
+            catch (NullPointerException e) {
+                return false;
+            }
+            if (!srcName.equals(selectedName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * This class represents the table model for the multiplexer {@link TableView}s.<br>
+     * <br>
+     * It stores the multiplexer source as {@link MuxInput} as well as the binary code, source info and extended source info as {@link SimpleStringProperty}.
+     *
+     * @author Philipp Rohde
+     */
+    public static class MuxTableModel {
+        private final SimpleStringProperty code;
+        private final SimpleStringProperty source;
+        private final SimpleStringProperty extended;
+        private final MuxInput muxInput;
+
+        private MuxTableModel(MuxInput muxInput, int index, int size) {
+            this.muxInput = muxInput;
+            this.code = new SimpleStringProperty(Util.toBinaryAddress(index, size));
+            this.source = new SimpleStringProperty(muxInput.getName());
+            this.extended = new SimpleStringProperty(getExtendedSourceInfo());
+        }
+
+        private String getExtendedSourceInfo() {
+            if (this.muxInput instanceof ConstantMuxInput)
+            {
+                int value = ((ConstantMuxInput) this.muxInput).getConstant();
+                return String.format("0x%08X", value);
+            }
+            return "";
+        }
+
+        public String getCode() {
+            return code.get();
+        }
+
+        public SimpleStringProperty codeProperty() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code.set(code);
+        }
+
+        public String getSource() {
+            return source.get();
+        }
+
+        public SimpleStringProperty sourceProperty() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source.set(source);
+        }
+
+        public String getExtended() {
+            return extended.get();
+        }
+
+        public SimpleStringProperty extendedProperty() {
+            return extended;
+        }
+
+        public void setExtended(String extended) {
+            this.extended.set(extended);
+        }
+
+        public MuxInput getMuxInput() {
+            return muxInput;
         }
     }
 

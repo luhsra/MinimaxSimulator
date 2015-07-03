@@ -35,8 +35,8 @@
                                 <TableView fx:id="tableMuxA" prefHeight="548.0" prefWidth="472.0">
                                     <columns>
                                         <TableColumn fx:id="col_mux_a_code" prefWidth="90.0" resizable="false" text=""/>
-                                        <TableColumn fx:id="col_mux_a_source" prefWidth="180.0" resizable="false" text=""/>
-                                        <TableColumn fx:id="col_mux_a_extended" prefWidth="180.0" resizable="false" text=""/>
+                                        <TableColumn fx:id="col_mux_a_source" prefWidth="135.0" resizable="false" text=""/>
+                                        <TableColumn fx:id="col_mux_a_extended" prefWidth="120.0" resizable="false" text=""/>
                                     </columns>
                                 </TableView>
                                 <VBox maxHeight="50.0" prefHeight="100.0" prefWidth="80.0" spacing="15.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -44,14 +44,14 @@
                                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
                                     </padding>
                                     <children>
-                                        <Button fx:id="btnMoveUpMuxA" mnemonicParsing="false" onAction="#moveOperation" text="">
+                                        <Button fx:id="btnMoveUpMuxA" mnemonicParsing="false" onAction="#moveSource" text="" disable="true">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/arrow-090.png"/>
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btnMoveDownMuxA" mnemonicParsing="false" onAction="#moveOperation" text="">
+                                        <Button fx:id="btnMoveDownMuxA" mnemonicParsing="false" onAction="#moveSource" text="" disable="true">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/arrow-270.png"/>
@@ -69,14 +69,14 @@
                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
                                     </rowConstraints>
                                     <children>
-                                        <Button id="add_label" fx:id="btnNewMuxA" mnemonicParsing="false" text="Neu" GridPane.halignment="CENTER">
+                                        <Button id="add_label" fx:id="btnNewMuxA" mnemonicParsing="false" text="Neu" GridPane.halignment="CENTER" onAction="#addSourceToA">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/node-insert-next2.png"/>
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button id="remove_label" fx:id="btnRemoveMuxA" mnemonicParsing="false" text="Löschen" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                        <Button id="remove_label" fx:id="btnRemoveMuxA" mnemonicParsing="false" text="Löschen" GridPane.columnIndex="1" GridPane.halignment="CENTER" onAction="#deleteSourceFromA" disable="true">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/cross.png"/>
@@ -103,13 +103,13 @@
                     <children>
                         <VBox prefHeight="548.0" prefWidth="233.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <RadioButton id="radio_register" fx:id="radioRegister" mnemonicParsing="false" text="Register"/>
-                                <ChoiceBox fx:id="cbRegister" prefWidth="233.0">
+                                <RadioButton id="radio_register" fx:id="radioRegister" mnemonicParsing="false" text="Register" disable="true"/>
+                                <ComboBox fx:id="cbRegister" prefWidth="233.0" disable="true">
                                     <VBox.margin>
                                         <Insets top="10.0"/>
                                     </VBox.margin>
-                                </ChoiceBox>
-                                <RadioButton id="radio_constant" fx:id="radioConstant" mnemonicParsing="false" text="RadioButton">
+                                </ComboBox>
+                                <RadioButton id="radio_constant" fx:id="radioConstant" mnemonicParsing="false" text="RadioButton" disable="true">
                                     <VBox.margin>
                                         <Insets top="25.0"/>
                                     </VBox.margin>
@@ -128,11 +128,16 @@
                                         <Insets top="10.0"/>
                                     </VBox.margin>
                                     <children>
-                                        <Label id="input.decimal" fx:id="lblDec" text="Label"/>
-                                        <Label id="input.hexadecimal" fx:id="lblHex" text="Label" GridPane.rowIndex="1"/>
-                                        <Spinner fx:id="spinnerDec" GridPane.columnIndex="1"/>
-                                        <Spinner fx:id="spinnerHex" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                        <Button mnemonicParsing="false" prefWidth="200.0" text="Button" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                        <Label id="input.decimal" fx:id="lblDec" text="Label" disable="true"/>
+                                        <Label id="input.hexadecimal" fx:id="lblHex" text="Label" GridPane.rowIndex="1" disable="true"/>
+                                        <Spinner fx:id="spinnerDec" GridPane.columnIndex="1" disable="true"/>
+                                        <Spinner fx:id="spinnerHex" GridPane.columnIndex="1" GridPane.rowIndex="1" disable="true"/>
+                                        <Button id="save_label" fx:id="btnSave" mnemonicParsing="false" prefWidth="200.0" text="Button" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" onAction="#updateMuxInput" disable="true">
+                                            <graphic>
+                                                <ImageView>
+                                                    <Image url="/images/fugue/disk-black.png"/>
+                                                </ImageView>
+                                            </graphic>
                                             <GridPane.margin>
                                                 <Insets top="80.0"/>
                                             </GridPane.margin>
@@ -165,8 +170,8 @@
                                 <TableView fx:id="tableMuxB" prefHeight="548.0" prefWidth="472.0" GridPane.columnIndex="1">
                                     <columns>
                                         <TableColumn fx:id="col_mux_b_code" prefWidth="90.0" resizable="false" text=""/>
-                                        <TableColumn fx:id="col_mux_b_source" prefWidth="180.0" resizable="false" text=""/>
-                                        <TableColumn fx:id="col_mux_b_extended" prefWidth="180.0" resizable="false" text=""/>
+                                        <TableColumn fx:id="col_mux_b_source" prefWidth="135.0" resizable="false" text=""/>
+                                        <TableColumn fx:id="col_mux_b_extended" prefWidth="120.0" resizable="false" text=""/>
                                     </columns>
                                 </TableView>
                                 <VBox maxHeight="50.0" prefHeight="100.0" prefWidth="80.0" spacing="15.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -177,14 +182,14 @@
                                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
                                     </padding>
                                     <children>
-                                        <Button fx:id="btnMoveUpMuxB" mnemonicParsing="false" onAction="#moveOperation" text="">
+                                        <Button fx:id="btnMoveUpMuxB" mnemonicParsing="false" onAction="#moveSource" text="" disable="true">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/arrow-090.png"/>
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="btnMoveDownMuxB" mnemonicParsing="false" onAction="#moveOperation" text="">
+                                        <Button fx:id="btnMoveDownMuxB" mnemonicParsing="false" onAction="#moveSource" text="" disable="true">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/arrow-270.png"/>
@@ -202,14 +207,14 @@
                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
                                     </rowConstraints>
                                     <children>
-                                        <Button id="add_label" fx:id="btnNewMuxB" mnemonicParsing="false" text="Neu" GridPane.halignment="CENTER">
+                                        <Button id="add_label" fx:id="btnNewMuxB" mnemonicParsing="false" text="Neu" GridPane.halignment="CENTER" onAction="#addSourceToB">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/node-insert-next2.png"/>
                                                 </ImageView>
                                             </graphic>
                                         </Button>
-                                        <Button id="remove_label" fx:id="btnRemoveMuxB" mnemonicParsing="false" text="Löschen" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                        <Button id="remove_label" fx:id="btnRemoveMuxB" mnemonicParsing="false" text="Löschen" GridPane.columnIndex="1" GridPane.halignment="CENTER" onAction="#deleteSourceFromB" disable="true">
                                             <graphic>
                                                 <ImageView>
                                                     <Image url="/images/fugue/cross.png"/>

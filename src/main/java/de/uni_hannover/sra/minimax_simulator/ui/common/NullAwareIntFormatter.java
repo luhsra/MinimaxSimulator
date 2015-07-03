@@ -4,6 +4,7 @@ import java.text.ParseException;
 
 import javax.swing.text.DefaultFormatter;
 
+//TODO extend from JavaFX TextFormatter
 public class NullAwareIntFormatter extends DefaultFormatter
 {
 	private final int _radix;
@@ -62,4 +63,6 @@ public class NullAwareIntFormatter extends DefaultFormatter
 
 		return _radix <= 10 ? str : str.toUpperCase();
 	}
+
+
 }
