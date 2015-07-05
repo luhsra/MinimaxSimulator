@@ -1,26 +1,16 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryExportWorker;
-import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryImportWorker;
-import de.uni_hannover.sra.minimax_simulator.gui.util.MemorySpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
-import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
-import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,23 +19,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import javafx.stage.FileChooser;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 
-//TODO: selection of OPs and showing information
 
 /**
- * FXController of the AluView
+ * <b>FXController of the AluView</b><br>
+ * <br>
+ * This controller handles every GUI interaction with the ALU {@link Tab}.
  *
  * @author Philipp Rohde
  */
@@ -89,15 +74,21 @@ public class AluView {
 
     private final static String ALU_RESULT = "ALU.result \u2190 ";
 
+    /**
+     * This method is called during application start up and initializes the AluView
+     * as much as possible without having any project data.
+     */
     public void initialize() {
         _res = Main.getTextResource("machine");
         _resAlu = Main.getTextResource("alu");
-        //txtRT.setFont(new Font("Monospaced", 14));
         txtDescription.setWrapText(true);
 
         setLocalizedTexts();
     }
 
+    /**
+     * Sets localized texts from resource for the GUI elements.
+     */
     private void setLocalizedTexts() {
         final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneAddedOP, paneAvailableOP, paneSelectedOP, lblRT, lblDescription, btnAdd, btnRemove));
         for (Labeled con : controls) {
@@ -105,16 +96,24 @@ public class AluView {
         }
     }
 
+    /**
+     * This method is called from the main controller if a new project was created or a opened.
+     * It initializes the two ALU operation {@link TableView}s because they need project data.
+     */
     public void initAluView() {
         _config = Main.getWorkspace().getProject().getMachineConfiguration();
         initAddedTable();
         initAvailableTable();
     }
 
+    /**
+     * Initializes the {@link TableView} for the added {@link AluOperation}s.
+     */
     private void initAddedTable() {
         col_added_op.setCellValueFactory(new PropertyValueFactory<>("op"));
         col_added_opcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
 
+        // remove operation with double click
         tableAdded.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -128,6 +127,7 @@ public class AluView {
             }
         });
 
+        // set selected operation and clear selection of other table
         tableAdded.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 tableAvailable.getSelectionModel().clearSelection();
@@ -152,6 +152,9 @@ public class AluView {
         updateAddedTable();
     }
 
+    /**
+     * Updates the {@link TableView} for the added {@link AluOperation}s.
+     */
     private void updateAddedTable() {
         ObservableList<AddedAluOpTableModel> data = FXCollections.observableArrayList();
 
@@ -169,9 +172,13 @@ public class AluView {
         tableAdded.setItems(data);
     }
 
+    /**
+     * Initializes the {@link TableView} for the available {@link AluOperation}s.
+     */
     private void initAvailableTable() {
         col_available_op.setCellValueFactory(new PropertyValueFactory<>("op"));
 
+        // add operation with double click
         tableAvailable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -185,6 +192,7 @@ public class AluView {
             }
         });
 
+        // set selected operation and clear selection of other table
         tableAvailable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 tableAdded.getSelectionModel().clearSelection();
@@ -203,6 +211,9 @@ public class AluView {
         updateAvailableTable();
     }
 
+    /**
+     * Updates the {@link TableView} for the available {@link AluOperation}s.
+     */
     private void updateAvailableTable() {
         ObservableList<AvailableAluOpTableModel> data = FXCollections.observableArrayList();
 
@@ -215,6 +226,13 @@ public class AluView {
         tableAvailable.setItems(data);
     }
 
+    /**
+     * Removes the table header of a {@link TableView} by looking up the TableHeaderRow and making it invisible.
+     *
+     * @param table
+     *          the {@link TableView} for that the header should be removed
+     */
+    //TODO: move to something like tableUtils
     private void removeTableHeader(TableView table) {
         Pane header = (Pane) table.lookup("TableHeaderRow");
         header.setMaxHeight(0);
@@ -223,6 +241,9 @@ public class AluView {
         header.setVisible(false);
     }
 
+    /**
+     * Adds the currently selected available {@link AluOperation} to the list of added {@link AluOperation}s.
+     */
     public void addOperation() {
         AluOperation op = tableAvailable.getSelectionModel().getSelectedItem().getAluOP();
         if (op != null) {
@@ -237,6 +258,9 @@ public class AluView {
         }
     }
 
+    /**
+     * Removes the currently selected added {@link AluOperation} and adds it to the list of available {@link AluOperation}s.
+     */
     public void removeOperation() {
         AluOperation op = tableAdded.getSelectionModel().getSelectedItem().getAluOP();
         if (op != null) {
@@ -266,6 +290,13 @@ public class AluView {
     @FXML
     private Button btnMoveDown;
 
+    /**
+     * Moves the currently selected operation.
+     * It moves the source up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
+     *
+     * @param ae
+     *          the {@link ActionEvent} calling the method
+     */
     public void moveOperation(ActionEvent ae) {
 
         if (tableAdded.getSelectionModel().getSelectedItems().isEmpty()) {
@@ -299,6 +330,13 @@ public class AluView {
         Main.getWorkspace().setProjectUnsaved();
     }
 
+    /**
+     * This class represents the table model for the added {@link AluOperation}s {@link TableView}.<br>
+     * <br>
+     * It stores the {@link AluOperation} as well as the binary operation code and the operation name as {@link SimpleStringProperty}.
+     *
+     * @author Philipp Rohde
+     */
     public static class AddedAluOpTableModel {
         private final SimpleStringProperty opcode;
         private final SimpleStringProperty op;
@@ -343,6 +381,14 @@ public class AluView {
         }
     }
 
+    /**
+     * This class represents the table model for the added {@link AluOperation}s {@link TableView}.<br>
+     * <br>
+     * It stores the {@link AluOperation} as well as the operation name as {@link SimpleStringProperty}.
+     *
+     * @author Philipp Rohde
+     */
+    //TODO: check if it is possible to use the AddedAluOpTableModel with null as operation code instead of this class
     public static class AvailableAluOpTableModel {
         private final SimpleStringProperty op;
         private final AluOperation aluOP;

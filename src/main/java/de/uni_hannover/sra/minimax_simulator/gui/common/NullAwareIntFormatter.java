@@ -4,7 +4,8 @@ import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
 
 /**
- * TODO: documentation
+ * The NullAwareIntFormatter is a {@link TextFormatter} using the {@link NullAwareIntStringConverter}.
+ * This class is used for the multiplexer constant input {@link javafx.scene.control.Spinner}s of the {@link de.uni_hannover.sra.minimax_simulator.gui.MuxView}.
  *
  * @author Philipp Rohde
  */

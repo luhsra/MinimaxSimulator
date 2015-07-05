@@ -16,6 +16,11 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import com.google.common.base.Throwables;
 import javafx.application.Platform;
 
+/**
+ *
+ * @author Philipp Rohde
+ * @author Martin L&uuml;ck
+ */
 public class UI
 {
 	private static UI	instance;
@@ -101,6 +106,13 @@ public class UI
 			invokeNow(r);
 	}
 
+	/**
+	 * If called from the FX application thread, just calls {@link Runnable#run()} on <code>r</code>.<br>
+	 * Otherwise, schedules its execution there.
+	 *
+	 * @param r
+	 * 			the {@link Runnable} to execute at FX application thread
+	 */
 	public static void invokeInFAT(Runnable r) {
 		checkNotNull(r);
 		if (Platform.isFxApplicationThread()) {

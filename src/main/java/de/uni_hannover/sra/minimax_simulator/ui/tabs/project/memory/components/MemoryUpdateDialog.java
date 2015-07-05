@@ -3,8 +3,13 @@ package de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXValueUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
-import javafx.scene.image.ImageView;
 
+/**
+ * The MemoryUpdateDialog is basically an {@link FXValueUpdateDialog}.
+ * It prompts for which memory address the value will be changed. On confirmation the new value will be stored in the {@link MachineMemory}.
+ *
+ * @author Philipp Rohde
+ */
 public class MemoryUpdateDialog extends FXValueUpdateDialog
 {
 	private final MachineMemory	_memory;
@@ -19,10 +24,14 @@ public class MemoryUpdateDialog extends FXValueUpdateDialog
 
 		_messageLabel.setText(_res.format("message",
 			Util.toHex(address, memory.getAddressWidth(), true)));
-
-		_swapMode.setGraphic(new ImageView("images/"+_res.get("swapmode.icon")));
 	}
 
+	/**
+	 * Sets the new value to the memory address for which the dialog was opened.
+	 *
+	 * @param value
+	 * 			the new value
+	 */
 	@Override
 	protected void setValue(int value)
 	{

@@ -7,7 +7,10 @@ import javafx.scene.control.ButtonType;
 import java.util.Optional;
 
 /**
- * Created by philipp on 24.06.15.
+ * An FXDialog is basically an {@link Alert}.
+ * It makes it more comfortable to set up a new dialog and get the user's choice.
+ *
+ * @author Philipp Rohde
  */
 public class FXDialog extends Alert {
 
@@ -21,6 +24,12 @@ public class FXDialog extends Alert {
         this.initOwner(Main.getPrimaryStage());
     }
 
+    /**
+     * Gets the user's choice.
+     *
+     * @return
+     *          the chosen {@link ButtonType}
+     */
     public ButtonType getChoice() {
         Optional<ButtonType> result = this.showAndWait();
         return result.get();

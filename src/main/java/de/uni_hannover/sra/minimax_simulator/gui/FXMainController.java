@@ -2,8 +2,6 @@ package de.uni_hannover.sra.minimax_simulator.gui;
 
 import com.google.common.collect.ImmutableMap;
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.gui.MemoryView;
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
 import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
@@ -11,31 +9,27 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXAboutDialog;
-import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import javafx.application.Platform;
-import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.paint.Color;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.*;
 
 /**
- * The controller for the JavaFX GUI.
+ * <b>The main controller for the JavaFX GUI.</b><br>
+ * <br>
+ * This controller handles the GUI interactions with the {@link MenuBar} and {@link TabPane} as well as
+ * the binded shortcuts.
  *
  * @author Philipp
  *
  */
-
 public class FXMainController implements WorkspaceListener {
 
     public Menu menuProject;
@@ -89,6 +83,9 @@ public class FXMainController implements WorkspaceListener {
     private static String _versionString;
     private static final Workspace _ws = Main.getWorkspace();
 
+    /**
+     * This method is called during application start up and initializes the GUI.
+     */
     public void initialize() {
 
         _versionString = Main.getVersionString();
@@ -109,6 +106,9 @@ public class FXMainController implements WorkspaceListener {
                 .build();
     }
 
+    /**
+     * Binds the shortcuts to the {@link MenuItem}s.
+     */
     private void setShortcuts() {
         // menu: project
         this.project_new.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
@@ -129,6 +129,9 @@ public class FXMainController implements WorkspaceListener {
         this.view_conf_signal.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN));
     }
 
+    /**
+     * Sets localized texts from resource for the GUI elements.
+     */
     private void setLocalizedTexts() {
         TextResource res = Main.getTextResource("menu");
         // menu: project
@@ -204,11 +207,17 @@ public class FXMainController implements WorkspaceListener {
         }
     }
 
+    /**
+     * Shuts down the application.
+     */
     public void exitApplication() {
         Platform.exit();
     }
 
-    public void newProject(ActionEvent ae) {
+    /**
+     * Creates a new project with default project data and initializes the rest of the GUI.
+     */
+    public void newProject() {
         setDisable(false);
         UIUtil.executeWorker(new Runnable() {
             @Override
@@ -258,6 +267,7 @@ public class FXMainController implements WorkspaceListener {
         // TODO: create project data
     }
 
+    @Deprecated
     private void drawCanvas() {
 /*        GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.GREEN);
@@ -265,9 +275,16 @@ public class FXMainController implements WorkspaceListener {
         gc.strokeLine(40, 10, 10, 40);  */
     }
 
+    /**
+     * Opens a new project from file.
+     *
+     * @param ae
+     *          the {@link ActionEvent} calling the method
+     */
     public void openProject(ActionEvent ae) {
         System.out.println(ae.toString());
         System.out.println(ae.getSource().toString());
+        // TODO: is this source thing necessary?
         if (ae.getSource().toString().substring(12, 19).equals("project")) {
             System.out.println("I'm a project");
             String source = ae.getSource().toString().substring(20).split(",")[0];
@@ -283,20 +300,20 @@ public class FXMainController implements WorkspaceListener {
         // TODO: open existing project
     }
 
-    public void saveProject(ActionEvent ae) {
+    public void saveProject() {
         // TODO: save the project data
     }
 
     public void saveProjectAs(ActionEvent ae) {
-        // TODO
+        // TODO: save as
     }
 
     public void exportSchematics(ActionEvent ae) {
-        // TODO
+        // TODO: export schematics
     }
 
     public void exportSignal(ActionEvent ae) {
-        // TODO
+        // TODO: export signal
     }
 
     public void closeProject(ActionEvent ae) {
@@ -304,6 +321,13 @@ public class FXMainController implements WorkspaceListener {
         // TODO: close project data
     }
 
+    /**
+     * Disables/Enables the project dependent {@link MenuItem}s.
+     * This method is called if a project was opened or closed.
+     *
+     * @param disabled
+     *          whether the GUI components should be disabled
+     */
     private void setDisable(boolean disabled) {
         if (disabledMenuItems == null) {
             disabledMenuItems = new ArrayList<>(Arrays.asList(project_save, project_saveas, project_export_schematics, project_export_signal, project_close, view_overview, view_memory, view_debugger));
@@ -320,6 +344,12 @@ public class FXMainController implements WorkspaceListener {
 
     }
 
+    /**
+     * Opens the {@link Tab} corresponding to the {@link ActionEvent} calling the method.
+     *
+     * @param ae
+     *          the {@link ActionEvent} calling the method
+     */
     public void openTab(ActionEvent ae) {
 
         if (!(ae.getSource() instanceof MenuItem)) {
@@ -346,23 +376,33 @@ public class FXMainController implements WorkspaceListener {
         tabpane.getSelectionModel().select(toAdd);
     }
 
+    /**
+     * Shows the about dialog.
+     */
     public void openInfo() {
         new FXAboutDialog().showAndWait();
     }
 
+    /**
+     * Gets the name of the currently open {@link Project}.
+     *
+     * @return
+     *          the name of the currently open {@link Project}
+     */
     private String getProjectName() {
-        System.out.println("get project file");
         File file = Main.getWorkspace().getCurrentProjectFile();
-        System.out.println("got project file");
-        if (file == null)
-        {
-            System.out.println("file was null");
+        if (file == null) {
             return _res.get("project.unnamed");
         }
-        System.out.println("file was not null");
         return file.getName();
     }
 
+    /**
+     * Sets the title of the application.
+     *
+     * @param newTitle
+     *              the title to set
+     */
     private void setApplicationTitle(String newTitle) {
         UI.invokeInFAT(new Runnable() {
             @Override
@@ -372,21 +412,45 @@ public class FXMainController implements WorkspaceListener {
         });
     }
 
+    /**
+     * Sets the application title with the name of the opened project.
+     *
+     * @param project
+     *          the opened {@link Project}
+     */
     @Override
     public void onProjectOpened(Project project) {
         setApplicationTitle(_res.format("title.open-project", _versionString, getProjectName()));
     }
 
+    /**
+     * Sets the application title with the name of the saved project.
+     *
+     * @param project
+     *          the saved {@link Project}
+     */
     @Override
     public void onProjectSaved(Project project) {
         setApplicationTitle(_res.format("title.open-project", _versionString, getProjectName()));
     }
 
+    /**
+     * Sets the application title without any project name.
+     *
+     * @param project
+     *          the closed {@link Project}
+     */
     @Override
     public void onProjectClosed(Project project) {
         setApplicationTitle(_res.format("title", _versionString));
     }
 
+    /**
+     * Sets the application title with the modified project and marks it as unsaved.
+     *
+     * @param project
+     *          the modified {@link Project}
+     */
     @Override
     public void onProjectDirty(Project project) {
         setApplicationTitle(_res.format("title.open-unsaved-project", _versionString, getProjectName()));

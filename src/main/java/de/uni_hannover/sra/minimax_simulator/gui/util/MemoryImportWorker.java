@@ -19,6 +19,13 @@ import java.util.logging.Logger;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+/**
+ * The MemoryImportWorker is a {@link Runnable} that loads a memory image from file.
+ * An error dialog will be shown if the import fails.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
 public class MemoryImportWorker implements Runnable
 {
 	private final static Logger	_log	= Logger.getLogger(MemoryImportWorker.class.getName());
@@ -51,6 +58,9 @@ public class MemoryImportWorker implements Runnable
 		_res = res;
 	}
 
+	/**
+	 * Tries to load the memory image from file. An error dialog will be shown if the import fails.
+	 */
 	@Override
 	public void run()
 	{
@@ -83,6 +93,14 @@ public class MemoryImportWorker implements Runnable
 		}
 	}
 
+	/**
+	 * Loads a memory image from file. The input is treated as little-endian.
+	 *
+	 * @param is
+	 * 			the {@link InputStream} to use for reading
+	 * @throws IOException
+	 * 			thrown if the file is not readable or does not exist
+	 */
 	private void doImport(InputStream is) throws IOException
 	{
 		byte[] bytes = new byte[_effectiveByteCount];

@@ -7,10 +7,19 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
+/**
+ * The FXValueUpdateDialog is a dialog for updating a value e.g. a value stored in memory.<br>
+ * It contains a {@link TextField} for entering the new value and a {@link Button} for swapping the input mode.<br>
+ * <br>
+ * Supported input modes are decimal and hexadecimal.
+ *
+ * @author Philipp Rohde
+ */
 public abstract class FXValueUpdateDialog extends FXDialog
 {
 	protected enum Mode
@@ -80,7 +89,7 @@ public abstract class FXValueUpdateDialog extends FXDialog
 
 	private Mode					_mode;
 
-	// TODO: show current mode
+
 	public FXValueUpdateDialog(int currentValue)
 	{
 		super(AlertType.NONE, null, null);
@@ -96,6 +105,7 @@ public abstract class FXValueUpdateDialog extends FXDialog
 
 		_swapMode = new Button();
 		_swapMode.setTooltip(new Tooltip(_res.get("swapmode.tooltip")));
+		_swapMode.setGraphic(new ImageView("images/" + _res.get("swapmode.icon")));
 
 		_messageLabel = new Label();
 
@@ -129,6 +139,7 @@ public abstract class FXValueUpdateDialog extends FXDialog
 
 		_okButton = (Button) this.getDialogPane().lookupButton(_okButtonType);
 
+		// invalid input should disable the OK button
 		_field.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -140,6 +151,7 @@ public abstract class FXValueUpdateDialog extends FXDialog
 			}
 		});
 
+		// due to the use of own buttons we need an resultConverter for getting the user's choice
 		this.setResultConverter(dialogButton -> {
 			if (dialogButton.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
 				Integer value = _mode.decode(_field.getText());
@@ -153,6 +165,12 @@ public abstract class FXValueUpdateDialog extends FXDialog
 
 	}
 
+	/**
+	 * Changes the input mode to the new mode and converts it to the new numerical system.
+	 *
+	 * @param mode
+	 * 			the new mode
+	 */
 	private void updateTextFieldMode(Mode mode)
 	{
 		if (_mode == mode)
@@ -165,6 +183,12 @@ public abstract class FXValueUpdateDialog extends FXDialog
 		_field.setText(_mode.toString(this, value));
 	}
 
+	/**
+	 * Updates the text of the current mode {@link Label} to the new mode.
+	 *
+	 * @param mode
+	 * 			the new mode
+	 */
 	private void updateLabelMode(Mode mode) {
 		String currentMode = _res.get("mode.label") + " ";
 		if (_mode == Mode.DEC) {

@@ -6,13 +6,21 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.util.StringConverter;
 
 /**
- * Created by philipp on 20.06.15.
+ * The {@link SpinnerValueFactory} for the {@link javafx.scene.control.Spinner}s from the memory {@link javafx.scene.control.Tab}.
+ * It sets the range from the minimal address to the maximal address of the {@link MachineMemory}.
+ * The addresses are rendered as hexadecimal {@link String}.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
  */
 public class MemorySpinnerValueFactory extends SpinnerValueFactory.IntegerSpinnerValueFactory {
 
     public MemorySpinnerValueFactory(MachineMemory mMemory) {
+        // set range in parent class
         super(mMemory.getMinAddress(), mMemory.getMaxAddress());
         this.setWrapAround(true);
+
+        // render addresses as hexadecimal String
         final String _addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
         this.setConverter(new StringConverter<Integer>() {
             @Override

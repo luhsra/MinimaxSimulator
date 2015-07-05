@@ -19,14 +19,10 @@ import java.util.Locale;
 /**
  * The main class of the simulator.
  *
- * @author Philipp
- *
+ * @author Philipp Rohde
  */
 // TODO: logging
 public class Main extends javafx.application.Application {
-
-    static final FXMLLoader loader = new FXMLLoader();
-    static final private String version = "JavaFX Alpha 1";
 
     private static Stage _primaryStage;
 
@@ -36,6 +32,14 @@ public class Main extends javafx.application.Application {
     private static Version _version;
 
 
+    /**
+     * Starts the JavaFX application.
+     *
+     * @param primaryStage
+     *          the primary {@link Stage} of the JavaFX application
+     * @throws Exception
+     *          thrown if an error occurs during start up
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -57,19 +61,38 @@ public class Main extends javafx.application.Application {
         _primaryStage.show();
     }
 
+    /**
+     * Gets the primary {@link Stage} of the application.
+     *
+     * @return
+     *          the applications primary {@link Stage}
+     */
     public static Stage getPrimaryStage() {
         return _primaryStage;
     }
 
+    /**
+     * Gets a list of all icons of the application.
+     *
+     * @return
+     *          a list containing all icons of the application
+     */
     public static ObservableList<Image> getAppIcon() {
         return _primaryStage.getIcons();
     }
 
+    /**
+     * Gets the {@link ResourceBundleLoader} of the application.
+     * If it does not already exist it will be initialized.
+     *
+     * @return
+     *          the {@link ResourceBundleLoader} used by the application
+     */
     public static ResourceBundleLoader getResourceLoader()
     {
         if (_resourceLoader == null)
         {
-            Locale locale = new Locale.Builder().setLanguage("en").setRegion("US").build();;
+            Locale locale = new Locale.Builder().setLanguage("en").setRegion("US").build();
 /*            if (Config.LOCALE == null || Config.LOCALE.isEmpty())
             {
                 locale = Locale.getDefault();
@@ -98,6 +121,13 @@ public class Main extends javafx.application.Application {
         return _resourceLoader.getTextResource(bundleName);
     }
 
+    /**
+     * The main method of the application. It initializes the configuration, {@link ResourceBundleLoader} and {@link Workspace}
+     * before launching the JavaFX application.
+     *
+     * @param args
+     *          the command line arguments
+     */
     public static void main(String[] args) {
         // Initialize config, read from file if existing
         try
@@ -116,14 +146,23 @@ public class Main extends javafx.application.Application {
         launch(args);
     }
 
-    public static Workspace getWorkspace()
-    {
+    /**
+     * Gets the {@link Workspace} used by the application.
+     *
+     * @return
+     *      the application's {@link Workspace}
+     */
+    public static Workspace getWorkspace() {
         return _workspace;
     }
 
-    public static String getVersionString()
-    {
-        //return _version.getModuleName() + " " + _version.getVersionNumber();
+    /**
+     * Gets the version number.
+     *
+     * @return
+     *      the version number as {@link String}
+     */
+    public static String getVersionString() {
         return _version.getVersionNumber();
     }
 }

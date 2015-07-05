@@ -14,6 +14,13 @@ import java.util.logging.Logger;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+/**
+ * The MemoryExportWorker is a {@link Runnable} that writes the memory image to file.
+ * An error dialog will be shown if the export fails.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
 public class MemoryExportWorker implements Runnable
 {
 	private final static Logger	_log	= Logger.getLogger(MemoryExportWorker.class.getName());
@@ -42,6 +49,9 @@ public class MemoryExportWorker implements Runnable
 		checkArgument(toAddress <= memory.getMaxAddress());
 	}
 
+	/**
+	 * Tries to write the memory image to file. If the export fails an error dialog will be shown.
+	 */
 	@Override
 	public void run()
 	{
@@ -70,6 +80,14 @@ public class MemoryExportWorker implements Runnable
 		}
 	}
 
+	/**
+	 * Converts the memory image to little-endian and writes it to file.
+	 *
+	 * @param os
+	 * 			the {@link OutputStream} to use for writing
+	 * @throws IOException
+	 * 			thrown if the memory image could not be written
+	 */
 	private void doExport(OutputStream os) throws IOException
 	{
 		MemoryState state = _memory.getMemoryState();

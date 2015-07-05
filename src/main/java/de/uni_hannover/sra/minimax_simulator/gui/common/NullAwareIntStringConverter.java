@@ -10,7 +10,7 @@ import java.text.ParseException;
  * <b>Caution:</b><br>
  * Due to the use of the synchronous {@link javafx.scene.control.Spinner}s at {@link de.uni_hannover.sra.minimax_simulator.gui.MuxView} the fromString method interprets every String as decimal input.
  *
- * @author Martin Lück
+ * @author Martin L&uuml;ck
  * @author Philipp Rohde
  */
 public class NullAwareIntStringConverter extends StringConverter {
@@ -36,12 +36,12 @@ public class NullAwareIntStringConverter extends StringConverter {
         String str;
         if (!_signed)
         {
-            // For unsigned values
+            // for unsigned values
             str = Long.toString(nr & 0xFFFFFFFFL, _radix);
         }
         else
         {
-            // For signed values
+            // for signed values
             str = Integer.toString(nr, _radix);
         }
         return _radix <= 10 ? str : str.toUpperCase();

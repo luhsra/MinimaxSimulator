@@ -39,6 +39,11 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 
+/**
+ *
+ * @author Philipp Rohde
+ * @author Martin L&uuml;ck
+ */
 public class UIUtil
 {
 	/**

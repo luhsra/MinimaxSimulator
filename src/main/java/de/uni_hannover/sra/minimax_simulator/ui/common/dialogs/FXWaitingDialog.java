@@ -10,6 +10,9 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
+ * An FXWaitingDialog is basically an {@link javafx.scene.control.Alert}.
+ * It contains an indeterminate {@link ProgressBar} indicating that some {@link Runnable} is executed at the moment.
+ *
  * @author Philipp Rohde
  */
 public class FXWaitingDialog extends FXDialog {
@@ -30,11 +33,26 @@ public class FXWaitingDialog extends FXDialog {
         this.getDialogPane().setContent(pb);
     }
 
+    /**
+     * Gets the user's choice.<br>
+     * <br>
+     * <b>Caution:</b><br>
+     * This method is not supported for the FXWaitingDialog, use {@link #isCanceled()} instead.
+     *
+     * @return
+     *          the chosen {@link ButtonType}
+     */
     @Override
     public ButtonType getChoice() {
         throw new UnsupportedOperationException("Method getChoice() not supported for FXWaitingDialog, use isCanceled() instead.");
     }
 
+    /**
+     * Checks if the dialog was canceled or not.
+     *
+     * @return
+     *          <code>true</code>, if the user closed the dialog, otherwise <code>false</code>
+     */
     public boolean isCanceled() {
         Optional<ButtonType> result = this.showAndWait();
         try {

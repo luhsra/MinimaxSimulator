@@ -5,22 +5,21 @@ import de.uni_hannover.sra.minimax_simulator.Version;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import javax.xml.soap.Text;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
 /**
+ * The FXAboutDialog is basically an {@link javafx.scene.control.Alert}.
+ * It provides all information about the application such as version and authors.
+ * The information is read from the MANIFEST.MF.
+ *
+ * @see Version
+ *
  * @author Philipp Rohde
  */
 public class FXAboutDialog extends FXDialog {
@@ -40,6 +39,8 @@ public class FXAboutDialog extends FXDialog {
         grid.setPadding(new Insets(10));
         grid.setVgap(10);
         grid.setHgap(20);
+
+        // set up the logos
         Image luh = new Image("images/luh/luh.png");
         Image sra = new Image("images/luh/sra.png");
 
@@ -53,9 +54,11 @@ public class FXAboutDialog extends FXDialog {
         sraIV.setPreserveRatio(true);
         sraIV.setFitHeight(70);
 
+        // create the description
         Label description = new Label("GUI-based Minimax Simulator");
         description.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
+        // create application information labels
         VBox vb = new VBox();
         vb.setPadding(new Insets(15, 0, 15, 0));
         vb.setSpacing(5);
@@ -64,17 +67,16 @@ public class FXAboutDialog extends FXDialog {
         Label authors = new Label(_res.format("author", ver.getAuthorName()));
         vb.getChildren().addAll(version, build, authors);
 
+        // create university label
         Label university = new Label("Leibniz Universität Hannover, Institut für Systems Engineering, FG System- und Rechnerarchitektur");
         university.setPadding(new Insets(0, 15, 0, 0));
 
+        // putting all together
         grid.add(sraIV, 0, 0);
         grid.setHalignment(luhIV, HPos.RIGHT);
         grid.add(luhIV, 1, 0);
         grid.add(description, 0, 1, 2, 1);
         grid.setHalignment(description, HPos.CENTER);
-/*        grid.add(version, 0, 2);
-        grid.add(build, 0, 3);
-        grid.add(authors, 0, 4, 2, 1);  */
         grid.add(vb, 0, 2, 2, 1);
         grid.add(university, 0, 3, 2, 1);
         this.getDialogPane().setContent(grid);

@@ -1,7 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
-import static com.google.common.base.Preconditions.*;
-
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryExportWorker;
 import de.uni_hannover.sra.minimax_simulator.gui.util.MemorySpinnerValueFactory;
@@ -34,7 +32,10 @@ import java.util.Optional;
 
 
 /**
- * FXController of the MemoryView
+ * <b>FXController of the MemoryView</b><br>
+ * <br>
+ * This controller handles every GUI interaction with the memory {@link Tab}.
+ * The MemoryView is the UI of the {@link MachineMemory}.
  *
  * @author Philipp Rohde
  */
@@ -66,6 +67,10 @@ public class MemoryView{
     @FXML
     private Spinner spinnerStartAddress;
 
+    /**
+     * This method is called during application start up and initializes the MemoryView
+     * as much as possible without having any project data.
+     */
     public void initialize() {
         _res = Main.getTextResource("project");
 
@@ -84,7 +89,7 @@ public class MemoryView{
                 System.out.println("select address: " + value);
                 selectAddress(value);
             } catch (NumberFormatException nfe) {
-                // Ignore malformed input
+                // ignore malformed input
             }
         });
 
@@ -114,6 +119,9 @@ public class MemoryView{
     @FXML
     private TitledPane paneClear;
 
+    /**
+     * Sets localized texts from resource for the GUI elements.
+     */
     private void setLocalizedTexts() {
         final List<TableColumn> tableColumns = new ArrayList<>(Arrays.asList(col_adr, col_dec, col_hex));
         for (TableColumn col : tableColumns) {
@@ -127,6 +135,10 @@ public class MemoryView{
         }
     }
 
+    /**
+     * This method is called from the main controller if a new project was created or a opened.
+     * It initializes the memory {@link TableView} and the {@link Spinner}s because they need project data.
+     */
     public void initMemoryView() {
         mMemory = Main.getWorkspace().getProject().getMachine().getMemory();
         _addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
@@ -140,11 +152,11 @@ public class MemoryView{
     @FXML
     Spinner spinnerExportEndAddress;
 
-    // all spinners need to have their own value factory
+    /**
+     * Initializes the {@link Spinner}s. Independent {@link Spinner}s have to have their own value factory.
+     */
     private void initSpinner() {
         spinnerStartAddress.setValueFactory(new MemorySpinnerValueFactory(mMemory));
-
-        spinnerExportStartAddress.setValueFactory(new MemorySpinnerValueFactory(mMemory));
 
         MemorySpinnerValueFactory expEndFactory = new MemorySpinnerValueFactory(mMemory);
         spinnerExportEndAddress.setValueFactory(expEndFactory);
@@ -154,26 +166,21 @@ public class MemoryView{
     private void selectAddress(int address) {
         int page;
         int row;
-        if (address < 0)
-        {
+        if (address < 0) {
             page = 0;
             row = 0;
         }
-        else
-        {
-            if (address > mMemory.getMaxAddress())
-            {
+        else {
+            if (address > mMemory.getMaxAddress()) {
                 address = mMemory.getMaxAddress();
             }
 
             page = address / _pageSize;
-            if (page >= _pageCount)
-            {
+            if (page >= _pageCount) {
                 page = _pageCount - 1;
                 row = _pageSize - 1;
             }
-            else
-            {
+            else {
                 row = address % _pageSize;
             }
         }
@@ -188,6 +195,9 @@ public class MemoryView{
     @FXML
     private TextField txtAddressField;
 
+    /**
+     * Initializes the {@link TableView} for the memory.
+     */
     private void initMemTable() {
         System.out.println("initializing memory table");
         int addressRange = mMemory.getMaxAddress() - mMemory.getMinAddress();
@@ -199,6 +209,7 @@ public class MemoryView{
 
         updateMemTable();
 
+        // open edit dialog at double click
         memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -216,6 +227,7 @@ public class MemoryView{
             }
         });
 
+        // set next/previous page at scroll
         memTable.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
             @Override
             public void handle(ScrollEvent scrollEvent) {
@@ -229,11 +241,12 @@ public class MemoryView{
         });
     }
 
+    /**
+     * Updates the {@link TableView} for the memory.
+     */
     private void updateMemTable() {
-        ObservableList<MemoryTableModel> data = FXCollections.observableArrayList(); /* = FXCollections.observableArrayList(
-                new MemoryTableModel("0000", "0", "FF"),
-                new MemoryTableModel("0001", "3", "AD")
-        ); */
+        ObservableList<MemoryTableModel> data = FXCollections.observableArrayList();
+
         MemoryState mState = mMemory.getMemoryState();
         for (int i = 0; i < _pageSize; i++) {
             int value = mState.getInt(_cachedPageStart + i);
@@ -246,10 +259,12 @@ public class MemoryView{
     @FXML
     private Button btnClear;
 
+    /**
+     * Zeros the complete memory after confirmation.
+     */
     public void clearMem() {
         FXDialog memoryClear = new FXDialog(AlertType.CONFIRMATION, _res.get("memory.clear.confirm.title"), _res.get("memory.clear.confirm.message"));
         if (memoryClear.getChoice() == ButtonType.OK) {
-            System.out.println("clearing memory");
             mMemory.getMemoryState().zero();
             updateMemTable();
         }
@@ -258,28 +273,46 @@ public class MemoryView{
     @FXML
     private Button btnNextPage;
 
+    /**
+     * Sets the next memory page to the {@link TableView}.
+     */
     public void nextPage() {
         this.setPage(_page+1);
     }
 
     @FXML Button btnPrevPage;
 
+    /**
+     * Sets the previous memory page to the {@link TableView}.
+     */
     public void prevPage() {
         this.setPage(_page-1);
     }
 
     @FXML Button btnFirstPage;
 
+    /**
+     * Sets the first memory page to the {@link TableView}.
+     */
     public void firstPage() {
         this.setPage(0);
     }
 
     @FXML Button btnLastPage;
 
+    /**
+     * Sets the last memory page to the {@link TableView}.
+     */
     public void lastPage() {
         this.setPage(_pageCount-1);
     }
 
+    /**
+     * Sets the memory page with the given page number to the {@link TableView}.
+     *
+     * @param newPage
+     *          the number of the new page
+     */
     private void setPage(int newPage) {
         if (newPage >= _pageCount || newPage < 0) {
             return;
@@ -302,6 +335,9 @@ public class MemoryView{
     @FXML
     private Button btnImportMem;
 
+    /**
+     * Opens a {@link FileChooser} and updates the GUI components of the import {@link TitledPane} if the selected file was not null.
+     */
     public void openImportDialog() {
         File selFile = fc.showOpenDialog(Main.getPrimaryStage());
 
@@ -312,7 +348,6 @@ public class MemoryView{
         txtImport.setText(selFile.getAbsoluteFile().toString());
 
         int length = (int) Math.min(Integer.MAX_VALUE, selFile.length());
-        //System.out.println("Größe der Datei: " + length);
 
         SpinnerValueFactory<Integer> sizeValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, length);
         sizeValueFactory.setWrapAround(true);
@@ -323,6 +358,9 @@ public class MemoryView{
         btnImportMem.setDisable(false);
     }
 
+    /**
+     * Enables/disables the {@link Spinner} for the partial import according to the state of the {@link CheckBox}.
+     */
     public void cbPartialImportAction() {
         if (cb_partialImport.isSelected()) {
             spinnerSize.setDisable(false);
@@ -333,6 +371,9 @@ public class MemoryView{
         }
     }
 
+    /**
+     * Imports the data from the selected input file with all import options after confirmation.
+     */
     public void importMemory() {
         FXDialog memoryOverride = new FXDialog(AlertType.CONFIRMATION, _res.get("memory.import.confirm.title"), _res.get("memory.import.confirm.message"));
         if (memoryOverride.getChoice() == ButtonType.OK) {
@@ -347,6 +388,9 @@ public class MemoryView{
     @FXML
     private TextField txtExport;
 
+    /**
+     * Opens a {@link FileChooser} and sets the export file to the selected file if it was not null.
+     */
     public void openExportDialog() {
         File selFile = fc.showSaveDialog(Main.getPrimaryStage());
 
@@ -381,6 +425,9 @@ public class MemoryView{
     @FXML
     private Button btnExportMem;
 
+    /**
+     * Exports the memory to the current export file with all export options.
+     */
     public void exportMemory() {
         Integer fromAddress = (Integer) spinnerExportStartAddress.getValue();
         Integer toAddress = (Integer) spinnerExportEndAddress.getValue();
@@ -394,6 +441,13 @@ public class MemoryView{
 
     }
 
+    /**
+     * This class represents the table model for the memory {@link TableView}.<br>
+     * <br>
+     * It stores the address as well as the decimal and hexadecimal value as {@link SimpleStringProperty}.
+     *
+     * @author Philipp Rohde
+     */
     public static class MemoryTableModel {
         private final SimpleStringProperty address;
         private final SimpleStringProperty decimal;
@@ -441,6 +495,5 @@ public class MemoryView{
             this.hex.set(hex);
         }
     }
-
 
 }
