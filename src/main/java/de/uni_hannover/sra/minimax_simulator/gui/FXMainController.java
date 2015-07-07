@@ -75,6 +75,8 @@ public class FXMainController implements WorkspaceListener {
     private AluView embeddedAluViewController;
     @FXML
     private MuxView embeddedMuxViewController;
+    @FXML
+    private RegView embeddedRegViewController;
 
     private TextResource _res;
 
@@ -263,6 +265,7 @@ public class FXMainController implements WorkspaceListener {
         embeddedMemoryViewController.initMemoryView();
         embeddedAluViewController.initAluView();
         embeddedMuxViewController.initMuxView();
+        embeddedRegViewController.initRegView();
 
         // TODO: create project data
     }
