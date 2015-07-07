@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.List;
 
 
-
 /**
  * <b>FXController of the AluView</b><br>
  * <br>
@@ -61,16 +60,16 @@ public class AluView {
     private Button btnRemove;
 
     @FXML
-    private TableView<AddedAluOpTableModel> tableAdded;
+    private TableView<AluOpTableModel> tableAdded;
     @FXML
-    private TableColumn<AddedAluOpTableModel, String> col_added_opcode;
+    private TableColumn<AluOpTableModel, String> col_added_opcode;
     @FXML
-    private TableColumn<AddedAluOpTableModel, String> col_added_op;
+    private TableColumn<AluOpTableModel, String> col_added_op;
 
     @FXML
-    private TableView<AvailableAluOpTableModel> tableAvailable;
+    private TableView<AluOpTableModel> tableAvailable;
     @FXML
-    private TableColumn<AvailableAluOpTableModel, String> col_available_op;
+    private TableColumn<AluOpTableModel, String> col_available_op;
 
     private final static String ALU_RESULT = "ALU.result \u2190 ";
 
@@ -156,10 +155,10 @@ public class AluView {
      * Updates the {@link TableView} for the added {@link AluOperation}s.
      */
     private void updateAddedTable() {
-        ObservableList<AddedAluOpTableModel> data = FXCollections.observableArrayList();
+        ObservableList<AluOpTableModel> data = FXCollections.observableArrayList();
 
         for (AluOperation op : _config.getAluOperations()) {
-            data.add(new AddedAluOpTableModel(op, _config));
+            data.add(new AluOpTableModel(op, _config));
         }
 
         final int size = _config.getAluOperations().size()-1;
@@ -215,11 +214,11 @@ public class AluView {
      * Updates the {@link TableView} for the available {@link AluOperation}s.
      */
     private void updateAvailableTable() {
-        ObservableList<AvailableAluOpTableModel> data = FXCollections.observableArrayList();
+        ObservableList<AluOpTableModel> data = FXCollections.observableArrayList();
 
         for (AluOperation op : AluOperation.values()) {
             if (!_config.getAluOperations().contains(op)) {
-                data.add(new AvailableAluOpTableModel(op));
+                data.add(new AluOpTableModel(op, _config));
             }
         }
 
@@ -270,8 +269,8 @@ public class AluView {
 
             int index = -1;
             // lookup the index of the removed operation at tableAvailable
-            List<AvailableAluOpTableModel> list = tableAvailable.getItems();
-            for (AvailableAluOpTableModel model : list) {
+            List<AluOpTableModel> list = tableAvailable.getItems();
+            for (AluOpTableModel model : list) {
                 AluOperation operation = model.getAluOP();
                 if (op.equals(operation)) {
                     index = list.indexOf(model);
@@ -331,18 +330,18 @@ public class AluView {
     }
 
     /**
-     * This class represents the table model for the added {@link AluOperation}s {@link TableView}.<br>
+     * This class represents the table model for the {@link AluOperation} {@link TableView}s.<br>
      * <br>
      * It stores the {@link AluOperation} as well as the binary operation code and the operation name as {@link SimpleStringProperty}.
      *
      * @author Philipp Rohde
      */
-    public static class AddedAluOpTableModel {
+    public static class AluOpTableModel {
         private final SimpleStringProperty opcode;
         private final SimpleStringProperty op;
         private final AluOperation aluOP;
 
-        private AddedAluOpTableModel(AluOperation aluOP, MachineConfiguration config) {
+        private AluOpTableModel(AluOperation aluOP, MachineConfiguration config) {
             this.aluOP = aluOP;
 
             int size = config.getAluOperations().size()-1;
@@ -362,40 +361,6 @@ public class AluView {
 
         public void setOpcode(String opcode) {
             this.opcode.set(opcode);
-        }
-
-        public String getOp() {
-            return op.get();
-        }
-
-        public SimpleStringProperty opProperty() {
-            return op;
-        }
-
-        public void setOp(String op) {
-            this.op.set(op);
-        }
-
-        public AluOperation getAluOP() {
-            return aluOP;
-        }
-    }
-
-    /**
-     * This class represents the table model for the added {@link AluOperation}s {@link TableView}.<br>
-     * <br>
-     * It stores the {@link AluOperation} as well as the operation name as {@link SimpleStringProperty}.
-     *
-     * @author Philipp Rohde
-     */
-    //TODO: check if it is possible to use the AddedAluOpTableModel with null as operation code instead of this class
-    public static class AvailableAluOpTableModel {
-        private final SimpleStringProperty op;
-        private final AluOperation aluOP;
-
-        private AvailableAluOpTableModel(AluOperation aluOP) {
-            this.aluOP = aluOP;
-            this.op = new SimpleStringProperty(aluOP.getOperationName());
         }
 
         public String getOp() {
