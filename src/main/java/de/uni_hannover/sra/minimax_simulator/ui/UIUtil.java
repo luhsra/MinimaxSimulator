@@ -38,6 +38,8 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXWaitingDialog;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -102,11 +104,9 @@ public class UIUtil
 	public static <T extends JComponent & Disposable> void disposeOnRemoval(
 			final T component)
 	{
-		runOnRemoval(component, new Runnable()
-		{
+		runOnRemoval(component, new Runnable() {
 			@Override
-			public void run()
-			{
+			public void run() {
 				component.dispose();
 			}
 		});
@@ -427,4 +427,17 @@ public class UIUtil
 				comp.setEnabled(enabled);
 	}
 
+	/**
+	 * Removes the table header of a {@link TableView} by looking up the TableHeaderRow and making it invisible.
+	 *
+	 * @param table
+	 *          the {@link TableView} for that the header should be removed
+	 */
+	public static void removeTableHeader(TableView table) {
+		Pane header = (Pane) table.lookup("TableHeaderRow");
+		header.setMaxHeight(0);
+		header.setMinHeight(0);
+		header.setPrefHeight(0);
+		header.setVisible(false);
+	}
 }

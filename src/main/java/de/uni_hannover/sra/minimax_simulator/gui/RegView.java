@@ -161,7 +161,7 @@ public class RegView {
             }
         });
 
-        removeTableHeader(tableBaseReg);
+        UIUtil.removeTableHeader(tableBaseReg);
         updateBaseTable();
     }
 
@@ -209,7 +209,7 @@ public class RegView {
             }
         });
 
-        removeTableHeader(tableExtendedReg);
+        UIUtil.removeTableHeader(tableExtendedReg);
         updateExtendedTable();
     }
 
@@ -224,21 +224,6 @@ public class RegView {
         }
 
         tableExtendedReg.setItems(data);
-    }
-
-    /**
-     * Removes the table header of a {@link TableView} by looking up the TableHeaderRow and making it invisible.
-     *
-     * @param table
-     *          the {@link TableView} for that the header should be removed
-     */
-    //TODO: move to something like tableUtils
-    private void removeTableHeader(TableView table) {
-        Pane header = (Pane) table.lookup("TableHeaderRow");
-        header.setMaxHeight(0);
-        header.setMinHeight(0);
-        header.setPrefHeight(0);
-        header.setVisible(false);
     }
 
     /**

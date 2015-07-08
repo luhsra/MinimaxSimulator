@@ -4,6 +4,7 @@ import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -147,7 +148,7 @@ public class AluView {
             }
         });
 
-        removeTableHeader(tableAdded);
+        UIUtil.removeTableHeader(tableAdded);
         updateAddedTable();
     }
 
@@ -206,7 +207,7 @@ public class AluView {
             }
         });
 
-        removeTableHeader(tableAvailable);
+        UIUtil.removeTableHeader(tableAvailable);
         updateAvailableTable();
     }
 
@@ -223,21 +224,6 @@ public class AluView {
         }
 
         tableAvailable.setItems(data);
-    }
-
-    /**
-     * Removes the table header of a {@link TableView} by looking up the TableHeaderRow and making it invisible.
-     *
-     * @param table
-     *          the {@link TableView} for that the header should be removed
-     */
-    //TODO: move to something like tableUtils
-    private void removeTableHeader(TableView table) {
-        Pane header = (Pane) table.lookup("TableHeaderRow");
-        header.setMaxHeight(0);
-        header.setMinHeight(0);
-        header.setPrefHeight(0);
-        header.setVisible(false);
     }
 
     /**

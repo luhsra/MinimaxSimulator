@@ -5,6 +5,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfigur
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.gui.common.NullAwareIntFormatter;
+import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.*;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
@@ -217,7 +218,7 @@ public class MuxView {
             }
         });
 
-        removeTableHeader(tableMuxA);
+        UIUtil.removeTableHeader(tableMuxA);
         updateTableMuxA();
     }
 
@@ -259,7 +260,7 @@ public class MuxView {
             }
         });
 
-        removeTableHeader(tableMuxB);
+        UIUtil.removeTableHeader(tableMuxB);
         updateTableMuxB();
     }
 
@@ -323,21 +324,6 @@ public class MuxView {
         btnMoveUpMuxB.setDisable(isMuxA);
         btnRemoveMuxA.setDisable(!isMuxA);
         btnRemoveMuxB.setDisable(isMuxA);
-    }
-
-    /**
-     * Removes the table header of a {@link TableView} by looking up the TableHeaderRow and making it invisible.
-     *
-     * @param table
-     *          the {@link TableView} for that the header should be removed
-     */
-    //TODO: move to something like tableUtils
-    private void removeTableHeader(TableView table) {
-        Pane header = (Pane) table.lookup("TableHeaderRow");
-        header.setMaxHeight(0);
-        header.setMinHeight(0);
-        header.setPrefHeight(0);
-        header.setVisible(false);
     }
 
     /**
