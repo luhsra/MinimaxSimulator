@@ -1,13 +1,16 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
 import com.google.common.collect.ImmutableMap;
+import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
 import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXAboutDialog;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -17,9 +20,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.stage.FileChooser;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * <b>The main controller for the JavaFX GUI.</b><br>
@@ -68,6 +74,8 @@ public class FXMainController implements WorkspaceListener {
     public Tab tab_experimental;
     public ScrollPane panel_machine_overview;
     public Canvas canvas;
+
+    private FileChooser fc = new FileChooser();
 
     @FXML
     private MemoryView embeddedMemoryViewController;
@@ -226,6 +234,10 @@ public class FXMainController implements WorkspaceListener {
             public void run() {
                 try {
                     Main.getWorkspace().newProject();
+                    embeddedMemoryViewController.initMemoryView();
+                    embeddedAluViewController.initAluView();
+                    embeddedMuxViewController.initMuxView();
+                    embeddedRegViewController.initRegView();
                 } catch (RuntimeException e) {
                     System.out.println("EXCEPTION DURING PROJECT CREATION");
                     Main.getWorkspace().closeProject();
@@ -262,12 +274,6 @@ public class FXMainController implements WorkspaceListener {
 
         drawCanvas();           // CANVAS TEST
 */
-        embeddedMemoryViewController.initMemoryView();
-        embeddedAluViewController.initAluView();
-        embeddedMuxViewController.initMuxView();
-        embeddedRegViewController.initRegView();
-
-        // TODO: create project data
     }
 
     @Deprecated
@@ -285,26 +291,57 @@ public class FXMainController implements WorkspaceListener {
      *          the {@link ActionEvent} calling the method
      */
     public void openProject(ActionEvent ae) {
-        System.out.println(ae.toString());
-        System.out.println(ae.getSource().toString());
-        // TODO: is this source thing necessary?
-        if (ae.getSource().toString().substring(12, 19).equals("project")) {
-            System.out.println("I'm a project");
-            String source = ae.getSource().toString().substring(20).split(",")[0];
-            System.out.println("real source: " + source);
-            switch (source) {
-                case "open":
-                    System.out.println("Opening project now...");
-                    break;
-                default:
-                    break;
-            }
-        }
         // TODO: open existing project
+
+        if (!UIUtil.confirmCloseProject()) {
+            return;
+        }
+        fc.getExtensionFilters().clear();
+//        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter(_res.get("project.filedescription"), "zip"));
+
+        File lastFolder = Main.getWorkspace().getLastProjectFolder();
+        if (lastFolder != null && lastFolder.exists()) {
+            fc.setInitialDirectory(lastFolder);
+        }
+
+
+/*
+
+        File file = fc.showOpenDialog(Main.getPrimaryStage());
+
+        if (file == null) {
+            return;
+        }
+
+        UIUtil.executeWorker(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Main.getWorkspace().openProject(file);
+
+//                    UI.invokeNow(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Application.getMainWindow().getWorkspacePanel().openDefaultTabs();
+//                        }
+//                    });
+                } catch (ProjectImportException e) {
+                    Main.getWorkspace().closeProject();
+                    JOptionPane.showMessageDialog(Application.getMainWindow(),
+                            _res.get("load-error.message"), _res.get("load-error.title"),
+                            JOptionPane.ERROR_MESSAGE);
+                    //log.log(Level.WARNING, e.getMessage(), e);
+                }
+            }
+        }, _res.get("wait.title"), _res.format("wait.project.load", file.getName()));
+*/
+
     }
 
     public void saveProject() {
-        // TODO: save the project data
+        // TODO: save the project data; improve
+        File file = fc.showSaveDialog(Main.getPrimaryStage());
+        new ProjectSaveTo().save(file);
     }
 
     public void saveProjectAs(ActionEvent ae) {

@@ -29,6 +29,7 @@ import javax.swing.border.TitledBorder;
 import com.google.common.base.Throwables;
 
 import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
@@ -141,9 +142,9 @@ public class UIUtil
 	//TODO: convert to JavaFX
 	public static boolean confirmCloseProject()
 	{
-		if (Application.getWorkspace().isUnsaved())
+		if (Main.getWorkspace().isUnsaved())
 		{
-			TextResource res = Application.getTextResource("application");
+			TextResource res = Main.getTextResource("application");
 
 			return confirmCloseProject(res.get("close-project.generic.message"),
 				res.get("close-project.generic.title"));
@@ -301,7 +302,7 @@ public class UIUtil
 		switch (result)
 		{
 			case JOptionPane.YES_OPTION:
-				return new ProjectSaveTo().save(Application.getWorkspace().getLastProjectFolder());
+				return new ProjectSaveTo().save(Main.getWorkspace().getLastProjectFolder());
 
 			case JOptionPane.NO_OPTION:
 				return true;

@@ -51,13 +51,18 @@ public class Workspace extends ListenerContainer<WorkspaceListener>
 	{
 		if (_currentProject != null)
 			closeProject();
-
+		System.out.println("DEBUG: create new project zip importer");
 		_currentProject = new ProjectZipImporter(file).importProject();
+		System.out.println("DEBUG: set current project file");
 		_currentProjectFile = file;
+		System.out.println("DEBUG: getParentFile()");
 		_lastProjectFolder = file.getParentFile();
 
-		for (WorkspaceListener l : getListeners())
+		System.out.println("DEBUG: notify all listeners");
+		for (WorkspaceListener l : getListeners()) {
+			System.out.println("DEBUG: notify listener " + l.toString());
 			l.onProjectOpened(_currentProject);
+		}
 	}
 
 	/**

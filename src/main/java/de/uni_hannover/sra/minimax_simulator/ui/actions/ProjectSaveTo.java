@@ -9,7 +9,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.google.common.base.Throwables;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -17,12 +18,12 @@ import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 
 public class ProjectSaveTo extends AbstractAction implements WorkspaceListener
 {
-	private final TextResource	res	= Application.getTextResource("application");
+	private final TextResource	res	= Main.getTextResource("application");
 
 	public ProjectSaveTo()
 	{
 		setEnabled(false);
-		Application.getWorkspace().addListener(this);
+		Main.getWorkspace().addListener(this);
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class ProjectSaveTo extends AbstractAction implements WorkspaceListener
 	{
 		if (file == null)
 		{
-			file = chooseFile(Application.getWorkspace().getCurrentProjectFile());
+			file = chooseFile(Main.getWorkspace().getCurrentProjectFile());
 
 			if (file == null)
 				return false;
@@ -53,11 +54,11 @@ public class ProjectSaveTo extends AbstractAction implements WorkspaceListener
 			{
 				try
 				{
-					Application.getWorkspace().saveProject(fileToSave);
+					Main.getWorkspace().saveProject(fileToSave);
 				}
 				catch (Exception e)
 				{
-					Application.getWorkspace().closeProject();
+					Main.getWorkspace().closeProject();
 					throw Throwables.propagate(e);
 				}
 			}
@@ -67,7 +68,7 @@ public class ProjectSaveTo extends AbstractAction implements WorkspaceListener
 
 	protected File chooseFile(File defaultFile)
 	{
-		JFileChooser chooser = new JFileChooser();
+/*		JFileChooser chooser = new JFileChooser();
 		chooser.setAcceptAllFileFilterUsed(true);
 		chooser.setFileFilter(new FileNameExtensionFilter(
 			res.get("project.filedescription"), "zip"));
@@ -81,7 +82,7 @@ public class ProjectSaveTo extends AbstractAction implements WorkspaceListener
 			}
 		}
 
-		int button = chooser.showSaveDialog(Application.getMainWindow());
+		int button = chooser.showSaveDialog(Main.getMainWindow());
 		if (button != JFileChooser.APPROVE_OPTION)
 			return null;
 
@@ -92,7 +93,8 @@ public class ProjectSaveTo extends AbstractAction implements WorkspaceListener
 			selectedFile = new File(selectedFile.getPath() + ".zip");
 		}
 
-		return selectedFile;
+		return selectedFile;*/
+		return defaultFile;
 	}
 
 	@Override
