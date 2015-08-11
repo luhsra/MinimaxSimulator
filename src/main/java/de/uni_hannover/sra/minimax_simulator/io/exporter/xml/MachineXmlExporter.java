@@ -19,6 +19,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.NullMuxInpu
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 
+@Deprecated
 class MachineXmlExporter
 {
 	void write(Writer wr, MachineConfiguration machine) throws ProjectExportException

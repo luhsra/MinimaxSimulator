@@ -2,19 +2,23 @@ package de.uni_hannover.sra.minimax_simulator.io.importer.xml;
 
 import static com.google.common.base.Preconditions.*;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.input.sax.XMLReaders;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xml.sax.EntityResolver;
 
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
 
+@Deprecated
 class Importer
 {
 	/**
@@ -72,6 +76,7 @@ class Importer
 		{
 			SAXBuilder sax = new SAXBuilder(XMLReaders.DTDVALIDATING);
 			sax.setEntityResolver(resolver);
+
 			doc = sax.build(inputStream, "/resources/xml/");
 		}
 		catch (JDOMException e)

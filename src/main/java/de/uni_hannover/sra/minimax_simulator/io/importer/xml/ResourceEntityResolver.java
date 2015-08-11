@@ -7,6 +7,7 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+@Deprecated
 public class ResourceEntityResolver implements EntityResolver
 {
 	private final String	_path;

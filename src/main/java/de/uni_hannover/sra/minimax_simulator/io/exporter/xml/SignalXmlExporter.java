@@ -18,6 +18,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
 
+@Deprecated
 class SignalXmlExporter
 {
 	void write(Writer wr, SignalTable table) throws ProjectExportException

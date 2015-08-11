@@ -14,6 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.jump.DefaultJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
 
+@Deprecated
 class SignalXmlImporter extends Importer
 {
 	SignalTable loadSignalTable(InputStream inputStream) throws ProjectImportException

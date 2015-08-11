@@ -30,6 +30,7 @@ import de.uni_hannover.sra.minimax_simulator.model.user.Project;
  * @author Martin
  * 
  */
+@Deprecated
 public class ProjectZipExporter implements ProjectExporter
 {
 	private final static Charset	charset	= Charset.forName("UTF-8");
