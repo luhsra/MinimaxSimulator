@@ -4,15 +4,14 @@ import java.io.File;
 
 import de.uni_hannover.sra.minimax_simulator.io.ProjectExportException;
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
-import de.uni_hannover.sra.minimax_simulator.io.exporter.xml.ProjectZipExporter;
-import de.uni_hannover.sra.minimax_simulator.io.importer.xml.ProjectZipImporter;
+import de.uni_hannover.sra.minimax_simulator.io.exporter.json.ProjectZipExporter;
+import de.uni_hannover.sra.minimax_simulator.io.importer.json.ProjectZipImporter;
 import de.uni_hannover.sra.minimax_simulator.util.ListenerContainer;
 
 /**
  * A container that can either hold a single project or be empty.
  * 
- * @author Martin
- * 
+ * @author Martin L&uuml;ck
  */
 public class Workspace extends ListenerContainer<WorkspaceListener>
 {

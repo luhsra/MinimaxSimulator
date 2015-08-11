@@ -25,7 +25,6 @@ import javafx.stage.FileChooser;
 import javax.swing.*;
 import java.io.File;
 import java.util.*;
-import java.util.logging.Level;
 
 /**
  * <b>The main controller for the JavaFX GUI.</b><br>
@@ -34,7 +33,6 @@ import java.util.logging.Level;
  * the binded shortcuts.
  *
  * @author Philipp
- *
  */
 public class FXMainController implements WorkspaceListener {
 
@@ -305,8 +303,6 @@ public class FXMainController implements WorkspaceListener {
         }
 
 
-/*
-
         File file = fc.showOpenDialog(Main.getPrimaryStage());
 
         if (file == null) {
@@ -318,7 +314,12 @@ public class FXMainController implements WorkspaceListener {
             public void run() {
                 try {
                     Main.getWorkspace().openProject(file);
-
+                    //TODO: do all views work correctly?
+                    setDisable(false);
+                    embeddedMemoryViewController.initMemoryView();
+                    embeddedAluViewController.initAluView();
+                    embeddedMuxViewController.initMuxView();
+                    embeddedRegViewController.initRegView();
 //                    UI.invokeNow(new Runnable() {
 //                        @Override
 //                        public void run() {
@@ -334,7 +335,7 @@ public class FXMainController implements WorkspaceListener {
                 }
             }
         }, _res.get("wait.title"), _res.format("wait.project.load", file.getName()));
-*/
+
 
     }
 
