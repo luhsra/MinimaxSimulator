@@ -72,3 +72,8 @@
     -fx-font-family: monospace;
     -fx-font-size: 14px;
 }
+
+#memtable .table-row-cell {
+    -fx-font-size: 12px;
+    -fx-cell-size: 18px;
+}

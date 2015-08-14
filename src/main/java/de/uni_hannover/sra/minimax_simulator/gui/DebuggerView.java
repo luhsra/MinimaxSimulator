@@ -10,7 +10,6 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
-import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,17 +51,54 @@ public class DebuggerView {
 
     private static FileChooser fc;
 
+    private TextResource _resSignal;
+    private TextResource _resMem;
     private TextResource _res;
 
     @FXML
     private TableView<MemoryTableModel> memTable;
 
     @FXML
-    private TableColumn<MemoryTableModel, String> col_adr;
+    private TableColumn<MemoryTableModel, String> col_mem_adr;
     @FXML
-    private TableColumn<MemoryTableModel, String> col_dec;
+    private TableColumn<MemoryTableModel, String> col_mem_dec;
     @FXML
-    private TableColumn<MemoryTableModel, String> col_hex;
+    private TableColumn<MemoryTableModel, String> col_mem_hex;
+
+    @FXML
+    private TableView regTable;
+    @FXML
+    private TableColumn col_reg_name;
+    @FXML
+    private TableColumn col_reg_dec;
+    @FXML
+    private TableColumn col_reg_hex;
+
+    @FXML
+    private TableView aluTable;
+    @FXML
+    private TableColumn col_alu_dec;
+    @FXML
+    private TableColumn col_alu_hex;
+
+
+    @FXML
+    private TableView simTable;
+    @FXML
+    private TableColumn col_sim_1;
+    @FXML
+    private TableColumn col_sim_2;
+    @FXML
+    private TableColumn col_sim_label;
+    @FXML
+    private TableColumn col_sim_adr;
+    @FXML
+    private TableColumn col_sim_alu;
+    @FXML
+    private TableColumn col_sim_next;
+    @FXML
+    private TableColumn col_sim_desc;
+
 
     @FXML
     private Spinner spinnerStartAddress;
@@ -72,7 +108,9 @@ public class DebuggerView {
      * as much as possible without having any project data.
      */
     public void initialize() {
-        _res = Main.getTextResource("project");
+        _resSignal = Main.getTextResource("signal");
+        _resMem = Main.getTextResource("project");
+        _res = Main.getTextResource("debugger");
 
         _page = _cachedPageStart = 0;
 
@@ -101,13 +139,20 @@ public class DebuggerView {
     @FXML
     private TitledPane paneMemory;
     @FXML
-    private Label lblImportFile;
+    private TitledPane paneRegister;
+    @FXML
+    private TitledPane paneALU;
+    @FXML
+    private TitledPane paneSimulation;
+    @FXML
+    private Label lblCycles;
+
+
     @FXML
     private Label lblTargetAddress;
     @FXML
     private Label lblByteCount;
-    @FXML
-    private TitledPane paneImport;
+
     @FXML
     private TitledPane paneExport;
     @FXML
@@ -123,16 +168,28 @@ public class DebuggerView {
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
-        final List<TableColumn> tableColumns = new ArrayList<>(Arrays.asList(col_adr, col_dec, col_hex));
+        final List<TableColumn> tableColumnsMem = new ArrayList<>(Arrays.asList(col_mem_adr, col_mem_dec, col_mem_hex));
+        for (TableColumn col : tableColumnsMem) {
+            col.setText(_resMem.get(col.getId().replace("_", ".")));
+        }
+        paneMemory.setText(_resMem.get(paneMemory.getId().replace("_", ".")));
+
+        final List<TableColumn> tableColumnsSignal = new ArrayList<>(Arrays.asList(col_sim_label, col_sim_adr, col_sim_alu, col_sim_next, col_sim_desc));
+        for (TableColumn col : tableColumnsSignal) {
+            col.setText(_resSignal.get(col.getId().replace("_", ".")));
+        }
+
+        final List<TableColumn> tableColumns = new ArrayList<>(Arrays.asList(col_reg_name, col_reg_dec, col_reg_hex, col_alu_dec, col_alu_hex));
         for (TableColumn col : tableColumns) {
             col.setText(_res.get(col.getId().replace("_", ".")));
         }
 
-        final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneMemory, btnImportMem, lblImportFile, lblTargetAddress, lblByteCount, cb_partialImport, paneImport, paneExport, btnExportMem, lblExportFile,
-                lblFromAddress, lblToAddress, paneClear, btnClear));
+        final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneRegister, paneALU, paneSimulation));
         for (Labeled con : controls) {
             con.setText(_res.get(con.getId().replace("_", ".")));
         }
+
+        lblCycles.setText(_res.format(lblCycles.getId().replace("_", "."), "---"));
     }
 
     /**
@@ -140,11 +197,11 @@ public class DebuggerView {
      * It initializes the memory {@link TableView} and the {@link Spinner}s because they need project data.
      */
     public void initMemoryView() {
-        mMemory = Main.getWorkspace().getProject().getMachine().getMemory();
+/*        mMemory = Main.getWorkspace().getProject().getMachine().getMemory();
         _addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
 
         initSpinner();
-        initMemTable();
+        initMemTable(); */
     }
 
     @FXML
@@ -203,9 +260,9 @@ public class DebuggerView {
         int addressRange = mMemory.getMaxAddress() - mMemory.getMinAddress();
         _pageCount = (addressRange - 1) / _pageSize + 1;
 
-        col_adr.setCellValueFactory(new PropertyValueFactory<>("address"));
-        col_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
-        col_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
+        col_mem_adr.setCellValueFactory(new PropertyValueFactory<>("address"));
+        col_mem_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
+        col_mem_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
         updateMemTable();
 
