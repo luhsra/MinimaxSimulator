@@ -16,7 +16,7 @@
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.sra.minimax_simulator.gui.AluView">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.sra.minimax_simulator.gui.AluView">
     <children>
         <TitledPane id="alu_added_title" fx:id="paneAddedOP" animated="false" collapsible="false" prefHeight="590.0" prefWidth="350.0" text="Hinzugefügte Operationen">
             <content>

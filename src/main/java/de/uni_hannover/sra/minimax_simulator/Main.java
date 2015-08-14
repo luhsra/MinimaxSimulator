@@ -54,7 +54,7 @@ public class Main extends javafx.application.Application {
         _primaryStage.getIcons().add(new Image("images/nuvola/cpu.png"));
         _primaryStage.getIcons().add(new Image("images/nuvola/cpu-big.png"));
 
-        Scene scene = new Scene(root, 1200, 675);
+        Scene scene = new Scene(root, 1200, 705);
         scene.getStylesheets().add("css/application.css");
         _primaryStage.setScene(scene);
         _primaryStage.setResizable(false);
