@@ -238,7 +238,7 @@ public class FXMainController implements WorkspaceListener {
                     embeddedAluViewController.initAluView();
                     embeddedMuxViewController.initMuxView();
                     embeddedRegViewController.initRegView();
-                    embeddedDebuggerViewController.initMemoryView();
+                    embeddedDebuggerViewController.initDebuggerView();
                 } catch (RuntimeException e) {
                     System.out.println("EXCEPTION DURING PROJECT CREATION");
                     Main.getWorkspace().closeProject();

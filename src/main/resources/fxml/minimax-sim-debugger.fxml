@@ -163,14 +163,14 @@
                            <children>
                               <HBox maxWidth="200.0" prefHeight="100.0" prefWidth="150.0" GridPane.halignment="CENTER">
                                  <children>
-                                     <Button mnemonicParsing="false" onAction="#initSimulation" text="" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                     <Button fx:id="btnSimInit" mnemonicParsing="false" onAction="#initSimulation" text="" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                          <graphic>
                                              <ImageView>
                                                  <Image url="/images/fugue/control-green.png" />
                                              </ImageView>
                                          </graphic>
                                      </Button>
-                                     <Button disable="true" mnemonicParsing="false" onAction="#quitSimulation" text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                     <Button fx:id="btnSimQuit" disable="true" mnemonicParsing="false" onAction="#quitSimulation" text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                          <graphic>
                                              <ImageView>
                                                  <Image url="/images/fugue/control-stop-square-red.png" />
@@ -180,14 +180,14 @@
                                              <Insets left="5.0" right="30.0" />
                                          </HBox.margin>
                                      </Button>
-                                     <Button disable="true" mnemonicParsing="false" onAction="#nextCycle" text="" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                     <Button fx:id="btnSimCycle" disable="true" mnemonicParsing="false" onAction="#nextCycle" text="" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                          <graphic>
                                              <ImageView>
                                                  <Image url="/images/fugue/arrow-skip-270-green.png" />
                                              </ImageView>
                                          </graphic>
                                      </Button>
-                                     <Button disable="true" mnemonicParsing="false" onAction="#runSimulation" text="" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                     <Button fx:id="btnSimRun" disable="true" mnemonicParsing="false" onAction="#runSimulation" text="" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                          <graphic>
                                              <ImageView>
                                                  <Image url="/images/fugue/arrow-stop-270-green.png" />

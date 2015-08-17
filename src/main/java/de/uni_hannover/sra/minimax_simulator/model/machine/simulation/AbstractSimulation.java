@@ -127,6 +127,9 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 	{
 		checkState(!_halted, "Already halted");
 
+		_state = SimulationState.HALTED;
+		fireStateChanged();
+
 		// The program ended
 		_halted = true;
 	}
