@@ -91,7 +91,7 @@
                       <Insets left="15.0" top="15.0" />
                   </padding>
               </TitledPane>
-            <TitledPane id="register_title" fx:id="paneRegister" animated="false" collapsible="false" prefHeight="167.0" prefWidth="600.0" text="Register">
+            <TitledPane id="register_title" fx:id="paneRegister" animated="false" collapsible="false" prefHeight="180.0" prefWidth="600.0" text="Register">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="598.0">
                      <children>
@@ -103,11 +103,11 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <TableView fx:id="regTable" maxHeight="118.0" maxWidth="558.0" prefHeight="118.0" prefWidth="558.0" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                              <TableView fx:id="regTable" maxHeight="128.0" maxWidth="532.0" prefHeight="128.0" prefWidth="532.0" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                                  <columns>
-                                    <TableColumn id="register_name" fx:id="col_reg_name" prefWidth="186.0" text="Name" />
-                                    <TableColumn id="register_dec" fx:id="col_reg_dec" prefWidth="186.0" text="Dezimal" />
-                                    <TableColumn id="register_hex" fx:id="col_reg_hex" prefWidth="188.0" text="Hexadezimal" />
+                                    <TableColumn id="register_name" fx:id="col_reg_name" prefWidth="186.0" text="Name" sortable="false" resizable="false" />
+                                    <TableColumn id="register_dec" fx:id="col_reg_dec" prefWidth="172.0" text="Dezimal" sortable="false" resizable="false" />
+                                    <TableColumn id="register_hex" fx:id="col_reg_hex" prefWidth="172.0" text="Hexadezimal" sortable="false" resizable="false" />
                                  </columns>
                               </TableView>
                            </children>
@@ -123,7 +123,7 @@
       </VBox>
         <VBox prefHeight="610.0" prefWidth="600.0" spacing="15.0">
             <children>
-                <TitledPane id="alu_title" fx:id="paneALU" animated="false" collapsible="false" prefHeight="95.0" prefWidth="600.0" text="ALU-result">
+                <TitledPane id="alu_title" fx:id="paneALU" animated="false" collapsible="false" prefHeight="110.0" prefWidth="600.0" text="ALU-result">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="598.0">
                             <children>
@@ -135,10 +135,10 @@
                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                            <children>
-                              <TableView fx:id="aluTable" maxHeight="46.0" maxWidth="558.0" prefHeight="46.0" prefWidth="558.0" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                              <TableView fx:id="aluTable" maxHeight="52.0" maxWidth="532.0" prefHeight="52.0" prefWidth="532.0" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                                 <columns>
-                                  <TableColumn id="alu_dec" fx:id="col_alu_dec" prefWidth="280.0" text="Dezimal" />
-                                  <TableColumn id="alu_hex" fx:id="col_alu_hex" prefWidth="280.0" text="Hexadezimal" />
+                                  <TableColumn id="alu_dec" fx:id="col_alu_dec" prefWidth="265.0" text="Dezimal" sortable="false" resizable="false" />
+                                  <TableColumn id="alu_hex" fx:id="col_alu_hex" prefWidth="265.0" text="Hexadezimal" sortable="false" resizable="false" />
                                 </columns>
                               </TableView>
                            </children>
@@ -156,21 +156,21 @@
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="100.0" prefWidth="553.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                            <children>
                               <HBox maxWidth="200.0" prefHeight="100.0" prefWidth="150.0" GridPane.halignment="CENTER">
                                  <children>
-                                     <Button mnemonicParsing="false" onAction="#firstPage" text="" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                     <Button mnemonicParsing="false" onAction="#initSimulation" text="" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                          <graphic>
                                              <ImageView>
                                                  <Image url="/images/fugue/control-green.png" />
                                              </ImageView>
                                          </graphic>
                                      </Button>
-                                     <Button disable="true" mnemonicParsing="false" onAction="#prevPage" text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                     <Button disable="true" mnemonicParsing="false" onAction="#quitSimulation" text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                          <graphic>
                                              <ImageView>
                                                  <Image url="/images/fugue/control-stop-square-red.png" />
@@ -180,14 +180,14 @@
                                              <Insets left="5.0" right="30.0" />
                                          </HBox.margin>
                                      </Button>
-                                     <Button disable="true" mnemonicParsing="false" onAction="#nextPage" text="" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                     <Button disable="true" mnemonicParsing="false" onAction="#nextCycle" text="" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                          <graphic>
                                              <ImageView>
                                                  <Image url="/images/fugue/arrow-skip-270-green.png" />
                                              </ImageView>
                                          </graphic>
                                      </Button>
-                                     <Button disable="true" mnemonicParsing="false" onAction="#lastPage" text="" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                     <Button disable="true" mnemonicParsing="false" onAction="#runSimulation" text="" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                          <graphic>
                                              <ImageView>
                                                  <Image url="/images/fugue/arrow-stop-270-green.png" />
@@ -207,15 +207,15 @@
                                     <Insets left="10.0" />
                                  </padding>
                               </Label>
-                              <TableView fx:id="simTable" maxHeight="298.0" maxWidth="-Infinity" prefHeight="298.0" prefWidth="550.0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                              <TableView id="simtable" fx:id="simTable" maxHeight="375.0" maxWidth="-Infinity" prefHeight="298.0" prefWidth="550.0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                  <columns>
-                                    <TableColumn fx:id="col_sim_1" prefWidth="35.0" />
-                                    <TableColumn fx:id="col_sim_2" prefWidth="35.0" />
-                                    <TableColumn id="col_label" fx:id="col_sim_label" prefWidth="90.0" text="Label" />
-                                    <TableColumn id="col_address" fx:id="col_sim_adr" prefWidth="50.0" text="Adr." />
-                                    <TableColumn id="col_condition" fx:id="col_sim_alu" prefWidth="100.0" text="ALU == 0?" />
-                                    <TableColumn id="col_jumptarget" fx:id="col_sim_next" prefWidth="100.0" text="Folgebefehl" />
-                                    <TableColumn id="col_description" fx:id="col_sim_desc" prefWidth="140.0" text="Beschreibung" />
+                                    <TableColumn fx:id="col_sim_1" prefWidth="35.0" sortable="false" resizable="false" />
+                                    <TableColumn fx:id="col_sim_2" prefWidth="35.0" sortable="false" resizable="false" />
+                                    <TableColumn id="col_label" fx:id="col_sim_label" prefWidth="95.0" text="Label" sortable="false" />
+                                    <TableColumn id="col_address" fx:id="col_sim_adr" prefWidth="40.0" text="Adr." sortable="false" resizable="false" />
+                                    <TableColumn id="col_condition" fx:id="col_sim_alu" prefWidth="85.0" text="ALU == 0?" sortable="false" resizable="false" />
+                                    <TableColumn id="col_jumptarget" fx:id="col_sim_next" prefWidth="90.0" text="Folgebefehl" sortable="false" resizable="false" />
+                                    <TableColumn id="col_description" fx:id="col_sim_desc" prefWidth="168.0" text="Beschreibung" sortable="false" />
                                  </columns>
                               </TableView>
                            </children>

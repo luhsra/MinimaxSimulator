@@ -77,3 +77,19 @@
     -fx-font-size: 12px;
     -fx-cell-size: 18px;
 }
+
+#simtable .table-row-cell {
+    -fx-font-size: 12px;
+}
+
+#simtable .column-header .label{
+    -fx-font-size: 12px;
+}
+
+.table-row-cell:empty {
+    -fx-background-color: white;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
