@@ -52,25 +52,9 @@ import java.util.Optional;
 //TODO: set breakpoints
 public class DebuggerView implements SimulationListener {
 
-    private String _addressFormatString;
-    private static MachineMemory mMemory;
-
-    private final int _pageSize = 16;
-    private int _pageCount;
-    private int	_page;
-    private int	_cachedPageStart;
-
-    private static FileChooser fc;
-
     private TextResource _resSignal;
     private TextResource _resMem;
     private TextResource _res;
-
-    @FXML private TableView<MemoryTableModel> memTable;
-
-    @FXML private TableColumn<MemoryTableModel, String> col_mem_adr;
-    @FXML private TableColumn<MemoryTableModel, String> col_mem_dec;
-    @FXML private TableColumn<MemoryTableModel, String> col_mem_hex;
 
     @FXML private TableView<RegisterTableModel> regTable;
     @FXML private TableColumn<RegisterTableModel, String> col_reg_name;
@@ -80,7 +64,6 @@ public class DebuggerView implements SimulationListener {
     @FXML private TableView<AluTableModel> aluTable;
     @FXML private TableColumn<AluTableModel, String> col_alu_dec;
     @FXML private TableColumn<AluTableModel, String> col_alu_hex;
-
 
     @FXML private TableView<SimulationTableModel> simTable;
     @FXML private TableColumn<SimulationTableModel, Boolean> col_sim_1;
@@ -93,6 +76,8 @@ public class DebuggerView implements SimulationListener {
 
     private Simulation _simulation;
 
+    @FXML MemoryTable embeddedMemoryTableController;
+
     /**
      * This method is called during application start up and initializes the DebuggerView
      * as much as possible without having any project data.
@@ -102,31 +87,9 @@ public class DebuggerView implements SimulationListener {
         _resMem = Main.getTextResource("project");
         _res = Main.getTextResource("debugger");
 
-        _page = _cachedPageStart = 0;
-
-        txtAddressField.textProperty().addListener((observable, oldValue, newValue) -> {
-            String text = newValue.trim();
-            if (text.isEmpty()) {
-                return;
-            }
-            if (text.startsWith("0x")) {
-                text = text.substring(2);
-            }
-            try {
-                int value = Integer.parseInt(text, 16);
-                System.out.println("select address: " + value);
-                selectAddress(value);
-            } catch (NumberFormatException nfe) {
-                // ignore malformed input
-            }
-        });
-
-        fc = new FileChooser();
-
         setLocalizedTexts();
     }
 
-    @FXML private TitledPane paneMemory;
     @FXML private TitledPane paneRegister;
     @FXML private TitledPane paneALU;
     @FXML private TitledPane paneSimulation;
@@ -136,12 +99,6 @@ public class DebuggerView implements SimulationListener {
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
-        final List<TableColumn> tableColumnsMem = new ArrayList<>(Arrays.asList(col_mem_adr, col_mem_dec, col_mem_hex));
-        for (TableColumn col : tableColumnsMem) {
-            col.setText(_resMem.get(col.getId().replace("_", ".")));
-        }
-        paneMemory.setText(_resMem.get(paneMemory.getId().replace("_", ".")));
-
         final List<TableColumn> tableColumnsSignal = new ArrayList<>(Arrays.asList(col_sim_label, col_sim_adr, col_sim_alu, col_sim_next, col_sim_desc));
         for (TableColumn col : tableColumnsSignal) {
             col.setText(_resSignal.get(col.getId().replace("_", ".")));
@@ -165,16 +122,14 @@ public class DebuggerView implements SimulationListener {
      * It initializes the {@link TableView}s because they need project data.
      */
     public void initDebuggerView() {
-        mMemory = Main.getWorkspace().getProject().getMachine().getMemory();
         _simulation = Main.getWorkspace().getProject().getSimulation();
         _simulation.addSimulationListener(this);
-        _addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
 
         _cyclesFormatHalted = _res.createFormat("cycles.label");
         _cyclesFormatRead = _res.createFormat("cycles.read.label");
         _cyclesFormatWrite = _res.createFormat("cycles.write.label");
 
-        initMemTable();
+        embeddedMemoryTableController.initMemTable();
         initRegTable();
         initAluTable();
         initSimulationTable();
@@ -184,39 +139,10 @@ public class DebuggerView implements SimulationListener {
      * Calls the update method for each {@link TableView}.
      */
     private void updateAllTables() {
-        updateMemTable();
+        embeddedMemoryTableController.updateMemTable();
         updateAluTable();
         updateRegTable();
         updateSimulationTable();
-    }
-
-    private void selectAddress(int address) {
-        int page;
-        int row;
-        if (address < 0) {
-            page = 0;
-            row = 0;
-        }
-        else {
-            if (address > mMemory.getMaxAddress()) {
-                address = mMemory.getMaxAddress();
-            }
-
-            page = address / _pageSize;
-            if (page >= _pageCount) {
-                page = _pageCount - 1;
-                row = _pageSize - 1;
-            }
-            else {
-                row = address % _pageSize;
-            }
-        }
-
-        setPage(page);
-
-        if (row != memTable.getSelectionModel().getSelectedIndex()) {
-            memTable.getSelectionModel().select(row);
-        }
     }
 
     /**
@@ -391,121 +317,6 @@ public class DebuggerView implements SimulationListener {
         aluTable.setItems(data);
     }
 
-    @FXML private TextField txtAddressField;
-
-    /**
-     * Initializes the {@link TableView} for the memory.
-     */
-    private void initMemTable() {
-        System.out.println("initializing memory table");
-        int addressRange = mMemory.getMaxAddress() - mMemory.getMinAddress();
-        _pageCount = (addressRange - 1) / _pageSize + 1;
-
-        col_mem_adr.setCellValueFactory(new PropertyValueFactory<>("address"));
-        col_mem_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
-        col_mem_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
-
-        updateMemTable();
-
-        // open edit dialog at double click
-        memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        System.out.println("Double clicked");
-                        int address = memTable.getSelectionModel().getSelectedIndex() + _cachedPageStart;
-                        // open edit dialog
-                        Optional<ButtonType> result = new MemoryUpdateDialog(address, mMemory).showAndWait();
-                        if (result.get() == ButtonType.OK) {
-                            updateMemTable();
-                        }
-                    }
-                }
-            }
-        });
-
-        // set next/previous page at scroll
-        memTable.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent scrollEvent) {
-                double deltaY = scrollEvent.getDeltaY();
-                if (deltaY > 0) {
-                    prevPage();
-                } else {
-                    nextPage();
-                }
-            }
-        });
-    }
-
-    /**
-     * Updates the {@link TableView} for the memory.
-     */
-    private void updateMemTable() {
-        ObservableList<MemoryTableModel> data = FXCollections.observableArrayList();
-
-        MemoryState mState = mMemory.getMemoryState();
-        for (int i = 0; i < _pageSize; i++) {
-            int value = mState.getInt(_cachedPageStart + i);
-            data.add(new MemoryTableModel(String.format(_addressFormatString, _cachedPageStart + i), String.valueOf(value), String.format("0x%08X", value)));
-        }
-
-        memTable.setItems(data);
-    }
-
-    @FXML private Button btnNextPage;
-
-    /**
-     * Sets the next memory page to the {@link TableView}.
-     */
-    public void nextPage() {
-        this.setPage(_page+1);
-    }
-
-    @FXML Button btnPrevPage;
-
-    /**
-     * Sets the previous memory page to the {@link TableView}.
-     */
-    public void prevPage() {
-        this.setPage(_page - 1);
-    }
-
-    @FXML Button btnFirstPage;
-
-    /**
-     * Sets the first memory page to the {@link TableView}.
-     */
-    public void firstPage() {
-        this.setPage(0);
-    }
-
-    @FXML Button btnLastPage;
-
-    /**
-     * Sets the last memory page to the {@link TableView}.
-     */
-    public void lastPage() {
-        this.setPage(_pageCount - 1);
-    }
-
-    /**
-     * Sets the memory page with the given page number to the {@link TableView}.
-     *
-     * @param newPage
-     *          the number of the new page
-     */
-    private void setPage(int newPage) {
-        if (newPage >= _pageCount || newPage < 0) {
-            return;
-        }
-        _page = newPage;
-        _cachedPageStart = _page * _pageSize + mMemory.getMinAddress();
-
-        updateMemTable();
-    }
-
     @Override
     public void stateChanged(SimulationState state) {
         System.out.println("DEBUG: state changed");
@@ -626,61 +437,6 @@ public class DebuggerView implements SimulationListener {
             text = format.format(_cyclesFormatParam);
         }
         lblCycles.setText(text);
-    }
-
-    /**
-     * This class represents the table model for the memory {@link TableView}.<br>
-     * <br>
-     * It stores the address as well as the decimal and hexadecimal value as {@link SimpleStringProperty}.
-     *
-     * @author Philipp Rohde
-     */
-    public static class MemoryTableModel {
-        private final SimpleStringProperty address;
-        private final SimpleStringProperty decimal;
-        private final SimpleStringProperty hex;
-
-        private MemoryTableModel(String address, String decimal, String hex) {
-            this.address = new SimpleStringProperty(address);
-            this.decimal = new SimpleStringProperty(decimal);
-            this.hex = new SimpleStringProperty(hex);
-        }
-
-        public String getAddress() {
-            return address.get();
-        }
-
-        public SimpleStringProperty addressProperty() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address.set(address);
-        }
-
-        public String getDecimal() {
-            return decimal.get();
-        }
-
-        public SimpleStringProperty decimalProperty() {
-            return decimal;
-        }
-
-        public void setDecimal(String decimal) {
-            this.decimal.set(decimal);
-        }
-
-        public String getHex() {
-            return hex.get();
-        }
-
-        public SimpleStringProperty hexProperty() {
-            return hex;
-        }
-
-        public void setHex(String hex) {
-            this.hex.set(hex);
-        }
     }
 
     /**
