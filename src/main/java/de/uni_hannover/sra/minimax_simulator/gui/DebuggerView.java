@@ -4,15 +4,13 @@ import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
-import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
-import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationListener;
-import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationState;
-import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Trackable;
+import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.*;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.components.RegisterUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.*;
@@ -153,6 +151,34 @@ public class DebuggerView implements SimulationListener {
         col_reg_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
         col_reg_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
+        // open edit dialog at double click
+        regTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                    if (mouseEvent.getClickCount() == 2) {
+                        System.out.println("Double clicked");
+
+                        if (_simulation.getState() == SimulationState.IDLE) {
+                            RegisterTableModel _model = regTable.getSelectionModel().getSelectedItem();
+                            RegisterExtension register = regTable.getSelectionModel().getSelectedItem().getRegister();
+                            int oldValue = Integer.parseInt(_model.getDecimal());
+                            // open edit dialog
+                            Optional<ButtonType> result = new RegisterUpdateDialog(register, oldValue) {
+                                @Override
+                                protected void setValue(int value) {
+                                    _model.setValue(value);
+                                }
+                            }.showAndWait();
+                            if (result.get() == ButtonType.OK) {
+                                updateRegTable();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
         updateRegTable();
     }
 
@@ -176,23 +202,14 @@ public class DebuggerView implements SimulationListener {
         registers.addAll(Main.getWorkspace().getProject().getMachineConfiguration().getRegisterExtensions());
 
         for (RegisterExtension register : registers) {
-            String formatString = register.getSize().getHexFormat();
-
             String name = register.getName();
-            String decimal;
-            String hex;
-            if (_simulation.getState().equals(SimulationState.OFF)) {
-                decimal = "--";
-                hex = "--";
-            }
-            else {
-                Trackable<Integer> value = _simulation.getRegisterValue(name);
-                decimal = Integer.toString(value.get().intValue());
-                hex = String.format(formatString, value.get().intValue());
+            Trackable<Integer> value = null;
+
+            if (_simulation.getState() != SimulationState.OFF) {
+                value = _simulation.getRegisterValue(name);
             }
 
-            data.add(new RegisterTableModel(name, decimal, hex));
-
+            data.add(new RegisterTableModel(register, value));
         }
 
         regTable.setItems(data);
@@ -443,16 +460,33 @@ public class DebuggerView implements SimulationListener {
      * This class represents the table model for the register {@link TableView}.<br>
      * <br>
      * It stores the name as well as the decimal and hexadecimal value as {@link SimpleStringProperty}.
+     * The {@link RegisterExtension} is stored as well.
      *
      * @author Philipp Rohde
      */
-    public static class RegisterTableModel {
+    public static class RegisterTableModel implements TrackableChangeListener<Integer> {
         private final SimpleStringProperty name;
         private final SimpleStringProperty decimal;
         private final SimpleStringProperty hex;
+        private final RegisterExtension register;
+        private final Trackable<Integer> value;
 
-        private RegisterTableModel(String name, String decimal, String hex) {
-            this.name = new SimpleStringProperty(name);
+        private RegisterTableModel(RegisterExtension register, Trackable<Integer> value) {
+            this.value = value;
+            this.register = register;
+            this.name = new SimpleStringProperty(register.getName());
+
+            String decimal;
+            String hex;
+            if (value == null) {
+                decimal = "--";
+                hex = "--";
+            }
+            else {
+                String formatString = register.getSize().getHexFormat();
+                decimal = Integer.toString(value.get().intValue());
+                hex = String.format(formatString, value.get().intValue());
+            }
             this.decimal = new SimpleStringProperty(decimal);
             this.hex = new SimpleStringProperty(hex);
         }
@@ -493,6 +527,22 @@ public class DebuggerView implements SimulationListener {
             this.hex.set(hex);
         }
 
+        public RegisterExtension getRegister() {
+            return register;
+        }
+
+        @Override
+        public void onValueChanged(Integer value) {
+            //do nothing
+        }
+
+        public int getValue() {
+            return value.get();
+        }
+
+        public void setValue(int value) {
+            this.value.set(value);
+        }
     }
 
     /**

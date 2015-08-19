@@ -20,6 +20,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 import de.uni_hannover.sra.minimax_simulator.ui.common.DoubleClickListener;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.model.RegisterViewModel;
 
+@Deprecated
 public class RegisterView extends JPanel implements Disposable
 {
 	// private final MachineConfiguration _config;
@@ -45,7 +46,7 @@ public class RegisterView extends JPanel implements Disposable
 		TextResource res = Application.getTextResource("debugger");
 
 		add(UIUtil.wrapInTitledGroupScroller(_table, res.get("register.title")));
-
+/*
 		_table.addMouseListener(new DoubleClickListener()
 		{
 			@Override
@@ -68,7 +69,7 @@ public class RegisterView extends JPanel implements Disposable
 					}
 				}.setVisible(true);
 			}
-		});
+		}); */
 	}
 
 	private LayoutManager createLayout()
