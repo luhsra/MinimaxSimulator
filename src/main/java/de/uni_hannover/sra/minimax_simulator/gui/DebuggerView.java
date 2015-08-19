@@ -244,6 +244,21 @@ public class DebuggerView implements SimulationListener {
                         }
                     }
                 };
+
+                cell.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if (event.getClickCount() == 2) {
+                            System.out.println("double clicked!");
+                            int index = cell.getTableView().getSelectionModel().getSelectedIndex();
+                            SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
+                            SignalRow signalRow = signalTable.getRow(index);
+                            signalRow.setBreakpoint(!signalRow.isBreakpoint());
+                            updateSimulationTable();
+                        }
+                    }
+                });
+
                 return cell;
             }
 
