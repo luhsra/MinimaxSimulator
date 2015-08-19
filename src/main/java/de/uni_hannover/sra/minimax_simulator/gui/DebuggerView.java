@@ -235,6 +235,10 @@ public class DebuggerView implements SimulationListener {
                             columnConstraints.setFillWidth(true);
                             columnConstraints.setHgrow(Priority.ALWAYS);
                             grid.getColumnConstraints().add(columnConstraints);
+                            RowConstraints rowConstraints = new RowConstraints();
+                            rowConstraints.setFillHeight(true);
+                            rowConstraints.setVgrow(Priority.ALWAYS);
+                            grid.getRowConstraints().add(rowConstraints);
                             grid.setHalignment(imageview, HPos.CENTER);
                             grid.setValignment(imageview, VPos.CENTER);
                             setGraphic(grid);
