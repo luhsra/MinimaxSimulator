@@ -51,7 +51,6 @@ import java.util.Optional;
 public class DebuggerView implements SimulationListener {
 
     private TextResource _resSignal;
-    private TextResource _resMem;
     private TextResource _res;
 
     @FXML private TableView<RegisterTableModel> regTable;
@@ -82,7 +81,6 @@ public class DebuggerView implements SimulationListener {
      */
     public void initialize() {
         _resSignal = Main.getTextResource("signal");
-        _resMem = Main.getTextResource("project");
         _res = Main.getTextResource("debugger");
 
         setLocalizedTexts();
@@ -160,16 +158,10 @@ public class DebuggerView implements SimulationListener {
                         System.out.println("Double clicked");
 
                         if (_simulation.getState() == SimulationState.IDLE) {
-                            RegisterTableModel _model = regTable.getSelectionModel().getSelectedItem();
-                            RegisterExtension register = regTable.getSelectionModel().getSelectedItem().getRegister();
-                            int oldValue = Integer.parseInt(_model.getDecimal());
+                            String register = regTable.getSelectionModel().getSelectedItem().getName();
+                            Trackable<Integer> value = _simulation.getRegisterValue(register);
                             // open edit dialog
-                            Optional<ButtonType> result = new RegisterUpdateDialog(register, oldValue) {
-                                @Override
-                                protected void setValue(int value) {
-                                    _model.setValue(value);
-                                }
-                            }.showAndWait();
+                            Optional<ButtonType> result = new RegisterUpdateDialog(register, value).showAndWait();
                             if (result.get() == ButtonType.OK) {
                                 updateRegTable();
                             }
@@ -464,16 +456,12 @@ public class DebuggerView implements SimulationListener {
      *
      * @author Philipp Rohde
      */
-    public static class RegisterTableModel implements TrackableChangeListener<Integer> {
+    public static class RegisterTableModel {
         private final SimpleStringProperty name;
         private final SimpleStringProperty decimal;
         private final SimpleStringProperty hex;
-        private final RegisterExtension register;
-        private final Trackable<Integer> value;
 
         private RegisterTableModel(RegisterExtension register, Trackable<Integer> value) {
-            this.value = value;
-            this.register = register;
             this.name = new SimpleStringProperty(register.getName());
 
             String decimal;
@@ -527,22 +515,6 @@ public class DebuggerView implements SimulationListener {
             this.hex.set(hex);
         }
 
-        public RegisterExtension getRegister() {
-            return register;
-        }
-
-        @Override
-        public void onValueChanged(Integer value) {
-            //do nothing
-        }
-
-        public int getValue() {
-            return value.get();
-        }
-
-        public void setValue(int value) {
-            this.value.set(value);
-        }
     }
 
     /**
