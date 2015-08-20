@@ -349,11 +349,17 @@ public class FXMainController implements WorkspaceListener {
 
     }
 
+    /**
+     * Saves the current project to the current file.
+     */
     public void saveProject() {
         // TODO: improve
         new ProjectSave().save(Main.getWorkspace().getCurrentProjectFile());
     }
 
+    /**
+     * Saves the current project to another file.
+     */
     public void saveProjectAs() {
         // TODO: improve
         fc.getExtensionFilters().clear();
@@ -362,6 +368,9 @@ public class FXMainController implements WorkspaceListener {
         new ProjectSaveTo().save(file);
     }
 
+    /**
+     * Exports the schematics of the current project.
+     */
     public void exportSchematics() {
         // TODO: improve
         fc.getExtensionFilters().clear();
@@ -370,6 +379,9 @@ public class FXMainController implements WorkspaceListener {
         new ProjectExportSchematics().export(file);
     }
 
+    /**
+     * Exports the {@link de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable} of the current project.
+     */
     public void exportSignal() {
         // TODO: improve
         fc.getExtensionFilters().clear();
@@ -378,6 +390,9 @@ public class FXMainController implements WorkspaceListener {
         new ProjectExportSignalTable().exportSignalTable(file);
     }
 
+    /**
+     * Closes the current project.
+     */
     public void closeProject() {
         setDisable(true);
         Main.getWorkspace().closeProject();
