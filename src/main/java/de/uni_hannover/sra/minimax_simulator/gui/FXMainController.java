@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
 import com.google.common.collect.ImmutableMap;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
@@ -36,7 +35,7 @@ import java.util.*;
  * This controller handles the GUI interactions with the {@link MenuBar} and {@link TabPane} as well as
  * the binded shortcuts.
  *
- * @author Philipp
+ * @author Philipp Rohde
  */
 public class FXMainController implements WorkspaceListener {
 
@@ -90,28 +89,34 @@ public class FXMainController implements WorkspaceListener {
     @FXML
     private DebuggerView embeddedDebuggerViewController;
 
-    private TextResource _res;
+    private final TextResource _res;
 
     private Map<String, Tab> tabMap;
 
-    private static String _versionString;
+    private static final String _versionString = Main.getVersionString();
     private static final Workspace _ws = Main.getWorkspace();
 
-    private static ExtensionFilter extFilterSignal;
-    private static ExtensionFilter extFilterProject;
-    private static ExtensionFilter extFilterSchematics;
+    private final ExtensionFilter extFilterSignal;
+    private final ExtensionFilter extFilterProject;
+    private final ExtensionFilter extFilterSchematics;
+
+    /**
+     * The constructor initializes the final variables.
+     */
+    public FXMainController() {
+        System.out.println("Constructor was called!");
+        _res = Main.getTextResource("application");
+
+        extFilterSignal = new ExtensionFilter(_res.get("project.signalfile.description"), "*.csv", "*.html");
+        extFilterProject = new ExtensionFilter(_res.get("project.filedescription"), "*.zip");
+        extFilterSchematics = new ExtensionFilter(_res.get("project.imagefile.description"), "*.jpg", "*.png");
+    }
 
     /**
      * This method is called during application start up and initializes the GUI.
      */
     public void initialize() {
-
-        _versionString = Main.getVersionString();
         _ws.addListener(this);
-
-       _res = Main.getTextResource("application");
-        this.setShortcuts();
-        this.setLocalizedTexts();
 
         this.tabMap = ImmutableMap.<String, Tab>builder()
                 .put("view_project_overview",   tab_overview)
@@ -123,9 +128,8 @@ public class FXMainController implements WorkspaceListener {
                 .put("view_project_debugger", tab_debugger)
                 .build();
 
-        extFilterSignal = new ExtensionFilter(_res.get("project.signalfile.description"), "*.csv", "*.html");
-        extFilterProject = new ExtensionFilter(_res.get("project.filedescription"), "*.zip");
-        extFilterSchematics = new ExtensionFilter(_res.get("project.imagefile.description"), "*.jpg", "*.png");
+        setShortcuts();
+        setLocalizedTexts();
     }
 
     /**

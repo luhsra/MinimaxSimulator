@@ -1,15 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
-import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.*;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,13 +14,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 
 /**
  * <b>FXController of the RegView</b><br>
@@ -34,57 +29,40 @@ import java.util.List;
  */
 public class RegView {
 
-    private TextResource _res;
-    private TextResource _resMachine;
+    private final TextResource _res;
 
     private MachineConfiguration _config;
 
-    @FXML
-    private TitledPane paneBaseReg;
-    @FXML
-    private TitledPane paneSelectedReg;
-    @FXML
-    private TitledPane paneExtendedReg;
-    @FXML
-    private Label lblName;
-    @FXML
-    private TextField txtName;
-    @FXML
-    private Label lblDescription;
-    @FXML
-    private TextArea txtDescription;
-    @FXML
-    private Label lblSize;
-    @FXML
-    private ComboBox<RegisterSize> cbSize;
-    @FXML
-    private Button btnSave;
-    @FXML
-    private Button btnAdd;
-    @FXML
-    private Button btnRemove;
+    @FXML private TitledPane paneBaseReg;
+    @FXML private TitledPane paneSelectedReg;
+    @FXML private TitledPane paneExtendedReg;
+    @FXML private Label lblName;
+    @FXML private TextField txtName;
+    @FXML private Label lblDescription;
+    @FXML private TextArea txtDescription;
+    @FXML private Label lblSize;
+    @FXML private ComboBox<RegisterSize> cbSize;
+    @FXML private Button btnSave;
+    @FXML private Button btnAdd;
+    @FXML private Button btnRemove;
 
-    @FXML
-    private TableView<RegisterTableModel> tableBaseReg;
-    @FXML
-    private TableColumn<RegisterTableModel, String> col_base_name;
-    @FXML
-    private TableColumn<RegisterTableModel, String> col_base_size;
+    @FXML private TableView<RegisterTableModel> tableBaseReg;
+    @FXML private TableColumn<RegisterTableModel, String> col_base_name;
+    @FXML private TableColumn<RegisterTableModel, String> col_base_size;
 
-    @FXML
-    private TableView<RegisterTableModel> tableExtendedReg;
-    @FXML
-    private TableColumn<RegisterTableModel, String> col_extended_name;
-    @FXML
-    private TableColumn<RegisterTableModel, String> col_extended_size;
+    @FXML private TableView<RegisterTableModel> tableExtendedReg;
+    @FXML private TableColumn<RegisterTableModel, String> col_extended_name;
+    @FXML private TableColumn<RegisterTableModel, String> col_extended_size;
 
+    public RegView() {
+        _res = Main.getTextResource("machine").using("register");
+    }
 
     /**
      * This method is called during application start up and initializes the RegView
      * as much as possible without having any project data.
      */
     public void initialize() {
-        _res = Main.getTextResource("machine").using("register");
         txtDescription.setWrapText(true);
 
         cbSize.getItems().addAll(RegisterSize.BITS_32, RegisterSize.BITS_24);
@@ -297,10 +275,8 @@ public class RegView {
         }
     }
 
-    @FXML
-    private Button btnMoveUp;
-    @FXML
-    private Button btnMoveDown;
+    @FXML private Button btnMoveUp;
+    @FXML private Button btnMoveDown;
 
     /**
      * Moves the currently selected register.

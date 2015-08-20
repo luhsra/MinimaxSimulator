@@ -4,32 +4,19 @@ import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryExportWorker;
 import de.uni_hannover.sra.minimax_simulator.gui.util.MemorySpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryImportWorker;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
-import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
-import de.uni_hannover.sra.minimax_simulator.util.Util;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
 
 /**
  * <b>FXController of the MemoryView</b><br>
@@ -44,21 +31,24 @@ public class MemoryView{
 
     private static MachineMemory mMemory;
 
-    private static FileChooser fc;
+    private static FileChooser fc = new FileChooser();
 
-    private TextResource _res;
+    private final TextResource _res;
 
     @FXML private Spinner spinnerStartAddress;
+
+    /**
+     * The constructor initializes the final variables.
+     */
+    public MemoryView() {
+        _res = Main.getTextResource("project");
+    }
 
     /**
      * This method is called during application start up and initializes the MemoryView
      * as much as possible without having any project data.
      */
     public void initialize() {
-        _res = Main.getTextResource("project");
-
-        fc = new FileChooser();
-
         setLocalizedTexts();
     }
 

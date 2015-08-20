@@ -17,7 +17,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
@@ -34,77 +33,55 @@ import java.util.Optional;
  */
 public class MuxView {
 
-    private TextResource _res;
+    private final TextResource _res;
     private MachineConfiguration _config;
 
-    @FXML
-    private TitledPane paneMuxA;
-    @FXML
-    private TitledPane paneMuxB;
-    @FXML
-    private TitledPane paneSelectedConnection;
+    @FXML private TitledPane paneMuxA;
+    @FXML private TitledPane paneMuxB;
+    @FXML private TitledPane paneSelectedConnection;
 
-    @FXML
-    private TableView<MuxTableModel> tableMuxA;
-    @FXML
-    private TableColumn<MuxTableModel, String> col_mux_a_code;
-    @FXML
-    private TableColumn<MuxTableModel, String> col_mux_a_source;
-    @FXML
-    private TableColumn<MuxTableModel, String> col_mux_a_extended;
-    @FXML
-    private Button btnMoveUpMuxA;
-    @FXML
-    private Button btnMoveDownMuxA;
-    @FXML
-    private Button btnNewMuxA;
-    @FXML
-    private Button btnRemoveMuxA;
+    @FXML private TableView<MuxTableModel> tableMuxA;
+    @FXML private TableColumn<MuxTableModel, String> col_mux_a_code;
+    @FXML private TableColumn<MuxTableModel, String> col_mux_a_source;
+    @FXML private TableColumn<MuxTableModel, String> col_mux_a_extended;
+    @FXML private Button btnMoveUpMuxA;
+    @FXML private Button btnMoveDownMuxA;
+    @FXML private Button btnNewMuxA;
+    @FXML private Button btnRemoveMuxA;
 
-    @FXML
-    private TableView<MuxTableModel> tableMuxB;
-    @FXML
-    private TableColumn<MuxTableModel, String> col_mux_b_code;
-    @FXML
-    private TableColumn<MuxTableModel, String> col_mux_b_source;
-    @FXML
-    private TableColumn<MuxTableModel, String> col_mux_b_extended;
-    @FXML
-    private Button btnMoveUpMuxB;
-    @FXML
-    private Button btnMoveDownMuxB;
-    @FXML
-    private Button btnNewMuxB;
-    @FXML
-    private Button btnRemoveMuxB;
+    @FXML private TableView<MuxTableModel> tableMuxB;
+    @FXML private TableColumn<MuxTableModel, String> col_mux_b_code;
+    @FXML private TableColumn<MuxTableModel, String> col_mux_b_source;
+    @FXML private TableColumn<MuxTableModel, String> col_mux_b_extended;
+    @FXML private Button btnMoveUpMuxB;
+    @FXML private Button btnMoveDownMuxB;
+    @FXML private Button btnNewMuxB;
+    @FXML private Button btnRemoveMuxB;
 
-    @FXML
-    private RadioButton radioRegister;
-    @FXML
-    private ComboBox<MuxInput> cbRegister;
-    @FXML
-    private RadioButton radioConstant;
-    @FXML
-    private Label lblDec;
-    @FXML
-    private Label lblHex;
-    @FXML
-    private Spinner<Integer> spinnerDec;
-    @FXML
-    private Spinner<Integer> spinnerHex;
-    @FXML
-    private Button btnSave;
+    @FXML private RadioButton radioRegister;
+    @FXML private ComboBox<MuxInput> cbRegister;
+    @FXML private RadioButton radioConstant;
+    @FXML private Label lblDec;
+    @FXML private Label lblHex;
+    @FXML private Spinner<Integer> spinnerDec;
+    @FXML private Spinner<Integer> spinnerHex;
+    @FXML private Button btnSave;
 
     private ToggleGroup tgroup = new ToggleGroup();
+
+    /**
+     * The constructor initializes the final variables.
+     */
+    public MuxView() {
+        _res = Main.getTextResource("machine").using("mux");
+    }
 
     /**
      * This method is called during application start up and initializes the MuxView
      * as much as possible without having any project data.
      */
     public void initialize() {
-        _res = Main.getTextResource("machine").using("mux");
         setLocalizedTexts();
-
 
         radioRegister.setToggleGroup(tgroup);
         radioConstant.setToggleGroup(tgroup);

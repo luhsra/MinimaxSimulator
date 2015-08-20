@@ -2,8 +2,6 @@ package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.*;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
@@ -11,8 +9,6 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.components.RegisterUpdateDialog;
-import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
-import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,9 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
-import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
 import java.text.MessageFormat;
@@ -36,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 
 /**
  * <b>FXController of the DebuggerView</b><br>
@@ -46,12 +39,10 @@ import java.util.Optional;
  *
  * @author Philipp Rohde
  */
-//TODO: change value of registers
-//TODO: set breakpoints
 public class DebuggerView implements SimulationListener {
 
-    private TextResource _resSignal;
-    private TextResource _res;
+    private final TextResource _resSignal;
+    private final TextResource _res;
 
     @FXML private TableView<RegisterTableModel> regTable;
     @FXML private TableColumn<RegisterTableModel, String> col_reg_name;
@@ -76,13 +67,18 @@ public class DebuggerView implements SimulationListener {
     @FXML MemoryTable embeddedMemoryTableController;
 
     /**
+     * The constructor initializes the final variables.
+     */
+    public DebuggerView() {
+        _resSignal = Main.getTextResource("signal");
+        _res = Main.getTextResource("debugger");
+    }
+
+    /**
      * This method is called during application start up and initializes the DebuggerView
      * as much as possible without having any project data.
      */
     public void initialize() {
-        _resSignal = Main.getTextResource("signal");
-        _res = Main.getTextResource("debugger");
-
         setLocalizedTexts();
     }
 

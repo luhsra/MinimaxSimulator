@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-
 /**
  * <b>FXController of the MemoryTable</b><br>
  * <br>
@@ -41,7 +40,7 @@ public class MemoryTable {
     private int	_page;
     private int	_cachedPageStart;
 
-    private TextResource _res;
+    private final TextResource _res;
 
     @FXML private TableView<MemoryTableModel> memTable;
 
@@ -50,14 +49,18 @@ public class MemoryTable {
     @FXML private TableColumn<MemoryTableModel, String> col_mem_hex;
 
     /**
+     * The constructor initializes the variables.
+     */
+    public MemoryTable() {
+        _res = Main.getTextResource("project");
+        _page = _cachedPageStart = 0;
+    }
+
+    /**
      * This method is called during application start up and initializes the DebuggerView
      * as much as possible without having any project data.
      */
     public void initialize() {
-        _res = Main.getTextResource("project");
-
-        _page = _cachedPageStart = 0;
-
         txtAddressField.textProperty().addListener((observable, oldValue, newValue) -> {
             String text = newValue.trim();
             if (text.isEmpty()) {

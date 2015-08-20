@@ -20,12 +20,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 
 /**
  * <b>FXController of the AluView</b><br>
@@ -36,51 +34,43 @@ import java.util.List;
  */
 public class AluView {
 
-    private TextResource _res;
-    private TextResource _resAlu;
+    private final TextResource _res;
+    private final TextResource _resAlu;
 
     private MachineConfiguration _config;
 
-    @FXML
-    private TitledPane paneAddedOP;
-    @FXML
-    private TitledPane paneSelectedOP;
-    @FXML
-    private TitledPane paneAvailableOP;
-    @FXML
-    private Label lblRT;
-    @FXML
-    private TextField txtRT;
-    @FXML
-    private Label lblDescription;
-    @FXML
-    private TextArea txtDescription;
-    @FXML
-    private Button btnAdd;
-    @FXML
-    private Button btnRemove;
+    @FXML private TitledPane paneAddedOP;
+    @FXML private TitledPane paneSelectedOP;
+    @FXML private TitledPane paneAvailableOP;
+    @FXML private Label lblRT;
+    @FXML private TextField txtRT;
+    @FXML private Label lblDescription;
+    @FXML private TextArea txtDescription;
+    @FXML private Button btnAdd;
+    @FXML private Button btnRemove;
 
-    @FXML
-    private TableView<AluOpTableModel> tableAdded;
-    @FXML
-    private TableColumn<AluOpTableModel, String> col_added_opcode;
-    @FXML
-    private TableColumn<AluOpTableModel, String> col_added_op;
+    @FXML private TableView<AluOpTableModel> tableAdded;
+    @FXML private TableColumn<AluOpTableModel, String> col_added_opcode;
+    @FXML private TableColumn<AluOpTableModel, String> col_added_op;
 
-    @FXML
-    private TableView<AluOpTableModel> tableAvailable;
-    @FXML
-    private TableColumn<AluOpTableModel, String> col_available_op;
+    @FXML private TableView<AluOpTableModel> tableAvailable;
+    @FXML private TableColumn<AluOpTableModel, String> col_available_op;
 
     private final static String ALU_RESULT = "ALU.result \u2190 ";
+
+    /**
+     * The constructor initializes the final variables.
+     */
+    public AluView() {
+        _res = Main.getTextResource("machine");
+        _resAlu = Main.getTextResource("alu");
+    }
 
     /**
      * This method is called during application start up and initializes the AluView
      * as much as possible without having any project data.
      */
     public void initialize() {
-        _res = Main.getTextResource("machine");
-        _resAlu = Main.getTextResource("alu");
         txtDescription.setWrapText(true);
 
         setLocalizedTexts();
