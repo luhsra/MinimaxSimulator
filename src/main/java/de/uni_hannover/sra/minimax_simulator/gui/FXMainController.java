@@ -10,6 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSave;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXAboutDialog;
 import javafx.application.Platform;
@@ -344,12 +345,13 @@ public class FXMainController implements WorkspaceListener {
 
     public void saveProject() {
         // TODO: save the project data; improve
-        File file = fc.showSaveDialog(Main.getPrimaryStage());
-        new ProjectSaveTo().save(file);
+        new ProjectSave().save(Main.getWorkspace().getCurrentProjectFile());
     }
 
     public void saveProjectAs(ActionEvent ae) {
         // TODO: save as
+        File file = fc.showSaveDialog(Main.getPrimaryStage());
+        new ProjectSaveTo().save(file);
     }
 
     public void exportSchematics(ActionEvent ae) {
@@ -374,7 +376,7 @@ public class FXMainController implements WorkspaceListener {
      */
     private void setDisable(boolean disabled) {
         if (disabledMenuItems == null) {
-            disabledMenuItems = new ArrayList<>(Arrays.asList(project_save, project_saveas, project_export_schematics, project_export_signal, project_close, view_overview, view_memory, view_debugger));
+            disabledMenuItems = new ArrayList<>(Arrays.asList(project_saveas, project_export_schematics, project_export_signal, project_close, view_overview, view_memory, view_debugger));
         }
 
         for (MenuItem mi : disabledMenuItems) {
@@ -476,6 +478,7 @@ public class FXMainController implements WorkspaceListener {
     @Override
     public void onProjectSaved(Project project) {
         setApplicationTitle(_res.format("title.open-project", _versionString, getProjectName()));
+        project_save.setDisable(true);
     }
 
     /**
@@ -498,5 +501,8 @@ public class FXMainController implements WorkspaceListener {
     @Override
     public void onProjectDirty(Project project) {
         setApplicationTitle(_res.format("title.open-unsaved-project", _versionString, getProjectName()));
+        if (Main.getWorkspace().getCurrentProjectFile() != null) {
+            project_save.setDisable(false);
+        }
     }
 }
