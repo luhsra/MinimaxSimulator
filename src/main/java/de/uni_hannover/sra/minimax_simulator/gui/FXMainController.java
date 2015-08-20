@@ -14,7 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectExportSchematics;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectExportSignalTable;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSave;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXAboutDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -246,11 +246,7 @@ public class FXMainController implements WorkspaceListener {
             public void run() {
                 try {
                     Main.getWorkspace().newProject();
-                    embeddedMemoryViewController.initMemoryView();
-                    embeddedAluViewController.initAluView();
-                    embeddedMuxViewController.initMuxView();
-                    embeddedRegViewController.initRegView();
-                    embeddedDebuggerViewController.initDebuggerView();
+                    initTabs();
                 } catch (RuntimeException e) {
                     System.out.println("EXCEPTION DURING PROJECT CREATION");
                     Main.getWorkspace().closeProject();
@@ -326,10 +322,7 @@ public class FXMainController implements WorkspaceListener {
                     Main.getWorkspace().openProject(file);
                     //TODO: do all views work correctly?
                     setDisable(false);
-                    embeddedMemoryViewController.initMemoryView();
-                    embeddedAluViewController.initAluView();
-                    embeddedMuxViewController.initMuxView();
-                    embeddedRegViewController.initRegView();
+                    initTabs();
 //                    UI.invokeNow(new Runnable() {
 //                        @Override
 //                        public void run() {
@@ -338,15 +331,26 @@ public class FXMainController implements WorkspaceListener {
 //                    });
                 } catch (ProjectImportException e) {
                     Main.getWorkspace().closeProject();
-                    JOptionPane.showMessageDialog(Application.getMainWindow(),
-                            _res.get("load-error.message"), _res.get("load-error.title"),
-                            JOptionPane.ERROR_MESSAGE);
+                    UI.invokeInFAT(new Runnable() {
+                        @Override
+                        public void run() {
+                            new FXDialog(Alert.AlertType.ERROR, _res.get("load-error.title"), _res.get("load-error.message")).showAndWait();
+                        }
+                    });
                     //log.log(Level.WARNING, e.getMessage(), e);
                 }
             }
         }, _res.get("wait.title"), _res.format("wait.project.load", file.getName()));
 
 
+    }
+
+    private void initTabs() {
+        embeddedMemoryViewController.initMemoryView();
+        embeddedAluViewController.initAluView();
+        embeddedMuxViewController.initMuxView();
+        embeddedRegViewController.initRegView();
+        embeddedDebuggerViewController.initDebuggerView();
     }
 
     /**
