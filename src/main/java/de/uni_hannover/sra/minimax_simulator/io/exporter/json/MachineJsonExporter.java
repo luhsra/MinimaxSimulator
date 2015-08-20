@@ -5,6 +5,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfigur
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -38,6 +39,7 @@ class MachineJsonExporter {
 		machine.put("alu", alu);
 
 		JSONObject registers = new JSONObject();
+		JSONArray registerArray = new JSONArray();
 		for (RegisterExtension register : machineConf.getRegisterExtensions())
 		{
 			if (!register.isExtended()) {
@@ -48,8 +50,9 @@ class MachineJsonExporter {
 			currentRegister.put("-name", register.getName());
 			currentRegister.put("-size", register.getSize().name());
 			currentRegister.put("#text", register.getDescription());
-			registers.accumulate("register", currentRegister);
+			registerArray.put(currentRegister);
 		}
+		registers.put("register", registerArray);
 		machine.put("registers", registers);
 
 		for (MuxType mux : MuxType.values()) {
