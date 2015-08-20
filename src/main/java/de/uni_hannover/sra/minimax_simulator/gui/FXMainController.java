@@ -299,12 +299,8 @@ public class FXMainController implements WorkspaceListener {
 
     /**
      * Opens a new project from file.
-     *
-     * @param ae
-     *          the {@link ActionEvent} calling the method
      */
-    public void openProject(ActionEvent ae) {
-        // TODO: open existing project
+    public void openProject() {
 
         if (!UIUtil.confirmCloseProject()) {
             return;
@@ -354,35 +350,35 @@ public class FXMainController implements WorkspaceListener {
     }
 
     public void saveProject() {
-        // TODO: save the project data; improve
+        // TODO: improve
         new ProjectSave().save(Main.getWorkspace().getCurrentProjectFile());
     }
 
-    public void saveProjectAs(ActionEvent ae) {
-        // TODO: save as
+    public void saveProjectAs() {
+        // TODO: improve
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterProject);
         File file = fc.showSaveDialog(Main.getPrimaryStage());
         new ProjectSaveTo().save(file);
     }
 
-    public void exportSchematics(ActionEvent ae) {
-        // TODO: export schematics
+    public void exportSchematics() {
+        // TODO: improve
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterSchematics);
         File file = fc.showSaveDialog(Main.getPrimaryStage());
         new ProjectExportSchematics().export(file);
     }
 
-    public void exportSignal(ActionEvent ae) {
-        // TODO: export signal
+    public void exportSignal() {
+        // TODO: improve
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterSignal);
         File file = fc.showSaveDialog(Main.getPrimaryStage());
         new ProjectExportSignalTable().exportSignalTable(file);
     }
 
-    public void closeProject(ActionEvent ae) {
+    public void closeProject() {
         setDisable(true);
         Main.getWorkspace().closeProject();
     }
