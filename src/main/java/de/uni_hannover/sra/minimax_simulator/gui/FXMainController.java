@@ -345,6 +345,9 @@ public class FXMainController implements WorkspaceListener {
 
     }
 
+    /**
+     * Initializes all tabs of the simulator.
+     */
     private void initTabs() {
         embeddedMemoryViewController.initMemoryView();
         embeddedAluViewController.initAluView();
