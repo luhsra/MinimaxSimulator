@@ -97,6 +97,7 @@ public class UI
 	 * 
 	 * @param r
 	 */
+	@Deprecated
 	public static void invokeInEDT(Runnable r)
 	{
 		checkNotNull(r);

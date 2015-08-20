@@ -10,6 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectExportSignalTable;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSave;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXAboutDialog;
@@ -22,6 +23,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.*;
 
 import javax.swing.*;
 import java.io.File;
@@ -94,6 +96,9 @@ public class FXMainController implements WorkspaceListener {
     private static String _versionString;
     private static final Workspace _ws = Main.getWorkspace();
 
+    private static ExtensionFilter extFilterSignal;
+    private static ExtensionFilter extFilterProject;
+
     /**
      * This method is called during application start up and initializes the GUI.
      */
@@ -106,7 +111,7 @@ public class FXMainController implements WorkspaceListener {
         this.setShortcuts();
         this.setLocalizedTexts();
 
-       this.tabMap = ImmutableMap.<String, Tab>builder()
+        this.tabMap = ImmutableMap.<String, Tab>builder()
                 .put("view_project_overview",   tab_overview)
                 .put("view_machine_alu", tab_alu)
                 .put("view_machine_register",   tab_reg)
@@ -115,6 +120,9 @@ public class FXMainController implements WorkspaceListener {
                 .put("view_project_memory",     tab_memory)
                 .put("view_project_debugger", tab_debugger)
                 .build();
+
+        extFilterSignal = new ExtensionFilter(_res.get("project.signalfile.description"), "*.csv", "*.html");
+        extFilterProject = new ExtensionFilter(_res.get("project.filedescription"), "*.zip");
     }
 
     /**
@@ -299,13 +307,12 @@ public class FXMainController implements WorkspaceListener {
             return;
         }
         fc.getExtensionFilters().clear();
-//        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter(_res.get("project.filedescription"), "zip"));
+        fc.getExtensionFilters().add(extFilterProject);
 
         File lastFolder = Main.getWorkspace().getLastProjectFolder();
         if (lastFolder != null && lastFolder.exists()) {
             fc.setInitialDirectory(lastFolder);
         }
-
 
         File file = fc.showOpenDialog(Main.getPrimaryStage());
 
@@ -350,6 +357,8 @@ public class FXMainController implements WorkspaceListener {
 
     public void saveProjectAs(ActionEvent ae) {
         // TODO: save as
+        fc.getExtensionFilters().clear();
+        fc.getExtensionFilters().add(extFilterProject);
         File file = fc.showSaveDialog(Main.getPrimaryStage());
         new ProjectSaveTo().save(file);
     }
@@ -360,6 +369,10 @@ public class FXMainController implements WorkspaceListener {
 
     public void exportSignal(ActionEvent ae) {
         // TODO: export signal
+        fc.getExtensionFilters().clear();
+        fc.getExtensionFilters().add(extFilterSignal);
+        File file = fc.showSaveDialog(Main.getPrimaryStage());
+        new ProjectExportSignalTable().exportSignalTable(file);
     }
 
     public void closeProject(ActionEvent ae) {
