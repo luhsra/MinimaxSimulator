@@ -1,6 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.gui.common.NullAwareIntStringConverter;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -160,6 +161,7 @@ public class MuxView {
      * Sets up two synchronous spinners with different value representation.
      */
     private void initSpinners() {
+        //TODO: hex spinner editable
         SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE);
         valueFactory.setWrapAround(true);
 
@@ -172,6 +174,25 @@ public class MuxView {
 
         spinnerDec.valueProperty().addListener((obs, oldValue, newValue) ->
                 updateSaveButton());
+
+
+        spinnerDec.setEditable(true);
+//        spinnerHex.setEditable(true);
+/*
+        spinnerDec.valueProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("UPDATED VALUE: " + newValue);
+        });
+
+        spinnerDec.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("NEW INPUT:" + newValue + "old value: " + oldValue);
+            try {
+                Integer.parseInt(newValue);
+            } catch (NumberFormatException e) {
+                String useThisInstead = newValue.substring(0, newValue.length()-1);
+                System.out.println("I'd like to use this: " + useThisInstead);
+                spinnerDec.getEditor().setText(useThisInstead);
+            }
+        }); */
     }
 
     /**

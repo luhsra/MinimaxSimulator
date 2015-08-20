@@ -223,14 +223,12 @@ public class RegView {
      * @return
      *          the created {@link RegisterExtension}
      */
-    private RegisterExtension createNewRegister()
-    {
+    private RegisterExtension createNewRegister() {
         String newName;
         int number = 0;
 
         NameSearch:
-        while (true)
-        {
+        while (true) {
             number++;
 
             newName = _res.format("new-name", "(" + number + ")");
@@ -320,8 +318,7 @@ public class RegView {
     /**
      * Checks if the save {@link Button} should be enabled and updates the disableProperty.
      */
-    protected void updateButton()
-    {
+    protected void updateButton() {
         boolean isValid = isInputValid();
         boolean isUnsaved = isUnsaved();
 
@@ -336,8 +333,7 @@ public class RegView {
      * @return
      *          whether the input of either the register or constant is valid
      */
-    private boolean isInputValid()
-    {
+    private boolean isInputValid() {
         if (tableExtendedReg.getSelectionModel().getSelectedItems().isEmpty()) {
             return false;
         }
@@ -365,8 +361,7 @@ public class RegView {
      * @return
      *          whether the selected source is modified
      */
-    private boolean isUnsaved()
-    {
+    private boolean isUnsaved() {
         if (tableExtendedReg.getSelectionModel().getSelectedItems().isEmpty()) {
             return false;
         }

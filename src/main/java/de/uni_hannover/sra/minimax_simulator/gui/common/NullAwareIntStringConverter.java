@@ -49,6 +49,7 @@ public class NullAwareIntStringConverter extends StringConverter {
 
     @Override
     public Object fromString(String text) {
+        System.out.println("DEBUG: using the fromString method of NullAwareIntStringConverter; INPUT: " + text);
         if (text == null || text.isEmpty())
             return null;
         try
