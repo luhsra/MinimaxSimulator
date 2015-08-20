@@ -384,7 +384,7 @@ public class FXMainController implements WorkspaceListener {
 
     public void closeProject(ActionEvent ae) {
         setDisable(true);
-        // TODO: close project data
+        Main.getWorkspace().closeProject();
     }
 
     /**
