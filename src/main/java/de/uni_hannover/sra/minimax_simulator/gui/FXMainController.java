@@ -10,6 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectExportSchematics;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectExportSignalTable;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSave;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
@@ -98,6 +99,7 @@ public class FXMainController implements WorkspaceListener {
 
     private static ExtensionFilter extFilterSignal;
     private static ExtensionFilter extFilterProject;
+    private static ExtensionFilter extFilterSchematics;
 
     /**
      * This method is called during application start up and initializes the GUI.
@@ -123,6 +125,7 @@ public class FXMainController implements WorkspaceListener {
 
         extFilterSignal = new ExtensionFilter(_res.get("project.signalfile.description"), "*.csv", "*.html");
         extFilterProject = new ExtensionFilter(_res.get("project.filedescription"), "*.zip");
+        extFilterSchematics = new ExtensionFilter(_res.get("project.imagefile.description"), "*.jpg", "*.png");
     }
 
     /**
@@ -365,6 +368,10 @@ public class FXMainController implements WorkspaceListener {
 
     public void exportSchematics(ActionEvent ae) {
         // TODO: export schematics
+        fc.getExtensionFilters().clear();
+        fc.getExtensionFilters().add(extFilterSchematics);
+        File file = fc.showSaveDialog(Main.getPrimaryStage());
+        new ProjectExportSchematics().export(file);
     }
 
     public void exportSignal(ActionEvent ae) {
