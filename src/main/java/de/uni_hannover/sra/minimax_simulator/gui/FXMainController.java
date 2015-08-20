@@ -353,11 +353,16 @@ public class FXMainController implements WorkspaceListener {
      * Initializes all tabs of the simulator.
      */
     private void initTabs() {
-        embeddedMemoryViewController.initMemoryView();
-        embeddedAluViewController.initAluView();
-        embeddedMuxViewController.initMuxView();
-        embeddedRegViewController.initRegView();
-        embeddedDebuggerViewController.initDebuggerView();
+        UI.invokeInFAT(new Runnable() {
+            @Override
+            public void run() {
+                embeddedMemoryViewController.initMemoryView();
+                embeddedAluViewController.initAluView();
+                embeddedMuxViewController.initMuxView();
+                embeddedRegViewController.initRegView();
+                embeddedDebuggerViewController.initDebuggerView();
+            }
+        });
     }
 
     /**
