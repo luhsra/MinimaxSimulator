@@ -73,7 +73,7 @@
                                                 <Font size="12.0" />
                                             </font>
                                         </Label>
-                                        <Spinner fx:id="spinnerStartAddress" prefHeight="26.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <Spinner fx:id="spinnerStartAddress" prefHeight="26.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="1" editable="true">
                                             <GridPane.margin>
                                                 <Insets left="15.0" right="15.0" />
                                             </GridPane.margin>
@@ -92,7 +92,7 @@
                                                         <Font size="12.0" />
                                                     </font>
                                                 </CheckBox>
-                                                <Spinner fx:id="spinnerSize" disable="true" prefHeight="26.0" prefWidth="148.0">
+                                                <Spinner fx:id="spinnerSize" disable="true" prefHeight="26.0" prefWidth="148.0" editable="true">
                                                     <GridPane.margin>
                                                         <Insets left="15.0" right="15.0" />
                                                     </GridPane.margin>
@@ -163,12 +163,12 @@
                                                 <Font size="12.0" />
                                             </font>
                                         </Label>
-                                        <Spinner fx:id="spinnerExportStartAddress" prefHeight="26.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <Spinner fx:id="spinnerExportStartAddress" prefHeight="26.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="1" editable="true">
                                             <GridPane.margin>
                                                 <Insets left="15.0" right="15.0" />
                                             </GridPane.margin>
                                         </Spinner>
-                                        <Spinner fx:id="spinnerExportEndAddress" prefHeight="26.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <Spinner fx:id="spinnerExportEndAddress" prefHeight="26.0" prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="2" editable="true">
                                             <GridPane.margin>
                                                 <Insets left="15.0" right="15.0" />
                                             </GridPane.margin>

@@ -65,8 +65,7 @@ public class NullAwareIntFormatter extends TextFormatter
 					public Change apply(Change change) {
 						if (change.isContentChange()) {
 							String newValue = change.getControlNewText();
-							System.out.println("HEY: " + newValue);
-							if (!newValue.matches("-?[0-9a-fA-F]+")) {
+							if (!newValue.matches("-?[0-9a-fA-F]+") || newValue.length() > 8) {
 								return null;
 							}
 						}

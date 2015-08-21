@@ -2,6 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.gui.common.NullAwareIntStringConverter;
+import de.uni_hannover.sra.minimax_simulator.gui.util.HexSpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -19,11 +20,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
+import java.text.NumberFormat;
+import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 
 /**
  * <b>FXController of the MuxView</b><br>
@@ -154,45 +159,31 @@ public class MuxView {
         });
 
         initSpinners();
-
     }
 
     /**
-     * Sets up two synchronous spinners with different value representation.
+     * Sets up two synchronous {@link Spinner}s with different value representation.
      */
     private void initSpinners() {
-        //TODO: hex spinner editable
-        SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE);
-        valueFactory.setWrapAround(true);
-
-        spinnerHex.setValueFactory(valueFactory);
-        spinnerDec.setValueFactory(valueFactory);
+        SpinnerValueFactory.IntegerSpinnerValueFactory vFacDec = new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE);
+        vFacDec.setWrapAround(true);
+        spinnerDec.setValueFactory(vFacDec);
         spinnerDec.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.DEC));
-        spinnerHex.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.HEX));
-
-        valueFactory.setValue(0);
-
-        spinnerDec.valueProperty().addListener((obs, oldValue, newValue) ->
-                updateSaveButton());
-
-
-        spinnerDec.setEditable(true);
-//        spinnerHex.setEditable(true);
-/*
-        spinnerDec.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("UPDATED VALUE: " + newValue);
+        spinnerDec.valueProperty().addListener((obs, oldValue, newValue) -> {
+            updateSaveButton();
+            spinnerHex.getValueFactory().setValue(newValue);
         });
 
-        spinnerDec.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("NEW INPUT:" + newValue + "old value: " + oldValue);
-            try {
-                Integer.parseInt(newValue);
-            } catch (NumberFormatException e) {
-                String useThisInstead = newValue.substring(0, newValue.length()-1);
-                System.out.println("I'd like to use this: " + useThisInstead);
-                spinnerDec.getEditor().setText(useThisInstead);
-            }
-        }); */
+        HexSpinnerValueFactory vFacHex = new HexSpinnerValueFactory();
+        vFacHex.setWrapAround(true);
+        spinnerHex.setValueFactory(vFacHex);
+        spinnerHex.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.HEX));
+        spinnerHex.valueProperty().addListener((observable, oldValue, newValue) -> {
+            spinnerDec.getValueFactory().setValue(newValue);
+        });
+
+        vFacDec.setValue(0);
+        vFacHex.setValue(0);
     }
 
     /**

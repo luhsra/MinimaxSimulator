@@ -2,8 +2,6 @@ package de.uni_hannover.sra.minimax_simulator.gui.common;
 
 import javafx.util.StringConverter;
 
-import java.text.ParseException;
-
 /**
  * The NullAwareIntStringConverter is capable of generating a String representation of an Integer for different numeral systems e.g. unsigned hexadecimal and signed decimal.<br>
  * <br>
@@ -29,18 +27,17 @@ public class NullAwareIntStringConverter extends StringConverter {
 
     @Override
     public String toString(Object value) {
-        if (value == null)
+        if (value == null) {
             return "";
+        }
 
         int nr = (Integer) value;
         String str;
-        if (!_signed)
-        {
+        if (!_signed) {
             // for unsigned values
             str = Long.toString(nr & 0xFFFFFFFFL, _radix);
         }
-        else
-        {
+        else {
             // for signed values
             str = Integer.toString(nr, _radix);
         }
@@ -49,17 +46,15 @@ public class NullAwareIntStringConverter extends StringConverter {
 
     @Override
     public Object fromString(String text) {
-        System.out.println("DEBUG: using the fromString method of NullAwareIntStringConverter; INPUT: " + text);
-        if (text == null || text.isEmpty())
+        if (text == null || text.isEmpty()) {
             return null;
-        try
-        {
-            Long l = Long.valueOf(text, 10);
-            return l.intValue();
         }
-        catch (NumberFormatException nfe)
-        {
-            return null;        //TODO: exception handling
+
+        try {
+            Long l = Long.valueOf(text, _radix);
+            return l.intValue();
+        } catch (NumberFormatException nfe) {
+            return null;        //TODO: exception handling; doesn't seem to be needed
         }
     }
 }

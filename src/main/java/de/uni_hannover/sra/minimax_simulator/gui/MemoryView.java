@@ -1,22 +1,29 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryExportWorker;
-import de.uni_hannover.sra.minimax_simulator.gui.util.MemorySpinnerValueFactory;
+import de.uni_hannover.sra.minimax_simulator.gui.common.HexStringConverter;
+import de.uni_hannover.sra.minimax_simulator.gui.common.NullAwareIntFormatter;
+import de.uni_hannover.sra.minimax_simulator.gui.util.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
-import de.uni_hannover.sra.minimax_simulator.gui.util.MemoryImportWorker;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
+import de.uni_hannover.sra.minimax_simulator.util.Util;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.UnaryOperator;
 
 /**
  * <b>FXController of the MemoryView</b><br>
@@ -94,10 +101,20 @@ public class MemoryView{
      */
     private void initSpinner() {
         spinnerStartAddress.setValueFactory(new MemorySpinnerValueFactory(mMemory));
+        spinnerStartAddress.getEditor().setTextFormatter(new AddressFormatter(mMemory));
+        spinnerStartAddress.getValueFactory().setValue(mMemory.getMinAddress());
 
         MemorySpinnerValueFactory expEndFactory = new MemorySpinnerValueFactory(mMemory);
         spinnerExportEndAddress.setValueFactory(expEndFactory);
+        spinnerExportEndAddress.getEditor().setTextFormatter(new AddressFormatter(mMemory));
         spinnerExportEndAddress.getValueFactory().setValue(expEndFactory.getMax());
+
+        MemorySpinnerValueFactory startEndFactory = new MemorySpinnerValueFactory(mMemory);
+        spinnerExportStartAddress.setValueFactory(startEndFactory);
+        spinnerExportStartAddress.getEditor().setTextFormatter(new AddressFormatter(mMemory));
+        spinnerExportStartAddress.getValueFactory().setValue(startEndFactory.getMin());
+
+        spinnerSize.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.DEC));
     }
 
     @FXML private Button btnClear;

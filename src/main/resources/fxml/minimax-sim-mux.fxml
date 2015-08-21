@@ -130,8 +130,8 @@
                                     <children>
                                         <Label id="input.decimal" fx:id="lblDec" text="Label" disable="true"/>
                                         <Label id="input.hexadecimal" fx:id="lblHex" text="Label" GridPane.rowIndex="1" disable="true"/>
-                                        <Spinner fx:id="spinnerDec" GridPane.columnIndex="1" disable="true"/>
-                                        <Spinner fx:id="spinnerHex" GridPane.columnIndex="1" GridPane.rowIndex="1" disable="true"/>
+                                        <Spinner fx:id="spinnerDec" GridPane.columnIndex="1" disable="true" editable="true" />
+                                        <Spinner fx:id="spinnerHex" GridPane.columnIndex="1" GridPane.rowIndex="1" disable="true" editable="true" />
                                         <Button id="save_label" fx:id="btnSave" mnemonicParsing="false" prefWidth="200.0" text="Button" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" onAction="#updateMuxInput" disable="true">
                                             <graphic>
                                                 <ImageView>
