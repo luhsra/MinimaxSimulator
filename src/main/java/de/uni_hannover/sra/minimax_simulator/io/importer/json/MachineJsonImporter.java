@@ -23,30 +23,27 @@ import java.util.List;
 class MachineJsonImporter extends Importer {
 
 	/**
-	 *
+	 * Imports the {@link MachineConfiguration} from a JSON string.
+     *
 	 * @param input
 	 *            the JSON string containing the saved MachineConfiguration
 	 * @return
 	 *            the imported MachineConfiguration
+     * @throws JSONException
+     *            thrown if there is an error during parsing the JSON string
 	 * @throws ProjectImportException
 	 *            thrown if there is an error during import
 	 */
-	MachineConfiguration loadMachine(String input) throws ProjectImportException {
+	MachineConfiguration loadMachine(String input) throws JSONException, ProjectImportException {
 		System.out.println("DEBUG: creating root object");
 		JSONObject root = new JSONObject(input);
 		JSONObject machine = root.getJSONObject("machine");
 
 		System.out.println("DEBUG: creating alu object");
 		JSONObject alu = machine.getJSONObject("alu");
-		if (alu == null) {
-			throw new ProjectImportException("No <alu> entry found in <machine>");
-		}
 
 		System.out.println("DEBUG: creating register object");
 		JSONObject registers = machine.getJSONObject("registers");
-		if (registers == null) {
-			throw new ProjectImportException("No <registers> entry found in <machine>");
-		}
 
 		// TODO: remove global access?
 		ResourceBundleLoader resourceLoader = Main.getResourceLoader();
@@ -79,11 +76,12 @@ class MachineJsonImporter extends Importer {
 	 *            the ALU as JSONObject
 	 * @return
 	 *            a list of all saved ALU operations
+     * @throws JSONException
+     *            thrown if there is an error during parsing the JSON string
 	 * @throws ProjectImportException
-	 *            thrown if there is an error during import
+	 *            thrown if creation of object of type {@code AluOperation} fails
 	 */
-	private List<AluOperation> loadAlu(JSONObject aluElem) throws ProjectImportException
-	{
+	private List<AluOperation> loadAlu(JSONObject aluElem) throws JSONException, ProjectImportException {
 		List<AluOperation> ops = new ArrayList<>();
 
 		JSONArray savedOPs = aluElem.getJSONArray("operation");
@@ -101,10 +99,12 @@ class MachineJsonImporter extends Importer {
 	 *            the registers as JSON object
 	 * @return
 	 *            a list of all saved extended registers
+     * @throws JSONException
+     *            thrown if there is an error during parsing the JSON string
 	 * @throws ProjectImportException
-	 *            thrown if there is an error during import
+	 *            thrown if creation of object of type {@code RegisterSize} fails
 	 */
-	private List<RegisterExtension> loadRegisters(JSONObject registerList) throws ProjectImportException {
+	private List<RegisterExtension> loadRegisters(JSONObject registerList) throws JSONException, ProjectImportException {
 		List<RegisterExtension> registers = new ArrayList<>();
 		System.out.println("DEBUG: creating savedRegisters array");
 		JSONArray savedRegisters = registerList.getJSONArray("register");
@@ -134,10 +134,10 @@ class MachineJsonImporter extends Importer {
 	 *            a list of all available MuxInputs (not used)
 	 * @return
 	 *            a list of all saved MuxInputs
-	 * @throws ProjectImportException
-	 *            thrown if there is an error during import
+     * @throws JSONException
+     *            thrown if there is an error during parsing the JSON string
 	 */
-	private List<MuxInput> loadMuxInputs(JSONArray muxInputList, List<MuxInput> available) throws ProjectImportException {
+	private List<MuxInput> loadMuxInputs(JSONArray muxInputList, List<MuxInput> available) throws JSONException {
 		ArrayList<MuxInput> result = new ArrayList<>();
 
 		for (int i = 0; i < muxInputList.length(); i++) {

@@ -2,6 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.io.importer.json;
 
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.model.user.ProjectConfiguration;
+import org.json.JSONException;
 
 /**
  * An Importer that imports a {@link ProjectConfiguration} from a JSON string.
@@ -17,11 +18,12 @@ class UserJsonImporter extends Importer {
 	 *            the JSON string containing the saved ProjectConfiguration
 	 * @return
 	 *            the imported ProjectConfiguration
+	 * @throws JSONException
+	 *            thrown if there is an error during parsing the JSON string
 	 * @throws ProjectImportException
 	 *            thrown if there is an error during import
 	 */
-	ProjectConfiguration loadProjectConfiguration(String input) throws ProjectImportException
-	{
+	ProjectConfiguration loadProjectConfiguration(String input) throws JSONException, ProjectImportException {
 //		Element root = rootOf(parseAndValidate(inputStream), "project");
 		return new ProjectConfiguration();
 	}

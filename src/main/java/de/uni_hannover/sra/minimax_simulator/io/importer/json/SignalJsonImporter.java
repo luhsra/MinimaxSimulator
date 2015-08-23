@@ -1,6 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.io.importer.json;
 
-import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.model.signal.DefaultSignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
@@ -10,6 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.jump.DefaultJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -26,10 +26,10 @@ class SignalJsonImporter extends Importer {
 	 *            the JSON string containing the SignalTable
 	 * @return
 	 *            the imported SignalTable
-	 * @throws ProjectImportException
-	 *            thrown if there is an error during import
+	 * @throws JSONException
+	 *            thrown if there is an error during parsing the JSON string
 	 */
-	SignalTable loadSignalTable(String input) throws ProjectImportException {
+	SignalTable loadSignalTable(String input) throws JSONException {
 		SignalTable table = new DefaultSignalTable();
 
 		System.out.println("DEBUG: creating root object");
