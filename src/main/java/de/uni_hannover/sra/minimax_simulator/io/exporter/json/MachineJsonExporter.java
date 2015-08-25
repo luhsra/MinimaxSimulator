@@ -40,16 +40,15 @@ class MachineJsonExporter {
 
 		JSONObject registers = new JSONObject();
 		JSONArray registerArray = new JSONArray();
-		for (RegisterExtension register : machineConf.getRegisterExtensions())
-		{
+		for (RegisterExtension register : machineConf.getRegisterExtensions()) {
 			if (!register.isExtended()) {
 				continue;
 			}
 
 			JSONObject currentRegister = new JSONObject();
-			currentRegister.put("-name", register.getName());
-			currentRegister.put("-size", register.getSize().name());
-			currentRegister.put("#text", register.getDescription());
+			currentRegister.put("name", register.getName());
+			currentRegister.put("size", register.getSize().name());
+			currentRegister.put("description", register.getDescription());
 			registerArray.put(currentRegister);
 		}
 		registers.put("register", registerArray);
@@ -57,33 +56,30 @@ class MachineJsonExporter {
 
 		for (MuxType mux : MuxType.values()) {
 			JSONObject currentMux = new JSONObject();
-			currentMux.put("-muxType", mux.name());
+			currentMux.put("muxType", mux.name());
 
 			for (MuxInput input : machineConf.getMuxSources(mux)) {
 				JSONObject muxInput = new JSONObject();
 				String type;
 				String content;
-				if (input instanceof ConstantMuxInput)
-				{
+				if (input instanceof ConstantMuxInput) {
 					content = Integer.toString(((ConstantMuxInput) input)
 							.getConstant());
 					type = "constant";
 				}
-				else if (input instanceof RegisterMuxInput)
-				{
+				else if (input instanceof RegisterMuxInput) {
 					content = ((RegisterMuxInput) input).getRegisterName();
 					type = "register";
 				}
-				else if (input instanceof NullMuxInput)
-				{
+				else if (input instanceof NullMuxInput) {
 					content = "";
 					type = "null";
 				}
 				else {
 					throw new ProjectExportException("Cannot export an instance of " + input.getClass());
 				}
-				muxInput.put("-type", type);
-				muxInput.put("#text", content);
+				muxInput.put("type", type);
+				muxInput.put("value", content);
 				currentMux.accumulate("input", muxInput);
 			}
 			machine.accumulate("muxInputs", currentMux);

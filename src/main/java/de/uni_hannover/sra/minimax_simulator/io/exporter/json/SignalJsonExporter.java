@@ -40,13 +40,10 @@ class SignalJsonExporter {
 		}
 		root.put("signaltable", signaltable);
 
-		try
-		{
+		try {
 			wr.write(root.toString(2));
 			wr.flush();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			throw new ProjectExportException("Cannot export due to I/O error: " + e.getMessage(), e);
 		}
 	}
@@ -63,18 +60,18 @@ class SignalJsonExporter {
 		JSONObject rowObj = new JSONObject();
 
 		if (row.getLabel() != null) {
-			rowObj.put("-label", row.getLabel());
+			rowObj.put("label", row.getLabel());
 		}
 		if (row.isBreakpoint()) {
-			rowObj.put("-breakpoint", true);
+			rowObj.put("breakpoint", true);
 		}
 
 		for (Entry<String, SignalValue> entry : row.getSignalValues().entrySet()) {
 			SignalValue value = entry.getValue();
 
 			JSONObject signal = new JSONObject();
-			signal.put("-name", entry.getKey());
-			signal.put("-value", Integer.toString(value.intValue()));
+			signal.put("name", entry.getKey());
+			signal.put("value", Integer.toString(value.intValue()));
 			if (value.isDontCare()) {
 				signal.put("dontcare", true);
 			}
@@ -85,7 +82,7 @@ class SignalJsonExporter {
 		if (j instanceof UnconditionalJump) {
 			String target = Integer.toString(((UnconditionalJump) j).getTargetRow());
 			JSONObject uncondJmp = new JSONObject();
-			uncondJmp.put("-target", target);
+			uncondJmp.put("target", target);
 			rowObj.put("unconditional-jump", uncondJmp);
 		}
 		else if (j instanceof ConditionalJump) {
@@ -93,8 +90,8 @@ class SignalJsonExporter {
 			String target0 = Integer.toString(cj.getTargetRow(0));
 			String target1 = Integer.toString(cj.getTargetRow(1));
 			JSONObject condJmp = new JSONObject();
-			condJmp.put("-cond0-target", target0);
-			condJmp.put("-cond1-target", target1);
+			condJmp.put("cond0-target", target0);
+			condJmp.put("cond1-target", target1);
 			rowObj.put("conditional-jump", condJmp);
 		}
 

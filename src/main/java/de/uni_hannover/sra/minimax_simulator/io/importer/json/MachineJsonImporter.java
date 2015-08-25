@@ -61,7 +61,7 @@ class MachineJsonImporter extends Importer {
 		JSONArray muxInputList = machine.getJSONArray("muxInputs");
 		for (int i = 0; i < muxInputList.length(); i++) {
 			System.out.println("DEBUG: create muxType");
-			MuxType type = get(MuxType.class, muxInputList.getJSONObject(i).getString("-muxType"));
+			MuxType type = get(MuxType.class, muxInputList.getJSONObject(i).getString("muxType"));
 			System.out.println("DEBUG: load muxInputs");
 			mb.getSelectedMuxInputs(type).addAll(loadMuxInputs(muxInputList.getJSONObject(i).getJSONArray("input"), mb.getAllowedMuxInputs()));
 		}
@@ -112,11 +112,11 @@ class MachineJsonImporter extends Importer {
 			System.out.println("DEBUG: create the " + i + "th register object");
 			JSONObject reg = savedRegisters.getJSONObject(i);
 			System.out.println("DEBUG: get name");
-			String name = reg.getString("-name");
+			String name = reg.getString("name");
 			System.out.println("DEBUG: create regSize");
-			RegisterSize size = get(RegisterSize.class, reg.getString("-size"));
+			RegisterSize size = get(RegisterSize.class, reg.getString("size"));
 			System.out.println("DEBUG: get desc");
-			String description = reg.getString("#text");
+			String description = reg.getString("description");
 
 			System.out.println("DEBUG: create RegExtension");
 			registers.add(new RegisterExtension(name, size, description, true));
@@ -142,18 +142,15 @@ class MachineJsonImporter extends Importer {
 
 		for (int i = 0; i < muxInputList.length(); i++) {
 			JSONObject input = muxInputList.getJSONObject(i);
-			String type = input.getString("-type");
-			String value = input.getString("#text");
-			if ("constant".equals(type))
-			{
+			String type = input.getString("type");
+			String value = input.getString("value");
+			if ("constant".equals(type)) {
 				result.add(new ConstantMuxInput(Integer.parseInt(value)));
 			}
-			else if ("register".equals(type))
-			{
+			else if ("register".equals(type)) {
 				result.add(new RegisterMuxInput(value));
 			}
-			else if ("null".equals(type))
-			{
+			else if ("null".equals(type)) {
 				result.add(NullMuxInput.INSTANCE);
 			}
 

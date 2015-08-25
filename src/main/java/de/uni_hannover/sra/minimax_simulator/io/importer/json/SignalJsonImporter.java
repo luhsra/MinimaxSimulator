@@ -45,8 +45,8 @@ class SignalJsonImporter extends Importer {
 			JSONObject currentRow = rows.getJSONObject(i);
 			//System.out.println("DEBUG: result: " + currentRow.toString());
 			System.out.println("DEBUG: check if row has label");
-			if (currentRow.has("-label")) {
-				String label = currentRow.getString("-label");
+			if (currentRow.has("label")) {
+				String label = currentRow.getString("label");
 				row.setLabel(label);
 			}
 			System.out.println("DEBUG: check if row has breakpoint");
@@ -63,7 +63,7 @@ class SignalJsonImporter extends Importer {
 				JSONObject currentSignal = signals.getJSONObject(j);
 				System.out.println("DEBUG: get intValue");
 				//int intValue = currentSignal.getInt("-value");
-				int intValue = Integer.valueOf(currentSignal.getString("-value"));
+				int intValue = Integer.valueOf(currentSignal.getString("value"));
 				boolean dontcare = false;
 				System.out.println("DEBUG: check if signal has dontcare");
 				if (currentSignal.has("dontcare")) {
@@ -72,7 +72,7 @@ class SignalJsonImporter extends Importer {
 				System.out.println("DEBUG: create SignalValue");
 				SignalValue value = dontcare ? SignalValue.DONT_CARE : SignalValue.valueOf(intValue);
 				System.out.println("DEBUG: set SignalValue to row");
-				row.setSignal(currentSignal.getString("-name"), value);
+				row.setSignal(currentSignal.getString("name"), value);
 			}
 
 			Jump jump;
@@ -81,13 +81,13 @@ class SignalJsonImporter extends Importer {
 			if (currentRow.has("unconditional-jump")) {
 				System.out.println("DEBUG: uncond jump detected");
 				JSONObject jmp = currentRow.getJSONObject("unconditional-jump");
-				jump = new UnconditionalJump(jmp.getInt("-target"));
+				jump = new UnconditionalJump(jmp.getInt("target"));
 			}
 			else if (currentRow.has("conditional-jump")) {
 				System.out.println("DEBUG: cond jump detected");
 				JSONObject jmp = currentRow.getJSONObject("conditional-jump");
-				int cond0 = jmp.getInt("-cond0-target");
-				int cond1 = jmp.getInt("-cond1-target");
+				int cond0 = jmp.getInt("cond0-target");
+				int cond1 = jmp.getInt("cond1-target");
 				jump = new ConditionalJump(cond0, cond1);
 			}
 			else {
