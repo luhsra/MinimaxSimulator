@@ -166,6 +166,9 @@ public class MuxView implements MachineConfigListener {
         initSpinners();
     }
 
+    /**
+     * Updates the {@link ComboBox} containing the registers.
+     */
     private void updateRegisterComboBox() {
         cbRegister.setItems(FXCollections.observableArrayList(_config.getAvailableSources()));
     }
