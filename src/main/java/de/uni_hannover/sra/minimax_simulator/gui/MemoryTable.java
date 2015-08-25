@@ -35,7 +35,6 @@ import java.util.Optional;
 public class MemoryTable implements MemoryAccessListener {
 
     private String _addressFormatString;
-    private static final String _hexFormatString = "0x%08X";
     private static MachineMemory mMemory;
 
     private final int _pageSize = 16;
@@ -193,7 +192,7 @@ public class MemoryTable implements MemoryAccessListener {
         MemoryState mState = mMemory.getMemoryState();
         for (int i = 0; i < _pageSize; i++) {
             int value = mState.getInt(_cachedPageStart + i);
-            data.add(new MemoryTableModel(String.format(_addressFormatString, _cachedPageStart + i), String.valueOf(value), String.format(_hexFormatString, value)));
+            data.add(new MemoryTableModel(String.format(_addressFormatString, _cachedPageStart + i), value));
         }
 
         memTable.setItems(data);
@@ -258,18 +257,20 @@ public class MemoryTable implements MemoryAccessListener {
 
     @Override
     public void memoryWriteAccess(int address, int value) {
+        // only update the affected table row
         MemoryTableModel entry = memTable.getItems().get(address % _pageSize);
-        entry.setDecimal(String.valueOf(value));
-        entry.setHex(String.format(_hexFormatString, value));
+        entry.setValue(value);
     }
 
     @Override
     public void memoryReset() {
+        // update the whole table
         updateMemTable();
     }
 
     @Override
     public void memoryChanged() {
+        //update the whole table
         updateMemTable();
     }
 
@@ -282,13 +283,15 @@ public class MemoryTable implements MemoryAccessListener {
      */
     public static class MemoryTableModel {
         private final SimpleStringProperty address;
-        private final SimpleStringProperty decimal;
+        private final SimpleIntegerProperty decimal;
         private final SimpleStringProperty hex;
 
-        private MemoryTableModel(String address, String decimal, String hex) {
+        private static final String _hexFormatString = "0x%08X";
+
+        private MemoryTableModel(String address, int value) {
             this.address = new SimpleStringProperty(address);
-            this.decimal = new SimpleStringProperty(decimal);
-            this.hex = new SimpleStringProperty(hex);
+            this.decimal = new SimpleIntegerProperty(value);
+            this.hex = new SimpleStringProperty(String.format(_hexFormatString, value));
         }
 
         public String getAddress() {
@@ -299,20 +302,12 @@ public class MemoryTable implements MemoryAccessListener {
             return address;
         }
 
-        public void setAddress(String address) {
-            this.address.set(address);
-        }
-
-        public String getDecimal() {
+        public int getDecimal() {
             return decimal.get();
         }
 
-        public SimpleStringProperty decimalProperty() {
+        public SimpleIntegerProperty decimalProperty() {
             return decimal;
-        }
-
-        public void setDecimal(String decimal) {
-            this.decimal.set(decimal);
         }
 
         public String getHex() {
@@ -323,8 +318,9 @@ public class MemoryTable implements MemoryAccessListener {
             return hex;
         }
 
-        public void setHex(String hex) {
-            this.hex.set(hex);
+        public void setValue(int value) {
+            this.decimal.set(value);
+            this.hex.set(String.format(_hexFormatString, value));
         }
     }
 
