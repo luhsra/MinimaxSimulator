@@ -13,23 +13,20 @@ import de.uni_hannover.sra.minimax_simulator.util.ListenerContainer;
  * 
  * @author Martin L&uuml;ck
  */
-public class Workspace extends ListenerContainer<WorkspaceListener>
-{
+public class Workspace extends ListenerContainer<WorkspaceListener> {
 	private Project	_currentProject;
 	private File	_currentProjectFile;
 
 	private File	_lastProjectFolder;
 
-	public Workspace()
-	{
+	public Workspace() {
 		// on application start, no project is loaded
 		_currentProject = null;
 		_currentProjectFile = null;
 		_lastProjectFolder = null;
 	}
 
-	public Project getProject()
-	{
+	public Project getProject() {
 		return _currentProject;
 	}
 
@@ -46,20 +43,16 @@ public class Workspace extends ListenerContainer<WorkspaceListener>
 	 * @throws ProjectImportException
 	 * @throws Exception
 	 */
-	public void openProject(File file) throws ProjectImportException
-	{
-		if (_currentProject != null)
+	public void openProject(File file) throws ProjectImportException {
+		if (_currentProject != null) {
 			closeProject();
-		System.out.println("DEBUG: create new project zip importer");
+		}
+
 		_currentProject = new ProjectZipImporter(file).importProject();
-		System.out.println("DEBUG: set current project file");
 		_currentProjectFile = file;
-		System.out.println("DEBUG: getParentFile()");
 		_lastProjectFolder = file.getParentFile();
 
-		System.out.println("DEBUG: notify all listeners");
 		for (WorkspaceListener l : getListeners()) {
-			System.out.println("DEBUG: notify listener " + l.toString());
 			l.onProjectOpened(_currentProject);
 		}
 	}
@@ -75,8 +68,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener>
 	 * @param file
 	 * @throws Exception
 	 */
-	public void closeProject()
-	{
+	public void closeProject() {
 		Project oldProject = _currentProject;
 		_currentProject = null;
 		_currentProjectFile = null;
@@ -99,8 +91,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener>
 	 * @throws ProjectExportException
 	 * @throws Exception
 	 */
-	public void saveProject(File file) throws ProjectExportException
-	{
+	public void saveProject(File file) throws ProjectExportException {
 		new ProjectZipExporter(file).exportProject(_currentProject);
 
 		_currentProject.setIsSaved();
@@ -119,13 +110,12 @@ public class Workspace extends ListenerContainer<WorkspaceListener>
 	 * <br>
 	 * Discards any unsaved data.
 	 */
-	public void newProject()
-	{
-		if (_currentProject != null)
+	public void newProject() {
+		if (_currentProject != null) {
 			closeProject();
-		System.out.println("DEBUG: call NewProjectBuilder().buildProject()");
+		}
 		_currentProject = new NewProjectBuilder().buildProject();
-		System.out.println("DEBUG: call NewProjectBuilder().buildProject() succeeded");
+
 		for (WorkspaceListener l : getListeners())
 			l.onProjectOpened(_currentProject);
 	}
@@ -136,8 +126,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener>
 	 * Does nothing if there is currently no open project or if it is already marked as unsaved.
 	 * 
 	 */
-	public void setProjectUnsaved()
-	{
+	public void setProjectUnsaved() {
 		if (_currentProject == null)
 			return;
 
@@ -155,8 +144,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener>
 	 *         Project was executed. This is only <code>null</code> if there was no project saved or
 	 *         loaded yet.
 	 */
-	public File getLastProjectFolder()
-	{
+	public File getLastProjectFolder() {
 		return _lastProjectFolder;
 	}
 
@@ -165,8 +153,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener>
 	 *         <code>null</code> if the method was not yet called for the current project, that is
 	 *         if the current project was never saved or does not exist.
 	 */
-	public File getCurrentProjectFile()
-	{
+	public File getCurrentProjectFile() {
 		return _currentProjectFile;
 	}
 
@@ -174,8 +161,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener>
 	 * @return <tt>true</tt> if there is actually an open project and if this project has unsaved
 	 *         changes, <tt>false</tt> otherwise. A newly created project has no unsaved changes.
 	 */
-	public boolean isUnsaved()
-	{
+	public boolean isUnsaved() {
 		return _currentProject != null && _currentProject.isUnsaved();
 	}
 }

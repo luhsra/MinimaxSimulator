@@ -35,34 +35,25 @@ class MachineJsonImporter extends Importer {
 	 *            thrown if there is an error during import
 	 */
 	MachineConfiguration loadMachine(String input) throws JSONException, ProjectImportException {
-		System.out.println("DEBUG: creating root object");
 		JSONObject root = new JSONObject(input);
 		JSONObject machine = root.getJSONObject("machine");
 
-		System.out.println("DEBUG: creating alu object");
 		JSONObject alu = machine.getJSONObject("alu");
 
-		System.out.println("DEBUG: creating register object");
 		JSONObject registers = machine.getJSONObject("registers");
 
 		// TODO: remove global access?
 		ResourceBundleLoader resourceLoader = Main.getResourceLoader();
 		TextResource registerTextResource = resourceLoader.getTextResource("register");
 
-		System.out.println("DEBUG: new MachineConfigBuilder");
 		MachineConfigurationBuilder mb = new MachineConfigurationBuilder();
 		mb.addDefaultBaseRegisters(registerTextResource);
-		System.out.println("DEBUG: load alu");
 		mb.getAluOperations().addAll(loadAlu(alu));
-		System.out.println("DEBUG: load registers");
 		mb.getRegisterExtensions().addAll(loadRegisters(registers));
 
-		System.out.println("DEBUG: create muxInputs array");
 		JSONArray muxInputList = machine.getJSONArray("muxInputs");
 		for (int i = 0; i < muxInputList.length(); i++) {
-			System.out.println("DEBUG: create muxType");
 			MuxType type = get(MuxType.class, muxInputList.getJSONObject(i).getString("muxType"));
-			System.out.println("DEBUG: load muxInputs");
 			mb.getSelectedMuxInputs(type).addAll(loadMuxInputs(muxInputList.getJSONObject(i).getJSONArray("input"), mb.getAllowedMuxInputs()));
 		}
 
@@ -106,19 +97,13 @@ class MachineJsonImporter extends Importer {
 	 */
 	private List<RegisterExtension> loadRegisters(JSONObject registerList) throws JSONException, ProjectImportException {
 		List<RegisterExtension> registers = new ArrayList<>();
-		System.out.println("DEBUG: creating savedRegisters array");
 		JSONArray savedRegisters = registerList.getJSONArray("register");
 		for (int i = 0; i < savedRegisters.length(); i++) {
-			System.out.println("DEBUG: create the " + i + "th register object");
 			JSONObject reg = savedRegisters.getJSONObject(i);
-			System.out.println("DEBUG: get name");
 			String name = reg.getString("name");
-			System.out.println("DEBUG: create regSize");
 			RegisterSize size = get(RegisterSize.class, reg.getString("size"));
-			System.out.println("DEBUG: get desc");
 			String description = reg.getString("description");
 
-			System.out.println("DEBUG: create RegExtension");
 			registers.add(new RegisterExtension(name, size, description, true));
 		}
 

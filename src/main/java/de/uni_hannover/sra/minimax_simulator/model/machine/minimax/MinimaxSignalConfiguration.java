@@ -77,20 +77,13 @@ public class MinimaxSignalConfiguration implements SignalConfiguration,
 
 	private final MachineConfiguration			_config;
 
-	public MinimaxSignalConfiguration(MachineConfiguration config)
-	{
-		System.out.println("DEBUG: create two ArrayLists");
+	public MinimaxSignalConfiguration(MachineConfiguration config) {
 		_signalTypes = new ArrayList<SignalType>();
 		_listeners = new ArrayList<SignalConfigListener>();
-		System.out.println("DEBUG: create two ArrayLists succeeded");
 
 		_config = config;
-		System.out.println("DEBUG: set listener");
 		_config.addMachineConfigListener(this);
-		System.out.println("DEBUG: set listener succeeded");
-		System.out.println("DEBUG: call updateSignals()");
 		updateSignals();
-		System.out.println("DEBUG: call updateSignals() succeeded");
 	}
 
 	@Override

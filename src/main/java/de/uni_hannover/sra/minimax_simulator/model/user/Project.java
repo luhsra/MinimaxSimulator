@@ -28,76 +28,55 @@ public class Project
 
 	private boolean						_unsaved;
 
-	public Project(MachineConfiguration machineConfig,
-			ProjectConfiguration projectConfig, SignalTable signalTable)
-	{
+	public Project(MachineConfiguration machineConfig, ProjectConfiguration projectConfig, SignalTable signalTable) {
 		_unsaved = false;
 
 		_machineConfiguration = checkNotNull(machineConfig);
 		_projectConfiguration = checkNotNull(projectConfig);
-		System.out.println("DEBUG: call new MinimaxSignalConf");
 		_signalConfig = new MinimaxSignalConfiguration(_machineConfiguration);
-		System.out.println("DEBUG: call new MinimaxSignalConf succeeded");
-		System.out.println("DEBUG: call new MST");
-		_signalTable = new MachineSignalTable(signalTable, _machineConfiguration,
-			new MinimaxSignalDescription(_machineConfiguration), _signalConfig);
-		System.out.println("DEBUG: call new MST succeeded");
-		System.out.println("DEBUG: call new MinimaxMachine");
+		_signalTable = new MachineSignalTable(signalTable, _machineConfiguration, new MinimaxSignalDescription(_machineConfiguration), _signalConfig);
 		MinimaxMachine minimax = new MinimaxMachine();
 		_machine = minimax;
-		_machineConfiguration.addMachineConfigListener(new MachineConfigurator(_machine,
-			_machineConfiguration));
-		System.out.println("DEBUG: call new MinimaxMachine succeeded");
-		System.out.println("DEBUG: call some adds");
+		_machineConfiguration.addMachineConfigListener(new MachineConfigurator(_machine, _machineConfiguration));
 		MinimaxSimulation simulation = new MinimaxSimulation(minimax, _signalTable);
 		_simulation = simulation;
 		_machineConfiguration.addMachineConfigListener(simulation);
 		_signalConfig.addSignalConfigListener(simulation);
-		System.out.println("DEBUG: call some adds succeeded");
 	}
 
-	public MachineConfiguration getMachineConfiguration()
-	{
+	public MachineConfiguration getMachineConfiguration() {
 		return _machineConfiguration;
 	}
 
-	public ProjectConfiguration getProjectConfiguration()
-	{
+	public ProjectConfiguration getProjectConfiguration() {
 		return _projectConfiguration;
 	}
 
-	public SignalTable getSignalTable()
-	{
+	public SignalTable getSignalTable() {
 		return _signalTable;
 	}
 
-	public boolean isUnsaved()
-	{
+	public boolean isUnsaved() {
 		return _unsaved;
 	}
 
-	public void setIsUnsaved()
-	{
+	public void setIsUnsaved() {
 		_unsaved = true;
 	}
 
-	public void setIsSaved()
-	{
+	public void setIsSaved() {
 		_unsaved = false;
 	}
 
-	public Machine getMachine()
-	{
+	public Machine getMachine() {
 		return _machine;
 	}
 
-	public SignalConfiguration getSignalConfiguration()
-	{
+	public SignalConfiguration getSignalConfiguration() {
 		return _signalConfig;
 	}
 
-	public Simulation getSimulation()
-	{
+	public Simulation getSimulation() {
 		return _simulation;
 	}
 }

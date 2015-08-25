@@ -52,14 +52,10 @@ public class ProjectZipImporter implements ProjectImporter
 		try {
 			zip = new ZipFile(_file);
 
-			System.out.println("DEBUG: get machine conf");
 			MachineConfiguration machineConfiguration = getMachineConfiguration(zip);
-			System.out.println("DEBUG: get project conf");
 			ProjectConfiguration projectConfiguration = getProjectConfiguration(zip);
-			System.out.println("DEBUG: get signal table");
 			SignalTable signalTable = getSignalTable(zip);
 
-			System.out.println("DEBUG: returning the project now");
 			return new Project(machineConfiguration, projectConfiguration, signalTable);
 		} catch (ZipException e) {
 			throw new ProjectImportException("Invalid zip file: " + _file.getPath(), e);

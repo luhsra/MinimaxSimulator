@@ -347,14 +347,11 @@ public class DebuggerView implements SimulationListener, MachineConfigListener {
 
     @Override
     public void stateChanged(SimulationState state) {
-        System.out.println("DEBUG: state changed");
         if (state == SimulationState.IDLE) {
-            System.out.println("DEBUG: state now is IDLE");
             // simulation has done a step
             _lastExecutedRow = _simulation.getCurrentSignalRow();
         }
         else if (state == SimulationState.HALTED) {
-            System.out.println("DEBUG: state now is HALTED");
             // simulation ended
             if (_lastExecutedRow != NO_ROW_MARKED) {
                 _lastExecutedRow = NO_ROW_MARKED;
@@ -363,13 +360,11 @@ public class DebuggerView implements SimulationListener, MachineConfigListener {
             btnSimRun.setDisable(true);
         }
         else if (state == SimulationState.OFF) {
-            System.out.println("DEBUG: state now is OFF");
             // simulation canceled
             if (_lastExecutedRow != NO_ROW_MARKED) {
                 _lastExecutedRow = NO_ROW_MARKED;
             }
         }
-        System.out.println("DEBUG: lastExecutedRow: " + _lastExecutedRow);
     }
 
     @FXML private Button btnSimInit;
