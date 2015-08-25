@@ -1,6 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.*;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
@@ -39,7 +42,7 @@ import java.util.Optional;
  *
  * @author Philipp Rohde
  */
-public class DebuggerView implements SimulationListener {
+public class DebuggerView implements SimulationListener, MachineConfigListener {
 
     private final TextResource _resSignal;
     private final TextResource _res;
@@ -116,6 +119,8 @@ public class DebuggerView implements SimulationListener {
     public void initDebuggerView() {
         _simulation = Main.getWorkspace().getProject().getSimulation();
         _simulation.addSimulationListener(this);
+
+        Main.getWorkspace().getProject().getMachineConfiguration().addMachineConfigListener(this);
 
         _cyclesFormatHalted = _res.createFormat("cycles.label");
         _cyclesFormatRead = _res.createFormat("cycles.read.label");
@@ -460,6 +465,13 @@ public class DebuggerView implements SimulationListener {
             text = format.format(_cyclesFormatParam);
         }
         lblCycles.setText(text);
+    }
+
+    @Override
+    public void processEvent(MachineConfigEvent event) {
+        if (event instanceof MachineConfigListEvent.MachineConfigRegisterEvent) {
+            updateRegTable();
+        }
     }
 
     /**
