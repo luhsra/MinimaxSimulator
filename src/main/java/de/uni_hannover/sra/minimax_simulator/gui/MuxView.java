@@ -4,6 +4,9 @@ import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.gui.common.NullAwareIntStringConverter;
 import de.uni_hannover.sra.minimax_simulator.gui.util.HexSpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.gui.common.NullAwareIntFormatter;
@@ -37,7 +40,7 @@ import java.util.function.UnaryOperator;
  *
  * @author Philipp Rohde
  */
-public class MuxView {
+public class MuxView implements MachineConfigListener {
 
     private final TextResource _res;
     private MachineConfiguration _config;
@@ -111,10 +114,10 @@ public class MuxView {
      */
     public void initMuxView() {
         _config = Main.getWorkspace().getProject().getMachineConfiguration();
+        _config.addMachineConfigListener(this);
         initTableMuxA();
         initTableMuxB();
 
-        cbRegister.setItems(FXCollections.observableArrayList(_config.getAvailableSources()));
         // set a new string converter for the combo box, otherwise the toString method of MuxInput would be used
         cbRegister.setConverter(new StringConverter<MuxInput>() {
             @Override
@@ -134,6 +137,8 @@ public class MuxView {
 
         cbRegister.valueProperty().addListener((obs, oldValue, newValue) ->
                 updateSaveButton());
+
+        updateRegisterComboBox();
 
         tgroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
@@ -159,6 +164,10 @@ public class MuxView {
         });
 
         initSpinners();
+    }
+
+    private void updateRegisterComboBox() {
+        cbRegister.setItems(FXCollections.observableArrayList(_config.getAvailableSources()));
     }
 
     /**
@@ -628,6 +637,13 @@ public class MuxView {
         }
 
         return false;
+    }
+
+    @Override
+    public void processEvent(MachineConfigEvent event) {
+        if (event instanceof MachineConfigListEvent.MachineConfigMuxEvent) {
+            updateRegisterComboBox();
+        }
     }
 
     /**
