@@ -131,7 +131,6 @@ public class DebuggerView implements SimulationListener {
      * Calls the update method for each {@link TableView}.
      */
     private void updateAllTables() {
-        embeddedMemoryTableController.updateMemTable();
         updateAluTable();
         updateRegTable();
         updateSimulationTable();

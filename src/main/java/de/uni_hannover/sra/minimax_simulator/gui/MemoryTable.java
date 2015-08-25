@@ -2,10 +2,12 @@ package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
+import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryAccessListener;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,9 +32,10 @@ import java.util.Optional;
  *
  * @author Philipp Rohde
  */
-public class MemoryTable {
+public class MemoryTable implements MemoryAccessListener {
 
     private String _addressFormatString;
+    private static final String _hexFormatString = "0x%08X";
     private static MachineMemory mMemory;
 
     private final int _pageSize = 16;
@@ -139,6 +142,7 @@ public class MemoryTable {
      */
     public void initMemTable() {
         mMemory = Main.getWorkspace().getProject().getMachine().getMemory();
+        mMemory.addMemoryAccessListener(this);
         _addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
 
         System.out.println("initializing memory table");
@@ -160,10 +164,7 @@ public class MemoryTable {
                         System.out.println("Double clicked");
                         int address = memTable.getSelectionModel().getSelectedIndex() + _cachedPageStart;
                         // open edit dialog
-                        Optional<ButtonType> result = new MemoryUpdateDialog(address, mMemory).showAndWait();
-                        if (result.get() == ButtonType.OK) {
-                            updateMemTable();
-                        }
+                        new MemoryUpdateDialog(address, mMemory).show();
                     }
                 }
             }
@@ -192,7 +193,7 @@ public class MemoryTable {
         MemoryState mState = mMemory.getMemoryState();
         for (int i = 0; i < _pageSize; i++) {
             int value = mState.getInt(_cachedPageStart + i);
-            data.add(new MemoryTableModel(String.format(_addressFormatString, _cachedPageStart + i), String.valueOf(value), String.format("0x%08X", value)));
+            data.add(new MemoryTableModel(String.format(_addressFormatString, _cachedPageStart + i), String.valueOf(value), String.format(_hexFormatString, value)));
         }
 
         memTable.setItems(data);
@@ -247,6 +248,28 @@ public class MemoryTable {
         _page = newPage;
         _cachedPageStart = _page * _pageSize + mMemory.getMinAddress();
 
+        updateMemTable();
+    }
+
+    @Override
+    public void memoryReadAccess(int address, int value) {
+        // there is nothing to do if the memory was read
+    }
+
+    @Override
+    public void memoryWriteAccess(int address, int value) {
+        MemoryTableModel entry = memTable.getItems().get(address % _pageSize);
+        entry.setDecimal(String.valueOf(value));
+        entry.setHex(String.format(_hexFormatString, value));
+    }
+
+    @Override
+    public void memoryReset() {
+        updateMemTable();
+    }
+
+    @Override
+    public void memoryChanged() {
         updateMemTable();
     }
 
