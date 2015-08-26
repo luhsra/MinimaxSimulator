@@ -59,7 +59,7 @@
     -fx-stroke: whitesmoke;
 }
 */
-#memtable_dec, #memtable_hex, #memtable_address {
+#memtable_dec, #memtable_hex, #memtable_address, #col_jumptarget, #col_condition, #col_address {
     -fx-alignment: CENTER;
 }
 
@@ -78,7 +78,7 @@
     -fx-cell-size: 18px;
 }
 
-#simtable .table-row-cell {
+#simtable .table-row-cell, #signaltable .table-row-cell {
     -fx-font-size: 12px;
 }
 
@@ -93,3 +93,13 @@
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
 }
+
+#signaltable .column-header {
+    -fx-pref-height: 100px;
+    -fx-max-height: 100px;
+}
+
+#signaltable .column-header .label{
+    -fx-font-size: 12px;
+}
+
