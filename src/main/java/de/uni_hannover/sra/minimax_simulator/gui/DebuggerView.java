@@ -8,6 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.*;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
@@ -42,7 +43,7 @@ import java.util.Optional;
  *
  * @author Philipp Rohde
  */
-public class DebuggerView implements SimulationListener, MachineConfigListener {
+public class DebuggerView implements SimulationListener, MachineConfigListener, SignalTableListener {
 
     private final TextResource _resSignal;
     private final TextResource _res;
@@ -121,6 +122,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener {
         _simulation.addSimulationListener(this);
 
         Main.getWorkspace().getProject().getMachineConfiguration().addMachineConfigListener(this);
+        Main.getWorkspace().getProject().getSignalTable().addSignalTableListener(this);
 
         _cyclesFormatHalted = _res.createFormat("cycles.label");
         _cyclesFormatRead = _res.createFormat("cycles.read.label");
@@ -467,6 +469,36 @@ public class DebuggerView implements SimulationListener, MachineConfigListener {
         if (event instanceof MachineConfigListEvent.MachineConfigRegisterEvent) {
             updateRegTable();
         }
+    }
+
+    @Override
+    public void onStructureChanged() {
+        updateSimulationTable();
+    }
+
+    @Override
+    public void onRowAdded(int index, SignalRow row) {
+        updateSimulationTable();
+    }
+
+    @Override
+    public void onRowRemoved(int index) {
+        updateSimulationTable();
+    }
+
+    @Override
+    public void onRowsExchanged(int index1, int index2) {
+        updateSimulationTable();
+    }
+
+    @Override
+    public void onRowReplaced(int index, SignalRow row) {
+        updateSimulationTable();
+    }
+
+    @Override
+    public void onRowsUpdated(int fromIndex, int toIndex) {
+        updateSimulationTable();
     }
 
     /**
