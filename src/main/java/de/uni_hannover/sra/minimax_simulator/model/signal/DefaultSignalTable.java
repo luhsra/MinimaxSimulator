@@ -91,6 +91,11 @@ public class DefaultSignalTable extends AbstractSignalTable
 	}
 
 	@Override
+	public DescriptionFactory getDescriptionFactory() {
+		return null;
+	}
+
+	@Override
 	public void moveSignalRows(int firstIndex, int lastIndex, int direction)
 	{
 		checkArgument(firstIndex >= 0 && lastIndex < getRowCount() && lastIndex >= firstIndex);

@@ -161,6 +161,11 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener
 	}
 
 	@Override
+	public DescriptionFactory getDescriptionFactory() {
+		return _descriptionFactory;
+	}
+
+	@Override
 	public void moveSignalRows(int firstIndex, int lastIndex, int direction)
 	{
 		_theTable.moveSignalRows(firstIndex, lastIndex, direction);

@@ -88,6 +88,8 @@ public class FXMainController implements WorkspaceListener {
     private RegView embeddedRegViewController;
     @FXML
     private DebuggerView embeddedDebuggerViewController;
+    @FXML
+    private SignalView embeddedSignalViewController;
 
     private final TextResource _res;
 
@@ -361,6 +363,7 @@ public class FXMainController implements WorkspaceListener {
                 embeddedMuxViewController.initMuxView();
                 embeddedRegViewController.initRegView();
                 embeddedDebuggerViewController.initDebuggerView();
+                embeddedSignalViewController.initSignalView();
             }
         });
     }
