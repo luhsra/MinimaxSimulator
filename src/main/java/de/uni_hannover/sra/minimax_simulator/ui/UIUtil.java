@@ -39,6 +39,9 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXWaitingDialog;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 
@@ -432,7 +435,7 @@ public class UIUtil
 	 * Removes the table header of a {@link TableView} by looking up the TableHeaderRow and making it invisible.
 	 *
 	 * @param table
-	 *          the {@link TableView} for that the header should be removed
+	 *          the {@code TableView} for that the header should be removed
 	 */
 	public static void removeTableHeader(TableView table) {
 		Pane header = (Pane) table.lookup("TableHeaderRow");
@@ -440,5 +443,22 @@ public class UIUtil
 		header.setMinHeight(0);
 		header.setPrefHeight(0);
 		header.setVisible(false);
+	}
+
+	/**
+	 * Clears the standard text component of a {@link TableColumn} and adds a new {@link Label} which
+	 * is rotated by -90 degrees.
+	 *
+	 * @param col
+	 *          the {@code TableColumn} for that the header should be rotated
+	 * @param text
+	 *          the text to set as column description
+	 */
+	public static void rotateColumnHeader(TableColumn col, String text) {
+		col.setText("");
+		Label lbl = new Label(text);
+		lbl.setRotate(-90);
+		Group grp = new Group(lbl);
+		col.setGraphic(grp);
 	}
 }

@@ -53,7 +53,7 @@
                 <Insets bottom="15.0" left="30.0" right="15.0" top="15.0" />
             </padding>
          <children>
-            <Button mnemonicParsing="false" text="" onAction="#doSomething">
+            <Button mnemonicParsing="false" text="" onAction="#addRow">
                <VBox.margin>
                   <Insets top="220.0" />
                </VBox.margin>
@@ -63,21 +63,21 @@
                     </ImageView>
                 </graphic>
             </Button>
-            <Button mnemonicParsing="false" text="">
+            <Button mnemonicParsing="false" text="" onAction="#deleteRow">
                 <graphic>
                     <ImageView>
                         <Image url="/images/fugue/cross.png"/>
                     </ImageView>
                 </graphic>
             </Button>
-            <Button mnemonicParsing="false" text="">
+            <Button fx:id="btnMoveUp" mnemonicParsing="false" text="" onAction="#moveOperation">
                 <graphic>
                     <ImageView>
                         <Image url="/images/fugue/arrow-090.png"/>
                     </ImageView>
                 </graphic>
             </Button>
-            <Button mnemonicParsing="false" text="">
+            <Button fx:id="btnMoveDown" mnemonicParsing="false" text="" onAction="#moveOperation">
                 <graphic>
                     <ImageView>
                         <Image url="/images/fugue/arrow-270.png"/>

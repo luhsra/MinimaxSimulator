@@ -7,18 +7,18 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperatio
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.signal.*;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXJumpTargetDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -26,43 +26,36 @@ import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.ComboBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.stage.FileChooser;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 
-import javax.swing.*;
-import javax.swing.table.*;
-import java.io.File;
 import java.util.*;
-import java.util.function.BooleanSupplier;
+import java.util.regex.Pattern;
 
 /**
- * <b>FXController of the MemoryView</b><br>
+ * <b>FXController of the SignalView</b><br>
  * <br>
- * This controller handles every GUI interaction with the memory {@link Tab}.
- * The MemoryView is the UI of the {@link MachineMemory}.
+ * This controller handles every GUI interaction with the signal table {@link Tab}.
+ * The SignalView is the UI of the {@link SignalTable}.
  *
  * @author Philipp Rohde
  */
-public class SignalView {
+// TODO: disable / enable the buttons
+public class SignalView implements SignalTableListener {
 
     private final TextResource _res;
 
     private SignalTable _signal;
 
     @FXML TableView signaltable;
-
-
-    private ImmutableList<TableColumn> cols;
 
     /**
      * The constructor initializes the final variables.
@@ -72,7 +65,7 @@ public class SignalView {
     }
 
     /**
-     * This method is called during application start up and initializes the MemoryView
+     * This method is called during application start up and initializes the SignalView
      * as much as possible without having any project data.
      */
     public void initialize() {
@@ -103,39 +96,36 @@ public class SignalView {
         }       */
     }
 
-    private void rotateColumnHeader(TableColumn col, String text) {
-        col.setText("");
-        Label lbl = new Label(text);
-        lbl.setRotate(-90);
-        Group grp = new Group(lbl);
-        col.setGraphic(grp);
-    }
-
     /**
      * This method is called from the main controller if a new project was created or a opened.
-     * It initializes the memory {@link TableView} and the {@link Spinner}s because they need project data.
+     * It initializes the signal {@link TableView} because it needs project data.
      */
     public void initSignalView() {
         _signal = Main.getWorkspace().getProject().getSignalTable();
+        _signal.addSignalTableListener(this);
         signaltable.getColumns().clear();
         updateSignalTable();
     }
 
 
+    /**
+     * Updates the signal table by complete recreation.
+     */
+    // TODO: create different TableColumn classes
     private void updateSignalTable() {
         signaltable.getItems().clear();
         signaltable.getColumns().clear();
 
         List<String> columns = new ArrayList<String>();
         columns.add(_res.get("col.breakpoint"));
-        columns.add("label");
-        columns.add("address");
-        columns.add("ALUSel.A");
-        columns.add("ALUSel.B");
-        columns.add("MDR.Sel");
-        columns.add("HS CS");
-        columns.add("HW RW");
-        columns.add("ALU Ctrl");
+        columns.add(_res.get("col.label"));
+        columns.add(_res.get("col.address"));
+        columns.add(_res.get("col.aluselA"));
+        columns.add(_res.get("col.aluselB"));
+        columns.add(_res.get("col.mdrsel"));
+        columns.add(_res.get("col.memcs"));
+        columns.add(_res.get("col.memrw"));
+        columns.add(_res.get("col.aluctrl"));
 
         // now all registers
         for (RegisterExtension baseReg : Main.getWorkspace().getProject().getMachineConfiguration().getBaseRegisters()) {
@@ -146,9 +136,9 @@ public class SignalView {
         }
 
         // now the rest
-        columns.add("ALU == 0?");
-        columns.add("Folgebefehl");
-        columns.add("Beschreibung");
+        columns.add(_res.get("col.condition"));
+        columns.add(_res.get("col.jumptarget"));
+        columns.add(_res.get("col.description"));
 
         List<String> columnIDs = new ArrayList<String>();
         columnIDs.add("BREAKPOINT");
@@ -178,8 +168,9 @@ public class SignalView {
         for (int i = 0 ; i < columns.size(); i++) {
             final int j = i;
             TableColumn col = new TableColumn(columns.get(i));
-            rotateColumnHeader(col, columns.get(i));
+            UIUtil.rotateColumnHeader(col, columns.get(i));
             col.setId(columnIDs.get(i));
+            col.setSortable(false);
             col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
                     try {
@@ -243,6 +234,94 @@ public class SignalView {
 
                 });
             }
+            else if (i == 1) {
+                col.setCellFactory(new Callback<TableColumn<ObservableList, String>, TableCell<ObservableList, String>>() {
+                    @Override
+                    public TableCell<ObservableList, String> call(TableColumn<ObservableList, String> param) {
+                        TableCell<ObservableList, String> cell = new TableCell<ObservableList, String>(){
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+
+                                if (item == null) {
+                                    setGraphic(null);
+                                }
+                                else {
+                                    GridPane grid = new GridPane();
+                                    Label lbl = new Label(item);
+
+                                    grid.add(lbl, 0, 0);
+                                    ColumnConstraints columnConstraints = new ColumnConstraints();
+                                    columnConstraints.setFillWidth(true);
+                                    columnConstraints.setHgrow(Priority.ALWAYS);
+                                    grid.getColumnConstraints().add(columnConstraints);
+                                    RowConstraints rowConstraints = new RowConstraints();
+                                    rowConstraints.setFillHeight(true);
+                                    rowConstraints.setVgrow(Priority.ALWAYS);
+                                    grid.getRowConstraints().add(rowConstraints);
+                                    grid.setHalignment(lbl, HPos.CENTER);
+                                    grid.setValignment(lbl, VPos.CENTER);
+                                    setGraphic(grid);
+                                }
+                            }
+                        };
+
+                        cell.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                if (event.getClickCount() == 2) {
+                                    System.out.println("double clicked!");
+                                    int index = cell.getTableView().getSelectionModel().getSelectedIndex();
+                                    SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
+                                    SignalRow signalRow = signalTable.getRow(index);
+
+                                    TextField txtLabel = new TextField(signalRow.getLabel());
+/*
+                                    txtLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+                                        signalRow.setLabel(newValue);
+                                        signalTable.setSignalRow(index, signalRow);
+                                    });
+*/
+                                    txtLabel.setOnKeyReleased(new EventHandler<KeyEvent>() {
+                                        @Override
+                                        public void handle(KeyEvent evt) {
+
+                                            if (KeyCode.ENTER == evt.getCode()) {
+                                                signalRow.setLabel(txtLabel.getText());
+                                                txtLabel.cancelEdit();
+                                                signalTable.setSignalRow(index, signalRow);
+                                                //updateSignalTable();
+
+                                            }
+                                            else if (KeyCode.ESCAPE == evt.getCode()) {
+                                                txtLabel.cancelEdit();
+                                                cell.setGraphic(new Label(signalRow.getLabel()));
+                                            }
+                                        }
+                                    });
+
+                                    txtLabel.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                                        @Override public void changed(ObservableValue<? extends Boolean> val, Boolean oldVal, Boolean newVal) {
+
+                                            if (!newVal) {
+                                                txtLabel.cancelEdit();
+                                                cell.setGraphic(new Label(signalRow.getLabel()));
+                                            }
+                                        }
+                                    });
+
+
+                                    cell.setGraphic(txtLabel);
+                                    txtLabel.requestFocus();
+                                }
+                            }
+                        });
+
+                        return cell;
+                    }
+
+                });
+            }
             else if ( (i >= 3) && (i < columns.size()-3) ) {
                 col.setCellFactory(new Callback<TableColumn<ObservableList, String>, TableCell<ObservableList, String>>() {
                     @Override
@@ -292,6 +371,7 @@ public class SignalView {
                                     setGraphic(new Label("-"));
                                 }
                             }
+
                         };
 
                         cell.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -303,22 +383,6 @@ public class SignalView {
                                     SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
                                     SignalRow signalRow = signalTable.getRow(index);
                                     ComboBox<String> cbRegister = new ComboBox<String>();
-
-                                    cbRegister.valueProperty().addListener((obs, oldValue, newValue) -> {
-                                        if (newValue.startsWith("-")) {
-                                            signalRow.setSignal(cell.getTableColumn().getId(), null);
-                                        }
-                                        else {
-                                            String binary = newValue.substring(0, newValue.indexOf(" "));
-                                            int code = Integer.parseInt(binary, 2);
-                                            signalRow.setSignalValue(cell.getTableColumn().getId(), code);
-                                        }
-
-                                        DescriptionFactory dFac = signalTable.getDescriptionFactory();
-                                        signalRow.setDescription(dFac.createDescription(index, signalRow));
-                                        signalTable.setSignalRow(index, signalRow);             // exchange row with itself for notification of SignalTableListeners
-                                        updateSignalTable();
-                                    });
 
                                     ObservableList<String> data = FXCollections.observableArrayList();
 
@@ -347,20 +411,141 @@ public class SignalView {
                                         case "ALU_CTRL":
                                             List<AluOperation> ops = Main.getWorkspace().getProject().getMachineConfiguration().getAluOperations();
 
+                                            data.add("-");
                                             for (int i = 0; i < ops.size(); i++) {
                                                 data.add(Util.toBinaryAddress(i, ops.size()-1) + " " + ops.get(i).getOperationName());
                                             }
+                                            break;
+
+                                        case "MDR_SEL":
+                                            data.addAll("-", "0 ALU.result", "1 MEM.DO");
+                                            break;
+
+                                        case "MEM_CS":
+                                            data.addAll("0 ", "1 enable");
+                                            break;
+
+                                        case "MEM_RW":
+                                            data.addAll("-", "0 write", "1 read");
                                             break;
 
                                         default:
                                             data.addAll("0 ", "1 write");
                                     }
 
+                                    // get the index of the currently set signal value
+                                    int indexCurrentValue;
+                                    if (signalRow.getSignalValues().containsKey(id)) {
+                                        indexCurrentValue = signalRow.getSignalValue(id) + 1;
+                                        if (Pattern.matches(".+\\.W", id)) {
+                                            indexCurrentValue -= 1;
+                                        }
+                                    }
+                                    else {
+                                        indexCurrentValue = 0;
+                                    }
+
+
                                     cbRegister.setItems(data);
+                                    cbRegister.getSelectionModel().select(indexCurrentValue);
+
+                                    cbRegister.valueProperty().addListener((obs, oldValue, newValue) -> {
+                                        if (newValue.startsWith("-")) {
+                                            signalRow.setSignal(cell.getTableColumn().getId(), null);
+                                        } else {
+                                            String binary = newValue.substring(0, newValue.indexOf(" "));
+                                            int code = Integer.parseInt(binary, 2);
+                                            signalRow.setSignalValue(cell.getTableColumn().getId(), code);
+                                        }
+
+                                        DescriptionFactory dFac = signalTable.getDescriptionFactory();
+                                        signalRow.setDescription(dFac.createDescription(index, signalRow));
+                                        signalTable.setSignalRow(index, signalRow);             // exchange row with itself for notification of SignalTableListeners
+                                    });
+
+                                    cbRegister.focusedProperty().addListener((obs, oldValue, newValue) -> {
+                                        if (!newValue) {
+                                            if (signalRow.getSignalValues().containsKey(id)) {
+                                                //cell.setGraphic(new Label(String.valueOf(signalRow.getSignalValue(id))));
+                                                // TODO: better update of the graphic
+                                                updateSignalTable();
+                                            } else {
+                                                cell.setGraphic(new Label("-"));
+                                            }
+                                        }
+                                    });
+                                    cbRegister.setOnKeyReleased(new EventHandler<KeyEvent>() {
+                                        @Override
+                                        public void handle(KeyEvent evt) {
+                                            if (KeyCode.ESCAPE == evt.getCode()) {
+                                                if (signalRow.getSignalValues().containsKey(id)) {
+                                                    //cell.setGraphic(new Label(String.valueOf(signalRow.getSignalValue(id))));
+                                                    //cell.setText(String.valueOf(signalRow.getSignalValue(id)));
+                                                    // TODO: better update of the graphic
+                                                    updateSignalTable();
+                                                } else {
+                                                    cell.setGraphic(new Label("-"));
+                                                }
+                                            }
+                                        }
+                                    });
 
                                     cell.setGraphic(cbRegister);
+                                    cbRegister.requestFocus();
                                     cbRegister.show();
 
+                                }
+                            }
+                        });
+
+                        return cell;
+                    }
+
+                });
+            }
+            else if (i == columns.size()-3 || i == columns.size()-2) {
+                col.setCellFactory(new Callback<TableColumn<ObservableList, String>, TableCell<ObservableList, String>>() {
+                    @Override
+                    public TableCell<ObservableList, String> call(TableColumn<ObservableList, String> param) {
+                        TableCell<ObservableList, String> cell = new TableCell<ObservableList, String>() {
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+
+                                if (item == null) {
+                                    setGraphic(null);
+                                }
+                                else {
+                                    GridPane grid = new GridPane();
+                                    Label lbl = new Label(item);
+
+                                    grid.add(lbl, 0, 0);
+                                    ColumnConstraints columnConstraints = new ColumnConstraints();
+                                    columnConstraints.setFillWidth(true);
+                                    columnConstraints.setHgrow(Priority.ALWAYS);
+                                    grid.getColumnConstraints().add(columnConstraints);
+                                    RowConstraints rowConstraints = new RowConstraints();
+                                    rowConstraints.setFillHeight(true);
+                                    rowConstraints.setVgrow(Priority.ALWAYS);
+                                    grid.getRowConstraints().add(rowConstraints);
+                                    grid.setHalignment(lbl, HPos.CENTER);
+                                    grid.setValignment(lbl, VPos.CENTER);
+                                    setGraphic(grid);
+                                }
+                            }
+
+                        };
+
+                        cell.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                if (event.getClickCount() == 2) {
+                                    System.out.println("double clicked!");
+                                    int index = cell.getTableView().getSelectionModel().getSelectedIndex();
+                                    SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
+                                    SignalRow signalRow = signalTable.getRow(index);
+                                    // TODO: open JumpDialog
+                                    new FXJumpTargetDialog(signalTable, signalRow, index).showAndApply();
                                 }
                             }
                         });
@@ -377,166 +562,165 @@ public class SignalView {
         ObservableList<ObservableList> allRows = FXCollections.observableArrayList();
 
         for (int i = 0; i < _signal.getRowCount(); i++) {
-            SignalRow signalRow = _signal.getRow(i);
-            ObservableList<String> row = FXCollections.observableArrayList();
-            row.add(String.valueOf(signalRow.isBreakpoint()));
-            row.add(signalRow.getLabel());
-            row.add(String.valueOf(i));
-
-            Map<String, SignalValue> signalValues = signalRow.getSignalValues();
-            ObservableList<TableColumn> cols = signaltable.getColumns();
-
-            for (int j = 3; j < cols.size()-3; j++) {
-                String lookUp = cols.get(j).getId();
-                if (signalValues.containsKey(lookUp)) {
-                    row.add(String.valueOf(signalValues.get(lookUp).intValue()));
-                }
-                else {
-                    row.add("-");
-                }
-            }
-
-            Jump j = signalRow.getJump();
-            if (j.getTargetRow(i, 0) == j.getTargetRow(i, 1)) {
-                row.add("-");
-            }
-            else {
-                row.add("1\n0");
-            }
-
-            int target0 = j.getTargetRow(i, 0);
-            int target1 = j.getTargetRow(i, 1);
-            if (target0 == target1) {
-                row.add(Integer.toString(target0));
-            }
-            else {
-                row.add(target1 + "\n" + target0);
-            }
-
-            row.add(signalRow.getDescription());
-            signaltable.getItems().add(row);
+            signaltable.getItems().add(createTableRow(i, _signal.getRow(i)));
         }
 
-
-        ObservableList<String> row = FXCollections.observableArrayList();
-        ObservableList<String> row1 = FXCollections.observableArrayList();
-        row.addAll("d1");
-        row.addAll("d11");
-        //row.addAll("d111");
-        row1.addAll("d2");
-        row1.addAll("d22");
-        //row1.addAll("d222");
-//        signaltable.getItems().add(allRows);
-//        signaltable.getItems().add(row1);
-    }
-
-    public void doSomething() {
-        updateSignalTable();
     }
 
     /**
-     * This class represents the table model for the memory {@link TableView}.<br>
-     * <br>
-     * It stores the address as well as the decimal and hexadecimal value as {@link SimpleStringProperty}.
+     * Creates an {@link ObservableList<String>} from a {@link SignalRow} to add to the signal table {@link TableView}.
      *
-     * @author Philipp Rohde
+     * @param index
+     *          the index of the row to create
+     * @param signalRow
+     *          the {@code SignalRow} to use for creating the table row data
+     * @return
+     *          the {@code SignalRow} as a list of {@code Strings}
      */
-    public static class SignalTableModel {
-        private final SimpleBooleanProperty breakpoint;
-        private final SimpleStringProperty label;
-        private final SimpleIntegerProperty address;
-        private final SimpleStringProperty description;
-        private final SimpleObjectProperty<Map<String, SignalValue>> signalValues;
-        private final SimpleStringProperty condition;
-        private final SimpleStringProperty jumptarget;
+    private ObservableList<String> createTableRow(int index, SignalRow signalRow) {
+        ObservableList<String> row = FXCollections.observableArrayList();
 
-        private static final String _hexFormatString = "0x%08X";
+        row.add(String.valueOf(signalRow.isBreakpoint()));
+        row.add(signalRow.getLabel());
+        row.add(String.valueOf(index));
 
-        private SignalTableModel(SignalRow row, int address) {
-            this.breakpoint = new SimpleBooleanProperty(row.isBreakpoint());
-            this.label = new SimpleStringProperty(row.getLabel());
-            this.address = new SimpleIntegerProperty(address);
-            this.description = new SimpleStringProperty(row.getDescription());
-            this.signalValues = new SimpleObjectProperty<>(row.getSignalValues());
+        Map<String, SignalValue> signalValues = signalRow.getSignalValues();
+        ObservableList<TableColumn> cols = signaltable.getColumns();
 
-            Jump j = row.getJump();
-            if (j.getTargetRow(address, 0) == j.getTargetRow(address, 1)) {
-                this.condition = new SimpleStringProperty("-");
+        for (int j = 3; j < cols.size()-3; j++) {
+            String lookUp = cols.get(j).getId();
+            if (signalValues.containsKey(lookUp)) {
+                row.add(String.valueOf(signalValues.get(lookUp).intValue()));
             }
             else {
-                this.condition = new SimpleStringProperty("1\n0");
+                if ( (j >= 3 && j <= 5) || j == 7 || j == 8) {
+                    row.add("-");
+                }
+                else {
+                    row.add("0 ");
+                }
+
             }
-
-            int target0 = j.getTargetRow(address, 0);
-            int target1 = j.getTargetRow(address, 1);
-            if (target0 == target1) {
-                this.jumptarget = new SimpleStringProperty(Integer.toString(target0));
-            }
-            else {
-                this.jumptarget = new SimpleStringProperty(target1 + "\n" + target0);
-            }
-
         }
 
-        public String getLabel() {
-            return label.get();
+        Jump j = signalRow.getJump();
+        if (j.getTargetRow(index, 0) == j.getTargetRow(index, 1)) {
+            row.add("-");
+        }
+        else {
+            row.add("1\n0");
         }
 
-        public SimpleStringProperty labelProperty() {
-            return label;
+        int target0 = j.getTargetRow(index, 0);
+        int target1 = j.getTargetRow(index, 1);
+        if (target0 == target1) {
+            row.add(Integer.toString(target0));
+        }
+        else {
+            row.add(target1 + "\n" + target0);
         }
 
-        public void setLabel(String label) {
-            this.label.set(label);
+        row.add(signalRow.getDescription());
+
+        return row;
+    }
+
+    /**
+     * Adds a row to the {@link SignalTable}.<br>
+     * If now row is selected the new created row will be added to the end
+     * else if will be added after the selected row.
+     */
+    public void addRow() {
+        int index = signaltable.getSelectionModel().getSelectedIndex();
+
+        if (index == -1) {
+            _signal.addSignalRow(new SignalRow());
+        }
+        else {
+            _signal.addSignalRow(index+1, new SignalRow());
+        }
+    }
+
+    /**
+     * Deletes the selected row of the {@link TableView} from the {@link SignalTable}.
+     */
+    public void deleteRow() {
+        int index = signaltable.getSelectionModel().getSelectedIndex();
+
+        if (index != -1) {
+            _signal.removeSignalRow(index);
+        }
+    }
+
+    @FXML private Button btnMoveUp;
+    @FXML private Button btnMoveDown;
+
+    /**
+     * Moves the currently selected signal row.
+     * It moves the source up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
+     *
+     * @param ae
+     *          the {@link ActionEvent} calling the method
+     */
+    public void moveOperation(ActionEvent ae) {
+
+        if (signaltable.getSelectionModel().getSelectedItems().isEmpty()) {
+            return;
         }
 
-        public int getAddress() {
-            return address.get();
+        Object caller = ae.getSource();
+        int difference = 0;
+        if (caller.equals(btnMoveUp)) {
+            difference = -1;
+        }
+        else if (caller.equals(btnMoveDown)) {
+            difference = 1;
+        }
+        else {
+            return;
         }
 
-        public SimpleIntegerProperty addressProperty() {
-            return address;
+        int index1 = signaltable.getSelectionModel().getSelectedIndex();
+        int index2 = index1 + difference;
+        if (index2 < 0 || index2 >= signaltable.getItems().size()) {
+            return;
         }
 
-        public boolean getBreakpoint() {
-            return breakpoint.get();
-        }
+        // move rows in model and adapt selection
+        _signal.exchangeSignalRows(index1, index2);
+        signaltable.getSelectionModel().select(index2);
 
-        public SimpleBooleanProperty breakpointProperty() {
-            return breakpoint;
-        }
+        Main.getWorkspace().setProjectUnsaved();
+    }
 
-        public String getDescription() {
-            return description.get();
-        }
+    @Override
+    public void onStructureChanged() {
+        updateSignalTable();
+    }
 
-        public SimpleStringProperty descriptionProperty() {
-            return description;
-        }
+    @Override
+    public void onRowAdded(int index, SignalRow row) {
+        updateSignalTable();
+    }
 
-        public Map<String, SignalValue> getSignalValues() {
-            return signalValues.get();
-        }
+    @Override
+    public void onRowRemoved(int index) {
+        updateSignalTable();
+    }
 
-        public SimpleObjectProperty<Map<String, SignalValue>> signalValuesProperty() {
-            return signalValues;
-        }
+    @Override
+    public void onRowsExchanged(int index1, int index2) {
+        updateSignalTable();
+    }
 
-        public String getCondition() {
-            return condition.get();
-        }
+    @Override
+    public void onRowReplaced(int index, SignalRow row) {
+        updateSignalTable();
+    }
 
-        public SimpleStringProperty conditionProperty() {
-            return condition;
-        }
-
-        public String getJumptarget() {
-            return  jumptarget.get();
-        }
-
-        public SimpleStringProperty jumptargetProperty() {
-            return jumptarget;
-        }
+    @Override
+    public void onRowsUpdated(int fromIndex, int toIndex) {
+        updateSignalTable();
     }
 
 }
