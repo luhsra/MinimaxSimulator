@@ -59,7 +59,7 @@
     -fx-stroke: whitesmoke;
 }
 */
-#memtable_dec, #memtable_hex, #memtable_address, #col_jumptarget, #col_condition, #col_address {
+#memtable_dec, #memtable_hex, #memtable_address, #col_jumptarget, #col_condition, #col_address, #ADDRESS {
     -fx-alignment: CENTER;
 }
 
