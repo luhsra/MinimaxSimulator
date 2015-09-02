@@ -23,7 +23,6 @@ import java.util.*;
  *
  * @author Philipp Rohde
  */
-// TODO: disable / enable the buttons
 public class SignalView implements SignalTableListener {
 
     private final TextResource _res;
@@ -78,7 +77,20 @@ public class SignalView implements SignalTableListener {
     public void initSignalView() {
         _signal = Main.getWorkspace().getProject().getSignalTable();
         _signal.addSignalTableListener(this);
-        signaltable.getColumns().clear();
+
+        signaltable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                btnMoveDown.setDisable(false);
+                btnMoveUp.setDisable(false);
+                if (signaltable.getSelectionModel().getSelectedIndex() == 0) {
+                    btnMoveUp.setDisable(true);
+                }
+                else if (signaltable.getSelectionModel().getSelectedIndex() == signaltable.getItems().size()-1) {
+                    btnMoveDown.setDisable(true);
+                }
+            }
+        });
+
         updateSignalTable();
     }
 

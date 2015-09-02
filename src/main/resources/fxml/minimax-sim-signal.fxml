@@ -70,14 +70,14 @@
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="btnMoveUp" mnemonicParsing="false" text="" onAction="#moveOperation">
+            <Button fx:id="btnMoveUp" mnemonicParsing="false" text="" onAction="#moveOperation" disable="true">
                 <graphic>
                     <ImageView>
                         <Image url="/images/fugue/arrow-090.png"/>
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="btnMoveDown" mnemonicParsing="false" text="" onAction="#moveOperation">
+            <Button fx:id="btnMoveDown" mnemonicParsing="false" text="" onAction="#moveOperation" disable="true">
                 <graphic>
                     <ImageView>
                         <Image url="/images/fugue/arrow-270.png"/>
