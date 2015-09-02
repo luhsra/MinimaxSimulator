@@ -153,6 +153,13 @@ public class FXJumpTargetDialog extends FXDialog {
         cbCond1 = new JumpLabelSelector(txtCond1, table, getCurrentConditionalRow(1));
         cbCond0 = new JumpLabelSelector(txtCond0, table, getCurrentConditionalRow(0));
 
+        txtUncond.setDisable(true);
+        txtCond0.setDisable(true);
+        txtCond1.setDisable(true);
+        cbUncond.setDisable(true);
+        cbCond0.setDisable(true);
+        cbCond1.setDisable(true);
+
         rBtnUncond.selectedProperty().addListener((obs, oldValue, newValue) -> {
             validateTargetRow();
             if (newValue) {
