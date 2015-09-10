@@ -36,9 +36,9 @@
                                     <children>
                                         <TableView fx:id="regTable" maxHeight="128.0" maxWidth="532.0" prefHeight="128.0" prefWidth="532.0" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                                             <columns>
-                                                <TableColumn id="register_name" fx:id="col_reg_name" prefWidth="186.0" text="Name" sortable="false" resizable="false"/>
-                                                <TableColumn id="register_dec" fx:id="col_reg_dec" prefWidth="172.0" text="Dezimal" sortable="false" resizable="false"/>
-                                                <TableColumn id="register_hex" fx:id="col_reg_hex" prefWidth="172.0" text="Hexadezimal" sortable="false" resizable="false"/>
+                                                <TableColumn id="register_name" fx:id="col_reg_name" prefWidth="214.0" text="Name" sortable="false" resizable="false"/>
+                                                <TableColumn id="register_dec" fx:id="col_reg_dec" prefWidth="150.0" text="Dezimal" sortable="false" resizable="false"/>
+                                                <TableColumn id="register_hex" fx:id="col_reg_hex" prefWidth="150.0" text="Hexadezimal" sortable="false" resizable="false"/>
                                             </columns>
                                         </TableView>
                                     </children>
