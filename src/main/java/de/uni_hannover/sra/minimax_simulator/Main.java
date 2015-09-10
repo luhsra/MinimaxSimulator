@@ -2,18 +2,23 @@ package de.uni_hannover.sra.minimax_simulator;
 
 import de.uni_hannover.sra.minimax_simulator.config.ConfigurationLoader;
 import de.uni_hannover.sra.minimax_simulator.config.PropertiesFileConfigLoader;
+import de.uni_hannover.sra.minimax_simulator.gui.FXMainController;
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
 import de.uni_hannover.sra.minimax_simulator.resources.DefaultResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.PropertyResourceControl;
 import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
+import java.net.URL;
 import java.util.Locale;
 
 /**
@@ -43,10 +48,29 @@ public class Main extends javafx.application.Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
+        _primaryStage = primaryStage;
         _version = new Version(this.getClass());
 
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/minimax-sim.fxml"));
-        _primaryStage = primaryStage;
+        URL location = getClass().getResource("/fxml/minimax-sim.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(location);
+        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+
+        Parent root = fxmlLoader.load(location.openStream());
+        Scene scene = new Scene(root, 1200, 705);
+        scene.getStylesheets().add("css/application.css");
+        _primaryStage.setScene(scene);
+
+        FXMainController mainController = fxmlLoader.getController();
+        _primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                if (!mainController.exitApplication()) {
+                    event.consume();        // do not close the application
+                }
+            }
+        });
+
         TextResource res = _resourceLoader.getTextResource("application");
         _primaryStage.setTitle(res.format("title", _version.getVersionNumber()));
 
@@ -54,9 +78,6 @@ public class Main extends javafx.application.Application {
         _primaryStage.getIcons().add(new Image("images/nuvola/cpu.png"));
         _primaryStage.getIcons().add(new Image("images/nuvola/cpu-big.png"));
 
-        Scene scene = new Scene(root, 1200, 705);
-        scene.getStylesheets().add("css/application.css");
-        _primaryStage.setScene(scene);
         _primaryStage.setResizable(false);
         _primaryStage.show();
     }

@@ -212,17 +212,18 @@ public class FXMainController implements WorkspaceListener {
     /**
      * Shuts down the application.
      */
-    public void exitApplication() {
+    public boolean exitApplication() {
         if (Main.getWorkspace().isUnsaved()) {
             ButtonType choice = new FXUnsavedDialog(_res.get("close-project.exit.title"), _res.get("close-project.exit.message")).getChoice();
             if (choice.equals(ButtonType.YES)) {
                 saveConfirmed();
             }
             else if (choice.equals(ButtonType.CANCEL)) {
-                return;
+                return false;
             }
         }
         Platform.exit();
+        return true;
     }
 
     private void saveConfirmed() {
