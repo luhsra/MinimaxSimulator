@@ -29,7 +29,7 @@ public class SignalView implements SignalTableListener {
 
     private SignalTable _signal;
 
-    @FXML TableView signaltable;
+    @FXML private TableView signaltable;
 
     /**
      * The constructor initializes the final variables.
@@ -39,39 +39,7 @@ public class SignalView implements SignalTableListener {
     }
 
     /**
-     * This method is called during application start up and initializes the SignalView
-     * as much as possible without having any project data.
-     */
-    public void initialize() {
-        setLocalizedTexts();
-    }
-
-    /**
-     * Sets localized texts from resource for the GUI elements.
-     */
-    private void setLocalizedTexts() {
-/*        cols = new ImmutableList.Builder<TableColumn>().addAll(Arrays.asList(col_breakpoint, col_label, col_address, col_alusel_a, col_alusel_b, col_mdrsel, col_memcs, col_memrw, col_aluctrl, col_condition, col_jumptarget, col_description)).build();
-        for (TableColumn col : cols) {
-            Label lbl = new Label(_res.get(col.getId().replace("_", ".")));
-            lbl.setRotate(-90);
-            Group grp = new Group(lbl);
-            col.setGraphic(grp);
-        }           */
-/*
-        ObservableList<TableColumn<SignalTableModel, ?>> test = signaltable.getColumns();
-        for (TableColumn col : test) {
-            if (!cols.contains(col)) {
-                Label lbl = new Label(col.getText());
-                lbl.setRotate(-90);
-                Group grp = new Group(lbl);
-                col.setText("");
-                col.setGraphic(grp);
-            }
-        }       */
-    }
-
-    /**
-     * This method is called from the main controller if a new project was created or a opened.
+     * This method is called from the main controller if a new project was created or opened.
      * It initializes the signal {@link TableView} because it needs project data.
      */
     public void initSignalView() {
@@ -98,6 +66,7 @@ public class SignalView implements SignalTableListener {
     /**
      * Updates the signal table by complete recreation.
      */
+    // TODO: is there a better way for this table?
     private void updateSignalTable() {
         signaltable.getItems().clear();
         signaltable.getColumns().clear();
@@ -257,8 +226,8 @@ public class SignalView implements SignalTableListener {
 
     /**
      * Adds a row to the {@link SignalTable}.<br>
-     * If now row is selected the new created row will be added to the end
-     * else if will be added after the selected row.
+     * If no row is selected the new row will be added to the end
+     * otherwise it will be added after the selected row.
      */
     public void addRow() {
         int index = signaltable.getSelectionModel().getSelectedIndex();
@@ -286,8 +255,8 @@ public class SignalView implements SignalTableListener {
     @FXML private Button btnMoveDown;
 
     /**
-     * Moves the currently selected signal row.
-     * It moves the source up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
+     * Moves the currently selected signal row.<br>
+     * It moves the row up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
      *
      * @param ae
      *          the {@link ActionEvent} calling the method

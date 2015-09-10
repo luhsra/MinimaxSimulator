@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
- * An FXWaitingDialog is basically an {@link javafx.scene.control.Alert}.
+ * An FXWaitingDialog is basically an {@link javafx.scene.control.Alert}.<br>
  * It contains an indeterminate {@link ProgressBar} indicating that some {@link Runnable} is executed at the moment.
  *
  * @author Philipp Rohde

@@ -6,9 +6,10 @@ import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.scene.control.SpinnerValueFactory;
 
 /**
- * The {@link SpinnerValueFactory} for the {@link javafx.scene.control.Spinner}s from the memory {@link javafx.scene.control.Tab}.
+ * The {@code MemorySpinnerValueFactory} is the {@link SpinnerValueFactory} for the {@link javafx.scene.control.Spinner}s
+ * from the memory {@link javafx.scene.control.Tab}.<br>
  * It sets the range from the minimal address to the maximal address of the {@link MachineMemory}.
- * The addresses are rendered as hexadecimal {@link String}.
+ * The addresses are rendered as hexadecimal String.
  *
  * @author Philipp Rohde
  */

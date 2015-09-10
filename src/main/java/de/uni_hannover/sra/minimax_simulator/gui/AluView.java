@@ -87,7 +87,7 @@ public class AluView {
     }
 
     /**
-     * This method is called from the main controller if a new project was created or a opened.
+     * This method is called from the main controller if a new project was created or opened.
      * It initializes the two ALU operation {@link TableView}s because they need project data.
      */
     public void initAluView() {
@@ -300,7 +300,6 @@ public class AluView {
         _config.exchangeAluOperations(index1, index2);
         updateAddedTable();
         tableAdded.getSelectionModel().select(index2);
-        //_addedTable.getSelectionModel().setSelectionInterval(index2, index2);
 
         Main.getWorkspace().setProjectUnsaved();
     }

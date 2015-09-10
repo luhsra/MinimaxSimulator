@@ -15,13 +15,13 @@ class Importer {
 	 * @param enumClass
 	 *            the class of the enum to create
 	 * @param element
-	 *            the value of the enum,
+	 *            the value of the enum
 	 * @param <T>
 	 *            the type of the enum
 	 * @return
 	 *            an enum of the given class with the given value
 	 * @throws ProjectImportException
-	 *            thrown if there is an error during import
+	 *            thrown if the enum can not be created
 	 */
 	static <T extends Enum<T>> T get(Class<T> enumClass, String element) throws ProjectImportException {
 		String value = element;

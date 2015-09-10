@@ -26,8 +26,8 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author Martin L&uuml;ck
  * @author Philipp Rohde
  */
-public class MemoryImportWorker implements Runnable
-{
+public class MemoryImportWorker implements Runnable {
+
 	private final static Logger	_log	= Logger.getLogger(MemoryImportWorker.class.getName());
 
 	private final MachineMemory	_memory;
@@ -39,9 +39,7 @@ public class MemoryImportWorker implements Runnable
 	private final File			_file;
 	private final TextResource	_res;
 
-	public MemoryImportWorker(MachineMemory memory, int addressStart, int byteCount,
-							  File file, TextResource res)
-	{
+	public MemoryImportWorker(MachineMemory memory, int addressStart, int byteCount, File file, TextResource res) {
 		_memory = memory;
 		_addressStart = addressStart;
 
@@ -62,19 +60,15 @@ public class MemoryImportWorker implements Runnable
 	 * Tries to load the memory image from file. An error dialog will be shown if the import fails.
 	 */
 	@Override
-	public void run()
-	{
+	public void run() {
 		FileInputStream fis = null;
 		boolean memoryNotifiesListeners = _memory.getNotifiesListeners();
 
-		try
-		{
+		try {
 			fis = new FileInputStream(_file);
 			_memory.setNotifiesListeners(false);
 			doImport(fis);
-		}
-		catch (IOException ioe)
-		{
+		} catch (IOException ioe) {
 			UI.invokeInFAT(new Runnable() {
 				@Override
 				public void run() {
@@ -85,9 +79,7 @@ public class MemoryImportWorker implements Runnable
 					fne.showAndWait();
 				}
 			});
-		}
-		finally
-		{
+		} finally {
 			_memory.setNotifiesListeners(memoryNotifiesListeners);
 			IOUtils.closeQuietly(fis);
 		}
@@ -101,8 +93,7 @@ public class MemoryImportWorker implements Runnable
 	 * @throws IOException
 	 * 			thrown if the file is not readable or does not exist
 	 */
-	private void doImport(InputStream is) throws IOException
-	{
+	private void doImport(InputStream is) throws IOException {
 		byte[] bytes = new byte[_effectiveByteCount];
 		ByteStreams.readFully(is, bytes, 0, _effectiveByteCount);
 
@@ -112,8 +103,7 @@ public class MemoryImportWorker implements Runnable
 		// divide length by 4 (rounding up)
 		int intCount = ((_effectiveByteCount - 1) >> 2) + 1;
 
-		for (int i = 0, n = intCount, a = _addressStart; i < n; i++, a++)
-		{
+		for (int i = 0, n = intCount, a = _addressStart; i < n; i++, a++) {
 			// multiply by 4
 			int byteNum = i << 2;
 
@@ -140,11 +130,11 @@ public class MemoryImportWorker implements Runnable
 
 		int truncated = _byteCount - _effectiveByteCount;
 
-		if (_log.isLoggable(Level.FINE))
+		if (_log.isLoggable(Level.FINE)) {
 			_log.fine(bytes.length + " bytes / " + intCount + " words imported, " + truncated + " bytes truncated from " + _file.getPath());
+		}
 
-		if (truncated > 0)
-		{
+		if (truncated > 0) {
 			int maxAddress = _memory.getMaxAddress();
 			int width = _memory.getAddressWidth();
 

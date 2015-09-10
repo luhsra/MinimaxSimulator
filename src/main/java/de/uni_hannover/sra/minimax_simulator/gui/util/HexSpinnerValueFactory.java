@@ -4,7 +4,7 @@ import de.uni_hannover.sra.minimax_simulator.gui.common.HexStringConverter;
 import javafx.scene.control.SpinnerValueFactory;
 
 /**
- * A {@link SpinnerValueFactory} for hexadecimal values.
+ * A {@link SpinnerValueFactory} for hexadecimal values.<br>
  * The range is the same as of {@link Integer}.
  *
  * @author Philipp Rohde

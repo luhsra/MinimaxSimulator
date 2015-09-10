@@ -114,7 +114,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     }
 
     /**
-     * This method is called from the main controller if a new project was created or a opened.
+     * This method is called from the main controller if a new project was created or opened.
      * It initializes the {@link TableView}s because they need project data.
      */
     public void initDebuggerView() {

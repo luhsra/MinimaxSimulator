@@ -3,18 +3,15 @@ package de.uni_hannover.sra.minimax_simulator.gui.common;
 import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
 
-import java.text.NumberFormat;
-import java.text.ParsePosition;
 import java.util.function.UnaryOperator;
 
 /**
- * The NullAwareIntFormatter is a {@link TextFormatter} using the {@link NullAwareIntStringConverter}.
+ * The NullAwareIntFormatter is a {@link TextFormatter} using the {@link NullAwareIntStringConverter}.<br>
  * This class is used for the multiplexer constant input {@link javafx.scene.control.Spinner}s of the {@link de.uni_hannover.sra.minimax_simulator.gui.MuxView}.
  *
  * @author Philipp Rohde
  */
-public class NullAwareIntFormatter extends TextFormatter
-{
+public class NullAwareIntFormatter extends TextFormatter {
 
 	public enum Mode {
 		DEC {
@@ -30,15 +27,6 @@ public class NullAwareIntFormatter extends TextFormatter
 					@Override
 					public Change apply(Change change) {
 						if (change.isContentChange()) {
-/*							ParsePosition parsePosition = new ParsePosition(0);
-							// NumberFormat evaluates the beginning of the text
-							NumberFormat format = NumberFormat.getIntegerInstance();
-							format.parse(change.getControlNewText(), parsePosition);
-							if (parsePosition.getIndex() == 0 ||
-									parsePosition.getIndex() < change.getControlNewText().length()) {
-								// reject, parsing the complete text failed
-								return null;
-							}	*/
 							//TODO: improve
 							try {
 								Integer.parseInt(change.getControlNewText());
@@ -85,7 +73,6 @@ public class NullAwareIntFormatter extends TextFormatter
 
 	public NullAwareIntFormatter(Mode mode) {
 		super(mode.getConverter(), 0, mode.getFilter());
-		//super(mode.getConverter());
 	}
 
 

@@ -20,51 +20,38 @@ import javafx.scene.layout.GridPane;
  *
  * @author Philipp Rohde
  */
-public abstract class FXValueUpdateDialog extends FXDialog
-{
-	protected enum Mode
-	{
-		HEX
-		{
+public abstract class FXValueUpdateDialog extends FXDialog {
+
+	protected enum Mode {
+		HEX {
 			@Override
-			public String toString(FXValueUpdateDialog instance, Integer value)
-			{
+			public String toString(FXValueUpdateDialog instance, Integer value) {
 				return String.format(instance._hexFormat, value);
 			}
 
 			@Override
-			public Integer decode(String value)
-			{
-				try
-				{
+			public Integer decode(String value) {
+				try {
 					long lon = Long.parseLong(value, 16);
 					if (lon > 0xFFFFFFFFL)
 						return null;
 					return (int) lon;
-				}
-				catch (NumberFormatException e)
-				{
+				} catch (NumberFormatException e) {
 					return null;
 				}
 			}
 		},
-		DEC
-		{
+		DEC {
 			@Override
-			public String toString(FXValueUpdateDialog instance, Integer value)
-			{
+			public String toString(FXValueUpdateDialog instance, Integer value) {
 				return Integer.toString(value);
 			}
 
 			@Override
-			public Integer decode(String value)
-			{
-				try
-				{
+			public Integer decode(String value) {
+				try {
 					return Integer.valueOf(value, 10);
-				}
-				catch (NumberFormatException e)
-				{
+				} catch (NumberFormatException e) {
 					return null;
 				}
 			}
@@ -90,8 +77,7 @@ public abstract class FXValueUpdateDialog extends FXDialog
 	private Mode					_mode;
 
 
-	public FXValueUpdateDialog(int currentValue)
-	{
+	public FXValueUpdateDialog(int currentValue) {
 		super(AlertType.NONE, null, null);
 
 		_res = Main.getTextResource("project").using("memory.update");
@@ -112,7 +98,7 @@ public abstract class FXValueUpdateDialog extends FXDialog
 		_okButtonType = new ButtonType(_res.get("ok"), ButtonBar.ButtonData.OK_DONE);
 
 		_modeLabel = new Label();
-		updateLabelMode(_mode);
+		updateLabelMode();
 		//UIUtil.closeOnEscapePressed(this);
 
 		GridPane pane = new GridPane();
@@ -132,7 +118,7 @@ public abstract class FXValueUpdateDialog extends FXDialog
 				if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 					Mode newMode = _mode == Mode.DEC ? Mode.HEX : Mode.DEC;
 					updateTextFieldMode(newMode);
-					updateLabelMode(newMode);
+					updateLabelMode();
 				}
 			}
 		});
@@ -184,12 +170,9 @@ public abstract class FXValueUpdateDialog extends FXDialog
 	}
 
 	/**
-	 * Updates the text of the current mode {@link Label} to the new mode.
-	 *
-	 * @param mode
-	 * 			the new mode
+	 * Updates the text of the current mode {@link Label}.
 	 */
-	private void updateLabelMode(Mode mode) {
+	private void updateLabelMode() {
 		String currentMode = _res.get("mode.label") + " ";
 		if (_mode == Mode.DEC) {
 			currentMode += _res.get("mode.dec");

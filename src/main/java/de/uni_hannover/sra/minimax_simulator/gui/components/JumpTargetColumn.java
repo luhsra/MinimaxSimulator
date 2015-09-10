@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 /**
- * An extended {@link SignalTableColumn} for UI representation of the jump attribute.
+ * An extended {@link SignalTableColumn} for the UI representation of the jump attribute.
  *
  * @author Philipp Rohde
  */

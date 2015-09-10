@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.gui.common.NullAwareIntStringConverter;
 import de.uni_hannover.sra.minimax_simulator.gui.util.HexSpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
@@ -23,15 +22,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
-import java.text.NumberFormat;
-import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.UnaryOperator;
 
 /**
  * <b>FXController of the MuxView</b><br>
@@ -109,7 +104,7 @@ public class MuxView implements MachineConfigListener {
     }
 
     /**
-     * This method is called from the main controller if a new project was created or a opened.
+     * This method is called from the main controller if a new project was created or opened.
      * It initializes the two multiplexer {@link TableView}s as well as the register {@link ComboBox} because they need project data.
      */
     public void initMuxView() {
@@ -562,7 +557,7 @@ public class MuxView implements MachineConfigListener {
     }
 
     /**
-     * Checks whether the input of the currently selected source type is valid. The source types are register and constant.
+     * Checks if the input of the currently selected source type is valid. The source types are register and constant.
      *
      * @return
      *          whether the input of either the register or constant is valid

@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 /**
- * The FXAboutDialog is basically an {@link javafx.scene.control.Alert}.
+ * The FXAboutDialog is basically an {@link javafx.scene.control.Alert}.<br>
  * It provides all information about the application such as version and authors.
  * The information is read from the MANIFEST.MF.
  *

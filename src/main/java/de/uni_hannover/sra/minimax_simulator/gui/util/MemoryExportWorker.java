@@ -21,8 +21,8 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author Martin L&uuml;ck
  * @author Philipp Rohde
  */
-public class MemoryExportWorker implements Runnable
-{
+public class MemoryExportWorker implements Runnable {
+
 	private final static Logger	_log	= Logger.getLogger(MemoryExportWorker.class.getName());
 
 	private final MachineMemory	_memory;
@@ -33,9 +33,7 @@ public class MemoryExportWorker implements Runnable
 	private final int			_fromAddress;
 	private final int			_toAddress;
 
-	public MemoryExportWorker(MachineMemory memory, int fromAddress, int toAddress,
-							  File file, TextResource res)
-	{
+	public MemoryExportWorker(MachineMemory memory, int fromAddress, int toAddress, File file, TextResource res) {
 		_memory = memory;
 
 		_file = file;
@@ -53,16 +51,12 @@ public class MemoryExportWorker implements Runnable
 	 * Tries to write the memory image to file. If the export fails an error dialog will be shown.
 	 */
 	@Override
-	public void run()
-	{
+	public void run() {
 		FileOutputStream fos = null;
-		try
-		{
+		try {
 			fos = new FileOutputStream(_file);
 			doExport(fos);
-		}
-		catch (IOException ioe)
-		{
+		} catch (IOException ioe) {
 			UI.invokeInFAT(new Runnable() {
 				@Override
 				public void run() {
@@ -73,9 +67,7 @@ public class MemoryExportWorker implements Runnable
 					fnw.showAndWait();
 				}
 			});
-		}
-		finally
-		{
+		} finally {
 			IOUtils.closeQuietly(fos);
 		}
 	}
@@ -88,18 +80,15 @@ public class MemoryExportWorker implements Runnable
 	 * @throws IOException
 	 * 			thrown if the memory image could not be written
 	 */
-	private void doExport(OutputStream os) throws IOException
-	{
+	private void doExport(OutputStream os) throws IOException {
 		MemoryState state = _memory.getMemoryState();
 
 		BufferedOutputStream bos = IOUtils.toBufferedStream(os);
 
 		byte[] intBytes = new byte[4];
 
-		try
-		{
-			for (int i = _fromAddress, n = _toAddress; i <= n; i++)
-			{
+		try {
+			for (int i = _fromAddress, n = _toAddress; i <= n; i++) {
 				int value = state.getInt(i);
 
 				// convert integer to little-endian byte-array
@@ -113,13 +102,12 @@ public class MemoryExportWorker implements Runnable
 
 				bos.write(intBytes);
 			}
-		}
-		finally
-		{
+		} finally {
 			IOUtils.closeQuietly(bos);
 		}
 
-		if (_log.isLoggable(Level.FINE))
+		if (_log.isLoggable(Level.FINE)) {
 			_log.fine(((_toAddress - _fromAddress) << 2) + " bytes / " + (_toAddress - _fromAddress) + " words exported to " + _file.getPath());
+		}
 	}
 }

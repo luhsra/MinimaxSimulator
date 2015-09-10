@@ -26,15 +26,14 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.*;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.*;
 
 /**
  * <b>The main controller for the JavaFX GUI.</b><br>
  * <br>
- * This controller handles the GUI interactions with the {@link MenuBar} and {@link TabPane} as well as
- * the binded shortcuts.
+ * This controller handles the GUI interactions with the {@link MenuBar} and {@link TabPane}
+ * as well as the bound shortcuts.
  *
  * @author Philipp Rohde
  */
@@ -74,25 +73,16 @@ public class FXMainController implements WorkspaceListener {
     public Tab tab_reg;
     public Tab tab_mux;
     public Tab tab_experimental;
-    public ScrollPane panel_machine_overview;
-    public Canvas canvas;
 
     private FileChooser fc = new FileChooser();
 
-    @FXML
-    private MemoryView embeddedMemoryViewController;
-    @FXML
-    private AluView embeddedAluViewController;
-    @FXML
-    private MuxView embeddedMuxViewController;
-    @FXML
-    private RegView embeddedRegViewController;
-    @FXML
-    private DebuggerView embeddedDebuggerViewController;
-    @FXML
-    private SignalView embeddedSignalViewController;
-    @FXML
-    private Overview embeddedOverviewController;
+    @FXML private MemoryView embeddedMemoryViewController;
+    @FXML private AluView embeddedAluViewController;
+    @FXML private MuxView embeddedMuxViewController;
+    @FXML private RegView embeddedRegViewController;
+    @FXML private DebuggerView embeddedDebuggerViewController;
+    @FXML private SignalView embeddedSignalViewController;
+    @FXML private Overview embeddedOverviewController;
 
     private final TextResource _res;
 
@@ -170,23 +160,18 @@ public class FXMainController implements WorkspaceListener {
     private void setLocalizedTexts() {
         TextResource res = Main.getTextResource("menu");
         // menu: project
-
         menuProject.setText(res.get("project"));
-//        final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(project_new, project_open, project_save, project_saveas, project_export_schematics, project_export_signal, project_close, exitApplication));
         final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(project_new, project_open, project_save, project_saveas, project_export_schematics, project_export_signal, project_close, exitApplication,
                 view_overview, view_memory, view_debugger, view_conf_alu, view_conf_mux, view_conf_reg, view_conf_signal, help_about));
         for (MenuItem mi : projectMenu) {
             String id = mi.getId().replace("_", ".");
             String mne = res.get(id + ".mne");
-            //String text = res.get("project."+id.replace("_", "-")).replaceFirst(mne, "_"+mne);
-            //String text = res.get("project."+id.replace("_", "-")).replaceFirst("", "_"+"");
 
             String text = res.get(id);
             if (!mne.isEmpty()) {
                 text = text.replaceFirst(mne, "_"+mne);
                 mi.setMnemonicParsing(true);
             }
-
             mi.setText(text);
         }
 
@@ -200,32 +185,11 @@ public class FXMainController implements WorkspaceListener {
                 text = text.replaceFirst(mne, "_"+mne);
                 m.setMnemonicParsing(true);
             }
-
             m.setText(text);
         }
-//        exitApplication.setText(res.get("project.exit"));
 
-  //      System.out.println("new: " + project_new.getText() + "  - close: " + project_close.getText());
-
-        // menu: view
-/*        menuView.setText(res.get("view"));
-        final List<MenuItem> viewMenu = new ArrayList<>(Arrays.asList(view_overview, view_memory, view_debugger));
-        for (MenuItem mi : viewMenu) {
-            String id = mi.getId().substring(5);
-            mi.setText(res.get("view.project."+id));
-        }
-*/
-        // menu: machine configuration
-/*        menuMachineConfiguration.setText(res.get("view.machine"));
-        final List<MenuItem> confMenu = new ArrayList<>(Arrays.asList(view_conf_alu, view_conf_mux, view_conf_reg, view_conf_signal));
-        for (MenuItem mi : confMenu) {
-            String id = mi.getId().substring(10);
-            mi.setText(res.get("view.machine."+id));
-        }
-*/
         // menu: help
         menuHelp.setText(res.get("help"));
-        //help_about.setText(res.get("help.info"));
 
         // tabs
         res = Main.getTextResource("project");
@@ -267,43 +231,6 @@ public class FXMainController implements WorkspaceListener {
                 }
             }
         }, _res.get("wait.title"), _res.get("wait.project.new"));
-/*        final SwingNode swingNode = new SwingNode();
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                final Machine _machine = Main.getWorkspace().getProject().getMachine();
-                final MachineSchematics _machineView = new MachineSchematics(_machine);
-                _machine.getDisplay().setRenderEnvironment(_machineView.getRenderEnvironment());
-                _machine.getDisplay().addMachineDisplayListener(_machineView);
-
-                //swingNode.setContent(new JButton("Click me!"));
-                swingNode.setContent(_machineView);
-            }
-        });
-        while (swingNode.getContent() == null) {        */
-            /*  We have to wait for the SwingUtilities thread to set the content of the swingNode
-             *  because otherwise there will be a null pointer exception. Also it is not possible
-             *  to add the swingNode to the JavaFX pane inside the SwingUtilities thread.
-             *
-             *  This is necessary until the MachineSchematics are converted to JavaFX.
-             */
-/*        }
-        double widthSchematics = swingNode.getContent().getWidth();
-        double widthViewport = panel_machine_overview.getViewportBounds().getWidth();
-        double insetLeft = (widthViewport - widthSchematics) / 2;
-        panel_machine_overview.setPadding(new Insets(0, 0, 0, insetLeft));
-        panel_machine_overview.setContent(swingNode);
-
-        drawCanvas();           // CANVAS TEST
-*/
-    }
-
-    @Deprecated
-    private void drawCanvas() {
-/*        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.GREEN);
-        gc.setStroke(Color.YELLOW);
-        gc.strokeLine(40, 10, 10, 40);  */
     }
 
     /**
@@ -335,12 +262,6 @@ public class FXMainController implements WorkspaceListener {
                     //TODO: do all views work correctly?
                     setDisable(false);
                     initTabs();
-//                    UI.invokeNow(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Application.getMainWindow().getWorkspacePanel().openDefaultTabs();
-//                        }
-//                    });
                 } catch (ProjectImportException e) {
                     Main.getWorkspace().closeProject();
                     UI.invokeInFAT(new Runnable() {

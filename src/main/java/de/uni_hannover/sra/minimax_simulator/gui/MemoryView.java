@@ -1,29 +1,21 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.gui.common.HexStringConverter;
 import de.uni_hannover.sra.minimax_simulator.gui.common.NullAwareIntFormatter;
 import de.uni_hannover.sra.minimax_simulator.gui.util.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
-import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
-import de.uni_hannover.sra.minimax_simulator.util.Util;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.UnaryOperator;
 
 /**
  * <b>FXController of the MemoryView</b><br>
@@ -33,7 +25,6 @@ import java.util.function.UnaryOperator;
  *
  * @author Philipp Rohde
  */
-//TODO: spinners editable
 public class MemoryView{
 
     private static MachineMemory mMemory;
@@ -83,7 +74,7 @@ public class MemoryView{
     }
 
     /**
-     * This method is called from the main controller if a new project was created or a opened.
+     * This method is called from the main controller if a new project was created or opened.
      * It initializes the memory {@link TableView} and the {@link Spinner}s because they need project data.
      */
     public void initMemoryView() {
@@ -97,7 +88,7 @@ public class MemoryView{
     @FXML Spinner spinnerExportEndAddress;
 
     /**
-     * Initializes the {@link Spinner}s. Independent {@link Spinner}s have to have their own value factory.
+     * Initializes the {@link Spinner}s.
      */
     private void initSpinner() {
         spinnerStartAddress.setValueFactory(new MemorySpinnerValueFactory(mMemory));
@@ -200,25 +191,8 @@ public class MemoryView{
             return;
         }
 
-/*          this is not needed because the file chooser itself checks if the file already exists and asks for confirmation to override
+        //the file chooser itself checks if the file already exists and asks for confirmation to override
 
-            else if (selFile.exists()) {
-            Alert fileOverride = new Alert(AlertType.CONFIRMATION);
-            fileOverride.setTitle("Überschreiben bestätigen");
-            fileOverride.setHeaderText(null);
-            fileOverride.setContentText("Die Datei "+selFile.getPath()+" ist schon vorhanden und wird beim Exportieren überschrieben. Trotzdem auswählen?");
-            fileOverride.initStyle(StageStyle.UTILITY);
-            // for setting the icon of the application to the dialog
-            fileOverride.initOwner(Main.getPrimaryStage());
-
-            // FIXME: delete if issue with long texts in linux is resolved
-            fileOverride.setResizable(true);
-
-            Optional<ButtonType> override = fileOverride.showAndWait();
-            if (override.get() != ButtonType.OK) {
-                return;
-            }
-        }           */
         _currentExportFile = selFile;
         txtExport.setText(selFile.getAbsoluteFile().toString());
         btnExportMem.setDisable(false);

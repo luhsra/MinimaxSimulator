@@ -105,7 +105,7 @@ public class RegView {
     }
 
     /**
-     * This method is called from the main controller if a new project was created or a opened.
+     * This method is called from the main controller if a new project was created or opened.
      * It initializes the two register {@link TableView}s because they need project data.
      */
     public void initRegView() {
@@ -278,7 +278,7 @@ public class RegView {
 
     /**
      * Moves the currently selected register.
-     * It moves the source up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
+     * It moves the register up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
      *
      * @param ae
      *          the {@link ActionEvent} calling the method
@@ -328,7 +328,7 @@ public class RegView {
     }
 
     /**
-     * Checks whether the input of the currently selected source type is valid. The source types are register and constant.
+     * Checks if the input of the currently selected source type is valid. The source types are register and constant.
      *
      * @return
      *          whether the input of either the register or constant is valid
@@ -356,7 +356,7 @@ public class RegView {
     }
 
     /**
-     * Checks if the selected source from one of the {@link TableView}s was modified.
+     * Checks if the selected register from one of the {@link TableView}s was modified.
      *
      * @return
      *          whether the selected source is modified

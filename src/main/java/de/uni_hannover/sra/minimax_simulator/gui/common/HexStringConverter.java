@@ -3,7 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.gui.common;
 import javafx.util.StringConverter;
 
 /**
- * The HexStringConverter is a {@link StringConverter} that converts decimal values to their hexadecimal representation.
+ * The HexStringConverter is a {@link StringConverter} that converts decimal values to their hexadecimal representation.<br>
  * It may use a format string for the conversion.
  *
  * @author Philipp Rohde

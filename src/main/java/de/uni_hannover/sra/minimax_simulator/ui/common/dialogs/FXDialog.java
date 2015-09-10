@@ -7,7 +7,7 @@ import javafx.scene.control.ButtonType;
 import java.util.Optional;
 
 /**
- * An FXDialog is basically an {@link Alert}.
+ * An FXDialog is basically an {@link Alert}.<br>
  * It makes it more comfortable to set up a new dialog and get the user's choice.
  *
  * @author Philipp Rohde
