@@ -217,13 +217,12 @@ public class FXMainController implements WorkspaceListener {
      * Creates a new project with default project data and initializes the rest of the GUI.
      */
     public void newProject() {
-        setDisable(false);
         UIUtil.executeWorker(new Runnable() {
             @Override
             public void run() {
                 try {
                     Main.getWorkspace().newProject();
-                    initTabs();
+                    initProjectGUI();
                 } catch (RuntimeException e) {
                     System.out.println("EXCEPTION DURING PROJECT CREATION");
                     Main.getWorkspace().closeProject();
@@ -260,8 +259,7 @@ public class FXMainController implements WorkspaceListener {
                 try {
                     Main.getWorkspace().openProject(file);
                     //TODO: do all views work correctly?
-                    setDisable(false);
-                    initTabs();
+                    initProjectGUI();
                 } catch (ProjectImportException e) {
                     Main.getWorkspace().closeProject();
                     UI.invokeInFAT(new Runnable() {
@@ -275,25 +273,40 @@ public class FXMainController implements WorkspaceListener {
             }
         }, _res.get("wait.title"), _res.format("wait.project.load", file.getName()));
 
+    }
 
+    /**
+     * Prepares the GUI for working with a project.
+     */
+    private void initProjectGUI() {
+        UI.invokeInFAT(new Runnable() {
+            @Override
+            public void run() {
+                setDisable(false);
+                initTabs();
+                closeNonDefaultTabs();
+            }
+        });
     }
 
     /**
      * Initializes all tabs of the simulator.
      */
     private void initTabs() {
-        UI.invokeInFAT(new Runnable() {
-            @Override
-            public void run() {
-                embeddedMemoryViewController.initMemoryView();
-                embeddedAluViewController.initAluView();
-                embeddedMuxViewController.initMuxView();
-                embeddedRegViewController.initRegView();
-                embeddedDebuggerViewController.initDebuggerView();
-                embeddedSignalViewController.initSignalView();
-                embeddedOverviewController.initOverview();
-            }
-        });
+        embeddedMemoryViewController.initMemoryView();
+        embeddedAluViewController.initAluView();
+        embeddedMuxViewController.initMuxView();
+        embeddedRegViewController.initRegView();
+        embeddedDebuggerViewController.initDebuggerView();
+        embeddedSignalViewController.initSignalView();
+        embeddedOverviewController.initOverview();
+    }
+
+    /**
+     * Removes the non-default {@link Tab}s from the {@link TabPane}
+     */
+    private void closeNonDefaultTabs() {
+        tabpane.getTabs().removeAll(tab_alu, tab_reg, tab_mux);
     }
 
     /**
