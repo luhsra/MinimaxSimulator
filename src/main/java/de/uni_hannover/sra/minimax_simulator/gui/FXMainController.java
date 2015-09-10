@@ -17,6 +17,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
@@ -25,6 +26,8 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.*;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.util.*;
@@ -119,7 +122,7 @@ public class FXMainController implements WorkspaceListener {
                 .put("view_machine_register",   tab_reg)
                 .put("view_machine_mux",        tab_mux)
                 .put("view_machine_signal",     tab_signal)
-                .put("view_project_memory",     tab_memory)
+                .put("view_project_memory", tab_memory)
                 .put("view_project_debugger", tab_debugger)
                 .build();
 
@@ -210,13 +213,41 @@ public class FXMainController implements WorkspaceListener {
      * Shuts down the application.
      */
     public void exitApplication() {
+        if (Main.getWorkspace().isUnsaved()) {
+            ButtonType choice = new FXUnsavedDialog(_res.get("close-project.exit.title"), _res.get("close-project.exit.message")).getChoice();
+            if (choice.equals(ButtonType.YES)) {
+                saveConfirmed();
+            }
+            else if (choice.equals(ButtonType.CANCEL)) {
+                return;
+            }
+        }
         Platform.exit();
+    }
+
+    private void saveConfirmed() {
+        if (Main.getWorkspace().getCurrentProjectFile() == null) {
+            saveProjectAs();
+        }
+        else {
+            saveProject();
+        }
     }
 
     /**
      * Creates a new project with default project data and initializes the rest of the GUI.
      */
     public void newProject() {
+        if (Main.getWorkspace().isUnsaved()) {
+            ButtonType choice = new FXUnsavedDialog(_res.get("close-project.generic.title"), _res.get("close-project.generic.message")).getChoice();
+            if (choice.equals(ButtonType.YES)) {
+                saveConfirmed();
+            }
+            else if (choice.equals(ButtonType.CANCEL)) {
+                return;
+            }
+        }
+
         UIUtil.executeWorker(new Runnable() {
             @Override
             public void run() {
@@ -236,6 +267,16 @@ public class FXMainController implements WorkspaceListener {
      * Opens a new project from file.
      */
     public void openProject() {
+        if (Main.getWorkspace().isUnsaved()) {
+            ButtonType choice = new FXUnsavedDialog(_res.get("close-project.generic.title"), _res.get("close-project.generic.message")).getChoice();
+            if (choice.equals(ButtonType.YES)) {
+                saveConfirmed();
+            }
+            else if (choice.equals(ButtonType.CANCEL)) {
+                return;
+            }
+        }
+
         if (!UIUtil.confirmCloseProject()) {
             return;
         }
@@ -354,6 +395,16 @@ public class FXMainController implements WorkspaceListener {
      * Closes the current project.
      */
     public void closeProject() {
+        if (Main.getWorkspace().isUnsaved()) {
+            ButtonType choice = new FXUnsavedDialog(_res.get("close-project.generic.title"), _res.get("close-project.generic.message")).getChoice();
+            if (choice.equals(ButtonType.YES)) {
+                saveConfirmed();
+            }
+            else if (choice.equals(ButtonType.CANCEL)) {
+                return;
+            }
+        }
+
         setDisable(true);
         Main.getWorkspace().closeProject();
     }
