@@ -1,5 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
@@ -130,6 +131,10 @@ public class FXMainController implements WorkspaceListener {
                 .put("view_machine_signal",     tab_signal)
                 .put("view_project_memory",     tab_memory)
                 .put("view_project_debugger", tab_debugger)
+                .build();
+
+        this.disabledMenuItems = ImmutableList.<MenuItem>builder()
+                .add(project_saveas, project_export_schematics, project_export_signal, project_close, view_overview, view_memory, view_debugger)
                 .build();
 
         setShortcuts();
@@ -305,7 +310,6 @@ public class FXMainController implements WorkspaceListener {
      * Opens a new project from file.
      */
     public void openProject() {
-
         if (!UIUtil.confirmCloseProject()) {
             return;
         }
@@ -428,10 +432,6 @@ public class FXMainController implements WorkspaceListener {
      *          whether the GUI components should be disabled
      */
     private void setDisable(boolean disabled) {
-        if (disabledMenuItems == null) {
-            disabledMenuItems = new ArrayList<>(Arrays.asList(project_saveas, project_export_schematics, project_export_signal, project_close, view_overview, view_memory, view_debugger));
-        }
-
         for (MenuItem mi : disabledMenuItems) {
             mi.setDisable(disabled);
         }
