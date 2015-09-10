@@ -211,12 +211,17 @@ public class FXMainController implements WorkspaceListener {
 
     /**
      * Shuts down the application.
+     *
+     * @return
+     *          {@code true} if the application will be shut down; {@code false} otherwise
      */
     public boolean exitApplication() {
         if (Main.getWorkspace().isUnsaved()) {
             ButtonType choice = new FXUnsavedDialog(_res.get("close-project.exit.title"), _res.get("close-project.exit.message")).getChoice();
             if (choice.equals(ButtonType.YES)) {
-                saveConfirmed();
+                if (!saveConfirmed()) {
+                    return false;
+                }
             }
             else if (choice.equals(ButtonType.CANCEL)) {
                 return false;
@@ -226,12 +231,18 @@ public class FXMainController implements WorkspaceListener {
         return true;
     }
 
-    private void saveConfirmed() {
+    /**
+     * Calls {@link #saveProjectAs} if the project was not saved yet, calls {@link #saveProject()} otherwise.
+     *
+     * @return
+     *          {@code true} if the project was saved; {@code false} otherwise
+     */
+    private boolean saveConfirmed() {
         if (Main.getWorkspace().getCurrentProjectFile() == null) {
-            saveProjectAs();
+            return saveProjectAs();
         }
         else {
-            saveProject();
+            return saveProject();
         }
     }
 
@@ -242,7 +253,9 @@ public class FXMainController implements WorkspaceListener {
         if (Main.getWorkspace().isUnsaved()) {
             ButtonType choice = new FXUnsavedDialog(_res.get("close-project.generic.title"), _res.get("close-project.generic.message")).getChoice();
             if (choice.equals(ButtonType.YES)) {
-                saveConfirmed();
+                if (!saveConfirmed()) {
+                    return;
+                }
             }
             else if (choice.equals(ButtonType.CANCEL)) {
                 return;
@@ -271,7 +284,9 @@ public class FXMainController implements WorkspaceListener {
         if (Main.getWorkspace().isUnsaved()) {
             ButtonType choice = new FXUnsavedDialog(_res.get("close-project.generic.title"), _res.get("close-project.generic.message")).getChoice();
             if (choice.equals(ButtonType.YES)) {
-                saveConfirmed();
+                if (!saveConfirmed()) {
+                    return;
+                }
             }
             else if (choice.equals(ButtonType.CANCEL)) {
                 return;
@@ -353,21 +368,28 @@ public class FXMainController implements WorkspaceListener {
 
     /**
      * Saves the current project to the current file.
+     *
+     * @return
+     *          {@code true} if the project was saved; {@code false} otherwise
      */
-    public void saveProject() {
+    public boolean saveProject() {
         // TODO: improve
-        new ProjectSave().save(Main.getWorkspace().getCurrentProjectFile());
+        return new ProjectSave().save(Main.getWorkspace().getCurrentProjectFile());
+
     }
 
     /**
      * Saves the current project to another file.
+     *
+     * @return
+     *          {@code true} if the project was saved; {@code false} otherwise
      */
-    public void saveProjectAs() {
+    public boolean saveProjectAs() {
         // TODO: improve
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterProject);
         File file = fc.showSaveDialog(Main.getPrimaryStage());
-        new ProjectSaveTo().save(file);
+        return new ProjectSaveTo().save(file);
     }
 
     /**
@@ -399,7 +421,9 @@ public class FXMainController implements WorkspaceListener {
         if (Main.getWorkspace().isUnsaved()) {
             ButtonType choice = new FXUnsavedDialog(_res.get("close-project.generic.title"), _res.get("close-project.generic.message")).getChoice();
             if (choice.equals(ButtonType.YES)) {
-                saveConfirmed();
+                if (!saveConfirmed()) {
+                    return;
+                }
             }
             else if (choice.equals(ButtonType.CANCEL)) {
                 return;
