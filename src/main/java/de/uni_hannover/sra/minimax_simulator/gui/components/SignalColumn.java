@@ -144,7 +144,8 @@ public class SignalColumn extends SignalTableColumn {
                                 if (Pattern.matches(".+\\.W", id)) {
                                     indexCurrentValue -= 1;
                                 }
-                            } else {
+                            }
+                            else {
                                 indexCurrentValue = 0;
                             }
 
@@ -155,7 +156,8 @@ public class SignalColumn extends SignalTableColumn {
                             cbRegister.valueProperty().addListener((obs, oldValue, newValue) -> {
                                 if (newValue.startsWith("-")) {
                                     signalRow.setSignal(cell.getTableColumn().getId(), null);
-                                } else {
+                                }
+                                else {
                                     String binary = newValue.substring(0, newValue.indexOf(" "));
                                     int code = Integer.parseInt(binary, 2);
                                     signalRow.setSignalValue(cell.getTableColumn().getId(), code);
@@ -214,5 +216,6 @@ public class SignalColumn extends SignalTableColumn {
      */
     private void fireUpdateTable() {
         signalTable.setSignalRow(rowIndex, signalRow);
+        Main.getWorkspace().setProjectUnsaved();
     }
 }

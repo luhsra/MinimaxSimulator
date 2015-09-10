@@ -238,6 +238,7 @@ public class SignalView implements SignalTableListener {
         else {
             _signal.addSignalRow(index+1, new SignalRow());
         }
+        Main.getWorkspace().setProjectUnsaved();
     }
 
     /**
@@ -249,6 +250,7 @@ public class SignalView implements SignalTableListener {
         if (index != -1) {
             _signal.removeSignalRow(index);
         }
+        Main.getWorkspace().setProjectUnsaved();
     }
 
     @FXML private Button btnMoveUp;

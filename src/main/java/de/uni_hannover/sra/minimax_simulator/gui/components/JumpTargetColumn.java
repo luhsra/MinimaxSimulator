@@ -41,7 +41,8 @@ public class JumpTargetColumn extends SignalTableColumn {
 
                         if (item == null) {
                             setGraphic(null);
-                        } else {
+                        }
+                        else {
                             setGraphic(new CenteredCellPane(item));
                         }
                     }

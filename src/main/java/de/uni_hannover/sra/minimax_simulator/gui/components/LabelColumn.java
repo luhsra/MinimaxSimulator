@@ -71,6 +71,7 @@ public class LabelColumn extends SignalTableColumn {
                                         signalRow.setLabel(txtLabel.getText());
                                         txtLabel.cancelEdit();
                                         signalTable.setSignalRow(index, signalRow);
+                                        Main.getWorkspace().setProjectUnsaved();
                                     }
                                     else if (KeyCode.ESCAPE == evt.getCode()) {
                                         txtLabel.cancelEdit();

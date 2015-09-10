@@ -293,6 +293,7 @@ public class FXJumpTargetDialog extends FXDialog {
             }
             this.row.setJump(newJump);
             this.table.setSignalRow(this.rowIndex, this.row);
+            Main.getWorkspace().setProjectUnsaved();
         }
     }
 
