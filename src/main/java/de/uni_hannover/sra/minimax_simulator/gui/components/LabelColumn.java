@@ -56,7 +56,6 @@ public class LabelColumn extends SignalTableColumn {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getClickCount() == 2) {
-                            System.out.println("double clicked!");
                             int index = cell.getTableView().getSelectionModel().getSelectedIndex();
                             SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
                             SignalRow signalRow = signalTable.getRow(index);

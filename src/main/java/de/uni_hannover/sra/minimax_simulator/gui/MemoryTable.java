@@ -143,7 +143,6 @@ public class MemoryTable implements MemoryAccessListener {
         mMemory.addMemoryAccessListener(this);
         _addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
 
-        System.out.println("initializing memory table");
         int addressRange = mMemory.getMaxAddress() - mMemory.getMinAddress();
         _pageCount = (addressRange - 1) / _pageSize + 1;
 
@@ -159,7 +158,6 @@ public class MemoryTable implements MemoryAccessListener {
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
-                        System.out.println("Double clicked");
                         int address = memTable.getSelectionModel().getSelectedIndex() + _cachedPageStart;
                         // open edit dialog
                         new MemoryUpdateDialog(address, mMemory).show();

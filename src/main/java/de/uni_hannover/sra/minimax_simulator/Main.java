@@ -109,36 +109,26 @@ public class Main extends javafx.application.Application {
      * @return
      *          the {@link ResourceBundleLoader} used by the application
      */
-    public static ResourceBundleLoader getResourceLoader()
-    {
-        if (_resourceLoader == null)
-        {
-            Locale locale = new Locale.Builder().setLanguage("en").setRegion("US").build();
-/*            if (Config.LOCALE == null || Config.LOCALE.isEmpty())
-            {
+    public static ResourceBundleLoader getResourceLoader() {
+        if (_resourceLoader == null) {
+            Locale locale;
+            if (Config.LOCALE == null || Config.LOCALE.isEmpty()) {
                 locale = Locale.getDefault();
             }
-            else
-            {
-                try
-                {
+            else {
+                try {
                     locale = new Locale(Config.LOCALE);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     // locale not supported
                     locale = Locale.getDefault();
                 }
-            }           */
-            System.out.println("Locale:" + locale);
-            _resourceLoader = new DefaultResourceBundleLoader(
-                    new PropertyResourceControl("text/"), locale);
+            }
+            _resourceLoader = new DefaultResourceBundleLoader(new PropertyResourceControl("text/"), locale);
         }
         return _resourceLoader;
     }
 
-    public static TextResource getTextResource(String bundleName)
-    {
+    public static TextResource getTextResource(String bundleName) {
         return _resourceLoader.getTextResource(bundleName);
     }
 
@@ -151,12 +141,9 @@ public class Main extends javafx.application.Application {
      */
     public static void main(String[] args) {
         // Initialize config, read from file if existing
-        try
-        {
+        try {
             new PropertiesFileConfigLoader(PropertiesFileConfigLoader.MissingConfigStrategy.USE_DEFAULT).configure(Config.class);
-        }
-        catch (ConfigurationLoader.ConfigurationException e)
-        {
+        } catch (ConfigurationLoader.ConfigurationException e) {
             throw new Error("Cannot initialize configuration", e);
         }
 

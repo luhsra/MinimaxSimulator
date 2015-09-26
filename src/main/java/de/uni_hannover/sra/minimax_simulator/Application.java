@@ -40,6 +40,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.exception.SimpleException
  * @author Martin
  * 
  */
+@Deprecated
 public class Application
 {
 	private static Logger				_log;

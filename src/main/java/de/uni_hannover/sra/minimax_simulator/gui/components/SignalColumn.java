@@ -82,7 +82,6 @@ public class SignalColumn extends SignalTableColumn {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getClickCount() == 2) {
-                            System.out.println("double clicked!");
                             rowIndex = cell.getTableView().getSelectionModel().getSelectedIndex();
                             signalTable = Main.getWorkspace().getProject().getSignalTable();
                             signalRow = signalTable.getRow(rowIndex);

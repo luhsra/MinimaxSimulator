@@ -102,7 +102,6 @@ public class FXMainController implements WorkspaceListener {
      * The constructor initializes the final variables.
      */
     public FXMainController() {
-        System.out.println("Constructor was called!");
         _res = Main.getTextResource("application");
 
         extFilterSignal = new ExtensionFilter(_res.get("project.signalfile.description"), "*.csv", "*.html");

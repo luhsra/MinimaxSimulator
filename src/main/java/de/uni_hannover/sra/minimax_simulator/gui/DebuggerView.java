@@ -157,8 +157,6 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
-                        System.out.println("Double clicked");
-
                         if (_simulation.getState() == SimulationState.IDLE) {
                             String register = regTable.getSelectionModel().getSelectedItem().getName();
                             Trackable<Integer> value = _simulation.getRegisterValue(register);
@@ -255,7 +253,6 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getClickCount() == 2) {
-                            System.out.println("double clicked!");
                             int index = cell.getTableView().getSelectionModel().getSelectedIndex();
                             SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
                             SignalRow signalRow = signalTable.getRow(index);
@@ -328,7 +325,6 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         }
 
         simTable.setItems(data);
-        System.out.println("Height of SimTable: " + simTable.getHeight());
     }
 
     /**
