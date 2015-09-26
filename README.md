@@ -1,7 +1,7 @@
-MinimaxSimulator
-================
+Minimax Simulator
+=================
 
-MinimaxSimulator is a platform independent GUI-based Minimax simulator written in Java.
+Minimax Simulator is a platform independent GUI-based Minimax simulator written in Java.
 
 **Content:**
 - [Compiling from Source](#compiling-source)
