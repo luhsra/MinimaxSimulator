@@ -276,8 +276,7 @@ public class FXMainController implements WorkspaceListener {
                     Main.getWorkspace().newProject();
                     initProjectGUI();
                 } catch (RuntimeException e) {
-                    System.out.println("EXCEPTION DURING PROJECT CREATION");
-                    Main.getWorkspace().closeProject();
+                    closeProject();
                     throw e;
                 }
             }
@@ -317,7 +316,7 @@ public class FXMainController implements WorkspaceListener {
                     //TODO: do all views work correctly?
                     initProjectGUI();
                 } catch (ProjectImportException e) {
-                    Main.getWorkspace().closeProject();
+                    closeProject();
                     UI.invokeInFAT(new Runnable() {
                         @Override
                         public void run() {
