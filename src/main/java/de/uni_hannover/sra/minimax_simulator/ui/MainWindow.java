@@ -112,8 +112,8 @@ public class MainWindow extends JFrame implements WorkspaceListener
 		ma.appendItem("project.new", new ProjectNew());
 		ma.appendItem("project.open", new ProjectOpen());
 		ma.appendSeparator();
-		ma.appendItem("project.save", new ProjectSave());
-		ma.appendItem("project.saveas", new ProjectSaveTo());
+		//ma.appendItem("project.save", new ProjectSave());
+		//ma.appendItem("project.saveas", new ProjectSaveTo());
 		ma.appendSeparator();
 		ma.appendItem("project.export-schematics",
 			new ProjectExportSchematics());
