@@ -11,7 +11,9 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXExceptionDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.components.RegisterUpdateDialog;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -374,17 +376,26 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Initializes the simulation of the machine.
      */
     public void initSimulation() {
-        if (_simulation.getState().equals(SimulationState.OFF)) {
-            _simulation.init();
-            btnSimQuit.setDisable(false);
-            btnSimCycle.setDisable(false);
-            btnSimRun.setDisable(false);
-            btnSimInit.setGraphic(new ImageView("/images/fugue/arrow-circle-225-red.png"));
-        }
-        else {
-            _simulation.reset();
-            btnSimCycle.setDisable(false);
-            btnSimRun.setDisable(false);
+        try {
+            if (_simulation.getState().equals(SimulationState.OFF)) {
+                _simulation.init();
+                btnSimQuit.setDisable(false);
+                btnSimCycle.setDisable(false);
+                btnSimRun.setDisable(false);
+                btnSimInit.setGraphic(new ImageView("/images/fugue/arrow-circle-225-red.png"));
+            }
+            else {
+                _simulation.reset();
+                btnSimCycle.setDisable(false);
+                btnSimRun.setDisable(false);
+            }
+        } catch (Exception e) {
+            UI.invokeInFAT(new Runnable() {
+                @Override
+                public void run() {
+                    new FXExceptionDialog(e).show();
+                }
+            });
         }
 
         updateAllTables();
@@ -395,11 +406,20 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Stops the simulation of the machine and resets it.
      */
     public void quitSimulation() {
-        _simulation.stop();
-        btnSimQuit.setDisable(true);
-        btnSimCycle.setDisable(true);
-        btnSimRun.setDisable(true);
-        btnSimInit.setGraphic(new ImageView("/images/fugue/control-green.png"));
+        try {
+            _simulation.stop();
+            btnSimQuit.setDisable(true);
+            btnSimCycle.setDisable(true);
+            btnSimRun.setDisable(true);
+            btnSimInit.setGraphic(new ImageView("/images/fugue/control-green.png"));
+        } catch (Exception e) {
+            UI.invokeInFAT(new Runnable() {
+                @Override
+                public void run() {
+                    new FXExceptionDialog(e).show();
+                }
+            });
+        }
 
         updateAllTables();
         updateCyclesText();
@@ -409,7 +429,17 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Simulates the next cycle of the machine.
      */
     public void nextCycle() {
-        _simulation.step();
+        try {
+            _simulation.step();
+        } catch (Exception e) {
+            UI.invokeInFAT(new Runnable() {
+                @Override
+                public void run() {
+                    new FXExceptionDialog(e).show();
+                }
+            });
+        }
+
         updateAllTables();
         updateCyclesText();
     }
@@ -422,7 +452,17 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                                  // background task
                                  @Override
                                  public void run() {
-                                     _simulation.run();
+                                     try {
+                                         _simulation.run();
+                                     } catch (Exception e) {
+                                         UI.invokeInFAT(new Runnable() {
+                                             @Override
+                                             public void run() {
+                                                 new FXExceptionDialog(e).show();
+                                             }
+                                         });
+                                     }
+
                                  }
                              }, _res.get("simulation.wait.title"), _res.get("simulation.wait.message"),
                 new Runnable() {
