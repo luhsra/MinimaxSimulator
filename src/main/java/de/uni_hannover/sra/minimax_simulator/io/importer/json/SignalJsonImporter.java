@@ -48,18 +48,20 @@ class SignalJsonImporter extends Importer {
 				row.setBreakpoint(breakpoint);
 			}
 
-			JSONArray signals = currentRow.getJSONArray("signal");
-			for (int j = 0; j < signals.length(); j++) {
-				JSONObject currentSignal = signals.getJSONObject(j);
-				int intValue = Integer.valueOf(currentSignal.getString("value"));
-				boolean dontcare = false;
-				if (currentSignal.has("dontcare")) {
-					dontcare = currentSignal.getBoolean("dontcare");
+			if (currentRow.has("signal")) {
+				JSONArray signals = currentRow.getJSONArray("signal");
+				for (int j = 0; j < signals.length(); j++) {
+					JSONObject currentSignal = signals.getJSONObject(j);
+					int intValue = Integer.valueOf(currentSignal.getString("value"));
+					boolean dontcare = false;
+					if (currentSignal.has("dontcare")) {
+						dontcare = currentSignal.getBoolean("dontcare");
+					}
+					SignalValue value = dontcare ? SignalValue.DONT_CARE : SignalValue.valueOf(intValue);
+					row.setSignal(currentSignal.getString("name"), value);
 				}
-				SignalValue value = dontcare ? SignalValue.DONT_CARE : SignalValue.valueOf(intValue);
-				row.setSignal(currentSignal.getString("name"), value);
 			}
-
+			
 			Jump jump;
 
 			if (currentRow.has("unconditional-jump")) {
