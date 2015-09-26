@@ -18,15 +18,18 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 /**
  * The main class of the simulator.
  *
  * @author Philipp Rohde
  */
-// TODO: logging
 public class Main extends javafx.application.Application {
 
     private static Stage _primaryStage;
@@ -36,6 +39,7 @@ public class Main extends javafx.application.Application {
 
     private static Version _version;
 
+    private static Logger _log;
 
     /**
      * Starts the JavaFX application.
@@ -50,6 +54,27 @@ public class Main extends javafx.application.Application {
 
         _primaryStage = primaryStage;
         _version = new Version(this.getClass());
+
+        // Read logger settings from .properties inside jar
+        setupLogger();
+
+        _log.info("Starting version " + _version.getVersionNumber());
+
+        // Initialize config, read from file if existing
+        try {
+            new PropertiesFileConfigLoader(PropertiesFileConfigLoader.MissingConfigStrategy.USE_DEFAULT).configure(Config.class);
+        } catch (ConfigurationLoader.ConfigurationException e) {
+            throw new Error("Cannot initialize configuration", e);
+        }
+        _log.info("Configuration loaded.");
+
+        // Initialize resource loader for clients (text boxes etc...)
+        getResourceLoader();
+
+        // Initialize empty workspace (no project loaded)
+        _workspace = new Workspace();
+
+        _log.info("Initializing UI...");
 
         URL location = getClass().getResource("/fxml/minimax-sim.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -140,17 +165,6 @@ public class Main extends javafx.application.Application {
      *          the command line arguments
      */
     public static void main(String[] args) {
-        // Initialize config, read from file if existing
-        try {
-            new PropertiesFileConfigLoader(PropertiesFileConfigLoader.MissingConfigStrategy.USE_DEFAULT).configure(Config.class);
-        } catch (ConfigurationLoader.ConfigurationException e) {
-            throw new Error("Cannot initialize configuration", e);
-        }
-
-        // Initialize resource loader for clients (text boxes etc...)
-        getResourceLoader();
-        _workspace = new Workspace();
-
         launch(args);
     }
 
@@ -173,4 +187,20 @@ public class Main extends javafx.application.Application {
     public static String getVersionString() {
         return _version.getVersionNumber();
     }
+
+    /**
+     * Initializes the application's logger.
+     */
+    private static void setupLogger() {
+        final InputStream inputStream = Main.class.getResourceAsStream("/logging.properties");
+
+        try {
+            LogManager.getLogManager().readConfiguration(inputStream);
+        } catch (final IOException e) {
+            throw new Error("Cannot initialize logging", e);
+        }
+
+        _log = Logger.getLogger(Main.class.getName());
+    }
+
 }
