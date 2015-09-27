@@ -2,6 +2,10 @@ package de.uni_hannover.sra.minimax_simulator.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.gui.components.*;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.signal.*;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
@@ -23,7 +27,7 @@ import java.util.*;
  *
  * @author Philipp Rohde
  */
-public class SignalView implements SignalTableListener {
+public class SignalView implements SignalTableListener, MachineConfigListener {
 
     private final TextResource _res;
 
@@ -45,6 +49,8 @@ public class SignalView implements SignalTableListener {
     public void initSignalView() {
         _signal = Main.getWorkspace().getProject().getSignalTable();
         _signal.addSignalTableListener(this);
+
+        Main.getWorkspace().getProject().getMachineConfiguration().addMachineConfigListener(this);
 
         signaltable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -126,6 +132,9 @@ public class SignalView implements SignalTableListener {
             String lookUp = cols.get(j).getId();
             if (signalValues.containsKey(lookUp)) {
                 row.add(String.valueOf(signalValues.get(lookUp).intValue()));
+                if (j == 3) {
+                    //System.out.println("ALUSelectA: " + String.valueOf(signalValues.get(lookUp).intValue()));
+                }
             }
             else {
                 if ( (j >= 3 && j <= 5) || j == 7 || j == 8) {
@@ -317,6 +326,13 @@ public class SignalView implements SignalTableListener {
     @Override
     public void onRowsUpdated(int fromIndex, int toIndex) {
         updateSignalTable();
+    }
+
+    @Override
+    public void processEvent(MachineConfigEvent event) {
+        if (event instanceof MachineConfigListEvent.MachineConfigMuxEvent) {
+            updateSignalTable();
+        }
     }
 
 }
