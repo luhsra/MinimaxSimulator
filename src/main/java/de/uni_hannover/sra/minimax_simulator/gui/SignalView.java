@@ -263,6 +263,7 @@ public class SignalView implements SignalTableListener {
      * @param ae
      *          the {@link ActionEvent} calling the method
      */
+    // TODO: select multiple rows and move them
     public void moveOperation(ActionEvent ae) {
 
         if (signaltable.getSelectionModel().getSelectedItems().isEmpty()) {
@@ -282,14 +283,8 @@ public class SignalView implements SignalTableListener {
         }
 
         int index1 = signaltable.getSelectionModel().getSelectedIndex();
-        int index2 = index1 + difference;
-        if (index2 < 0 || index2 >= signaltable.getItems().size()) {
-            return;
-        }
-
-        // move rows in model and adapt selection
-        _signal.exchangeSignalRows(index1, index2);
-        signaltable.getSelectionModel().select(index2);
+        _signal.moveSignalRows(index1, index1, difference);
+        signaltable.getSelectionModel().select(index1+difference);
 
         Main.getWorkspace().setProjectUnsaved();
     }
