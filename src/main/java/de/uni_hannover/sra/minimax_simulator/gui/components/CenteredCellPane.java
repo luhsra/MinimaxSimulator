@@ -16,6 +16,8 @@ import javafx.scene.layout.RowConstraints;
  */
 public class CenteredCellPane extends GridPane {
 
+    private final Node child;
+
     /**
      * Creates a {@code CenteredCellPane} with a {@link Node}.
      *
@@ -25,7 +27,8 @@ public class CenteredCellPane extends GridPane {
     public CenteredCellPane(Node node) {
         super();
 
-        this.add(node, 0, 0);
+        child = node;
+        this.add(child, 0, 0);
         ColumnConstraints columnConstraints = new ColumnConstraints();
         columnConstraints.setFillWidth(true);
         columnConstraints.setHgrow(Priority.ALWAYS);
@@ -34,8 +37,8 @@ public class CenteredCellPane extends GridPane {
         rowConstraints.setFillHeight(true);
         rowConstraints.setVgrow(Priority.ALWAYS);
         this.getRowConstraints().add(rowConstraints);
-        this.setHalignment(node, HPos.CENTER);
-        this.setValignment(node, VPos.CENTER);
+        this.setHalignment(child, HPos.CENTER);
+        this.setValignment(child, VPos.CENTER);
     }
 
     /**
@@ -46,5 +49,20 @@ public class CenteredCellPane extends GridPane {
      */
     public CenteredCellPane(String label) {
         this(new Label(label));
+    }
+
+    /**
+     * Creates a {@code CenteredCellPane} with a styled {@link Label}.
+     *
+     * @param label
+     *          the text of the {@code Label}
+     * @param style
+     *          the style of the {@code Label}
+     */
+    public CenteredCellPane(String label, String style) {
+        this(label);
+        if (style != null && !style.equals("")) {
+            child.setStyle(style);
+        }
     }
 }
