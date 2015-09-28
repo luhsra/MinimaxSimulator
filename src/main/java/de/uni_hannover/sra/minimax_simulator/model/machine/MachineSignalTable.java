@@ -39,6 +39,28 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	private final MachineConfiguration	_machineConfig;
 	private final SignalConfiguration	_signalConfig;
 
+	/** enum used for the recalculation of the jump targets */
+	private enum Action {
+		ADDED,
+		MOVED {
+			private int direction = 0;
+
+			@Override
+			public void setDirection(int value) {
+				direction = value;
+			}
+
+			@Override
+			public int getDirection() {
+				return direction;
+			}
+		},
+		REMOVED;
+
+		public int getDirection() { return 0; }
+		public void setDirection(int value) {}
+	}
+
 	public MachineSignalTable(SignalTable table, MachineConfiguration machineConfig,
 			DescriptionFactory descriptionFactory, SignalConfiguration	signalConfig)
 	{
@@ -95,140 +117,103 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	}
 
 	@Override
-	public void addSignalRow(int index, SignalRow row)
-	{
-		updateJumpTargetsAdded(index);
+	public void addSignalRow(int index, SignalRow row) {
+		updateJumpTargets(index, Action.ADDED);
 		updateDescription(index, row);
 		_theTable.addSignalRow(index, row);
 	}
 
 	@Override
 	public void removeSignalRow(int index) {
-		updateJumpTargetsRemoved(index);
+		updateJumpTargets(index, Action.REMOVED);
 		_theTable.removeSignalRow(index);
 	}
 
-	private void updateJumpTargetsRemoved(int index) {
+	/**
+	 * Updates the jump targets after a {@code SignalRow} has been added, removed or moved.
+	 *
+	 * @param index
+	 *          the index of the row that has been changed
+	 * @param action
+	 *          the action that triggered the update
+	 */
+	private void updateJumpTargets(int index, Action action) {
 		List<SignalRow> rows = _theTable.getRows();
 
 		for (int i = 0; i < rows.size(); i++) {
 			Jump j = rows.get(i).getJump();
 
-			if ( (j != null) && (j instanceof UnconditionalJump) ) {
+			if (j == null) {
+				break;
+			}
+			if (j instanceof UnconditionalJump ) {
 				UnconditionalJump uj = (UnconditionalJump) j;
+
 				int oldTarget = uj.getTargetRow();
+				int newTarget = calculateJumpTarget(index, oldTarget, action);
 
-				if (oldTarget >= index) {
-					int newTarget = (oldTarget > index) ? (oldTarget - 1) : -1;
+				if (oldTarget != newTarget) {
 					setRowJump(i, new UnconditionalJump(newTarget));
 				}
 			}
-			else if ( (j != null) && (j instanceof ConditionalJump) ) {
+			else if (j instanceof ConditionalJump) {
 				ConditionalJump cj = (ConditionalJump) j;
+
 				int oldTarget0 = cj.getTargetRow(0);
+				int newTarget0 = calculateJumpTarget(index, oldTarget0, action);
+
 				int oldTarget1 = cj.getTargetRow(1);
+				int newTarget1 = calculateJumpTarget(index, oldTarget1, action);
 
-				if ( (oldTarget0 >= index) || (oldTarget1 >= index) ) {
-					int newTarget0 = oldTarget0;
-					int newTarget1 = oldTarget1;
-
-					if (oldTarget0 == index) {
-						newTarget0 = -1;
-					}
-					else if (oldTarget0 > index) {
-						newTarget0 = oldTarget0 - 1;
-					}
-
-					if (oldTarget1 == index) {
-						newTarget1 = -1;
-					}
-					else if (oldTarget1 > index) {
-						newTarget1 = oldTarget1 - 1;
-					}
-
-					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
-				}
-			}
-		}
-	}
-
-	private void updateJumpTargetsAdded(int index) {
-		List<SignalRow> rows = _theTable.getRows();
-
-		for (int i = 0; i < rows.size(); i++) {
-			Jump j = rows.get(i).getJump();
-
-			if ( (j != null) && (j instanceof UnconditionalJump) ) {
-				UnconditionalJump uj = (UnconditionalJump) j;
-				int oldTarget = uj.getTargetRow();
-
-				if (oldTarget >= index) {
-					int newTarget = oldTarget + 1;
-					setRowJump(i, new UnconditionalJump(newTarget));
-				}
-			}
-			else if ( (j != null) && (j instanceof ConditionalJump) ) {
-				ConditionalJump cj = (ConditionalJump) j;
-				int oldTarget0 = cj.getTargetRow(0);
-				int oldTarget1 = cj.getTargetRow(1);
-
-				if ( (oldTarget0 >= index) || (oldTarget1 >= index) ) {
-					int newTarget0 = oldTarget0 + 1;
-					int newTarget1 = oldTarget1 + 1;
-
-					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
-				}
-			}
-		}
-	}
-
-	private void updateJumpTargetsMoved(int index, int direction) {
-		List<SignalRow> rows = _theTable.getRows();
-
-		for (int i = 0; i < rows.size(); i++) {
-			Jump j = rows.get(i).getJump();
-
-			if ( (j != null) && (j instanceof UnconditionalJump) ) {
-				UnconditionalJump uj = (UnconditionalJump) j;
-				int oldTarget = uj.getTargetRow();
-
-				if (oldTarget == index + direction) {
-					int newTarget = oldTarget - direction;
-					setRowJump(i, new UnconditionalJump(newTarget));
-				}
-				else if (oldTarget == index) {
-					int newTarget = oldTarget + direction;
-					setRowJump(i, new UnconditionalJump(newTarget));
-				}
-			}
-			else if ( (j != null) && (j instanceof ConditionalJump) ) {
-				ConditionalJump cj = (ConditionalJump) j;
-				int oldTarget0 = cj.getTargetRow(0);
-				int oldTarget1 = cj.getTargetRow(1);
-
-				int newTarget0 = oldTarget0;
-				int newTarget1 = oldTarget1;
-
-				if (oldTarget0 == index + direction) {
-					newTarget0 = oldTarget0 - direction;
-				}
-				else if (oldTarget0 == index) {
-					newTarget0 = oldTarget0 + direction;
-				}
-
-				if (oldTarget1 == index + direction) {
-					newTarget1 = oldTarget1 - direction;
-				}
-				else if (oldTarget1 == index) {
-					newTarget1 = oldTarget1 + direction;
-				}
-
-				// set new Jump only if at least one target changed
 				if ( (oldTarget0 != newTarget0) || (oldTarget1 != newTarget1) ) {
 					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
 				}
+
 			}
 		}
+	}
+
+	/**
+	 * Recalculates the jump target.
+	 *
+	 * @param index
+	 *          the index of the row that has been changed
+	 * @param oldTarget
+	 *          the index of old target row
+	 * @param action
+	 *          the action that triggered the update
+	 * @return
+	 *          the recalculated jump target
+	 */
+	private int calculateJumpTarget(int index, int oldTarget, Action action) {
+		int newTarget = oldTarget;
+		switch (action) {
+			case ADDED:
+				if (oldTarget >= index) {
+					newTarget = oldTarget + 1;
+				}
+				break;
+
+			case REMOVED:
+				if (oldTarget == index) {
+					newTarget = -1;
+				}
+				else if (oldTarget > index) {
+					newTarget = oldTarget - 1;
+				}
+				break;
+
+			case MOVED:
+				int direction = action.getDirection();
+				if (oldTarget == index + direction) {
+					newTarget = oldTarget - direction;
+				}
+				else if (oldTarget == index) {
+					newTarget = oldTarget + direction;
+				}
+				break;
+		}
+		return newTarget;
 	}
 
 	@Override
@@ -363,11 +348,11 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	}
 
 	@Override
-	public void moveSignalRows(int firstIndex, int lastIndex, int direction)
-	{
-		System.out.println("moved SignalRows");
+	public void moveSignalRows(int firstIndex, int lastIndex, int direction) {
+		Action action = Action.MOVED;
+		action.setDirection(direction);
 		for (int i = lastIndex; i >= firstIndex; i--) {
-			updateJumpTargetsMoved(i, direction);
+			updateJumpTargets(i, action);
 		}
 		_theTable.moveSignalRows(firstIndex, lastIndex, direction);
 	}
