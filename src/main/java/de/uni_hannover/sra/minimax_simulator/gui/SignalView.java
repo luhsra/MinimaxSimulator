@@ -330,9 +330,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
 
     @Override
     public void processEvent(MachineConfigEvent event) {
-        if (event instanceof MachineConfigListEvent.MachineConfigMuxEvent) {
-            updateSignalTable();
-        }
+        updateSignalTable();
     }
 
 }

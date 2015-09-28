@@ -252,6 +252,16 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 				updateAluSelectCodesExchanged(muxEvent.mux, muxEvent.index, muxEvent.index2);
 			}
 		}
+		// update the ALUOp codes
+		else if (event instanceof MachineConfigListEvent.MachineConfigAluEvent) {
+			MachineConfigListEvent.MachineConfigAluEvent aluEvent = (MachineConfigListEvent.MachineConfigAluEvent) event;
+			if (aluEvent.type == MachineConfigListEvent.EventType.ELEMENT_REMOVED) {
+				updateAluOpCodesRemoved(aluEvent.index);
+			}
+			else if (aluEvent.type == MachineConfigListEvent.EventType.ELEMENTS_EXCHANGED) {
+				updateAluOpCodesExchanged(aluEvent.index, aluEvent.index2);
+			}
+		}
 
 		// Any signal may now be invalid
 		replaceInvalidSignals();
@@ -319,6 +329,57 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	 */
 	private void updateAluSelectCodesExchanged(MuxType mux, int index1, int index2) {
 		String lookUp = (mux == MuxType.A) ? "ALU_SELECT_A" : "ALU_SELECT_B";
+
+		for (SignalRow signalRow : _theTable.getRows()) {
+			Map<String, SignalValue> signalValues = signalRow.getSignalValues();
+
+			if (signalValues.containsKey(lookUp)) {
+				SignalValue value = signalValues.get(lookUp);
+				if (!value.isDontCare() && value.intValue() == index1) {
+					signalRow.setSignalValue(lookUp, index2);
+				}
+				else if (!value.isDontCare() && value.intValue() == index2) {
+					signalRow.setSignalValue(lookUp, index1);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Updates the ALUOp codes after deletion of an ALUOperation.
+	 *
+	 * @param index
+	 *          the index of the removed muxInput
+	 */
+	private void updateAluOpCodesRemoved(int index) {
+		String lookUp = "ALU_CTRL";
+
+		for (SignalRow signalRow : _theTable.getRows()) {
+			Map<String, SignalValue> signalValues = signalRow.getSignalValues();
+
+			if (signalValues.containsKey(lookUp)) {
+				SignalValue value = signalValues.get(lookUp);
+				if (!value.isDontCare() && value.intValue() > index) {
+					int newIndex = value.intValue() - 1;
+					signalRow.setSignalValue(lookUp, newIndex);
+				}
+				else if (!value.isDontCare() && value.intValue() == index) {
+					signalRow.setSignal(lookUp, null);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Updates the ALUOp codes after exchanging two ALUOperations.
+	 *
+	 * @param index1
+	 *          the first muxInput
+	 * @param index2
+	 *          the second muxInput
+	 */
+	private void updateAluOpCodesExchanged(int index1, int index2) {
+		String lookUp = "ALU_CTRL";
 
 		for (SignalRow signalRow : _theTable.getRows()) {
 			Map<String, SignalValue> signalValues = signalRow.getSignalValues();
