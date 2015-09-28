@@ -2,6 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.machine;
 
 import static com.google.common.base.Preconditions.*;
 
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
@@ -20,16 +21,19 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalType;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
+import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
+import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
 
 /**
- * Decorator for a signal table that calculates the descriptions of the signal rows.
+ * Decorator for a SignalTable that calculates the descriptions of the SignalRows
+ * and updates the ALUSelect codes, ALUOperation codes and JumpTargets.
  * 
- * @author Martin
- * 
+ * @author Martin L&uml;ck
+ * @author Philipp Rohde
  */
-public class MachineSignalTable implements SignalTable, MachineConfigListener
-{
+public class MachineSignalTable implements SignalTable, MachineConfigListener {
+
 	private final SignalTable			_theTable;
 	private final DescriptionFactory	_descriptionFactory;
 	private final MachineConfiguration	_machineConfig;
@@ -98,9 +102,53 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener
 	}
 
 	@Override
-	public void removeSignalRow(int index)
-	{
+	public void removeSignalRow(int index) {
+		updateJumpTargetsRemoved(index);
 		_theTable.removeSignalRow(index);
+	}
+
+	private void updateJumpTargetsRemoved(int index) {
+		List<SignalRow> rows = _theTable.getRows();
+
+		for (int i = 0; i < rows.size(); i++) {
+			Jump j = rows.get(i).getJump();
+
+			if ( (j != null) && (j instanceof UnconditionalJump) ) {
+				UnconditionalJump uj = (UnconditionalJump) j;
+				int oldTarget = uj.getTargetRow();
+
+				if (oldTarget >= index) {
+					int newTarget = (oldTarget > index) ? (oldTarget - 1) : -1;
+					setRowJump(i, new UnconditionalJump(newTarget));
+				}
+			}
+			else if ( (j != null) && (j instanceof ConditionalJump) ) {
+				ConditionalJump cj = (ConditionalJump) j;
+				int oldTarget0 = cj.getTargetRow(0);
+				int oldTarget1 = cj.getTargetRow(1);
+
+				if ( (oldTarget0 >= index) || (oldTarget1 >= index) ) {
+					int newTarget0 = oldTarget0;
+					int newTarget1 = oldTarget1;
+
+					if (oldTarget0 == index) {
+						newTarget0 = -1;
+					}
+					else if (oldTarget0 > index) {
+						newTarget0 = oldTarget0 -1;
+					}
+
+					if (oldTarget1 == index) {
+						newTarget1 = -1;
+					}
+					else if (oldTarget1 > index) {
+						newTarget1 = oldTarget1 -1;
+					}
+
+					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
+				}
+			}
+		}
 	}
 
 	@Override

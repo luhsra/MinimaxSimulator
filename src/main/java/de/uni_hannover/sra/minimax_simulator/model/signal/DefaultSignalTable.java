@@ -8,9 +8,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
-import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
 
 public class DefaultSignalTable extends AbstractSignalTable
 {
@@ -48,31 +46,6 @@ public class DefaultSignalTable extends AbstractSignalTable
 
 	@Override
 	public void removeSignalRow(int index) {
-		// the following code updates the JumpTargets
-		// TODO: should this be active? should the user be asked?
-/*		for (int i = 0; i < _rows.size(); i++) {
-			Jump j = _rows.get(i).getJump();
-			if ( (j != null) && (j instanceof UnconditionalJump) ) {
-				UnconditionalJump uj = (UnconditionalJump) j;
-				if (uj.getTargetRow() > index) {
-					int newTarget = uj.getTargetRow() - 1;
-					setRowJump(i, new UnconditionalJump(newTarget));
-				}
-			}
-			else if ( (j != null) && (j instanceof ConditionalJump) ) {
-				ConditionalJump cj = (ConditionalJump) j;
-				if ( (cj.getTargetRow(1) > index) || (cj.getTargetRow(0) > index) ) {
-					int target0 = cj.getTargetRow(0);
-					int target1 = cj.getTargetRow(1);
-
-					int newTarget0 = (target0 > index) ? target0 - 1 : target0;
-					int newTarget1 = (target1 > index) ? target1 - 1 : target1;
-
-					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
-				}
-			}
-		}		*/
-
 		_rows.remove(index);
 		fireRowRemoved(index);
 	}
