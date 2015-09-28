@@ -18,6 +18,8 @@ import javafx.util.Callback;
  */
 public class JumpTargetColumn extends SignalTableColumn {
 
+    private final String invalidJumpStyle = "-fx-text-fill: red; -fx-font-weight: bold;";
+
     /**
      * Creates a {@link TableColumn} for the jump attribute of a {@link SignalRow}.
      *
@@ -43,7 +45,13 @@ public class JumpTargetColumn extends SignalTableColumn {
                             setGraphic(null);
                         }
                         else {
-                            setGraphic(new CenteredCellPane(item));
+                            if ( item.contains("-") && id.equals("JUMPTARGET") ) {
+                                // the JumpTarget is invalid
+                                setGraphic(new CenteredCellPane(item, invalidJumpStyle));
+                            }
+                            else {
+                                setGraphic(new CenteredCellPane(item));
+                            }
                         }
                     }
 
