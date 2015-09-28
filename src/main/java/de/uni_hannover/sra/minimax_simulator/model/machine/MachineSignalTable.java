@@ -192,8 +192,9 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 				UnconditionalJump uj = (UnconditionalJump) j;
 				int oldTarget = uj.getTargetRow();
 
-				if ( (i == index) && (index+direction == oldTarget) ) {
-					setRowJump(i, new UnconditionalJump(oldTarget-direction));
+				if (oldTarget == index + direction) {
+					int newTarget = oldTarget - direction;
+					setRowJump(i, new UnconditionalJump(newTarget));
 				}
 				else if (oldTarget == index) {
 					int newTarget = oldTarget + direction;
@@ -205,24 +206,25 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 				int oldTarget0 = cj.getTargetRow(0);
 				int oldTarget1 = cj.getTargetRow(1);
 
-				if ( (i == index) && ( (index+direction == oldTarget0) || (index+direction == oldTarget1) ) ) {
-					int newTarget0 = oldTarget0;
-					int newTarget1 = oldTarget1;
+				int newTarget0 = oldTarget0;
+				int newTarget1 = oldTarget1;
 
-					if (oldTarget0 == index + direction) {
-						newTarget0 = oldTarget0 - direction;
-					}
-
-					if (oldTarget1 == index + direction) {
-						newTarget1 = oldTarget1 - direction;
-					}
-
-					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
+				if (oldTarget0 == index + direction) {
+					newTarget0 = oldTarget0 - direction;
 				}
-				else if ( (oldTarget0 == index) || (oldTarget1 == index) ) {
-					int newTarget0 = (oldTarget0 == index) ? (oldTarget0 + direction) : oldTarget0;
-					int newTarget1 = (oldTarget1 == index) ? (oldTarget1 + direction) : oldTarget1;
+				else if (oldTarget0 == index) {
+					newTarget0 = oldTarget0 + direction;
+				}
 
+				if (oldTarget1 == index + direction) {
+					newTarget1 = oldTarget1 - direction;
+				}
+				else if (oldTarget1 == index) {
+					newTarget1 = oldTarget1 + direction;
+				}
+
+				// set new Jump only if at least one target changed
+				if ( (oldTarget0 != newTarget0) || (oldTarget1 != newTarget1) ) {
 					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
 				}
 			}
