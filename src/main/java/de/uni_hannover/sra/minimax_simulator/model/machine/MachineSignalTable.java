@@ -97,7 +97,6 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	@Override
 	public void addSignalRow(int index, SignalRow row)
 	{
-		System.out.println("Adding SignalRow with index: " + index);
 		updateJumpTargetsAdded(index);
 		updateDescription(index, row);
 		_theTable.addSignalRow(index, row);
@@ -176,7 +175,54 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 				if ( (oldTarget0 >= index) || (oldTarget1 >= index) ) {
 					int newTarget0 = oldTarget0 + 1;
 					int newTarget1 = oldTarget1 + 1;
-					
+
+					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
+				}
+			}
+		}
+	}
+
+	private void updateJumpTargetsMoved(int index, int direction) {
+		List<SignalRow> rows = _theTable.getRows();
+
+		for (int i = 0; i < rows.size(); i++) {
+			Jump j = rows.get(i).getJump();
+
+			if ( (j != null) && (j instanceof UnconditionalJump) ) {
+				UnconditionalJump uj = (UnconditionalJump) j;
+				int oldTarget = uj.getTargetRow();
+
+				if ( (i == index) && (index+direction == oldTarget) ) {
+					setRowJump(i, new UnconditionalJump(oldTarget-direction));
+				}
+				else if (oldTarget == index) {
+					int newTarget = oldTarget + direction;
+					setRowJump(i, new UnconditionalJump(newTarget));
+				}
+			}
+			else if ( (j != null) && (j instanceof ConditionalJump) ) {
+				ConditionalJump cj = (ConditionalJump) j;
+				int oldTarget0 = cj.getTargetRow(0);
+				int oldTarget1 = cj.getTargetRow(1);
+
+				if ( (i == index) && ( (index+direction == oldTarget0) || (index+direction == oldTarget1) ) ) {
+					int newTarget0 = oldTarget0;
+					int newTarget1 = oldTarget1;
+
+					if (oldTarget0 == index + direction) {
+						newTarget0 = oldTarget0 - direction;
+					}
+
+					if (oldTarget1 == index + direction) {
+						newTarget1 = oldTarget1 - direction;
+					}
+
+					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
+				}
+				else if ( (oldTarget0 == index) || (oldTarget1 == index) ) {
+					int newTarget0 = (oldTarget0 == index) ? (oldTarget0 + direction) : oldTarget0;
+					int newTarget1 = (oldTarget1 == index) ? (oldTarget1 + direction) : oldTarget1;
+
 					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
 				}
 			}
@@ -317,6 +363,10 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	@Override
 	public void moveSignalRows(int firstIndex, int lastIndex, int direction)
 	{
+		System.out.println("moved SignalRows");
+		for (int i = lastIndex; i >= firstIndex; i--) {
+			updateJumpTargetsMoved(i, direction);
+		}
 		_theTable.moveSignalRows(firstIndex, lastIndex, direction);
 	}
 
