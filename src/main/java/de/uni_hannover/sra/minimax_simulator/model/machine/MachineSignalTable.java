@@ -97,6 +97,8 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	@Override
 	public void addSignalRow(int index, SignalRow row)
 	{
+		System.out.println("Adding SignalRow with index: " + index);
+		updateJumpTargetsAdded(index);
 		updateDescription(index, row);
 		_theTable.addSignalRow(index, row);
 	}
@@ -135,16 +137,46 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 						newTarget0 = -1;
 					}
 					else if (oldTarget0 > index) {
-						newTarget0 = oldTarget0 -1;
+						newTarget0 = oldTarget0 - 1;
 					}
 
 					if (oldTarget1 == index) {
 						newTarget1 = -1;
 					}
 					else if (oldTarget1 > index) {
-						newTarget1 = oldTarget1 -1;
+						newTarget1 = oldTarget1 - 1;
 					}
 
+					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
+				}
+			}
+		}
+	}
+
+	private void updateJumpTargetsAdded(int index) {
+		List<SignalRow> rows = _theTable.getRows();
+
+		for (int i = 0; i < rows.size(); i++) {
+			Jump j = rows.get(i).getJump();
+
+			if ( (j != null) && (j instanceof UnconditionalJump) ) {
+				UnconditionalJump uj = (UnconditionalJump) j;
+				int oldTarget = uj.getTargetRow();
+
+				if (oldTarget >= index) {
+					int newTarget = oldTarget + 1;
+					setRowJump(i, new UnconditionalJump(newTarget));
+				}
+			}
+			else if ( (j != null) && (j instanceof ConditionalJump) ) {
+				ConditionalJump cj = (ConditionalJump) j;
+				int oldTarget0 = cj.getTargetRow(0);
+				int oldTarget1 = cj.getTargetRow(1);
+
+				if ( (oldTarget0 >= index) || (oldTarget1 >= index) ) {
+					int newTarget0 = oldTarget0 + 1;
+					int newTarget1 = oldTarget1 + 1;
+					
 					setRowJump(i, new ConditionalJump(newTarget0, newTarget1));
 				}
 			}
