@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.beans.*;
 import javax.swing.*;
 
-/* The WrappedAction class is a convenience class that allows you to replace an installed Action
+/** The WrappedAction class is a convenience class that allows you to replace an installed Action
  * with a custom Action of your own. There are two benefits to using this class:
  * 
  * a) Key Bindings of the original Action are retained for the custom Action. b) the original Action
@@ -12,6 +12,7 @@ import javax.swing.*;
  * 
  * This class is abstract so your custom Action must extend this class and implement the
  * actionPerformed() method. */
+@Deprecated
 abstract class WrappedAction implements Action
 {
 	private Action		originalAction;

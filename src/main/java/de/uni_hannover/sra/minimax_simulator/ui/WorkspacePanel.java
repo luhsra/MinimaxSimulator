@@ -23,6 +23,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.DebuggerTa
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.MemoryTab;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.SignalTab;
 
+@Deprecated
 public class WorkspacePanel extends JPanel implements WorkspaceListener, Disposable
 {
 	private final Workspace		_workspace;

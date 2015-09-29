@@ -23,6 +23,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import javafx.scene.control.Alert;
 
+@Deprecated
 public class ProjectExportSchematics extends ProjectAction
 {
 	private final TextResource	res	= Main.getTextResource("application");

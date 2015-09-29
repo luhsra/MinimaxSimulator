@@ -39,6 +39,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.common.models.Abstr
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.common.models.AluTableModel2;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.common.models.TwoSidedListSelectionListener;
 
+@Deprecated
 public class AluEditorPanel extends JPanel implements MachineConfigListener, Disposable
 {
 	private final static String ALU_RESULT = "ALU.result \u2190 ";

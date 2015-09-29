@@ -14,6 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.components.tabbed.JPersis
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.register.RegisterExtensionsTab;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.register.models.MachineRegisterTableModel;
 
+@Deprecated
 class RegisterTable extends JTable implements Disposable
 {
 	private final TextResource				res	= Application.getTextResource("machine");

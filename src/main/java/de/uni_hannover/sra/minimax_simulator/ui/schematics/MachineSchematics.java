@@ -12,6 +12,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineD
 import de.uni_hannover.sra.minimax_simulator.ui.render.DefaultRenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.render.SpriteCanvas;
 
+// TODO: update to JavaFX
 public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements MachineDisplayListener {
 
 	public final static Font	FONT	= new Font("SansSerif", Font.PLAIN, 17);

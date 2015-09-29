@@ -22,6 +22,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.ui.VerticalLabelUI2;
  * @see VerticalLabelUI
  * @author Darryl
  */
+@Deprecated
 public class VerticalTableHeaderCellRenderer extends DefaultTableHeaderCellRenderer
 {
 	/**

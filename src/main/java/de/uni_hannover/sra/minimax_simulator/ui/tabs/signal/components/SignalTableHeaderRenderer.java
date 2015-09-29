@@ -11,6 +11,7 @@ import javax.swing.border.Border;
 
 import de.uni_hannover.sra.minimax_simulator.ui.common.renderer.VerticalTableHeaderCellRenderer;
 
+@Deprecated
 public class SignalTableHeaderRenderer extends VerticalTableHeaderCellRenderer
 {
 //	private final static Painter	_backgroundPainter;

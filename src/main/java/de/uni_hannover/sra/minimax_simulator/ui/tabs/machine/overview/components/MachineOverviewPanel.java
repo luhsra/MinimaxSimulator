@@ -14,6 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.components.JScrollablePan
 import de.uni_hannover.sra.minimax_simulator.ui.common.components.JScrollablePanel.ScrollableSizeHint;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 
+@Deprecated
 public class MachineOverviewPanel extends JPanel implements Disposable
 {
 	private final Machine _machine;

@@ -12,6 +12,7 @@ import javax.swing.event.ChangeListener;
 
 import de.uni_hannover.sra.minimax_simulator.ui.common.FillLayout;
 
+@Deprecated
 public class JSpinnerEditor extends JPanel implements ChangeListener,
 		PropertyChangeListener
 {

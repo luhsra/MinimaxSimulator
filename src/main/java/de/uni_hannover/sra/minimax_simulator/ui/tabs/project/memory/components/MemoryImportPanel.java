@@ -33,6 +33,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.models.SpinnerNullModel;
 import de.uni_hannover.sra.minimax_simulator.ui.common.models.WrapSpinnerModel;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.MemoryImportWorker;
 
+@Deprecated
 public class MemoryImportPanel extends JPanel implements MemorySelectionListener
 {
 	private class OnClickFileChooser extends MouseAdapter

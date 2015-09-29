@@ -8,6 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 
+@Deprecated
 public abstract class AbstractProgramTableModel extends AbstractTableModel
 {
 	protected abstract List<Column> createColumns();

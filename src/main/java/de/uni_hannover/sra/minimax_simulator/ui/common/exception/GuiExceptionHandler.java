@@ -13,6 +13,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.JErrorDialog;
  * 
  * @author Martin
  */
+@Deprecated
 public class GuiExceptionHandler extends SimpleExceptionHandler
 {
 	private final JFrame _parent;

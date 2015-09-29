@@ -13,6 +13,7 @@ import java.awt.LayoutManager;
  * 
  * @author Martin
  */
+@Deprecated
 public final class FillLayout implements LayoutManager
 {
 	/**

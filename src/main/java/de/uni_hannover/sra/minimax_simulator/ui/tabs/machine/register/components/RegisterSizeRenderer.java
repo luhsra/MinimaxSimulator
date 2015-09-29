@@ -9,6 +9,7 @@ import javax.swing.ListCellRenderer;
 
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 
+@Deprecated
 class RegisterSizeRenderer extends JLabel implements ListCellRenderer
 {
 	public RegisterSizeRenderer()

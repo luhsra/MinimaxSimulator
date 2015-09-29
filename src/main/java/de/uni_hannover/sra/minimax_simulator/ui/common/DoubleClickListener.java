@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.SwingUtilities;
 
+@Deprecated
 public abstract class DoubleClickListener implements MouseListener
 {
 	public abstract void doubleClicked(MouseEvent e);

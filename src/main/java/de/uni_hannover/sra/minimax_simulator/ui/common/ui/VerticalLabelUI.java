@@ -31,6 +31,7 @@ import javax.swing.plaf.basic.BasicLabelUI;
  * 
  * @author Darryl
  */
+@Deprecated
 public class VerticalLabelUI extends BasicLabelUI
 {
 	private boolean							clockwise				= false;

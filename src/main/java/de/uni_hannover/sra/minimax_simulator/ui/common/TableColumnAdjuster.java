@@ -21,6 +21,7 @@ import javax.swing.table.*;
  * So if you increase one column, one or more of the other columns must decrease. Because of this
  * the resize mode of RESIZE_ALL_COLUMNS will work the best.
  */
+@Deprecated
 public class TableColumnAdjuster implements PropertyChangeListener, TableModelListener
 {
 	private final JTable					table;

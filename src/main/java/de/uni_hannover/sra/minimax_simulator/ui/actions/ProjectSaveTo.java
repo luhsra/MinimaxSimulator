@@ -8,6 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 
+// TODO: Refactoring
 public class ProjectSaveTo {
 
 	private final TextResource	res;

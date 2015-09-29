@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+@Deprecated
 public class DummyRenderEnvironment implements RenderEnvironment
 {
 	private final Font _font;

@@ -15,6 +15,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 import de.uni_hannover.sra.minimax_simulator.ui.common.components.JCollapsablePanel;
 
+@Deprecated
 class MachineSidePanel extends JPanel implements Disposable
 {
 	private final RegisterTable	_registerTable;

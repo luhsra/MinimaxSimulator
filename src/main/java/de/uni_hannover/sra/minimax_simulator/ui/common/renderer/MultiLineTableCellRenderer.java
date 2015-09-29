@@ -15,6 +15,7 @@ import javax.swing.table.TableCellRenderer;
 /**
  * Multiline Table Cell Renderer.
  */
+@Deprecated
 public class MultiLineTableCellRenderer extends JTextArea implements TableCellRenderer
 {
 	private List<List<Integer>>	_rowColHeight	= new ArrayList<List<Integer>>();

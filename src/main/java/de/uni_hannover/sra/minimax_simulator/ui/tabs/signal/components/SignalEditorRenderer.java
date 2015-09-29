@@ -12,6 +12,7 @@ import javax.swing.ListCellRenderer;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.model.SignalColumn;
 
+@Deprecated
 class SignalEditorRenderer extends JLabel implements ListCellRenderer
 {
 	private final SignalColumn _signalColumn;

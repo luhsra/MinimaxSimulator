@@ -32,6 +32,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.common.models.TwoSi
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.mux.model.MuxTableModel;
 
 // TODO: moved mux inputs sometimes are marked as unsaved
+@Deprecated
 public class MuxEditorPanel extends JPanel implements Disposable, MachineConfigListener
 {
 	private class MuxControlGroup

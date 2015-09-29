@@ -66,6 +66,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.model.SignalTableMod
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.model.ToggleColumn;
 import de.uni_hannover.sra.minimax_simulator.util.EnumerationIterator;
 
+@Deprecated
 public class SignalTablePanel extends JPanel implements Disposable
 {
 	private class AddAction extends AbstractAction

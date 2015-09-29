@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
+@Deprecated
 public class SpriteCanvas<T> extends JPanel
 {
 	private final Map<T, Sprite> _sprites;

@@ -5,7 +5,8 @@ import java.awt.Dimension;
 import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 
-// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4618607 
+// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4618607
+@Deprecated
 public class JWideComboBox extends JComboBox
 {
 	public JWideComboBox()

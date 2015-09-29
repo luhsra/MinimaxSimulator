@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 
+@Deprecated
 public class TabButtonComponent extends JPanel
 {
 	private final JCloseableTabPanel _pane;

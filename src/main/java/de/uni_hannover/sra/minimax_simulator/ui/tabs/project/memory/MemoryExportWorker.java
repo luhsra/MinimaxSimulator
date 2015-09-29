@@ -19,6 +19,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemorySta
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 
+@Deprecated
 public class MemoryExportWorker implements Runnable
 {
 	private final static Logger	_log	= Logger.getLogger(MemoryExportWorker.class.getName());

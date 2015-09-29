@@ -8,6 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryView;
 
+@Deprecated
 public class DebuggerPanel extends JPanel implements Disposable
 {
 	private final RegisterView		_register;

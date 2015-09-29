@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
  * @author Martin
  *
  */
+@Deprecated
 public class ViewDummy extends ProjectAction
 {
 	public final static ViewDummy INSTANCE = new ViewDummy();

@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 
 import de.uni_hannover.sra.minimax_simulator.Application;
 
+@Deprecated
 public class ProjectExit extends AbstractAction
 {
 	@Override

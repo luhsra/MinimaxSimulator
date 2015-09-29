@@ -24,6 +24,7 @@ import javax.swing.*;
  * added to the panel will be size to fill the area available, based on the rules of the applicable
  * layout manager of course.
  */
+@Deprecated
 public class JScrollablePanel extends JPanel implements Scrollable, SwingConstants
 {
 	public enum ScrollableSizeHint

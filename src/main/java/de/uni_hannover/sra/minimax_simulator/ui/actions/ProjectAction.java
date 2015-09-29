@@ -8,7 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 
-
+@Deprecated
 public abstract class ProjectAction extends AbstractAction implements WorkspaceListener
 {
 	public ProjectAction()

@@ -8,6 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.common.AbstractTab;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 
+@Deprecated
 public class ProjectTab<T extends JComponent & Disposable> extends AbstractTab<T>
 {
 	public ProjectTab(String key, T panel)

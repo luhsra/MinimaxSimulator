@@ -39,6 +39,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.model.JumpTargetColu
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.model.RowIndicatorColumn;
 import de.uni_hannover.sra.minimax_simulator.util.EnumerationIterator;
 
+@Deprecated
 public class ProgramPanel extends JPanel implements Disposable, SimulationListener
 {
 	private final Simulation		_simulation;

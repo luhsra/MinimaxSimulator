@@ -7,6 +7,7 @@ import javax.swing.AbstractAction;
 import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Config;
 
+@Deprecated
 public class DebugSprites extends AbstractAction
 {
 	@Override

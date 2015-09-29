@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 
+@Deprecated
 public class JCustomMenuItem extends JMenuItem
 {
 	public JCustomMenuItem(String text)

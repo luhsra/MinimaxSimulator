@@ -32,6 +32,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.components.JSpinnerEditor
 import de.uni_hannover.sra.minimax_simulator.ui.common.models.NullAwareIntegerSpinnerModel;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.mux.model.MuxSourceComboModel;
 
+@Deprecated
 class MuxInputEditor extends JPanel implements Disposable
 {
 	private MuxType						_mux;

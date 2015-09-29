@@ -5,6 +5,7 @@ import javax.swing.ListSelectionModel;
 
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.mux.model.MuxTableModel;
 
+@Deprecated
 class MuxTable extends JTable
 {
 	private final MuxTableModel _model;

@@ -12,6 +12,7 @@ import javax.swing.SwingWorker;
  * 
  * @author Martin
  */
+@Deprecated
 public abstract class SwingWorkerCompletionWaiter implements PropertyChangeListener, Runnable
 {
 	@Override

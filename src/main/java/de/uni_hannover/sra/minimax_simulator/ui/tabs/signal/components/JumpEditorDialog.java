@@ -28,6 +28,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.AbstractDocumentListener;
 
+@Deprecated
 public class JumpEditorDialog extends JDialog
 {
 	private class OkAction extends AbstractAction

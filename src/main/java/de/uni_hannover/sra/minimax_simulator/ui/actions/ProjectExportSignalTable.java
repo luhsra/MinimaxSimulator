@@ -21,6 +21,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
 import javafx.scene.control.Alert;
 
+@Deprecated
 public class ProjectExportSignalTable extends ProjectAction {
 	
 	private final TextResource	res	= Main.getTextResource("application");

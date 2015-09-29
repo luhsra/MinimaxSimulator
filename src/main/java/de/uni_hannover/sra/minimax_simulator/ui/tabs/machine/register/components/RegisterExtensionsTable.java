@@ -9,6 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.common.models.AbstractRegisterTableModel;
 
+@Deprecated
 class RegisterExtensionsTable extends JTable
 {
 	private final static TextResource			res	= Application.getTextResource("machine");

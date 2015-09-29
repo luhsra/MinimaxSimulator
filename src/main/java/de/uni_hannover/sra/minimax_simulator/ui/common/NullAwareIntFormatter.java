@@ -4,7 +4,7 @@ import java.text.ParseException;
 
 import javax.swing.text.DefaultFormatter;
 
-//TODO extend from JavaFX TextFormatter
+@Deprecated
 public class NullAwareIntFormatter extends DefaultFormatter
 {
 	private final int _radix;
