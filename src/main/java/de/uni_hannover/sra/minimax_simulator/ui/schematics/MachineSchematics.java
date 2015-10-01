@@ -32,8 +32,6 @@ public class MachineSchematics extends FXSpriteCanvas<SpriteOwner> implements Ma
             setSprite(sprite);
         }
 
-		// TODO: set Border via CSS
-		//setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		updatePreferredSize();
 	}
 

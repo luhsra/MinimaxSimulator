@@ -45,12 +45,33 @@ public class FXSpriteCanvas<T> extends javafx.scene.canvas.Canvas
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, getWidth(), getHeight());
 
+		drawBorder();
+
 		gc.setFill(Color.BLACK);
 		gc.setStroke(Color.BLACK);
 
 		for (Sprite sprite : _sprites.values()) {
 			sprite.paint(gc, _env);
 		}
+	}
+
+	private void drawBorder() {
+		double maxY = getHeight();
+		double maxX = getWidth();
+
+		gc.save();
+		gc.setLineWidth(1);
+
+		gc.beginPath();
+		gc.moveTo(0, 0);
+		gc.lineTo(0, maxY);
+		gc.lineTo(maxX, maxY);
+		gc.lineTo(maxX, 0);
+		gc.lineTo(0, 0);
+		gc.closePath();
+		gc.stroke();
+
+		gc.restore();
 	}
 
 	public void setSprite(T owner, Sprite sprite)
