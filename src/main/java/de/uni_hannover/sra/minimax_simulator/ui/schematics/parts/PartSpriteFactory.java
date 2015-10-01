@@ -12,6 +12,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.render.SpriteFactory;
 
+// TODO: if this class is unused, can it be deleted?
 public class PartSpriteFactory implements SpriteFactory<Circuit>
 {
 	@Override

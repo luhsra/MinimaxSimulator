@@ -48,7 +48,7 @@ public class MachineOverviewPanel extends JPanel implements Disposable
 		panel.setScrollableWidth(ScrollableSizeHint.STRETCH);
 		panel.setScrollableHeight(ScrollableSizeHint.STRETCH);
 		panel.setLayout(FillLayout.INSTANCE);
-		panel.add(_machineView);
+		//panel.add(_machineView);
 //		add(split);
 		JScrollPane machineScroller = new JFastScrollPane(panel);
 		panel.setLayout(new MigLayout("center", "[]", "[]"));

@@ -17,17 +17,13 @@ import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.*;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.util.*;

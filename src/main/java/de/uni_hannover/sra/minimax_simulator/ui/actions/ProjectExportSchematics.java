@@ -21,7 +21,10 @@ import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Alert;
+import javafx.scene.image.WritableImage;
+import javafx.scene.image.Image;
 
 @Deprecated
 public class ProjectExportSchematics extends ProjectAction
@@ -31,7 +34,7 @@ public class ProjectExportSchematics extends ProjectAction
 	@Override @Deprecated
 	public void actionPerformed(ActionEvent e)
 	{
-		// Let the user select an image file
+/*		// Let the user select an image file
 		final File imageFile = chooseFile(new File(res.get("project.export.file")));
 		if (imageFile == null)
 			return;
@@ -88,7 +91,7 @@ public class ProjectExportSchematics extends ProjectAction
 				}
 			}
 
-		}, res.get("wait.title"), res.get("wait.image-export"));
+		}, res.get("wait.title"), res.get("wait.image-export"));	*/
 	}
 
 	private void error(String filename) {
@@ -150,17 +153,19 @@ public class ProjectExportSchematics extends ProjectAction
 		// Paint it to a buffered image
 		Dimension dim = schematics.getPreferredSize();
 		schematics.setSize(dim);
-		final BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_ARGB);
-		Graphics g = image.createGraphics();
-		schematics.paint(g);
-		g.dispose();
+		//final BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_ARGB);
+		final WritableImage image = schematics.snapshot(null, null);  //new WritableImage(dim.width, dim.height);
+		//Graphics g = image.createGraphics();
+		//schematics.paint(g);
+		//g.dispose();
 
 		UIUtil.executeWorker(new Runnable() {
 			@Override
 			public void run() {
 				// Write the image to disk
 				try {
-					if (!ImageIO.write(image, ending, imageFile)) {
+					// TODO: pure JavaFX
+					if (!ImageIO.write(SwingFXUtils.fromFXImage(image, null), ending, imageFile)) {
 						error(imageFile.getPath());
 						return;
 					}

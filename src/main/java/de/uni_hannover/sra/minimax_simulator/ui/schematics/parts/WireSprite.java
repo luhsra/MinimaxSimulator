@@ -8,6 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.layout.Point;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
+import javafx.scene.canvas.GraphicsContext;
 
 public class WireSprite extends CircuitSprite
 {
@@ -32,6 +33,23 @@ public class WireSprite extends CircuitSprite
 		if (!(_wire.getDrain() instanceof Junction))
 		{
 			drawArrow(g, points[i - 2], points[i - 1]);
+		}
+	}
+
+	@Override
+	public void paint(GraphicsContext gc, RenderEnvironment env) {
+		Point[] points = _wire.getPoints();
+
+		double lineWidth = gc.getLineWidth();
+		gc.setLineWidth(1.0);
+		int i = 1;
+		for (; i < points.length; i++) {
+			gc.strokeLine(points[i-1].x, points[i-1].y, points[i].x, points[i].y);
+		}
+		gc.setLineWidth(lineWidth);
+
+		if (!(_wire.getDrain() instanceof  Junction)) {
+			drawArrow(gc, points[i-2], points[i-1]);
 		}
 	}
 }

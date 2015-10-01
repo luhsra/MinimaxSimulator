@@ -1,5 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.render;
 
+import javafx.scene.canvas.GraphicsContext;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -16,4 +18,11 @@ public interface RenderEnvironment
 	public Font getFont();
 
 	public FontMetrics getFontMetrics();
+
+	// FXVersion
+	public GraphicsContext createGraphics(GraphicsContext gc);
+	public javafx.scene.paint.Color getBackgroundColorFX();
+	public javafx.scene.paint.Color getForegroundColorFX();
+	public javafx.scene.text.Font getFontFX();
+	public com.sun.javafx.tk.FontMetrics getFontMetricsFX();
 }

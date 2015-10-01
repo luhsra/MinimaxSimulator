@@ -4,8 +4,10 @@ import static com.google.common.base.Preconditions.*;
 
 import java.awt.Graphics2D;
 
+import com.sun.javafx.tk.Toolkit;
 import de.uni_hannover.sra.minimax_simulator.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Memory;
+import javafx.scene.canvas.GraphicsContext;
 
 public class MemorySprite extends CircuitSprite
 {
@@ -38,5 +40,30 @@ public class MemorySprite extends CircuitSprite
 		debugPin(g, _memory.getAdr());
 		debugPin(g, _memory.getCs());
 		debugPin(g, _memory.getRw());
+	}
+
+	@Override
+	public void paint(GraphicsContext gc) {
+		Bounds b = _memory.getBounds();
+
+		gc.strokeRect(b.x, b.y, b.w, b.h);
+
+		String name = "HS";
+
+		com.sun.javafx.tk.FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
+
+		double textWidth = fm.computeStringWidth(name);
+		double textHeight = fm.getLineHeight();
+
+		double textX = b.x + b.w / 2 - textWidth / 2;
+		double textY = b.y + b.h / 2 + textHeight / 4;
+
+		gc.fillText(name, textX, textY);
+
+		debugPin(gc, _memory.getDataIn());
+		debugPin(gc, _memory.getDataOut());
+		debugPin(gc, _memory.getAdr());
+		debugPin(gc, _memory.getCs());
+		debugPin(gc, _memory.getRw());
 	}
 }

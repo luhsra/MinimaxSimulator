@@ -1,5 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.ui.render;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.text.FontSmoothingType;
+
 import static com.google.common.base.Preconditions.*;
 
 import java.awt.Color;
@@ -17,6 +20,18 @@ public class DefaultRenderEnvironment implements RenderEnvironment
 	{
 		_font = checkNotNull(font);
 		_fontMetrics = checkNotNull(fontMetrics);
+		this.font = null;
+		this.fontMetrics = null;
+	}
+
+	private final javafx.scene.text.Font font;
+	private final com.sun.javafx.tk.FontMetrics fontMetrics;
+
+	public DefaultRenderEnvironment(javafx.scene.text.Font font, com.sun.javafx.tk.FontMetrics fontMetrics) {
+		this.font = checkNotNull(font);
+		this.fontMetrics = checkNotNull(fontMetrics);
+		_font = null;
+		_fontMetrics = null;
 	}
 
 	@Override
@@ -56,5 +71,32 @@ public class DefaultRenderEnvironment implements RenderEnvironment
 	public FontMetrics getFontMetrics()
 	{
 		return _fontMetrics;
+	}
+
+	@Override
+	public GraphicsContext createGraphics(GraphicsContext gc) {
+		gc.setFontSmoothingType(FontSmoothingType.LCD);
+		gc.setFont(font);
+		return gc;
+	}
+
+	@Override
+	public javafx.scene.paint.Color getBackgroundColorFX() {
+		return javafx.scene.paint.Color.WHITE;
+	}
+
+	@Override
+	public javafx.scene.paint.Color getForegroundColorFX() {
+		return javafx.scene.paint.Color.BLACK;
+	}
+
+	@Override
+	public javafx.scene.text.Font getFontFX() {
+		return this.font;
+	}
+
+	@Override
+	public com.sun.javafx.tk.FontMetrics getFontMetricsFX() {
+		return this.fontMetrics;
 	}
 }

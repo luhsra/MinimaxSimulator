@@ -49,7 +49,7 @@ public class Overview implements MachineDisplayListener {
     private void schematicsToImage() {
         // paint the machine schematics to a buffered image
         MachineSchematics mSchematics = new MachineSchematics(Main.getWorkspace().getProject().getMachine());
-        Dimension dim = mSchematics.getPreferredSize();
+/*        Dimension dim = mSchematics.getPreferredSize();
         mSchematics.setSize(dim);
         BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_ARGB);
         Graphics g = image.createGraphics();
@@ -68,7 +68,11 @@ public class Overview implements MachineDisplayListener {
             imgSchematics.setImage(new Image(is));
         } catch (IOException e) {
             // catch only
-        }
+        }   */
+        Image image = mSchematics.snapshot(null, null);
+        imgSchematics.setFitHeight(image.getHeight());
+        imgSchematics.setFitWidth(image.getWidth());
+        imgSchematics.setImage(image);
     }
 
     @Override
@@ -78,7 +82,7 @@ public class Overview implements MachineDisplayListener {
 
     @Override
     public void machineDisplayChanged() {
-        // not needed here
+        schematicsToImage();
     }
 
     @Override

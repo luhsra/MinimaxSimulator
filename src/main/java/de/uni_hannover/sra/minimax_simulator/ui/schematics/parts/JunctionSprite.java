@@ -7,9 +7,10 @@ import java.awt.Graphics2D;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
+import javafx.scene.canvas.GraphicsContext;
 
-public class JunctionSprite implements Sprite
-{
+public class JunctionSprite implements Sprite {
+
 	private final Junction _junction;
 
 	public JunctionSprite(Junction junction)
@@ -18,6 +19,7 @@ public class JunctionSprite implements Sprite
 	}
 
 	@Override
+	@Deprecated
 	public void paint(Graphics2D g, RenderEnvironment env)
 	{
 		// Draw only junction with 0, 2 or more outgoing wires
@@ -29,5 +31,18 @@ public class JunctionSprite implements Sprite
 		int y = _junction.getBounds().y;
 
 		g.fillOval(x - 2, y - 2, 5, 5);
+	}
+
+	@Override
+	public void paint(GraphicsContext gc, RenderEnvironment env) {
+		// draw only junction with 0, 2 or more outgoing wires
+		if (_junction.getDataOuts().size() == 1) {
+			return;
+		}
+
+		int x = _junction.getBounds().x;
+		int y = _junction.getBounds().y;
+
+		gc.fillOval(x - 2, y - 2, 5, 5);
 	}
 }

@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import de.uni_hannover.sra.minimax_simulator.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Label;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
+import javafx.scene.canvas.GraphicsContext;
 
 public class LabelSprite extends CircuitSprite
 {
@@ -25,5 +26,12 @@ public class LabelSprite extends CircuitSprite
 		debugBounds(g, b);
 
 		g.drawString(_label.getMessage(), b.x, b.y + b.h);
+	}
+
+	@Override
+	public void paint(GraphicsContext gc, RenderEnvironment env) {
+		Bounds b = _label.getBounds();
+		debugBounds(gc, b);
+		gc.fillText(_label.getMessage(), b.x, b.y + b.h);
 	}
 }

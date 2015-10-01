@@ -10,12 +10,14 @@ import javax.swing.BorderFactory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplayListener;
 import de.uni_hannover.sra.minimax_simulator.ui.render.DefaultRenderEnvironment;
+import de.uni_hannover.sra.minimax_simulator.ui.render.FXSpriteCanvas;
 import de.uni_hannover.sra.minimax_simulator.ui.render.SpriteCanvas;
 
 // TODO: update to JavaFX
-public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements MachineDisplayListener {
+public class MachineSchematics extends FXSpriteCanvas<SpriteOwner> implements MachineDisplayListener {
 
 	public final static Font	FONT	= new Font("SansSerif", Font.PLAIN, 17);
+	public final static javafx.scene.text.Font FXFONT = new javafx.scene.text.Font("SansSerif", 17.0);
 
 	private final Machine		_machine;
 
@@ -23,22 +25,25 @@ public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements Mach
 	{
 		_machine = checkNotNull(machine);
 
-		setEnvironment(new DefaultRenderEnvironment(FONT, this.getFontMetrics(FONT)));
+		setEnvironment(new DefaultRenderEnvironment(FXFONT, getFontMetrics(FXFONT)));
 		setSpriteFactory(new DefaultSpriteFactory());
 
 		for (SpriteOwner sprite : _machine.getDisplay().getAllSpriteOwners()) {
             setSprite(sprite);
         }
 
-		setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		// TODO: set Border via CSS
+		//setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		updatePreferredSize();
 	}
 
 	private void updatePreferredSize()
 	{
-		setPreferredSize(_machine.getDisplay().getDimension().toAWT());
-		revalidate();
-		repaint();
+		//setPreferredSize(_machine.getDisplay().getDimension().toAWT());
+		//revalidate();
+		//repaint();
+		this.setSize(_machine.getDisplay().getDimension().toAWT());
+		draw();
 	}
 
 	@Override
@@ -50,7 +55,8 @@ public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements Mach
 	@Override
 	public void machineDisplayChanged()
 	{
-		repaint();
+		//repaint();
+		draw();
 	}
 
 	@Override
@@ -70,8 +76,8 @@ public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements Mach
 	{
 		setSprite(spriteOwner);
 	}
-
+/*
 	public int getWidth() {
 		return _machine.getDisplay().getDimension().toAWT().width;
-	}
+	}	*/
 }
