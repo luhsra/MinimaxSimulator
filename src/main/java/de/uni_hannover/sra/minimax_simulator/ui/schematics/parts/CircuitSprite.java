@@ -75,9 +75,8 @@ public abstract class CircuitSprite implements Sprite
 		tx.setToIdentity();
 		tx.appendTranslation(point2.x, point2.y);
 		tx.appendRotation(Math.toDegrees(angle) - 90);
-System.out.println("The angle is: " + angle + "\t set rotation to: " + (angle - Math.PI / 2d));
+
 		Transform oldTransform = gc.getTransform();
-		//gc.transform(tx);		// makes everything white
 		gc.setTransform(tx);
 		gc.fillPolygon(ArrowHead.xPoints, ArrowHead.yPoints, ArrowHead.nPoints);
 		gc.setTransform((Affine)oldTransform);

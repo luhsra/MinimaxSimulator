@@ -5,10 +5,9 @@ package de.uni_hannover.sra.minimax_simulator.layout;
  * It consists of an integer width and an integer height.
  * 
  * @author Martin
- *
  */
-public class Dimension
-{
+public class Dimension {
+
 	public final static Dimension ZERO = new Dimension(0, 0);
 
 	public final int w;
@@ -20,8 +19,7 @@ public class Dimension
 	 * @param width a non-negative integer
 	 * @param height a non-negative integer
 	 */
-	public Dimension(int width, int height)
-	{
+	public Dimension(int width, int height) {
 		if (width < 0)
 			throw new IllegalArgumentException("width < 0: " + width);
 		if (height < 0)
@@ -32,8 +30,7 @@ public class Dimension
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + h;
@@ -42,8 +39,7 @@ public class Dimension
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -60,18 +56,25 @@ public class Dimension
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "[" + w + "," + h + "]";
 	}
 
+	@Deprecated
 	public java.awt.Dimension toAWT()
 	{
 		return new java.awt.Dimension(w, h);
 	}
 
-	public Dimension addInsets(Insets in)
-	{
+	public int getWidth() {
+		return w;
+	}
+
+	public int getHeight() {
+		return h;
+	}
+
+	public Dimension addInsets(Insets in) {
 		return new Dimension(w + in.l + in.r, h + in.t + in.b);
 	}
 }

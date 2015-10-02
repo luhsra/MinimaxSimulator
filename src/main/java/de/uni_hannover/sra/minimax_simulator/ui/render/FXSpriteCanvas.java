@@ -1,27 +1,19 @@
 package de.uni_hannover.sra.minimax_simulator.ui.render;
 
-import com.sun.javafx.tk.*;
-import de.uni_hannover.sra.minimax_simulator.ui.UI;
-import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.*;
 import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.*;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-// TODO: update to JavaFX
-public class FXSpriteCanvas<T> extends javafx.scene.canvas.Canvas
-{
+// TODO: full JavaFX update
+public class FXSpriteCanvas<T> extends Canvas {
+
 	private final Map<T, Sprite> _sprites;
 
 	private RenderEnvironment _env;
@@ -55,6 +47,9 @@ public class FXSpriteCanvas<T> extends javafx.scene.canvas.Canvas
 		}
 	}
 
+	/**
+	 * Draws a thin border around the {@code FXSpriteCanvas}.
+	 */
 	private void drawBorder() {
 		double maxY = getHeight();
 		double maxX = getWidth();
@@ -122,14 +117,8 @@ public class FXSpriteCanvas<T> extends javafx.scene.canvas.Canvas
 		return com.sun.javafx.tk.Toolkit.getToolkit().getFontLoader().getFontMetrics(font);
 	}
 
-	@Deprecated
-	public Dimension getPreferredSize() {
-		return new Dimension((int) getWidth(), (int) getHeight());
-	}
-
-	@Deprecated
-	public void setSize(Dimension dim) {
-		this.setWidth(dim.getWidth());
-		this.setHeight(dim.getHeight());
+	public void setSize(int width, int height) {
+		setWidth(width);
+		setHeight(height);
 	}
 }

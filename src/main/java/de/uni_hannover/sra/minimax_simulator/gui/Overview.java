@@ -5,18 +5,11 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineD
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * <b>FXController of the overview tab</b><br>
@@ -25,7 +18,6 @@ import java.io.InputStream;
  *
  * @author Philipp Rohde
  */
-// TODO: find a better way
 public class Overview implements MachineDisplayListener {
 
     @FXML private ScrollPane paneSchematics;
@@ -44,31 +36,11 @@ public class Overview implements MachineDisplayListener {
     }
 
     /**
-     * Creates a {@link BufferedImage} of the {@link MachineSchematics} and uses {@code Streams} to set it to the {@link ImageView}.
+     * Creates an {@link Image} of the {@link MachineSchematics} using {@link javafx.scene.canvas.Canvas#snapshot(SnapshotParameters, WritableImage)}
+     * and sets the {@code Image} to the {@link ImageView}.
      */
     private void schematicsToImage() {
-        // paint the machine schematics to a buffered image
         MachineSchematics mSchematics = new MachineSchematics(Main.getWorkspace().getProject().getMachine());
-/*        Dimension dim = mSchematics.getPreferredSize();
-        mSchematics.setSize(dim);
-        BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = image.createGraphics();
-        mSchematics.paint(g);
-        g.dispose();
-
-        // set size of the image view to fit the image
-        imgSchematics.setFitHeight(dim.getHeight());
-        imgSchematics.setFitWidth(dim.getWidth());
-
-        // set the buffered image to the image view
-        try {
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", os);
-            InputStream is = new ByteArrayInputStream(os.toByteArray());
-            imgSchematics.setImage(new Image(is));
-        } catch (IOException e) {
-            // catch only
-        }   */
         Image image = mSchematics.snapshot(null, null);
         imgSchematics.setFitHeight(image.getHeight());
         imgSchematics.setFitWidth(image.getWidth());
