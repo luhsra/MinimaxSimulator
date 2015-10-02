@@ -10,15 +10,26 @@ import de.uni_hannover.sra.minimax_simulator.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Register;
 import javafx.scene.canvas.GraphicsContext;
 
-public class RegisterSprite extends CircuitSprite
-{
+/**
+ * The sprite for a {@link Register}.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public class RegisterSprite extends CircuitSprite {
+
 	public final static Color EXTENDED_REGISTER = new Color(0.95f, 0.95f, 0.95f);
 	public final static javafx.scene.paint.Color EXTENDED_REGISTER_FX = new javafx.scene.paint.Color(0.95f, 0.95f, 0.95f, 1f);
 
 	private final Register _register;
 
-	public RegisterSprite(Register reg)
-	{
+	/**
+	 * Initializes the {@code RegisterSprite}.
+	 *
+	 * @param reg
+	 *          the {@code Register} this sprite will represent
+	 */
+	public RegisterSprite(Register reg) {
 		_register = checkNotNull(reg);
 	}
 
@@ -62,6 +73,7 @@ public class RegisterSprite extends CircuitSprite
 		debugPin(g, _register.getWriteEnabled());
 	}
 
+	// TODO: review
 	@Override
 	public void paint(GraphicsContext gc) {
 		final Bounds b = _register.getBounds();

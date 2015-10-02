@@ -1,8 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.ui.render;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.text.FontSmoothingType;
-
 import static com.google.common.base.Preconditions.*;
 
 import java.awt.Color;
@@ -11,13 +8,16 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-public class DefaultRenderEnvironment implements RenderEnvironment
-{
+/**
+ * Default {@link RenderEnvironment}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class DefaultRenderEnvironment implements RenderEnvironment {
 	private final Font _font;
 	private final FontMetrics _fontMetrics;
 
-	public DefaultRenderEnvironment(Font font, FontMetrics fontMetrics)
-	{
+	public DefaultRenderEnvironment(Font font, FontMetrics fontMetrics) {
 		_font = checkNotNull(font);
 		_fontMetrics = checkNotNull(fontMetrics);
 		this.font = null;
@@ -71,13 +71,6 @@ public class DefaultRenderEnvironment implements RenderEnvironment
 	public FontMetrics getFontMetrics()
 	{
 		return _fontMetrics;
-	}
-
-	@Override
-	public GraphicsContext createGraphics(GraphicsContext gc) {
-		gc.setFontSmoothingType(FontSmoothingType.LCD);
-		gc.setFont(font);
-		return gc;
 	}
 
 	@Override

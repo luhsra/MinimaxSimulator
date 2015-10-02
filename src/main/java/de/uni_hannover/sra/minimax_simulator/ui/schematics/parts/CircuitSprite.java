@@ -16,8 +16,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Transform;
 
-public abstract class CircuitSprite implements Sprite
-{
+/**
+ * A {@link Sprite} of a component of the Minimax machine's circuit.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public abstract class CircuitSprite implements Sprite {
 	@Deprecated
 	private final static Polygon	arrowHead;
 	static
@@ -28,6 +33,12 @@ public abstract class CircuitSprite implements Sprite
 		arrowHead.addPoint(3, -5);
 	}
 
+	/**
+	 * A polygon that looks like an arrow head and can be drawn with
+	 * {@link GraphicsContext#fillPolygon(double[], double[], int)}.
+	 *
+	 * @author Philipp Rohde
+	 */
 	private final static class ArrowHead {
 		public final static double[] xPoints = {0, -3, 3};
 		public final static double[] yPoints = {0, -5, -5};
@@ -51,6 +62,12 @@ public abstract class CircuitSprite implements Sprite
 	@Override
 	public void paint(GraphicsContext gc, RenderEnvironment env) { paint(gc); }
 
+	/**
+	 * Provides a method for drawing a {@code CircuitSprite} without a {@code RenderEnvironment}.
+	 *
+	 * @param gc
+	 *          the {@code GraphicsContext} the {@code CircuitSprite} will be drawn on
+	 */
 	// TODO: make abstract?
 	public void paint(GraphicsContext gc) {}
 
@@ -69,6 +86,17 @@ public abstract class CircuitSprite implements Sprite
 		g2.dispose();
 	}
 
+	/**
+	 * Draws the arrow head at the end of a wire.<br>
+	 * Therefore the polygon will be translated and rotated.
+	 *
+	 * @param gc
+	 *          the {@code GraphicsContext} the arrow will be drawn on
+	 * @param point1
+	 *          the starting point
+	 * @param point2
+	 *          the end point
+	 */
 	public void drawArrow(GraphicsContext gc, Point point1, Point point2) {
 		double angle = Math.atan2(point2.y - point1.y, point2.x - point1.x);
 		Affine tx = new Affine();
@@ -94,6 +122,14 @@ public abstract class CircuitSprite implements Sprite
 		}
 	}
 
+	/**
+	 * Debugs {@link Bounds} on a {@code GraphicsContext}.
+	 *
+	 * @param gc
+	 *          the {@code GraphicsContext} the {@code Bounds} will be debugged on
+	 * @param bounds
+	 *          the {@code Bounds} to debug
+	 */
 	public void debugBounds(GraphicsContext gc, Bounds bounds) {
 		if (Config.DEBUG_SCHEMATICS) {
 			gc.setStroke(RED);
@@ -111,6 +147,14 @@ public abstract class CircuitSprite implements Sprite
 		}
 	}
 
+	/**
+	 * Debugs a {@link Pin} on a {@code GraphicsContext}.
+	 *
+	 * @param gc
+	 *          the {@code GraphicsContext} the {@code Pin} will be debugged on
+	 * @param pin
+	 *          the {@code Pin} to debug
+	 */
 	public void debugPin(GraphicsContext gc, Pin pin) {
 		if (Config.DEBUG_SCHEMATICS) {
 			debugPosition(gc, pin.getBounds().x, pin.getBounds().y);
@@ -128,6 +172,16 @@ public abstract class CircuitSprite implements Sprite
 		}
 	}
 
+	/**
+	 * Debugs a point on a {@code GraphicsContext}.
+	 *
+	 * @param gc
+	 *          the {@code GraphicsContext} the point will be debugged on
+	 * @param x
+	 *          the x coordinate of the point to debug
+	 * @param y
+	 *          the y coordinate of the point to debug
+	 */
 	public void debugPosition(GraphicsContext gc, int x, int y) {
 		if (Config.DEBUG_SCHEMATICS) {
 			gc.setFill(RED);

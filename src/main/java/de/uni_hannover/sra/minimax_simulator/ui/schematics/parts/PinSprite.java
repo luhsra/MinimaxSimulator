@@ -11,13 +11,24 @@ import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
+/**
+ * The sprite of a {@link Pin}.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
 // TODO: delete because it is unused?
-public class PinSprite implements Sprite
-{
+public class PinSprite implements Sprite {
+
 	private final Pin _pin;
 
-	public PinSprite(Pin pin)
-	{
+	/**
+	 * Initializes the {@code PinSprite}.
+	 *
+	 * @param pin
+	 *          the {@code Pin} this sprite will represent
+	 */
+	public PinSprite(Pin pin) {
 		_pin = checkNotNull(pin);
 	}
 

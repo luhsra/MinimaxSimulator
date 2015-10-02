@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.render;
 
 import com.sun.javafx.tk.Toolkit;
-import javafx.scene.canvas.GraphicsContext;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,9 +9,14 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+/**
+ * A {@link RenderEnvironment} for font measuring.
+ *
+ * @author Martin L&uuml;ck
+ */
 // TODO: is this still needed due to the use of the toolkit font metrics class?
-public class DummyRenderEnvironment implements RenderEnvironment
-{
+public class DummyRenderEnvironment implements RenderEnvironment {
+
 	private final Font _font;
 	private final FontMetrics _fontMetrics;
 
@@ -61,11 +65,6 @@ public class DummyRenderEnvironment implements RenderEnvironment
 	public FontMetrics getFontMetrics()
 	{
 		return _fontMetrics;
-	}
-
-	@Override
-	public GraphicsContext createGraphics(GraphicsContext gc) {
-		throw new UnsupportedOperationException("This is a dummy render environment for font measuring");
 	}
 
 	@Override

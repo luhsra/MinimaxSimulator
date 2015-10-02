@@ -10,12 +10,23 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.SignExtension;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import javafx.scene.canvas.GraphicsContext;
 
-public class SignExtSprite extends CircuitSprite
-{
+/**
+ * The sprite for a {@link SignExtension}.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public class SignExtSprite extends CircuitSprite {
+
 	private final SignExtension _signExt;
 
-	public SignExtSprite(SignExtension signExt)
-	{
+	/**
+	 * Initializes the {@code SignExtSprite}.
+	 *
+	 * @param signExt
+	 *          the {@code SignExtension} this sprite will represent
+	 */
+	public SignExtSprite(SignExtension signExt) {
 		_signExt = checkNotNull(signExt);
 	}
 

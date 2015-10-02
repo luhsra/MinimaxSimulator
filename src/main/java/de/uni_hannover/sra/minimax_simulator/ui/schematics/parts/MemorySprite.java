@@ -9,12 +9,23 @@ import de.uni_hannover.sra.minimax_simulator.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Memory;
 import javafx.scene.canvas.GraphicsContext;
 
-public class MemorySprite extends CircuitSprite
-{
+/**
+ * The sprite of a {@link Memory}.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public class MemorySprite extends CircuitSprite {
+
 	private final Memory _memory;
 
-	public MemorySprite(Memory memory)
-	{
+	/**
+	 * Initializes the {@code MemorySprite}.
+	 *
+	 * @param memory
+	 *          the {@code Memory} this sprite will represent
+	 */
+	public MemorySprite(Memory memory) {
 		_memory = checkNotNull(memory);
 	}
 

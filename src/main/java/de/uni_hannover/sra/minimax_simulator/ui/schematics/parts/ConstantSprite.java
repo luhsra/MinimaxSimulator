@@ -9,12 +9,23 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Constant;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import javafx.scene.canvas.GraphicsContext;
 
-public class ConstantSprite extends CircuitSprite
-{
+/**
+ * The sprite of a {@link Constant} multiplexer input.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public class ConstantSprite extends CircuitSprite {
+
 	private final Constant	_constant;
 
-	public ConstantSprite(Constant constant)
-	{
+	/**
+	 * Initializes the {@code ConstantSprite}.
+	 *
+	 * @param constant
+	 *          the {@code Constant} this sprite will represent
+	 */
+	public ConstantSprite(Constant constant) {
 		_constant = checkNotNull(constant);
 	}
 

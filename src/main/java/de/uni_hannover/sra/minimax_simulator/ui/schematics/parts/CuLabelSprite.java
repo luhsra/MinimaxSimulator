@@ -11,22 +11,34 @@ import de.uni_hannover.sra.minimax_simulator.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Label;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 
-public class CuLabelSprite extends CircuitSprite
-{
+/**
+ * The sprite of the control unit (CU).
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public class CuLabelSprite extends CircuitSprite {
+
 	private final Label					_label;
 
+	@Deprecated
 	private final static float			dash[]		= { 10.0f };
+	@Deprecated
 	private final static BasicStroke	dashStroke	= new BasicStroke(1.0f,
 														BasicStroke.CAP_BUTT,
 														BasicStroke.JOIN_MITER, 10.0f,
 														dash, 0.0f);
 
-	public CuLabelSprite(Label label)
-	{
+	/**
+	 * Initializes the {@code CuLabelSprite}.
+	 *
+	 * @param label
+	 *          the CU's label
+	 */
+	public CuLabelSprite(Label label) {
 		_label = checkNotNull(label);
 	}
 
@@ -70,28 +82,18 @@ public class CuLabelSprite extends CircuitSprite
 		gc.fillText(message, textX, textY);
 
 		// save parameters
-		double lineWidth = gc.getLineWidth();
-		StrokeLineCap lineCap = gc.getLineCap();
-		StrokeLineJoin lineJoin = gc.getLineJoin();
-		double miterLimit = gc.getMiterLimit();
-		double[] lineDashes = gc.getLineDashes();
-		double lineDashOffset = gc.getLineDashOffset();
+		gc.save();
 
 		// change parameters and stroke rectangle
 		gc.setLineWidth(1.0f);
 		gc.setLineCap(StrokeLineCap.BUTT);
 		gc.setLineJoin(StrokeLineJoin.MITER);
 		gc.setMiterLimit(10.0f);
-		gc.setLineDashes(dash[0]);
+		gc.setLineDashes(10.0f);
 		gc.setLineDashOffset(0.0f);
 		gc.strokeRect(b.x, b.y, b.w, b.h);
 
 		// restore old parameters
-		gc.setLineWidth(lineWidth);
-		gc.setLineCap(lineCap);
-		gc.setLineJoin(lineJoin);
-		gc.setMiterLimit(miterLimit);
-		gc.setLineDashes(lineDashes);
-		gc.setLineDashOffset(lineDashOffset);
+		gc.restore();
 	}
 }

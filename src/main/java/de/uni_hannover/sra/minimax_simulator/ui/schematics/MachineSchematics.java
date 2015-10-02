@@ -9,12 +9,25 @@ import de.uni_hannover.sra.minimax_simulator.ui.render.DefaultRenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.render.FXSpriteCanvas;
 import javafx.scene.text.Font;
 
+/**
+ * The {@code MachineSchematics} are used to draw the schematics of the {@link Machine}.
+ * All sprites of the machine's components will be drawn on a {@code Canvas}.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
 public class MachineSchematics extends FXSpriteCanvas<SpriteOwner> implements MachineDisplayListener {
 
 	public final static Font FONT = new Font("SansSerif", 17.0);
 
 	private final Machine machine;
 
+	/**
+	 * Initializes the {@code MachineSchematics}.
+	 *
+	 * @param machine
+	 *          the {@code Machine} for which the schematics should be drawn
+	 */
 	public MachineSchematics(Machine machine) {
 		this.machine = checkNotNull(machine);
 
@@ -26,6 +39,9 @@ public class MachineSchematics extends FXSpriteCanvas<SpriteOwner> implements Ma
 		updatePreferredSize();
 	}
 
+	/**
+	 * Updates the size of the {@code Canvas}.
+	 */
 	private void updatePreferredSize() {
 		Dimension dim = this.machine.getDisplay().getDimension();
 		setSize(dim.getWidth(), dim.getHeight());

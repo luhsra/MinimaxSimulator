@@ -10,18 +10,24 @@ import javafx.scene.canvas.GraphicsContext;
 
 import com.sun.javafx.tk.*;
 
-public class AluSprite extends CircuitSprite
-{
+/**
+ * The ALU sprite.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public class AluSprite extends CircuitSprite {
+
 	private final static int[][] POINTS = new int[][] {
-			// x  y
-			{-9, 0 },
-			{-34, 12},
-			{-34, 44},
-			{34, 10},
-			{34, -10},
+			// x    y
+			{ -9,   0},
+			{-34,  12},
+			{-34,  44},
+			{ 34,  10},
+			{ 34, -10},
 			{-34, -44},
 			{-34, -12},
-			{-9, 0}
+			{ -9,   0}
 	};
 
 	private final static String NAME = "ALU";
@@ -30,8 +36,13 @@ public class AluSprite extends CircuitSprite
 
 	private final Alu _alu;
 
-	public AluSprite(Alu alu)
-	{
+	/**
+	 * Initializes the {@code AluSprite}.
+	 *
+	 * @param alu
+	 *          the {@link Alu} this sprite will represent
+	 */
+	public AluSprite(Alu alu) {
 		_alu = checkNotNull(alu);
 	}
 
@@ -101,6 +112,5 @@ public class AluSprite extends CircuitSprite
 		debugPin(gc, _alu.getOutData());
 		debugPin(gc, _alu.getOutZero());
 	}
-
 
 }

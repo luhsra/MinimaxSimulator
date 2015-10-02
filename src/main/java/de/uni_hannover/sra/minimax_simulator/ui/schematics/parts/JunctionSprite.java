@@ -9,12 +9,23 @@ import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * The sprite of a {@link Junction}.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
 public class JunctionSprite implements Sprite {
 
 	private final Junction _junction;
 
-	public JunctionSprite(Junction junction)
-	{
+	/**
+	 * Initializes the  {@code JunctionSprite}.
+	 *
+	 * @param junction
+	 *          the {@code Junction} this sprite will represent
+	 */
+	public JunctionSprite(Junction junction) {
 		_junction = checkNotNull(junction);
 	}
 

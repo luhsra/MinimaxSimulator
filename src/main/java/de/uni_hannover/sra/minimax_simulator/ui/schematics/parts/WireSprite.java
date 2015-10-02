@@ -10,12 +10,23 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import javafx.scene.canvas.GraphicsContext;
 
-public class WireSprite extends CircuitSprite
-{
+/**
+ * The sprite for a {@link Wire}.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public class WireSprite extends CircuitSprite {
+
 	private final Wire				_wire;
 
-	public WireSprite(Wire wire)
-	{
+	/**
+	 * Initializes the {@code WireSprite}.
+	 *
+	 * @param wire
+	 *          the {@code Wire} this sprite will represent
+	 */
+	public WireSprite(Wire wire) {
 		_wire = checkNotNull(wire);
 	}
 
