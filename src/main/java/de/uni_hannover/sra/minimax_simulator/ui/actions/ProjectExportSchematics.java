@@ -27,6 +27,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.image.Image;
 
 @Deprecated
+// TODO: full FX Update
 public class ProjectExportSchematics extends ProjectAction
 {
 	private final TextResource	res	= Main.getTextResource("application");
@@ -151,8 +152,8 @@ public class ProjectExportSchematics extends ProjectAction
 		MachineSchematics schematics = new MachineSchematics(project.getMachine());
 
 		// Paint it to a buffered image
-		Dimension dim = schematics.getPreferredSize();
-		schematics.setSize(dim);
+		//Dimension dim = new Dimension( (int) schematics.getWidth(), (int) schematics.getHeight()); //schematics.getPreferredSize();
+		//schematics.setSize(dim);
 		//final BufferedImage image = new BufferedImage(dim.width, dim.height, BufferedImage.TYPE_INT_ARGB);
 		final WritableImage image = schematics.snapshot(null, null);  //new WritableImage(dim.width, dim.height);
 		//Graphics g = image.createGraphics();
