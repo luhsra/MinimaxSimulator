@@ -30,6 +30,7 @@ public class MachineSchematics extends FXSpriteCanvas<SpriteOwner> implements Ma
 	 */
 	public MachineSchematics(Machine machine) {
 		this.machine = checkNotNull(machine);
+		this.machine.getDisplay().addMachineDisplayListener(this);
 
 		setEnvironment(new DefaultRenderEnvironment(FONT, getFontMetrics(FONT)));
 		setSpriteFactory(new DefaultSpriteFactory());
