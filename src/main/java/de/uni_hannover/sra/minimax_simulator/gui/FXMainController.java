@@ -15,6 +15,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectExportSignalTable
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSave;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.*;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,6 +74,8 @@ public class FXMainController implements WorkspaceListener {
     public Tab tab_mux;
     public Tab tab_experimental;
 
+    @FXML private ScrollPane paneOverview;
+
     private FileChooser fc = new FileChooser();
 
     @FXML private MemoryView embeddedMemoryViewController;
@@ -81,7 +84,6 @@ public class FXMainController implements WorkspaceListener {
     @FXML private RegView embeddedRegViewController;
     @FXML private DebuggerView embeddedDebuggerViewController;
     @FXML private SignalView embeddedSignalViewController;
-    @FXML private Overview embeddedOverviewController;
 
     private final TextResource _res;
 
@@ -350,7 +352,12 @@ public class FXMainController implements WorkspaceListener {
         embeddedRegViewController.initRegView();
         embeddedDebuggerViewController.initDebuggerView();
         embeddedSignalViewController.initSignalView();
-        embeddedOverviewController.initOverview();
+
+        // init overview tab
+        MachineSchematics schematics = new MachineSchematics(Main.getWorkspace().getProject().getMachine());
+        schematics.translateXProperty().bind(paneOverview.widthProperty().subtract(schematics.widthProperty()).divide(2));
+        paneOverview.setContent(schematics);
+
     }
 
     /**
