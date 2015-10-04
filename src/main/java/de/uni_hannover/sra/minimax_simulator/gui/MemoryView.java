@@ -133,6 +133,13 @@ public class MemoryView{
      * Opens a {@link FileChooser} and updates the GUI components of the import {@link TitledPane} if the selected file was not null.
      */
     public void openImportDialog() {
+        if (_currentImportFile != null && _currentImportFile.getParentFile().exists()) {
+            fc.setInitialDirectory(_currentImportFile.getParentFile());
+        }
+        else if (_currentExportFile != null && _currentExportFile.getParentFile().exists()) {
+            fc.setInitialDirectory(_currentExportFile.getParentFile());
+        }
+
         File selFile = fc.showOpenDialog(Main.getPrimaryStage());
 
         if (selFile == null) {
@@ -185,6 +192,13 @@ public class MemoryView{
      * Opens a {@link FileChooser} and sets the export file to the selected file if it was not null.
      */
     public void openExportDialog() {
+        if (_currentExportFile != null && _currentExportFile.getParentFile().exists()) {
+            fc.setInitialDirectory(_currentExportFile.getParentFile());
+        }
+        else if (_currentImportFile != null && _currentImportFile.getParentFile().exists()) {
+            fc.setInitialDirectory(_currentImportFile.getParentFile());
+        }
+
         File selFile = fc.showSaveDialog(Main.getPrimaryStage());
 
         if (selFile == null) {
@@ -211,9 +225,7 @@ public class MemoryView{
             return;
         }
 
-        UIUtil.executeWorker(new MemoryExportWorker(mMemory, fromAddress, toAddress,
-                _currentExportFile, _res), _res.get("memory.export.wait.title"), _res.get("memory.export.wait.message"));
-
+        UIUtil.executeWorker(new MemoryExportWorker(mMemory, fromAddress, toAddress, _currentExportFile, _res), _res.get("memory.export.wait.title"), _res.get("memory.export.wait.message"));
     }
 
 }
