@@ -72,7 +72,6 @@ public class FXMainController implements WorkspaceListener {
     public Tab tab_alu;
     public Tab tab_reg;
     public Tab tab_mux;
-    public Tab tab_experimental;
 
     @FXML private ScrollPane paneOverview;
 
