@@ -39,39 +39,39 @@ import java.util.*;
  */
 public class FXMainController implements WorkspaceListener {
 
-    public Menu menuProject;
-    public MenuItem project_new;
-    public MenuItem project_open;
-    public MenuItem project_save;
-    public MenuItem project_saveas;
-    public MenuItem project_export_schematics;
-    public MenuItem project_export_signal;
-    public MenuItem project_close;
-    public MenuItem exitApplication;
+    @FXML private Menu menuProject;
+    @FXML private MenuItem project_new;
+    @FXML private MenuItem project_open;
+    @FXML private MenuItem project_save;
+    @FXML private MenuItem project_saveas;
+    @FXML private MenuItem project_export_schematics;
+    @FXML private MenuItem project_export_signal;
+    @FXML private MenuItem project_close;
+    @FXML private MenuItem exitApplication;
     private List<MenuItem> disabledMenuItems = null;
 
-    public Menu menuView;
-    public MenuItem view_overview;
-    public MenuItem view_memory;
-    public MenuItem view_debugger;
+    @FXML private Menu menuView;
+    @FXML private MenuItem view_overview;
+    @FXML private MenuItem view_memory;
+    @FXML private MenuItem view_debugger;
 
-    public Menu menuMachineConfiguration;
-    public MenuItem view_conf_alu;
-    public MenuItem view_conf_reg;
-    public MenuItem view_conf_mux;
-    public MenuItem view_conf_signal;
+    @FXML private Menu menuMachineConfiguration;
+    @FXML private MenuItem view_conf_alu;
+    @FXML private MenuItem view_conf_reg;
+    @FXML private MenuItem view_conf_mux;
+    @FXML private MenuItem view_conf_signal;
 
-    public Menu menuHelp;
-    public MenuItem help_about;
+    @FXML private Menu menuHelp;
+    @FXML private MenuItem help_about;
 
-    public TabPane tabpane;
-    public Tab tab_overview;
-    public Tab tab_signal;
-    public Tab tab_memory;
-    public Tab tab_debugger;
-    public Tab tab_alu;
-    public Tab tab_reg;
-    public Tab tab_mux;
+    @FXML private TabPane tabpane;
+    @FXML private Tab tab_overview;
+    @FXML private Tab tab_signal;
+    @FXML private Tab tab_memory;
+    @FXML private Tab tab_debugger;
+    @FXML private Tab tab_alu;
+    @FXML private Tab tab_reg;
+    @FXML private Tab tab_mux;
 
     @FXML private ScrollPane paneOverview;
 
