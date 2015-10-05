@@ -1,33 +1,43 @@
 package de.uni_hannover.sra.minimax_simulator.gui;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
+import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalCsvExporter;
+import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalHtmlExporter;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfiguration;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
 import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
-import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectExportSchematics;
-import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectExportSignalTable;
-import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSave;
-import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.*;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.*;
 
+import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 /**
  * <b>The main controller for the JavaFX GUI.</b><br>
@@ -83,6 +93,8 @@ public class FXMainController implements WorkspaceListener {
     @FXML private RegView embeddedRegViewController;
     @FXML private DebuggerView embeddedDebuggerViewController;
     @FXML private SignalView embeddedSignalViewController;
+
+    private MachineSchematics schematics;
 
     private final TextResource _res;
 
@@ -353,10 +365,9 @@ public class FXMainController implements WorkspaceListener {
         embeddedSignalViewController.initSignalView();
 
         // init overview tab
-        MachineSchematics schematics = new MachineSchematics(Main.getWorkspace().getProject().getMachine());
-        schematics.translateXProperty().bind(paneOverview.widthProperty().subtract(schematics.widthProperty()).divide(2));
-        paneOverview.setContent(schematics);
-
+        this.schematics = new MachineSchematics(Main.getWorkspace().getProject().getMachine());
+        this.schematics.translateXProperty().bind(paneOverview.widthProperty().subtract(schematics.widthProperty()).divide(2));
+        paneOverview.setContent(this.schematics);
     }
 
     /**
@@ -373,9 +384,7 @@ public class FXMainController implements WorkspaceListener {
      *          {@code true} if the project was saved; {@code false} otherwise
      */
     public boolean saveProject() {
-        // TODO: improve
-        return new ProjectSave().save(Main.getWorkspace().getCurrentProjectFile());
-
+        return saveProjectToFile(Main.getWorkspace().getCurrentProjectFile());
     }
 
     /**
@@ -385,33 +394,183 @@ public class FXMainController implements WorkspaceListener {
      *          {@code true} if the project was saved; {@code false} otherwise
      */
     public boolean saveProjectAs() {
-        // TODO: improve
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterProject);
         File file = fc.showSaveDialog(Main.getPrimaryStage());
-        return new ProjectSaveTo().save(file);
+        return saveProjectToFile(file);
+    }
+
+    /**
+     * Saves the current project to the given file.
+     *
+     * @param file
+     *          the {@code File} the project should be saved to
+     * @return
+     *          {@code true} if the project was saved; {@code false} otherwise
+     */
+    private boolean saveProjectToFile(File file) {
+        if (file == null) {
+            return false;
+        }
+
+        if (file.getName().lastIndexOf('.') == -1) {
+            // append ending
+            file = new File(file.getPath() + ".zip");
+        }
+
+        final File fileToSave = file;
+
+        UIUtil.executeWorker(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Main.getWorkspace().saveProject(fileToSave);
+                } catch (Exception e) {
+                    Main.getWorkspace().closeProject();		// TODO: really closing project if saving didn't work?
+                    throw Throwables.propagate(e);
+                }
+            }
+        }, _res.get("wait.title"), _res.format("wait.project.save", file.getName()));
+        return true;
     }
 
     /**
      * Exports the schematics of the current project.
      */
     public void exportSchematics() {
-        // TODO: improve
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterSchematics);
         File file = fc.showSaveDialog(Main.getPrimaryStage());
-        new ProjectExportSchematics().export(file);
+
+        exportSchematicsToFile(file);
+    }
+
+    /**
+     * Saves the schematics of the current project to the given file.
+     *
+     * @param file
+     *          the {@code File} the {@code MachineSchematics} should be saved to
+     */
+    private void exportSchematicsToFile(File file) {
+        if (file == null) {
+            return;
+        }
+
+        if (file.getName().lastIndexOf(".") == -1) {
+            file = new File(file.getPath() + ".png");
+        }
+
+        final File imageFile = file;
+
+        int dot = imageFile.getName().lastIndexOf('.');
+        final String ending = imageFile.getName().substring(dot + 1);
+
+        // get an image of the schematics
+        final WritableImage image = this.schematics.snapshot(null, null);
+
+        UIUtil.executeWorker(new Runnable() {
+            @Override
+            public void run() {
+                // write the image to disk
+                try {
+                    // TODO: pure JavaFX
+                    if (!ImageIO.write(SwingFXUtils.fromFXImage(image, null), ending, imageFile)) {
+                        ioError(imageFile.getPath(), _res.get("project.export.error.message.ioex"));
+                        return;
+                    }
+                } catch (IOException e1) {
+                    // (almost) ignore
+                    e1.printStackTrace();
+                    ioError(imageFile.getPath(), _res.get("project.export.error.message.ioex"));
+                    return;
+                }
+                // open the image
+                try {
+                    Main.getHostServicesStatic().showDocument(imageFile.getAbsolutePath());
+                } catch (Exception e) {
+                    // (almost) ignore
+                    e.printStackTrace();
+                }
+            }
+        }, _res.get("wait.title"), _res.get("wait.image-export"));
     }
 
     /**
      * Exports the {@link de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable} of the current project.
      */
     public void exportSignal() {
-        // TODO: improve
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterSignal);
         File file = fc.showSaveDialog(Main.getPrimaryStage());
-        new ProjectExportSignalTable().exportSignalTable(file);
+
+        exportSignalToFile(file);
+    }
+
+    /**
+     * Saves the {@code SignalTable} to the given file.
+     *
+     * @param file
+     *          the {@code File} the {@code SignalTable} should be saved to
+     */
+    private void exportSignalToFile(File file) {
+        final Project project = Main.getWorkspace().getProject();
+
+        if (file == null) {
+            return;
+        }
+
+        if (file.getName().lastIndexOf(".") == -1) {
+            // append ending
+            file = new File(file.getPath() + ".html");
+        }
+
+        final File fileToSave = file;
+
+        UIUtil.executeWorker(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SignalTable table = project.getSignalTable();
+                    SignalConfiguration config = project.getSignalConfiguration();
+                    if (fileToSave.getName().endsWith(".csv")) {
+                        new SignalCsvExporter(fileToSave).exportSignalTable(table, config);
+                    }
+                    else if (fileToSave.getName().endsWith(".html")) {
+                        new SignalHtmlExporter(fileToSave).exportSignalTable(table, config);
+                    }
+                    else {
+                        ioError(fileToSave.getPath(), _res.get("project.export.error.message.wrongformat"));
+                    }
+                } catch (IOException e1) {
+                    // (almost) ignore
+                    e1.printStackTrace();
+
+                    ioError(fileToSave.getPath(), _res.get("project.export.error.message.ioex"));
+                }
+            }
+
+        }, _res.get("wait.title"), _res.get("wait.signal-export"));
+    }
+
+    /**
+     * Opens an error dialog if an {@code IOException} was thrown during export of the {@code MachineSchematics}
+     * or {@code SignalTable}.
+     *
+     * @param filename
+     *          the filename of the {@code File} where something went wrong
+     * @param reason
+     *          the reason of the error
+     */
+    private void ioError(String filename, String reason) {
+        String error = _res.format("project.export.error.message", filename, reason);
+        String title = _res.get("project.export.error.title");
+
+        UI.invokeInFAT(new Runnable() {
+            @Override
+            public void run() {
+                new FXDialog(Alert.AlertType.ERROR, title, error).showAndWait();
+            }
+        });
     }
 
     /**

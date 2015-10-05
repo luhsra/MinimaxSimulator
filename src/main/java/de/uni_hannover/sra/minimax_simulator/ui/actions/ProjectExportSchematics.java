@@ -27,7 +27,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.image.Image;
 
 @Deprecated
-// TODO: full FX Update
 public class ProjectExportSchematics extends ProjectAction
 {
 	private final TextResource	res	= Main.getTextResource("application");

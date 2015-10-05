@@ -8,6 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.DefaultResourceBundleLoad
 import de.uni_hannover.sra.minimax_simulator.resources.PropertyResourceControl;
 import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import javafx.application.HostServices;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +42,8 @@ public class Main extends javafx.application.Application {
 
     private static Logger _log;
 
+    private static HostServices hostServices;
+
     /**
      * Starts the JavaFX application.
      *
@@ -54,6 +57,8 @@ public class Main extends javafx.application.Application {
 
         _primaryStage = primaryStage;
         _version = new Version(this.getClass());
+
+        hostServices = getHostServices();
 
         // Read logger settings from .properties inside jar
         setupLogger();
@@ -201,6 +206,10 @@ public class Main extends javafx.application.Application {
         }
 
         _log = Logger.getLogger(Main.class.getName());
+    }
+
+    public static HostServices getHostServicesStatic() {
+        return hostServices;
     }
 
 }
