@@ -90,12 +90,12 @@ public class MultiplexerSprite extends CircuitSprite
 		double textHeight = fm.getAscent() - 3;
 
 		// upper / lower arc
-		gc.strokeArc(b.x, b.y, b.w, b.w, 0, 180, ArcType.OPEN);
-		gc.strokeArc(b.x, b.y + b.h - b.w, b.w, b.w, 180, 180, ArcType.OPEN);
+		gc.strokeArc(b.x + 0.5, b.y + 0.5, b.w, b.w, 0, 180, ArcType.OPEN);
+		gc.strokeArc(b.x + 0.5, b.y + b.h - b.w + 0.5, b.w, b.w, 180, 180, ArcType.OPEN);
 
 		// left / right line
-		gc.strokeLine(b.x, b.y + b.w / 2, b.x, b.y + b.h - b.w / 2);
-		gc.strokeLine(b.x + b.w, b.y + b.w / 2, b.x + b.w, b.y + b.h - b.w / 2);
+		gc.strokeLine(b.x + 0.5, b.y + b.w / 2 + 0.5, b.x + 0.5, b.y + b.h - b.w / 2 + 0.5);
+		gc.strokeLine(b.x + b.w + 0.5, b.y + b.w / 2 + 0.5, b.x + b.w + 0.5, b.y + b.h - b.w / 2 + 0.5);
 
 		// pin addresses
 		//int availableHeight = b.h - 24;

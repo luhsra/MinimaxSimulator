@@ -4,6 +4,7 @@ import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
 import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontSmoothingType;
@@ -38,7 +39,6 @@ public class FXSpriteCanvas<T> extends Canvas {
 	public FXSpriteCanvas() {
 		_sprites = new HashMap<T, Sprite>();
 		gc = this.getGraphicsContext2D();
-		gc.setFontSmoothingType(FontSmoothingType.LCD);
 	}
 
 	/**

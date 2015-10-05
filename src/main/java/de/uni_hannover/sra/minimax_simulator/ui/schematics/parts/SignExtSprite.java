@@ -53,7 +53,7 @@ public class SignExtSprite extends CircuitSprite {
 		Bounds b = _signExt.getBounds();
 		debugBounds(gc, b);
 
-		gc.strokeOval(b.x, b.y, b.w, b.h);
+		gc.strokeOval(b.x + 0.5, b.y + 0.5, b.w, b.h);
 
 		String name = _signExt.getLabel();
 		com.sun.javafx.tk.FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());

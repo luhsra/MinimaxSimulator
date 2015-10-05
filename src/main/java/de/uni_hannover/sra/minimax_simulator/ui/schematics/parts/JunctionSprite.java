@@ -54,6 +54,6 @@ public class JunctionSprite implements Sprite {
 		int x = _junction.getBounds().x;
 		int y = _junction.getBounds().y;
 
-		gc.fillOval(x - 2, y - 2, 5, 5);
+		gc.fillOval(x - 2 + 0.5, y - 2 + 0.5, 5, 5);
 	}
 }

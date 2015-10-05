@@ -57,7 +57,7 @@ public class MemorySprite extends CircuitSprite {
 	public void paint(GraphicsContext gc) {
 		Bounds b = _memory.getBounds();
 
-		gc.strokeRect(b.x, b.y, b.w, b.h);
+		gc.strokeRect(b.x + 0.5, b.y + 0.5 , b.w, b.h);
 
 		String name = "HS";
 

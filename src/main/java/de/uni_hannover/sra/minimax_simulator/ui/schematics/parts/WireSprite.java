@@ -55,7 +55,7 @@ public class WireSprite extends CircuitSprite {
 		gc.setLineWidth(1.0);
 		int i = 1;
 		for (; i < points.length; i++) {
-			gc.strokeLine(points[i-1].x, points[i-1].y, points[i].x, points[i].y);
+			gc.strokeLine(points[i-1].x + 0.5, points[i-1].y + 0.5, points[i].x + 0.5, points[i].y + 0.5);
 		}
 		gc.setLineWidth(lineWidth);
 

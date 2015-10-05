@@ -91,7 +91,7 @@ public class CuLabelSprite extends CircuitSprite {
 		gc.setMiterLimit(10.0f);
 		gc.setLineDashes(10.0f);
 		gc.setLineDashOffset(0.0f);
-		gc.strokeRect(b.x, b.y, b.w, b.h);
+		gc.strokeRect(b.x + 0.5, b.y + 0.5, b.w, b.h);
 
 		// restore old parameters
 		gc.restore();

@@ -73,7 +73,6 @@ public class RegisterSprite extends CircuitSprite {
 		debugPin(g, _register.getWriteEnabled());
 	}
 
-	// TODO: review
 	@Override
 	public void paint(GraphicsContext gc) {
 		final Bounds b = _register.getBounds();
@@ -84,26 +83,16 @@ public class RegisterSprite extends CircuitSprite {
 		double textWidth = fm.computeStringWidth(name);
 		double textHeight = fm.getLineHeight();
 
-		double drawHeight = b.h;	// textHeight + REGISTER_PADDING;
-		double drawWidth = b.w;		// Math.max(textWidth + REGISTER_PADDING, REGISTER_MIN_WIDTH);
-
-		// difference between estimated size (bounds) and font metrics
-		double deltaW = drawWidth - b.w;
-		double deltaH = drawHeight - b.h;
-
-		double x0 = b.x - deltaW / 2;
-		double y0 = b.y - deltaH / 2;
-
 		if (_register.isExtended()) {
 			gc.setFill(EXTENDED_REGISTER_FX);
-			gc.fillRect(x0, y0, drawWidth, drawHeight);
+			gc.fillRect(b.x + 0.5, b.y + 0.5, b.w, b.h);
 			gc.setFill(javafx.scene.paint.Color.BLACK);
 		}
 
-		double xCenter = x0 + drawWidth / 2;
-		double yCenter = y0 + drawHeight / 2;
+		double xCenter = b.x + b.w / 2;
+		double yCenter = b.y + b.h / 2;
 
-		gc.strokeRect(x0, y0, drawWidth, drawHeight);
+		gc.strokeRect(b.x + 0.5, b.y + 0.5, b.w, b.h);
 		gc.fillText(name, xCenter - textWidth / 2, yCenter + textHeight / 4 + 1);
 
 		debugPin(gc, _register.getDataIn());
