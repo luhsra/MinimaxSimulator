@@ -81,7 +81,7 @@ public class PropertiesFileConfigLoader implements ConfigurationLoader
 
 			Properties properties = new Properties();
 
-			if (file == null)
+			if (file != null)
 				loadPropertiesFrom(file, properties);
 
 			configureStaticFields(clazz, properties);
