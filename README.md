@@ -34,7 +34,7 @@ If you are missing a feature within the simulator, feel free to ask us about it 
 
 Note that usually you can speed up the process by submitting a pull request providing the needed changes for your requested feature.
 
-<a name="changelog></> Change Log
+<a name="changelog"></a> Change Log
 ---------------------------------
 See [Change Log](CHANGELOG.md)
 
