@@ -7,11 +7,11 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetr
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Register;
 
 public class RegisterShape extends TextRenderShape {
-	// TODO: really public?
-	public final static int	REGISTER_HEIGHT						= 20;
-	public final static int	REGISTER_MIN_WIDTH					= 90;
-	public final static int	REGISTER_SPACING					= 50;
-	public final static int	REGISTER_TEXT_LEFT_RIGHT_PADDING	= 5;
+
+	private final static int	REGISTER_HEIGHT						= 20;
+	private final static int	REGISTER_MIN_WIDTH					= 90;
+	private final static int	REGISTER_SPACING					= 50;
+	private final static int	REGISTER_TEXT_LEFT_RIGHT_PADDING	= 5;
 
 	public RegisterShape(FontMetricsProvider fontProvider) {
 		super(fontProvider);

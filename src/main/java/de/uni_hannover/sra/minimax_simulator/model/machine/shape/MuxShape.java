@@ -7,13 +7,13 @@ import de.uni_hannover.sra.minimax_simulator.layout.Insets;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Multiplexer;
 
 public class MuxShape implements ComponentShape {
-	// TODO: really public?
-	public final static int	MUX_WIDTH			= 20;
-	public final static int	MUX_HEIGHT_PER_PIN	= 18;
-	public final static int	MUX_CORNER_HEIGHT	= 20;
-	public final static int	MUX_CORNER_SPACING	= 10;
 
-	public final static int	MUX_SPACING			= 15;
+	private final static int	MUX_WIDTH			= 20;
+	public final static int		MUX_HEIGHT_PER_PIN	= 18;
+	private final static int	MUX_CORNER_HEIGHT	= 20;
+	public final static int		MUX_CORNER_SPACING	= 10;
+
+	private final static int	MUX_SPACING			= 15;
 
 	private final Insets	_insets				= new Insets(MUX_SPACING, MUX_SPACING, 0, 0);
 
