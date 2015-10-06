@@ -35,13 +35,12 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 * success, the current project, if existing, is discarded. <br>
 	 * <br>
 	 * Then all {@link WorkspaceListener}s are notified via their
-	 * {@link WorkspaceListener#projectOpened()} method. <br>
+	 * {@link WorkspaceListener#onProjectOpened(Project)} method. <br>
 	 * <br>
 	 * This method does not check if the current project has unsaved data.
 	 * 
 	 * @param file
 	 * @throws ProjectImportException
-	 * @throws Exception
 	 */
 	public void openProject(File file) throws ProjectImportException {
 		if (_currentProject != null) {
@@ -61,12 +60,9 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 * Closes the current project and sets it to <code>null</code>. <br>
 	 * <br>
 	 * Then all {@link WorkspaceListener}s are notified via their
-	 * {@link WorkspaceListener#projectClosed()} method. <br>
+	 * {@link WorkspaceListener#onProjectOpened(Project)} method. <br>
 	 * <br>
 	 * Discards any unsaved project data.
-	 * 
-	 * @param file
-	 * @throws Exception
 	 */
 	public void closeProject() {
 		Project oldProject = _currentProject;
@@ -85,11 +81,10 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 * for following {@link #getLastProjectFolder()} calls. <br>
 	 * <br>
 	 * Then all {@link WorkspaceListener}s are notified via their
-	 * {@link WorkspaceListener#projectSaved()} method.
+	 * {@link WorkspaceListener#onProjectSaved(Project)} method.
 	 * 
 	 * @param file
 	 * @throws ProjectExportException
-	 * @throws Exception
 	 */
 	public void saveProject(File file) throws ProjectExportException {
 		new ProjectZipExporter(file).exportProject(_currentProject);
@@ -106,7 +101,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 * Creates a new project. <br>
 	 * <br>
 	 * Then all {@link WorkspaceListener}s are notified via their
-	 * {@link WorkspaceListener#projectOpened()} method. <br>
+	 * {@link WorkspaceListener#onProjectOpened(Project)} method. <br>
 	 * <br>
 	 * Discards any unsaved data.
 	 */

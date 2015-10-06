@@ -109,7 +109,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
     }
 
     /**
-     * Creates an {@link ObservableList<String>} from a {@link SignalRow} to add to the signal table {@link TableView}.
+     * Creates an {@link ObservableList} from a {@link SignalRow} to add to the signal table {@link TableView}.
      *
      * @param index
      *          the index of the row to create

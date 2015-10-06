@@ -23,9 +23,9 @@ import javax.swing.plaf.basic.BasicLabelUI;
  * <P>
  * Extends {@link BasicLabelUI}.
  * <P>
- * The only difference between the appearance of labels in the Basic and Metal L&Fs is the manner in
+ * The only difference between the appearance of labels in the Basic and Metal L&amp;Fs is the manner in
  * which diabled text is painted. As VerticalLabelUI does not override the method paintDisabledText,
- * this class can be adapted for Metal L&F by extending MetalLabelUI instead of BasicLabelUI.
+ * this class can be adapted for Metal L&amp;F by extending MetalLabelUI instead of BasicLabelUI.
  * <P>
  * No other changes are required.
  * 
