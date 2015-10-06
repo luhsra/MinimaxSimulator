@@ -1,10 +1,10 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.base.display;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
+import com.sun.javafx.tk.FontMetrics;
+import javafx.scene.text.Font;
 
-public interface FontMetricsProvider
-{
+public interface FontMetricsProvider {
+
 	public Font getFont();
 
 	public FontMetrics getFontMetrics();

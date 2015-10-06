@@ -5,36 +5,32 @@ import de.uni_hannover.sra.minimax_simulator.layout.ComponentShape;
 import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.layout.Insets;
 
-public class FixedShape implements ComponentShape
-{
+public class FixedShape implements ComponentShape {
+
 	private final Dimension _dimension;
 	private final Insets _insets;
 
-	public FixedShape(Dimension dim, Insets insets)
-	{
+	public FixedShape(Dimension dim, Insets insets) {
 		_dimension = dim;
 		_insets = insets;
 	}
 
-	public FixedShape(Dimension dim)
-	{
+	public FixedShape(Dimension dim) {
 		this(dim, new Insets(0, 0, 0, 0));
 	}
 
-	public FixedShape(int w, int h)
-	{
+	public FixedShape(int w, int h) {
 		this(new Dimension(w, h));
 	}
 
 	@Override
-	public void updateShape(Component component)
-	{
+	public void updateShape(Component component) {
 		component.setDimension(_dimension);
 		component.setInsets(_insets);
 	}
 
 	@Override
-	public void layout(Component component)
-	{
+	public void layout(Component component) {
+
 	}
 }

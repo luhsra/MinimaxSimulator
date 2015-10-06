@@ -14,7 +14,6 @@ import javax.swing.JPanel;
  *
  * @author Martin L&uuml;ck
  */
-// TODO: is this still needed due to the use of the toolkit font metrics class?
 public class DummyRenderEnvironment implements RenderEnvironment {
 
 	private final Font _font;

@@ -6,16 +6,14 @@ import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.SignExtension;
 
-public class SignExtShape extends TextRenderShape
-{
-	public SignExtShape(FontMetricsProvider fontProvider)
-	{
+public class SignExtShape extends TextRenderShape {
+
+	public SignExtShape(FontMetricsProvider fontProvider) {
 		super(fontProvider);
 	}
 
 	@Override
-	public void updateShape(Component component)
-	{
+	public void updateShape(Component component) {
 		SignExtension s = (SignExtension) component;
 
 		Dimension dim = getStringDimension(s.getLabel());
@@ -23,8 +21,7 @@ public class SignExtShape extends TextRenderShape
 	}
 
 	@Override
-	public void layout(Component component)
-	{
+	public void layout(Component component) {
 		SignExtension s = (SignExtension) component;
 
 		Bounds b = s.getBounds();

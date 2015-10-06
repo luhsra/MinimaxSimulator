@@ -6,16 +6,14 @@ import de.uni_hannover.sra.minimax_simulator.layout.Insets;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Label;
 
-public class CuLabelShape extends LabelShape
-{
-	public CuLabelShape(FontMetricsProvider fontProvider)
-	{
+public class CuLabelShape extends LabelShape {
+
+	public CuLabelShape(FontMetricsProvider fontProvider) {
 		super(fontProvider);
 	}
 
 	@Override
-	public void updateShape(Component component)
-	{
+	public void updateShape(Component component) {
 		Label label = (Label) component;
 		Dimension textDim = getStringDimension(label.getMessage());
 
