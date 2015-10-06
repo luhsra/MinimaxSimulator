@@ -6,6 +6,11 @@ import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Register;
 
+/**
+ * The shape of a register component.
+ *
+ * @author Martin L&uuml;ck
+ */
 public class RegisterShape extends TextRenderShape {
 
 	private final static int	REGISTER_HEIGHT						= 20;

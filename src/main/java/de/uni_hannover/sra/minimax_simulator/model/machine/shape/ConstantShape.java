@@ -4,6 +4,11 @@ import de.uni_hannover.sra.minimax_simulator.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Constant;
 
+/**
+ * The shape for a constant (multiplexer input).
+ *
+ * @author Martin L&uuml;ck
+ */
 public class ConstantShape extends TextRenderShape {
 
 	public ConstantShape(FontMetricsProvider fontProvider) {

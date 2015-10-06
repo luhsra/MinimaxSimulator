@@ -6,6 +6,11 @@ import de.uni_hannover.sra.minimax_simulator.layout.Insets;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Label;
 
+/**
+ * The shape of the control unit (CU).
+ *
+ * @author Martin L&uuml;ck
+ */
 public class CuLabelShape extends LabelShape {
 
 	public CuLabelShape(FontMetricsProvider fontProvider) {

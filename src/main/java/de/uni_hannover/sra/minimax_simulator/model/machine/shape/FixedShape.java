@@ -5,6 +5,11 @@ import de.uni_hannover.sra.minimax_simulator.layout.ComponentShape;
 import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.layout.Insets;
 
+/**
+ * A {@link ComponentShape} with a fixed size.
+ *
+ * @author Martin L&uuml;ck
+ */
 public class FixedShape implements ComponentShape {
 
 	private final Dimension _dimension;
