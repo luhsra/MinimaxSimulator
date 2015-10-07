@@ -4,11 +4,16 @@ Minimax Simulator
 Minimax Simulator is a platform independent GUI-based Minimax simulator written in Java.
 
 **Content:**
+- [System Requirements](#system-requirements)
 - [Compiling from Source](#compiling-source)
 - [Found an Issue or Bug?](#bug)
 - [Requesting a Feature?](#feature)
 - [Change Log](#changelog)
 - [License](#license)
+
+<a name="system-requirements"></a> System Requirements
+------------------------------------------------------
+* JRE 8u40 or higher
 
 <a name="compiling-source"></a> Compiling from Source
 ------------------------------------------------------
