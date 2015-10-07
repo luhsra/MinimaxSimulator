@@ -9,6 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.PropertyResourceControl;
 import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import javafx.application.HostServices;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -64,6 +65,13 @@ public class Main extends javafx.application.Application {
         setupLogger();
 
         _log.info("Starting version " + _version.getVersionNumber());
+
+        // check if Java 8u40 or higher is available
+        if (_version.isJvmLower(1, 8, 0, 40)) {
+            String jvmVersion = _version.getJvmMajor() + "." + _version.getJvmFeature() + "." + _version.getJvmUpdate() + "_" + _version.getJvmBuild();
+            _log.severe("Java 1.8.0_40 or higher needed but found " + jvmVersion);
+            System.exit(-1);
+        }
 
         // Initialize config, read from file if existing
         try {
