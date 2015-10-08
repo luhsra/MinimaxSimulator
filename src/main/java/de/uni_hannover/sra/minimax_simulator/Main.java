@@ -116,7 +116,7 @@ public class Main extends javafx.application.Application {
         _primaryStage.getIcons().add(new Image("images/nuvola/cpu.png"));
         _primaryStage.getIcons().add(new Image("images/nuvola/cpu-big.png"));
 
-        _primaryStage.setResizable(false);
+        _primaryStage.setResizable(true);
         _primaryStage.show();
     }
 

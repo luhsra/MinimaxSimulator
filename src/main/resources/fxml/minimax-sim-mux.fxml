@@ -1,225 +1,244 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.sra.minimax_simulator.gui.MuxView">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40"
+          fx:controller="de.uni_hannover.sra.minimax_simulator.gui.MuxView">
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" minWidth="447.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="285.0"/>
+        <ColumnConstraints hgrow="NEVER" minWidth="447.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
     <children>
-        <TitledPane fx:id="paneMuxA" animated="false" collapsible="false" prefHeight="590.0" prefWidth="450.0" text="Mux A">
+        <TitledPane fx:id="paneMuxA" animated="false" collapsible="false" prefHeight="590.0" prefWidth="450.0"
+                    text="Mux A">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="470.0">
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.0" minWidth="10.0" prefWidth="333.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="50.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="478.0" minHeight="10.0" prefHeight="478.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="258.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
                     <children>
-                        <GridPane prefHeight="548.0" prefWidth="415.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.0" minWidth="10.0" prefWidth="333.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="50.0"/>
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints maxHeight="478.0" minHeight="10.0" prefHeight="478.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="258.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
+                        <TableView fx:id="tableMuxA" prefHeight="548.0" prefWidth="472.0">
+                            <columns>
+                                <TableColumn fx:id="col_mux_a_code" prefWidth="90.0" resizable="false" text=""/>
+                                <TableColumn fx:id="col_mux_a_source" prefWidth="135.0" resizable="false" text=""/>
+                                <TableColumn fx:id="col_mux_a_extended" prefWidth="120.0" resizable="false" text=""/>
+                            </columns>
+                        </TableView>
+                        <VBox maxHeight="50.0" prefHeight="100.0" prefWidth="80.0" spacing="15.0"
+                              GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <padding>
+                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                            </padding>
                             <children>
-                                <TableView fx:id="tableMuxA" prefHeight="548.0" prefWidth="472.0">
-                                    <columns>
-                                        <TableColumn fx:id="col_mux_a_code" prefWidth="90.0" resizable="false" text=""/>
-                                        <TableColumn fx:id="col_mux_a_source" prefWidth="135.0" resizable="false" text=""/>
-                                        <TableColumn fx:id="col_mux_a_extended" prefWidth="120.0" resizable="false" text=""/>
-                                    </columns>
-                                </TableView>
-                                <VBox maxHeight="50.0" prefHeight="100.0" prefWidth="80.0" spacing="15.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <padding>
-                                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
-                                    </padding>
-                                    <children>
-                                        <Button fx:id="btnMoveUpMuxA" mnemonicParsing="false" onAction="#moveSource" text="" disable="true">
-                                            <graphic>
-                                                <ImageView>
-                                                    <Image url="/images/fugue/arrow-090.png"/>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
-                                        <Button fx:id="btnMoveDownMuxA" mnemonicParsing="false" onAction="#moveSource" text="" disable="true">
-                                            <graphic>
-                                                <ImageView>
-                                                    <Image url="/images/fugue/arrow-270.png"/>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
-                                    </children>
-                                </VBox>
-                                <GridPane GridPane.rowIndex="1">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                    </rowConstraints>
-                                    <children>
-                                        <Button id="add_label" fx:id="btnNewMuxA" mnemonicParsing="false" text="Neu" GridPane.halignment="CENTER" onAction="#addSourceToA">
-                                            <graphic>
-                                                <ImageView>
-                                                    <Image url="/images/fugue/node-insert-next2.png"/>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
-                                        <Button id="remove_label" fx:id="btnRemoveMuxA" mnemonicParsing="false" text="Löschen" GridPane.columnIndex="1" GridPane.halignment="CENTER" onAction="#deleteSourceFromA" disable="true">
-                                            <graphic>
-                                                <ImageView>
-                                                    <Image url="/images/fugue/cross.png"/>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
-                                    </children>
-                                </GridPane>
-                            </children>
-                        </GridPane>
-                    </children>
-                </AnchorPane>
-            </content>
-            <padding>
-                <Insets left="15.0" top="15.0"/>
-            </padding>
-            <HBox.margin>
-                <Insets bottom="15.0"/>
-            </HBox.margin>
-        </TitledPane>
-        <TitledPane id="source-editor_title" fx:id="paneSelectedConnection" animated="false" collapsible="false" minWidth="230.0" prefHeight="590.0" prefWidth="275.0" text="Ausgewählter Anschluss">
-            <content>
-                <AnchorPane>
-                    <children>
-                        <VBox prefHeight="548.0" prefWidth="233.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <children>
-                                <RadioButton id="radio_register" fx:id="radioRegister" mnemonicParsing="false" text="Register" disable="true"/>
-                                <ComboBox fx:id="cbRegister" prefWidth="233.0" disable="true">
-                                    <VBox.margin>
-                                        <Insets top="10.0"/>
-                                    </VBox.margin>
-                                </ComboBox>
-                                <RadioButton id="radio_constant" fx:id="radioConstant" mnemonicParsing="false" text="RadioButton" disable="true">
-                                    <VBox.margin>
-                                        <Insets top="25.0"/>
-                                    </VBox.margin>
-                                </RadioButton>
-                                <GridPane>
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                    </rowConstraints>
-                                    <VBox.margin>
-                                        <Insets top="10.0"/>
-                                    </VBox.margin>
-                                    <children>
-                                        <Label id="input.decimal" fx:id="lblDec" text="Label" disable="true"/>
-                                        <Label id="input.hexadecimal" fx:id="lblHex" text="Label" GridPane.rowIndex="1" disable="true"/>
-                                        <Spinner fx:id="spinnerDec" GridPane.columnIndex="1" disable="true" editable="true" />
-                                        <Spinner fx:id="spinnerHex" GridPane.columnIndex="1" GridPane.rowIndex="1" disable="true" editable="true" />
-                                        <Button id="save_label" fx:id="btnSave" mnemonicParsing="false" prefWidth="200.0" text="Button" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" onAction="#updateMuxInput" disable="true">
-                                            <graphic>
-                                                <ImageView>
-                                                    <Image url="/images/fugue/disk-black.png"/>
-                                                </ImageView>
-                                            </graphic>
-                                            <GridPane.margin>
-                                                <Insets top="80.0"/>
-                                            </GridPane.margin>
-                                        </Button>
-                                    </children>
-                                </GridPane>
+                                <Button fx:id="btnMoveUpMuxA" disable="true" mnemonicParsing="false"
+                                        onAction="#moveSource" text="">
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="/images/fugue/arrow-090.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnMoveDownMuxA" disable="true" mnemonicParsing="false"
+                                        onAction="#moveSource" text="">
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="/images/fugue/arrow-270.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
                             </children>
                         </VBox>
-                    </children>
-                </AnchorPane>
-            </content>
-            <padding>
-                <Insets left="15.0" top="15.0"/>
-            </padding>
-        </TitledPane>
-        <TitledPane fx:id="paneMuxB" animated="false" collapsible="false" prefHeight="590.0" prefWidth="450.0" text="Mux B">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="470.0">
-                    <children>
-                        <GridPane prefHeight="548.0" prefWidth="415.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <GridPane GridPane.rowIndex="1">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="50.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.0" minWidth="10.0" prefWidth="333.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0"
+                                                   prefWidth="100.0"/>
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints maxHeight="478.0" minHeight="10.0" prefHeight="478.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="258.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
                             </rowConstraints>
                             <children>
-                                <TableView fx:id="tableMuxB" prefHeight="548.0" prefWidth="472.0" GridPane.columnIndex="1">
-                                    <columns>
-                                        <TableColumn fx:id="col_mux_b_code" prefWidth="90.0" resizable="false" text=""/>
-                                        <TableColumn fx:id="col_mux_b_source" prefWidth="135.0" resizable="false" text=""/>
-                                        <TableColumn fx:id="col_mux_b_extended" prefWidth="120.0" resizable="false" text=""/>
-                                    </columns>
-                                </TableView>
-                                <VBox maxHeight="50.0" prefHeight="100.0" prefWidth="80.0" spacing="15.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <opaqueInsets>
-                                        <Insets/>
-                                    </opaqueInsets>
-                                    <padding>
-                                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
-                                    </padding>
-                                    <children>
-                                        <Button fx:id="btnMoveUpMuxB" mnemonicParsing="false" onAction="#moveSource" text="" disable="true">
-                                            <graphic>
-                                                <ImageView>
-                                                    <Image url="/images/fugue/arrow-090.png"/>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
-                                        <Button fx:id="btnMoveDownMuxB" mnemonicParsing="false" onAction="#moveSource" text="" disable="true">
-                                            <graphic>
-                                                <ImageView>
-                                                    <Image url="/images/fugue/arrow-270.png"/>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
-                                    </children>
-                                </VBox>
-                                <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                    </rowConstraints>
-                                    <children>
-                                        <Button id="add_label" fx:id="btnNewMuxB" mnemonicParsing="false" text="Neu" GridPane.halignment="CENTER" onAction="#addSourceToB">
-                                            <graphic>
-                                                <ImageView>
-                                                    <Image url="/images/fugue/node-insert-next2.png"/>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
-                                        <Button id="remove_label" fx:id="btnRemoveMuxB" mnemonicParsing="false" text="Löschen" GridPane.columnIndex="1" GridPane.halignment="CENTER" onAction="#deleteSourceFromB" disable="true">
-                                            <graphic>
-                                                <ImageView>
-                                                    <Image url="/images/fugue/cross.png"/>
-                                                </ImageView>
-                                            </graphic>
-                                        </Button>
-                                    </children>
-                                </GridPane>
+                                <Button id="add_label" fx:id="btnNewMuxA" mnemonicParsing="false"
+                                        onAction="#addSourceToA" text="Neu" GridPane.halignment="CENTER">
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="/images/fugue/node-insert-next2.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button id="remove_label" fx:id="btnRemoveMuxA" disable="true" mnemonicParsing="false"
+                                        onAction="#deleteSourceFromA" text="Löschen" GridPane.columnIndex="1"
+                                        GridPane.halignment="CENTER">
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="/images/fugue/cross.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
                             </children>
                         </GridPane>
                     </children>
-                </AnchorPane>
+                </GridPane>
             </content>
             <padding>
-                <Insets left="15.0" top="15.0"/>
+                <Insets bottom="15.0" left="15.0" top="15.0"/>
+            </padding>
+        </TitledPane>
+        <TitledPane id="source-editor_title" fx:id="paneSelectedConnection" animated="false" collapsible="false"
+                    minWidth="230.0" prefHeight="590.0" prefWidth="275.0" text="Ausgewählter Anschluss"
+                    GridPane.columnIndex="1">
+            <content>
+                <VBox>
+                    <children>
+                        <RadioButton id="radio_register" fx:id="radioRegister" disable="true" mnemonicParsing="false"
+                                     text="Register"/>
+                        <ComboBox fx:id="cbRegister" disable="true" prefWidth="233.0" maxWidth="1000.0">
+                            <VBox.margin>
+                                <Insets top="10.0"/>
+                            </VBox.margin>
+                        </ComboBox>
+                        <RadioButton id="radio_constant" fx:id="radioConstant" disable="true" mnemonicParsing="false"
+                                     text="RadioButton">
+                            <VBox.margin>
+                                <Insets top="25.0"/>
+                            </VBox.margin>
+                        </RadioButton>
+                        <GridPane>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0"
+                                                   prefWidth="100.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <VBox.margin>
+                                <Insets top="10.0"/>
+                            </VBox.margin>
+                            <children>
+                                <Label id="input.decimal" fx:id="lblDec" disable="true" text="Label"/>
+                                <Label id="input.hexadecimal" fx:id="lblHex" disable="true" text="Label"
+                                       GridPane.rowIndex="1"/>
+                                <Spinner fx:id="spinnerDec" disable="true" editable="true" GridPane.columnIndex="1"/>
+                                <Spinner fx:id="spinnerHex" disable="true" editable="true" GridPane.columnIndex="1"
+                                         GridPane.rowIndex="1"/>
+                                <Button id="save_label" fx:id="btnSave" disable="true" mnemonicParsing="false"
+                                        onAction="#updateMuxInput" prefWidth="200.0" text="Button"
+                                        GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="/images/fugue/disk-black.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                    <GridPane.margin>
+                                        <Insets top="80.0"/>
+                                    </GridPane.margin>
+                                </Button>
+                            </children>
+                        </GridPane>
+                    </children>
+                </VBox>
+            </content>
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            </padding>
+        </TitledPane>
+        <TitledPane fx:id="paneMuxB" animated="false" collapsible="false" prefHeight="590.0" prefWidth="450.0"
+                    text="Mux B" GridPane.columnIndex="2">
+            <content>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="50.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.0" minWidth="10.0" prefWidth="333.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="478.0" minHeight="10.0" prefHeight="478.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="258.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <TableView fx:id="tableMuxB" prefHeight="548.0" prefWidth="472.0" GridPane.columnIndex="1">
+                            <columns>
+                                <TableColumn fx:id="col_mux_b_code" prefWidth="90.0" resizable="false" text=""/>
+                                <TableColumn fx:id="col_mux_b_source" prefWidth="135.0" resizable="false" text=""/>
+                                <TableColumn fx:id="col_mux_b_extended" prefWidth="120.0" resizable="false" text=""/>
+                            </columns>
+                        </TableView>
+                        <VBox maxHeight="50.0" prefHeight="100.0" prefWidth="80.0" spacing="15.0"
+                              GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
+                            <padding>
+                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                            </padding>
+                            <children>
+                                <Button fx:id="btnMoveUpMuxB" disable="true" mnemonicParsing="false"
+                                        onAction="#moveSource" text="">
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="/images/fugue/arrow-090.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnMoveDownMuxB" disable="true" mnemonicParsing="false"
+                                        onAction="#moveSource" text="">
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="/images/fugue/arrow-270.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0"
+                                                   prefWidth="100.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <Button id="add_label" fx:id="btnNewMuxB" mnemonicParsing="false"
+                                        onAction="#addSourceToB" text="Neu" GridPane.halignment="CENTER">
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="/images/fugue/node-insert-next2.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button id="remove_label" fx:id="btnRemoveMuxB" disable="true" mnemonicParsing="false"
+                                        onAction="#deleteSourceFromB" text="Löschen" GridPane.columnIndex="1"
+                                        GridPane.halignment="CENTER">
+                                    <graphic>
+                                        <ImageView>
+                                            <Image url="/images/fugue/cross.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </GridPane>
+                    </children>
+                </GridPane>
+            </content>
+            <padding>
+                <Insets bottom="15.0" right="15.0" top="15.0"/>
             </padding>
         </TitledPane>
     </children>
-</HBox>
+</GridPane>

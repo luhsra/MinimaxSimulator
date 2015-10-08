@@ -1,82 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.sra.minimax_simulator.gui.SignalView">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40"
+          fx:controller="de.uni_hannover.sra.minimax_simulator.gui.SignalView">
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" percentWidth="-1"/>
+        <ColumnConstraints hgrow="NEVER" maxWidth="90" minWidth="90" prefWidth="90"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
     <children>
-      <TableView fx:id="signaltable" maxHeight="620.0" maxWidth="1050.0" prefHeight="200.0" prefWidth="1050.0">
-        <columns>
-            <TableColumn id="col_breakpoint" fx:id="col_breakpoint" editable="false" prefWidth="35.0" resizable="false" sortable="false" text="" />
-            <TableColumn id="col_label" fx:id="col_label" editable="true" prefWidth="100.0" sortable="false" text="" />
-            <TableColumn id="col_address" fx:id="col_address" editable="false" prefWidth="40.0" sortable="false" text="" />
-            <TableColumn id="col_aluselA" fx:id="col_alusel_a" editable="false" prefWidth="50.0" sortable="false" text="" />
-            <TableColumn id="col_aluselB" fx:id="col_alusel_b" editable="true" prefWidth="50.0" sortable="false" text="" />
-            <TableColumn id="col_mdrsel" fx:id="col_mdrsel" editable="false" prefWidth="50.0" sortable="false" text="" />
-            <TableColumn id="col_memcs" fx:id="col_memcs" editable="false" prefWidth="50.0" sortable="false" text="" />
-            <TableColumn id="col_memrw" fx:id="col_memrw" editable="false" prefWidth="50.0" sortable="false" text="" />
-            <TableColumn id="col_aluctrl" fx:id="col_aluctrl" editable="false" prefWidth="50.0" sortable="false" text="" />
-            <TableColumn editable="false" prefWidth="50.0" sortable="false" text="PC.W" />
-            <TableColumn editable="false" prefWidth="50.0" sortable="false" text="IR.W" />
-            <TableColumn editable="false" prefWidth="50.0" sortable="false" text="MDR.W" />
-            <TableColumn editable="false" prefWidth="50.0" sortable="false" text="MAR.W" />
-            <TableColumn editable="false" prefWidth="50.0" sortable="false" text="ACCU.W" />
-            <TableColumn id="col_condition" fx:id="col_condition" editable="false" prefWidth="50.0" sortable="false" text="" />
-            <TableColumn id="col_jumptarget" fx:id="col_jumptarget" editable="false" prefWidth="50.0" sortable="false" text="" />
-            <TableColumn id="col_description" fx:id="col_description" editable="false" prefWidth="150.0" sortable="false" text="" />
-        </columns>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <HBox.margin>
-            <Insets bottom="10.0" left="15.0" top="10.0" />
-         </HBox.margin>
-      </TableView>
-        <VBox prefHeight="640.0" prefWidth="120.0" spacing="15.0">
-            <opaqueInsets>
-                <Insets />
-            </opaqueInsets>
-            <padding>
-                <Insets bottom="15.0" left="30.0" right="15.0" top="15.0" />
-            </padding>
-         <children>
-            <Button mnemonicParsing="false" text="" onAction="#addRow">
-               <VBox.margin>
-                  <Insets top="220.0" />
-               </VBox.margin>
-                <graphic>
-                    <ImageView>
-                        <Image url="/images/fugue/plus-button.png"/>
-                    </ImageView>
-                </graphic>
-            </Button>
-            <Button mnemonicParsing="false" text="" onAction="#deleteRow">
-                <graphic>
-                    <ImageView>
-                        <Image url="/images/fugue/cross.png"/>
-                    </ImageView>
-                </graphic>
-            </Button>
-            <Button fx:id="btnMoveUp" mnemonicParsing="false" text="" onAction="#moveOperation" disable="true">
-                <graphic>
-                    <ImageView>
-                        <Image url="/images/fugue/arrow-090.png"/>
-                    </ImageView>
-                </graphic>
-            </Button>
-            <Button fx:id="btnMoveDown" mnemonicParsing="false" text="" onAction="#moveOperation" disable="true">
-                <graphic>
-                    <ImageView>
-                        <Image url="/images/fugue/arrow-270.png"/>
-                    </ImageView>
-                </graphic>
-            </Button>
-         </children>
-        </VBox>
+        <TableView fx:id="signaltable" prefHeight="200.0" prefWidth="1050.0" GridPane.halignment="CENTER"
+                   GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+            <columns>
+                <TableColumn id="col_breakpoint" fx:id="col_breakpoint" editable="false" prefWidth="35.0"
+                             resizable="false" sortable="false" text=""/>
+                <TableColumn id="col_label" fx:id="col_label" editable="true" prefWidth="100.0" sortable="false"
+                             text=""/>
+                <TableColumn id="col_address" fx:id="col_address" editable="false" prefWidth="40.0" sortable="false"
+                             text=""/>
+                <TableColumn id="col_aluselA" fx:id="col_alusel_a" editable="false" prefWidth="50.0" sortable="false"
+                             text=""/>
+                <TableColumn id="col_aluselB" fx:id="col_alusel_b" editable="true" prefWidth="50.0" sortable="false"
+                             text=""/>
+                <TableColumn id="col_mdrsel" fx:id="col_mdrsel" editable="false" prefWidth="50.0" sortable="false"
+                             text=""/>
+                <TableColumn id="col_memcs" fx:id="col_memcs" editable="false" prefWidth="50.0" sortable="false"
+                             text=""/>
+                <TableColumn id="col_memrw" fx:id="col_memrw" editable="false" prefWidth="50.0" sortable="false"
+                             text=""/>
+                <TableColumn id="col_aluctrl" fx:id="col_aluctrl" editable="false" prefWidth="50.0" sortable="false"
+                             text=""/>
+                <TableColumn editable="false" prefWidth="50.0" sortable="false" text="PC.W"/>
+                <TableColumn editable="false" prefWidth="50.0" sortable="false" text="IR.W"/>
+                <TableColumn editable="false" prefWidth="50.0" sortable="false" text="MDR.W"/>
+                <TableColumn editable="false" prefWidth="50.0" sortable="false" text="MAR.W"/>
+                <TableColumn editable="false" prefWidth="50.0" sortable="false" text="ACCU.W"/>
+                <TableColumn id="col_condition" fx:id="col_condition" editable="false" prefWidth="50.0" sortable="false"
+                             text=""/>
+                <TableColumn id="col_jumptarget" fx:id="col_jumptarget" editable="false" prefWidth="50.0"
+                             sortable="false" text=""/>
+                <TableColumn id="col_description" fx:id="col_description" editable="false" prefWidth="150.0"
+                             sortable="false" text=""/>
+            </columns>
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </GridPane.margin>
+        </TableView>
+        <GridPane GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" percentWidth="100"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" percentHeight="-1" prefHeight="30.0" vgrow="ALWAYS"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER"/>
+                <RowConstraints minHeight="10.0" percentHeight="-1" prefHeight="30.0" vgrow="ALWAYS"/>
+            </rowConstraints>
+            <children>
+                <VBox prefWidth="120" spacing="15.0" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                      GridPane.valignment="CENTER">
+                    <padding>
+                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0"/>
+                    </padding>
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#addRow" text="">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="/images/fugue/plus-button.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#deleteRow" text="">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="/images/fugue/cross.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btnMoveUp" disable="true" mnemonicParsing="false" onAction="#moveOperation"
+                                text="">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="/images/fugue/arrow-090.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btnMoveDown" disable="true" mnemonicParsing="false" onAction="#moveOperation"
+                                text="">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="/images/fugue/arrow-270.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </GridPane>
     </children>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
-</HBox>
+</GridPane>

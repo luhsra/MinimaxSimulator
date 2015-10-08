@@ -1,76 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import de.uni_hannover.sra.minimax_simulator.gui.components.PTableColumn?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<TitledPane id="memtable_title" fx:id="paneMemory" animated="false" collapsible="false" prefHeight="440.0" prefWidth="600.0" text="Speicher" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.sra.minimax_simulator.gui.MemoryTable">
+<TitledPane xmlns:fx="http://javafx.com/fxml/1" id="memtable_title" fx:id="paneMemory" animated="false" collapsible="false"
+            prefWidth="600.0" text="Speicher" xmlns="http://javafx.com/javafx/8.0.40"
+            fx:controller="de.uni_hannover.sra.minimax_simulator.gui.MemoryTable">
     <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="286.0">
+        <GridPane prefWidth="583.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="336.0" prefHeight="336.0" vgrow="NEVER"/>
+            </rowConstraints>
             <children>
-                <VBox layoutX="149.0" layoutY="100.0" prefHeight="472.0" prefWidth="583.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <children>
-                        <GridPane>
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0"/>
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
-                            <children>
-                                <Button fx:id="btnFirstPage" mnemonicParsing="false" onAction="#firstPage" text="" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <graphic>
-                                        <ImageView>
-                                            <Image url="/images/fugue/skip-left.png"/>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button fx:id="btnPrevPage" mnemonicParsing="false" onAction="#prevPage" text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <graphic>
-                                        <ImageView>
-                                            <Image url="/images/fugue/step-left.png"/>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button fx:id="btnNextPage" mnemonicParsing="false" onAction="#nextPage" text="" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <graphic>
-                                        <ImageView>
-                                            <Image url="/images/fugue/step-right.png"/>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button fx:id="btnLastPage" mnemonicParsing="false" onAction="#lastPage" text="" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                    <graphic>
-                                        <ImageView>
-                                            <Image url="/images/fugue/skip-right.png"/>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <TextField fx:id="txtAddressField" GridPane.columnIndex="2"/>
-                            </children>
-                            <padding>
-                                <Insets bottom="10.0" top="10.0"/>
-                            </padding>
-                        </GridPane>
-                        <TableView id="memtable" fx:id="memTable" prefHeight="316.0" prefWidth="558.0">
-                            <columns>
-                                <TableColumn id="memtable_address" fx:id="col_mem_adr" prefWidth="143.0" resizable="false" text="Adresse" sortable="false" />
-                                <TableColumn id="memtable_dec" fx:id="col_mem_dec" prefWidth="189.0" resizable="false" text="Dezimal" sortable="false"/>
-                                <TableColumn id="memtable_hex" fx:id="col_mem_hex" prefWidth="229.0" resizable="false" text="Hexadezimal" sortable="false"/>
-                            </columns>
-                        </TableView>
-                    </children>
-                </VBox>
+                <Button fx:id="btnFirstPage" mnemonicParsing="false" onAction="#firstPage" text=""
+                        GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <graphic>
+                        <ImageView>
+                            <Image url="/images/fugue/skip-left.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnPrevPage" mnemonicParsing="false" onAction="#prevPage" text=""
+                        GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <graphic>
+                        <ImageView>
+                            <Image url="/images/fugue/step-left.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnNextPage" mnemonicParsing="false" onAction="#nextPage" text=""
+                        GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <graphic>
+                        <ImageView>
+                            <Image url="/images/fugue/step-right.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnLastPage" mnemonicParsing="false" onAction="#lastPage" text=""
+                        GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <graphic>
+                        <ImageView>
+                            <Image url="/images/fugue/skip-right.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <TextField fx:id="txtAddressField" GridPane.columnIndex="2"/>
+                <TableView id="memtable" fx:id="memTable" minHeight="300.0" minWidth="200.0" prefHeight="316.0"
+                           prefWidth="561.0" GridPane.columnSpan="5" GridPane.halignment="CENTER"
+                           GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                    <columns>
+                        <PTableColumn id="memtable_address" fx:id="col_mem_adr" percentageWidth="0.251"
+                                      prefWidth="143.0" resizable="false" sortable="false" text="Adresse"/>
+                        <PTableColumn id="memtable_dec" fx:id="col_mem_dec" percentageWidth="0.337" prefWidth="189.0"
+                                      resizable="false" sortable="false" text="Dezimal"/>
+                        <PTableColumn id="memtable_hex" fx:id="col_mem_hex" percentageWidth="0.408" prefWidth="229.0"
+                                      resizable="false" sortable="false" text="Hexadezimal"/>
+                    </columns>
+                    <GridPane.margin>
+                        <Insets bottom="10.0" top="10.0"/>
+                    </GridPane.margin>
+                </TableView>
             </children>
-        </AnchorPane>
+            <padding>
+                <Insets bottom="10.0" left="20" right="20" top="10.0"/>
+            </padding>
+        </GridPane>
     </content>
     <padding>
         <Insets left="15.0" top="15.0"/>
     </padding>
 </TitledPane>
-

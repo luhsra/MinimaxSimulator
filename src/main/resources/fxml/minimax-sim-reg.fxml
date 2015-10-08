@@ -1,182 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import de.uni_hannover.sra.minimax_simulator.gui.components.PTableColumn?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uni_hannover.sra.minimax_simulator.gui.RegView">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40"
+          fx:controller="de.uni_hannover.sra.minimax_simulator.gui.RegView">
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" minWidth="350.0"/>
+        <ColumnConstraints hgrow="NEVER" minWidth="30.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="-1"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
     <children>
-      <VBox>
-         <children>
-              <TitledPane id="basic_title" fx:id="paneBaseReg" animated="false" collapsible="false" prefHeight="184.0" prefWidth="350.0" text="Basis-Register">
-                  <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="135.0" prefWidth="320.0">
-                          <children>
-                                <TableView fx:id="tableBaseReg" prefHeight="134.0" prefWidth="333.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <columns>
-                                        <TableColumn fx:id="col_base_name" maxWidth="500.0" prefWidth="221.0" resizable="false" text="RegName" />
-                                        <TableColumn fx:id="col_base_size" prefWidth="90.0" resizable="false" text="Size" />
-                                    </columns>
-                                </TableView>
-                          </children>
-                      </AnchorPane>
-                  </content>
-                  <padding>
-                      <Insets left="15.0" top="15.0" />
-                  </padding>
-               <HBox.margin>
-                  <Insets bottom="15.0" />
-               </HBox.margin>
-              </TitledPane>
-            <TitledPane id="extended_title" fx:id="paneExtendedReg" animated="false" collapsible="false" prefHeight="304.0" prefWidth="350.0" text="erweiterte Register">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="320.0">
-                     <children>
-                        <TableView fx:id="tableExtendedReg" prefHeight="254.0" prefWidth="333.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <columns>
-                              <TableColumn fx:id="col_extended_name" maxWidth="500.0" prefWidth="221.0" resizable="false" text="RegName" />
-                              <TableColumn fx:id="col_extended_size" prefWidth="90.0" resizable="false" text="Size" />
-                           </columns>
+        <VBox maxHeight="50.0" prefHeight="100.0" spacing="15.0" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+              GridPane.valignment="CENTER">
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <padding>
+                <Insets bottom="15.0" left="20.0" right="20.0" top="15.0"/>
+            </padding>
+            <children>
+                <Button fx:id="btnMoveUp" mnemonicParsing="false" onAction="#moveOperation" text="">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="/images/fugue/arrow-090.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnMoveDown" mnemonicParsing="false" onAction="#moveOperation" text="">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="/images/fugue/arrow-270.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+        </VBox>
+        <VBox>
+            <children>
+                <TitledPane id="basic_title" fx:id="paneBaseReg" animated="false" collapsible="false" prefHeight="184.0"
+                            prefWidth="350.0" text="Basis-Register">
+                    <content>
+                        <TableView fx:id="tableBaseReg" prefHeight="134.0" prefWidth="333.0">
+                            <columns>
+                                <PTableColumn fx:id="col_base_name" percentageWidth="0.71" prefWidth="221.0"
+                                              resizable="false" text="RegName"/>
+                                <PTableColumn fx:id="col_base_size" percentageWidth="0.286" prefWidth="90.0"
+                                              resizable="false" text="Size"/>
+                            </columns>
                         </TableView>
-                     </children>
-                  </AnchorPane>
-               </content>
-               <padding>
-                  <Insets left="15.0" top="15.0" />
-               </padding>
-            </TitledPane>
-            <GridPane>
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                   <Button id="add_label" fx:id="btnAdd" mnemonicParsing="false" text="Neu" GridPane.halignment="CENTER" GridPane.valignment="CENTER" onAction="#addRegister">
-                       <graphic>
-                           <ImageView>
-                               <image>
-                                   <Image url="/images/fugue/node-insert-next2.png" />
-                               </image>
-                           </ImageView>
-                       </graphic>
-                   </Button>
-                   <Button id="delete_label" fx:id="btnRemove" disable="true" mnemonicParsing="false" text="Löschen" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" onAction="#removeRegister">
-                       <graphic>
-                           <ImageView>
-                               <image>
-                                   <Image url="/images/fugue/cross.png" />
-                               </image>
-                           </ImageView>
-                       </graphic>
-                   </Button>
-               </children>
-               <VBox.margin>
-                  <Insets top="15.0" />
-               </VBox.margin>
-            </GridPane>
-         </children>
-      </VBox>
-      <GridPane>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-              <VBox maxHeight="50.0" prefHeight="100.0" prefWidth="100.0" spacing="15.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                  <opaqueInsets>
-                      <Insets />
-                  </opaqueInsets>
-                  <padding>
-                      <Insets bottom="15.0" left="30.0" right="15.0" top="15.0" />
-                  </padding>
-               <children>
-                  <Button fx:id="btnMoveUp" mnemonicParsing="false" onAction="#moveOperation" text="">
-                      <graphic>
-                          <ImageView>
-                             <image>
-                                 <Image url="/images/fugue/arrow-090.png" />
-                             </image>
-                          </ImageView>
-                      </graphic>
-                  </Button>
-                  <Button fx:id="btnMoveDown" mnemonicParsing="false" onAction="#moveOperation" text="">
-                      <graphic>
-                          <ImageView>
-                             <image>
-                                 <Image url="/images/fugue/arrow-270.png" />
-                             </image>
-                          </ImageView>
-                      </graphic>
-                  </Button>
-               </children>
-              </VBox>
-         </children>
-      </GridPane>
-      <TitledPane id="properties_title" fx:id="paneSelectedReg" animated="false" collapsible="false" prefHeight="590.0" prefWidth="430.0" text="Register-Eigenschaften">
-        <content>
-          <AnchorPane>
-               <children>
-                  <GridPane prefHeight="530.0" prefWidth="430.0">
+                    </content>
+                    <padding>
+                        <Insets left="15.0" top="15.0"/>
+                    </padding>
+                    <HBox.margin>
+                        <Insets bottom="15.0"/>
+                    </HBox.margin>
+                </TitledPane>
+                <TitledPane id="extended_title" fx:id="paneExtendedReg" animated="false" collapsible="false"
+                            prefWidth="350.0" text="erweiterte Register">
+                    <content>
+                        <TableView fx:id="tableExtendedReg" prefWidth="333.0">
+                            <columns>
+                                <PTableColumn fx:id="col_extended_name" percentageWidth="0.71" prefWidth="221.0"
+                                              resizable="false" text="RegName"/>
+                                <PTableColumn fx:id="col_extended_size" percentageWidth="0.225" prefWidth="90.0"
+                                              resizable="false" text="Size"/>
+                            </columns>
+                        </TableView>
+                    </content>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" top="15.0"/>
+                    </padding>
+                </TitledPane>
+                <GridPane>
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="151.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="443.0" minHeight="10.0" prefHeight="330.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="97.0" minHeight="0.0" prefHeight="48.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
-                     <children>
-                        <VBox spacing="5.0" GridPane.columnSpan="2">
-                           <children>
-                              <Label id="name_title" fx:id="lblName" text="Name" />
-                              <TextField id="reg_name" fx:id="txtName" editable="false" />
-                              <Label id="size_title" fx:id="lblSize" text="Größe">
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <ComboBox fx:id="cbSize" prefHeight="25.0" prefWidth="402.0" disable="true"/>
-                           </children>
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" top="10.0" />
-                           </GridPane.margin>
-                        </VBox>
-                        <VBox maxHeight="400.0" prefHeight="300.0" prefWidth="100.0" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" top="10.0" />
-                           </GridPane.margin>
-                           <children>
-                              <Label id="description_title" fx:id="lblDescription" text="Beschreibung" />
-                              <TextArea fx:id="txtDescription" editable="false" minWidth="300.0" prefHeight="300.0" prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                         <Button id="save_label" fx:id="btnSave" disable="true" mnemonicParsing="false" prefWidth="200.0" text="Button" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" onAction="#saveChanges">
-                             <graphic>
-                                 <ImageView>
+                    <children>
+                        <Button id="add_label" fx:id="btnAdd" mnemonicParsing="false" onAction="#addRegister" text="Neu"
+                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <graphic>
+                                <ImageView>
                                     <image>
-                                        <Image url="/images/fugue/disk-black.png" />
+                                        <Image url="/images/fugue/node-insert-next2.png"/>
                                     </image>
-                                 </ImageView>
-                             </graphic>
-                           <GridPane.margin>
-                              <Insets top="15.0" />
-                           </GridPane.margin>
-                         </Button>
-                     </children>
-                  </GridPane>
-               </children>
-            </AnchorPane>
-        </content>
-         <padding>
-            <Insets top="15.0" />
-         </padding>
-      </TitledPane>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button id="delete_label" fx:id="btnRemove" disable="true" mnemonicParsing="false"
+                                onAction="#removeRegister" text="Löschen" GridPane.columnIndex="1"
+                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <graphic>
+                                <ImageView>
+                                    <image>
+                                        <Image url="/images/fugue/cross.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="15.0"/>
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="15.0"/>
+                    </padding>
+                </GridPane>
+            </children>
+        </VBox>
+        <TitledPane id="properties_title" fx:id="paneSelectedReg" animated="false" collapsible="false" maxWidth="1500.0"
+                    prefHeight="590.0" text="Register-Eigenschaften" GridPane.columnIndex="2" GridPane.valignment="TOP">
+            <content>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="151.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="443.0" minHeight="10.0" prefHeight="330.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="97.0" minHeight="0.0" prefHeight="48.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <VBox spacing="5.0" GridPane.columnSpan="2">
+                            <children>
+                                <Label id="name_title" fx:id="lblName" text="Name"/>
+                                <TextField id="reg_name" fx:id="txtName" editable="false"/>
+                                <Label id="size_title" fx:id="lblSize" text="Größe">
+                                    <VBox.margin>
+                                        <Insets top="15.0"/>
+                                    </VBox.margin>
+                                </Label>
+                                <ComboBox fx:id="cbSize" disable="true" prefHeight="25.0" prefWidth="402.0"/>
+                            </children>
+                            <GridPane.margin>
+                                <Insets left="15.0" right="15.0" top="10.0"/>
+                            </GridPane.margin>
+                        </VBox>
+                        <VBox maxHeight="400.0" prefHeight="300.0" spacing="5.0" GridPane.columnSpan="2"
+                              GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets left="15.0" right="15.0" top="10.0"/>
+                            </GridPane.margin>
+                            <children>
+                                <Label id="description_title" fx:id="lblDescription" text="Beschreibung"/>
+                                <TextArea fx:id="txtDescription" editable="false" minWidth="300.0" prefHeight="300.0"/>
+                            </children>
+                        </VBox>
+                        <Button id="save_label" fx:id="btnSave" disable="true" mnemonicParsing="false"
+                                onAction="#saveChanges" prefWidth="200.0" text="Button" GridPane.columnSpan="2"
+                                GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                            <graphic>
+                                <ImageView>
+                                    <image>
+                                        <Image url="/images/fugue/disk-black.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <GridPane.margin>
+                                <Insets top="15.0"/>
+                            </GridPane.margin>
+                        </Button>
+                    </children>
+                </GridPane>
+            </content>
+            <padding>
+                <Insets bottom="15.0" right="15.0" top="15.0"/>
+            </padding>
+        </TitledPane>
     </children>
-</HBox>
+</GridPane>
