@@ -4,7 +4,7 @@
 
     <groupId>de.uni_hannover.sra.minimax_simulator</groupId>
     <artifactId>minimax_simulator</artifactId>
-    <version>0.8.4</version>
+    <version>0.9.0</version>
     <packaging>jar</packaging>
     <name>Minimax Simulator</name>
 
