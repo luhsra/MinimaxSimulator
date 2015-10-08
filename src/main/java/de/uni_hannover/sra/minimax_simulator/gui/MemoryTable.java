@@ -33,6 +33,8 @@ import java.util.List;
  */
 public class MemoryTable implements MemoryAccessListener {
 
+    @FXML private TitledPane paneMemory;
+
     private String _addressFormatString;
     private static MachineMemory mMemory;
 
@@ -48,6 +50,9 @@ public class MemoryTable implements MemoryAccessListener {
     @FXML private TableColumn<MemoryTableModel, String> col_mem_adr;
     @FXML private TableColumn<MemoryTableModel, String> col_mem_dec;
     @FXML private TableColumn<MemoryTableModel, String> col_mem_hex;
+
+    @FXML private TextField txtAddressField;
+    @FXML private Label lblMemPage;
 
     /**
      * The constructor initializes the variables.
@@ -82,8 +87,6 @@ public class MemoryTable implements MemoryAccessListener {
         setLocalizedTexts();
     }
 
-    @FXML private TitledPane paneMemory;
-
     /**
      * Sets localized texts from resource for the GUI elements.
      */
@@ -93,7 +96,11 @@ public class MemoryTable implements MemoryAccessListener {
             col.setText(_res.get(col.getId().replace("_", ".")));
         }
         paneMemory.setText(_res.get(paneMemory.getId().replace("_", ".")));
+        updateMemPageLabel();
+    }
 
+    private void updateMemPageLabel() {
+        lblMemPage.setText(_res.format("memtable.page", _page + 1, _pageCount));
     }
 
     /**
@@ -131,8 +138,6 @@ public class MemoryTable implements MemoryAccessListener {
         }
     }
 
-    @FXML private TextField txtAddressField;
-
     /**
      * This method is called from the controller of the views containing the MemoryTable
      * if a new project was created or a opened. It initializes the {@link TableView}
@@ -145,6 +150,8 @@ public class MemoryTable implements MemoryAccessListener {
 
         int addressRange = mMemory.getMaxAddress() - mMemory.getMinAddress();
         _pageCount = (addressRange - 1) / _pageSize + 1;
+
+        updateMemPageLabel();
 
         col_mem_adr.setCellValueFactory(new PropertyValueFactory<>("address"));
         col_mem_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
@@ -245,6 +252,7 @@ public class MemoryTable implements MemoryAccessListener {
         _cachedPageStart = _page * _pageSize + mMemory.getMinAddress();
 
         updateMemTable();
+        updateMemPageLabel();
     }
 
     @Override
