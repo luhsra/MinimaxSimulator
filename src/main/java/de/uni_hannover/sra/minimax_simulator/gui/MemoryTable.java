@@ -85,6 +85,7 @@ public class MemoryTable implements MemoryAccessListener {
         });
 
         setLocalizedTexts();
+        setTooltips();
     }
 
     /**
@@ -97,6 +98,18 @@ public class MemoryTable implements MemoryAccessListener {
         }
         paneMemory.setText(_res.get(paneMemory.getId().replace("_", ".")));
         updateMemPageLabel();
+    }
+
+    /**
+     * Sets the tooltips for the buttons.
+     */
+    private void setTooltips() {
+        btnFirstPage.setTooltip(new Tooltip(_res.get("memtable.first.tip")));
+        btnPrevPage.setTooltip(new Tooltip(_res.get("memtable.previous.tip")));
+        btnNextPage.setTooltip(new Tooltip(_res.get("memtable.next.tip")));
+        btnLastPage.setTooltip(new Tooltip(_res.get("memtable.last.tip")));
+
+        txtAddressField.setTooltip(new Tooltip(_res.get("memtable.address.tip")));
     }
 
     private void updateMemPageLabel() {

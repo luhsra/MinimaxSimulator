@@ -70,6 +70,9 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
 
     private Simulation _simulation;
 
+    private final Tooltip simInit;
+    private final Tooltip simStop;
+
     @FXML MemoryTable embeddedMemoryTableController;
 
     /**
@@ -78,6 +81,9 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     public DebuggerView() {
         _resSignal = Main.getTextResource("signal");
         _res = Main.getTextResource("debugger");
+
+        simInit = new Tooltip(_res.get("action.init.tip"));
+        simStop = new Tooltip(_res.get("action.stop.tip"));
     }
 
     /**
@@ -86,6 +92,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      */
     public void initialize() {
         setLocalizedTexts();
+        setTooltips();
     }
 
     @FXML private TitledPane paneRegister;
@@ -113,6 +120,16 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         }
 
         lblCycles.setText(_res.format(lblCycles.getId().replace("_", "."), "---"));
+    }
+
+    /**
+     * Sets the tooltips for the buttons.
+     */
+    private void setTooltips() {
+        btnSimCycle.setTooltip(new Tooltip(_res.get("action.step.tip")));
+        btnSimRun.setTooltip(new Tooltip(_res.get("action.run.tip")));
+        btnSimQuit.setTooltip(new Tooltip(_res.get("action.reset.tip")));
+        btnSimInit.setTooltip(simInit);
     }
 
     /**
@@ -382,7 +399,8 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                 btnSimQuit.setDisable(false);
                 btnSimCycle.setDisable(false);
                 btnSimRun.setDisable(false);
-                btnSimInit.setGraphic(new ImageView("/images/fugue/arrow-circle-225-red.png"));
+                btnSimInit.setGraphic(new ImageView("/images/fugue/arrow-circle-225-red.png"));     // TODO: hold reference instead of loading from file each time
+                btnSimInit.setTooltip(simStop);
             }
             else {
                 _simulation.reset();
@@ -411,7 +429,8 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             btnSimQuit.setDisable(true);
             btnSimCycle.setDisable(true);
             btnSimRun.setDisable(true);
-            btnSimInit.setGraphic(new ImageView("/images/fugue/control-green.png"));
+            btnSimInit.setGraphic(new ImageView("/images/fugue/control-green.png"));        // TODO: hold reference instead of loading from file each time
+            btnSimInit.setTooltip(simInit);
         } catch (Exception e) {
             UI.invokeInFAT(new Runnable() {
                 @Override
