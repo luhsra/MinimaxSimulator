@@ -2,21 +2,14 @@ package de.uni_hannover.sra.minimax_simulator.io;
 
 import static com.google.common.base.Preconditions.*;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.Closeable;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.util.zip.ZipFile;
 
 /**
  * Some static utility methods for dealing with I/O classes, mostly similar to a part of apache-commons-io.
  * 
- * @author Martin
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
  *
  */
 public final class IOUtils
@@ -139,4 +132,39 @@ public final class IOUtils
 
 		return new BufferedOutputStream(os);
 	}
+
+	/**
+	 *
+	 *
+	 * @param is
+	 * @return
+	 */
+	public static String getStringFromInputStream(InputStream is) {
+
+		BufferedReader br = null;
+		StringBuilder sb = new StringBuilder();
+
+		String line;
+		try {
+
+			br = new BufferedReader(new InputStreamReader(is));
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return sb.toString();
+	}
+
 }

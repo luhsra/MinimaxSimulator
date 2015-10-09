@@ -15,6 +15,7 @@ import com.google.common.collect.ImmutableList.Builder;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 
+@Deprecated
 public class JumpLabelSelector extends JComboBox
 {
 	private static class Target

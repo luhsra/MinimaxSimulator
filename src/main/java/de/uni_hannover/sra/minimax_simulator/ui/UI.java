@@ -4,13 +4,23 @@ import static com.google.common.base.Preconditions.*;
 
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.google.common.base.Throwables;
+import javafx.application.Platform;
 
+/**
+ *
+ * @author Philipp Rohde
+ * @author Martin L&uuml;ck
+ */
 public class UI
 {
 	private static UI	instance;
@@ -32,9 +42,9 @@ public class UI
 
 	private UI()
 	{
-		initLaf("Nimbus");
+		//initLaf("Nimbus");
 	}
-
+/*
 	private void initLaf(String name)
 	{
 		// Set the Look and feel
@@ -67,7 +77,7 @@ public class UI
 				+ ", falling back to default: " + lafName);
 		}
 	}
-
+*/
 	/**
 	 * Schedule asynchronous execution of the {@link Runnable} in the Swing event dispatch thread.
 	 * 
@@ -76,7 +86,8 @@ public class UI
 	public static void invoke(Runnable r)
 	{
 		checkNotNull(r);
-		EventQueue.invokeLater(r);
+		//EventQueue.invokeLater(r);
+		Platform.runLater(r);
 	}
 
 	/**
@@ -86,6 +97,7 @@ public class UI
 	 * 
 	 * @param r
 	 */
+	@Deprecated
 	public static void invokeInEDT(Runnable r)
 	{
 		checkNotNull(r);
@@ -93,6 +105,24 @@ public class UI
 			r.run();
 		else
 			invokeNow(r);
+	}
+
+	/**
+	 * If called from the FX application thread, just calls {@link Runnable#run()} on <code>r</code>.<br>
+	 * Otherwise, schedules its execution there.
+	 *
+	 * @param r
+	 * 			the {@link Runnable} to execute at FX application thread
+	 */
+	public static void invokeInFAT(Runnable r) {
+		checkNotNull(r);
+		if (Platform.isFxApplicationThread()) {
+			r.run();
+		}
+		else {
+			Platform.runLater(r);
+			//invokeNowFX(r);				// does not work --> DEADLOCK
+		}
 	}
 
 	/**
@@ -120,4 +150,49 @@ public class UI
 				+ Thread.currentThread().getName(), e);
 		}
 	}
+
+	// This would work if invokeAndWait() would.
+	public static void invokeNowFX(Runnable r) {
+		checkNotNull(r);
+		try {
+			System.out.println("I am trying to invokeAndWait()");
+			invokeAndWait(r);
+		}
+		catch (ExecutionException e) {
+			System.out.println("Error: ExecutionException");
+			throw Throwables.propagate(e.getCause());
+		}
+		catch (InterruptedException e) {
+			System.out.println("Error: InterruptedException");
+			throw new Error("Invoking thread interrupted while waiting: " + Thread.currentThread().getName(), e);
+		}
+	}
+
+	// According to https://community.oracle.com/thread/2372263 this should do the trick
+	// but the runnable is not executed before task.get() finishes. This is the reason for the timeout.
+	private static void invokeAndWait(Runnable r) throws InterruptedException, ExecutionException {
+		checkNotNull(r);
+//		FutureTask<Boolean> task = new FutureTask<>(r, true);
+		FutureTask<Boolean> task = new FutureTask<>(new Runnable() {
+			@Override
+			public void run() {
+				// Do something on FX thread
+				System.out.println("NOW IT IS WORKING!");
+			}
+		}, true);
+
+		System.out.println("Call: runLater()");
+		Platform.runLater(task);
+//		System.out.println("Call: task.get()");
+//		task.get();
+//		System.out.println("finished waiting");
+		try {
+			task.get(10, TimeUnit.SECONDS);
+		}
+		catch (TimeoutException e) {
+			// timed out
+			return;
+		}
+	}
+
 }

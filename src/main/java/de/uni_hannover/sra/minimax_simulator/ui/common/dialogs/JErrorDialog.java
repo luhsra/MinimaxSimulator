@@ -30,6 +30,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 /**
  * This dialog will present the details of a throwable exception to a user.
  */
+@Deprecated
 public class JErrorDialog extends JDialog
 {
 	private static final long	serialVersionUID	= 1L;

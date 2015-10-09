@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import de.uni_hannover.sra.minimax_simulator.Application;
 
+@Deprecated
 public class ViewTabAction extends ProjectAction
 {
 	private final String	_tab;

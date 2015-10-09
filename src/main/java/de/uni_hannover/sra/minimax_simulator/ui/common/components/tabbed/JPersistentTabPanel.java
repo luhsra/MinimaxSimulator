@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Deprecated
 public class JPersistentTabPanel extends JCloseableTabPanel
 {
 	private final Map<String, TabFactory> _tabFactories = new HashMap<String, TabFactory>();

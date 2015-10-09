@@ -21,6 +21,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 
+@Deprecated
 public class MemoryImportWorker implements Runnable
 {
 	private final static Logger	_log	= Logger.getLogger(MemoryImportWorker.class.getName());

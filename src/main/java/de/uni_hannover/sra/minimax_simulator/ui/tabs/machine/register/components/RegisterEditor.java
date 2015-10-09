@@ -25,6 +25,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.AbstractDocumentListener;
 import de.uni_hannover.sra.minimax_simulator.ui.common.LimitedLenghtDocument;
 
+@Deprecated
 class RegisterEditor extends JPanel
 {
 	private final TextResource			res	= Application.getTextResource("machine");

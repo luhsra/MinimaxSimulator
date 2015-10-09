@@ -8,6 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperatio
 import de.uni_hannover.sra.minimax_simulator.ui.common.DoubleClickListener;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.common.models.AbstractAluTableModel;
 
+@Deprecated
 abstract class AluOperationDoubleClickListener extends DoubleClickListener
 {
 	private final JTable				_table;

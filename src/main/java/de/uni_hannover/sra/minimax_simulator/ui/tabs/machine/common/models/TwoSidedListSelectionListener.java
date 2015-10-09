@@ -4,6 +4,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+@Deprecated
 public abstract class TwoSidedListSelectionListener implements ListSelectionListener
 {
 	private int	_myLastSelectionMin	= -1;

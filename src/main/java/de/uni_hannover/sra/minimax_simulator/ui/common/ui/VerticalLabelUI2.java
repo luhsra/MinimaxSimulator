@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.plaf.basic.BasicLabelUI;
 
+@Deprecated
 public class VerticalLabelUI2 extends BasicLabelUI
 {
 	static

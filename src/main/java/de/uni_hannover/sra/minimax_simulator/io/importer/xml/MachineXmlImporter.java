@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import org.jdom2.Element;
 
 import de.uni_hannover.sra.minimax_simulator.Application;
@@ -21,11 +22,10 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
 import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 
-class MachineXmlImporter extends Importer
-{
-	MachineConfiguration loadMachine(InputStream inputStream)
-			throws ProjectImportException
-	{
+@Deprecated
+class MachineXmlImporter extends Importer {
+
+	MachineConfiguration loadMachine(InputStream inputStream) throws ProjectImportException	{
 		Element machineElem = rootOf(parseAndValidate(inputStream), "machine");
 
 		Element alu = machineElem.getChild("alu");
@@ -36,7 +36,7 @@ class MachineXmlImporter extends Importer
 			throw new ProjectImportException("No <registers> entry found in <machine>");
 
 		// TODO: remove global access?
-		ResourceBundleLoader resourceLoader = Application.getResourceLoader();
+		ResourceBundleLoader resourceLoader = Main.getResourceLoader();
 		TextResource registerTextResource = resourceLoader.getTextResource("register");
 
 		MachineConfigurationBuilder mb = new MachineConfigurationBuilder();

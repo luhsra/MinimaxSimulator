@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.*;
 
 import javax.swing.AbstractSpinnerModel;
 
+@Deprecated
 public class WrapSpinnerModel extends AbstractSpinnerModel
 {
 	private Integer _currentValue;

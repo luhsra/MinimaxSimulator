@@ -7,6 +7,7 @@ import javax.swing.ListSelectionModel;
 
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.common.models.AbstractAluTableModel;
 
+@Deprecated
 class AluOperationTable extends JTable
 {
 	private final AbstractAluTableModel	_model;

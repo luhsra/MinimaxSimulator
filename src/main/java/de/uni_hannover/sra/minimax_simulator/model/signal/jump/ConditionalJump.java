@@ -12,9 +12,8 @@ public final class ConditionalJump implements Jump
 	}
 
 	@Override
-	public int getTargetRow(int currentRow, int condition)
-	{
-		return condition == 0 ? _condZeroTarget : _condOneTarget;
+	public int getTargetRow(int currentRow, int condition) {
+		return getTargetRow(condition);
 	}
 
 	public int getTargetRow(int condition)

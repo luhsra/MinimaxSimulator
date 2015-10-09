@@ -10,6 +10,7 @@ import org.jdom2.output.XMLOutputter;
 
 import de.uni_hannover.sra.minimax_simulator.model.user.ProjectConfiguration;
 
+@Deprecated
 class UserXmlExporter
 {
 	void write(Writer wr, ProjectConfiguration projectConfig) throws IOException

@@ -37,6 +37,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.actions.ViewTabAction;
 import de.uni_hannover.sra.minimax_simulator.ui.util.MenuBuilder;
 import de.uni_hannover.sra.minimax_simulator.ui.util.MenuBuilder.MenuAppender;
 
+@Deprecated
 public class MainWindow extends JFrame implements WorkspaceListener
 {
 	private final TextResource		_res;
@@ -112,8 +113,8 @@ public class MainWindow extends JFrame implements WorkspaceListener
 		ma.appendItem("project.new", new ProjectNew());
 		ma.appendItem("project.open", new ProjectOpen());
 		ma.appendSeparator();
-		ma.appendItem("project.save", new ProjectSave());
-		ma.appendItem("project.saveas", new ProjectSaveTo());
+		//ma.appendItem("project.save", new ProjectSave());
+		//ma.appendItem("project.saveas", new ProjectSaveTo());
 		ma.appendSeparator();
 		ma.appendItem("project.export-schematics",
 			new ProjectExportSchematics());

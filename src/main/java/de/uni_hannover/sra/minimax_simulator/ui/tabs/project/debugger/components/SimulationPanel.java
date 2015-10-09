@@ -22,6 +22,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 
+@Deprecated
 public class SimulationPanel extends JPanel implements Disposable, SimulationListener
 {
 	private class InitAction extends AbstractAction

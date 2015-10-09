@@ -9,6 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 
+@Deprecated
 public class ProjectNew extends AbstractAction
 {
 	private final static TextResource	res	= Application.getTextResource("application");

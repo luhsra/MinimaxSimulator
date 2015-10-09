@@ -3,6 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.common;
 import java.awt.event.*;
 import javax.swing.*;
 
+@Deprecated
 public class EditableCellFocusAction extends WrappedAction
 {
 	private JTable	table;

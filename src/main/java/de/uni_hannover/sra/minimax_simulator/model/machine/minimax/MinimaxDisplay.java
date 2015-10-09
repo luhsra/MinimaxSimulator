@@ -1,12 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.sun.javafx.tk.FontMetrics;
 import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplay;
@@ -15,6 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
 import de.uni_hannover.sra.minimax_simulator.ui.render.DummyRenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
+import javafx.scene.text.Font;
 
 class MinimaxDisplay implements MachineDisplay, FontMetricsProvider
 {
@@ -131,14 +131,12 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider
 	}
 
 	@Override
-	public Font getFont()
-	{
-		return _renderEnvironment.getFont();
+	public Font getFont() {
+		return _renderEnvironment.getFontFX();
 	}
 
 	@Override
-	public FontMetrics getFontMetrics()
-	{
-		return _renderEnvironment.getFontMetrics();
+	public FontMetrics getFontMetrics() {
+		return _renderEnvironment.getFontMetricsFX();
 	}
 }

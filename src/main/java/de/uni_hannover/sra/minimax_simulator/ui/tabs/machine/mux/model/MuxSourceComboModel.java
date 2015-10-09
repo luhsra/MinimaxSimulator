@@ -12,6 +12,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineCo
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigMuxEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 
+@Deprecated
 public class MuxSourceComboModel extends AbstractListModel implements ComboBoxModel,
 		MachineConfigListener
 {

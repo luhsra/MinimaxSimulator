@@ -7,6 +7,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMe
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 
+@Deprecated
 public class MemoryPanel extends JPanel implements Disposable
 {
 	private MachineMemory			_memory;

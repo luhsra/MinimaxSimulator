@@ -1,5 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.user;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.BaseControlPort;
 import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
@@ -11,12 +12,10 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
 import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 
-public class NewProjectBuilder implements ProjectBuilder
-{
+public class NewProjectBuilder implements ProjectBuilder {
 	@Override
-	public Project buildProject()
-	{
-		ResourceBundleLoader res = Application.getResourceLoader();
+	public Project buildProject() {
+		ResourceBundleLoader res = Main.getResourceLoader();
 
 		MachineConfigurationBuilder mb = new MachineConfigurationBuilder();
 		MachineConfiguration conf = mb.loadDefaultValues(
@@ -24,17 +23,13 @@ public class NewProjectBuilder implements ProjectBuilder
 
 		SignalTable table = new DefaultSignalTable();
 		createDefaultProgram(table);
-
 		Project project = new Project(conf, new ProjectConfiguration(), table);
-
 		return project;
 	}
 
-	private void createDefaultProgram(SignalTable table)
-	{
+	private void createDefaultProgram(SignalTable table) {
 		SignalRow[] rows = new SignalRow[4];
-		for (int i = 0; i < rows.length; i++)
-		{
+		for (int i = 0; i < rows.length; i++) {
 			rows[i] = new SignalRow();
 			table.addSignalRow(rows[i]);
 		}
@@ -46,8 +41,7 @@ public class NewProjectBuilder implements ProjectBuilder
 		rows[0].setSignalValue(BaseControlPort.ALU_CTRL.name(), 0);
 		rows[0].setLabel("start");
 
-		for (int i = 1; i < 4; i++)
-		{
+		for (int i = 1; i < 4; i++) {
 			// ACCU/PC <- ACCU + ACCU
 			rows[i].setSignalValue("ACCU.W", 1);
 			rows[i].setSignalValue("PC.W", 1);

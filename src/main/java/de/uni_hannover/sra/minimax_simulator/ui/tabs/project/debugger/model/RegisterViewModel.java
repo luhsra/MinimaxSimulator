@@ -20,6 +20,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.TrackableC
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 
+@Deprecated
 public class RegisterViewModel extends AbstractTableModel implements
 		MachineConfigListener, Disposable, SimulationListener
 {

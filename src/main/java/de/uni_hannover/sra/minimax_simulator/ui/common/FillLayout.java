@@ -9,10 +9,11 @@ import java.awt.LayoutManager;
 /**
  * The FillLayout always should have no children, or exactly one.<br>
  * That is aligned in a way so it fills the parent element completely. (minus the {@link Insets}).<br>
- * FillLayout cannot be instanciated, there exists the shared instance {@link FillLayout.INSTANCE} instead.
+ * FillLayout cannot be instanciated, there exists the shared instance {@link FillLayout#INSTANCE} instead.
  * 
- * @author Martin
+ * @author Martin L&uuml;ck
  */
+@Deprecated
 public final class FillLayout implements LayoutManager
 {
 	/**

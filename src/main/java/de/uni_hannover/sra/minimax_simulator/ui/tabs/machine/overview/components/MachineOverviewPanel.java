@@ -14,6 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.components.JScrollablePan
 import de.uni_hannover.sra.minimax_simulator.ui.common.components.JScrollablePanel.ScrollableSizeHint;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 
+@Deprecated
 public class MachineOverviewPanel extends JPanel implements Disposable
 {
 	private final Machine _machine;
@@ -47,7 +48,7 @@ public class MachineOverviewPanel extends JPanel implements Disposable
 		panel.setScrollableWidth(ScrollableSizeHint.STRETCH);
 		panel.setScrollableHeight(ScrollableSizeHint.STRETCH);
 		panel.setLayout(FillLayout.INSTANCE);
-		panel.add(_machineView);
+		//panel.add(_machineView);
 //		add(split);
 		JScrollPane machineScroller = new JFastScrollPane(panel);
 		panel.setLayout(new MigLayout("center", "[]", "[]"));

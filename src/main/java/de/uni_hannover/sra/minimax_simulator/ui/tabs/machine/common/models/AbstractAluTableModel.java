@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 
+@Deprecated
 public abstract class AbstractAluTableModel extends AbstractTableModel
 {
 	protected final List<AluOperation>	_aluOperations;

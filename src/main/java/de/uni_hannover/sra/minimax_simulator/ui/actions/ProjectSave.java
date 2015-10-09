@@ -5,12 +5,13 @@ import java.awt.event.ActionEvent;
 import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 
+@Deprecated
 public class ProjectSave extends ProjectSaveTo
 {
 	public ProjectSave()
 	{
 	}
-
+/*
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -34,4 +35,5 @@ public class ProjectSave extends ProjectSaveTo
 	{
 		setEnabled(true);
 	}
+	*/
 }

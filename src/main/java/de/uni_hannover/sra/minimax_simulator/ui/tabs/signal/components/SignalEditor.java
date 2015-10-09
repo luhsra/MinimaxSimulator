@@ -22,6 +22,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.components.JWideComboBox;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.model.SignalColumn;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.model.SignalTableModel;
 
+@Deprecated
 public class SignalEditor extends AbstractCellEditor implements TableCellEditor
 {
 	// When dropping Java 6 support, change to JComboBox<SignalValue>

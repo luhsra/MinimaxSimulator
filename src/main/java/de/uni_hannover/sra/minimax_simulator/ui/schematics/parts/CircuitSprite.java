@@ -12,9 +12,18 @@ import de.uni_hannover.sra.minimax_simulator.layout.Point;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Pin;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Transform;
 
-public abstract class CircuitSprite implements Sprite
-{
+/**
+ * A {@link Sprite} of a component of the Minimax machine's circuit.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public abstract class CircuitSprite implements Sprite {
+	@Deprecated
 	private final static Polygon	arrowHead;
 	static
 	{
@@ -24,16 +33,45 @@ public abstract class CircuitSprite implements Sprite
 		arrowHead.addPoint(3, -5);
 	}
 
+	/**
+	 * A polygon that looks like an arrow head and can be drawn with
+	 * {@link GraphicsContext#fillPolygon(double[], double[], int)}.
+	 *
+	 * @author Philipp Rohde
+	 */
+	private final static class ArrowHead {
+		public final static double[] xPoints = {0, -3, 3};
+		public final static double[] yPoints = {0, -5, -5};
+		public final static int nPoints = 3;
+	}
+
+	protected static final javafx.scene.paint.Color RED = new javafx.scene.paint.Color(1f, 0f, 0f, 0.8f);
+
 	@Override
+	@Deprecated
 	public void paint(Graphics2D g, RenderEnvironment env)
 	{
 		paint(g);
 	}
 
+	@Deprecated
 	public void paint(Graphics2D g)
 	{
 	}
 
+	@Override
+	public void paint(GraphicsContext gc, RenderEnvironment env) { paint(gc); }
+
+	/**
+	 * Provides a method for drawing a {@code CircuitSprite} without a {@code RenderEnvironment}.
+	 *
+	 * @param gc
+	 *          the {@code GraphicsContext} the {@code CircuitSprite} will be drawn on
+	 */
+	// TODO: make abstract?
+	public void paint(GraphicsContext gc) {}
+
+	@Deprecated
 	public void drawArrow(Graphics2D g, Point point1, Point point2)
 	{
 		double angle = Math.atan2(point2.y - point1.y, point2.x - point1.x);
@@ -48,6 +86,32 @@ public abstract class CircuitSprite implements Sprite
 		g2.dispose();
 	}
 
+	/**
+	 * Draws the arrow head at the end of a wire.<br>
+	 * Therefore the polygon will be translated and rotated.
+	 *
+	 * @param gc
+	 *          the {@code GraphicsContext} the arrow will be drawn on
+	 * @param point1
+	 *          the starting point
+	 * @param point2
+	 *          the end point
+	 */
+	public void drawArrow(GraphicsContext gc, Point point1, Point point2) {
+		double angle = Math.atan2(point2.y - point1.y, point2.x - point1.x);
+		Affine tx = new Affine();
+		tx.setToIdentity();
+		tx.appendTranslation(point2.x, point2.y);
+		tx.appendRotation(Math.toDegrees(angle) - 90);
+
+		Transform oldTransform = gc.getTransform();
+		gc.setTransform(tx);
+		gc.fillPolygon(ArrowHead.xPoints, ArrowHead.yPoints, ArrowHead.nPoints);
+		gc.setTransform((Affine)oldTransform);
+
+	}
+
+	@Deprecated
 	public void debugBounds(Graphics g, Bounds bounds)
 	{
 		if (Config.DEBUG_SCHEMATICS)
@@ -58,6 +122,23 @@ public abstract class CircuitSprite implements Sprite
 		}
 	}
 
+	/**
+	 * Debugs {@link Bounds} on a {@code GraphicsContext}.
+	 *
+	 * @param gc
+	 *          the {@code GraphicsContext} the {@code Bounds} will be debugged on
+	 * @param bounds
+	 *          the {@code Bounds} to debug
+	 */
+	public void debugBounds(GraphicsContext gc, Bounds bounds) {
+		if (Config.DEBUG_SCHEMATICS) {
+			gc.setStroke(RED);
+			gc.strokeRect(bounds.x, bounds.y, bounds.w, bounds.h);
+			gc.setStroke(javafx.scene.paint.Color.BLACK);
+		}
+	}
+
+	@Deprecated
 	public void debugPin(Graphics g, Pin pin)
 	{
 		if (Config.DEBUG_SCHEMATICS)
@@ -66,6 +147,21 @@ public abstract class CircuitSprite implements Sprite
 		}
 	}
 
+	/**
+	 * Debugs a {@link Pin} on a {@code GraphicsContext}.
+	 *
+	 * @param gc
+	 *          the {@code GraphicsContext} the {@code Pin} will be debugged on
+	 * @param pin
+	 *          the {@code Pin} to debug
+	 */
+	public void debugPin(GraphicsContext gc, Pin pin) {
+		if (Config.DEBUG_SCHEMATICS) {
+			debugPosition(gc, pin.getBounds().x, pin.getBounds().y);
+		}
+	}
+
+	@Deprecated
 	public void debugPosition(Graphics g, int x, int y)
 	{
 		if (Config.DEBUG_SCHEMATICS)
@@ -73,6 +169,24 @@ public abstract class CircuitSprite implements Sprite
 			g.setColor(new Color(1f, 0f, 0f, 0.8f));
 			g.fillOval(x - 2, y - 2, 5, 5);
 			g.setColor(Color.BLACK);
+		}
+	}
+
+	/**
+	 * Debugs a point on a {@code GraphicsContext}.
+	 *
+	 * @param gc
+	 *          the {@code GraphicsContext} the point will be debugged on
+	 * @param x
+	 *          the x coordinate of the point to debug
+	 * @param y
+	 *          the y coordinate of the point to debug
+	 */
+	public void debugPosition(GraphicsContext gc, int x, int y) {
+		if (Config.DEBUG_SCHEMATICS) {
+			gc.setFill(RED);
+			gc.fillOval(x - 2, y - 2, 5, 5);
+			gc.setFill(javafx.scene.paint.Color.BLACK);
 		}
 	}
 }

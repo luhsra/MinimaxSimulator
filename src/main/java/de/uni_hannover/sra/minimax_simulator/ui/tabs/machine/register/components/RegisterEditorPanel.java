@@ -34,6 +34,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.common.models.TwoSi
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.register.models.DefaultRegisterTableModel;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.register.models.MachineRegisterTableModel;
 
+@Deprecated
 public class RegisterEditorPanel extends JPanel implements Disposable
 {
 	private class AddAction extends AbstractAction

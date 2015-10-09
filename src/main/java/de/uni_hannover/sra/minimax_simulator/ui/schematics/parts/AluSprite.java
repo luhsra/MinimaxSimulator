@@ -6,19 +6,28 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Alu;
+import javafx.scene.canvas.GraphicsContext;
 
-public class AluSprite extends CircuitSprite
-{
-	private final static int[][] POINTS = new int[][] {
-			// x  y
-			{-9, 0 },
-			{-34, 12},
-			{-34, 44},
-			{34, 10},
-			{34, -10},
-			{-34, -44},
-			{-34, -12},
-			{-9, 0}
+import com.sun.javafx.tk.*;
+
+/**
+ * The ALU sprite.
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public class AluSprite extends CircuitSprite {
+
+	private final static double[][] POINTS = new double[][] {
+			// x      y
+			{ -9.5,   0.5},
+			{-34.5,  12.5},
+			{-34.5,  44.5},
+			{ 34.5,  10.5},
+			{ 34.5, -10.5},
+			{-34.5, -44.5},
+			{-34.5, -12.5},
+			{ -9.5,   0.5}
 	};
 
 	private final static String NAME = "ALU";
@@ -27,8 +36,13 @@ public class AluSprite extends CircuitSprite
 
 	private final Alu _alu;
 
-	public AluSprite(Alu alu)
-	{
+	/**
+	 * Initializes the {@code AluSprite}.
+	 *
+	 * @param alu
+	 *          the {@link Alu} this sprite will represent
+	 */
+	public AluSprite(Alu alu) {
 		_alu = checkNotNull(alu);
 	}
 
@@ -39,11 +53,11 @@ public class AluSprite extends CircuitSprite
 
 		int xCenter = _alu.getBounds().x + _alu.getBounds().w / 2;
 		int yCenter = _alu.getBounds().y + _alu.getBounds().h / 2;
-
+/*
 		for (int i = 1; i < POINTS.length; i++)
 			g.drawLine(POINTS[i - 1][0] + xCenter, POINTS[i - 1][1] + yCenter,
 				POINTS[i][0] + xCenter, POINTS[i][1] + yCenter);
-
+*/
 		FontMetrics fm = g.getFontMetrics();
 		
 		int xTextAlu = xCenter - fm.stringWidth(NAME) / 2 + 16;
@@ -65,4 +79,41 @@ public class AluSprite extends CircuitSprite
 		debugPin(g, _alu.getOutData());
 		debugPin(g, _alu.getOutZero());
 	}
+
+	@Override
+	public void paint(GraphicsContext gc) {
+		debugBounds(gc, _alu.getBounds());
+
+		double xCenter = _alu.getBounds().x + _alu.getBounds().w / 2;
+		double yCenter = _alu.getBounds().y + _alu.getBounds().h / 2;
+
+		gc.save();
+		gc.setLineWidth(1);
+		for (int i = 1; i < POINTS.length; i++) {
+			gc.strokeLine(POINTS[i - 1][0] + xCenter, POINTS[i - 1][1] + yCenter, POINTS[i][0] + xCenter, POINTS[i][1] + yCenter);
+		}
+		gc.restore();
+
+		com.sun.javafx.tk.FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
+
+		double xTextAlu = xCenter - fm.computeStringWidth(NAME) / 2 + 16;
+		double yTextAlu = yCenter + fm.getLineHeight() / 4;
+
+		double xTextA = xCenter - fm.computeStringWidth(PIN_A) / 2 - 25;
+		double yTextA = yCenter + fm.getLineHeight() / 4 - 23;
+
+		double xTextB = xTextA;
+		double yTextB = yCenter + fm.getLineHeight() / 4 + 23;
+
+		gc.fillText(NAME, xTextAlu, yTextAlu);
+		gc.fillText(PIN_A, xTextA, yTextA);
+		gc.fillText(PIN_B, xTextB, yTextB);
+
+		debugPin(gc, _alu.getInA());
+		debugPin(gc, _alu.getInB());
+		debugPin(gc, _alu.getInCtrl());
+		debugPin(gc, _alu.getOutData());
+		debugPin(gc, _alu.getOutZero());
+	}
+
 }

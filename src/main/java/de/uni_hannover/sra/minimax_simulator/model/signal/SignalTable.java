@@ -29,6 +29,8 @@ public interface SignalTable
 
 	public void setSignalRow(int index, SignalRow row);
 
+	DescriptionFactory getDescriptionFactory();
+
 	// Breaks running simulation
 	public void setRowSignal(int index, String signal, SignalValue value);
 	public void setRowJump(int index, Jump jump);

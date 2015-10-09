@@ -18,6 +18,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 
+@Deprecated
 public class JInfoDialog extends JDialog implements ActionListener
 {
 	public JInfoDialog(TextResource res)

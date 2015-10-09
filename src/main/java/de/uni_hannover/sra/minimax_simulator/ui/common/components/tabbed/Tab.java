@@ -3,6 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.common.components.tabbed;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 
+@Deprecated
 public interface Tab
 {
 	/*

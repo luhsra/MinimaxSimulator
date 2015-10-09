@@ -13,6 +13,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.components.tabbed.JPersis
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.alu.AluTab;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.overview.model.AluTableModel;
 
+@Deprecated
 class AluTable extends JTable implements Disposable
 {
 	private MachineConfiguration	_conf;

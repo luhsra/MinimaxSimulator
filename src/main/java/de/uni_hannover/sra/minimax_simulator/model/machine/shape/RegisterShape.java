@@ -6,35 +6,35 @@ import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Register;
 
-public class RegisterShape extends TextRenderShape
-{
-	public final static int	REGISTER_HEIGHT						= 20;
-	public final static int	REGISTER_MIN_WIDTH					= 90;
-	public final static int	REGISTER_SPACING					= 50;
-	public final static int	REGISTER_TEXT_LEFT_RIGHT_PADDING	= 5;
+/**
+ * The shape of a register component.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class RegisterShape extends TextRenderShape {
 
-	public RegisterShape(FontMetricsProvider fontProvider)
-	{
+	private final static int	REGISTER_HEIGHT						= 20;
+	private final static int	REGISTER_MIN_WIDTH					= 90;
+	private final static int	REGISTER_SPACING					= 50;
+	private final static int	REGISTER_TEXT_LEFT_RIGHT_PADDING	= 5;
+
+	public RegisterShape(FontMetricsProvider fontProvider) {
 		super(fontProvider);
 	}
 
 	@Override
-	public void updateShape(Component component)
-	{
+	public void updateShape(Component component) {
 		Register reg = (Register) component;
 
 		Dimension fontDim = getStringDimension(reg.getLabel());
-		int width = Math.max(REGISTER_MIN_WIDTH, fontDim.w
-			+ REGISTER_TEXT_LEFT_RIGHT_PADDING);
+		int width = Math.max(REGISTER_MIN_WIDTH, fontDim.w + REGISTER_TEXT_LEFT_RIGHT_PADDING);
 		int height = Math.max(REGISTER_HEIGHT, fontDim.h);
 
 		component.setDimension(new Dimension(width, height));
-
 	}
 
 	@Override
-	public void layout(Component component)
-	{
+	public void layout(Component component) {
 		Register reg = (Register) component;
 
 		Bounds b = reg.getBounds();

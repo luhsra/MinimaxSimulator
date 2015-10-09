@@ -11,6 +11,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 
+@Deprecated
 public class MemoryTableModel extends AbstractTableModel implements MemoryAccessListener,
 		Disposable
 {

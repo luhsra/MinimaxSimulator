@@ -24,6 +24,7 @@ import javax.swing.*;
  * added to the panel will be size to fill the area available, based on the rules of the applicable
  * layout manager of course.
  */
+@Deprecated
 public class JScrollablePanel extends JPanel implements Scrollable, SwingConstants
 {
 	public enum ScrollableSizeHint
@@ -148,7 +149,7 @@ public class JScrollablePanel extends JPanel implements Scrollable, SwingConstan
 	 * @param orientation
 	 *            specify the scrolling orientation. Must be either: SwingContants.HORIZONTAL or
 	 *            SwingContants.VERTICAL.
-	 * @paran type specify how the amount parameter in the calculation of the scrollable amount.
+	 * @param type specify how the amount parameter in the calculation of the scrollable amount.
 	 *        Valid values are: IncrementType.PERCENT - treat the amount as a % of the viewport size
 	 *        IncrementType.PIXEL - treat the amount as the scrollable amount
 	 * @param amount
@@ -202,7 +203,7 @@ public class JScrollablePanel extends JPanel implements Scrollable, SwingConstan
 	 * @param orientation
 	 *            specify the scrolling orientation. Must be either: SwingContants.HORIZONTAL or
 	 *            SwingContants.VERTICAL.
-	 * @paran type specify how the amount parameter in the calculation of the scrollable amount.
+	 * @param type specify how the amount parameter in the calculation of the scrollable amount.
 	 *        Valid values are: IncrementType.PERCENT - treat the amount as a % of the viewport size
 	 *        IncrementType.PIXEL - treat the amount as the scrollable amount
 	 * @param amount

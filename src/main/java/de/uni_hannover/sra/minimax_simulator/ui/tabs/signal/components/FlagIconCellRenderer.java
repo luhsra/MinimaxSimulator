@@ -7,6 +7,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
+@Deprecated
 public class FlagIconCellRenderer extends DefaultTableCellRenderer
 {
 	private final Icon _icon;

@@ -45,8 +45,7 @@ public class DefaultSignalTable extends AbstractSignalTable
 	}
 
 	@Override
-	public void removeSignalRow(int index)
-	{
+	public void removeSignalRow(int index) {
 		_rows.remove(index);
 		fireRowRemoved(index);
 	}
@@ -88,6 +87,11 @@ public class DefaultSignalTable extends AbstractSignalTable
 	{
 		_rows.set(index, row);
 		fireRowReplaced(index, row);
+	}
+
+	@Override
+	public DescriptionFactory getDescriptionFactory() {
+		return null;
 	}
 
 	@Override

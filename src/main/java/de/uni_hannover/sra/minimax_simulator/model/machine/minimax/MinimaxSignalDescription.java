@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
@@ -21,7 +22,7 @@ public class MinimaxSignalDescription implements DescriptionFactory
 	public MinimaxSignalDescription(MachineConfiguration machineConfiguration)
 	{
 		_configuration = machineConfiguration;
-		_aluRes = Application.getTextResource("alu");
+		_aluRes = Main.getTextResource("alu");
 	}
 
 	private List<String> getWritingRegisterNames(SignalRow row)

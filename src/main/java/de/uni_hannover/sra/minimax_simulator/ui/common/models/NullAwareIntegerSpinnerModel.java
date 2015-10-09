@@ -2,6 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.common.models;
 
 import javax.swing.AbstractSpinnerModel;
 
+@Deprecated
 public class NullAwareIntegerSpinnerModel extends AbstractSpinnerModel
 {
 	private Integer _value;

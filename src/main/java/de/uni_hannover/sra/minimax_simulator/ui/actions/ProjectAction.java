@@ -3,15 +3,17 @@ package de.uni_hannover.sra.minimax_simulator.ui.actions;
 import javax.swing.AbstractAction;
 
 import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 
+@Deprecated
 public abstract class ProjectAction extends AbstractAction implements WorkspaceListener
 {
 	public ProjectAction()
 	{
-		Application.getWorkspace().addListener(this);
+//		Main.getWorkspace().addListener(this);
 
 		// initial state: no project open
 		setEnabled(false);
@@ -19,14 +21,14 @@ public abstract class ProjectAction extends AbstractAction implements WorkspaceL
 
 	private void setEnabledInEDT(final boolean enabled)
 	{
-		UI.invokeInEDT(new Runnable()
+/*		UI.invokeInEDT(new Runnable()
 		{
 			@Override
 			public void run()
 			{
 				setEnabled(enabled);
 			}
-		});
+		});	*/
 	}
 
 	@Override

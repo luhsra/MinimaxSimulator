@@ -12,7 +12,7 @@ public interface AttributeOwner
 	/**
 	 * Returns if the given attribute is already known for this instance.
 	 * 
-	 * @param attr
+	 * @param attribute
 	 * @return <code>true</code> if the given attribute for this instance is already set or derived from others of its attributes,
 	 * otherwise <code>false</code>
 	 * @throws NullPointerException if <code>attribute</code> is null
@@ -22,7 +22,7 @@ public interface AttributeOwner
 	/**
 	 * Set the given attribute for this instance.
 	 * 
-	 * @param attr the attribute type of the value
+	 * @param attribute the attribute type of the value
 	 * @param value the value
 	 * @throws IllegalStateException if a value for the attribute was already set or derived from other attributes.
 	 * @throws NullPointerException if <code>attribute</code> is null
@@ -32,7 +32,7 @@ public interface AttributeOwner
 	/**
 	 * Retrieves the current value for the given attribute type.<br><br>
 
-	 * @param attr the attribute type (e.g. left, top, bottom)
+	 * @param attribute the attribute type (e.g. left, top, bottom)
 	 * @return the value that was set or derived in this instance for the given attribute type
 	 * @throws IllegalStateException if the value is not yet known
 	 * @throws NullPointerException if <code>attribute</code> is null

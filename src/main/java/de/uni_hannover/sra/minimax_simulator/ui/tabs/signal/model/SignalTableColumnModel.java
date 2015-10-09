@@ -5,6 +5,7 @@ import javax.swing.table.TableColumn;
 
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.components.SignalTableHeaderRenderer;
 
+@Deprecated
 public class SignalTableColumnModel extends DefaultTableColumnModel
 {
 	public SignalTableColumnModel()

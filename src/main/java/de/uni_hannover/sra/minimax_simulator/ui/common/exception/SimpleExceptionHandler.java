@@ -17,6 +17,7 @@ import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
  * @author Martin
  * 
  */
+@Deprecated
 public class SimpleExceptionHandler implements UncaughtExceptionHandler
 {
 	private final String	_logFileName;

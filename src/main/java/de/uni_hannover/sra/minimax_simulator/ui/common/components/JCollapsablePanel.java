@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+@Deprecated
 public class JCollapsablePanel extends JPanel
 {
 	private final Icon			_expandedIcon;

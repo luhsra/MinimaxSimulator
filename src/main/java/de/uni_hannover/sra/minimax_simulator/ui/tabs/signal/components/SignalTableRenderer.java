@@ -9,6 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.model.SignalColumn;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.model.SignalTableModel;
 
+@Deprecated
 class SignalTableRenderer extends DefaultTableCellRenderer
 {
 	private final SignalTableModel _model;

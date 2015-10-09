@@ -9,6 +9,7 @@ import javax.swing.ListCellRenderer;
 
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
 
+@Deprecated
 class RegisterNameRenderer extends JLabel implements ListCellRenderer
 {
 	public RegisterNameRenderer()

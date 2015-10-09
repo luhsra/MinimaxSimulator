@@ -5,6 +5,7 @@ import javax.swing.JComponent;
 
 import de.uni_hannover.sra.minimax_simulator.ui.common.components.tabbed.CloseableTab;
 
+@Deprecated
 public class AbstractTab<T extends JComponent & Disposable> implements CloseableTab
 {
 	private String	_title;

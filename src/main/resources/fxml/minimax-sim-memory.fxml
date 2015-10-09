@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40"
+          fx:controller="de.uni_hannover.sra.minimax_simulator.gui.MemoryView">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="50.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="50.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <fx:include fx:id="embeddedMemoryTable" source="minimax-sim-table-memory.fxml" GridPane.valignment="TOP"/>
+        <VBox prefHeight="610.0" prefWidth="600.0" spacing="15.0" GridPane.columnIndex="1">
+            <children>
+                <TitledPane id="memory_import_title" fx:id="paneImport" animated="false" collapsible="false"
+                            text="Import">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <GridPane prefHeight="177.0" prefWidth="553.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0"
+                                                           prefWidth="100.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Button id="memory_import_button_label" fx:id="btnImportMem" disable="true"
+                                                mnemonicParsing="false" onAction="#importMemory" text="Importieren"
+                                                GridPane.columnIndex="0" GridPane.columnSpan="2"
+                                                GridPane.halignment="CENTER" GridPane.rowIndex="3"
+                                                GridPane.valignment="CENTER">
+                                            <graphic>
+                                                <ImageView>
+                                                    <Image url="/images/fugue/blue-document-export.png"/>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <TextField fx:id="txtImport" editable="false" onMouseClicked="#openImportDialog"
+                                                   GridPane.columnIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="15.0" right="15.0"/>
+                                            </GridPane.margin>
+                                        </TextField>
+                                        <Label id="memory_import_file" fx:id="lblImportFile" text="Datei:">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                            <font>
+                                                <Font size="12.0"/>
+                                            </font>
+                                        </Label>
+                                        <Label id="memory_import_address" fx:id="lblTargetAddress" text="Zieladresse:"
+                                               GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                            <font>
+                                                <Font size="12.0"/>
+                                            </font>
+                                        </Label>
+                                        <Label id="memory_import_bytescount" fx:id="lblByteCount"
+                                               text="Anzahl in Bytes:" GridPane.rowIndex="2">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                            <font>
+                                                <Font size="12.0"/>
+                                            </font>
+                                        </Label>
+                                        <Spinner fx:id="spinnerStartAddress" editable="true" prefHeight="26.0"
+                                                 prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="15.0" right="15.0"/>
+                                            </GridPane.margin>
+                                        </Spinner>
+                                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0"
+                                                                   prefWidth="189.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0"
+                                                                   prefWidth="254.0"/>
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                            </rowConstraints>
+                                            <children>
+                                                <CheckBox id="memory_import_partial" fx:id="cb_partialImport"
+                                                          disable="true" mnemonicParsing="false"
+                                                          onAction="#cbPartialImportAction" text="Partieller Import"
+                                                          GridPane.columnIndex="1">
+                                                    <font>
+                                                        <Font size="12.0"/>
+                                                    </font>
+                                                </CheckBox>
+                                                <Spinner fx:id="spinnerSize" disable="true" editable="true"
+                                                         prefHeight="26.0" prefWidth="148.0">
+                                                    <GridPane.margin>
+                                                        <Insets left="15.0" right="15.0"/>
+                                                    </GridPane.margin>
+                                                </Spinner>
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </TitledPane>
+                <TitledPane id="memory_export_title" fx:id="paneExport" animated="false" collapsible="false"
+                            prefHeight="204.0" prefWidth="600.0" text="Export">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <GridPane prefHeight="177.0" prefWidth="553.0" AnchorPane.bottomAnchor="0.0"
+                                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                          AnchorPane.topAnchor="0.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                        <ColumnConstraints/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Button id="memory_export_button_label" fx:id="btnExportMem" disable="true"
+                                                mnemonicParsing="false" onAction="#exportMemory" text="Exportieren"
+                                                GridPane.columnSpan="2" GridPane.halignment="CENTER"
+                                                GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                                            <graphic>
+                                                <ImageView>
+                                                    <Image url="/images/fugue/blue-document-import.png"/>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <Label id="memory_export_file" fx:id="lblExportFile" text="Datei:">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                            <font>
+                                                <Font size="12.0"/>
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="txtExport" editable="false" onMouseClicked="#openExportDialog"
+                                                   GridPane.columnIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="15.0" right="15.0"/>
+                                            </GridPane.margin>
+                                        </TextField>
+                                        <Label id="memory_export_address-from" fx:id="lblFromAddress"
+                                               text="von Adresse:" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                            <font>
+                                                <Font size="12.0"/>
+                                            </font>
+                                        </Label>
+                                        <Label id="memory_export_address-to" fx:id="lblToAddress" text="bis Adresse:"
+                                               GridPane.rowIndex="2">
+                                            <GridPane.margin>
+                                                <Insets left="5.0"/>
+                                            </GridPane.margin>
+                                            <font>
+                                                <Font size="12.0"/>
+                                            </font>
+                                        </Label>
+                                        <Spinner fx:id="spinnerExportStartAddress" editable="true" prefHeight="26.0"
+                                                 prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets left="15.0" right="15.0"/>
+                                            </GridPane.margin>
+                                        </Spinner>
+                                        <Spinner fx:id="spinnerExportEndAddress" editable="true" prefHeight="26.0"
+                                                 prefWidth="415.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <GridPane.margin>
+                                                <Insets left="15.0" right="15.0"/>
+                                            </GridPane.margin>
+                                        </Spinner>
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+                <TitledPane id="memory_clear_title" fx:id="paneClear" animated="false" collapsible="false"
+                            prefHeight="80.0" prefWidth="600.0" text="Leeren">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="598.0">
+                            <children>
+                                <GridPane prefHeight="82.0" prefWidth="553.0" AnchorPane.bottomAnchor="0.0"
+                                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                          AnchorPane.topAnchor="0.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Button id="memory_clear_button_label" fx:id="btnClear" mnemonicParsing="false"
+                                                onAction="#clearMem" text="Leeren..." GridPane.halignment="CENTER"
+                                                GridPane.valignment="CENTER">
+                                            <graphic>
+                                                <ImageView>
+                                                    <Image url="/images/fugue/blue-document.png"/>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+            </children>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <padding>
+                <Insets bottom="15.0" left="30.0" right="15.0" top="15.0"/>
+            </padding>
+        </VBox>
+    </children>
+</GridPane>

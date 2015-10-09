@@ -1,25 +1,33 @@
 package de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.components;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
-import de.uni_hannover.sra.minimax_simulator.resources.Icons;
+import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Trackable;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.ValueUpdateDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXValueUpdateDialog;
 
-public abstract class RegisterUpdateDialog extends ValueUpdateDialog
-{
-	public RegisterUpdateDialog(RegisterExtension register, int value)
-	{
-		super(value);
+/**
+ * The MemoryUpdateDialog is basically an {@link FXValueUpdateDialog}.
+ * It prompts for which register the value will be changed. On confirmation the new value will be stored.
+ *
+ * @author Philipp Rohde
+ */
+public class RegisterUpdateDialog extends FXValueUpdateDialog {
 
-		TextResource res = Application.getTextResource("debugger").using("register.update");
+	private final Trackable<Integer>	_value;
 
-		_messageLabel.setText(res.format("message", register.getName()));
-		_swapMode.setIcon(Icons.getInstance().get(res.get("swapmode.icon")));
-		_okButton.setText(res.get("ok"));
-		_cancelButton.setText(res.get("cancel"));
+	public RegisterUpdateDialog(String register, Trackable<Integer> value) {
+		super(value.get());
 
-		pack();
-		setLocationRelativeTo(null);
+		_value = value;
+
+		TextResource res = Main.getTextResource("debugger").using("register.update");
+
+		_messageLabel.setText(res.format("message", register));
+	}
+
+	@Override
+	protected void setValue(int value) {
+		_value.set(value);
 	}
 }

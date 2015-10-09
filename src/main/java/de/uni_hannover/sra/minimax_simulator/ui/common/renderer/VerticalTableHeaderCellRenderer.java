@@ -22,6 +22,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.ui.VerticalLabelUI2;
  * @see VerticalLabelUI
  * @author Darryl
  */
+@Deprecated
 public class VerticalTableHeaderCellRenderer extends DefaultTableHeaderCellRenderer
 {
 	/**
@@ -72,7 +73,7 @@ public class VerticalTableHeaderCellRenderer extends DefaultTableHeaderCellRende
 	/**
 	 * An icon implementation to paint the contained icon rotated 90° clockwise.
 	 * <P>
-	 * This implementation assumes that the L&F provides ascending and descending sort icons of
+	 * This implementation assumes that the L&amp;F provides ascending and descending sort icons of
 	 * identical size.
 	 */
 	private enum VerticalSortIcon implements Icon
@@ -92,7 +93,7 @@ public class VerticalTableHeaderCellRenderer extends DefaultTableHeaderCellRende
 		 * clockwise. This rotation is applied to compensate the rotation already applied to the
 		 * passed in Graphics reference by the VerticalLabelUI.
 		 * <P>
-		 * The icon is retrieved from the UIManager to obtain an icon appropriate to the L&F.
+		 * The icon is retrieved from the UIManager to obtain an icon appropriate to the L&amp;F.
 		 * 
 		 * @param c
 		 *            the component to which the icon is to be rendered

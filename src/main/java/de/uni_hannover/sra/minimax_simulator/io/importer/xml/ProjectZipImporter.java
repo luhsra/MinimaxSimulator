@@ -29,6 +29,7 @@ import de.uni_hannover.sra.minimax_simulator.model.user.ProjectConfiguration;
  * @author Martin
  * 
  */
+@Deprecated
 public class ProjectZipImporter implements ProjectImporter
 {
 	// private final static Charset _charset = Charset.forName("UTF-8");
@@ -80,9 +81,9 @@ public class ProjectZipImporter implements ProjectImporter
 	private MachineConfiguration getMachineConfiguration(ZipFile zip) throws IOException,
 			ProjectImportException
 	{
-		ZipEntry machineEntry = zip.getEntry("machine.xml");
+		ZipEntry machineEntry = zip.getEntry("machine.json");
 		if (machineEntry == null)
-			throw new FileNotFoundException("Missing machine.xml in project archive");
+			throw new FileNotFoundException("Missing machine.json in project archive");
 
 		InputStream machineStream = zip.getInputStream(machineEntry);
 		try

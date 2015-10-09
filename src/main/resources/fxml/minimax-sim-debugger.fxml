@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.uni_hannover.sra.minimax_simulator.gui.components.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40"
+          fx:controller="de.uni_hannover.sra.minimax_simulator.gui.DebuggerView">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <VBox prefWidth="600.0" spacing="15.0">
+            <children>
+                <fx:include fx:id="embeddedMemoryTable" source="minimax-sim-table-memory.fxml"/>
+
+                <TitledPane id="register_title" fx:id="paneRegister" animated="false" collapsible="false"
+                            prefWidth="600.0" text="Register">
+                    <content>
+                        <GridPane>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <TableView fx:id="regTable" prefWidth="532.0" GridPane.halignment="CENTER">
+                                    <columns>
+                                        <PTableColumn id="register_name" fx:id="col_reg_name" percentageWidth="0.385"
+                                                      prefWidth="214.0" resizable="false" sortable="false" text="Name"/>
+                                        <PTableColumn id="register_dec" fx:id="col_reg_dec" percentageWidth="0.29"
+                                                      prefWidth="150.0" resizable="false" sortable="false"
+                                                      text="Dezimal"/>
+                                        <PTableColumn id="register_hex" fx:id="col_reg_hex" percentageWidth="0.29"
+                                                      prefWidth="150.0" resizable="false" sortable="false"
+                                                      text="Hexadezimal"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </GridPane>
+                    </content>
+                    <VBox.margin>
+                        <Insets left="15.0"/>
+                    </VBox.margin>
+                </TitledPane>
+
+            </children>
+            <padding>
+                <Insets bottom="10.0"/>
+            </padding>
+
+        </VBox>
+        <VBox prefWidth="600.0" spacing="15.0" GridPane.columnIndex="1">
+            <children>
+                <TitledPane id="alu_title" fx:id="paneALU" animated="false" collapsible="false" minHeight="-Infinity"
+                            prefWidth="600.0" text="ALU-result">
+                    <content>
+                        <GridPane>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <TableView fx:id="aluTable" maxHeight="52.0" minHeight="52.0" prefHeight="52.0"
+                                           GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                                    <columns>
+                                        <PTableColumn id="alu_dec" fx:id="col_alu_dec" percentageWidth="0.498"
+                                                      resizable="false" sortable="false" text="Dezimal"/>
+                                        <PTableColumn id="alu_hex" fx:id="col_alu_hex" percentageWidth="0.498"
+                                                      resizable="false" sortable="false" text="Hexadezimal"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </GridPane>
+
+                    </content>
+                </TitledPane>
+                <TitledPane id="simulation_title" fx:id="paneSimulation" animated="false" collapsible="false"
+                            prefWidth="600.0" text="Simulation">
+                    <content>
+                        <GridPane>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="100.0"
+                                                   prefWidth="553.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES"/>
+                                <RowConstraints percentHeight="-1" vgrow="ALWAYS"/>
+                            </rowConstraints>
+                            <children>
+                                <HBox maxWidth="200.0" prefHeight="100.0" prefWidth="150.0"
+                                      GridPane.halignment="CENTER">
+                                    <children>
+                                        <Button fx:id="btnSimInit" mnemonicParsing="false" onAction="#initSimulation"
+                                                text="" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                            <graphic>
+                                                <ImageView>
+                                                    <Image url="/images/fugue/control-green.png"/>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <Button fx:id="btnSimQuit" disable="true" mnemonicParsing="false"
+                                                onAction="#quitSimulation" text="" GridPane.columnIndex="1"
+                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                            <graphic>
+                                                <ImageView>
+                                                    <Image url="/images/fugue/control-stop-square-red.png"/>
+                                                </ImageView>
+                                            </graphic>
+                                            <HBox.margin>
+                                                <Insets left="5.0" right="30.0"/>
+                                            </HBox.margin>
+                                        </Button>
+                                        <Button fx:id="btnSimCycle" disable="true" mnemonicParsing="false"
+                                                onAction="#nextCycle" text="" GridPane.columnIndex="3"
+                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                            <graphic>
+                                                <ImageView>
+                                                    <Image url="/images/fugue/arrow-skip-270-green.png"/>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <Button fx:id="btnSimRun" disable="true" mnemonicParsing="false"
+                                                onAction="#runSimulation" text="" GridPane.columnIndex="4"
+                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                            <graphic>
+                                                <ImageView>
+                                                    <Image url="/images/fugue/arrow-stop-270-green.png"/>
+                                                </ImageView>
+                                            </graphic>
+                                            <HBox.margin>
+                                                <Insets left="5.0"/>
+                                            </HBox.margin>
+                                        </Button>
+                                    </children>
+                                    <padding>
+                                        <Insets left="10.0" top="10.0"/>
+                                    </padding>
+                                </HBox>
+                                <Label id="cycles.label" fx:id="lblCycles" text="Zyklus: ---" GridPane.rowIndex="1">
+                                    <padding>
+                                        <Insets left="10.0"/>
+                                    </padding>
+                                </Label>
+                                <TableView id="simtable" fx:id="simTable" prefWidth="550.0" GridPane.halignment="CENTER"
+                                           GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="col_sim_1" prefWidth="35.0" resizable="false"
+                                                     sortable="false"/>
+                                        <TableColumn fx:id="col_sim_2" prefWidth="35.0" resizable="false"
+                                                     sortable="false"/>
+                                        <TableColumn id="col_label" fx:id="col_sim_label" prefWidth="95.0"
+                                                     sortable="false" text="Label"/>
+                                        <TableColumn id="col_address" fx:id="col_sim_adr" prefWidth="40.0"
+                                                     resizable="false" sortable="false" text="Adr."/>
+                                        <TableColumn id="col_condition" fx:id="col_sim_alu" prefWidth="85.0"
+                                                     resizable="false" sortable="false" text="ALU == 0?"/>
+                                        <TableColumn id="col_jumptarget" fx:id="col_sim_next" prefWidth="90.0"
+                                                     resizable="false" sortable="false" text="Folgebefehl"/>
+                                        <TableColumn id="col_description" fx:id="col_sim_desc" prefWidth="151.0"
+                                                     sortable="false" text="Beschreibung"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </GridPane>
+                    </content>
+                </TitledPane>
+            </children>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <padding>
+                <Insets bottom="15.0" left="30.0" right="15.0" top="15.0"/>
+            </padding>
+        </VBox>
+    </children>
+</GridPane>

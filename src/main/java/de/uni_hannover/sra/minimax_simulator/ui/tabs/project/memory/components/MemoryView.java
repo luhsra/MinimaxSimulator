@@ -36,6 +36,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.DoubleClickListener;
 import de.uni_hannover.sra.minimax_simulator.ui.common.FillLayout;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.model.MemoryTableModel;
 
+@Deprecated
 public class MemoryView extends JPanel implements Disposable, ListSelectionListener
 {
 	private class FirstPageAction extends AbstractAction
@@ -238,7 +239,7 @@ public class MemoryView extends JPanel implements Disposable, ListSelectionListe
 					return;
 
 				// open edit dialog
-				new MemoryUpdateDialog(_model.rowToAddress(row), memory).setVisible(true);
+				//new MemoryUpdateDialog(_model.rowToAddress(row), memory).setVisible(true);
 			}
 		});
 	}

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
+// TODO: update to JavaFX
 public class SpriteCanvas<T> extends JPanel
 {
 	private final Map<T, Sprite> _sprites;

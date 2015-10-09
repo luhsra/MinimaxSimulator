@@ -23,6 +23,7 @@ import javax.swing.table.JTableHeader;
  * 
  * @author Darryl
  */
+@Deprecated
 public class DefaultTableHeaderCellRenderer extends DefaultTableCellRenderer
 {
 	/**

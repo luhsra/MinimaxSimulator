@@ -5,6 +5,7 @@ import java.io.InputStream;
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.model.user.ProjectConfiguration;
 
+@Deprecated
 class UserXmlImporter extends Importer
 {
 	ProjectConfiguration loadProjectConfiguration(InputStream stream) throws ProjectImportException

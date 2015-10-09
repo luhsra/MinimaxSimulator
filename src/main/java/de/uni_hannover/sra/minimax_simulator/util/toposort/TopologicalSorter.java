@@ -88,7 +88,7 @@ public interface TopologicalSorter
 	 * Sorts the collection of elements into a newly created list. <br>
 	 * <br>
 	 * The elements are ordered w.r.t. their dependencies provided by the
-	 * {@link TopologicalDependencyRelation#dependsOn(T, T)} method which is queried for every pair
+	 * {@link TopologicalDependencyRelation#dependsOn(Object, Object)} method which is queried for every pair
 	 * of elements in the collection parameter of this method.
 	 * 
 	 * @throws IllegalArgumentException
@@ -104,7 +104,7 @@ public interface TopologicalSorter
 	 * Sorts the collection of elements into the given list, which is cleared before the insertion.<br>
 	 * <br>
 	 * The elements are ordered w.r.t. their dependencies provided by the
-	 * {@link TopologicalDependencyRelation#dependsOn(T, T)} method which is queried for every pair
+	 * {@link TopologicalDependencyRelation#dependsOn(Object, Object)} method which is queried for every pair
 	 * of elements in the collection parameter of this method.
 	 * 
 	 * @throws IllegalArgumentException

@@ -2,7 +2,19 @@ package de.uni_hannover.sra.minimax_simulator.ui.schematics;
 
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 
-public interface SpriteOwner
-{
+/**
+ * A {code SpriteOwner} is a class that contains {@link Sprite}s.
+ *
+ * @author Martin L&uuml;ck
+ */
+public interface SpriteOwner {
+
+	/**
+	 * Creates the {@code Sprite} of the owner.
+	 *
+	 * @return
+	 *          the created {@code Sprite}
+	 */
 	public Sprite createSprite();
+
 }

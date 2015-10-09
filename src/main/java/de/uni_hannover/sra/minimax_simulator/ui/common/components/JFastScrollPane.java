@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
  * 
  * @author Martin
  */
+@Deprecated
 public final class JFastScrollPane extends JScrollPane
 {
 	public JFastScrollPane(Component view)

@@ -7,6 +7,7 @@ import javax.swing.text.DefaultFormatter;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.AddressRange;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 
+@Deprecated
 public class AddressFormatter extends DefaultFormatter
 {
 	private final AddressRange _range;

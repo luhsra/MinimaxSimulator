@@ -20,6 +20,7 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 
+@Deprecated
 public class JDraggableTabPanel extends JTabbedPane
 {
 	private boolean	_dragging				= false;

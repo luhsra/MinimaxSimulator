@@ -7,6 +7,7 @@ import javax.swing.AbstractAction;
 import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.JInfoDialog;
 
+@Deprecated
 public class HelpInfo extends AbstractAction
 {
 	@Override

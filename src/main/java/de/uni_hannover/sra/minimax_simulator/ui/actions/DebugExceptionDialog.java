@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+@Deprecated
 public class DebugExceptionDialog extends AbstractAction
 {
 	@Override

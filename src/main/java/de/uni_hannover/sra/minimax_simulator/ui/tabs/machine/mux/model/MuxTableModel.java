@@ -14,6 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 
+@Deprecated
 public class MuxTableModel extends AbstractTableModel implements MachineConfigListener
 {
 	private final List<MuxInput>	_sources	= new ArrayList<MuxInput>();

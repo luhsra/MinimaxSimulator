@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 
+@Deprecated
 public abstract class AbstractRegisterTableModel extends AbstractTableModel
 {
 	protected final List<RegisterExtension>	_registers;
