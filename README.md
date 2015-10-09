@@ -1,6 +1,10 @@
 Minimax Simulator
 =================
 
+Latest version: 1.0.0
+---------------------
+[![Travis CI Build Status](https://travis-ci.org/SRAhub/MinimaxSimulator.png?branch=master)](https://travis-ci.org/SRAhub/MinimaxSimulator)
+
 Minimax Simulator is a platform independent GUI-based Minimax simulator written in Java.
 
 **Content:**
