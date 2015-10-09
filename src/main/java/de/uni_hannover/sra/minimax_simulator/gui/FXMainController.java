@@ -7,6 +7,7 @@ import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalCsvExporter;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalHtmlExporter;
+import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplayListener;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
@@ -17,6 +18,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.*;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -26,6 +28,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -47,7 +51,7 @@ import java.util.List;
  *
  * @author Philipp Rohde
  */
-public class FXMainController implements WorkspaceListener {
+public class FXMainController implements WorkspaceListener, MachineDisplayListener {
 
     @FXML private Menu menuProject;
     @FXML private MenuItem project_new;
@@ -366,8 +370,28 @@ public class FXMainController implements WorkspaceListener {
 
         // init overview tab
         this.schematics = new MachineSchematics(Main.getWorkspace().getProject().getMachine());
-        this.schematics.translateXProperty().bind(paneOverview.widthProperty().subtract(schematics.widthProperty()).divide(2));
-        paneOverview.setContent(this.schematics);
+        //this.schematics.translateXProperty().bind(paneOverview.widthProperty().subtract(schematics.widthProperty()).divide(2));
+        //paneOverview.setContent(this.schematics);
+
+        // the canvas didn't resize itself correctly on mac; here is the workaround
+        schematicsToImage();
+    }
+
+    /**
+     * Workaround for Mac:
+     * Using the schematics itself for rendering caused a bug on Mac. The canvas did resize but didn't fill
+     * the new occupied space so the schematics were cropped. Using an image instead of the canvas solved the problem.
+     */
+    private void schematicsToImage() {
+        ImageView imgView = new ImageView();
+        Image img = this.schematics.snapshot(null, null);
+
+        imgView.translateXProperty().bind(paneOverview.widthProperty().subtract(img.widthProperty()).divide(2));
+        imgView.setFitHeight(img.getHeight());
+        imgView.setFitWidth(img.getWidth());
+
+        imgView.setImage(img);
+        paneOverview.setContent(imgView);
     }
 
     /**
@@ -718,5 +742,30 @@ public class FXMainController implements WorkspaceListener {
         if (Main.getWorkspace().getCurrentProjectFile() != null) {
             project_save.setDisable(false);
         }
+    }
+
+    @Override
+    public void machineSizeChanged() {
+        schematicsToImage();
+    }
+
+    @Override
+    public void machineDisplayChanged() {
+        schematicsToImage();
+    }
+
+    @Override
+    public void onSpriteOwnerAdded(SpriteOwner spriteOwner) {
+        // not needed here
+    }
+
+    @Override
+    public void onSpriteOwnerRemoved(SpriteOwner spriteOwner) {
+        // not needed here
+    }
+
+    @Override
+    public void onSpriteOwnerChanged(SpriteOwner spriteOwner) {
+        // not needed here
     }
 }
