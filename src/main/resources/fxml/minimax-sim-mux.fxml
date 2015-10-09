@@ -17,7 +17,7 @@
     </rowConstraints>
     <children>
         <TitledPane fx:id="paneMuxA" animated="false" collapsible="false" prefHeight="590.0" prefWidth="450.0"
-                    text="Mux A">
+                    text="Mux A" GridPane.valignment="TOP">
             <content>
                 <GridPane>
                     <columnConstraints>
@@ -98,7 +98,7 @@
         </TitledPane>
         <TitledPane id="source-editor_title" fx:id="paneSelectedConnection" animated="false" collapsible="false"
                     minWidth="230.0" prefHeight="590.0" prefWidth="275.0" text="Ausgewählter Anschluss"
-                    GridPane.columnIndex="1">
+                    GridPane.columnIndex="1" GridPane.valignment="TOP">
             <content>
                 <VBox>
                     <children>
@@ -158,7 +158,7 @@
             </padding>
         </TitledPane>
         <TitledPane fx:id="paneMuxB" animated="false" collapsible="false" prefHeight="590.0" prefWidth="450.0"
-                    text="Mux B" GridPane.columnIndex="2">
+                    text="Mux B" GridPane.columnIndex="2" GridPane.valignment="TOP">
             <content>
                 <GridPane>
                     <columnConstraints>

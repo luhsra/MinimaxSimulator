@@ -19,32 +19,41 @@
         <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
     </rowConstraints>
     <children>
-
-        <VBox maxHeight="50.0" prefHeight="100.0" spacing="15.0" GridPane.halignment="CENTER"
-              GridPane.valignment="CENTER" GridPane.columnIndex="1">
-            <padding>
-                <Insets bottom="15.0" left="20.0" right="20.0" top="15.0"/>
-            </padding>
+        <GridPane GridPane.halignment="CENTER" GridPane.valignment="TOP" GridPane.columnIndex="1">
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" minWidth="30.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="548.0" vgrow="NEVER"/>
+            </rowConstraints>
             <children>
-                <Button fx:id="btnMoveUp" mnemonicParsing="false" onAction="#moveOperation" text="">
-                    <graphic>
-                        <ImageView>
-                            <Image url="/images/fugue/arrow-090.png"/>
-                        </ImageView>
-                    </graphic>
-                </Button>
-                <Button fx:id="btnMoveDown" mnemonicParsing="false" onAction="#moveOperation" text="">
-                    <graphic>
-                        <ImageView>
-                            <Image url="/images/fugue/arrow-270.png"/>
-                        </ImageView>
-                    </graphic>
-                </Button>
+                <VBox maxHeight="50.0" prefHeight="100.0" spacing="15.0" GridPane.halignment="CENTER"
+                      GridPane.valignment="CENTER">
+                    <padding>
+                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0"/>
+                    </padding>
+                    <children>
+                        <Button fx:id="btnMoveUp" mnemonicParsing="false" onAction="#moveOperation" text="">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="/images/fugue/arrow-090.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btnMoveDown" mnemonicParsing="false" onAction="#moveOperation" text="">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="/images/fugue/arrow-270.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                </VBox>
             </children>
-        </VBox>
+        </GridPane>
 
         <TitledPane id="alu_added_title" fx:id="paneAddedOP" animated="false" collapsible="false" prefHeight="590.0"
-                    prefWidth="350.0" text="Hinzugefügte Operationen">
+                    prefWidth="350.0" text="Hinzugefügte Operationen" GridPane.valignment="TOP">
             <content>
                 <TableView fx:id="tableAdded" prefHeight="548.0" prefWidth="333.0" AnchorPane.bottomAnchor="0.0"
                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -60,8 +69,10 @@
                 <Insets left="15.0" top="15.0"/>
             </padding>
         </TitledPane>
+
         <TitledPane id="alu_selected_title" fx:id="paneSelectedOP" animated="false" collapsible="false"
-                    prefHeight="590.0" prefWidth="450.0" text="Ausgewählte Operation" GridPane.columnIndex="2">
+                    prefHeight="590.0" prefWidth="450.0" text="Ausgewählte Operation" GridPane.columnIndex="2"
+                    GridPane.valignment="TOP">
             <content>
                 <GridPane prefHeight="530.0" prefWidth="435.0">
                     <columnConstraints>
@@ -106,8 +117,10 @@
                 <Insets right="15.0" top="15.0"/>
             </padding>
         </TitledPane>
+
         <TitledPane id="alu_available_title" fx:id="paneAvailableOP" animated="false" collapsible="false"
-                    prefHeight="590.0" prefWidth="260.0" text="Verfügbare Operationen" GridPane.columnIndex="3">
+                    prefHeight="590.0" prefWidth="260.0" text="Verfügbare Operationen" GridPane.columnIndex="3"
+                    GridPane.valignment="TOP">
             <content>
                 <TableView fx:id="tableAvailable" prefHeight="548.0" prefWidth="240.0">
                     <columns>
