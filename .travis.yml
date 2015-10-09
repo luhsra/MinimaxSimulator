@@ -4,6 +4,8 @@ branches:
   only:
   - master
 
+jdk: oraclejdk8
+  
 sudo: required
 
 addons:
