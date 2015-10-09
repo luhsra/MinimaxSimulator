@@ -4,17 +4,12 @@ branches:
   only:
   - master
 
-# use JDK 8u60 Linux Homebrew because Travis CI is still running lower than 8u40
-before_install:
-    - sudo apt-get install build-essential
-    - rm -rf ~/.linuxbrew
-    - yes | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
-    - export PATH="$HOME/.linuxbrew/bin:$PATH"
-    - export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-    - export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-    - brew doctor
-    - brew install jdk
-    - export JAVA_HOME=/home/travis/.linuxbrew/Cellar/jdk/1.8.0-60
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
   
 script:
   - mvn clean compile assembly:single
