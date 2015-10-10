@@ -1,19 +1,14 @@
 package de.uni_hannover.sra.minimax_simulator.ui.actions;
 
 import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -24,7 +19,6 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.image.WritableImage;
-import javafx.scene.image.Image;
 
 @Deprecated
 public class ProjectExportSchematics extends ProjectAction
@@ -118,7 +112,7 @@ public class ProjectExportSchematics extends ProjectAction
 		if (defaultFile != null)
 			chooser.setCurrentDirectory(defaultFile.getParentFile());
 
-		int button = chooser.showSaveDialog(Application.getMainWindow());
+		int button = -1; //chooser.showSaveDialog(Application.getMainWindow());
 		if (button != JFileChooser.APPROVE_OPTION)
 			return null;
 

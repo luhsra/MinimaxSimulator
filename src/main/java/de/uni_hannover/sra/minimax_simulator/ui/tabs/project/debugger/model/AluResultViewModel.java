@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.model;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationListener;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationState;
@@ -27,7 +27,7 @@ public class AluResultViewModel extends AbstractTableModel implements
 		if (simulation.getState() != SimulationState.OFF)
 			_aluResult = simulation.getAluResult();
 
-		TextResource res = Application.getTextResource("debugger");
+		TextResource res = Main.getTextResource("debugger");
 		_colNames = new String[] { res.get("alu.dec"), res.get("alu.hex") };
 
 		_simulation.addSimulationListener(this);

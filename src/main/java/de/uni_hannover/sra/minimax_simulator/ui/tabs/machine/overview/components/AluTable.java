@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 import de.uni_hannover.sra.minimax_simulator.ui.common.components.tabbed.JPersistentTabPanel;
@@ -22,7 +22,7 @@ class AluTable extends JTable implements Disposable
 	public AluTable(MachineConfiguration machine)
 	{
 		_conf = machine;
-		_model = new AluTableModel(machine, Application.getTextResource("alu"));
+		_model = new AluTableModel(machine, Main.getTextResource("alu"));
 		setModel(_model);
 		_conf.addMachineConfigListener(_model);
 
@@ -33,7 +33,7 @@ class AluTable extends JTable implements Disposable
 			{
 				if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2)
 				{
-					JPersistentTabPanel projectPanel = Application.getMainWindow().getWorkspacePanel().getProjectPanel();
+					JPersistentTabPanel projectPanel = null; //Application.getMainWindow().getWorkspacePanel().getProjectPanel();
 					if (projectPanel != null)
 					{
 						// switch to alu editor tab

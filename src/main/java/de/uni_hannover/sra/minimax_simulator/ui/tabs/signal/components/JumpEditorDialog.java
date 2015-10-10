@@ -16,8 +16,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
@@ -126,7 +126,7 @@ public class JumpEditorDialog extends JDialog
 	{
 		_jump = null;
 
-		TextResource res = Application.getTextResource("machine").using("signal.jump");
+		TextResource res = Main.getTextResource("machine").using("signal.jump");
 
 		_okAction = new OkAction(res.get("ok"));
 

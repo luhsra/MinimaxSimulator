@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigMuxEvent;
@@ -51,7 +51,7 @@ public class MuxEditorPanel extends JPanel implements Disposable, MachineConfigL
 				_config.addMuxSource(model.getMux(), createDefaultMuxSource());
 				table.getSelectionModel().setSelectionInterval(index, index);
 
-				Application.getWorkspace().setProjectUnsaved();
+				Main.getWorkspace().setProjectUnsaved();
 			}
 		}
 
@@ -66,10 +66,10 @@ public class MuxEditorPanel extends JPanel implements Disposable, MachineConfigL
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				int choice = JOptionPane.showConfirmDialog(Application.getMainWindow(),
-					res.format("mux.delete-dialog.message", model.getMux().toString()),
-					res.get("mux.delete-dialog.title"), JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.WARNING_MESSAGE);
+				int choice = -1; //JOptionPane.showConfirmDialog(Application.getMainWindow(),
+					//res.format("mux.delete-dialog.message", model.getMux().toString()),
+					//res.get("mux.delete-dialog.title"), JOptionPane.OK_CANCEL_OPTION,
+					//JOptionPane.WARNING_MESSAGE);
 
 				if (choice != JOptionPane.OK_OPTION)
 					return;
@@ -100,7 +100,7 @@ public class MuxEditorPanel extends JPanel implements Disposable, MachineConfigL
 					table.clearSelection();
 				}
 
-				Application.getWorkspace().setProjectUnsaved();
+				Main.getWorkspace().setProjectUnsaved();
 			}
 		}
 
@@ -131,7 +131,7 @@ public class MuxEditorPanel extends JPanel implements Disposable, MachineConfigL
 
 				table.getSelectionModel().setSelectionInterval(index2, index2);
 
-				Application.getWorkspace().setProjectUnsaved();
+				Main.getWorkspace().setProjectUnsaved();
 			}
 		}
 
@@ -211,7 +211,7 @@ public class MuxEditorPanel extends JPanel implements Disposable, MachineConfigL
 	private final MuxControlGroup		_groupA;
 	private final MuxControlGroup		_groupB;
 
-	private final TextResource			res	= Application.getTextResource("machine");
+	private final TextResource			res	= Main.getTextResource("machine");
 
 	private LayoutManager createLayout()
 	{

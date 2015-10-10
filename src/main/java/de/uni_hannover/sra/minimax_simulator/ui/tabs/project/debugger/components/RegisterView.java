@@ -1,23 +1,19 @@
 package de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.components;
 
 import java.awt.LayoutManager;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
-import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
-import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationState;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
-import de.uni_hannover.sra.minimax_simulator.ui.common.DoubleClickListener;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.model.RegisterViewModel;
 
 @Deprecated
@@ -43,7 +39,7 @@ public class RegisterView extends JPanel implements Disposable
 		setLayout(createLayout());
 
 		// TODO: get this from constructor
-		TextResource res = Application.getTextResource("debugger");
+		TextResource res = Main.getTextResource("debugger");
 
 		add(UIUtil.wrapInTitledGroupScroller(_table, res.get("register.title")));
 /*

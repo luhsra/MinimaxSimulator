@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
@@ -64,9 +63,9 @@ public class MemoryExportWorker implements Runnable
 				@Override
 				public void run()
 				{
-					JOptionPane.showMessageDialog(Application.getMainWindow(),
-						_res.format("write-error", _file.getPath()),
-						_res.get("error"), JOptionPane.ERROR_MESSAGE);
+					//JOptionPane.showMessageDialog(Main.getMainWindow(),
+					//	_res.format("write-error", _file.getPath()),
+					//	_res.get("error"), JOptionPane.ERROR_MESSAGE);
 				}
 			});
 		}

@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Config;
 
 @Deprecated
@@ -14,6 +13,6 @@ public class DebugSprites extends AbstractAction
 	public void actionPerformed(ActionEvent e)
 	{
 		Config.DEBUG_SCHEMATICS = !Config.DEBUG_SCHEMATICS;
-		Application.getMainWindow().getWorkspacePanel().repaint();
+		//Application.getMainWindow().getWorkspacePanel().repaint();
 	}
 }

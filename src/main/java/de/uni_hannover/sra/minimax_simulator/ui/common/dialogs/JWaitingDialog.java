@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 
 @Deprecated
@@ -47,7 +47,7 @@ public final class JWaitingDialog extends JDialog
 
 		if (cancelAction != null)
 		{
-			TextResource res = Application.getTextResource("application");
+			TextResource res = Main.getTextResource("application");
 			final JButton cancel = new JButton(res.get("wait.cancel"));
 			add(cancel, down);
 

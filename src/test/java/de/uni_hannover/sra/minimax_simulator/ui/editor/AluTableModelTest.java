@@ -1,11 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.ui.editor;
 
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfigurationBuilder;
 import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;

@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
@@ -17,7 +17,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.register.models.Mac
 @Deprecated
 class RegisterTable extends JTable implements Disposable
 {
-	private final TextResource				res	= Application.getTextResource("machine");
+	private final TextResource				res	= Main.getTextResource("machine");
 
 	private final MachineConfiguration		_conf;
 	private final MachineRegisterTableModel	_model;
@@ -37,7 +37,7 @@ class RegisterTable extends JTable implements Disposable
 			{
 				if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2)
 				{
-					JPersistentTabPanel projectPanel = Application.getMainWindow().getWorkspacePanel().getProjectPanel();
+					JPersistentTabPanel projectPanel = null; //Application.getMainWindow().getWorkspacePanel().getProjectPanel();
 					if (projectPanel != null)
 					{
 						// switch to alu editor tab

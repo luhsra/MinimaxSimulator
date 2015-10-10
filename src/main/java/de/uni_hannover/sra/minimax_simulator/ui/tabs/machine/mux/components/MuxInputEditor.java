@@ -16,8 +16,8 @@ import javax.swing.SpinnerModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.ConstantMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
@@ -59,7 +59,7 @@ class MuxInputEditor extends JPanel implements Disposable
 	{
 		_config = config;
 
-		TextResource res = Application.getTextResource("machine");
+		TextResource res = Main.getTextResource("machine");
 
 		_radioConstant = new JRadioButton(res.get("mux.radio.constant"));
 		_radioRegister = new JRadioButton(res.get("mux.radio.register"));
@@ -325,7 +325,7 @@ class MuxInputEditor extends JPanel implements Disposable
 
 		updateButton();
 
-		Application.getWorkspace().setProjectUnsaved();
+		Main.getWorkspace().setProjectUnsaved();
 	}
 
 	@Override

@@ -17,8 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -37,16 +37,16 @@ public class MemoryExportPanel extends JPanel implements MemorySelectionListener
 		public void mouseClicked(MouseEvent e)
 		{
 			JFileChooser chooser = new JFileChooser();
-			int result = chooser.showSaveDialog(Application.getMainWindow());
+			int result = -1; //chooser.showSaveDialog(Application.getMainWindow());
 			if (result == JFileChooser.APPROVE_OPTION)
 			{
 				File file = chooser.getSelectedFile();
 				if (file.exists())
 				{
-					int overwrite = JOptionPane.showConfirmDialog(
-						Application.getMainWindow(),
-						_res.format("overwrite.confirm.message", file.getName()),
-						_res.get("overwrite.confirm.title"), JOptionPane.OK_CANCEL_OPTION);
+					int overwrite = -1; //JOptionPane.showConfirmDialog(
+						//Application.getMainWindow(),
+						//_res.format("overwrite.confirm.message", file.getName()),
+						//_res.get("overwrite.confirm.title"), JOptionPane.OK_CANCEL_OPTION);
 
 					if (overwrite != JOptionPane.OK_OPTION)
 						return;
@@ -101,7 +101,7 @@ public class MemoryExportPanel extends JPanel implements MemorySelectionListener
 	{
 		_memory = memory;
 
-		_res = Application.getTextResource("project").using("memory.export");
+		_res = Main.getTextResource("project").using("memory.export");
 
 		setLayout(createLayout());
 

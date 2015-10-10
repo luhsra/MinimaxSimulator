@@ -3,7 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.tabs.signal.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
@@ -19,7 +19,7 @@ public class SignalTableModel extends AbstractProgramTableModel implements Signa
 
 	public SignalTableModel(SignalTable signalTable, SignalConfiguration signalConfig)
 	{
-		super(Application.getTextResource("signal"), signalTable);
+		super(Main.getTextResource("signal"), signalTable);
 
 		_signalTable = signalTable;
 		_signalConfig = signalConfig;

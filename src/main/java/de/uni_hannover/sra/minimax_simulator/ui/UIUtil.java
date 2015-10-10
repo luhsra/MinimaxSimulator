@@ -28,7 +28,6 @@ import javax.swing.border.TitledBorder;
 
 import com.google.common.base.Throwables;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -165,9 +164,9 @@ public class UIUtil
 	//TODO: convert to JavaFX
 	public static boolean confirmCloseProjectAndExit()
 	{
-		if (Application.getWorkspace().isUnsaved())
+		if (Main.getWorkspace().isUnsaved())
 		{
-			TextResource res = Application.getTextResource("application");
+			TextResource res = Main.getTextResource("application");
 
 			return confirmCloseProject(res.get("close-project.exit.message"),
 				res.get("close-project.exit.title"));
@@ -178,12 +177,12 @@ public class UIUtil
 	//TODO: convert to JavaFX
 	public static boolean confirmOverwriteFile(String filename)
 	{
-		TextResource res = Application.getTextResource("application");
+		TextResource res = Main.getTextResource("application");
 
-		return JOptionPane.showConfirmDialog(Application.getMainWindow(),
-			res.format("application.overwrite.confirm.message", filename),
-			res.get("application.overwrite.confirm.title"), JOptionPane.OK_CANCEL_OPTION,
-			JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION;
+		return false; //JOptionPane.showConfirmDialog(Application.getMainWindow(),
+			//res.format("application.overwrite.confirm.message", filename),
+			//res.get("application.overwrite.confirm.title"), JOptionPane.OK_CANCEL_OPTION,
+			//JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION;
 	}
 
 	/**
@@ -299,8 +298,7 @@ public class UIUtil
 	//TODO: Conversion to JavaFX
 	private static boolean confirmCloseProject(String message, String title)
 	{
-		int result = JOptionPane.showConfirmDialog(Application.getMainWindow(), message,
-			title, JOptionPane.YES_NO_CANCEL_OPTION);
+		int result = -1; //JOptionPane.showConfirmDialog(Application.getMainWindow(), message, title, JOptionPane.YES_NO_CANCEL_OPTION);
 
 		switch (result)
 		{

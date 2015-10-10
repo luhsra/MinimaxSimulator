@@ -19,8 +19,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -42,7 +42,7 @@ public class MemoryImportPanel extends JPanel implements MemorySelectionListener
 		public void mouseClicked(MouseEvent e)
 		{
 			JFileChooser chooser = new JFileChooser();
-			int result = chooser.showOpenDialog(Application.getMainWindow());
+			int result = -1; //chooser.showOpenDialog(Application.getMainWindow());
 			if (result == JFileChooser.APPROVE_OPTION)
 			{
 				updateFileSelection(chooser.getSelectedFile());
@@ -61,9 +61,9 @@ public class MemoryImportPanel extends JPanel implements MemorySelectionListener
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			int result = JOptionPane.showConfirmDialog(Application.getMainWindow(),
-				_res.get("confirm.message"),
-				_res.get("confirm.title"), JOptionPane.OK_CANCEL_OPTION);
+			int result = -1; //JOptionPane.showConfirmDialog(Application.getMainWindow(),
+				//_res.get("confirm.message"),
+				//_res.get("confirm.title"), JOptionPane.OK_CANCEL_OPTION);
 
 			if (result != JOptionPane.OK_OPTION)
 				return;
@@ -124,7 +124,7 @@ public class MemoryImportPanel extends JPanel implements MemorySelectionListener
 	{
 		_memory = memory;
 
-		_res = Application.getTextResource("project").using("memory.import");
+		_res = Main.getTextResource("project").using("memory.import");
 
 		setLayout(createLayout());
 

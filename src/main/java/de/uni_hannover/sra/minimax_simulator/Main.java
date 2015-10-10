@@ -45,6 +45,8 @@ public class Main extends javafx.application.Application {
 
     private static HostServices hostServices;
 
+    private static boolean _isDebugging;
+
     /**
      * Starts the JavaFX application.
      *
@@ -58,6 +60,8 @@ public class Main extends javafx.application.Application {
 
         _primaryStage = primaryStage;
         _version = new Version(this.getClass());
+
+        _isDebugging = System.getProperty("application.debug") != null;
 
         hostServices = getHostServices();
 
@@ -168,6 +172,10 @@ public class Main extends javafx.application.Application {
 
     public static TextResource getTextResource(String bundleName) {
         return _resourceLoader.getTextResource(bundleName);
+    }
+
+    public static boolean isDebugging() {
+        return _isDebugging;
     }
 
     /**

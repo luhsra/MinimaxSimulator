@@ -19,8 +19,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
@@ -58,7 +58,7 @@ public class RegisterEditorPanel extends JPanel implements Disposable
 
 			_registerPanel.focusFirstField();
 
-			Application.getWorkspace().setProjectUnsaved();
+			Main.getWorkspace().setProjectUnsaved();
 		}
 	}
 
@@ -79,14 +79,14 @@ public class RegisterEditorPanel extends JPanel implements Disposable
 
 			RegisterExtension register = _extendedModel.get(row);
 
-			int choice = JOptionPane.showConfirmDialog(Application.getMainWindow(),
-				res.format("register.dialog.delete.message", register.getName()),
-				res.get("register.dialog.delete.title"), JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.WARNING_MESSAGE);
+			int choice = -1; //JOptionPane.showConfirmDialog(Application.getMainWindow(),
+				//res.format("register.dialog.delete.message", register.getName()),
+				//res.get("register.dialog.delete.title"), JOptionPane.OK_CANCEL_OPTION,
+				//JOptionPane.WARNING_MESSAGE);
 			if (choice == JOptionPane.OK_OPTION)
 			{
 				_config.removeRegisterExtension(row);
-				Application.getWorkspace().setProjectUnsaved();
+				Main.getWorkspace().setProjectUnsaved();
 
 				if (_extendedTable.getRowCount() > 0)
 				{
@@ -128,11 +128,11 @@ public class RegisterEditorPanel extends JPanel implements Disposable
 
 			_extendedTable.getSelectionModel().setSelectionInterval(index2, index2);
 
-			Application.getWorkspace().setProjectUnsaved();
+			Main.getWorkspace().setProjectUnsaved();
 		}
 	}
 
-	private final static TextResource		res	= Application.getTextResource("machine");
+	private final static TextResource		res	= Main.getTextResource("machine");
 
 	private final MachineConfiguration		_config;
 

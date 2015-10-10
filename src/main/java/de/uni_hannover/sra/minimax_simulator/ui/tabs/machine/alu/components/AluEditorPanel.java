@@ -22,8 +22,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
@@ -78,7 +78,7 @@ public class AluEditorPanel extends JPanel implements MachineConfigListener, Dis
 				_addedTable.getSelectionModel().addSelectionInterval(selectedIndex,
 					selectedIndex);
 
-			Application.getWorkspace().setProjectUnsaved();
+			Main.getWorkspace().setProjectUnsaved();
 		}
 	}
 
@@ -116,7 +116,7 @@ public class AluEditorPanel extends JPanel implements MachineConfigListener, Dis
 				_availableTable.getSelectionModel().addSelectionInterval(idx, idx);
 			}
 
-			Application.getWorkspace().setProjectUnsaved();
+			Main.getWorkspace().setProjectUnsaved();
 		}
 	}
 
@@ -146,7 +146,7 @@ public class AluEditorPanel extends JPanel implements MachineConfigListener, Dis
 			_config.exchangeAluOperations(index1, index2);
 			_addedTable.getSelectionModel().setSelectionInterval(index2, index2);
 
-			Application.getWorkspace().setProjectUnsaved();
+			Main.getWorkspace().setProjectUnsaved();
 		}
 	}
 
@@ -218,8 +218,8 @@ public class AluEditorPanel extends JPanel implements MachineConfigListener, Dis
 	public AluEditorPanel(final Project project)
 	{
 		setLayout(createLayout());
-		_res = Application.getTextResource("machine");
-		_resAlu = Application.getTextResource("alu");
+		_res = Main.getTextResource("machine");
+		_resAlu = Main.getTextResource("alu");
 		_config = project.getMachineConfiguration();
 
 		_addAction = new AddAction(_res.get("alu.button.add"));
@@ -274,7 +274,7 @@ public class AluEditorPanel extends JPanel implements MachineConfigListener, Dis
 				_availableTable.getSelectionModel().setSelectionInterval(newIndex,
 					newIndex);
 
-				Application.getWorkspace().setProjectUnsaved();
+				Main.getWorkspace().setProjectUnsaved();
 			}
 		});
 		_availableTable.addMouseListener(new AluOperationDoubleClickListener(
@@ -288,7 +288,7 @@ public class AluEditorPanel extends JPanel implements MachineConfigListener, Dis
 				int newIndex = _addedModel.getRowCount() - 1;
 				_addedTable.getSelectionModel().setSelectionInterval(newIndex, newIndex);
 
-				Application.getWorkspace().setProjectUnsaved();
+				Main.getWorkspace().setProjectUnsaved();
 			}
 		});
 

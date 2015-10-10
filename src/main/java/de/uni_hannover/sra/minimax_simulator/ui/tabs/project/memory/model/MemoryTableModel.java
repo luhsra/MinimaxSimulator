@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.*;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryAccessListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -48,7 +48,7 @@ public class MemoryTableModel extends AbstractTableModel implements MemoryAccess
 
 		_page = _cachedPageStart = 0;
 
-		TextResource res = Application.getTextResource("project");
+		TextResource res = Main.getTextResource("project");
 
 		_colNames = new String[] { res.get("memtable.address"), res.get("memtable.dec"),
 				res.get("memtable.hex") };

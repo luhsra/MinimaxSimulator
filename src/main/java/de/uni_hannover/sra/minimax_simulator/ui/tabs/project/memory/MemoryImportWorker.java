@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 
 import com.google.common.io.ByteStreams;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
@@ -73,9 +72,9 @@ public class MemoryImportWorker implements Runnable
 				@Override
 				public void run()
 				{
-					JOptionPane.showMessageDialog(Application.getMainWindow(),
-						_res.format("file-not-existing", _file.getPath()),
-						_res.get("error"), JOptionPane.ERROR_MESSAGE);
+					//JOptionPane.showMessageDialog(Application.getMainWindow(),
+					//	_res.format("file-not-existing", _file.getPath()),
+					//	_res.get("error"), JOptionPane.ERROR_MESSAGE);
 				}
 			});
 		}
@@ -141,8 +140,7 @@ public class MemoryImportWorker implements Runnable
 				@Override
 				public void run()
 				{
-					JOptionPane.showMessageDialog(Application.getMainWindow(),
-						message, title, JOptionPane.WARNING_MESSAGE);
+					//JOptionPane.showMessageDialog(Application.getMainWindow(), message, title, JOptionPane.WARNING_MESSAGE);
 				}
 			});
 		}

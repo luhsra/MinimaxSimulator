@@ -10,8 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationListener;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationState;
@@ -113,7 +113,7 @@ public class SimulationPanel extends JPanel implements Disposable, SimulationLis
 		}
 	}
 
-	private final TextResource	_res				= Application.getTextResource("debugger");
+	private final TextResource	_res				= Main.getTextResource("debugger");
 
 	private final Action		_initAction;
 	private final Action		_resetAction;
@@ -147,7 +147,7 @@ public class SimulationPanel extends JPanel implements Disposable, SimulationLis
 		_simulation.addSimulationListener(this);
 
 		Icons icons = Icons.getInstance();
-		TextResource res = Application.getTextResource("debugger");
+		TextResource res = Main.getTextResource("debugger");
 
 		_initAction = new InitAction(icons.get(res.get("action.init.icon")));
 		_resetAction = new ResetAction(icons.get(res.get("action.reset.icon")));

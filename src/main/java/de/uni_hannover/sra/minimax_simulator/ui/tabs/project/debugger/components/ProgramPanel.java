@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationListener;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationState;
@@ -51,7 +51,7 @@ public class ProgramPanel extends JPanel implements Disposable, SimulationListen
 
 	public ProgramPanel(Simulation simulation, SignalTable signalTable)
 	{
-		_res = Application.getTextResource("machine");
+		_res = Main.getTextResource("machine");
 
 		_simulation = simulation;
 		_signalTable = signalTable;
@@ -152,7 +152,7 @@ public class ProgramPanel extends JPanel implements Disposable, SimulationListen
 				if (isValidCell(row, col))
 				{
 					if (_model.toggleCell(row, col))
-						Application.getWorkspace().setProjectUnsaved();
+						Main.getWorkspace().setProjectUnsaved();
 				}
 			}
 		});

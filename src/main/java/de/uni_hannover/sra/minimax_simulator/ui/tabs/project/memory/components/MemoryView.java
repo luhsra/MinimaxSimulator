@@ -24,8 +24,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -141,7 +141,7 @@ public class MemoryView extends JPanel implements Disposable, ListSelectionListe
 
 		setLayout(createLayout());
 
-		TextResource res = Application.getTextResource("project");
+		TextResource res = Main.getTextResource("project");
 
 		_model = new MemoryTableModel(memory);
 		_table = new JTable(_model)

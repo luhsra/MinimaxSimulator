@@ -3,7 +3,6 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;

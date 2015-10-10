@@ -7,7 +7,6 @@ import java.util.List;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import org.jdom2.Element;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfigurationBuilder;

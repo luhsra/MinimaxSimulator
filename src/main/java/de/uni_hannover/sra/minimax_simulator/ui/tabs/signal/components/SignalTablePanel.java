@@ -35,11 +35,11 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
 
 import com.google.common.base.Objects;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
@@ -92,7 +92,7 @@ public class SignalTablePanel extends JPanel implements Disposable
 			}
 			_signalTable.addSignalRow(selectedIndex, new SignalRow());
 			_table.getSelectionModel().setSelectionInterval(selectedIndex, selectedIndex);
-			Application.getWorkspace().setProjectUnsaved();
+			Main.getWorkspace().setProjectUnsaved();
 		}
 	}
 
@@ -118,7 +118,7 @@ public class SignalTablePanel extends JPanel implements Disposable
 				}
 			}
 
-			Application.getWorkspace().setProjectUnsaved();
+			Main.getWorkspace().setProjectUnsaved();
 		}
 	}
 
@@ -139,7 +139,7 @@ public class SignalTablePanel extends JPanel implements Disposable
 			_signalTable.moveSignalRows(min, max, -1);
 
 			_table.getSelectionModel().setSelectionInterval(min - 1, max - 1);
-			Application.getWorkspace().setProjectUnsaved();
+			Main.getWorkspace().setProjectUnsaved();
 		}
 	}
 
@@ -160,7 +160,7 @@ public class SignalTablePanel extends JPanel implements Disposable
 			_signalTable.moveSignalRows(min, max, 1);
 
 			_table.getSelectionModel().setSelectionInterval(min + 1, max + 1);
-			Application.getWorkspace().setProjectUnsaved();
+			Main.getWorkspace().setProjectUnsaved();
 		}
 	}
 
@@ -195,7 +195,7 @@ public class SignalTablePanel extends JPanel implements Disposable
 
 	public SignalTablePanel(SignalTable signalTable, SignalConfiguration config)
 	{
-		_res = Application.getTextResource("machine");
+		_res = Main.getTextResource("machine");
 
 		_signalTable = signalTable;
 		_signalConfig = config;
@@ -212,7 +212,7 @@ public class SignalTablePanel extends JPanel implements Disposable
 				super.setValueAt(aValue, rowIndex, columnIndex);
 				// changed values could change the description column width
 				revalidate();
-				Application.getWorkspace().setProjectUnsaved();
+				Main.getWorkspace().setProjectUnsaved();
 			}
 		};
 
@@ -482,7 +482,7 @@ public class SignalTablePanel extends JPanel implements Disposable
 		if (col instanceof ToggleColumn)
 		{
 			_model.toggleCell(rowIndex, colIndex);
-			Application.getWorkspace().setProjectUnsaved();
+			Main.getWorkspace().setProjectUnsaved();
 		}
 		else if (col instanceof JumpTargetColumn || col instanceof ConditionColumn)
 		{
@@ -500,7 +500,7 @@ public class SignalTablePanel extends JPanel implements Disposable
 			if (!jump.equals(row.getJump()))
 			{
 				_signalTable.setRowJump(rowIndex, jump);
-				Application.getWorkspace().setProjectUnsaved();
+				Main.getWorkspace().setProjectUnsaved();
 			}
 		}
 		else if (col instanceof EditableColumn)

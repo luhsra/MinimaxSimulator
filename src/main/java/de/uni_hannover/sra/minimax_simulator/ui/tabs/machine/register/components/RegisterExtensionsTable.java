@@ -5,14 +5,14 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.tabs.machine.common.models.AbstractRegisterTableModel;
 
 @Deprecated
 class RegisterExtensionsTable extends JTable
 {
-	private final static TextResource			res	= Application.getTextResource("machine");
+	private final static TextResource			res	= Main.getTextResource("machine");
 
 	private final AbstractRegisterTableModel	_model;
 

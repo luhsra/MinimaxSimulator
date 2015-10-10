@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigRegisterEvent;
@@ -72,7 +72,7 @@ public class RegisterViewModel extends AbstractTableModel implements
 		_config = config;
 		_simulation = simulation;
 
-		TextResource res = Application.getTextResource("debugger");
+		TextResource res = Main.getTextResource("debugger");
 		_colNames = new String[] { res.get("register.name"), res.get("register.dec"),
 				res.get("register.hex") };
 

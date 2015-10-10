@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
 import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
@@ -30,12 +30,11 @@ import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectExportSchematics;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectExportSignalTable;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectNew;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectOpen;
-import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSave;
-import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ViewDummy;
 import de.uni_hannover.sra.minimax_simulator.ui.actions.ViewTabAction;
 import de.uni_hannover.sra.minimax_simulator.ui.util.MenuBuilder;
 import de.uni_hannover.sra.minimax_simulator.ui.util.MenuBuilder.MenuAppender;
+import javafx.application.Platform;
 
 @Deprecated
 public class MainWindow extends JFrame implements WorkspaceListener
@@ -51,7 +50,7 @@ public class MainWindow extends JFrame implements WorkspaceListener
 		_res = checkNotNull(appRes, "application text resource is null");
 		_ws = checkNotNull(ws, "workspace is null");
 
-		_versionString = Application.getVersionString();
+		_versionString = Main.getVersionString();
 
 		List<Image> images = new ArrayList<Image>(2);
 		images.add(Icons.getInstance().get(appRes.get("application.icon-big")).getImage());
@@ -74,7 +73,7 @@ public class MainWindow extends JFrame implements WorkspaceListener
 			@Override
 			public void windowClosing(WindowEvent e)
 			{
-				Application.shutdown();
+				Platform.exit();
 			}
 
 		    @Override
@@ -144,7 +143,7 @@ public class MainWindow extends JFrame implements WorkspaceListener
 
 		bar.add(m.buildMenu("help").appendItem("help.info", new HelpInfo()).menu());
 
-		if (Application.isDebugging())
+		if (Main.isDebugging())
 		{
 			ma = m.buildMenu("debug");
 			ma.appendItem("debug.gc", new DebugGc());

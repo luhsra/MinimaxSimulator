@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
@@ -43,7 +43,7 @@ public class JErrorDialog extends JDialog
 		String titleStr = "Error";
 		try
 		{
-			TextResource res = Application.getTextResource("exception");
+			TextResource res = Main.getTextResource("exception");
 			titleStr = res.get("exception-dialog.title");
 		}
 		catch (Throwable e0)
@@ -87,7 +87,7 @@ public class JErrorDialog extends JDialog
 
 		try
 		{
-			TextResource res = Application.getTextResource("exception");
+			TextResource res = Main.getTextResource("exception");
 			closeStr = res.get("exception-dialog.close");
 			detailsStr = res.get("exception-dialog.details");
 			messageStr = res.get("exception-dialog.message");

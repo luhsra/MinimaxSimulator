@@ -3,7 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationListener;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationState;
@@ -31,7 +31,7 @@ public class ProgramTableModel extends AbstractProgramTableModel implements
 
 	public ProgramTableModel(SignalTable signalTable, Simulation simulation)
 	{
-		super(Application.getTextResource("signal"), signalTable);
+		super(Main.getTextResource("signal"), signalTable);
 
 		_simulation = simulation;
 		_simulation.addSimulationListener(this);

@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
@@ -19,7 +19,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 @Deprecated
 public class ProjectOpen extends AbstractAction
 {
-	private final static TextResource	res	= Application.getTextResource("application");
+	private final static TextResource	res	= Main.getTextResource("application");
 
 	private final static Logger			log	= Logger.getLogger(ProjectOpen.class.getName());
 
@@ -34,13 +34,13 @@ public class ProjectOpen extends AbstractAction
 		chooser.setFileFilter(new FileNameExtensionFilter(
 			res.get("project.filedescription"), "zip"));
 
-		File lastFolder = Application.getWorkspace().getLastProjectFolder();
+		File lastFolder = Main.getWorkspace().getLastProjectFolder();
 		if (lastFolder != null && lastFolder.exists())
 		{
 			chooser.setCurrentDirectory(lastFolder);	
 		}
 
-		int selection = chooser.showOpenDialog(Application.getMainWindow());
+		int selection = -1; //chooser.showOpenDialog(Main.getMainWindow());
 		if (selection != JFileChooser.APPROVE_OPTION)
 			return;
 
@@ -53,23 +53,23 @@ public class ProjectOpen extends AbstractAction
 			{
 				try
 				{
-					Application.getWorkspace().openProject(file);
+					Main.getWorkspace().openProject(file);
 
 					UI.invokeNow(new Runnable()
 					{
 						@Override
 						public void run()
 						{
-							Application.getMainWindow().getWorkspacePanel().openDefaultTabs();
+							//Application.getMainWindow().getWorkspacePanel().openDefaultTabs();
 						}
 					});
 				}
 				catch (ProjectImportException e)
 				{
-					Application.getWorkspace().closeProject();
-					JOptionPane.showMessageDialog(Application.getMainWindow(),
+					Main.getWorkspace().closeProject();
+					/*JOptionPane.showMessageDialog(Application.getMainWindow(),
 						res.get("load-error.message"), res.get("load-error.title"),
-						JOptionPane.ERROR_MESSAGE);
+						JOptionPane.ERROR_MESSAGE);*/
 					log.log(Level.WARNING, e.getMessage(), e);
 				}
 			}

@@ -10,8 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -30,9 +30,9 @@ public class MemoryClearPanel extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			int result = JOptionPane.showConfirmDialog(Application.getMainWindow(),
-				_res.get("confirm.message"),
-				_res.get("confirm.title"), JOptionPane.OK_CANCEL_OPTION);
+			int result = -1; //JOptionPane.showConfirmDialog(Application.getMainWindow(),
+			//	_res.get("confirm.message"),
+			//	_res.get("confirm.title"), JOptionPane.OK_CANCEL_OPTION);
 
 			if (result != JOptionPane.OK_OPTION)
 				return;
@@ -58,7 +58,7 @@ public class MemoryClearPanel extends JPanel
 	{
 		_memory = memory;
 
-		_res = Application.getTextResource("project").using("memory.clear");
+		_res = Main.getTextResource("project").using("memory.clear");
 
 		setLayout(createLayout());
 

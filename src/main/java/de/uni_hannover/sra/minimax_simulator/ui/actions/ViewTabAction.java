@@ -2,8 +2,6 @@ package de.uni_hannover.sra.minimax_simulator.ui.actions;
 
 import java.awt.event.ActionEvent;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
-
 @Deprecated
 public class ViewTabAction extends ProjectAction
 {
@@ -17,7 +15,6 @@ public class ViewTabAction extends ProjectAction
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		Application.getMainWindow().getWorkspacePanel().getProjectPanel().selectTab(_tab,
-			true);
+		//Application.getMainWindow().getWorkspacePanel().getProjectPanel().selectTab(_tab, true);
 	}
 }

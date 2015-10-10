@@ -12,7 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.Version;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -27,7 +27,7 @@ public class JInfoDialog extends JDialog implements ActionListener
 		setTitle(res.get("info.title"));
 		setResizable(false);
 
-		Version version = Application.getVersion();
+		Version version = new Version(Main.class);
 
 		JLabel image1 = new JLabel(Icons.getInstance().get(res.get("info.image1")));
 		JLabel image2 = new JLabel(Icons.getInstance().get(res.get("info.image2")));

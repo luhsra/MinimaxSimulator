@@ -5,10 +5,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalCsvExporter;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalHtmlExporter;
@@ -97,7 +95,7 @@ public class ProjectExportSignalTable extends ProjectAction {
 		if (defaultFile != null)
 			chooser.setCurrentDirectory(defaultFile.getParentFile());
 
-		int button = chooser.showSaveDialog(Application.getMainWindow());
+		int button = -1; //chooser.showSaveDialog(Application.getMainWindow());
 		if (button != JFileChooser.APPROVE_OPTION)
 			return null;
 

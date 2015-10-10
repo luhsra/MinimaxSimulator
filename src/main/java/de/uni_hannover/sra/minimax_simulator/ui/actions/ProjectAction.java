@@ -2,11 +2,8 @@ package de.uni_hannover.sra.minimax_simulator.ui.actions;
 
 import javax.swing.AbstractAction;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
-import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
-import de.uni_hannover.sra.minimax_simulator.ui.UI;
 
 @Deprecated
 public abstract class ProjectAction extends AbstractAction implements WorkspaceListener

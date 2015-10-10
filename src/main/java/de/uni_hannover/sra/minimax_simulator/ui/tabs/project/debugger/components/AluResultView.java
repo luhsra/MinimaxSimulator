@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
@@ -41,7 +41,7 @@ public class AluResultView extends JPanel implements Disposable
 
 		setLayout(createLayout());
 
-		TextResource res = Application.getTextResource("debugger");
+		TextResource res = Main.getTextResource("debugger");
 
 		add(UIUtil.wrapInTitledGroupScroller(_table, res.get("alu.title")));
 	}

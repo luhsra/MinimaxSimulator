@@ -14,8 +14,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import de.uni_hannover.sra.minimax_simulator.Main;
 import net.miginfocom.swing.MigLayout;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Config;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
@@ -28,7 +28,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.common.LimitedLenghtDocument;
 @Deprecated
 class RegisterEditor extends JPanel
 {
-	private final TextResource			res	= Application.getTextResource("machine");
+	private final TextResource			res	= Main.getTextResource("machine");
 
 	private final MachineConfiguration	_config;
 	private final JTextField			_name;
@@ -116,7 +116,7 @@ class RegisterEditor extends JPanel
 
 				updateButton();
 
-				Application.getWorkspace().setProjectUnsaved();
+				Main.getWorkspace().setProjectUnsaved();
 			}
 		});
 	}

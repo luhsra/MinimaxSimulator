@@ -6,8 +6,8 @@ import java.awt.GridBagLayout;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Config;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
@@ -38,7 +38,7 @@ class MachineSidePanel extends JPanel implements Disposable
 		_aluTable = new AluTable(config);
 		//_memoryView = new MemoryView(memory);
 
-		TextResource res = Application.getTextResource("project");
+		TextResource res = Main.getTextResource("project");
 		Icon collapsedIcon = Icons.getInstance().get(res.get("overview.panel.icon.collapsed"));
 		Icon expandedIcon = Icons.getInstance().get(res.get("overview.panel.icon.expanded"));
 
