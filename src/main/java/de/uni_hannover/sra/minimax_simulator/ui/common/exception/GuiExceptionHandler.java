@@ -5,7 +5,6 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.JErrorDialog;
 
 /**
  * The {@link GuiExceptionHandler} extends the {@link SimpleExceptionHandler} class
@@ -37,7 +36,7 @@ public class GuiExceptionHandler extends SimpleExceptionHandler
 				@Override
 				public void run()
 				{
-					JErrorDialog dialog = new JErrorDialog(_parent, e);
+/*					JErrorDialog dialog = new JErrorDialog(_parent, e);
 
 					// center on screen
 					dialog.setLocationRelativeTo(null);
@@ -47,7 +46,7 @@ public class GuiExceptionHandler extends SimpleExceptionHandler
 					// blocking call until "ok" is clicked
 					dialog.setVisible(true);
 
-					dialog.dispose();
+					dialog.dispose();		*/
 				}
 			});	
 		}
