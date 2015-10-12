@@ -2,32 +2,6 @@ package de.uni_hannover.sra.minimax_simulator.ui;
 
 import static com.google.common.base.Preconditions.*;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
-import java.awt.event.KeyEvent;
-import java.util.ResourceBundle;
-
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.BorderFactory;
-import javax.swing.InputMap;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JRootPane;
-import javax.swing.KeyStroke;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-
-import com.google.common.base.Throwables;
-
-import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.resources.Icons;
-import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXWaitingDialog;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -47,13 +21,11 @@ public class UIUtil {
 
 	/**
 	 * Registers an Action on the dialog on the Esc key that disposes the dialog.
-	 * 
-	 * @param dialog
 	 */
 	//TODO: convert to JavaFX or delete?
-	public static void closeOnEscapePressed(final JDialog dialog)
+	public static void closeOnEscapePressed() //final JDialog dialog)
 	{
-		JRootPane rootPane = dialog.getRootPane();
+/*		JRootPane rootPane = dialog.getRootPane();
 		InputMap im = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap actionMap = rootPane.getActionMap();
 		KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
@@ -64,7 +36,7 @@ public class UIUtil {
 			public void actionPerformed(ActionEvent e) {
 				dialog.dispose();
 			}
-		});
+		});	*/
 	}
 
 	/**
@@ -101,6 +73,7 @@ public class UIUtil {
 	 *            the {@link Runnable} to execute if the user chooses to cancel the computation
 	 */
 	public static void executeWorker(final Runnable runnable, String waitingTitle, String waitingMessage, Runnable cancelAction) {
+		checkNotNull(runnable);
 
 		FXWaitingDialog waitingDialog = new FXWaitingDialog(waitingTitle, waitingMessage);
 
