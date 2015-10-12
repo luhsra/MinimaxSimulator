@@ -31,7 +31,6 @@ import com.google.common.base.Throwables;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
-import de.uni_hannover.sra.minimax_simulator.ui.actions.ProjectSaveTo;
 import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
 import de.uni_hannover.sra.minimax_simulator.ui.common.FillLayout;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXWaitingDialog;
@@ -298,7 +297,7 @@ public class UIUtil
 	//TODO: Conversion to JavaFX
 	private static boolean confirmCloseProject(String message, String title)
 	{
-		int result = -1; //JOptionPane.showConfirmDialog(Application.getMainWindow(), message, title, JOptionPane.YES_NO_CANCEL_OPTION);
+/*		int result = JOptionPane.showConfirmDialog(Application.getMainWindow(), message, title, JOptionPane.YES_NO_CANCEL_OPTION);
 
 		switch (result)
 		{
@@ -309,9 +308,9 @@ public class UIUtil
 				return true;
 
 				// cancel
-			default:
+			default:	*/
 				return false;
-		}
+//		}
 	}
 
 	@Deprecated

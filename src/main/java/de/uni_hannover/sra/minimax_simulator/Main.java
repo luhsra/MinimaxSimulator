@@ -32,6 +32,10 @@ import java.util.logging.Logger;
  *
  * @author Philipp Rohde
  */
+/* TODO: DebugMenu is isDebugging with
+         DebugException: throw new RuntimeException("Test exception")
+         DebugSprites: toggle Config.DEBUG_SCHEMATICS
+*/
 public class Main extends javafx.application.Application {
 
     private static Stage _primaryStage;
