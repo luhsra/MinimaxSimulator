@@ -16,10 +16,7 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
@@ -31,8 +28,6 @@ import com.google.common.base.Throwables;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.Icons;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
-import de.uni_hannover.sra.minimax_simulator.ui.common.Disposable;
-import de.uni_hannover.sra.minimax_simulator.ui.common.FillLayout;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXWaitingDialog;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -92,43 +87,6 @@ public class UIUtil
 						component.removeHierarchyListener(this);
 					}
 				}
-			}
-		});
-	}
-
-	/**
-	 * Disposes an object that is also an {@link JComponent} as soon as it is removed from its
-	 * ancestor.
-	 * 
-	 * @param component
-	 */
-	@Deprecated
-	public static <T extends JComponent & Disposable> void disposeOnRemoval(
-			final T component)
-	{
-		runOnRemoval(component, new Runnable() {
-			@Override
-			public void run() {
-				component.dispose();
-			}
-		});
-	}
-
-	/**
-	 * Disposes an object as soon as the given {@link JComponent} is removed from its ancestor.
-	 * 
-	 * @param component
-	 */
-	@Deprecated
-	public static void disposeOnRemoval(final JComponent component,
-			final Disposable disposable)
-	{
-		runOnRemoval(component, new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				disposable.dispose();
 			}
 		});
 	}
@@ -339,48 +297,6 @@ public class UIUtil
 	{
 		return new TitledBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED),
 			title, TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
-	}
-
-	@Deprecated
-	public static JPanel wrapInTitledGroupScroller(JComponent comp, String title)
-	{
-		JScrollPane scroller = new JScrollPane(comp);
-
-		JPanel panel = new JPanel();
-		panel.setBorder(createGroupBorder(title));
-		panel.setLayout(FillLayout.INSTANCE);
-		panel.add(scroller);
-		return panel;
-	}
-
-	@Deprecated
-	public static JPanel wrapInTitledGroupPanel(JComponent comp, String title)
-	{
-		JPanel panel = new JPanel();
-		panel.setBorder(createGroupBorder(title));
-		panel.setLayout(FillLayout.INSTANCE);
-		panel.add(comp);
-		return panel;
-	}
-
-	@Deprecated
-	public static JPanel wrapInTitledBevelPanel(JComponent comp, String title)
-	{
-		JPanel panel = new JPanel();
-		panel.setBorder(createTitledBevelBorder(title));
-		panel.setLayout(FillLayout.INSTANCE);
-		panel.add(comp);
-		return panel;
-	}
-
-	@Deprecated
-	public static JPanel wrapInBorderPanel(JComponent comp, Border border, String title)
-	{
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(border, title));
-		panel.setLayout(FillLayout.INSTANCE);
-		panel.add(comp);
-		return panel;
 	}
 
 	@Deprecated
