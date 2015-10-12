@@ -1,11 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.ui.render;
 
-import javafx.scene.canvas.GraphicsContext;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
+import com.sun.javafx.tk.FontMetrics;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  * A {@code RenderEnvironment} is used for some basic rendering related methods.
@@ -14,28 +11,13 @@ import java.awt.Graphics2D;
  */
 public interface RenderEnvironment {
 
-	@Deprecated
-	public Graphics2D createGraphics(Graphics2D g);
-
-	@Deprecated
-	public Color getBackgroundColor();
-
-	@Deprecated
-	public Color getForegroundColor();
-
-	@Deprecated
-	public Font getFont();
-
-	@Deprecated
-	public FontMetrics getFontMetrics();
-
 	/**
 	 * Gets the background {@link javafx.scene.paint.Color}.
 	 *
 	 * @return
 	 *          the {@code Color} of the background
 	 */
-	public javafx.scene.paint.Color getBackgroundColorFX();
+	public Color getBackgroundColorFX();
 
 	/**
 	 * Gets the foreground {@link javafx.scene.paint.Color}.
@@ -43,7 +25,7 @@ public interface RenderEnvironment {
 	 * @return
 	 *          the {@code Color} of the foreground
 	 */
-	public javafx.scene.paint.Color getForegroundColorFX();
+	public Color getForegroundColorFX();
 
 	/**
 	 * Gets the currently used {@link javafx.scene.text.Font}.
@@ -51,7 +33,7 @@ public interface RenderEnvironment {
 	 * @return
 	 *          the currently used {@code Font}
 	 */
-	public javafx.scene.text.Font getFontFX();
+	public Font getFontFX();
 
 	/**
 	 * Gets the {@link com.sun.javafx.tk.FontMetrics} of the {@code RenderEnvironment}.
@@ -59,5 +41,5 @@ public interface RenderEnvironment {
 	 * @return
 	 *          the {@code FontMetrics} of the {@code RenderEnvironment}.
 	 */
-	public com.sun.javafx.tk.FontMetrics getFontMetricsFX();
+	public FontMetrics getFontMetricsFX();
 }
