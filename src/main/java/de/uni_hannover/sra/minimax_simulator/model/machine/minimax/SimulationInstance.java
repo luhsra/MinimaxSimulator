@@ -132,15 +132,6 @@ class SimulationInstance
 		_resolver.resetCircuits();
 	}
 
-	@Deprecated
-	void step()
-	{
-		// Resolve ALU calculations
-		_resolver.resolveCircuits();
-		// Resolve register writings
-		_resolver.nextCycle();
-	}
-
 	void resolve()
 	{
 		// Resolve ALU calculations

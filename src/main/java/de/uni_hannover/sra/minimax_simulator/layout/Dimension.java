@@ -1,10 +1,10 @@
 package de.uni_hannover.sra.minimax_simulator.layout;
 
 /**
- * Immutable representant for the dimension of a rectangular entity.<br>
+ * Immutable representative for the dimension of a rectangular entity.<br>
  * It consists of an integer width and an integer height.
  * 
- * @author Martin
+ * @author Martin L&uuml;ck
  */
 public class Dimension {
 
@@ -58,12 +58,6 @@ public class Dimension {
 	@Override
 	public String toString() {
 		return "[" + w + "," + h + "]";
-	}
-
-	@Deprecated
-	public java.awt.Dimension toAWT()
-	{
-		return new java.awt.Dimension(w, h);
 	}
 
 	public int getWidth() {
