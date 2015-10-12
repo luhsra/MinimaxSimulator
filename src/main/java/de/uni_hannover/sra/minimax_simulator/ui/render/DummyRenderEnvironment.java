@@ -21,22 +21,22 @@ public class DummyRenderEnvironment implements RenderEnvironment {
 	}
 
 	@Override
-	public Color getBackgroundColorFX() {
+	public Color getBackgroundColor() {
 		throw new UnsupportedOperationException("This is a dummy render environment for font measuring");
 	}
 
 	@Override
-	public Color getForegroundColorFX() {
+	public Color getForegroundColor() {
 		throw new UnsupportedOperationException("This is a dummy render environment for font measuring");
 	}
 
 	@Override
-	public Font getFontFX() {
+	public Font getFont() {
 		return this.font;
 	}
 
 	@Override
-	public FontMetrics getFontMetricsFX() {
+	public FontMetrics getFontMetrics() {
 		return this.fontMetrics;
 	}
 }

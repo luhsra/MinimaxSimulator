@@ -22,22 +22,22 @@ public class DefaultRenderEnvironment implements RenderEnvironment {
 	}
 
 	@Override
-	public Color getBackgroundColorFX() {
+	public Color getBackgroundColor() {
 		return Color.WHITE;
 	}
 
 	@Override
-	public Color getForegroundColorFX() {
+	public Color getForegroundColor() {
 		return Color.BLACK;
 	}
 
 	@Override
-	public Font getFontFX() {
+	public Font getFont() {
 		return this.font;
 	}
 
 	@Override
-	public FontMetrics getFontMetricsFX() {
+	public FontMetrics getFontMetrics() {
 		return this.fontMetrics;
 	}
 }

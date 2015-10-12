@@ -4,10 +4,8 @@ import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
 import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontSmoothingType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +22,7 @@ import static com.google.common.base.Preconditions.checkState;
  * @author Martin L&uuml;ck
  * @author Philipp Rohde
  */
-public class FXSpriteCanvas<T> extends Canvas {
+public class SpriteCanvas<T> extends Canvas {
 
 	private final Map<T, Sprite> _sprites;
 
@@ -36,28 +34,30 @@ public class FXSpriteCanvas<T> extends Canvas {
 	/**
 	 * Initializes the {@code FXSpriteCanvas}.
 	 */
-	public FXSpriteCanvas() {
+	public SpriteCanvas() {
 		_sprites = new HashMap<T, Sprite>();
 		gc = this.getGraphicsContext2D();
 	}
 
 	/**
-	 * Draws all {@code Sprite}s on a white background with a black border.
+	 * Draws all {@code Sprite}s on a {@code Canvas} with a black border.<br>
+	 * The background color is defined by {@link RenderEnvironment#getBackgroundColor()} and the
+	 * {@code Sprite}'s color by {@link RenderEnvironment#getForegroundColor()}.
 	 */
 	protected void draw() {
 		if (_env == null) {
 			throw new IllegalStateException("Cannot render SpriteCanvas without RenderEnvironment set");
 		}
-		gc.setFont(_env.getFontFX());
+		gc.setFont(_env.getFont());
 		gc.clearRect(0, 0, getWidth(), getHeight());
 
-		gc.setFill(Color.WHITE);
+		gc.setFill(_env.getBackgroundColor());
 		gc.fillRect(0, 0, getWidth(), getHeight());
 
 		drawBorder();
 
-		gc.setFill(Color.BLACK);
-		gc.setStroke(Color.BLACK);
+		gc.setFill(_env.getForegroundColor());
+		gc.setStroke(_env.getForegroundColor());
 
 		for (Sprite sprite : _sprites.values()) {
 			sprite.paint(gc, _env);

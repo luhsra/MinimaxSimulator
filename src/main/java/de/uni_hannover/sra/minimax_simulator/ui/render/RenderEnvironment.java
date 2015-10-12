@@ -17,7 +17,7 @@ public interface RenderEnvironment {
 	 * @return
 	 *          the {@code Color} of the background
 	 */
-	public Color getBackgroundColorFX();
+	public Color getBackgroundColor();
 
 	/**
 	 * Gets the foreground {@link javafx.scene.paint.Color}.
@@ -25,7 +25,7 @@ public interface RenderEnvironment {
 	 * @return
 	 *          the {@code Color} of the foreground
 	 */
-	public Color getForegroundColorFX();
+	public Color getForegroundColor();
 
 	/**
 	 * Gets the currently used {@link javafx.scene.text.Font}.
@@ -33,7 +33,7 @@ public interface RenderEnvironment {
 	 * @return
 	 *          the currently used {@code Font}
 	 */
-	public Font getFontFX();
+	public Font getFont();
 
 	/**
 	 * Gets the {@link com.sun.javafx.tk.FontMetrics} of the {@code RenderEnvironment}.
@@ -41,5 +41,5 @@ public interface RenderEnvironment {
 	 * @return
 	 *          the {@code FontMetrics} of the {@code RenderEnvironment}.
 	 */
-	public FontMetrics getFontMetricsFX();
+	public FontMetrics getFontMetrics();
 }

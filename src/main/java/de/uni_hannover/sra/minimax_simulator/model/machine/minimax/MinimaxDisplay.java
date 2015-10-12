@@ -132,11 +132,11 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider
 
 	@Override
 	public Font getFont() {
-		return _renderEnvironment.getFontFX();
+		return _renderEnvironment.getFont();
 	}
 
 	@Override
 	public FontMetrics getFontMetrics() {
-		return _renderEnvironment.getFontMetricsFX();
+		return _renderEnvironment.getFontMetrics();
 	}
 }

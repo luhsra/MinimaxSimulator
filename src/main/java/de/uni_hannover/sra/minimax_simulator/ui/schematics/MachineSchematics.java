@@ -6,7 +6,7 @@ import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplayListener;
 import de.uni_hannover.sra.minimax_simulator.ui.render.DefaultRenderEnvironment;
-import de.uni_hannover.sra.minimax_simulator.ui.render.FXSpriteCanvas;
+import de.uni_hannover.sra.minimax_simulator.ui.render.SpriteCanvas;
 import javafx.scene.text.Font;
 
 /**
@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
  * @author Martin L&uuml;ck
  * @author Philipp Rohde
  */
-public class MachineSchematics extends FXSpriteCanvas<SpriteOwner> implements MachineDisplayListener {
+public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements MachineDisplayListener {
 
 	public final static Font FONT = new Font("SansSerif", 17.0);
 
