@@ -244,6 +244,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * @return
      *          {@code true} if changes will be dismissed or were saved; {@code false} otherwise
      */
+    // TODO: move to UIUtil?
     private boolean confirmDismissUnsavedChanges(String dialogTitle, String dialogMessage) {
         if (Main.getWorkspace().isUnsaved()) {
             ButtonType choice = new FXUnsavedDialog(dialogTitle, dialogMessage).getChoice();
@@ -304,9 +305,6 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
             return;
         }
 
-        if (!UIUtil.confirmCloseProject()) {
-            return;
-        }
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterProject);
 
