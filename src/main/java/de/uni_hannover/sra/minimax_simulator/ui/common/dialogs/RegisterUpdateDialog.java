@@ -1,4 +1,4 @@
-package de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.components;
+package de.uni_hannover.sra.minimax_simulator.ui.common.dialogs;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;

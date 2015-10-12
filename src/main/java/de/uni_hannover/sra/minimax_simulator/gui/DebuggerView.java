@@ -14,7 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXExceptionDialog;
-import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.debugger.components.RegisterUpdateDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.RegisterUpdateDialog;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

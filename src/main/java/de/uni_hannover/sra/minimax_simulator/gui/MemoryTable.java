@@ -5,7 +5,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMe
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryAccessListener;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
-import de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components.MemoryUpdateDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.MemoryUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

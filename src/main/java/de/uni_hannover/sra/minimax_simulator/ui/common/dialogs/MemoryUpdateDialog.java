@@ -1,4 +1,4 @@
-package de.uni_hannover.sra.minimax_simulator.ui.tabs.project.memory.components;
+package de.uni_hannover.sra.minimax_simulator.ui.common.dialogs;
 
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXValueUpdateDialog;
