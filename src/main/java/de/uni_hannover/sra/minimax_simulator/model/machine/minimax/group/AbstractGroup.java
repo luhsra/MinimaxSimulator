@@ -1,16 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import de.uni_hannover.sra.minimax_simulator.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.LayoutSet;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
+
+import java.util.*;
 
 public abstract class AbstractGroup implements Group
 {

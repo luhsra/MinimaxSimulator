@@ -1,13 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout;
 
+import de.uni_hannover.sra.minimax_simulator.layout.constraint.*;
+
 import java.util.EnumSet;
 import java.util.Set;
-
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.Attribute;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.AttributeType;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.Constraint;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.Layout;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.RelativeConstraint;
 
 class StackLayout implements Layout
 {

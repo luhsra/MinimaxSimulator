@@ -1,16 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
 import com.google.common.collect.Lists;
-
 import de.uni_hannover.sra.minimax_simulator.layout.constraint.ConstraintBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
@@ -24,7 +15,9 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.IngoingPin;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.OutgoingPin;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 class RegisterInputGroupManager extends RegisterManager implements MuxInputGroupManager
 {

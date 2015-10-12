@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.util;
 
-import static com.google.common.base.Preconditions.*;
-
 import java.util.Enumeration;
 import java.util.Iterator;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * This class wraps a single Iterator of type E into an Enumeration of type E.

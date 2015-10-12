@@ -1,18 +1,17 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.ExtensionList;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.RegisterManager.RegisterType;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.FlowLeftLayoutSet;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.LayoutSet;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.StackLayoutSet;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 class RegisterExtensionList implements ExtensionList<RegisterExtension>
 {

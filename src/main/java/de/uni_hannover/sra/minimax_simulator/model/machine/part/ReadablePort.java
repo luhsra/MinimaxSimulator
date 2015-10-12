@@ -1,10 +1,10 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import java.util.Collections;
-import java.util.Set;
-
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.ResultPort;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
+
+import java.util.Collections;
+import java.util.Set;
 
 public class ReadablePort extends Part implements ResultPort
 {

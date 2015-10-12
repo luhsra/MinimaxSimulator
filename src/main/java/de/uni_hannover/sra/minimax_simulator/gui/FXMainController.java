@@ -16,7 +16,9 @@ import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.*;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXAboutDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXUnsavedDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import javafx.application.Platform;
@@ -24,10 +26,6 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -35,13 +33,15 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.*;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <b>The main controller for the JavaFX GUI.</b><br>

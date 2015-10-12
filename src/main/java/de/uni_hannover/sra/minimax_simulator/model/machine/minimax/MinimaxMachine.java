@@ -1,12 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-
 import de.uni_hannover.sra.minimax_simulator.layout.Insets;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
@@ -17,17 +11,12 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.ExtensionList;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.PagedArrayMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.RegisterManager.RegisterType;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.AluGroup;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.BasePartGroup;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.BaseRegisterOutWireGroup;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.MemoryGroup;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.MultiplexerGroup;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.SignExtGroup;
+import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.GroupLayout;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Alu;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
+
+import java.util.*;
 
 public class MinimaxMachine implements ConfigurableMachine
 {

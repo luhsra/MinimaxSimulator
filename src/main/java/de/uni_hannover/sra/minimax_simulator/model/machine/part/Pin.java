@@ -1,7 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import static com.google.common.base.Preconditions.*;
 import de.uni_hannover.sra.minimax_simulator.model.layout.component.PointComponent;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class Pin extends PointComponent
 {

@@ -1,12 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
-import java.util.Collection;
-import java.util.List;
-
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.ExtensionList;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.IngoingPin;
+
+import java.util.Collection;
+import java.util.List;
 
 interface MuxInputManager extends ExtensionList<MuxInput>
 {

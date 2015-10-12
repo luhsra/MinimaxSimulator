@@ -1,11 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
-import static com.google.common.base.Preconditions.*;
-
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import javafx.scene.canvas.GraphicsContext;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The sprite of a {@link Junction}.

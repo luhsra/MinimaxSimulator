@@ -1,16 +1,14 @@
 package de.uni_hannover.sra.minimax_simulator.ui;
 
-import static com.google.common.base.Preconditions.*;
+import com.google.common.base.Throwables;
+import javafx.application.Platform;
 
-import java.awt.EventQueue;
-import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import com.google.common.base.Throwables;
-import javafx.application.Platform;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *

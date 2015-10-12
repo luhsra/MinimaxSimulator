@@ -1,15 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.config;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
+
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Properties;
-
-import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 
 /**
  * A basic implementation of {@link ConfigurationLoader} using <i>.properties</i> files.

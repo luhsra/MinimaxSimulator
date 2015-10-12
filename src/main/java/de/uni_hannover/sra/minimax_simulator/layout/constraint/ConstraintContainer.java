@@ -1,20 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.layout.constraint;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import de.uni_hannover.sra.minimax_simulator.layout.Bounds;
-import de.uni_hannover.sra.minimax_simulator.layout.Component;
-import de.uni_hannover.sra.minimax_simulator.layout.Container;
-import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
-import de.uni_hannover.sra.minimax_simulator.layout.Insets;
-import de.uni_hannover.sra.minimax_simulator.layout.Point;
+import de.uni_hannover.sra.minimax_simulator.layout.*;
 import de.uni_hannover.sra.minimax_simulator.util.toposort.SimpleTopologicalSorter;
 import de.uni_hannover.sra.minimax_simulator.util.toposort.TopologicalSorter;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 // TODO: insets?
 public class ConstraintContainer extends Container implements ConstraintsManager

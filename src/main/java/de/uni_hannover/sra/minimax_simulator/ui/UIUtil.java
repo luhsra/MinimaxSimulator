@@ -1,7 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.ui;
 
-import static com.google.common.base.Preconditions.*;
-
 import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXWaitingDialog;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -11,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *

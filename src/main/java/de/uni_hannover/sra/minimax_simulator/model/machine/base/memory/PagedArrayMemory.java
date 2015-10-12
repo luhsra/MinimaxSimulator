@@ -1,8 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.base.memory;
 
-import static com.google.common.base.Preconditions.*;
-
 import java.util.Arrays;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class PagedArrayMemory extends AbstractMemory
 {

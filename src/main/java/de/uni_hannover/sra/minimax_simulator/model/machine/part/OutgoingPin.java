@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
+import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
 
 public class OutgoingPin extends Pin
 {

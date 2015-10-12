@@ -1,6 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
 
-import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class RegisterMuxInput implements MuxInput
 {

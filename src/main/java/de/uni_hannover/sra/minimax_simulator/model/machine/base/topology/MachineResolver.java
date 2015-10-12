@@ -1,15 +1,14 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.base.topology;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
+import de.uni_hannover.sra.minimax_simulator.util.toposort.SimpleTopologicalSorter;
+import de.uni_hannover.sra.minimax_simulator.util.toposort.TopologicalDependencyRelation;
+
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
-
-import de.uni_hannover.sra.minimax_simulator.util.toposort.SimpleTopologicalSorter;
-import de.uni_hannover.sra.minimax_simulator.util.toposort.TopologicalDependencyRelation;
 
 public class MachineResolver
 {

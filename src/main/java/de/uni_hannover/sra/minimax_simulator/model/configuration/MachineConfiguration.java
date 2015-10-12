@@ -1,14 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.configuration;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-
 import com.google.common.collect.ImmutableList;
-
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigAluEvent;
@@ -20,6 +12,8 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.NullMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
+
+import java.util.*;
 
 /**
  * This class represents the configuration of a register machine. <br>

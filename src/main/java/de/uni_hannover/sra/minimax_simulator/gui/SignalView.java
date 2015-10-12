@@ -3,21 +3,27 @@ package de.uni_hannover.sra.minimax_simulator.gui;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.gui.components.*;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
-import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
-import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
-import de.uni_hannover.sra.minimax_simulator.model.signal.*;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <b>FXController of the SignalView</b><br>

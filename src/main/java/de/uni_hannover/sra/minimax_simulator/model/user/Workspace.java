@@ -1,12 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.model.user;
 
-import java.io.File;
-
 import de.uni_hannover.sra.minimax_simulator.io.ProjectExportException;
 import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.json.ProjectZipExporter;
 import de.uni_hannover.sra.minimax_simulator.io.importer.json.ProjectZipImporter;
 import de.uni_hannover.sra.minimax_simulator.util.ListenerContainer;
+
+import java.io.File;
 
 /**
  * A container that can either hold a single project or be empty.

@@ -1,13 +1,13 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.DefaultRegisterGroup;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.ExtendedRegisterGroup;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.MdrRegisterGroup;
+
+import java.util.HashMap;
+import java.util.Map;
 
 class RegisterManager
 {

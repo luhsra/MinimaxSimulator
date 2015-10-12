@@ -1,17 +1,16 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableSet;
-
 import de.uni_hannover.sra.minimax_simulator.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.layout.Point;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.WireSprite;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class Wire implements Circuit, SpriteOwner
 {

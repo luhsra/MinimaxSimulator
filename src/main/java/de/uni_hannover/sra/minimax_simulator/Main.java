@@ -9,7 +9,6 @@ import de.uni_hannover.sra.minimax_simulator.resources.PropertyResourceControl;
 import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import javafx.application.HostServices;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

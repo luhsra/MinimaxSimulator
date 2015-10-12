@@ -1,11 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.ControlPort;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.ResultPort;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
@@ -18,7 +13,11 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Register;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.AbstractTrackable;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Trackable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 class SimulationInstance
 {

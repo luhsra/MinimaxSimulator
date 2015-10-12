@@ -1,13 +1,13 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics;
 
-import static com.google.common.base.Preconditions.*;
-
 import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplayListener;
 import de.uni_hannover.sra.minimax_simulator.ui.render.DefaultRenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.render.SpriteCanvas;
 import javafx.scene.text.Font;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The {@code MachineSchematics} are used to draw the schematics of the {@link Machine}.

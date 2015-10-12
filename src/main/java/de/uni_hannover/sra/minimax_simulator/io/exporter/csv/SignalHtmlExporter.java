@@ -1,21 +1,16 @@
 package de.uni_hannover.sra.minimax_simulator.io.exporter.csv;
 
-import static com.google.common.base.Preconditions.*;
+import com.google.common.base.Strings;
+import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
+import de.uni_hannover.sra.minimax_simulator.model.signal.*;
+import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-import com.google.common.base.Strings;
-
-import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfiguration;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalType;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
-import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class SignalHtmlExporter
 {

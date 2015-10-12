@@ -1,29 +1,21 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine;
 
-import static com.google.common.base.Preconditions.*;
-
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-
 import com.google.common.collect.ImmutableList;
-
-import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
-import de.uni_hannover.sra.minimax_simulator.model.signal.DescriptionFactory;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfiguration;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalType;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
+import de.uni_hannover.sra.minimax_simulator.model.signal.*;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
+
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Decorator for a SignalTable that calculates the descriptions of the SignalRows

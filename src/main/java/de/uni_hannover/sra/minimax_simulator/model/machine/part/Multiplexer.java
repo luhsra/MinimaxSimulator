@@ -1,11 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.MultiplexerSprite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Multiplexer extends SimplePart implements SpriteOwner
 {

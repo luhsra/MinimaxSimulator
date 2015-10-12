@@ -1,5 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator;
 
+import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -9,8 +11,6 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 
 /*
  * According to http://stackoverflow.com/questions/1272648/reading-my-own-jars-manifest

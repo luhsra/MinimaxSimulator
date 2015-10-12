@@ -2,9 +2,8 @@ package de.uni_hannover.sra.minimax_simulator.ui.render;
 
 import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
-import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.paint.Color;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.Font;
 
 import java.util.HashMap;

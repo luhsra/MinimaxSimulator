@@ -1,16 +1,16 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
-import static com.google.common.base.Preconditions.*;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryAccessListener;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.AbstractSimulation;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Trackable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static com.google.common.base.Preconditions.checkState;
 
 public class MinimaxSimulation extends AbstractSimulation implements MemoryAccessListener
 {

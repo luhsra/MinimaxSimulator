@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.layout.container;
 
-import java.util.ArrayList;
-
 import de.uni_hannover.sra.minimax_simulator.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.layout.Container;
+
+import java.util.ArrayList;
 
 public abstract class AbstractListContainer extends Container
 {

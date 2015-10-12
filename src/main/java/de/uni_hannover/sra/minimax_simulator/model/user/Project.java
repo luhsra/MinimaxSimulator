@@ -1,6 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.model.user;
 
-import static com.google.common.base.Preconditions.*;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.machine.MachineSignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.ConfigurableMachine;
@@ -13,6 +12,8 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.MinimaxSimula
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Project
 {

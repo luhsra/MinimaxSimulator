@@ -1,11 +1,10 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
-import static com.google.common.base.Preconditions.*;
-
+import com.sun.javafx.tk.Toolkit;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Alu;
 import javafx.scene.canvas.GraphicsContext;
 
-import com.sun.javafx.tk.*;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The ALU sprite.

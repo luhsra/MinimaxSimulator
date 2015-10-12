@@ -1,8 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group;
 
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.MachineTopology;
+import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.LayoutSet;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.MuxConstantLayoutSet;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Constant;

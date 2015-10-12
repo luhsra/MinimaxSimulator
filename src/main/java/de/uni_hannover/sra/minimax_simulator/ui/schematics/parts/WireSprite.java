@@ -1,12 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
-import static com.google.common.base.Preconditions.*;
-
 import de.uni_hannover.sra.minimax_simulator.layout.Point;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import javafx.scene.canvas.GraphicsContext;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The sprite for a {@link Wire}.

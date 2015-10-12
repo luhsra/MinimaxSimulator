@@ -1,11 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.ExtensionList;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Alu;
+
+import java.util.Collection;
+import java.util.Collections;
 
 class AluExtensionList implements ExtensionList<AluOperation>
 {

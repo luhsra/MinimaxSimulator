@@ -1,10 +1,10 @@
 package de.uni_hannover.sra.minimax_simulator.ui.render;
 
-import static com.google.common.base.Preconditions.*;
-
 import com.sun.javafx.tk.FontMetrics;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Default {@link RenderEnvironment}.

@@ -1,13 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.base;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.MachineTopology;
+
+import java.util.*;
 
 public class DefaultCircuitTopology implements MachineTopology
 {

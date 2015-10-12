@@ -1,10 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.sun.javafx.tk.FontMetrics;
 import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
@@ -15,6 +10,11 @@ import de.uni_hannover.sra.minimax_simulator.ui.render.DummyRenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import javafx.scene.text.Font;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 class MinimaxDisplay implements MachineDisplay, FontMetricsProvider
 {
