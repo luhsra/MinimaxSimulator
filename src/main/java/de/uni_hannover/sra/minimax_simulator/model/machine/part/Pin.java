@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import de.uni_hannover.sra.minimax_simulator.model.layout.component.PointComponent;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.PointComponent;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

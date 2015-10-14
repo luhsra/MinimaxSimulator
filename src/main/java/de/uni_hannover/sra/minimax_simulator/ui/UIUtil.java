@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui;
 
-import de.uni_hannover.sra.minimax_simulator.ui.common.dialogs.FXWaitingDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.WaitingDialog;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -75,7 +75,7 @@ public class UIUtil {
 	public static void executeWorker(final Runnable runnable, String waitingTitle, String waitingMessage, Runnable cancelAction) {
 		checkNotNull(runnable);
 
-		FXWaitingDialog waitingDialog = new FXWaitingDialog(waitingTitle, waitingMessage);
+		WaitingDialog waitingDialog = new WaitingDialog(waitingTitle, waitingMessage);
 
 		Task<Void> task = new Task<Void>() {
 			@Override

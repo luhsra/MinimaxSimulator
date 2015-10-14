@@ -1,8 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout;
 
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.AttributeType;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.Constraint;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.Layout;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.AttributeType;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.Constraint;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.Layout;
 
 import java.util.Collections;
 import java.util.EnumMap;

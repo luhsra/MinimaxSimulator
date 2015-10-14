@@ -2,9 +2,9 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.layout;
 
 import org.junit.Test;
 
-import de.uni_hannover.sra.minimax_simulator.layout.AbstractComponent;
-import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
-import de.uni_hannover.sra.minimax_simulator.model.layout.container.GridContainer;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.AbstractComponent;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.GridContainer;
 import static org.junit.Assert.*;
 
 public class GridLayoutTest

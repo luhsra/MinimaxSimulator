@@ -1,7 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 import com.sun.javafx.tk.FontMetrics;
-import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplay;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplayListener;

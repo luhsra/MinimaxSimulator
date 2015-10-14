@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout;
 
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.Layout;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.Layout;
 
 import java.util.Set;
 

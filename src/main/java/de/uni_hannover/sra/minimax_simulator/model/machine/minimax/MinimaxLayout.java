@@ -1,11 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
-import de.uni_hannover.sra.minimax_simulator.layout.Bounds;
-import de.uni_hannover.sra.minimax_simulator.layout.Component;
-import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
-import de.uni_hannover.sra.minimax_simulator.layout.Insets;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.*;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.MachineTopology;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;

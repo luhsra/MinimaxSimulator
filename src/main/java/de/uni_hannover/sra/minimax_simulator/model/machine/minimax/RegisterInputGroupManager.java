@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
 import com.google.common.collect.Lists;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.ConstraintBuilder;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;

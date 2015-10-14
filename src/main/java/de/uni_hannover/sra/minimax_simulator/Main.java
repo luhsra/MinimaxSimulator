@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator;
 
 import de.uni_hannover.sra.minimax_simulator.config.ConfigurationLoader;
 import de.uni_hannover.sra.minimax_simulator.config.PropertiesFileConfigLoader;
-import de.uni_hannover.sra.minimax_simulator.gui.FXMainController;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.FXMainController;
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
 import de.uni_hannover.sra.minimax_simulator.resources.DefaultResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.PropertyResourceControl;

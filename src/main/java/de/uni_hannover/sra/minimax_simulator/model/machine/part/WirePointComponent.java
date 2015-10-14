@@ -1,7 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import de.uni_hannover.sra.minimax_simulator.layout.Point;
-import de.uni_hannover.sra.minimax_simulator.model.layout.component.PointComponent;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Point;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.PointComponent;
 
 public class WirePointComponent extends PointComponent
 {

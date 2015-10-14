@@ -1,7 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
-import de.uni_hannover.sra.minimax_simulator.layout.Insets;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;

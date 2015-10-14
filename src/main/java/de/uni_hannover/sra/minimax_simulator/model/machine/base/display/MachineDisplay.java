@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.base.display;
 
-import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 
