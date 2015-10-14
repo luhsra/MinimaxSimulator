@@ -1,28 +1,22 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
-import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigAluEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigMuxEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigRegisterEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
-import de.uni_hannover.sra.minimax_simulator.model.signal.BinarySignalType;
-import de.uni_hannover.sra.minimax_simulator.model.signal.DefaultSignalType;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfigListener;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfiguration;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalType;
+import de.uni_hannover.sra.minimax_simulator.model.signal.*;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.BaseControlPort;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MinimaxSignalConfiguration implements SignalConfiguration,
 		MachineConfigListener

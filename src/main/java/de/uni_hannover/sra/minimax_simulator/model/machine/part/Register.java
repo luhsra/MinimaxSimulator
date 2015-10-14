@@ -1,8 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import java.util.Collections;
-import java.util.Set;
-
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
@@ -10,6 +7,9 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Synchro
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.RegisterSprite;
+
+import java.util.Collections;
+import java.util.Set;
 
 public class Register extends SimplePart implements SynchronousCircuit, SpriteOwner
 {

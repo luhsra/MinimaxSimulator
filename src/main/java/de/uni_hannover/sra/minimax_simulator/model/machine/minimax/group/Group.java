@@ -1,13 +1,13 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group;
 
-import java.util.Set;
-
-import de.uni_hannover.sra.minimax_simulator.layout.Component;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.MachineTopology;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.LayoutSet;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
+
+import java.util.Set;
 
 public interface Group
 {

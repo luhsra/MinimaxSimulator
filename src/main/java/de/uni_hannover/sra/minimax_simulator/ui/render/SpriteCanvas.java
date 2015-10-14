@@ -1,59 +1,113 @@
 package de.uni_hannover.sra.minimax_simulator.ui.render;
 
-import static com.google.common.base.Preconditions.*;
+import com.sun.javafx.tk.FontMetrics;
+import com.sun.javafx.tk.Toolkit;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.text.Font;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JPanel;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
-// TODO: update to JavaFX
-public class SpriteCanvas<T> extends JPanel
-{
+/**
+ * A {@link Canvas} that holds and draws {@link Sprite}s.
+ *
+ * @param <T>
+ *          the sprite owner class
+ *
+ * @author Martin L&uuml;ck
+ * @author Philipp Rohde
+ */
+public class SpriteCanvas<T> extends Canvas {
+
 	private final Map<T, Sprite> _sprites;
 
 	private RenderEnvironment _env;
 	private SpriteFactory _spriteFactory;
 
-	public SpriteCanvas()
-	{
+	private final GraphicsContext gc;
+
+	/**
+	 * Initializes the {@code FXSpriteCanvas}.
+	 */
+	public SpriteCanvas() {
 		_sprites = new HashMap<T, Sprite>();
+		gc = this.getGraphicsContext2D();
 	}
 
-	@Override
-	public void paintComponent(Graphics g0)
-	{
-		if (_env == null)
+	/**
+	 * Draws all {@code Sprite}s on a {@code Canvas} with a black border.<br>
+	 * The background color is defined by {@link RenderEnvironment#getBackgroundColor()} and the
+	 * {@code Sprite}'s color by {@link RenderEnvironment#getForegroundColor()}.
+	 */
+	protected void draw() {
+		if (_env == null) {
 			throw new IllegalStateException("Cannot render SpriteCanvas without RenderEnvironment set");
+		}
+		gc.setFont(_env.getFont());
+		gc.clearRect(0, 0, getWidth(), getHeight());
 
-		assert (g0 instanceof Graphics2D);
-		Graphics2D g = _env.createGraphics((Graphics2D) g0);
+		gc.setFill(_env.getBackgroundColor());
+		gc.fillRect(0, 0, getWidth(), getHeight());
 
-		g.setColor(_env.getBackgroundColor());
-		g.setBackground(_env.getBackgroundColor());
-		g.fillRect(0, 0, getWidth(), getHeight());
+		drawBorder();
 
-		g.setColor(_env.getForegroundColor());
+		gc.setFill(_env.getForegroundColor());
+		gc.setStroke(_env.getForegroundColor());
 
-		for (Sprite sprite : _sprites.values())
-			sprite.paint(g, _env);
-
-		g.dispose();
+		for (Sprite sprite : _sprites.values()) {
+			sprite.paint(gc, _env);
+		}
 	}
 
-	public void setSprite(T owner, Sprite sprite)
-	{
+	/**
+	 * Draws a thin border around the {@code FXSpriteCanvas}.
+	 */
+	private void drawBorder() {
+		double maxY = getHeight();
+		double maxX = getWidth();
+
+		gc.save();
+		gc.setLineWidth(1);
+
+		gc.beginPath();
+		gc.moveTo(0, 0);
+		gc.lineTo(0, maxY);
+		gc.lineTo(maxX, maxY);
+		gc.lineTo(maxX, 0);
+		gc.lineTo(0, 0);
+		gc.closePath();
+		gc.stroke();
+
+		gc.restore();
+	}
+
+	/**
+	 * Adds a {@code Sprite} and it's owner.
+	 *
+	 * @param owner
+	 *          the owner of the {@code Sprite}
+	 * @param sprite
+	 *          the {@code Sprite} to add
+	 */
+	public void setSprite(T owner, Sprite sprite) {
 		checkNotNull(owner, "Sprite owner must not be null");
 		checkNotNull(sprite, "Sprite must not be null");
 
 		_sprites.put(owner, sprite);
-		repaint();
+		draw();
 	}
 
-	public void setSprite(T owner)
-	{
+	/**
+	 * Creates the {@code Sprite} of the owner and adds them.
+	 *
+	 * @param owner
+	 *          the owner of the {@code Sprite} to add
+	 */
+	public void setSprite(T owner) {
 		checkNotNull(owner, "Sprite owner must not be null");
 		checkState(_spriteFactory != null, "Must provide a sprite or set a SpriteFactory");
 
@@ -61,29 +115,79 @@ public class SpriteCanvas<T> extends JPanel
 		setSprite(owner, sprite);
 	}
 
-	public void removeSprite(T owner)
-	{
+	/**
+	 * Removes all {@code Sprite}s of an owner.
+	 *
+	 * @param owner
+	 *          the {@code SpriteOwner} for which all {@code Sprites} will be removed
+	 */
+	public void removeSprite(T owner) {
 		if (_sprites.remove(owner) != null)
-			repaint();
+			draw();
 	}
 
-	public SpriteFactory getSpriteFactory()
-	{
+	/**
+	 * Gets the {@code SpriteFactory} of the {@code FXSpriteCanvas}.
+	 *
+	 * @return
+	 *          the {@code SpriteFactory} of the {@code FXSpriteCanvas}
+	 */
+	public SpriteFactory getSpriteFactory() {
 		return _spriteFactory;
 	}
 
-	public void setSpriteFactory(SpriteFactory spriteFactory)
-	{
+	/**
+	 * Sets the {@code SpriteFactory} of the {@code FXSpriteCanvas}.
+	 *
+	 * @param spriteFactory
+	 *          the {@code SpriteFactory} to set
+	 */
+	public void setSpriteFactory(SpriteFactory spriteFactory) {
 		_spriteFactory = spriteFactory;
 	}
 
-	public RenderEnvironment getRenderEnvironment()
-	{
+	/**
+	 * Gets the {@code RenderEnvironment} of the {@code FXSpriteCanvas}.
+	 *
+	 * @return
+	 *          the {@code RenderEnvironment} of the {@code FXSpriteCanvas}
+	 */
+	public RenderEnvironment getRenderEnvironment() {
 		return _env;
 	}
 
-	public void setEnvironment(RenderEnvironment env)
-	{
+	/**
+	 * Sets the {@code RenderEnvironment} of the {@code FXSpriteCanvas}.
+	 *
+	 * @param env
+	 *          the {@code RenderEnvironment} to set
+	 */
+	public void setEnvironment(RenderEnvironment env) {
 		_env = env;
+	}
+
+	/**
+	 * Get the {@link FontMetrics} of a {@link Font}.
+	 *
+	 * @param font
+	 *          the {@code Font} for which the {@code FontMetrics} should be get
+	 * @return
+	 *          the {@code FontMetrics} of the {@code Font}
+	 */
+	public FontMetrics getFontMetrics(Font font) {
+		return Toolkit.getToolkit().getFontLoader().getFontMetrics(font);
+	}
+
+	/**
+	 * Sets the width and height of the {@code FXSpriteCanvas}.
+	 *
+	 * @param width
+	 *          the width to set
+	 * @param height
+	 *          the height to set
+	 */
+	public void setSize(int width, int height) {
+		setWidth(width);
+		setHeight(height);
 	}
 }

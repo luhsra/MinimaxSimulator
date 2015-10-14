@@ -1,17 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group;
 
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.MachineTopology;
+import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.LayoutSet;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.SignExtLayoutSet;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.CuLabel;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.OutgoingPin;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.ReadablePort;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Register;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.SignExtension;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
+import de.uni_hannover.sra.minimax_simulator.model.machine.part.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.CuLabelShape;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.SignExtShape;
 

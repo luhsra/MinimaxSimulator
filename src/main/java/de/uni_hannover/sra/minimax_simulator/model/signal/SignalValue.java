@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.signal;
 
-import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * This class represents a signal value, that is the value that a machine executing a signal row

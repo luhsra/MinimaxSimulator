@@ -1,15 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout;
 
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.*;
+
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
-
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.AttributeType;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.Constraint;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.Layout;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.RelativeMaxConstraint;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.RelativeMinConstraint;
 
 public class GroupLayout implements Layout
 {

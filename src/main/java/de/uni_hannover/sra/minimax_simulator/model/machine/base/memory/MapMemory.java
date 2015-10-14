@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.base.memory;
 
-import static com.google.common.base.Preconditions.*;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.google.common.base.Preconditions.checkElementIndex;
 
 public class MapMemory extends AbstractMemory
 {

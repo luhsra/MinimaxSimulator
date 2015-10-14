@@ -1,12 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.resources;
 
-import static com.google.common.base.Preconditions.*;
+import de.uni_hannover.sra.minimax_simulator.util.IteratorEnumeration;
 
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import de.uni_hannover.sra.minimax_simulator.util.IteratorEnumeration;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class MapResourceBundle extends ResourceBundle
 {

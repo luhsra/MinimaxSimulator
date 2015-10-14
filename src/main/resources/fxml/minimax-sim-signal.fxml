@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40"
-          fx:controller="de.uni_hannover.sra.minimax_simulator.gui.SignalView">
+          fx:controller="de.uni_hannover.sra.minimax_simulator.ui.gui.SignalView">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" percentWidth="-1"/>
         <ColumnConstraints hgrow="NEVER" maxWidth="90" minWidth="90" prefWidth="90"/>

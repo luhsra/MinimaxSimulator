@@ -1,14 +1,14 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.simulation;
 
-import static com.google.common.base.Preconditions.*;
-
-import java.util.ArrayList;
-
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener;
+
+import java.util.ArrayList;
+
+import static com.google.common.base.Preconditions.checkState;
 
 public abstract class AbstractSimulation implements Simulation, MachineConfigListener,
 		SignalTableListener, SignalConfigListener

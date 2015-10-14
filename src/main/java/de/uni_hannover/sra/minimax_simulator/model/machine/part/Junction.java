@@ -1,14 +1,14 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.JunctionSprite;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Junction extends Part implements SpriteOwner
 {

@@ -1,18 +1,14 @@
 package de.uni_hannover.sra.minimax_simulator.resources;
 
+import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
-
-import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 
 public class PropertyResourceControl extends Control
 {

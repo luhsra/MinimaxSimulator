@@ -1,9 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
@@ -13,6 +9,9 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.DescriptionFactory;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MinimaxSignalDescription implements DescriptionFactory
 {

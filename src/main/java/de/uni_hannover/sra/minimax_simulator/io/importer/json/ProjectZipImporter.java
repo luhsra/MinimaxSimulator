@@ -10,7 +10,10 @@ import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.ProjectConfiguration;
 import org.json.JSONException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;

@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.io;
 
-import static com.google.common.base.Preconditions.*;
-
 import java.io.*;
 import java.util.zip.ZipFile;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Some static utility methods for dealing with I/O classes, mostly similar to a part of apache-commons-io.

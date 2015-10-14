@@ -1,18 +1,17 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.google.common.collect.Sets;
-
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
 import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.AluSprite;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Alu extends Part implements SpriteOwner
 {

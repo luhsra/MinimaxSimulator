@@ -1,16 +1,15 @@
 package de.uni_hannover.sra.minimax_simulator.config;
 
 /**
- * The FieldType of a configuration determines how the configured string is tried to be parsed
+ * The {@code FieldType} of a configuration determines how the configured string is tried to be parsed
  * to a meaningful value.<br>
  * For most fields, the default value ({@link #AUTO}) is reasonable since they are meant to be parsed according
  * to their actual java field types.
  * 
- * @author Martin
- *
+ * @author Martin L&uuml;ck
  */
-public enum FieldType
-{
+public enum FieldType {
+
 	/**
 	 * Automatically deduce the parsing mode from the field type (String, int, long, ...).
 	 */

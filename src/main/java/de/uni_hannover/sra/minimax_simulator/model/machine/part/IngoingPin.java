@@ -1,10 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import java.util.Set;
-
 import com.google.common.collect.ImmutableSet;
-
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
+
+import java.util.Set;
 
 public class IngoingPin extends Pin
 {

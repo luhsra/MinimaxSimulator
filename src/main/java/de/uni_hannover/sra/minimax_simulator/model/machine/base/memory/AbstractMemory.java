@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.base.memory;
 
-import static com.google.common.base.Preconditions.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkState;
 
 public abstract class AbstractMemory implements MachineMemory
 {

@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.signal;
 
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
+
+import java.util.List;
 
 public class DefaultSignalType implements SignalType
 {

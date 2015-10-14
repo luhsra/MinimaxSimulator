@@ -1,8 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import java.util.Set;
-
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
+
+import java.util.Set;
 
 public abstract class SimplePart extends Part
 {

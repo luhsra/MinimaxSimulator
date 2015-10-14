@@ -1,13 +1,13 @@
 package de.uni_hannover.sra.minimax_simulator.model.signal;
 
-import static com.google.common.base.Preconditions.*;
+import de.uni_hannover.sra.minimax_simulator.model.signal.jump.DefaultJump;
+import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.uni_hannover.sra.minimax_simulator.model.signal.jump.DefaultJump;
-import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public final class SignalRow
 {

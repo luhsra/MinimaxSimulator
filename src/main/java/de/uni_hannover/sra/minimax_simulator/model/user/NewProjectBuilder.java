@@ -1,10 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.user;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.BaseControlPort;
-import de.uni_hannover.sra.minimax_simulator.Application;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfigurationBuilder;
+import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.BaseControlPort;
 import de.uni_hannover.sra.minimax_simulator.model.signal.DefaultSignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;

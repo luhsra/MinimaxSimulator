@@ -1,10 +1,10 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.LayoutSet;
+
+import java.util.HashMap;
+import java.util.Map;
 
 class DefaultGroupManager implements GroupManager
 {

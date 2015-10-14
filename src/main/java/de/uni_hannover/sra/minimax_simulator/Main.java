@@ -2,14 +2,13 @@ package de.uni_hannover.sra.minimax_simulator;
 
 import de.uni_hannover.sra.minimax_simulator.config.ConfigurationLoader;
 import de.uni_hannover.sra.minimax_simulator.config.PropertiesFileConfigLoader;
-import de.uni_hannover.sra.minimax_simulator.gui.FXMainController;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.FXMainController;
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
 import de.uni_hannover.sra.minimax_simulator.resources.DefaultResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.PropertyResourceControl;
 import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import javafx.application.HostServices;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +31,10 @@ import java.util.logging.Logger;
  *
  * @author Philipp Rohde
  */
+/* TODO: DebugMenu is isDebugging with
+         DebugException: throw new RuntimeException("Test exception")
+         DebugSprites: toggle Config.DEBUG_SCHEMATICS
+*/
 public class Main extends javafx.application.Application {
 
     private static Stage _primaryStage;
@@ -44,6 +47,8 @@ public class Main extends javafx.application.Application {
     private static Logger _log;
 
     private static HostServices hostServices;
+
+    private static boolean _isDebugging;
 
     /**
      * Starts the JavaFX application.
@@ -58,6 +63,8 @@ public class Main extends javafx.application.Application {
 
         _primaryStage = primaryStage;
         _version = new Version(this.getClass());
+
+        _isDebugging = System.getProperty("application.debug") != null;
 
         hostServices = getHostServices();
 
@@ -168,6 +175,10 @@ public class Main extends javafx.application.Application {
 
     public static TextResource getTextResource(String bundleName) {
         return _resourceLoader.getTextResource(bundleName);
+    }
+
+    public static boolean isDebugging() {
+        return _isDebugging;
     }
 
     /**

@@ -1,21 +1,14 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.ConstantMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.MuxInputManager.InputEntry;
-import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.MuxConstantGroup;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.GroupLayout;
+
+import java.util.*;
 
 class ConstantInputGroupManager implements MuxInputGroupManager
 {

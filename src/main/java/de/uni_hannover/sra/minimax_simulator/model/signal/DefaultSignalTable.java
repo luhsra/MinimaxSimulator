@@ -1,14 +1,13 @@
 package de.uni_hannover.sra.minimax_simulator.model.signal;
 
-import static com.google.common.base.Preconditions.*;
+import com.google.common.collect.ImmutableList;
+import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.common.collect.ImmutableList;
-
-import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class DefaultSignalTable extends AbstractSignalTable
 {

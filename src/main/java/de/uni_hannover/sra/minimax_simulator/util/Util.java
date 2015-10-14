@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.util;
 
-import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class Util
 {

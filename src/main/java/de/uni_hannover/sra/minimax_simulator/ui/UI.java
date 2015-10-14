@@ -1,20 +1,14 @@
 package de.uni_hannover.sra.minimax_simulator.ui;
 
-import static com.google.common.base.Preconditions.*;
+import com.google.common.base.Throwables;
+import javafx.application.Platform;
 
-import java.awt.EventQueue;
-import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
-import com.google.common.base.Throwables;
-import javafx.application.Platform;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *
@@ -28,8 +22,7 @@ public class UI
 	/**
 	 * Initializes the UI of the application.
 	 */
-	public static void initialize()
-	{
+	public static void initialize() {
 		assert (instance == null);
 		instance = new UI();
 	}
@@ -40,71 +33,20 @@ public class UI
 //		return instance;
 //	}
 
-	private UI()
-	{
-		//initLaf("Nimbus");
-	}
-/*
-	private void initLaf(String name)
-	{
-		// Set the Look and feel
-		try
-		{
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
-			{
-				if (name.equals(info.getName()))
-				{
-					UIManager.setLookAndFeel(info.getClassName());
+	private UI() {
 
-					// Fix for http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6789983
-					UIManager.getLookAndFeel().getDefaults().put(
-						"ToolTip[Disabled].backgroundPainter",
-						UIManager.get("ToolTip[Enabled].backgroundPainter"));
-					break;
-				}
-			}
-		}
-		catch (Exception e)
-		{
-			LookAndFeel laf = UIManager.getLookAndFeel();
-			String lafName;
-			if (laf == null)
-				lafName = "null";
-			else
-				lafName = laf.getName();
-
-			System.err.println("Cannot use Swing LaF " + name
-				+ ", falling back to default: " + lafName);
-		}
 	}
-*/
+
 	/**
-	 * Schedule asynchronous execution of the {@link Runnable} in the Swing event dispatch thread.
+	 * Schedules asynchronous execution of the {@link Runnable} in the FX application thread.
 	 * 
 	 * @param r
+	 * 			the {@code Runnable} to schedule for asynchronous execution
 	 */
-	public static void invoke(Runnable r)
-	{
+	// TODO: delete; this is basically the same like invokeInFAT
+	public static void invoke(Runnable r) {
 		checkNotNull(r);
-		//EventQueue.invokeLater(r);
 		Platform.runLater(r);
-	}
-
-	/**
-	 * If called from the event dispatch thread, just calls {@link Runnable#run()} on <code>r</code>
-	 * . <br>
-	 * Otherwise, schedules its execution there like {@link #invoke(Runnable)}.
-	 * 
-	 * @param r
-	 */
-	@Deprecated
-	public static void invokeInEDT(Runnable r)
-	{
-		checkNotNull(r);
-		if (EventQueue.isDispatchThread())
-			r.run();
-		else
-			invokeNow(r);
 	}
 
 	/**
@@ -112,7 +54,7 @@ public class UI
 	 * Otherwise, schedules its execution there.
 	 *
 	 * @param r
-	 * 			the {@link Runnable} to execute at FX application thread
+	 * 			the {@code Runnable} to execute in FX application thread
 	 */
 	public static void invokeInFAT(Runnable r) {
 		checkNotNull(r);
@@ -121,7 +63,7 @@ public class UI
 		}
 		else {
 			Platform.runLater(r);
-			//invokeNowFX(r);				// does not work --> DEADLOCK
+			//invokeNowFX(r);
 		}
 	}
 
@@ -133,24 +75,6 @@ public class UI
 	 * 
 	 * @param r
 	 */
-	public static void invokeNow(Runnable r)
-	{
-		checkNotNull(r);
-		try
-		{
-			EventQueue.invokeAndWait(r);
-		}
-		catch (InvocationTargetException e)
-		{
-			throw Throwables.propagate(e.getCause());
-		}
-		catch (InterruptedException e)
-		{
-			throw new Error("Invoking thread interrupted while waiting: "
-				+ Thread.currentThread().getName(), e);
-		}
-	}
-
 	// This would work if invokeAndWait() would.
 	public static void invokeNowFX(Runnable r) {
 		checkNotNull(r);

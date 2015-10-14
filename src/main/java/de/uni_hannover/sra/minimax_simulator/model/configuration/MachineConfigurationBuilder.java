@@ -1,11 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.model.configuration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.ConstantMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
@@ -14,6 +8,8 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMux
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+
+import java.util.*;
 
 // TODO: should be an interface rather than know details of Minimax internals
 public class MachineConfigurationBuilder

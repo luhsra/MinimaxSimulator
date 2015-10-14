@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import de.uni_hannover.sra.minimax_simulator.layout.AbstractComponent;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.AttributeType;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.ConstraintContainer;
-import de.uni_hannover.sra.minimax_simulator.layout.constraint.ConstraintFactory;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.AbstractComponent;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.AttributeType;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintContainer;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintFactory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.FixedShape;
 
 public class ConstraintLayoutTest

@@ -4,11 +4,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetr
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.MachineTopology;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Alu;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Memory;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Multiplexer;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Register;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
+import de.uni_hannover.sra.minimax_simulator.model.machine.part.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.RegisterShape;
 
 public class BasePartGroup extends AbstractGroup

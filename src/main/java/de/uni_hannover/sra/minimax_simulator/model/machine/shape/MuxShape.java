@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.shape;
 
-import de.uni_hannover.sra.minimax_simulator.layout.Component;
-import de.uni_hannover.sra.minimax_simulator.layout.ComponentShape;
-import de.uni_hannover.sra.minimax_simulator.layout.Dimension;
-import de.uni_hannover.sra.minimax_simulator.layout.Insets;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.ComponentShape;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Multiplexer;
 
 public class MuxShape implements ComponentShape {

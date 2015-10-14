@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.signal;
 
 import com.google.common.collect.ImmutableList;
-
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 
 public interface SignalTable
