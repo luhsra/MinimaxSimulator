@@ -4,7 +4,7 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
+import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalCsvExporter;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalHtmlExporter;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplayListener;

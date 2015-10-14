@@ -1,8 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.io.exporter.json;
 
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
-import de.uni_hannover.sra.minimax_simulator.io.ProjectExportException;
-import de.uni_hannover.sra.minimax_simulator.io.ProjectExporter;
+import de.uni_hannover.sra.minimax_simulator.io.exporter.ProjectExportException;
+import de.uni_hannover.sra.minimax_simulator.io.exporter.ProjectExporter;
 import de.uni_hannover.sra.minimax_simulator.io.importer.json.ProjectZipImporter;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 
@@ -25,8 +25,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 
  * @author Martin L&uuml;ck
  */
-public class ProjectZipExporter implements ProjectExporter
-{
+public class ProjectZipExporter implements ProjectExporter {
+
 	private final static Charset	charset	= Charset.forName("UTF-8");
 
 	private final File				_file;
@@ -47,13 +47,11 @@ public class ProjectZipExporter implements ProjectExporter
 		checkNotNull(project);
 
 		FileOutputStream fos = null;
-		try
-		{
+		try {
 			fos = new FileOutputStream(_file);
 
 			ZipOutputStream zos = new ZipOutputStream(fos);
-			try
-			{
+			try {
 				ZipEntry machineFile = new ZipEntry("machine.json");
 				zos.putNextEntry(machineFile);
 				new MachineJsonExporter().write(new OutputStreamWriter(zos, charset),
@@ -72,26 +70,14 @@ public class ProjectZipExporter implements ProjectExporter
 				zos.putNextEntry(signalTableEntry);
 				new SignalJsonExporter().write(new OutputStreamWriter(zos, charset),
 					project.getSignalTable());
-			}
-			catch (IOException ioe)
-			{
-				throw new ProjectExportException(
-					"I/O Error while exporting project into file: " + _file.getPath(),
-					ioe);
-			}
-			finally
-			{
+			} catch (IOException ioe) {
+				throw new ProjectExportException("I/O Error while exporting project into file: " + _file.getPath(), ioe);
+			} finally {
 				IOUtils.closeQuietly(zos);
 			}
-		}
-		catch (FileNotFoundException e)
-		{
-			throw new ProjectExportException(
-				"Target file for export of project cannot be opened: " + _file.getPath(),
-				e);
-		}
-		finally
-		{
+		} catch (FileNotFoundException e) {
+			throw new ProjectExportException("Target file for export of project cannot be opened: " + _file.getPath(), e);
+		} finally {
 			IOUtils.closeQuietly(fos);
 		}
 	}
