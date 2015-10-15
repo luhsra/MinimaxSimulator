@@ -372,6 +372,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         //paneOverview.setContent(this.schematics);
 
         // the canvas didn't resize itself correctly on mac; here is the workaround
+        _ws.getProject().getMachine().getDisplay().addMachineDisplayListener(this);
         schematicsToImage();
     }
 
