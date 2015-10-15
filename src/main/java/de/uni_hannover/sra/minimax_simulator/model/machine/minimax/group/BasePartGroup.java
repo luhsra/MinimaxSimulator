@@ -42,11 +42,14 @@ public class BasePartGroup extends AbstractGroup
 		ir.setName(Parts.IR);
 		Register pc = new Register(Parts.PC);
 		pc.setName(Parts.PC);
+		Register accu = new Register(Parts.ACCU);
+		accu.setName(Parts.ACCU);
 
 		mar.setShape(new RegisterShape(fontProvider));
 		mdr.setShape(new RegisterShape(fontProvider));
 		ir.setShape(new RegisterShape(fontProvider));
 		pc.setShape(new RegisterShape(fontProvider));
+		accu.setShape(new RegisterShape(fontProvider));
 
 		Wire muxOutA = new Wire(2, muxA.getDataOut(), alu.getInA());
 		Wire muxOutB = new Wire(2, muxB.getDataOut(), alu.getInB());
@@ -59,6 +62,7 @@ public class BasePartGroup extends AbstractGroup
 		add(mdr, Parts.MDR);
 		add(ir, Parts.IR);
 		add(pc, Parts.PC);
+		add(accu, Parts.ACCU);
 		add(mdrSelect, Parts.MDR_SELECT);
 
 		add(muxOutA, Parts.MUX_A + "_WIRE_OUT");

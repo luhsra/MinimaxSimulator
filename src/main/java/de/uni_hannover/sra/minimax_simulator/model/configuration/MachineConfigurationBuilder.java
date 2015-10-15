@@ -111,11 +111,15 @@ public class MachineConfigurationBuilder {
 	 * <ul>
 	 *     <li>A ADD B</li>
 	 *     <li>B SUB A</li>
+	 *     <li>TRANS.A</li>
+	 *     <li>TRANS.B</li>
 	 * </ul>
 	 */
 	private void addDefaultAluOperations() {
 		_aluOperations.add(AluOperation.A_ADD_B);
 		_aluOperations.add(AluOperation.B_SUB_A);
+		_aluOperations.add(AluOperation.TRANS_A);
+		_aluOperations.add(AluOperation.TRANS_B);
 	}
 
 	/**
@@ -124,9 +128,8 @@ public class MachineConfigurationBuilder {
 	 * @param textResource
 	 *          the {@link TextResource} used for getting localized texts
 	 */
-	// TODO: make ACCU a base register
 	private void addDefaultRegisterExtensions(TextResource textResource) {
-		_registerExtensions.add(new RegisterExtension("ACCU", RegisterSize.BITS_32, textResource.get("register.accu.description"), true));
+		// actually the base machine has no default extended registers
 	}
 
 	/**
@@ -180,11 +183,11 @@ public class MachineConfigurationBuilder {
 	 * 	</tr>
 	 * 	<tr>
 	 * 		<td>1</td>
-	 * 		<td>AT</td>
+	 * 		<td>PC</td>
 	 * 	</tr>
 	 * 	<tr>
 	 * 		<td>ACCU</td>
-	 * 		<td>PC</td>
+	 * 		<td>AT</td>
 	 * 	</tr>
 	 * 	<tr>
 	 * 		<td>&nbsp;</td>
@@ -200,8 +203,8 @@ public class MachineConfigurationBuilder {
 
 		List<MuxInput> listB = _selectedMuxInputs.get(MuxType.B);
 		listB.add(new RegisterMuxInput("MDR"));
-		listB.add(new RegisterMuxInput("IR", "AT"));
 		listB.add(new RegisterMuxInput("PC"));
+		listB.add(new RegisterMuxInput("IR", "AT"));
 		listB.add(new RegisterMuxInput("ACCU"));
 	}
 
@@ -214,6 +217,7 @@ public class MachineConfigurationBuilder {
 	 *     <li>IR</li>
 	 *     <li>MDR</li>
 	 *     <li>MAR</li>
+	 *     <li>ACCU</li>
 	 * </ul>
 	 *
 	 * @param textResource
@@ -224,11 +228,12 @@ public class MachineConfigurationBuilder {
 		_baseRegisters.add(new RegisterExtension("IR", RegisterSize.BITS_32, textResource.get("register.ir.description"), false));
 		_baseRegisters.add(new RegisterExtension("MDR", RegisterSize.BITS_32, textResource.get("register.mdr.description"), false));
 		_baseRegisters.add(new RegisterExtension("MAR", RegisterSize.BITS_24, textResource.get("register.mar.description"), false));
+		_baseRegisters.add(new RegisterExtension("ACCU", RegisterSize.BITS_32, textResource.get("register.accu.description"), false));
 	}
 
 	/**
 	 * Loads the default values for {@link AluOperation}, extended and base registers ({@link RegisterExtension}) and
-	 * {@link MuxInput}s.
+	 * {@link MuxInput}s. This creates the basic Minimax machine.
 	 *
 	 * @param registerDescriptionResource
 	 *          the {@link TextResource} used for getting localized texts
@@ -263,7 +268,6 @@ public class MachineConfigurationBuilder {
 	 */
 	public MachineConfiguration build() {
 		addRegistersAsMuxSources();
-
 		return new MachineConfiguration(_aluOperations, _baseRegisters, _registerExtensions, _allowedMuxInputs, _selectedMuxInputs);
 	}
 }

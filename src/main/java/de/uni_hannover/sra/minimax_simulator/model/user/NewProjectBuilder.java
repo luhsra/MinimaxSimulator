@@ -51,9 +51,8 @@ public class NewProjectBuilder implements ProjectBuilder {
 
 		// PC == 0?
 		SignalRow row = new SignalRow();
-		row.setSignalValue(BaseControlPort.ALU_SELECT_A.name(), 0);
-		row.setSignalValue(BaseControlPort.ALU_SELECT_B.name(), 2);
-		row.setSignalValue(BaseControlPort.ALU_CTRL.name(), 0);
+		row.setSignalValue(BaseControlPort.ALU_SELECT_B.name(), 1);
+		row.setSignalValue(BaseControlPort.ALU_CTRL.name(), 3);
 		row.setJump(new ConditionalJump(5, 7));
 		table.addSignalRow(row);
 
@@ -70,7 +69,7 @@ public class NewProjectBuilder implements ProjectBuilder {
 		row = new SignalRow();
 		row.setSignalValue("PC.W", 1);
 		row.setSignalValue(BaseControlPort.ALU_SELECT_A.name(), 1);
-		row.setSignalValue(BaseControlPort.ALU_SELECT_B.name(), 2);
+		row.setSignalValue(BaseControlPort.ALU_SELECT_B.name(), 1);
 		row.setSignalValue(BaseControlPort.ALU_CTRL.name(), 1);
 		row.setJump(new UnconditionalJump(4));
 		table.addSignalRow(row);

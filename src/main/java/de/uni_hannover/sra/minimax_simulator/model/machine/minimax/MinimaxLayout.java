@@ -60,8 +60,8 @@ class MinimaxLayout
 	public void initPartLayouts(MachineTopology cr, FontMetricsProvider fontProvider)
 	{
 		// Layout for base registers
-		putLayouts(new StackLayoutSet(Parts.MEMORY, Arrays.asList(Parts.MAR, Parts.MDR, Parts.IR, Parts.PC),
-			Arrays.asList(65, 45, 70, 80), Parts.GROUP_BASE_REGISTERS));
+		putLayouts(new StackLayoutSet(Parts.MEMORY, Arrays.asList(Parts.MAR, Parts.MDR, Parts.IR, Parts.PC, Parts.ACCU),
+				Arrays.asList(65, 45, 70, 80, 45), Parts.GROUP_BASE_REGISTERS));
 
 		putLayout(
 				Parts.GROUP_ALL_REGISTERS,
@@ -81,7 +81,7 @@ class MinimaxLayout
 		putLayout(
 				Parts.GROUP_MUX_BASE_REGISTERS,
 			new GroupLayout(Arrays.asList(Parts.MDR + Parts._OUT_JUNCTION, Parts.IR + Parts._OUT_JUNCTION, Parts.PC
-				+ Parts._OUT_JUNCTION)));
+				+ Parts._OUT_JUNCTION, Parts.ACCU + Parts._OUT_JUNCTION)));
 	}
 
 	public void addGroup(Group group)
