@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.io.exporter.json;
 
-import de.uni_hannover.sra.minimax_simulator.io.ProjectExportException;
+import de.uni_hannover.sra.minimax_simulator.io.exporter.ProjectExportException;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;

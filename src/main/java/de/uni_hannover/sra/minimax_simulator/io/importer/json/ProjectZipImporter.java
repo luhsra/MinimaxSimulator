@@ -1,8 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.io.importer.json;
 
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
-import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
-import de.uni_hannover.sra.minimax_simulator.io.ProjectImporter;
+import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImportException;
+import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImporter;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.json.ProjectZipExporter;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
@@ -30,8 +30,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author Martin L&uuml;ck
  * @author Philipp Rohde
  */
-public class ProjectZipImporter implements ProjectImporter
-{
+public class ProjectZipImporter implements ProjectImporter {
 	// private final static Charset _charset = Charset.forName("UTF-8");
 
 	private final File	_file;
@@ -44,8 +43,7 @@ public class ProjectZipImporter implements ProjectImporter
 	 * @param file
 	 *            the (non-null) file that will be read
 	 */
-	public ProjectZipImporter(File file)
-	{
+	public ProjectZipImporter(File file) {
 		_file = checkNotNull(file, "Invalid Null argument: file");
 	}
 

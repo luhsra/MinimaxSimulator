@@ -30,7 +30,7 @@ public interface ConfigurationLoader {
 	public static class ConfigurationException extends Exception {
 
 		/**
-		 * Constructs a new {@code ConfigurationException} with an error message and cause.
+		 * Constructs a new {@code ConfigurationException} with the specified detail message and cause.
 		 *
 		 * @param str
 		 *          the detail message
@@ -43,7 +43,8 @@ public interface ConfigurationLoader {
 		}
 
 		/**
-		 * Constructs a new {@code ConfigurationException} with an error message.
+		 * Constructs a new {@code ConfigurationException} with the specified detail message.
+		 * The cause is not initialized, and may subsequently be initialized by a call to {@link #initCause}.
 		 *
 		 * @param str
 		 *          the detail message

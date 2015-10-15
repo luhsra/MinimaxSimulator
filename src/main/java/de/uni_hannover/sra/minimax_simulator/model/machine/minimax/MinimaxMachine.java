@@ -59,6 +59,7 @@ public class MinimaxMachine implements ConfigurableMachine
 		_registerManager.addRegister(RegisterType.BASE, Parts.IR);
 		_registerManager.addRegister(RegisterType.BASE, Parts.MAR);
 		_registerManager.addRegister(RegisterType.BASE, Parts.PC);
+		_registerManager.addRegister(RegisterType.BASE, Parts.ACCU);
 
 		// Layout base parts and group parts
 		_layout.initPartLayouts(_topology, _display);

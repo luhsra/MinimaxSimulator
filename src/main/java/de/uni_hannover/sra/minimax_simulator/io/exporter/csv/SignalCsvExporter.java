@@ -11,59 +11,97 @@ import java.io.Writer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class SignalCsvExporter
-{
+/**
+ * The {@code SignalCsvExporter} exports the {@link SignalTable} to a csv file.
+ *
+ * @author Martin L&uuml;ck
+ */
+// TODO: create abstract parent class SignalExporter
+public class SignalCsvExporter {
+
 	private final File	_file;
 
-	public SignalCsvExporter(File file)
-	{
+	/**
+	 * Creates a new instance of the {@code SignalCsvExporter} and sets the file.
+	 *
+	 * @param file
+	 *          the {@code File} to save to
+	 */
+	public SignalCsvExporter(File file) {
 		_file = checkNotNull(file, "Invalid Null argument: file");
 	}
 
-	private String binaryToString(int val, SignalType signal)
-	{
+	/**
+	 * Converts an {@code int} to a {@code String} with the length of
+	 * {@link SignalType#getBitWidth()} belonging to the value.
+	 *
+	 * @param val
+	 *          the {@code int} to convert
+	 * @param signal
+	 *          the {@code SignalType} the value belongs to
+	 * @return
+	 *          a binary {@code String} representation of the value
+	 */
+	private String binaryToString(int val, SignalType signal) {
 		return Strings.padStart(Integer.toBinaryString(val), signal.getBitWidth(), '0');
 	}
 
-	private String getShortDescription(SignalValue value, SignalType signal)
-	{
-		if (value.isDontCare())
+	/**
+	 * Converts the value of a {@link SignalValue} to a {@code String} with
+	 * the length of {@link SignalType#getBitWidth()} belonging to the value.
+	 *
+	 * @param value
+	 *          the {@code SignalValue} to convert
+	 * @param signal
+	 *          the {@code SignalType} the value belongs to
+	 * @return
+	 *          a binary {@code String} representation of the value
+	 */
+	private String getShortDescription(SignalValue value, SignalType signal) {
+		if (value.isDontCare()) {
 			return "-";
+		}
 		return binaryToString(value.intValue(), signal);
 	}
 
-	public void exportSignalTable(SignalTable table, SignalConfiguration config)
-			throws IOException
-	{
+	/**
+	 * Exports the {@code SignalTable} to the file set via the constructor.
+	 *
+	 * @param table
+	 *          the {@code SignalTable} to export
+	 * @param config
+	 *          the {@code SignalConfiguration} belonging to the {@code SignalTable}
+	 * @throws IOException
+	 *          thrown if the file was not writable
+	 */
+	public void exportSignalTable(SignalTable table, SignalConfiguration config) throws IOException {
 		String lineSeparator = System.getProperty("line.separator");
-		if (lineSeparator == null || lineSeparator.isEmpty())
+		if (lineSeparator == null || lineSeparator.isEmpty()) {
 			lineSeparator = "\n";
+		}
 
-		// Write the table to disk
+		// write the table to disk
 		Writer wr = null;
-		try
-		{
+		try {
 			wr = IOUtils.toBufferedWriter(new FileWriter(_file));
 
-			// Header line
+			// header line
 			wr.append("#,Label");
-			for (SignalType signal : config.getSignalTypes())
-			{
+			for (SignalType signal : config.getSignalTypes()) {
 				wr.append(',').append(signal.getId());
 			}
 			wr.append(",Jump0,Jump1,Description");
 			wr.append(lineSeparator);
 
-			// Value lines
-			for (int i = 0, n = table.getRowCount(); i < n; i++)
-			{
+			// value lines
+			for (int i = 0, n = table.getRowCount(); i < n; i++) {
 				SignalRow row = table.getRow(i);
 				wr.append(Integer.toString(i)).append(',');
-				if (row.getLabel() != null)
+				if (row.getLabel() != null) {
 					wr.append(row.getLabel());
+				}
 				wr.append(',');
-				for (SignalType signal : config.getSignalTypes())
-				{
+				for (SignalType signal : config.getSignalTypes()) {
 					SignalValue value = row.getSignal(signal);
 					wr.append(getShortDescription(value, signal)).append(',');
 				}
@@ -72,9 +110,7 @@ public class SignalCsvExporter
 				wr.append(row.getDescription().replaceAll("\n", " : "));
 				wr.append(lineSeparator);
 			}
-		}
-		finally
-		{
+		} finally {
 			IOUtils.closeQuietly(wr);
 		}
 	}

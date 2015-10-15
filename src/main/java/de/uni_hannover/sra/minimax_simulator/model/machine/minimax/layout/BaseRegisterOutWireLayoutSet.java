@@ -10,6 +10,7 @@ public class BaseRegisterOutWireLayoutSet extends DefaultLayoutSet
 		layoutMdr();
 		layoutIr();
 		layoutPc();
+		layoutAccu();
 	}
 
 	private void layoutMdr()
@@ -65,5 +66,16 @@ public class BaseRegisterOutWireLayoutSet extends DefaultLayoutSet
 		addLayout(pcOutJunction, cb.alignVertically(Parts.PC).left(Parts.GROUP_MUX_EXT_REGISTERS, 10));
 		addLayout(pcOutWire + ".0", cb.left(Parts.PC).alignVertically(Parts.PC));
 		addLayout(pcOutWire + ".1", cb.align(pcOutJunction));
+	}
+
+	private void layoutAccu() {
+		ConstraintBuilder cb = new ConstraintBuilder();
+
+		String accuOutJunction = Parts.ACCU + Parts._OUT_JUNCTION;
+		String accuOutWire = Parts.ACCU + Parts._WIRE_DATA_OUT;
+
+		addLayout(accuOutJunction, cb.alignVertically(Parts.ACCU).left(Parts.GROUP_MUX_EXT_REGISTERS, 10));
+		addLayout(accuOutWire + ".0", cb.left(Parts.ACCU).alignVertically(Parts.ACCU));
+		addLayout(accuOutWire + ".1", cb.align(accuOutJunction));
 	}
 }

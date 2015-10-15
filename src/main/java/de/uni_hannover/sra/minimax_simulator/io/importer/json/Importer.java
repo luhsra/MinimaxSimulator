@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.io.importer.json;
 
-import de.uni_hannover.sra.minimax_simulator.io.ProjectImportException;
+import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImportException;
 
 /**
  * This provides some basic methods used by the JSON importers.

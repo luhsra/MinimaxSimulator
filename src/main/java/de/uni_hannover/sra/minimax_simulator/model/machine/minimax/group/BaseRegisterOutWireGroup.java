@@ -15,6 +15,7 @@ public class BaseRegisterOutWireGroup extends AbstractGroup
 		initMdr(cr);
 		initIr(cr);
 		initPc(cr);
+		initAccu(cr);
 	}
 
 	private void initMdr(MachineTopology cr)
@@ -57,6 +58,15 @@ public class BaseRegisterOutWireGroup extends AbstractGroup
 
 		add(pcOutJunction, Parts.PC + Parts._OUT_JUNCTION);
 		addWire(pcOutWire, Parts.PC + Parts._WIRE_DATA_OUT);
+	}
+	
+	private void initAccu(MachineTopology cr) {
+		Register accu = cr.getCircuit(Register.class, Parts.ACCU);
+		Junction accuOutJunction = new Junction();
+		Wire accuOutWire = new Wire(2, accu.getDataOut(), accuOutJunction.getDataIn());
+
+		add(accuOutJunction, Parts.ACCU + Parts._OUT_JUNCTION);
+		add(accuOutWire, Parts.ACCU + Parts._WIRE_DATA_OUT);
 	}
 
 	@Override
