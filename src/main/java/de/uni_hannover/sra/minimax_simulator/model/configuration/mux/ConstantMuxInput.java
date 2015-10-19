@@ -1,47 +1,61 @@
 package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
 
-public class ConstantMuxInput implements MuxInput
-{
-	private final int _constant;
+/**
+ * A {@code ConstantMuxInput} is a {@link MuxInput} consisting of a constant.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class ConstantMuxInput implements MuxInput {
 
-	public ConstantMuxInput(int constant)
-	{
-		_constant = constant;
+	private final int CONSTANT;
+
+	/**
+	 * Constructs a new {@code ConstantMuxInput} with the specified constant.
+	 *
+	 * @param constant
+	 *          the constant to set to the {@code ConstantMuxInput}
+	 */
+	public ConstantMuxInput(int constant) {
+		this.CONSTANT = constant;
 	}
 
-	public int getConstant()
-	{
-		return _constant;
+	/**
+	 * Gets the constant of the {@code ConstantMuxInput}.
+	 *
+	 * @return
+	 *          the constant of the {@code ConstantMuxInput}
+	 */
+	public int getConstant() {
+		return CONSTANT;
 	}
 
 	@Override
-	public String toString()
-	{
-		return "ConstantMuxInput[" + _constant + "]";
+	public String toString() {
+		return "ConstantMuxInput[" + CONSTANT + "]";
 	}
 
 	@Override
-	public boolean equals(Object o)
-	{
-		if (this == o)
+	public boolean equals(Object o) {
+		if (this == o) {
 			return true;
-		if (o == null)
+		}
+		if (o == null) {
 			return false;
-		if (getClass() != o.getClass())
+		}
+		if (getClass() != o.getClass()) {
 			return false;
+		}
 
-		return ((ConstantMuxInput) o)._constant == _constant;
+		return ((ConstantMuxInput) o).CONSTANT == this.CONSTANT;
 	}
 
 	@Override
-	public int hashCode()
-	{
-		return 31 * _constant;
+	public int hashCode() {
+		return 31 * CONSTANT;
 	}
 
 	@Override
-	public String getName()
-	{
-		return Integer.toString(_constant);
+	public String getName() {
+		return Integer.toString(CONSTANT);
 	}
 }

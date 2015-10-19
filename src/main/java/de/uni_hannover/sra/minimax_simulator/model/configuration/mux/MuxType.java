@@ -1,7 +1,19 @@
 package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
 
-public enum MuxType
-{
+/**
+ * This enumeration is used to differentiate between the two multiplexers.
+ *
+ * @author Martin L&uuml;ck
+ */
+public enum MuxType {
+
+	/**
+	 * multiplexer A
+	 */
 	A,
-	B;
+
+	/**
+	 * multiplexer B
+	 */
+	B
 }
