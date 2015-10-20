@@ -10,63 +10,76 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MachineResolver
-{
+/**
+ * Resolves the {@link MachineTopology} using a {@link SimpleTopologicalSorter}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class MachineResolver {
+
 	private final static Logger _log = Logger.getLogger(MachineResolver.class.getName());
 
 	private final ImmutableList<Circuit>			_resolveOrder;
 	private final ImmutableList<SynchronousCircuit>	_synchronousCircuits;
 
-	public MachineResolver(Set<Circuit> circuits)
-	{
+	/**
+	 * Constructs a new {@code MachineResolver} with the specified set of {@code Circuits}.
+	 *
+	 * @param circuits
+	 *          the {@code Circuit}s to resolve
+	 */
+	public MachineResolver(Set<Circuit> circuits) {
 		ArrayList<Circuit> list = new ArrayList<Circuit>(circuits);
-		new SimpleTopologicalSorter().sort(circuits,
-			new TopologicalDependencyRelation<Circuit>()
-			{
+		new SimpleTopologicalSorter().sort(circuits, new TopologicalDependencyRelation<Circuit>() {
 				@Override
-				public boolean dependsOn(Circuit element, Circuit dependency)
-				{
+				public boolean dependsOn(Circuit element, Circuit dependency) {
 					return dependency.getSuccessors().contains(element);
 				}
 			}, list);
 
 		_resolveOrder = ImmutableList.copyOf(list);
-		_synchronousCircuits = ImmutableList.copyOf(Iterables.filter(circuits,
-			SynchronousCircuit.class));
+		_synchronousCircuits = ImmutableList.copyOf(Iterables.filter(circuits, SynchronousCircuit.class));
 	}
 
-	public void resolveCircuits()
-	{
-		for (Circuit circuit : _resolveOrder)
-		{
-			if (_log.isLoggable(Level.FINEST))
+	/**
+	 * Resolves the {@link Circuit}s.
+	 */
+	public void resolveCircuits() {
+		for (Circuit circuit : _resolveOrder) {
+			if (_log.isLoggable(Level.FINEST)) {
 				_log.finest("Resolving " + circuit);
+			}
 
 			circuit.update();
 
-			if (_log.isLoggable(Level.FINEST))
+			if (_log.isLoggable(Level.FINEST)) {
 				_log.finest("Resolved to " + circuit);
+			}
 		}
 	}
 
-	public void nextCycle()
-	{
-		for (SynchronousCircuit circuit : _synchronousCircuits)
-		{
-			if (_log.isLoggable(Level.FINEST))
+	/**
+	 * Switches the cycles in {@link SynchronousCircuit}s.
+	 */
+	public void nextCycle() {
+		for (SynchronousCircuit circuit : _synchronousCircuits) {
+			if (_log.isLoggable(Level.FINEST)) {
 				_log.finest("Switching cycle in " + circuit);
+			}
 
 			circuit.nextCycle();
 
-			if (_log.isLoggable(Level.FINEST))
+			if (_log.isLoggable(Level.FINEST)) {
 				_log.finest("Switched cycle in " + circuit);
+			}
 		}
 	}
 
-	public void resetCircuits()
-	{
-		for (Circuit circuit : _resolveOrder)
-		{
+	/**
+	 * Resets the {@link Circuit}s to their default state.
+	 */
+	public void resetCircuits() {
+		for (Circuit circuit : _resolveOrder) {
 			circuit.reset();
 		}
 	}

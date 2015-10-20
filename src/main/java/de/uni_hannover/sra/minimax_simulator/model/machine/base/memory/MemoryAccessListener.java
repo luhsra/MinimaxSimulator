@@ -1,6 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.base.memory;
 
 /**
+ * A {@code MemoryAccessListener} is a class that needs to react to events
+ * concerning the memory of the machine.
  *
  * @author Martin L&uuml;ck
  */
