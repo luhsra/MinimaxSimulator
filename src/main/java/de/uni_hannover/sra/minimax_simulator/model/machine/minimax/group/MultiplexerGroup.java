@@ -11,15 +11,31 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Port;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.LabelShape;
 
-public class MultiplexerGroup extends AbstractGroup
-{
+/**
+ * Groups the parts of a multiplexer.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class MultiplexerGroup extends AbstractGroup {
 	private final String		_muxName;
 	private final String		_muxLabel;
 	private final boolean		_topDown;
 	private final Port			_port;
 
-	public MultiplexerGroup(String muxName, String muxLabel, boolean topDown, Port port)
-	{
+	/**
+	 * Constructs a new {@code MultiplexerGroup} with the specified multiplexer name,
+	 * display name (label), {@code top down} property and {@link Port}.
+	 *
+	 * @param muxName
+	 *          the name of the multiplexer
+	 * @param muxLabel
+	 *          the display name of the multiplexer
+	 * @param topDown
+	 *          whether the group will be displayed top down or not
+	 * @param port
+	 *          the {@code Port} of the multiplexer
+	 */
+	public MultiplexerGroup(String muxName, String muxLabel, boolean topDown, Port port) {
 		_muxName = muxName;
 		_muxLabel = muxLabel;
 		_topDown = topDown;
@@ -27,8 +43,7 @@ public class MultiplexerGroup extends AbstractGroup
 	}
 
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		Multiplexer mux = cr.getCircuit(Multiplexer.class, _muxName);
 
 		Label label = new Label(_muxLabel);
@@ -42,14 +57,12 @@ public class MultiplexerGroup extends AbstractGroup
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return true;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		return new MultiplexerLayoutSet(_muxName, _topDown);
 	}
 }

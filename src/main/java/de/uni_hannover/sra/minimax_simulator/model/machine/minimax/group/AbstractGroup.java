@@ -8,8 +8,13 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 
 import java.util.*;
 
-public abstract class AbstractGroup implements Group
-{
+/**
+ * Basic implementation of {@link Group}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public abstract class AbstractGroup implements Group {
+
 	private final Set<Circuit>			_circuitSet		= new HashSet<Circuit>();
 	private final Set<SpriteOwner>		_spriteSet		= new HashSet<SpriteOwner>();
 	private final Set<Component>		_componentSet	= new HashSet<Component>();
@@ -18,109 +23,138 @@ public abstract class AbstractGroup implements Group
 
 	private final Map<Object, String>	_names			= new HashMap<Object, String>();
 
-	protected void add(Object object, String name)
-	{
-		if (object instanceof Circuit)
-		{
+	/**
+	 * Adds the specified {@code Object} links it with the specified name.
+	 *
+	 * @param object
+	 *          the {@code Object} to add
+	 * @param name
+	 *          the name of the {@code Object}
+	 */
+	protected void add(Object object, String name) {
+		if (object instanceof Circuit) {
 			addCircuit((Circuit) object);
 		}
-		if (object instanceof SpriteOwner)
-		{
+		if (object instanceof SpriteOwner) {
 			addSprite((SpriteOwner) object);
 		}
-		if (object instanceof Component)
-		{
+		if (object instanceof Component) {
 			addComponent((Component) object);
 		}
-		if (object instanceof Wire)
-		{
+		if (object instanceof Wire) {
 			addWireComponents((Wire) object, name);
 		}
 		_names.put(object, name);
 	}
 
-	private void addWireComponents(Wire wire, String name)
-	{
+	/**
+	 * Adds the {@link Component}s of the specified {@link Wire}.
+	 * Their name will be computed using the specified name.
+	 *
+	 * @param wire
+	 *          the {@code Wire} whose {@code Component}s will be added
+	 * @param name
+	 *          the name of the {@code Wire}
+	 */
+	private void addWireComponents(Wire wire, String name) {
 		int index = 0;
-		for (Component component : wire.createWireComponents())
-		{
+		for (Component component : wire.createWireComponents()) {
 			add(component, name + "." + index);
 			index++;
 		}
 	}
 
-	protected void addWire(Wire wire, String name)
-	{
-		// As Sprite and Circuit
+	/**
+	 * Adds the specified {@link Wire} and links it with the specified name.
+	 *
+	 * @param wire
+	 *          the {@code Wire} to add
+	 * @param name
+	 *          the name of the {@code Wire}
+	 */
+	protected void addWire(Wire wire, String name) {
+		// as Sprite and Circuit
 		add(wire, name);
 
 		int index = 0;
-		for (Component component : wire.createWireComponents())
-		{
+		for (Component component : wire.createWireComponents()) {
 			add(component, name + "." + index);
 			index++;
 		}
 	}
 
-	protected void addCircuit(Circuit circuit)
-	{
+	/**
+	 * Adds a {@link Circuit}.
+	 *
+	 * @param circuit
+	 *          the {@code Circuit} to add
+	 */
+	protected void addCircuit(Circuit circuit) {
 		_circuitSet.add(circuit);
 	}
 
-	protected void addComponent(Component component)
-	{
+	/**
+	 * Adds a {@link Component}.
+	 *
+	 * @param component
+	 *          the {@code Component} to add
+	 */
+	protected void addComponent(Component component) {
 		_componentSet.add(component);
 	}
 
-	protected void addSprite(SpriteOwner sprite)
-	{
+	/**
+	 * Adds a sprite ({@link SpriteOwner}).
+	 *
+	 * @param sprite
+	 *          the sprite to add
+	 */
+	protected void addSprite(SpriteOwner sprite) {
 		_spriteSet.add(sprite);
 	}
 
-	protected void addVirtual(String name)
-	{
+	/**
+	 * Adds a virtual component.
+	 *
+	 * @param name
+	 *          the name of the virtual component
+	 */
+	protected void addVirtual(String name) {
 		_virtualsSet.add(name);
 	}
 
 	@Override
-	public String getName(Object object)
-	{
+	public String getName(Object object) {
 		return _names.get(object);
 	}
 
 	@Override
-	public Set<Circuit> getGroupCircuits()
-	{
+	public Set<Circuit> getGroupCircuits() {
 		return Collections.unmodifiableSet(_circuitSet);
 	}
 
 	@Override
-	public Set<SpriteOwner> getSpriteOwners()
-	{
+	public Set<SpriteOwner> getSpriteOwners() {
 		return Collections.unmodifiableSet(_spriteSet);
 	}
 
 	@Override
-	public Set<Component> getComponents()
-	{
+	public Set<Component> getComponents() {
 		return Collections.unmodifiableSet(_componentSet);
 	}
 
 	@Override
-	public Set<String> getVirtualComponents()
-	{
+	public Set<String> getVirtualComponents() {
 		return Collections.unmodifiableSet(_virtualsSet);
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return false;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		throw new IllegalStateException();
 	}
 }

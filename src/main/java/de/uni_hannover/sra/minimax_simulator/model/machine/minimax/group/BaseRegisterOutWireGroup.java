@@ -7,19 +7,28 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.BaseRe
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.LayoutSet;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.*;
 
-public class BaseRegisterOutWireGroup extends AbstractGroup
-{
+/**
+ * Groups the output wires of the basic registers.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class BaseRegisterOutWireGroup extends AbstractGroup {
+
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		initMdr(cr);
 		initIr(cr);
 		initPc(cr);
 		initAccu(cr);
 	}
 
-	private void initMdr(MachineTopology cr)
-	{
+	/**
+	 * Initializes the outputs of the register MDR.
+	 *
+	 * @param cr
+	 *          the machine's topology
+	 */
+	private void initMdr(MachineTopology cr) {
 		Register mdr = cr.getCircuit(Register.class, Parts.MDR);
 		Memory memory = cr.getCircuit(Memory.class, Parts.MEMORY);
 
@@ -40,8 +49,13 @@ public class BaseRegisterOutWireGroup extends AbstractGroup
 		addWire(mdrMemDiWire, Parts.MEMORY + Parts._WIRE_DATA_IN);
 	}
 
-	private void initIr(MachineTopology cr)
-	{
+	/**
+	 * Initializes the outputs of the register IR.
+	 *
+	 * @param cr
+	 *          the machine's topology
+	 */
+	private void initIr(MachineTopology cr) {
 		SignExtension signExt = cr.getCircuit(SignExtension.class, Parts.SIGN_EXTENSION);
 		Junction irOutJunction = new Junction();
 		Wire irOutWire = new Wire(3, signExt.getDataOut(), irOutJunction.getDataIn());
@@ -50,8 +64,13 @@ public class BaseRegisterOutWireGroup extends AbstractGroup
 		addWire(irOutWire, Parts.IR + Parts._WIRE_DATA_OUT);
 	}
 
-	private void initPc(MachineTopology cr)
-	{
+	/**
+	 * Initializes the outputs of the register PC.
+	 *
+	 * @param cr
+	 *          the machine's topology
+	 */
+	private void initPc(MachineTopology cr) {
 		Register pc = cr.getCircuit(Register.class, Parts.PC);
 		Junction pcOutJunction = new Junction();
 		Wire pcOutWire = new Wire(2, pc.getDataOut(), pcOutJunction.getDataIn());
@@ -59,7 +78,13 @@ public class BaseRegisterOutWireGroup extends AbstractGroup
 		add(pcOutJunction, Parts.PC + Parts._OUT_JUNCTION);
 		addWire(pcOutWire, Parts.PC + Parts._WIRE_DATA_OUT);
 	}
-	
+
+	/**
+	 * Initializes the outputs of the register ACCU.
+	 *
+	 * @param cr
+	 *          the machine's topology
+	 */
 	private void initAccu(MachineTopology cr) {
 		Register accu = cr.getCircuit(Register.class, Parts.ACCU);
 		Junction accuOutJunction = new Junction();
@@ -70,14 +95,12 @@ public class BaseRegisterOutWireGroup extends AbstractGroup
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return true;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		return new BaseRegisterOutWireLayoutSet();
 	}
 }

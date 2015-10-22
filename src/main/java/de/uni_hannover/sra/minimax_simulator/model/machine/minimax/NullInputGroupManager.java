@@ -12,24 +12,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class NullInputGroupManager implements MuxInputGroupManager
-{
+/**
+ * A {@link MuxInputGroupManager} for {@link NullMuxInput}s.
+ *
+ * @author Martin L&uuml;ck
+ */
+class NullInputGroupManager implements MuxInputGroupManager {
+
 	private final GroupManager						_groupManager;
 
 	private final Map<MuxType, List<InputEntry>>	_inputEntries;
 
-	public NullInputGroupManager(GroupManager groupManager)
-	{
+	/**
+	 * Constructs a new {@code NullInputGroupManager} with the specified {@link GroupManager}.
+	 *
+	 * @param groupManager
+	 *          the {@code GroupManager}
+	 */
+	public NullInputGroupManager(GroupManager groupManager) {
 		_groupManager = groupManager;
 
 		_inputEntries = new HashMap<MuxType, List<InputEntry>>();
-		for (MuxType type : MuxType.values())
+		for (MuxType type : MuxType.values()) {
 			_inputEntries.put(type, new ArrayList<InputEntry>());
+		}
 	}
 
 	@Override
-	public void update(MuxInputManager muxInputs)
-	{
+	public void update(MuxInputManager muxInputs) {
 		List<InputEntry> entries = _inputEntries.get(muxInputs.getMuxType());
 
 		destroyGroups(entries);
@@ -38,24 +48,30 @@ class NullInputGroupManager implements MuxInputGroupManager
 		createGroups(entries);
 	}
 
-	private void createGroups(List<InputEntry> entries)
-	{
-		for (InputEntry entry : entries)
-		{
-			if (entry.input instanceof NullMuxInput)
-			{
+	/**
+	 * Creates {@link MuxNullGroup}s for the {@link NullMuxInput}s of the specified entries.
+	 *
+	 * @param entries
+	 *          a list of {@link InputEntry} to create {@code Group}s for
+	 */
+	private void createGroups(List<InputEntry> entries) {
+		for (InputEntry entry : entries) {
+			if (entry.input instanceof NullMuxInput) {
 				Group group = new MuxNullGroup(entry.pinId, entry.pin);
 				_groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
 			}
 		}
 	}
 
-	private void destroyGroups(List<InputEntry> entries)
-	{
-		for (InputEntry entry : entries)
-		{
-			if (entry.input instanceof NullMuxInput)
-			{
+	/**
+	 * Removes the {@link MuxNullGroup}s of the {@link NullMuxInput}s of the specified entries.
+	 *
+	 * @param entries
+	 *          a list of {@link InputEntry} to destroy {@code Group}s for
+	 */
+	private void destroyGroups(List<InputEntry> entries) {
+		for (InputEntry entry : entries) {
+			if (entry.input instanceof NullMuxInput) {
 				_groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
 			}
 		}

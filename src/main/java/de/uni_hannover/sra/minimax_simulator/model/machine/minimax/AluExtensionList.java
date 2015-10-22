@@ -7,43 +7,48 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Alu;
 import java.util.Collection;
 import java.util.Collections;
 
-class AluExtensionList implements ExtensionList<AluOperation>
-{
+/**
+ * An {@link ExtensionList} for the machine's {@link AluOperation}s.
+ *
+ * @author Martin L&uuml;ck
+ */
+class AluExtensionList implements ExtensionList<AluOperation> {
+
 	private final Alu	_alu;
 
-	public AluExtensionList(Alu alu)
-	{
+	/**
+	 * Constructs a new {@code AluExtensionList} for the specified {@link Alu}.
+	 *
+	 * @param alu
+	 *          the {@code Alu}
+	 */
+	public AluExtensionList(Alu alu) {
 		_alu = alu;
 	}
 
 	@Override
-	public void add(AluOperation operation)
-	{
+	public void add(AluOperation operation) {
 		_alu.getAluOperations().add(operation);
 	}
 
 	@Override
-	public void addAll(Collection<? extends AluOperation> elements)
-	{
+	public void addAll(Collection<? extends AluOperation> elements) {
 		_alu.getAluOperations().addAll(elements);
 	}
 
 	@Override
-	public void remove(int index)
-	{
+	public void remove(int index) {
 		_alu.getAluOperations().remove(index);
 	}
 
 	@Override
-	public void swap(int index1, int index2)
-	{
+	public void swap(int index1, int index2) {
 		Collections.swap(_alu.getAluOperations(), index1, index2);
 	}
 
 	@Override
-	public void set(int index, AluOperation element)
-	{
-		// Cannot happen with ALU operations
+	public void set(int index, AluOperation element) {
+		// cannot happen with ALU operations
 		throw new AssertionError();
 	}
 }

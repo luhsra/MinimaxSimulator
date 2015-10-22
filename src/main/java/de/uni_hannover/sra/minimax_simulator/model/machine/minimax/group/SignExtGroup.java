@@ -9,11 +9,15 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.CuLabelShape;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.SignExtShape;
 
-public class SignExtGroup extends AbstractGroup
-{
+/**
+ * Groups the parts of a sign extension unit.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class SignExtGroup extends AbstractGroup {
+
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		SignExtension signExt = new SignExtension("sign ext.");
 		signExt.setShape(new SignExtShape(fontProvider));
 
@@ -41,14 +45,12 @@ public class SignExtGroup extends AbstractGroup
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return true;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		return new SignExtLayoutSet();
 	}
 }

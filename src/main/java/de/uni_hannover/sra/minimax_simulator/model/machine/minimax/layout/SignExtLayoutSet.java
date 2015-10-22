@@ -3,10 +3,18 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 
-public class SignExtLayoutSet extends DefaultLayoutSet
-{
-	public SignExtLayoutSet()
-	{
+/**
+ * Container for the {@link de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.Layout}s
+ * of a {@link de.uni_hannover.sra.minimax_simulator.model.machine.part.SignExtension}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class SignExtLayoutSet extends DefaultLayoutSet {
+
+	/**
+	 * Initializes the {@code SignExtLayoutSet}.
+	 */
+	public SignExtLayoutSet() {
 		String junctionName = Parts.IR + Parts._WIRE + Parts._JUNCTION;
 		String portName = Parts.SIGN_EXTENSION + Parts._CU + Parts._PORT;
 		String labelName = Parts.SIGN_EXTENSION + Parts._CU + Parts._LABEL;

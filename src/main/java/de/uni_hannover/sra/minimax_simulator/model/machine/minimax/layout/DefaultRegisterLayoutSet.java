@@ -4,10 +4,21 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.AttributeType;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 
-public class DefaultRegisterLayoutSet extends DefaultLayoutSet
-{
-	public DefaultRegisterLayoutSet(String registerid)
-	{
+/**
+ * Default container for the {@link de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.Layout}s
+ * of a register.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class DefaultRegisterLayoutSet extends DefaultLayoutSet {
+
+	/**
+	 * Initializes the {@code DefaultRegisterLayoutSet} for the register with the specified register ID.
+	 *
+	 * @param registerid
+	 *          the ID of the register the {@code DefaultRegisterLayoutSet} refers to
+	 */
+	public DefaultRegisterLayoutSet(String registerid) {
 		String junctionId = registerid + Parts._JUNCTION;
 		String portId = registerid + Parts._PORT;
 		String labelId = registerid + Parts._LABEL;

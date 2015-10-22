@@ -9,30 +9,50 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.MdrRegi
 import java.util.HashMap;
 import java.util.Map;
 
-class RegisterManager
-{
-	enum RegisterType
-	{
+/**
+ * Manages the registers of a {@link MinimaxMachine}.
+ *
+ * @author Martin L&uuml;ck
+ */
+class RegisterManager {
+
+	/**
+	 * The type of the register.
+	 */
+	enum RegisterType {
 		MDR,
 		BASE,
-		EXTENDED;
+		EXTENDED
 	}
 
 	private final GroupManager						_groupManager;
 	private final Map<String, String>				_registerIds;
 
-	public RegisterManager(GroupManager groupManager)
-	{
+	/**
+	 * Constructs a new {@code RegisterManager} using the specified {@link GroupManager}.
+	 *
+	 * @param groupManager
+	 *          the group manager
+	 */
+	public RegisterManager(GroupManager groupManager) {
 		_groupManager = groupManager;
 		_registerIds = new HashMap<String, String>();
 	}
 
-	public String addRegister(RegisterType type, String registerName)
-	{
+	/**
+	 * Adds a register with the specified {@link RegisterType} and name.
+	 *
+	 * @param type
+	 *          the type of the register
+	 * @param registerName
+	 *          the name of the register
+	 * @return
+	 *          the ID of the register
+	 */
+	public String addRegister(RegisterType type, String registerName) {
 		String registerId;
 
-		switch (type)
-		{
+		switch (type) {
 			case BASE:
 			case MDR:
 				registerId = registerName;
@@ -45,8 +65,7 @@ class RegisterManager
 		_registerIds.put(registerName, registerId);
 
 		Group group;
-		switch (type)
-		{
+		switch (type) {
 			case BASE:
 				group = new DefaultRegisterGroup(registerId);
 				break;
@@ -60,40 +79,74 @@ class RegisterManager
 				throw new AssertionError();
 		}
 
-		// Use register id as name for the group
+		// use register id as name for the group
 		_groupManager.initializeGroup(registerId, group);
 
 		return registerId;
 	}
 
-	public String removeRegister(String registerName)
-	{
+	/**
+	 * Removes the register with the specified name.
+	 *
+	 * @param registerName
+	 *          the name of the register to remove
+	 * @return
+	 *          the ID of the removed register
+	 */
+	public String removeRegister(String registerName) {
 		String registerId = _registerIds.remove(registerName);
-		if (registerId == null)
+		if (registerId == null) {
 			throw new IllegalStateException("Unknown register name: " + registerName);
+		}
 
 		_groupManager.removeGroup(registerId);
 
 		return registerId;
 	}
 
-	String getRegisterId(RegisterMuxInput input)
-	{
+	/**
+	 * Gets the register ID of the specified {@link RegisterMuxInput}.
+	 *
+	 * @param input
+	 *          the {@code RegisterMuxInput}
+	 * @return
+	 *          the ID of the register related to the {@code RegisterMuxInput}
+	 */
+	String getRegisterId(RegisterMuxInput input) {
 		return _registerIds.get(input.getRegisterName());
 	}
 
-	String getRegisterId(String name)
-	{
+	/**
+	 * Gets the register ID of the register with the specified name.
+	 *
+	 * @param name
+	 *          the name of the register
+	 * @return
+	 *          the ID of the register
+	 */
+	String getRegisterId(String name) {
 		return _registerIds.get(name);
 	}
 
-	Map<String, String> getRegisterIdsByName()
-	{
+	/**
+	 * Gets the names and IDs of the registers.
+	 *
+	 * @return
+	 *          a map containing the names and IDs of the registers
+	 */
+	Map<String, String> getRegisterIdsByName() {
 		return _registerIds;
 	}
 
-	private String buildRegisterId(String registerName)
-	{
+	/**
+	 * Builds a register ID for the specified register name.
+	 *
+	 * @param registerName
+	 *          the name of the register
+	 * @return
+	 *          the built ID of the register
+	 */
+	private String buildRegisterId(String registerName) {
 		return Parts.REGISTER_ + "<" + registerName + ">";
 	}
 }

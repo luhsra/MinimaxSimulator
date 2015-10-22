@@ -10,11 +10,15 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.CuLabelShape;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.LabelShape;
 
-public class AluGroup extends AbstractGroup
-{
+/**
+ * The {@code AluGroup} groups all parts of the ALU.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class AluGroup extends AbstractGroup {
+
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		Alu alu = cr.getCircuit(Alu.class, Parts.ALU);
 
 		Port aluCtrlPort = BaseControlPort.ALU_CTRL.port();
@@ -48,14 +52,12 @@ public class AluGroup extends AbstractGroup
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return true;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		return new AluLayoutSet();
 	}
 }
