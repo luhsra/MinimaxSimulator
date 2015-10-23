@@ -13,8 +13,13 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Alu extends Part implements SpriteOwner
-{
+/**
+ * Implementation of the component part ALU of a machine.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class Alu extends Part implements SpriteOwner {
+
 	private final static Logger			_log	= Logger.getLogger(Alu.class.getName());
 
 	private final List<AluOperation>	_aluOperations;
@@ -27,8 +32,10 @@ public class Alu extends Part implements SpriteOwner
 
 	private int							_result;
 
-	public Alu()
-	{
+	/**
+	 * Constructs a new instance of the {@code Alu}.
+	 */
+	public Alu() {
 		_aluOperations = new ArrayList<AluOperation>();
 
 		_inCtrl = new IngoingPin(this);
@@ -37,30 +44,27 @@ public class Alu extends Part implements SpriteOwner
 		_outData = new OutgoingPin(this);
 		_outZero = new OutgoingPin(this);
 
-		// _successors = ImmutableSet.of(_outData, _outZero);
-
 		_result = 0;
 	}
 
 	@Override
-	public void update()
-	{
+	public void update() {
 		int mode = _inCtrl.read();
-		if (mode < _aluOperations.size())
-		{
+		if (mode < _aluOperations.size()) {
 			AluOperation op = _aluOperations.get(mode);
 			_result = op.execute(_inA.read(), _inB.read());
 
-			if (_log.isLoggable(Level.FINER))
+			if (_log.isLoggable(Level.FINER)) {
 				_log.log(Level.FINER, "Applying ALU operation " + op + " to " + _inA.read()
-					+ " and " + _inB.read() + " with result " + _result);
+						+ " and " + _inB.read() + " with result " + _result);
+			}
 		}
-		else
-		{
+		else {
 			_result = 0;
 
-			if (_log.isLoggable(Level.FINER))
+			if (_log.isLoggable(Level.FINER)) {
 				_log.log(Level.FINER, "Unknown ALU operation: " + mode + ", writing 0");
+			}
 		}
 
 		_outZero.write(_result == 0 ? 1 : 0);
@@ -68,55 +72,87 @@ public class Alu extends Part implements SpriteOwner
 	}
 
 	@Override
-	public Set<? extends Circuit> getSuccessors()
-	{
+	public Set<? extends Circuit> getSuccessors() {
 		return Sets.union(_outData.getSuccessors(), _outZero.getSuccessors());
 	}
 
-	public List<AluOperation> getAluOperations()
-	{
+	/**
+	 * Gets the {@link AluOperation}s the {@code Alu} can execute.
+	 *
+	 * @return
+	 *          a list of the {@code AluOperation}s
+	 */
+	public List<AluOperation> getAluOperations() {
 		return _aluOperations;
 	}
 
-	public IngoingPin getInCtrl()
-	{
+	/**
+	 * Gets the control {@link IngoingPin}.
+	 *
+	 * @return
+	 *          the control pin
+	 */
+	public IngoingPin getInCtrl() {
 		return _inCtrl;
 	}
 
-	public IngoingPin getInA()
-	{
+	/**
+	 * Gets the {@link IngoingPin} for port A.
+	 *
+	 * @return
+	 *          the pin of port A
+	 */
+	public IngoingPin getInA() {
 		return _inA;
 	}
 
-	public IngoingPin getInB()
-	{
+	/**
+	 * Gets the {@link IngoingPin} for port B.
+	 *
+	 * @return
+	 *          the pin of port B
+	 */
+	public IngoingPin getInB() {
 		return _inB;
 	}
 
-	public OutgoingPin getOutData()
-	{
+	/**
+	 * Gets the data {@link OutgoingPin}.
+	 *
+	 * @return
+	 *          the data pin
+	 */
+	public OutgoingPin getOutData() {
 		return _outData;
 	}
 
-	public OutgoingPin getOutZero()
-	{
+	/**
+	 * Gets the condition {@link OutgoingPin}.
+	 *
+	 * @return
+	 *          the ALU condition pin
+	 */
+	public OutgoingPin getOutZero() {
 		return _outZero;
 	}
 
-	public int getResult()
-	{
+	/**
+	 * Gets the ALU result.
+	 *
+	 * @return
+	 *          the result
+	 */
+	public int getResult() {
 		return _result;
 	}
 
 	@Override
-	public Sprite createSprite()
-	{
+	public Sprite createSprite() {
 		return new AluSprite(this);
 	}
 
 	@Override
-	public void reset()
-	{
+	public void reset() {
 		_result = 0;
 	}
 }

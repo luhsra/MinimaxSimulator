@@ -11,8 +11,13 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.RegisterSprite;
 import java.util.Collections;
 import java.util.Set;
 
-public class Register extends SimplePart implements SynchronousCircuit, SpriteOwner
-{
+/**
+ * Implementation of a register a component part of a machine.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class Register extends SimplePart implements SynchronousCircuit, SpriteOwner {
+
 	private final RegisterSize	_size;
 	private final boolean		_isExtended;
 	private final IngoingPin	_dataIn;
@@ -22,13 +27,27 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 
 	private int					_value;
 
-	public Register(String label)
-	{
+	/**
+	 * Constructs a new 32 Bits not-extended {@code Register} with the specified name.
+	 *
+	 * @param label
+	 *          the name of the {@code Register}
+	 */
+	public Register(String label) {
 		this(label, RegisterSize.BITS_32, false);
 	}
 
-	public Register(String label, RegisterSize size, boolean isExtended)
-	{
+	/**
+	 * Constructs a new {@code Register} with the specified name, {@link RegisterSize} and {@code is extended} property.
+	 *
+	 * @param label
+	 *          the name of the {@code Register}
+	 * @param size
+	 *          the {@code RegisterSize} of the {@code Register}
+	 * @param isExtended
+	 *          whether the {@code Register} is a base register or not
+	 */
+	public Register(String label, RegisterSize size, boolean isExtended) {
 		_label = label;
 		_size = size;
 
@@ -39,84 +58,118 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 		_writeEnabled = new IngoingPin(this);
 	}
 
-	public Register(RegisterExtension ext)
-	{
+	/**
+	 * Constructs a new {@code Register} using the specified {@link RegisterExtension}.
+	 *
+	 * @param ext
+	 *          the {@code RegisterExtension} to create a {@code Register} from
+	 */
+	public Register(RegisterExtension ext) {
 		this(ext.getName(), ext.getSize(), ext.isExtended());
 	}
 
-	public int getValue()
-	{
+	/**
+	 * Gets the value of the {@code Register}.
+	 *
+	 * @return
+	 *          the value
+	 */
+	public int getValue() {
 		return _value;
 	}
 
-	public void setValue(int value)
-	{
+	/**
+	 * Sets the value of the {@code Register}.
+	 *
+	 * @param value
+	 *          the new value
+	 */
+	public void setValue(int value) {
 		value = _size.getBitMask() & value;
 		_value = value;
 		getDataOut().setValue(value);
 	}
 
 	@Override
-	public void update()
-	{
+	public void update() {
+
 	}
 
 	@Override
-	public Set<Circuit> getSuccessors()
-	{
+	public Set<Circuit> getSuccessors() {
 		return Collections.emptySet();
 	}
 
-	public IngoingPin getDataIn()
-	{
+	/**
+	 * Gets the data {@link IngoingPin}.
+	 *
+	 * @return
+	 *          the data in pin
+	 */
+	public IngoingPin getDataIn() {
 		return _dataIn;
 	}
 
-	public IngoingPin getWriteEnabled()
-	{
+	/**
+	 * Gets the control {@link IngoingPin}.
+	 *
+	 * @return
+	 *          the control pin
+	 */
+	public IngoingPin getWriteEnabled() {
 		return _writeEnabled;
 	}
 
 	@Override
-	public void nextCycle()
-	{
-		if (_writeEnabled.read() != 0)
-		{
+	public void nextCycle() {
+		if (_writeEnabled.read() != 0) {
 			_value = _dataIn.read();
 			getDataOut().write(_value);
 		}
 	}
 
-	public boolean isExtended()
-	{
+	/**
+	 * Gets the value of the {@code is extended} property.
+	 *
+	 * @return
+	 *          {@code false} if the {@code Register} is part of the base machine, {@code true} otherwise
+	 */
+	public boolean isExtended() {
 		return _isExtended;
 	}
 
-	public String getLabel()
-	{
+	/**
+	 * Gets the name of the {@code Register}.
+	 *
+	 * @return
+	 *          the name of the {@code Register}
+	 */
+	public String getLabel() {
 		return _label;
 	}
 
 	@Override
-	public Sprite createSprite()
-	{
+	public Sprite createSprite() {
 		return new RegisterSprite(this);
 	}
 
-	public RegisterSize getSize()
-	{
+	/**
+	 * Gets the {@link RegisterSize} of the {@code Register}.
+	 *
+	 * @return
+	 *          the size of the {@code Register}
+	 */
+	public RegisterSize getSize() {
 		return _size;
 	}
 
 	@Override
-	public void reset()
-	{
+	public void reset() {
 		setValue(0);
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "Register[name=" + getName() + ", value=" + _value + "]";
 	}
 }

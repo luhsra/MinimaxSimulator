@@ -5,34 +5,65 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit
 
 import java.util.Set;
 
-public class IngoingPin extends Pin
-{
+/**
+ * An {@code IngoingPin} is an input {@link Pin} of a {@link Part}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class IngoingPin extends Pin {
+
 	private Wire _wire;
 	private Set<? extends Circuit> _thePart;
 
-	public IngoingPin(Part part)
-	{
+	/**
+	 * Constructs a new {@code IngoingPin} for the specified {@link Part}.
+	 *
+	 * @param part
+	 *          the {@code Part} the {@code IngoingPin} goes in
+	 */
+	public IngoingPin(Part part) {
 		super(part);
 		_thePart = ImmutableSet.of(part); 
 	}
 
-	public Wire getWire()
-	{
+	/**
+	 * Gets the {@link Wire} connected to the {@code IngoingPin}.
+	 *
+	 * @return
+	 *          the {@code Wire}
+	 */
+	public Wire getWire() {
 		return _wire;
 	}
 
-	public void setWire(Wire wire)
-	{
+	/**
+	 * Sets the {@link Wire} connected to the {@code IngoingPin}.
+	 *
+	 * @param wire
+	 *          the {@code Wire}
+	 */
+	public void setWire(Wire wire) {
 		_wire = wire;
 	}
 
-	public int read()
-	{
+	/**
+	 * Reads the value at the {@code IngoingPin}.
+	 *
+	 * @return
+	 *          the value of the {@code IngoingPin}
+	 */
+	public int read() {
 		return getValue();
 	}
 
-	public Set<? extends Circuit> getSuccessors()
-	{
+	/**
+	 * Gets the successors of the {@code IngoingPin}.<br>
+	 * Obviously the successor of an {@code IngoingPin} is the {@link Part} it goes in.
+	 *
+	 * @return
+	 *          a set of the successors of {@code IngoingPin}
+	 */
+	public Set<? extends Circuit> getSuccessors() {
 		return _thePart;
 	}
 }

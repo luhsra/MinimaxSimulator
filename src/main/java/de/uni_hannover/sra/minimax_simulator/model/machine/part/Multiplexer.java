@@ -7,50 +7,69 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.MultiplexerSpri
 import java.util.ArrayList;
 import java.util.List;
 
-public class Multiplexer extends SimplePart implements SpriteOwner
-{
+/**
+ * Implementation of a multiplexer as component part of a machine.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class Multiplexer extends SimplePart implements SpriteOwner {
+
 	private final IngoingPin _select = new IngoingPin(this);
 	private final List<IngoingPin> _dataIns;
 
-	public Multiplexer()
-	{
+	/**
+	 * Constructs a new {@code Multiplexer} without any data ins.
+	 */
+	public Multiplexer() {
 		this(0);
 	}
 
-	public Multiplexer(int numberOfInputs)
-	{
+	/**
+	 * Constructs a new {@code Multiplexer} with the specified amount of data ins.
+	 *
+	 * @param numberOfInputs
+	 *          the amount of data ins
+	 */
+	public Multiplexer(int numberOfInputs) {
 		_dataIns = new ArrayList<IngoingPin>(numberOfInputs);
-		for (int i = 0; i < numberOfInputs; i++)
+		for (int i = 0; i < numberOfInputs; i++) {
 			_dataIns.add(new IngoingPin(this));
+		}
 	}
 
-	public List<IngoingPin> getDataInputs()
-	{
+	/**
+	 * Gets the {@link IngoingPin}s.
+	 *
+	 * @return
+	 *          a list of the data ins
+	 */
+	public List<IngoingPin> getDataInputs() {
 		return _dataIns;
 	}
 
-	public IngoingPin getSelectPin()
-	{
+	/**
+	 * Gets the selected {@link IngoingPin}.
+	 *
+	 * @return
+	 *          the selected data in
+	 */
+	public IngoingPin getSelectPin() {
 		return _select;
 	}
 
 	@Override
-	public void update()
-	{
+	public void update() {
 		int index = _select.read();
-		if (index < _dataIns.size())
-		{
+		if (index < _dataIns.size()) {
 			getDataOut().write(_dataIns.get(index).read());	
 		}
-		else
-		{
+		else {
 			getDataOut().write(0);
 		}
 	}
 
 	@Override
-	public Sprite createSprite()
-	{
+	public Sprite createSprite() {
 		return new MultiplexerSprite(this);
 	}
 }
