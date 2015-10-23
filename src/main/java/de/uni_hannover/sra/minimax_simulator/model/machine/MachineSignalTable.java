@@ -18,7 +18,7 @@ import java.util.Map;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Decorator for a SignalTable that calculates the descriptions of the SignalRows
+ * Decorator for a {@link SignalTable} that calculates the descriptions of the {@link SignalRow}s
  * and updates the ALUSelect codes, ALUOperation codes and JumpTargets.
  * 
  * @author Martin L&uml;ck
@@ -31,7 +31,7 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	private final MachineConfiguration	_machineConfig;
 	private final SignalConfiguration	_signalConfig;
 
-	/** enum used for the recalculation of the jump targets */
+	/** Enum used for the recalculation of the jump targets. */
 	private enum Action {
 		ADDED,
 		MOVED {
@@ -49,13 +49,37 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 		},
 		REMOVED;
 
+		/**
+		 * Gets the direction of moving.
+		 *
+		 * @return
+		 *          {@code -1} for up and {@code 1} for down
+		 */
 		public int getDirection() { return 0; }
+
+		/**
+		 * Sets the direction to the specified value.
+		 *
+		 * @param value
+		 *          the new value
+		 */
 		public void setDirection(int value) {}
 	}
 
+	/**
+	 * Constructs a new {@code MachineSignalTable}.
+	 *
+	 * @param table
+	 *          the {@link SignalTable} of the machine
+	 * @param machineConfig
+	 *          the {@link MachineConfiguration} of the machine
+	 * @param descriptionFactory
+	 *          the {@link DescriptionFactory} used for generating the row description
+	 * @param signalConfig
+	 *          the {@link SignalConfiguration} of the machine
+	 */
 	public MachineSignalTable(SignalTable table, MachineConfiguration machineConfig,
-			DescriptionFactory descriptionFactory, SignalConfiguration	signalConfig)
-	{
+			DescriptionFactory descriptionFactory, SignalConfiguration	signalConfig) {
 		_theTable = checkNotNull(table);
 		_machineConfig = checkNotNull(machineConfig);
 		_descriptionFactory = checkNotNull(descriptionFactory);
@@ -66,44 +90,49 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 		updateAllDescriptions();
 	}
 
-	private void updateDescription(int rowIndex, SignalRow row)
-	{
+	/**
+	 * Updates the description of the specified {@link SignalRow}.
+	 *
+	 * @param rowIndex
+	 *          the index of the row
+	 * @param row
+	 *          the {@code SignalRow}
+	 */
+	private void updateDescription(int rowIndex, SignalRow row) {
 		row.setDescription(_descriptionFactory.createDescription(rowIndex, row));
 	}
 
-	private void updateAllDescriptions()
-	{
-		for (int i = 0, n = _theTable.getRowCount(); i < n; i++)
+	/**
+	 * Updates the description of all {@link SignalRow}s.
+	 */
+	private void updateAllDescriptions() {
+		for (int i = 0, n = _theTable.getRowCount(); i < n; i++) {
 			updateDescription(i, _theTable.getRow(i));
+		}
 	}
 
 	@Override
-	public int getRowCount()
-	{
+	public int getRowCount() {
 		return _theTable.getRowCount();
 	}
 
 	@Override
-	public SignalRow getRow(int index)
-	{
+	public SignalRow getRow(int index) {
 		return _theTable.getRow(index);
 	}
 
 	@Override
-	public void addSignalTableListener(SignalTableListener l)
-	{
+	public void addSignalTableListener(SignalTableListener l) {
 		_theTable.addSignalTableListener(l);
 	}
 
 	@Override
-	public void removeSignalTableListener(SignalTableListener l)
-	{
+	public void removeSignalTableListener(SignalTableListener l) {
 		_theTable.removeSignalTableListener(l);
 	}
 
 	@Override
-	public void addSignalRow(SignalRow row)
-	{
+	public void addSignalRow(SignalRow row) {
 		updateDescription(_theTable.getRowCount(), row);
 		_theTable.addSignalRow(row);
 	}
@@ -255,26 +284,25 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 			}
 		}
 
-		// Any signal may now be invalid
+		// any signal may now be invalid
 		replaceInvalidSignals();
 
-		// Any signal row can have another description now
+		// any signal row can have another description now
 		updateAllDescriptions();
 	}
 
-	private void replaceInvalidSignals()
-	{
+	/**
+	 * Replaces invalid signals with {@link SignalValue#DONT_CARE}.
+	 */
+	private void replaceInvalidSignals() {
 		ImmutableList<SignalRow> rows = getRows();
 		ListIterator<SignalRow> iter = rows.listIterator();
-		while (iter.hasNext())
-		{
+		while (iter.hasNext()) {
 			int index = iter.nextIndex();
 			SignalRow row = iter.next();
-			for (SignalType signalType : _signalConfig.getSignalTypes())
-			{
+			for (SignalType signalType : _signalConfig.getSignalTypes()) {
 				SignalValue currentRowValue = row.getSignal(signalType);
-				if (!signalType.getValues().contains(currentRowValue))
-				{
+				if (!signalType.getValues().contains(currentRowValue)) {
 					row.setSignal(signalType, SignalValue.DONT_CARE);
 					_theTable.setRowSignal(index, signalType.getName(), SignalValue.DONT_CARE);
 				}
@@ -389,8 +417,7 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	}
 
 	@Override
-	public void setSignalRow(int index, SignalRow row)
-	{
+	public void setSignalRow(int index, SignalRow row) {
 		updateDescription(index, row);
 		_theTable.setSignalRow(index, row);
 	}
@@ -411,8 +438,7 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	}
 
 	@Override
-	public ImmutableList<SignalRow> getRows()
-	{
+	public ImmutableList<SignalRow> getRows() {
 		return _theTable.getRows();
 	}
 }
