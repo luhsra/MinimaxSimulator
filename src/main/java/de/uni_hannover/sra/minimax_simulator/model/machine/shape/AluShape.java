@@ -12,6 +12,9 @@ public class AluShape extends FixedShape {
 
 	// private final static int ALU_UPPER_SPACING = 30;
 
+	/**
+	 * Initializes the {@code AluShape}.
+	 */
 	public AluShape() {
 		super(ALU_WIDTH, ALU_HEIGHT);
 	}

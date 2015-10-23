@@ -13,6 +13,12 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Label;
  */
 public class CuLabelShape extends LabelShape {
 
+	/**
+	 * Initializes the {@code CuLabelShape}.
+	 *
+	 * @param fontProvider
+	 *          the {@link FontMetricsProvider} used for font measuring
+	 */
 	public CuLabelShape(FontMetricsProvider fontProvider) {
 		super(fontProvider);
 	}
