@@ -9,8 +9,16 @@ import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public final class SignalRow
-{
+/**
+ * A single row of a {@link SignalTable}.<br>
+ * <br>
+ * The {@code SignalRow} contains all information needed for simulation of it
+ * as a row of the machine's control table.
+ *
+ * @author Martin L&uuml;ck
+ */
+public final class SignalRow {
+
 	private final Map<String, SignalValue>	_values;
 
 	private String							_label;
@@ -19,117 +27,216 @@ public final class SignalRow
 
 	private String							_description;
 
-	public SignalRow()
-	{
+	/**
+	 * Constructs a new {@code SignalRow}. All signals have their default value and the jump is
+	 * {@link DefaultJump#INSTANCE}.
+	 */
+	public SignalRow() {
 		_values = new HashMap<String, SignalValue>();
 		_label = null;
 		_isBreakpoint = false;
 		_jump = DefaultJump.INSTANCE;
 	}
 
-	public String getLabel()
-	{
+	/**
+	 * Gets the label of the {@code SignalRow}.
+	 *
+	 * @return
+	 *          the label
+	 */
+	public String getLabel() {
 		return _label;
 	}
 
-	public void setLabel(String label)
-	{
+	/**
+	 * Sets the label of the {@code SignalRow}.
+	 *
+	 * @param label
+	 *          the new label
+	 */
+	public void setLabel(String label) {
 		_label = label;
 	}
 
-	public Map<String, SignalValue> getSignalValues()
-	{
+	/**
+	 * Gets the {@link SignalValue}s of the {@code SignalRow}.
+	 *
+	 * @return
+	 *          a map of the {@code SignalValue}s
+	 */
+	public Map<String, SignalValue> getSignalValues() {
 		return Collections.unmodifiableMap(_values);
 	}
 
-	public int getSignalValue(String signal)
-	{
+	/**
+	 * Gets the value of the {@link SignalValue} with the specified name.
+	 *
+	 * @param signal
+	 *          the name of the {@code SignalValue}
+	 * @return
+	 *          the value of the {@code SignalValue}
+	 */
+	public int getSignalValue(String signal) {
 		SignalValue val = _values.get(signal);
-		if (val == null)
+		if (val == null) {
 			return 0;
+		}
 		return val.intValue();
 	}
 
-	public SignalValue getSignal(String signal, SignalValue dflt)
-	{
+	/**
+	 * Gets the {@link SignalValue} with the specified name.
+	 *
+	 * @param signal
+	 *          the name of the {@code SignalValue}
+	 * @param dflt
+	 *          the default {@code SignalValue}
+	 * @return
+	 *          the {@code SignalValue} with the specified name or {@code dflt} if the {@code SignalValue} does not exist
+	 */
+	public SignalValue getSignal(String signal, SignalValue dflt) {
 		SignalValue val = _values.get(signal);
-		if (val == null)
+		if (val == null) {
 			return dflt;
+		}
 		return val;
 	}
 
-	public SignalValue getSignal(SignalType signalType)
-	{
+	/**
+	 * Gets the {@link SignalValue} related to the specified {@link SignalType}.
+	 *
+	 * @param signalType
+	 *          the {@code SignalType}
+	 * @return
+	 *          the {@code SignalValue}
+	 */
+	public SignalValue getSignal(SignalType signalType) {
 		return getSignal(signalType.getId(), signalType.getDefault());
 	}
 
-	public void setSignalValue(String signal, int value)
-	{
+	/**
+	 * Sets the {@link SignalValue} with the specified name to the specified value.
+	 *
+	 * @param signal
+	 *          the name of the {@code SignalValue}
+	 * @param value
+	 *          the new value
+	 */
+	public void setSignalValue(String signal, int value) {
 		_values.put(signal, SignalValue.valueOf(value));
 	}
 
-	public void setSignal(String signal, SignalValue value)
-	{
-		if (value == null)
+	public void setSignal(String signal, SignalValue value) {
+		if (value == null) {
 			_values.remove(signal);
-		else
+		}
+		else {
 			_values.put(signal, value);
+		}
 	}
 
-	public void setSignal(SignalType signalType, SignalValue value)
-	{
+	/**
+	 * Sets the {@link SignalValue} of the specified {@link SignalType} to the specified value.
+	 *
+	 * @param signalType
+	 *          the {@code SignalType}
+	 * @param value
+	 *          the new value
+	 */
+	public void setSignal(SignalType signalType, SignalValue value) {
 		setSignal(signalType.getId(), value);
 	}
 
-	public void resetSignal(String signal)
-	{
+	/**
+	 * Resets the value of the signal with the specified name.
+	 *
+	 * @param signal
+	 *          the name of the signal
+	 */
+	public void resetSignal(String signal) {
 		_values.remove(signal);
 	}
 
-	public boolean isGotoOp()
-	{
+	/**
+	 * Gets the value of the {@code is goto operation} property.
+	 *
+	 * @return
+	 *          always {@code false}
+	 */
+	public boolean isGotoOp() {
 		return false;
 	}
 
-	public Jump getJump()
-	{
+	/**
+	 * Gets the {@link Jump} of the {@code SignalRow}.
+	 *
+	 * @return
+	 *          the {@code Jump}
+	 */
+	public Jump getJump() {
 		return _jump;
 	}
 
-	public void setJump(Jump jump)
-	{
+	/**
+	 * Sets the {@link Jump} of the {@code SignalRow} to the specified {@code Jump}.
+	 *
+	 * @param jump
+	 *          the new {@code Jump}
+	 */
+	public void setJump(Jump jump) {
 		_jump = checkNotNull(jump);
 	}
 
-	public boolean isBreakpoint()
-	{
+	/**
+	 * Gets the value of the {@code breakpoint} property.
+	 *
+	 * @return
+	 *          {@code true} if the {@code SignalRow} is a breakpoint, {@code false} otherwise
+	 */
+	public boolean isBreakpoint() {
 		return _isBreakpoint;
 	}
 
-	public void setBreakpoint(boolean isBreakpoint)
-	{
+	/**
+	 * Sets the value of the {@code breakpoint} property to the specified value.
+	 *
+	 * @param isBreakpoint
+	 *          the new value
+	 */
+	public void setBreakpoint(boolean isBreakpoint) {
 		_isBreakpoint = isBreakpoint;
 	}
 
-	public String getDescription()
-	{
+	/**
+	 * Gets the description of the {@code SignalRow}.
+	 *
+	 * @return
+	 *          the description
+	 */
+	public String getDescription() {
 		return _description;
 	}
 
-	public void setDescription(String description)
-	{
+	/**
+	 * Sets the description of the  {@code SignalRow}.
+	 *
+	 * @param description
+	 *          the new description
+	 */
+	public void setDescription(String description) {
 		_description = description;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if (_isBreakpoint)
+		if (_isBreakpoint) {
 			sb.append('*');
+		}
 		sb.append('<');
-		if (_label != null)
+		if (_label != null) {
 			sb.append(_label);
+		}
 		sb.append(">: ");
 		sb.append(_values.toString());
 		return sb.toString();
