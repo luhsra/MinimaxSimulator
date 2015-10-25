@@ -8,53 +8,65 @@ import java.util.ResourceBundle.Control;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class DefaultResourceBundleLoader implements ResourceBundleLoader
-{
+/**
+ * Default implementation of the {@link ResourceBundleLoader}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class DefaultResourceBundleLoader implements ResourceBundleLoader {
+
 	private final Control					_defaultControl;
 	private final Locale					_defaultLocale;
 
 	private final Map<String, TextResource>	_resourceCache;
 
-	public DefaultResourceBundleLoader(Control defaultControl, Locale defaultLocale)
-	{
-		_defaultControl = checkNotNull(defaultControl,
-				"Invalid null argument: defaultControl");
-			_defaultLocale = checkNotNull(defaultLocale,
-				"Invalid null argument: defaultLocale");
+	/**
+	 * Constructs a new {@code DefaultResourceBundleLoader} with the specified {@link Control} and {@link Locale}.
+	 *
+	 * @param defaultControl
+	 *          the {@code Control}
+	 * @param defaultLocale
+	 *          the {@code Locale}
+	 */
+	public DefaultResourceBundleLoader(Control defaultControl, Locale defaultLocale) {
+		_defaultControl = checkNotNull(defaultControl, "Invalid null argument: defaultControl");
+			_defaultLocale = checkNotNull(defaultLocale, "Invalid null argument: defaultLocale");
 
 		_resourceCache = new HashMap<String, TextResource>();
 	}
 
-	public Control getDefaultControl()
-	{
+	/**
+	 * Gets the {@link Control} of the {@code DefaultResourceBundleLoader}.
+	 *
+	 * @return
+	 *          the {@code Control}
+	 */
+	public Control getDefaultControl() {
 		return _defaultControl;
 	}
 
-	public Locale getDefaultLocale()
-	{
+	/**
+	 * Gets the {@link Locale} of the {@code DefaultResourceBundleLoader}.
+	 *
+	 * @return
+	 *          the {@code Locale}
+	 */
+	public Locale getDefaultLocale() {
 		return _defaultLocale;
 	}
 
-	/* (non-Javadoc)
-	 * 
-	 * @see de.luh.sra.mmsim.resources.ResourceBundleLoader#getBundle(java.lang.String) */
 	@Override
-	public ResourceBundle getBundle(String bundleName)
-	{
-		ResourceBundle res = ResourceBundle.getBundle(bundleName, _defaultLocale,
-			_defaultControl);
+	public ResourceBundle getBundle(String bundleName) {
+		ResourceBundle res = ResourceBundle.getBundle(bundleName, _defaultLocale, _defaultControl);
 		return res;
 	}
 
-	/* (non-Javadoc)
-	 * 
-	 * @see de.luh.sra.mmsim.resources.ResourceBundleLoader#getTextResource(java.lang.String) */
 	@Override
-	public TextResource getTextResource(String bundleName)
-	{
+	public TextResource getTextResource(String bundleName) {
 		TextResource res = _resourceCache.get(bundleName);
-		if (res != null)
+		if (res != null) {
 			return res;
+		}
 
 		final ResourceBundle bundle = getBundle(bundleName);
 		res = new DefaultTextResource(bundle);
