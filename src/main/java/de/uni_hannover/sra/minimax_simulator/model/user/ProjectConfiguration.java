@@ -4,34 +4,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Unfinished class.
- *
+ * <b>Under construction!</b><br>
+ * The {@code ProjectConfiguration} holds information about the open tabs. This could be used to save user preferences.
  * 
- *
+ * @author Martin L&uuml;ck
  */
-public class ProjectConfiguration
-{
+// TODO: finish
+public class ProjectConfiguration {
+
 	private List<String> _openTabKeys;
 	private String _selectedTabKey;
 
-	public ProjectConfiguration()
-	{
+	/**
+	 * Constructs a new {@code ProjectConfiguration}.
+	 */
+	public ProjectConfiguration() {
 		_openTabKeys = new ArrayList<String>();
 		_selectedTabKey = "";
 	}
 
-	public List<String> getOpenTabKeys()
-	{
+	/**
+	 * Gets the keys of the open tabs.
+	 *
+	 * @return
+	 *          a list of the keys of the open tabs
+	 */
+	public List<String> getOpenTabKeys() {
 		return _openTabKeys;
 	}
 
-	public String getSelectedTabKey()
-	{
+	/**
+	 * Gets the key of the selected tab.
+	 *
+	 * @return
+	 *          the key of the selected tab
+	 */
+	public String getSelectedTabKey() {
 		return _selectedTabKey;
 	}
 
-	public void setSelectedTabKey(String key)
-	{
+	/**
+	 * Sets the key of the selected tab.
+	 *
+	 * @param key
+	 *          the key of the selected tab
+	 */
+	public void setSelectedTabKey(String key) {
 		_selectedTabKey = key;
 	}
 }
