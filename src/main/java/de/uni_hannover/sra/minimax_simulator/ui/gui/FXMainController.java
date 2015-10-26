@@ -112,7 +112,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     private final ExtensionFilter extFilterSchematics;
 
     /**
-     * The constructor initializes the final variables.
+     * Initializes the final variables.
      */
     public FXMainController() {
         _res = Main.getTextResource("application");
@@ -236,6 +236,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     }
 
     /**
+     * Asks the user to dismiss unsaved changes.
      *
      * @param dialogTitle
      *          the title of the {@link UnsavedDialog}

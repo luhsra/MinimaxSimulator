@@ -6,13 +6,14 @@ import javafx.util.StringConverter;
 import java.util.function.UnaryOperator;
 
 /**
- * The NullAwareIntFormatter is a {@link TextFormatter} using the {@link NullAwareIntStringConverter}.<br>
+ * The {@code NullAwareIntFormatter} is a {@link TextFormatter} using the {@link NullAwareIntStringConverter}.<br>
  * This class is used for the multiplexer constant input {@link javafx.scene.control.Spinner}s of the {@link de.uni_hannover.sra.minimax_simulator.ui.gui.MuxView}.
  *
  * @author Philipp Rohde
  */
 public class NullAwareIntFormatter extends TextFormatter {
 
+	/** The mode the {@code NullAwareIntFormatter} uses for formatting. */
 	public enum Mode {
 		DEC {
 			@Override
@@ -66,14 +67,35 @@ public class NullAwareIntFormatter extends TextFormatter {
 			}
 		};
 
+		// TODO: make abstract
+
+		/**
+		 * Gets the {@link StringConverter} for the mode.
+		 *
+		 * @return
+		 *          the {@code StringConverter}
+		 */
 		public StringConverter getConverter() {
 			return null;
 		}
+
+		/**
+		 * Gets the used filter of the mode.
+		 *
+		 * @return
+		 *          the filter for the change
+		 */
 		public UnaryOperator<TextFormatter.Change> getFilter() {
 			return null;
 		}
 	}
 
+	/**
+	 * Constructs a new {@code NullAwareIntFormatter} with the specified {@link de.uni_hannover.sra.minimax_simulator.ui.gui.util.NullAwareIntFormatter.Mode}.
+	 *
+	 * @param mode
+	 *          the mode
+	 */
 	public NullAwareIntFormatter(Mode mode) {
 		super(mode.getConverter(), 0, mode.getFilter());
 	}

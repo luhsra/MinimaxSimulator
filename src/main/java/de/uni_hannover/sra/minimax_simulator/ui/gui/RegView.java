@@ -55,12 +55,15 @@ public class RegView {
     @FXML private TableColumn<RegisterTableModel, String> col_extended_name;
     @FXML private TableColumn<RegisterTableModel, String> col_extended_size;
 
+    /**
+     * Initializes the final variables.
+     */
     public RegView() {
         _res = Main.getTextResource("machine").using("register");
     }
 
     /**
-     * This method is called during application start up and initializes the RegView
+     * This method is called during application start up and initializes the {@code RegView}
      * as much as possible without having any project data.
      */
     public void initialize() {
@@ -286,7 +289,7 @@ public class RegView {
 
     /**
      * Moves the currently selected register.
-     * It moves the register up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
+     * It moves the register up if the caller is the {@code moveUp} {@link Button} or down if the caller is the {@code moveDown Button}.
      *
      * @param ae
      *          the {@link ActionEvent} calling the method
@@ -420,10 +423,17 @@ public class RegView {
      * @author Philipp Rohde
      */
     public static class RegisterTableModel {
+
         private final SimpleStringProperty name;
         private final SimpleStringProperty size;
         private final RegisterExtension register;
 
+        /**
+         * Constructs a new {@code RegisterTableModel} and sets the properties.
+         *
+         * @param register
+         *          the {@link RegisterExtension} to represent
+         */
         private RegisterTableModel(RegisterExtension register) {
             this.name = new SimpleStringProperty(register.getName());
             this.size = new SimpleStringProperty(register.getSize().getName());

@@ -22,6 +22,7 @@ import javafx.scene.layout.GridPane;
  */
 public abstract class ValueUpdateDialog extends FXDialog {
 
+	/** The input mode. */
 	protected enum Mode {
 		HEX {
 			@Override
@@ -57,11 +58,35 @@ public abstract class ValueUpdateDialog extends FXDialog {
 			}
 		};
 
+		/**
+		 * Converts the specified value to {@code String} according to the currently set mode.
+		 *
+		 * @param instance
+		 *          the {@code ValueUpdateDialog} instance
+		 * @param value
+		 *          the value to convert
+		 * @return
+		 *          the {@code String} representation
+		 */
 		public abstract String toString(ValueUpdateDialog instance, Integer value);
 
+		/**
+		 * Decodes the specified {@code String} to {@code Integer} according to the currently set mode.
+		 *
+		 * @param value
+		 *          the value to decode
+		 * @return
+		 *          the decoded {@code Integer}
+		 */
 		public abstract Integer decode(String value);
 	}
 
+	/**
+	 * Sets the value to the specified value.
+	 *
+	 * @param value
+	 *          the new value
+	 */
 	protected abstract void setValue(int value);
 
 	protected final Label			_messageLabel;
@@ -77,6 +102,12 @@ public abstract class ValueUpdateDialog extends FXDialog {
 	private Mode					_mode;
 
 
+	/**
+	 * Constructs a new {@code ValueUpdateDialog} with the specified starting value.
+	 *
+	 * @param currentValue
+	 *          the value at the moment of opening the dialog
+	 */
 	public ValueUpdateDialog(int currentValue) {
 		super(AlertType.NONE, null, null);
 
@@ -152,25 +183,27 @@ public abstract class ValueUpdateDialog extends FXDialog {
 	}
 
 	/**
-	 * Changes the input mode to the new mode and converts it to the new numerical system.
+	 * Changes the input mode of the {@code TextField} to the specified mode
+	 * and converts its value to the new numerical system.
 	 *
 	 * @param mode
 	 * 			the new mode
 	 */
-	private void updateTextFieldMode(Mode mode)
-	{
-		if (_mode == mode)
+	private void updateTextFieldMode(Mode mode) {
+		if (_mode == mode) {
 			return;
+		}
 
 		Integer value = _mode.decode(_field.getText().trim());
-		if (value == null)
+		if (value == null) {
 			value = Integer.valueOf(0);
+		}
 		_mode = mode;
 		_field.setText(_mode.toString(this, value));
 	}
 
 	/**
-	 * Updates the text of the current mode {@link Label}.
+	 * Updates the text of the current mode {@code Label}.
 	 */
 	private void updateLabelMode() {
 		String currentMode = _res.get("mode.label") + " ";

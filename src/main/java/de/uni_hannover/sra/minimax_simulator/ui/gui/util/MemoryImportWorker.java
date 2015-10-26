@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * The MemoryImportWorker is a {@link Runnable} that loads a memory image from file.
+ * The {@code MemoryImportWorker} is a {@link Runnable} that loads a memory image from file.
  * An error dialog will be shown if the import fails.
  *
  * @author Martin L&uuml;ck
@@ -39,6 +39,20 @@ public class MemoryImportWorker implements Runnable {
 	private final File			_file;
 	private final TextResource	_res;
 
+	/**
+	 * Constructs a new {@code MemoryImportWorker} instance.
+	 *
+	 * @param memory
+	 *          the machine's memory
+	 * @param addressStart
+	 *          the start address
+	 * @param byteCount
+	 *          the number of bytes to import
+	 * @param file
+	 *          the file to read from
+	 * @param res
+	 *          the {@link TextResource} for getting localized texts
+	 */
 	public MemoryImportWorker(MachineMemory memory, int addressStart, int byteCount, File file, TextResource res) {
 		_memory = memory;
 		_addressStart = addressStart;

@@ -10,6 +10,9 @@ import javafx.scene.control.SpinnerValueFactory;
  */
 public class HexSpinnerValueFactory extends SpinnerValueFactory.IntegerSpinnerValueFactory {
 
+    /**
+     * Constructs a {@code HexSpinnerValueFactory} and sets the converter to {@link HexStringConverter}.
+     */
     public HexSpinnerValueFactory() {
         // set range in parent class
         super(Integer.MIN_VALUE, Integer.MAX_VALUE);

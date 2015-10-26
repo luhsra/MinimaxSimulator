@@ -10,6 +10,14 @@ import javafx.scene.control.ButtonType;
  */
 public class UnsavedDialog extends FXDialog {
 
+    /**
+     * Constructs a new {@code UnsavedDialog} with the specified title and message.
+     *
+     * @param title
+     *          the title of the dialog
+     * @param message
+     *          the message of the dialog
+     */
     public UnsavedDialog(String title, String message) {
         super(AlertType.WARNING, title, message);
         this.getDialogPane().getButtonTypes().clear();

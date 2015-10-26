@@ -22,6 +22,12 @@ public class ExceptionDialog extends FXDialog {
 
     private final TextResource _res;
 
+    /**
+     * Constructs a new {@code ExceptionDialog} for the specified {@link Exception}.
+     *
+     * @param e
+     *          the {@code Exception} to display
+     */
     public ExceptionDialog(Exception e) {
         super(AlertType.ERROR, "title", "message");
 

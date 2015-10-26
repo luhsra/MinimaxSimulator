@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * The MemoryExportWorker is a {@link Runnable} that writes the memory image to file.
+ * The {@code MemoryExportWorker} is a {@link Runnable} that writes the memory image to file.
  * An error dialog will be shown if the export fails.
  *
  * @author Martin L&uuml;ck
@@ -33,6 +33,20 @@ public class MemoryExportWorker implements Runnable {
 	private final int			_fromAddress;
 	private final int			_toAddress;
 
+	/**
+	 * Constructs a new {@code MemoryExportWorker} instance.
+	 *
+	 * @param memory
+	 *          the machine's memory
+	 * @param fromAddress
+	 *          the start address
+	 * @param toAddress
+	 *          the end address
+	 * @param file
+	 *          the file to write to
+	 * @param res
+	 *          the {@link TextResource} for getting localized texts
+	 */
 	public MemoryExportWorker(MachineMemory memory, int fromAddress, int toAddress, File file, TextResource res) {
 		_memory = memory;
 

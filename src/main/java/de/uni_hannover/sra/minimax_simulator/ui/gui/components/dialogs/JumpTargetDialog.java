@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * An {@code JumpTargetDialog} is basically an {@link FXDialog} with customized content.<br>
+ * A {@code JumpTargetDialog} is basically an {@link FXDialog} with customized content.<br>
  * The {@code JumpTargetDialog} is the UI used to change the {@link Jump} of a {@link SignalRow}.
  *
  * @author Philipp Rohde
@@ -54,7 +54,8 @@ public class JumpTargetDialog extends FXDialog {
     private final TextResource _res;
 
     /**
-     * Default constructor.
+     * Constructs a new {@code JumpTargetDialog} for the specified {@link SignalRow}
+     * of the specified {@link SignalTable}.
      *
      * @param table
      *          the {@code SignalTable} the simulator currently works with

@@ -28,6 +28,9 @@ public class AboutDialog extends FXDialog {
     private final TextResource _res;
     private final Version ver = new Version(Main.class);        // works only with JAR files
 
+    /**
+     * Constructs a new {@code AboutDialog}.
+     */
     public AboutDialog() {
         super(AlertType.NONE, "Info", null);
         _res = Main.getTextResource("application").using("info");
