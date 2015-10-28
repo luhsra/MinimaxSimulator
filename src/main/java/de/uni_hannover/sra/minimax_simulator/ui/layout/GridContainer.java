@@ -1,7 +1,13 @@
 package de.uni_hannover.sra.minimax_simulator.ui.layout;
 
-public class GridContainer extends AbstractListContainer
-{
+/**
+ * The {@code GridContainer} is a {@link AbstractListContainer} that layouts
+ * the child {@link Component}s in a grid.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class GridContainer extends AbstractListContainer {
+
 	private final int _cols;
 	private final int _rows;
 
@@ -9,8 +15,7 @@ public class GridContainer extends AbstractListContainer
 	private final int[] _colWidths;
 
 	@Override
-	protected void updateMySize()
-	{
+	protected void updateMySize() {
 		zero(_rowHeights);
 		zero(_colWidths);
 
@@ -20,10 +25,8 @@ public class GridContainer extends AbstractListContainer
 		int rowHeight = 0;
 
 		// calculate row heights and column widths
-		for (Component comp : _children)
-		{
-			if (y == _rows)
-			{
+		for (Component comp : _children) {
+			if (y == _rows) {
 				throw new IllegalStateException("Too many elements");
 			}
 
@@ -35,16 +38,17 @@ public class GridContainer extends AbstractListContainer
 			int itsWidth = dim.w + insets.r + insets.l;
 			int itsHeight = dim.h + insets.b + insets.t;
 
-			if (itsHeight > rowHeight)
+			if (itsHeight > rowHeight) {
 				rowHeight = itsHeight;
+			}
 
-			if (_colWidths[x] < itsWidth)
+			if (_colWidths[x] < itsWidth) {
 				_colWidths[x] = itsWidth;
+			}
 
 			x++;
 
-			if (x == _cols)
-			{
+			if (x == _cols) {
 				_rowHeights[y] = rowHeight;
 				rowHeight = 0;
 
@@ -55,18 +59,30 @@ public class GridContainer extends AbstractListContainer
 
 		int width = 0;
 		int height = 0;
-		for (int colW : _colWidths)
+		for (int colW : _colWidths) {
 			width += colW;
-		for (int rowH : _rowHeights)
+		}
+		for (int rowH : _rowHeights) {
 			height += rowH;
+		}
 
 		setDimension(new Dimension(width, height));
 	}
 
-	public GridContainer(int cols, int rows)
-	{
-		if (cols < 1 || rows < 1)
+	/**
+	 * Constructs a new {@code GridContainer} with the specified number of columns and rows.
+	 *
+	 * @param cols
+	 * 			the number of columns
+	 * @param rows
+	 * 			the number of rows
+	 * @throws IllegalArgumentException
+	 * 			thrown if {@code cols} or {@code rows} is {@code < 1}
+	 */
+	public GridContainer(int cols, int rows) {
+		if (cols < 1 || rows < 1) {
 			throw new IllegalArgumentException("Require at least 1 col and 1 row");
+		}
 
 		_cols = cols;
 		_rows = rows;
@@ -74,19 +90,19 @@ public class GridContainer extends AbstractListContainer
 		_colWidths = new int[_cols];
 	}
 
+	/**
+	 * Layouts the child {@link Component}s in a grid.
+	 */
 	@Override
-	protected void layoutChildren()
-	{
+	protected void layoutChildren() {
 		int x = getBounds().x;
 		int y = getBounds().y;
 
 		int col = 0;
 		int row = 0;
 
-		for (Component child : _children)
-		{
-			if (row == _rows)
-			{
+		for (Component child : _children) {
+			if (row == _rows) {
 				throw new IllegalStateException("Too many elements");
 			}
 
@@ -97,8 +113,7 @@ public class GridContainer extends AbstractListContainer
 			x += _colWidths[col];
 			col++;
 
-			if (col == _cols)
-			{
+			if (col == _cols) {
 				x = getBounds().x;
 				col = 0;
 
@@ -108,9 +123,15 @@ public class GridContainer extends AbstractListContainer
 		}
 	}
 
-	private void zero(int[] array)
-	{
-		for (int i = 0; i < array.length; i++)
+	/**
+	 * Zeros the specified integer array.
+	 *
+	 * @param array
+	 * 			the array to zero
+	 */
+	private void zero(int[] array) {
+		for (int i = 0; i < array.length; i++) {
 			array[i] = 0;
+		}
 	}
 }

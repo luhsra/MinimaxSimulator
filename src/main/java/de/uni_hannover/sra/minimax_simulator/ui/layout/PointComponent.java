@@ -1,78 +1,107 @@
 package de.uni_hannover.sra.minimax_simulator.ui.layout;
 
-public class PointComponent implements Component
-{
+/**
+ * A {@link Component} that occupies only a single point.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class PointComponent implements Component {
+
 	private Bounds _bounds;
 
-	public PointComponent()
-	{
+	/**
+	 * Constructs a new {@code PointComponent} at {@code (0,0)}.
+	 */
+	public PointComponent() {
 		_bounds = new Bounds();
 	}
 
-	public int getX()
-	{
+	/**
+	 * Gets the x-coordinate of the {@code PointComponent}.
+	 *
+	 * @return
+	 * 			the x-coordinate
+	 */
+	public int getX() {
 		return getBounds().x;
 	}
 
-	public int getY()
-	{
+	/**
+	 * Gets the y-coordinate of the {@code PointComponent}.
+	 *
+	 * @return
+	 * 			the y-coordinate
+	 */
+	public int getY() {
 		return getBounds().y;
 	}
 
-	public void set(int x, int y)
-	{
+	/**
+	 * Sets the x- and y-coordinate to the specified values.
+	 *
+	 * @param x
+	 * 			the new x-coordinate
+	 * @param y
+	 * 			the new y-coordinate
+	 */
+	public void set(int x, int y) {
 		setBounds(new Bounds(x, y, 0, 0));
 	}
 
 	@Override
-	public Bounds getBounds()
-	{
+	public Bounds getBounds() {
 		return _bounds;
 	}
 
 	@Override
-	public void setBounds(Bounds bounds)
-	{
+	public void setBounds(Bounds bounds) {
 		_bounds = bounds;
 	}
 
+	/**
+	 * Gets the {@link Dimension#ZERO} instance because a {@code PointComponent} has no dimension.
+	 *
+	 * @return
+	 * 			zero dimension instance
+	 */
 	@Override
-	public Dimension getDimension()
-	{
+	public Dimension getDimension() {
 		return Dimension.ZERO;
 	}
 
 	@Override
-	public void setDimension(Dimension dimension)
-	{
-		// Ignored for point components
+	public void setDimension(Dimension dimension) {
+		// ignored for point components
 	}
 
 	@Override
-	public void setInsets(Insets insets)
-	{
-		// Ignored for point components
+	public void setInsets(Insets insets) {
+		// ignored for point components
 	}
 
 	@Override
-	public void updateSize()
-	{
+	public void updateSize() {
+		// ignored for point components
 	}
 
 	@Override
-	public void doLayout()
-	{
+	public void doLayout() {
+		// ignored for point components
 	}
 
+	/**
+	 * Gets the {@link Insets#ZERO} instance because a {@code PointComponent} has no insets.
+	 *
+	 * @return
+	 * 			zero insets instance
+	 */
 	@Override
-	public Insets getInsets()
-	{
+	public Insets getInsets() {
 		return Insets.ZERO;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return getClass().getSimpleName();
 	}
 }
