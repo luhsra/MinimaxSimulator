@@ -31,13 +31,14 @@ public abstract class CircuitSprite implements Sprite {
 		public final static int nPoints = 3;
 	}
 
+	/** The {@code Color} for debugging the schematics. */
 	protected static final Color RED = new Color(1f, 0f, 0f, 0.8f);
 
 	@Override
 	public void paint(GraphicsContext gc, RenderEnvironment env) { paint(gc); }
 
 	/**
-	 * Provides a method for drawing a {@code CircuitSprite} without a {@code RenderEnvironment}.
+	 * Draws the {@code CircuitSprite} on a {@link GraphicsContext} of a {@link javafx.scene.canvas.Canvas}.
 	 *
 	 * @param gc
 	 *          the {@code GraphicsContext} the {@code CircuitSprite} will be drawn on

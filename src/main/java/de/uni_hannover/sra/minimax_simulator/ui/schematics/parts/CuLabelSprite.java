@@ -1,5 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
+import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Label;
@@ -16,6 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author Martin L&uuml;ck
  * @author Philipp Rohde
  */
+// TODO: why CircuitSprite and not LabelSprite?
 public class CuLabelSprite extends CircuitSprite {
 
 	private final Label					_label;
@@ -37,7 +39,7 @@ public class CuLabelSprite extends CircuitSprite {
 
 		String message = _label.getMessage();
 
-		com.sun.javafx.tk.FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
+		FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
 		double textWidth = fm.computeStringWidth(message);
 		double textHeight = fm.getLineHeight();
 

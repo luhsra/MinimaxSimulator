@@ -1,5 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
+import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Register;
@@ -16,6 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class RegisterSprite extends CircuitSprite {
 
+	/** The {@code Color} to highlight extended registers. */
 	public final static Color EXTENDED_REGISTER_FX = new javafx.scene.paint.Color(0.95f, 0.95f, 0.95f, 1f);
 
 	private final Register _register;
@@ -36,7 +38,7 @@ public class RegisterSprite extends CircuitSprite {
 		debugBounds(gc, b);
 
 		String name = _register.getLabel();
-		com.sun.javafx.tk.FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
+		FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
 		double textWidth = fm.computeStringWidth(name);
 		double textHeight = fm.getLineHeight();
 
