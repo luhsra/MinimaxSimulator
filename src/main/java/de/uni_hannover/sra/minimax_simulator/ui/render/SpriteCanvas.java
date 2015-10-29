@@ -31,7 +31,7 @@ public class SpriteCanvas<T> extends Canvas {
 	private final GraphicsContext gc;
 
 	/**
-	 * Initializes the {@code FXSpriteCanvas}.
+	 * Initializes the {@code SpriteCanvas}.
 	 */
 	public SpriteCanvas() {
 		_sprites = new HashMap<T, Sprite>();
@@ -42,6 +42,9 @@ public class SpriteCanvas<T> extends Canvas {
 	 * Draws all {@code Sprite}s on a {@code Canvas} with a black border.<br>
 	 * The background color is defined by {@link RenderEnvironment#getBackgroundColor()} and the
 	 * {@code Sprite}'s color by {@link RenderEnvironment#getForegroundColor()}.
+	 *
+	 * @throws IllegalStateException
+	 *          thrown if the {@code RenderEnvironment} was not set yet
 	 */
 	protected void draw() {
 		if (_env == null) {
@@ -64,7 +67,7 @@ public class SpriteCanvas<T> extends Canvas {
 	}
 
 	/**
-	 * Draws a thin border around the {@code FXSpriteCanvas}.
+	 * Draws a thin border around the {@code SpriteCanvas}.
 	 */
 	private void drawBorder() {
 		double maxY = getHeight();
@@ -119,7 +122,7 @@ public class SpriteCanvas<T> extends Canvas {
 	 * Removes all {@code Sprite}s of an owner.
 	 *
 	 * @param owner
-	 *          the {@code SpriteOwner} for which all {@code Sprites} will be removed
+	 *          the {@code SpriteOwner} for which all {@code Sprite}s will be removed
 	 */
 	public void removeSprite(T owner) {
 		if (_sprites.remove(owner) != null)
@@ -127,17 +130,17 @@ public class SpriteCanvas<T> extends Canvas {
 	}
 
 	/**
-	 * Gets the {@code SpriteFactory} of the {@code FXSpriteCanvas}.
+	 * Gets the {@code SpriteFactory} of the {@code SpriteCanvas}.
 	 *
 	 * @return
-	 *          the {@code SpriteFactory} of the {@code FXSpriteCanvas}
+	 *          the {@code SpriteFactory} of the {@code SpriteCanvas}
 	 */
 	public SpriteFactory getSpriteFactory() {
 		return _spriteFactory;
 	}
 
 	/**
-	 * Sets the {@code SpriteFactory} of the {@code FXSpriteCanvas}.
+	 * Sets the {@code SpriteFactory} of the {@code SpriteCanvas}.
 	 *
 	 * @param spriteFactory
 	 *          the {@code SpriteFactory} to set
@@ -147,17 +150,17 @@ public class SpriteCanvas<T> extends Canvas {
 	}
 
 	/**
-	 * Gets the {@code RenderEnvironment} of the {@code FXSpriteCanvas}.
+	 * Gets the {@code RenderEnvironment} of the {@code SpriteCanvas}.
 	 *
 	 * @return
-	 *          the {@code RenderEnvironment} of the {@code FXSpriteCanvas}
+	 *          the {@code RenderEnvironment} of the {@code SpriteCanvas}
 	 */
 	public RenderEnvironment getRenderEnvironment() {
 		return _env;
 	}
 
 	/**
-	 * Sets the {@code RenderEnvironment} of the {@code FXSpriteCanvas}.
+	 * Sets the {@code RenderEnvironment} of the {@code SpriteCanvas}.
 	 *
 	 * @param env
 	 *          the {@code RenderEnvironment} to set
@@ -167,7 +170,7 @@ public class SpriteCanvas<T> extends Canvas {
 	}
 
 	/**
-	 * Get the {@link FontMetrics} of a {@link Font}.
+	 * Gets the {@link FontMetrics} of a {@link Font}.
 	 *
 	 * @param font
 	 *          the {@code Font} for which the {@code FontMetrics} should be get
@@ -179,12 +182,12 @@ public class SpriteCanvas<T> extends Canvas {
 	}
 
 	/**
-	 * Sets the width and height of the {@code FXSpriteCanvas}.
+	 * Sets the width and height of the {@code SpriteCanvas}.
 	 *
 	 * @param width
-	 *          the width to set
+	 *          the new width
 	 * @param height
-	 *          the height to set
+	 *          the new height
 	 */
 	public void setSize(int width, int height) {
 		setWidth(width);

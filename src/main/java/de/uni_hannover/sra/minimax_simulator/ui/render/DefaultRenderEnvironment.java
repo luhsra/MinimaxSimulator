@@ -16,16 +16,36 @@ public class DefaultRenderEnvironment implements RenderEnvironment {
 	private final Font font;
 	private final FontMetrics fontMetrics;
 
+	/**
+	 * Constructs a new {@code DefaultRenderEnvironment} with the specified {@link Font} and {@link FontMetrics}.
+	 *
+	 * @param font
+	 *          the font to use
+	 * @param fontMetrics
+	 *          the font metrics of the font
+	 */
 	public DefaultRenderEnvironment(Font font, FontMetrics fontMetrics) {
 		this.font = checkNotNull(font);
 		this.fontMetrics = checkNotNull(fontMetrics);
 	}
 
+	/**
+	 * Gets the background {@link Color}.
+	 *
+	 * @return
+	 *          {@link Color#WHITE}
+	 */
 	@Override
 	public Color getBackgroundColor() {
 		return Color.WHITE;
 	}
 
+	/**
+	 * Gets the foreground {@link Color}.
+	 *
+	 * @return
+	 *          {@link Color#BLACK}
+	 */
 	@Override
 	public Color getForegroundColor() {
 		return Color.BLACK;

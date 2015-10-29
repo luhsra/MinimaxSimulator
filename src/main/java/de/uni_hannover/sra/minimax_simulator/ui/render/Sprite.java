@@ -3,7 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.render;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * A {@code Sprite} is a simple graphical representation of a {@link de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine}'s component.
+ * A {@code Sprite} is a simple graphical representation of a machine's component.
  *
  * @author Martin L&uuml;ck
  */
