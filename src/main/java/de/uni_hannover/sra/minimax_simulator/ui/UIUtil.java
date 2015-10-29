@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
+ * Provides miscellaneous utility methods related to the UI.
  *
  * @author Philipp Rohde
  * @author Martin L&uuml;ck
@@ -56,21 +57,21 @@ public class UIUtil {
 	}
 
 	/**
-	 * Execute a {@link Runnable} instance and show a cancelable progress dialog until the
+	 * Executes a {@link Runnable} instance and shows a cancelable progress dialog until the
 	 * computation finished.<br>
 	 * Canceling the action in the dialog will NOT automatically interrupt the {@link Runnable} or
-	 * prevent it from executing, this must be done manually inside the <code>run()</code> method.<br>
+	 * prevent it from executing, this must be done manually inside the {@code run()} method.<br>
 	 * The user can specify a second {@link Runnable} that is executed if the user wishes to cancel
 	 * the computation.
 	 * 
 	 * @param runnable
-	 *            the {@link Runnable} to execute
+	 *            the {@code Runnable} to execute
 	 * @param waitingTitle
 	 *            the title of the progress dialog
 	 * @param waitingMessage
 	 *            the message of the progress dialog
 	 * @param cancelAction
-	 *            the {@link Runnable} to execute if the user chooses to cancel the computation
+	 *            the {@code Runnable} to execute if the user chooses to cancel the computation
 	 */
 	public static void executeWorker(final Runnable runnable, String waitingTitle, String waitingMessage, Runnable cancelAction) {
 		checkNotNull(runnable);
@@ -116,7 +117,7 @@ public class UIUtil {
 	}
 
 	/**
-	 * Removes the table header of a {@link TableView} by looking up the TableHeaderRow and making it invisible.
+	 * Removes the table header of a {@link TableView} by looking up the {@code TableHeaderRow} and making it invisible.
 	 *
 	 * @param table
 	 *          the {@code TableView} for that the header should be removed
