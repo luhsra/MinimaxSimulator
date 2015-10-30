@@ -10,15 +10,29 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.IngoingPin;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.ConstantShape;
 
-public class MuxConstantGroup extends AbstractGroup
-{
+/**
+ * Groups the parts of a {@link de.uni_hannover.sra.minimax_simulator.model.configuration.mux.ConstantMuxInput}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class MuxConstantGroup extends AbstractGroup {
+
 	private final String _pinName;
 	private final IngoingPin _muxPin;
 
 	private final int _value;
 
-	public MuxConstantGroup(String pinName, IngoingPin muxPin, int value)
-	{
+	/**
+	 * Constructs a new {@code MuxConstantGroup} for the specified pin with the specified value.
+	 *
+	 * @param pinName
+	 *          the name of the pin
+	 * @param muxPin
+	 *          the multiplexer pin
+	 * @param value
+	 *          the value of the constant
+	 */
+	public MuxConstantGroup(String pinName, IngoingPin muxPin, int value) {
 		_pinName = pinName;
 		_muxPin = muxPin;
 
@@ -26,8 +40,7 @@ public class MuxConstantGroup extends AbstractGroup
 	}
 
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		Constant constant = new Constant(_value);
 		constant.setShape(new ConstantShape(fontProvider));
 
@@ -38,14 +51,12 @@ public class MuxConstantGroup extends AbstractGroup
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return true;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		return new MuxConstantLayoutSet(_pinName);
 	}
 }

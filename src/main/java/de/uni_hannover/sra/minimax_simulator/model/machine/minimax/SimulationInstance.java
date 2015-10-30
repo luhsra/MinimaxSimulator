@@ -19,6 +19,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+/**
+ * The instance of the {@link MinimaxSimulation}.
+ *
+ * @author Martin L&uuml;ck
+ */
 class SimulationInstance {
 
 	/**

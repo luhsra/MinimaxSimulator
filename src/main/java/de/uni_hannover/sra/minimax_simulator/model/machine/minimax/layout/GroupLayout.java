@@ -7,6 +7,11 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Groups the {@link Layout}s of the members of a group.
+ *
+ * @author Martin L&uuml;ck
+ */
 public class GroupLayout implements Layout {
 
 	private final static Set<AttributeType>	attributes	= EnumSet.of(AttributeType.LEFT,

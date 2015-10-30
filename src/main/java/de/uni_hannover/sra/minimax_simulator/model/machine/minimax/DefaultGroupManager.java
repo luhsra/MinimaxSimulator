@@ -6,8 +6,13 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.Layout
 import java.util.HashMap;
 import java.util.Map;
 
-class DefaultGroupManager implements GroupManager
-{
+/**
+ * Default implementation of {@link GroupManager}.
+ *
+ * @author Martin L&uuml;ck
+ */
+class DefaultGroupManager implements GroupManager {
+
 	private final MinimaxLayout		_layout;
 	private final MinimaxTopology	_topology;
 	private final MinimaxDisplay	_display;
@@ -15,24 +20,34 @@ class DefaultGroupManager implements GroupManager
 	private final Map<String, Group>		_groups		= new HashMap<String, Group>();
 	private final Map<String, LayoutSet>	_layouts	= new HashMap<String, LayoutSet>();
 
-	DefaultGroupManager(MinimaxLayout layout, MinimaxTopology topology,
-			MinimaxDisplay display)
-	{
+	/**
+	 * Constructs a new {@code DefaultGroupManager} with the specified {@link MinimaxLayout},
+	 * {@link MinimaxTopology} and {@link MinimaxDisplay}.
+	 *
+	 * @param layout
+	 *          the layout of the {@link MinimaxMachine}
+	 * @param topology
+	 *          the topology of the {@code MinimaxMachine}
+	 * @param display
+	 *          the display of the {@code MinimaxMachine}
+	 */
+	DefaultGroupManager(MinimaxLayout layout, MinimaxTopology topology, MinimaxDisplay display) {
 		_layout = layout;
 		_topology = topology;
 		_display = display;
 	}
 
 	@Override
-	public void removeGroup(String id)
-	{
+	public void removeGroup(String id) {
 		Group group = _groups.remove(id);
-		if (group == null)
+		if (group == null) {
 			throw new IllegalArgumentException("Unknown group: " + id);
+		}
 
 		LayoutSet set = _layouts.remove(id);
-		if (set != null)
+		if (set != null) {
 			_layout.removeLayouts(set);
+		}
 
 		_display.removeGroup(group);
 		_layout.removeGroup(group);
@@ -40,10 +55,10 @@ class DefaultGroupManager implements GroupManager
 	}
 
 	@Override
-	public void initializeGroup(String id, Group group)
-	{
-		if (_groups.containsKey(id))
+	public void initializeGroup(String id, Group group) {
+		if (_groups.containsKey(id)) {
 			throw new IllegalArgumentException("Group already registered: " + id);
+		}
 
 		_groups.put(id, group);
 
@@ -52,8 +67,7 @@ class DefaultGroupManager implements GroupManager
 		_layout.addGroup(group);
 		_display.addGroup(group);
 
-		if (group.hasLayouts())
-		{
+		if (group.hasLayouts()) {
 			LayoutSet set = group.createLayouts();
 			_layouts.put(id, set);
 			_layout.putLayouts(group.createLayouts());

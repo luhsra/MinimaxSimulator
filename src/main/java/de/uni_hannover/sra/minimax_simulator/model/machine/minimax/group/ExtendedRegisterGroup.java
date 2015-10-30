@@ -11,7 +11,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.shape.LabelShape;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.RegisterShape;
 
 /**
- * Groups the parts of a extended register.
+ * Groups the parts of an extended register.
  *
  * @author Martin L&uuml;ck
  */

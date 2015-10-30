@@ -9,11 +9,15 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.Memory
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.LabelShape;
 
-public class MemoryGroup extends AbstractGroup
-{
+/**
+ * Groups the parts of the memory.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class MemoryGroup extends AbstractGroup {
+
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		Memory memory = cr.getCircuit(Memory.class, Parts.MEMORY);
 
 		Label csLabel = new Label("CS");
@@ -58,14 +62,12 @@ public class MemoryGroup extends AbstractGroup
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return true;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		return new MemoryLayoutSet();
 	}
 }

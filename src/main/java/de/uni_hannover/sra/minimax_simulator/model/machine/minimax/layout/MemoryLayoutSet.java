@@ -4,10 +4,18 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.AttributeType;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 
-public class MemoryLayoutSet extends DefaultLayoutSet
-{
-	public MemoryLayoutSet()
-	{
+/**
+ * Container for the {@link de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.Layout}s
+ * of the components of the memory.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class MemoryLayoutSet extends DefaultLayoutSet {
+
+	/**
+	 * Constructs a new {@code MemoryLayoutSet}.
+	 */
+	public MemoryLayoutSet() {
 		ConstraintBuilder cb = new ConstraintBuilder();
 
 		addLayout(Parts.MEMORY_CS + Parts._PORT, cb.above(Parts.MEMORY_CS, 20).alignHorizontally(Parts.MEMORY_CS));
