@@ -919,7 +919,7 @@ public enum AluOperation {
 
 	/**
 	 * Returns the integer that results from applying the binary operation
-	 * to the given integer parameters.
+	 * to the specified integer parameters.
 	 * 
 	 * @param a
 	 *          the first parameter
@@ -934,13 +934,15 @@ public enum AluOperation {
 	 * Gets the name of the operation expressed with formal parameters.
 	 *
 	 * @return
-	 *          the name of this operation expressed with formal parameters, for example <b>A ADD B</b>
+	 *          the name of this operation expressed with formal parameters, e.g. <b>A ADD B</b>
 	 */
 	public abstract String getOperationName();
 
 	/**
 	 * Gets the description of the operation.
 	 *
+	 * @param resource
+	 *          the {@code TextResource} to get the localized description
 	 * @return
 	 *          the description of this operation, for example <tt>"Multiplies A and B."</tt>
 	 */
@@ -960,6 +962,8 @@ public enum AluOperation {
 	/**
 	 * Gets the register-transfer expression of this operation.
 	 *
+	 * @param resource
+	 *          the {@code TextResource} to get the register-transfer expression
 	 * @return
 	 *          this operation represented by a register-transfer expression using formal parameters,
 	 *          for example <b>0@A[31..1]</b> (unsigned shift right).
@@ -980,8 +984,14 @@ public enum AluOperation {
 	/**
 	 * Gets the register-transfer expression of this operation.
 	 *
+	 * @param resource
+	 *          the {@code TextResource} to get the register-transfer expression
+	 * @param param1
+	 *          the first parameter of the operation
+	 * @param param2
+	 *          the second parameter of the operation
 	 * @return
-	 *          this operation represented by a register-transfer expression using the given
+	 *          this operation represented by a register-transfer expression using the specified
 	 *          parameters, for example <b>0@A[31..1]</b> (unsigned shift right).
 	 */
 	public String getRtOperation(TextResource resource, String param1, String param2) {

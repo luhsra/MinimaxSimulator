@@ -36,7 +36,9 @@ class RegisterExtensionList implements ExtensionList<RegisterExtension> {
 	 * using the specified {@link RegisterManager}.
 	 *
 	 * @param machine
+	 *          the {@code MinimaxMachine}
 	 * @param registerManager
+	 *          the {@code RegisterManager}
 	 */
 	public RegisterExtensionList(MinimaxMachine machine, RegisterManager registerManager) {
 		_machine = machine;
@@ -145,7 +147,7 @@ class RegisterExtensionList implements ExtensionList<RegisterExtension> {
 	}
 
 	/**
-	 * Sets a {@link de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.StackLayout}.
+	 * Sets a {@link StackLayoutSet}.
 	 */
 	private void setStackLayout() {
 		List<String> outJunctionNames = new ArrayList<String>(_registerNames.size());
@@ -164,7 +166,7 @@ class RegisterExtensionList implements ExtensionList<RegisterExtension> {
 	}
 
 	/**
-	 * Removes the {@link de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.StackLayout}.
+	 * Removes the {@link StackLayoutSet}.
 	 */
 	private void removeStackLayout() {
 		if (_stackLayout != null) {

@@ -43,6 +43,9 @@ public class UIUtil {
 	/**
 	 * Like {@link #executeWorker(Runnable, String, String)}, using an empty title and message for
 	 * the progress dialog.
+	 *
+	 * @param runnable
+	 *          the {@code Runnable} to execute
 	 */
 	public static void executeWorker(Runnable runnable) {
 		executeWorker(runnable, "", "", null);
@@ -51,6 +54,13 @@ public class UIUtil {
 	/**
 	 * Like {@link #executeWorker(Runnable, String, String, Runnable)}, but the user cannot cancel
 	 * the computation.
+	 *
+	 * @param runnable
+	 *          the {@code Runnable} to execute
+	 * @param waitingTitle
+	 *          the title of the progress dialog
+	 * @param waitingMessage
+	 *          the message of the progress dialog
 	 */
 	public static void executeWorker(Runnable runnable, String waitingTitle, String waitingMessage) {
 		executeWorker(runnable, waitingTitle, waitingMessage, null);

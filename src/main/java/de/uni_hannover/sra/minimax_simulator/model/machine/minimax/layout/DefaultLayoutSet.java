@@ -41,6 +41,7 @@ public class DefaultLayoutSet implements LayoutSet {
 	 * @param name
 	 *          the name of the component the {@code Layout} belongs to
 	 * @param cb
+	 *          the {@code ConstraintBuilder} for the {@code DefaultLayout}
 	 */
 	public void addLayout(String name, ConstraintBuilder cb) {
 		if (_layouts.containsKey(name)) {
