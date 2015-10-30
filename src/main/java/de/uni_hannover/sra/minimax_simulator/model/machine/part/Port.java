@@ -9,7 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.ControlPort;
  */
 public class Port extends SimplePart implements ControlPort {
 
-	private int _value;
+	private int value;
 
 	/**
 	 * Constructs a new {@code Port} with the specified name.
@@ -33,21 +33,21 @@ public class Port extends SimplePart implements ControlPort {
 
 	@Override
 	public void write(int value) {
-		_value = value;
+		this.value = value;
 	}
 
 	@Override
 	public void update() {
-		getDataOut().write(_value);
+		getDataOut().write(value);
 	}
 
 	@Override
 	public void reset() {
-		_value = 0;
+		value = 0;
 	}
 
 	@Override
 	public String toString() {
-		return "Port[name=" + getName() + ", value=" + _value + "]";
+		return "Port[name=" + getName() + ", value=" + value + "]";
 	}
 }

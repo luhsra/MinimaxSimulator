@@ -20,60 +20,60 @@ import java.util.logging.Logger;
  */
 public class Alu extends Part implements SpriteOwner {
 
-	private final static Logger			_log	= Logger.getLogger(Alu.class.getName());
+	private final static Logger LOG = Logger.getLogger(Alu.class.getName());
 
-	private final List<AluOperation>	_aluOperations;
+	private final List<AluOperation> aluOperations;
 
-	private final IngoingPin			_inCtrl;
-	private final IngoingPin			_inA;
-	private final IngoingPin			_inB;
-	private final OutgoingPin			_outData;
-	private final OutgoingPin			_outZero;
+	private final IngoingPin inCtrl;
+	private final IngoingPin inA;
+	private final IngoingPin inB;
+	private final OutgoingPin outData;
+	private final OutgoingPin outZero;
 
-	private int							_result;
+	private int result;
 
 	/**
 	 * Constructs a new instance of the {@code Alu}.
 	 */
 	public Alu() {
-		_aluOperations = new ArrayList<AluOperation>();
+		aluOperations = new ArrayList<AluOperation>();
 
-		_inCtrl = new IngoingPin(this);
-		_inA = new IngoingPin(this);
-		_inB = new IngoingPin(this);
-		_outData = new OutgoingPin(this);
-		_outZero = new OutgoingPin(this);
+		inCtrl = new IngoingPin(this);
+		inA = new IngoingPin(this);
+		inB = new IngoingPin(this);
+		outData = new OutgoingPin(this);
+		outZero = new OutgoingPin(this);
 
-		_result = 0;
+		result = 0;
 	}
 
 	@Override
 	public void update() {
-		int mode = _inCtrl.read();
-		if (mode < _aluOperations.size()) {
-			AluOperation op = _aluOperations.get(mode);
-			_result = op.execute(_inA.read(), _inB.read());
+		int mode = inCtrl.read();
+		if (mode < aluOperations.size()) {
+			AluOperation op = aluOperations.get(mode);
+			result = op.execute(inA.read(), inB.read());
 
-			if (_log.isLoggable(Level.FINER)) {
-				_log.log(Level.FINER, "Applying ALU operation " + op + " to " + _inA.read()
-						+ " and " + _inB.read() + " with result " + _result);
+			if (LOG.isLoggable(Level.FINER)) {
+				LOG.log(Level.FINER, "Applying ALU operation " + op + " to " + inA.read()
+						+ " and " + inB.read() + " with result " + result);
 			}
 		}
 		else {
-			_result = 0;
+			result = 0;
 
-			if (_log.isLoggable(Level.FINER)) {
-				_log.log(Level.FINER, "Unknown ALU operation: " + mode + ", writing 0");
+			if (LOG.isLoggable(Level.FINER)) {
+				LOG.log(Level.FINER, "Unknown ALU operation: " + mode + ", writing 0");
 			}
 		}
 
-		_outZero.write(_result == 0 ? 1 : 0);
-		_outData.write(_result);
+		outZero.write(result == 0 ? 1 : 0);
+		outData.write(result);
 	}
 
 	@Override
 	public Set<? extends Circuit> getSuccessors() {
-		return Sets.union(_outData.getSuccessors(), _outZero.getSuccessors());
+		return Sets.union(outData.getSuccessors(), outZero.getSuccessors());
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class Alu extends Part implements SpriteOwner {
 	 *          a list of the {@code AluOperation}s
 	 */
 	public List<AluOperation> getAluOperations() {
-		return _aluOperations;
+		return aluOperations;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Alu extends Part implements SpriteOwner {
 	 *          the control pin
 	 */
 	public IngoingPin getInCtrl() {
-		return _inCtrl;
+		return inCtrl;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class Alu extends Part implements SpriteOwner {
 	 *          the pin of port A
 	 */
 	public IngoingPin getInA() {
-		return _inA;
+		return inA;
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class Alu extends Part implements SpriteOwner {
 	 *          the pin of port B
 	 */
 	public IngoingPin getInB() {
-		return _inB;
+		return inB;
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class Alu extends Part implements SpriteOwner {
 	 *          the data pin
 	 */
 	public OutgoingPin getOutData() {
-		return _outData;
+		return outData;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Alu extends Part implements SpriteOwner {
 	 *          the ALU condition pin
 	 */
 	public OutgoingPin getOutZero() {
-		return _outZero;
+		return outZero;
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class Alu extends Part implements SpriteOwner {
 	 *          the result
 	 */
 	public int getResult() {
-		return _result;
+		return result;
 	}
 
 	@Override
@@ -153,6 +153,6 @@ public class Alu extends Part implements SpriteOwner {
 
 	@Override
 	public void reset() {
-		_result = 0;
+		result = 0;
 	}
 }

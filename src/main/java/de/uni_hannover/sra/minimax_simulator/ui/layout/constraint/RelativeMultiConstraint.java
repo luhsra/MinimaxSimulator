@@ -10,9 +10,9 @@ import java.util.Set;
  */
 public abstract class RelativeMultiConstraint implements Constraint {
 
-	protected final int _offset;
+	protected final int offset;
 
-	protected final Set<Attribute> _anchors;
+	protected final Set<Attribute> anchors;
 
 	/**
 	 * Constructs a new {@code RelativeMultiConstraint} with the specified anchors.
@@ -52,18 +52,18 @@ public abstract class RelativeMultiConstraint implements Constraint {
 			throw new IllegalArgumentException("Empty anchor set is invalid for group");
 		}
 
-		_offset = offset;
-		_anchors = new HashSet<Attribute>(anchors);
+		this.offset = offset;
+		this.anchors = new HashSet<Attribute>(anchors);
 	}
 
 	@Override
 	public String toString() {
-		return "rel(" + _anchors + " + " + _offset + ")";
+		return "rel(" + anchors + " + " + offset + ")";
 	}
 
 	@Override
 	public Set<Attribute> getDependencies() {
-		return _anchors;
+		return anchors;
 	}
 
 	/**

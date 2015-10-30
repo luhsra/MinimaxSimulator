@@ -13,7 +13,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.LabelSprite;
  */
 public class Label extends AbstractComponent implements SpriteOwner {
 
-	private final String _message;
+	private final String message;
 
 	/**
 	 * Constructs a new {@code Label} with the specified message.
@@ -22,7 +22,7 @@ public class Label extends AbstractComponent implements SpriteOwner {
 	 *          the message of the {@code Label}
 	 */
 	public Label(String message) {
-		_message = message;
+		this.message = message;
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class Label extends AbstractComponent implements SpriteOwner {
 	 *          the message
 	 */
 	public String getMessage() {
-		return _message;
+		return message;
 	}
 
 	@Override

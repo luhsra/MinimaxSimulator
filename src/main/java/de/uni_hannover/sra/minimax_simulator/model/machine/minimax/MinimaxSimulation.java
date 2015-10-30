@@ -19,17 +19,17 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public class MinimaxSimulation extends AbstractSimulation implements MemoryAccessListener {
 
-	private final static Logger		_log	= Logger.getLogger(MinimaxSimulation.class.getName());
+	private final static Logger LOG = Logger.getLogger(MinimaxSimulation.class.getName());
 
-	private final MinimaxMachine	_machine;
-	private final SignalTable		_signalTable;
+	private final MinimaxMachine machine;
+	private final SignalTable signalTable;
 
-	private int						_currentSignalRow;
-	private SimulationInstance		_currentInstance;
+	private int currentSignalRow;
+	private SimulationInstance currentInstance;
 
-	private boolean					_resolvedRead;
+	private boolean resolvedRead;
 
-	private final static int		CYCLE_YIELD_BITMASK = 0x00000100;
+	private final static int CYCLE_YIELD_BITMASK = 0x00000100;
 
 	/**
 	 * Constructs a new instance of the {@code MinimaxSimulation} with the specified {@link MinimaxMachine}
@@ -41,72 +41,72 @@ public class MinimaxSimulation extends AbstractSimulation implements MemoryAcces
 	 *          the {@code SignalTable} containing the microprogram that will be simulated
 	 */
 	public MinimaxSimulation(MinimaxMachine machine, SignalTable table) {
-		_machine = machine;
-		_signalTable = table;
-		_currentSignalRow = -1;
-		_resolvedRead = false;
+		this.machine = machine;
+		signalTable = table;
+		currentSignalRow = -1;
+		resolvedRead = false;
 
-		if (_signalTable.getRowCount() == 0) {
+		if (signalTable.getRowCount() == 0) {
 			halt();
 		}
 
-		_machine.getMemory().addMemoryAccessListener(this);
-		_signalTable.addSignalTableListener(this);
+		this.machine.getMemory().addMemoryAccessListener(this);
+		signalTable.addSignalTableListener(this);
 	}
 
 	@Override
 	public Trackable<Integer> getAluResult() {
-		checkState(_currentInstance != null);
-		return _currentInstance.getAluResult();
+		checkState(currentInstance != null);
+		return currentInstance.getAluResult();
 	}
 
 	@Override
 	public Trackable<Integer> getRegisterValue(String name) {
-		checkState(_currentInstance != null);
-		return _currentInstance.getRegisterValue(name);
+		checkState(currentInstance != null);
+		return currentInstance.getRegisterValue(name);
 	}
 
 	@Override
 	public MachineMemory getMemoryState() {
-		return _machine.getMemory();
+		return machine.getMemory();
 	}
 
 	@Override
 	protected void resetImpl() {
-		_currentInstance.reset();
-		_currentSignalRow = 0;
-		_resolvedRead = false;
+		currentInstance.reset();
+		currentSignalRow = 0;
+		resolvedRead = false;
 		resetCycles();
 
-		_machine.getMemory().resetMemoryState();
-		_machine.getMemory().markMemoryState();
-		_currentInstance.updateAll();
+		machine.getMemory().resetMemoryState();
+		machine.getMemory().markMemoryState();
+		currentInstance.updateAll();
 	}
 
 	@Override
 	protected void initImpl() {
-		_log.log(Level.FINE, "Starting simulation.");
+		LOG.log(Level.FINE, "Starting simulation.");
 
-		_currentInstance = new SimulationInstance(_machine);
-		_currentInstance.reset();
-		_currentSignalRow = 0;
-		_resolvedRead = false;
+		currentInstance = new SimulationInstance(machine);
+		currentInstance.reset();
+		currentSignalRow = 0;
+		resolvedRead = false;
 		resetCycles();
 
-		_machine.getMemory().markMemoryState();
-		_currentInstance.updateAll();
+		machine.getMemory().markMemoryState();
+		currentInstance.updateAll();
 	}
 
 	@Override
 	protected void stopImpl() {
-		_log.log(Level.FINE, "Stopping simulation.");
+		LOG.log(Level.FINE, "Stopping simulation.");
 
-		_currentSignalRow = -1;
-		_currentInstance.reset();
-		_currentInstance = null;
-		_resolvedRead = false;
+		currentSignalRow = -1;
+		currentInstance.reset();
+		currentInstance = null;
+		resolvedRead = false;
 
-		_machine.getMemory().resetMemoryState();
+		machine.getMemory().resetMemoryState();
 	}
 
 	/**
@@ -116,38 +116,38 @@ public class MinimaxSimulation extends AbstractSimulation implements MemoryAcces
 	 *          whether updates will be posted or not
 	 */
 	private void doStep(boolean postUpdates) {
-		SignalRow row = _signalTable.getRow(_currentSignalRow);
+		SignalRow row = signalTable.getRow(currentSignalRow);
 
-		if (!_resolvedRead) {
-			if (_log.isLoggable(Level.FINE)) {
-				_log.log(Level.FINE, "Executing signal row " + _currentSignalRow + ": " + row.toString());
+		if (!resolvedRead) {
+			if (LOG.isLoggable(Level.FINE)) {
+				LOG.log(Level.FINE, "Executing signal row " + currentSignalRow + ": " + row.toString());
 			}
 
-			_currentInstance.setPortValues(row);
-			_currentInstance.resolve();
+			currentInstance.setPortValues(row);
+			currentInstance.resolve();
 			if (postUpdates) {
-				_currentInstance.updateAluDisplay();
+				currentInstance.updateAluDisplay();
 			}
 
-			_resolvedRead = true;
+			resolvedRead = true;
 		}
 		else {
-			_currentInstance.nextCycle();
+			currentInstance.nextCycle();
 			if (postUpdates) {
-				_currentInstance.updateRegisterDisplay();
+				currentInstance.updateRegisterDisplay();
 			}
 			incrementCycles();
 
-			_currentSignalRow = row.getJump().getTargetRow(_currentSignalRow, _currentInstance.getCond());
+			currentSignalRow = row.getJump().getTargetRow(currentSignalRow, currentInstance.getCond());
 
-			if (_currentSignalRow >= _signalTable.getRowCount()) {
+			if (currentSignalRow >= signalTable.getRowCount()) {
 				halt();
 			}
-			else if (_signalTable.getRow(_currentSignalRow).isBreakpoint()) {
+			else if (signalTable.getRow(currentSignalRow).isBreakpoint()) {
 				pause();
 			}
 
-			_resolvedRead = false;
+			resolvedRead = false;
 		}
 	}
 
@@ -158,10 +158,10 @@ public class MinimaxSimulation extends AbstractSimulation implements MemoryAcces
 
 	@Override
 	protected void runImpl() {
-		boolean memoryNotify = _machine.getMemory().getNotifiesListeners();
+		boolean memoryNotify = machine.getMemory().getNotifiesListeners();
 		try {
 			int i = 0;
-			_machine.getMemory().setNotifiesListeners(false);
+			machine.getMemory().setNotifiesListeners(false);
 			while (!isHalted() && !paused()) {
 				if ((i++ & CYCLE_YIELD_BITMASK) == 1) {
 					Thread.yield();
@@ -169,15 +169,15 @@ public class MinimaxSimulation extends AbstractSimulation implements MemoryAcces
 
 				doStep(false);
 			}
-			_currentInstance.updateAll();	
+			currentInstance.updateAll();
 		} finally {
-			_machine.getMemory().setNotifiesListeners(memoryNotify);
+			machine.getMemory().setNotifiesListeners(memoryNotify);
 		}
 	}
 
 	@Override
 	public int getCurrentSignalRow() {
-		return _currentSignalRow;
+		return currentSignalRow;
 	}
 
 	@Override
@@ -202,6 +202,6 @@ public class MinimaxSimulation extends AbstractSimulation implements MemoryAcces
 
 	@Override
 	public boolean isResolved() {
-		return _resolvedRead;
+		return resolvedRead;
 	}
 }

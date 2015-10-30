@@ -17,15 +17,15 @@ import java.util.*;
  */
 class ConstantInputGroupManager implements MuxInputGroupManager {
 
-	private final Set<String>						_defaultGroupSet;
+	private final Set<String> defaultGroupSet;
 
-	private final String							_layoutGroupName;
-	private final GroupManager						_groupManager;
-	private final MinimaxLayout						_layout;
+	private final String layoutGroupName;
+	private final GroupManager groupManager;
+	private final MinimaxLayout layout;
 
-	private final Set<String>						_namesOfConstants;
+	private final Set<String> namesOfConstants;
 
-	private final Map<MuxType, List<InputEntry>>	_inputEntries;
+	private final Map<MuxType, List<InputEntry>> inputEntries;
 
 	/**
 	 * Constructs a new {@code ConstantInputGroupManager} with the specified layout group name, default group set and {@link MinimaxMachine}.
@@ -38,23 +38,23 @@ class ConstantInputGroupManager implements MuxInputGroupManager {
 	 *          the {@code MinimaxMachine}
 	 */
 	public ConstantInputGroupManager(String layoutGroupName, Collection<String> defaultGroupSet, MinimaxMachine machine) {
-		_defaultGroupSet = new HashSet<String>(defaultGroupSet);
-		_layoutGroupName = layoutGroupName;
-		_groupManager = machine.getGroupManager();
-		_layout = machine.getLayout();
+		this.defaultGroupSet = new HashSet<String>(defaultGroupSet);
+		this.layoutGroupName = layoutGroupName;
+		groupManager = machine.getGroupManager();
+		layout = machine.getLayout();
 
-		_namesOfConstants = new HashSet<String>();
+		namesOfConstants = new HashSet<String>();
 
-		_inputEntries = new HashMap<MuxType, List<InputEntry>>();
+		inputEntries = new HashMap<MuxType, List<InputEntry>>();
 		for (MuxType type : MuxType.values())
-			_inputEntries.put(type, new ArrayList<InputEntry>());
+			inputEntries.put(type, new ArrayList<InputEntry>());
 
 		updateLayout();
 	}
 
 	@Override
 	public void update(MuxInputManager muxInputs) {
-		List<InputEntry> entries = _inputEntries.get(muxInputs.getMuxType());
+		List<InputEntry> entries = inputEntries.get(muxInputs.getMuxType());
 
 		destroyGroups(entries);
 		entries.clear();
@@ -70,8 +70,8 @@ class ConstantInputGroupManager implements MuxInputGroupManager {
 				int value = ((ConstantMuxInput) entry.input).getConstant();
 				Group group = new MuxConstantGroup(entry.pinId, entry.pin, value);
 
-				_groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
-				_namesOfConstants.add(entry.pinId +  Parts._CONSTANT);	
+				groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
+				namesOfConstants.add(entry.pinId + Parts._CONSTANT);
 			}
 		}
 	}
@@ -79,21 +79,21 @@ class ConstantInputGroupManager implements MuxInputGroupManager {
 	private void destroyGroups(List<InputEntry> entries) {
 		for (InputEntry entry : entries) {
 			if (entry.input instanceof ConstantMuxInput) {
-				_groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
-				_namesOfConstants.remove(entry.pinId +  Parts._CONSTANT);	
+				groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
+				namesOfConstants.remove(entry.pinId + Parts._CONSTANT);
 			}
 		}
 	}
 
 	private void updateLayout() {
 		Set<String> constants;
-		if (_namesOfConstants.isEmpty()) {
-			constants = _defaultGroupSet;
+		if (namesOfConstants.isEmpty()) {
+			constants = defaultGroupSet;
 		}
 		else {
-			constants = _namesOfConstants;
+			constants = namesOfConstants;
 		}
 
-		_layout.putLayout(_layoutGroupName, new GroupLayout(constants));
+		layout.putLayout(layoutGroupName, new GroupLayout(constants));
 	}
 }

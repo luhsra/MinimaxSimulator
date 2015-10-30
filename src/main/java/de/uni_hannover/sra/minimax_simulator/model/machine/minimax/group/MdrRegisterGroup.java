@@ -15,7 +15,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.shape.LabelShape;
  */
 public class MdrRegisterGroup extends AbstractGroup {
 
-	private final String _registerId;
+	private final String registerId;
 
 	/**
 	 * Constructs a new {@code MdrRegisterGroup} with the specified register ID.
@@ -24,12 +24,12 @@ public class MdrRegisterGroup extends AbstractGroup {
 	 *          the ID of the register
 	 */
 	public MdrRegisterGroup(String registerId) {
-		_registerId = registerId;
+		this.registerId = registerId;
 	}
 
 	@Override
 	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
-		Register register = cr.getCircuit(Register.class, _registerId);
+		Register register = cr.getCircuit(Register.class, registerId);
 
 		Junction junction = new Junction();
 		junction.getDataOuts().add(new OutgoingPin(junction));
@@ -51,14 +51,14 @@ public class MdrRegisterGroup extends AbstractGroup {
 		Wire mdrSelectInput0Wire = new Wire(2, junction.getDataOuts().get(0),
 			mdrSelect.getDataInputs().get(0));
 
-		add(junction, _registerId + Parts._JUNCTION);
-		add(label, _registerId + Parts._LABEL);
-		add(port, _registerId + Parts._PORT);
+		add(junction, registerId + Parts._JUNCTION);
+		add(label, registerId + Parts._LABEL);
+		add(port, registerId + Parts._PORT);
 
-		addWire(dataInWire, _registerId + Parts._WIRE_DATA_IN);
-		addWire(enabledWire, _registerId + Parts._WIRE_ENABLED);
-		addWire(aluWire, _registerId + Parts._JUNCTION + Parts._WIRE_DATA_IN);
-		addWire(mdrSelectInput0Wire, _registerId + "_WIRE_MDR_SELECT_INPUT0");
+		addWire(dataInWire, registerId + Parts._WIRE_DATA_IN);
+		addWire(enabledWire, registerId + Parts._WIRE_ENABLED);
+		addWire(aluWire, registerId + Parts._JUNCTION + Parts._WIRE_DATA_IN);
+		addWire(mdrSelectInput0Wire, registerId + "_WIRE_MDR_SELECT_INPUT0");
 	}
 
 	@Override
@@ -68,6 +68,6 @@ public class MdrRegisterGroup extends AbstractGroup {
 
 	@Override
 	public LayoutSet createLayouts() {
-		return new MdrLayoutSet(_registerId);
+		return new MdrLayoutSet(registerId);
 	}
 }

@@ -39,18 +39,18 @@ import java.util.logging.Logger;
 */
 public class Main extends javafx.application.Application {
 
-    private static Stage _primaryStage;
+    private static Stage primaryStage;
 
-    private static Workspace _workspace;
-    private static ResourceBundleLoader _resourceLoader;
+    private static Workspace workspace;
+    private static ResourceBundleLoader resourceLoader;
 
-    private static Version _version;
+    private static Version version;
 
-    private static Logger _log;
+    private static Logger log;
 
     private static HostServices hostServices;
 
-    private static boolean _isDebugging;
+    private static boolean isDebugging;
 
     /**
      * Starts the JavaFX application.
@@ -63,22 +63,22 @@ public class Main extends javafx.application.Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        _primaryStage = primaryStage;
-        _version = new Version(this.getClass());
+        Main.primaryStage = primaryStage;
+        version = new Version(this.getClass());
 
-        _isDebugging = System.getProperty("application.debug") != null;
+        isDebugging = System.getProperty("application.debug") != null;
 
         hostServices = getHostServices();
 
         // Read logger settings from .properties inside jar
         setupLogger();
 
-        _log.info("Starting version " + _version.getVersionNumber());
+        log.info("Starting version " + version.getVersionNumber());
 
         // check if Java 8u40 or higher is available
-        if (_version.isJvmLower(1, 8, 0, 40)) {
-            String jvmVersion = _version.getJvmMajor() + "." + _version.getJvmFeature() + "." + _version.getJvmUpdate() + "_" + _version.getJvmBuild();
-            _log.severe("Java 1.8.0_40 or higher needed but found " + jvmVersion);
+        if (version.isJvmLower(1, 8, 0, 40)) {
+            String jvmVersion = version.getJvmMajor() + "." + version.getJvmFeature() + "." + version.getJvmUpdate() + "_" + version.getJvmBuild();
+            log.severe("Java 1.8.0_40 or higher needed but found " + jvmVersion);
             System.exit(-1);
         }
 
@@ -88,15 +88,15 @@ public class Main extends javafx.application.Application {
         } catch (ConfigurationLoader.ConfigurationException e) {
             throw new Error("Cannot initialize configuration", e);
         }
-        _log.info("Configuration loaded.");
+        log.info("Configuration loaded.");
 
         // Initialize resource loader for clients (text boxes etc...)
         getResourceLoader();
 
         // Initialize empty workspace (no project loaded)
-        _workspace = new Workspace();
+        workspace = new Workspace();
 
-        _log.info("Initializing UI...");
+        log.info("Initializing UI...");
 
         URL location = getClass().getResource("/fxml/minimax-sim.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -106,10 +106,10 @@ public class Main extends javafx.application.Application {
         Parent root = fxmlLoader.load(location.openStream());
         Scene scene = new Scene(root, 1200, 705);
         scene.getStylesheets().add("css/application.css");
-        _primaryStage.setScene(scene);
+        Main.primaryStage.setScene(scene);
 
         FXMainController mainController = fxmlLoader.getController();
-        _primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        Main.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
                 if (!mainController.exitApplication()) {
@@ -118,15 +118,15 @@ public class Main extends javafx.application.Application {
             }
         });
 
-        TextResource res = _resourceLoader.getTextResource("application");
-        _primaryStage.setTitle(res.format("title", _version.getVersionNumber()));
+        TextResource res = resourceLoader.getTextResource("application");
+        Main.primaryStage.setTitle(res.format("title", version.getVersionNumber()));
 
         // set application icon
-        _primaryStage.getIcons().add(new Image("images/nuvola/cpu.png"));
-        _primaryStage.getIcons().add(new Image("images/nuvola/cpu-big.png"));
+        Main.primaryStage.getIcons().add(new Image("images/nuvola/cpu.png"));
+        Main.primaryStage.getIcons().add(new Image("images/nuvola/cpu-big.png"));
 
-        _primaryStage.setResizable(true);
-        _primaryStage.show();
+        Main.primaryStage.setResizable(true);
+        Main.primaryStage.show();
     }
 
     /**
@@ -136,7 +136,7 @@ public class Main extends javafx.application.Application {
      *          the application's primary {@code Stage}
      */
     public static Stage getPrimaryStage() {
-        return _primaryStage;
+        return primaryStage;
     }
 
     /**
@@ -146,7 +146,7 @@ public class Main extends javafx.application.Application {
      *          a list containing all icons of the application
      */
     public static ObservableList<Image> getAppIcon() {
-        return _primaryStage.getIcons();
+        return primaryStage.getIcons();
     }
 
     /**
@@ -157,7 +157,7 @@ public class Main extends javafx.application.Application {
      *          the {@code ResourceBundleLoader} used by the application
      */
     public static ResourceBundleLoader getResourceLoader() {
-        if (_resourceLoader == null) {
+        if (resourceLoader == null) {
             Locale locale;
             if (Config.LOCALE == null || Config.LOCALE.isEmpty()) {
                 locale = Locale.getDefault();
@@ -170,9 +170,9 @@ public class Main extends javafx.application.Application {
                     locale = Locale.getDefault();
                 }
             }
-            _resourceLoader = new DefaultResourceBundleLoader(new PropertyResourceControl("text/"), locale);
+            resourceLoader = new DefaultResourceBundleLoader(new PropertyResourceControl("text/"), locale);
         }
-        return _resourceLoader;
+        return resourceLoader;
     }
 
     /**
@@ -184,11 +184,11 @@ public class Main extends javafx.application.Application {
      *          the {@code TextResource} with the specified bundle name
      */
     public static TextResource getTextResource(String bundleName) {
-        return _resourceLoader.getTextResource(bundleName);
+        return resourceLoader.getTextResource(bundleName);
     }
 
     public static boolean isDebugging() {
-        return _isDebugging;
+        return isDebugging;
     }
 
     /**
@@ -208,7 +208,7 @@ public class Main extends javafx.application.Application {
      *      the application's {@code Workspace}
      */
     public static Workspace getWorkspace() {
-        return _workspace;
+        return workspace;
     }
 
     /**
@@ -218,7 +218,7 @@ public class Main extends javafx.application.Application {
      *      the version number as {@code String}
      */
     public static String getVersionString() {
-        return _version.getVersionNumber();
+        return version.getVersionNumber();
     }
 
     /**
@@ -233,7 +233,7 @@ public class Main extends javafx.application.Application {
             throw new Error("Cannot initialize logging", e);
         }
 
-        _log = Logger.getLogger(Main.class.getName());
+        log = Logger.getLogger(Main.class.getName());
     }
 
     /**

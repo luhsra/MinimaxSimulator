@@ -13,8 +13,8 @@ import javafx.util.StringConverter;
  */
 public class NullAwareIntStringConverter extends StringConverter {
 
-    private final int _radix;
-    private final boolean _signed;
+    private final int radix;
+    private final boolean signed;
 
     /**
      * Constructs a {@code NullAwareIntStringConverter} with the specified radix and value of the {@code signed} property.
@@ -25,8 +25,8 @@ public class NullAwareIntStringConverter extends StringConverter {
      *          whether the Integer is signed or not
      */
     public NullAwareIntStringConverter(int radix, boolean signed) {
-        _radix = radix;
-        _signed = signed;
+        this.radix = radix;
+        this.signed = signed;
     }
 
     /**
@@ -44,15 +44,15 @@ public class NullAwareIntStringConverter extends StringConverter {
 
         int nr = (Integer) value;
         String str;
-        if (!_signed) {
+        if (!signed) {
             // for unsigned values
-            str = Long.toString(nr & 0xFFFFFFFFL, _radix);
+            str = Long.toString(nr & 0xFFFFFFFFL, radix);
         }
         else {
             // for signed values
-            str = Integer.toString(nr, _radix);
+            str = Integer.toString(nr, radix);
         }
-        return _radix <= 10 ? str : str.toUpperCase();
+        return radix <= 10 ? str : str.toUpperCase();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class NullAwareIntStringConverter extends StringConverter {
         }
 
         try {
-            Long l = Long.valueOf(text, _radix);
+            Long l = Long.valueOf(text, radix);
             return l.intValue();
         } catch (NumberFormatException nfe) {
             return null;        //TODO: exception handling; doesn't seem to be needed

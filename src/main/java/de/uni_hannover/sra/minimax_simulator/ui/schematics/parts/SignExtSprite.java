@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SignExtSprite extends CircuitSprite {
 
-	private final SignExtension _signExt;
+	private final SignExtension signExt;
 
 	/**
 	 * Initializes the {@code SignExtSprite}.
@@ -26,17 +26,17 @@ public class SignExtSprite extends CircuitSprite {
 	 *          the {@code SignExtension} this sprite will represent
 	 */
 	public SignExtSprite(SignExtension signExt) {
-		_signExt = checkNotNull(signExt);
+		this.signExt = checkNotNull(signExt);
 	}
 
 	@Override
 	public void paint(GraphicsContext gc, RenderEnvironment env) {
-		Bounds b = _signExt.getBounds();
+		Bounds b = signExt.getBounds();
 		debugBounds(gc, b);
 
 		gc.strokeOval(b.x + 0.5, b.y + 0.5, b.w, b.h);
 
-		String name = _signExt.getLabel();
+		String name = signExt.getLabel();
 		FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
 		double textWidth = fm.computeStringWidth(name);
 		double textHeight = fm.getLineHeight();

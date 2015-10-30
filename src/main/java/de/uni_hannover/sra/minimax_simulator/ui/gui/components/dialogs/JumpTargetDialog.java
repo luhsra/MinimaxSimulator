@@ -51,7 +51,7 @@ public class JumpTargetDialog extends FXDialog {
     private ButtonType okButtonType;
     private ButtonType cancelButtonType;
 
-    private final TextResource _res;
+    private final TextResource res;
 
     /**
      * Constructs a new {@code JumpTargetDialog} for the specified {@link SignalRow}
@@ -66,7 +66,7 @@ public class JumpTargetDialog extends FXDialog {
      */
     public JumpTargetDialog(SignalTable table, SignalRow row, int rowIndex) {
         super(AlertType.NONE, "", "");
-        _res = Main.getTextResource("machine").using("signal.jump");
+        res = Main.getTextResource("machine").using("signal.jump");
 
         this.table = table;
         this.row = row;
@@ -128,12 +128,12 @@ public class JumpTargetDialog extends FXDialog {
      * Sets up the UI of the dialog.
      */
     private void createUI() {
-        okButtonType = new ButtonType(_res.get("ok"), ButtonBar.ButtonData.OK_DONE);
-        cancelButtonType = new ButtonType(_res.get("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+        okButtonType = new ButtonType(res.get("ok"), ButtonBar.ButtonData.OK_DONE);
+        cancelButtonType = new ButtonType(res.get("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        rBtnNext = new RadioButton(_res.get("default"));
-        rBtnUncond = new RadioButton(_res.get("unconditional"));
-        rBtnCond = new RadioButton(_res.get("conditional"));
+        rBtnNext = new RadioButton(res.get("default"));
+        rBtnUncond = new RadioButton(res.get("unconditional"));
+        rBtnCond = new RadioButton(res.get("conditional"));
 
         ToggleGroup tgrp = new ToggleGroup();
         rBtnNext.setToggleGroup(tgrp);

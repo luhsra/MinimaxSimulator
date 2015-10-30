@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class WireSprite extends CircuitSprite {
 
-	private final Wire				_wire;
+	private final Wire wire;
 
 	/**
 	 * Initializes the {@code WireSprite}.
@@ -25,12 +25,12 @@ public class WireSprite extends CircuitSprite {
 	 *          the {@code Wire} this sprite will represent
 	 */
 	public WireSprite(Wire wire) {
-		_wire = checkNotNull(wire);
+		this.wire = checkNotNull(wire);
 	}
 
 	@Override
 	public void paint(GraphicsContext gc, RenderEnvironment env) {
-		Point[] points = _wire.getPoints();
+		Point[] points = wire.getPoints();
 
 		double lineWidth = gc.getLineWidth();
 		gc.setLineWidth(1.0);
@@ -40,7 +40,7 @@ public class WireSprite extends CircuitSprite {
 		}
 		gc.setLineWidth(lineWidth);
 
-		if (!(_wire.getDrain() instanceof  Junction)) {
+		if (!(wire.getDrain() instanceof  Junction)) {
 			drawArrow(gc, points[i-2], points[i-1]);
 		}
 	}

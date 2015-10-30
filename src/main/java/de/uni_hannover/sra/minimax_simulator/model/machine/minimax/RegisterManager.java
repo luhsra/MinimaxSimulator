@@ -25,8 +25,8 @@ class RegisterManager {
 		EXTENDED
 	}
 
-	private final GroupManager						_groupManager;
-	private final Map<String, String>				_registerIds;
+	private final GroupManager groupManager;
+	private final Map<String, String> registerIds;
 
 	/**
 	 * Constructs a new {@code RegisterManager} using the specified {@link GroupManager}.
@@ -35,8 +35,8 @@ class RegisterManager {
 	 *          the group manager
 	 */
 	public RegisterManager(GroupManager groupManager) {
-		_groupManager = groupManager;
-		_registerIds = new HashMap<String, String>();
+		this.groupManager = groupManager;
+		registerIds = new HashMap<String, String>();
 	}
 
 	/**
@@ -62,7 +62,7 @@ class RegisterManager {
 				break;
 		}
 
-		_registerIds.put(registerName, registerId);
+		registerIds.put(registerName, registerId);
 
 		Group group;
 		switch (type) {
@@ -80,7 +80,7 @@ class RegisterManager {
 		}
 
 		// use register id as name for the group
-		_groupManager.initializeGroup(registerId, group);
+		groupManager.initializeGroup(registerId, group);
 
 		return registerId;
 	}
@@ -94,12 +94,12 @@ class RegisterManager {
 	 *          the ID of the removed register
 	 */
 	public String removeRegister(String registerName) {
-		String registerId = _registerIds.remove(registerName);
+		String registerId = registerIds.remove(registerName);
 		if (registerId == null) {
 			throw new IllegalStateException("Unknown register name: " + registerName);
 		}
 
-		_groupManager.removeGroup(registerId);
+		groupManager.removeGroup(registerId);
 
 		return registerId;
 	}
@@ -113,7 +113,7 @@ class RegisterManager {
 	 *          the ID of the register related to the {@code RegisterMuxInput}
 	 */
 	String getRegisterId(RegisterMuxInput input) {
-		return _registerIds.get(input.getRegisterName());
+		return registerIds.get(input.getRegisterName());
 	}
 
 	/**
@@ -125,7 +125,7 @@ class RegisterManager {
 	 *          the ID of the register
 	 */
 	String getRegisterId(String name) {
-		return _registerIds.get(name);
+		return registerIds.get(name);
 	}
 
 	/**
@@ -135,7 +135,7 @@ class RegisterManager {
 	 *          a map containing the names and IDs of the registers
 	 */
 	Map<String, String> getRegisterIdsByName() {
-		return _registerIds;
+		return registerIds;
 	}
 
 	/**

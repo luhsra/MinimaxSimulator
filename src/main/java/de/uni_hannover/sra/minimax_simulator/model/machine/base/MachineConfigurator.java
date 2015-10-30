@@ -17,7 +17,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
  */
 public class MachineConfigurator implements MachineConfigListener {
 
-	private final ConfigurableMachine _machine;
+	private final ConfigurableMachine machine;
 
 	/**
 	 * Constructs a new {@code MachineConfigurator} with the specified {@link ConfigurableMachine}
@@ -29,14 +29,14 @@ public class MachineConfigurator implements MachineConfigListener {
 	 *          the {@code MachineConfiguration} of the {@code ConfigurableMachine}
 	 */
 	public MachineConfigurator(ConfigurableMachine machine, MachineConfiguration config) {
-		_machine = machine;
+		this.machine = machine;
 
 		// Fetch all extensions which are already added.
 
-		_machine.getAluOperations().addAll(config.getAluOperations());
-		_machine.getRegisterExtensions().addAll(config.getRegisterExtensions());
+		this.machine.getAluOperations().addAll(config.getAluOperations());
+		this.machine.getRegisterExtensions().addAll(config.getRegisterExtensions());
 		for (MuxType mux : MuxType.values()) {
-			_machine.getMuxInputExtensions(mux).addAll(config.getMuxSources(mux));
+			this.machine.getMuxInputExtensions(mux).addAll(config.getMuxSources(mux));
 		}
 	}
 
@@ -46,13 +46,13 @@ public class MachineConfigurator implements MachineConfigListener {
 			MachineConfigAluEvent a = (MachineConfigAluEvent) event;
 			switch (a.type) {
 				case ELEMENT_ADDED:
-					_machine.getAluOperations().add(a.element);
+					machine.getAluOperations().add(a.element);
 					break;
 				case ELEMENT_REMOVED:
-					_machine.getAluOperations().remove(a.index);
+					machine.getAluOperations().remove(a.index);
 					break;
 				case ELEMENTS_EXCHANGED:
-					_machine.getAluOperations().swap(a.index, a.index2);
+					machine.getAluOperations().swap(a.index, a.index2);
 					break;
 				case ELEMENT_REPLACED:
 					// cannot happen with ALU operations
@@ -63,16 +63,16 @@ public class MachineConfigurator implements MachineConfigListener {
 			MachineConfigRegisterEvent r = (MachineConfigRegisterEvent) event;
 			switch (r.type) {
 				case ELEMENT_ADDED:
-					_machine.getRegisterExtensions().add(r.element);
+					machine.getRegisterExtensions().add(r.element);
 					break;
 				case ELEMENT_REMOVED:
-					_machine.getRegisterExtensions().remove(r.index);
+					machine.getRegisterExtensions().remove(r.index);
 					break;
 				case ELEMENT_REPLACED:
-					_machine.getRegisterExtensions().set(r.index, r.element);
+					machine.getRegisterExtensions().set(r.index, r.element);
 					break;
 				case ELEMENTS_EXCHANGED:
-					_machine.getRegisterExtensions().swap(r.index, r.index2);
+					machine.getRegisterExtensions().swap(r.index, r.index2);
 					break;
 			}
 		}
@@ -85,7 +85,7 @@ public class MachineConfigurator implements MachineConfigListener {
 				return;
 			}
 
-			ExtensionList<MuxInput> list = _machine.getMuxInputExtensions(m.mux);
+			ExtensionList<MuxInput> list = machine.getMuxInputExtensions(m.mux);
 
 			switch (m.type) {
 				case ELEMENT_ADDED:

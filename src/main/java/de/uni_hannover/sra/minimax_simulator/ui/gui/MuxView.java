@@ -37,8 +37,8 @@ import java.util.Optional;
  */
 public class MuxView implements MachineConfigListener {
 
-    private final TextResource _res;
-    private MachineConfiguration _config;
+    private final TextResource res;
+    private MachineConfiguration config;
 
     @FXML private TitledPane paneMuxA;
     @FXML private TitledPane paneMuxB;
@@ -77,7 +77,7 @@ public class MuxView implements MachineConfigListener {
      * Initializes the final variables.
      */
     public MuxView() {
-        _res = Main.getTextResource("machine").using("mux");
+        res = Main.getTextResource("machine").using("mux");
     }
 
     /**
@@ -95,11 +95,11 @@ public class MuxView implements MachineConfigListener {
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
-        paneMuxA.setText(_res.format("table.title", "A"));
-        paneMuxB.setText(_res.format("table.title", "B"));
+        paneMuxA.setText(res.format("table.title", "A"));
+        paneMuxB.setText(res.format("table.title", "B"));
         final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneSelectedConnection, radioRegister, radioConstant, lblDec, lblHex, btnSave));
         for (Labeled con : controls) {
-            con.setText(_res.get(con.getId().replace("_", ".")));
+            con.setText(res.get(con.getId().replace("_", ".")));
         }
     }
 
@@ -108,8 +108,8 @@ public class MuxView implements MachineConfigListener {
      * It initializes the two multiplexer {@link TableView}s as well as the register {@link ComboBox} because they need project data.
      */
     public void initMuxView() {
-        _config = Main.getWorkspace().getProject().getMachineConfiguration();
-        _config.addMachineConfigListener(this);
+        config = Main.getWorkspace().getProject().getMachineConfiguration();
+        config.addMachineConfigListener(this);
         initTableMuxA();
         initTableMuxB();
 
@@ -165,7 +165,7 @@ public class MuxView implements MachineConfigListener {
      * Updates the {@link ComboBox} containing the registers.
      */
     private void updateRegisterComboBox() {
-        cbRegister.setItems(FXCollections.observableArrayList(_config.getAvailableSources()));
+        cbRegister.setItems(FXCollections.observableArrayList(config.getAvailableSources()));
     }
 
     /**
@@ -225,7 +225,7 @@ public class MuxView implements MachineConfigListener {
     private void updateTableMuxA() {
         ObservableList<MuxTableModel> data = FXCollections.observableArrayList();
 
-        final List<MuxInput> muxInputList = _config.getMuxSources(MuxType.A);
+        final List<MuxInput> muxInputList = config.getMuxSources(MuxType.A);
         int size = muxInputList.size();
 
         for (int i = 0; i < size; i++) {
@@ -267,7 +267,7 @@ public class MuxView implements MachineConfigListener {
     private void updateTableMuxB() {
         ObservableList<MuxTableModel> data = FXCollections.observableArrayList();
 
-        final List<MuxInput> muxInputList = _config.getMuxSources(MuxType.B);
+        final List<MuxInput> muxInputList = config.getMuxSources(MuxType.B);
         int size = muxInputList.size();
 
         for (int i = 0; i < size; i++) {
@@ -376,7 +376,7 @@ public class MuxView implements MachineConfigListener {
         }
 
         // Move one up
-        _config.exchangeMuxSources(mux, index1, index2);
+        config.exchangeMuxSources(mux, index1, index2);
         Main.getWorkspace().setProjectUnsaved();
 
         if (mux == MuxType.A) {
@@ -422,13 +422,13 @@ public class MuxView implements MachineConfigListener {
             index = tableMuxB.getSelectionModel().getSelectedIndex();
         }
 
-        FXDialog delete = new FXDialog(Alert.AlertType.CONFIRMATION, _res.get("delete-dialog.title"), _res.format("delete-dialog.message", mux.name()));
+        FXDialog delete = new FXDialog(Alert.AlertType.CONFIRMATION, res.get("delete-dialog.title"), res.format("delete-dialog.message", mux.name()));
         Optional<ButtonType> result = delete.showAndWait();
         if (result.get() != ButtonType.OK) {
             return;
         }
 
-        _config.removeMuxSource(mux, index);
+        config.removeMuxSource(mux, index);
 
         if (mux == MuxType.A) {
             updateTableMuxA();
@@ -468,7 +468,7 @@ public class MuxView implements MachineConfigListener {
      *          the multiplexer for which the source should be added
      */
     private void addSource(MuxType mux) {
-        _config.addMuxSource(mux, createDefaultMuxSource());
+        config.addMuxSource(mux, createDefaultMuxSource());
         if (mux == MuxType.A) {
             tableMuxA.getSelectionModel().select(tableMuxA.getItems().size()-1);
             updateTableMuxA();
@@ -533,7 +533,7 @@ public class MuxView implements MachineConfigListener {
         else
             return;
 
-        _config.setMuxSource(mux, index, input);
+        config.setMuxSource(mux, index, input);
 
         if (mux == MuxType.A) {
             updateTableMuxA();

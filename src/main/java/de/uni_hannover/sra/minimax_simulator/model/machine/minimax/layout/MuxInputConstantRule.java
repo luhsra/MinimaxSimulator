@@ -9,6 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
  *
  * @author Martin L&uuml;ck
  */
+// TODO: unused <-> delete?
 public class MuxInputConstantRule extends DefaultLayoutSet {
 
 	/**

@@ -8,29 +8,29 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout;
 // TODO: why not abstract?
 public class AbstractComponent implements Component {
 
-	private Dimension _dimension = new Dimension(0, 0);
-	private Insets _insets = new Insets(0, 0, 0, 0);
-	private Bounds _bounds = new Bounds(0, 0, 0, 0);
-	private ComponentShape _shape = null;
-	private String _name = "";
+	private Dimension dimension = new Dimension(0, 0);
+	private Insets insets = new Insets(0, 0, 0, 0);
+	private Bounds bounds = new Bounds(0, 0, 0, 0);
+	private ComponentShape shape = null;
+	private String name = "";
 
 	@Override
 	public void updateSize() {
-		if (_shape != null) {
-			_shape.updateShape(this);
+		if (shape != null) {
+			shape.updateShape(this);
 		}
 	}
 
 	@Override
 	public void doLayout() {
-		if (_shape != null) {
-			_shape.layout(this);
+		if (shape != null) {
+			shape.layout(this);
 		}
 	}
 
 	@Override
 	public Dimension getDimension() {
-		return _dimension;
+		return dimension;
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class AbstractComponent implements Component {
 		if (dimension == null) {
 			throw new IllegalArgumentException("Cannot set null dimension");
 		}
-		_dimension = dimension;
+		this.dimension = dimension;
 	}
 
 	@Override
 	public Insets getInsets() {
-		return _insets;
+		return insets;
 	}
 
 	@Override
@@ -51,12 +51,12 @@ public class AbstractComponent implements Component {
 		if (insets == null) {
 			throw new IllegalArgumentException("Cannot set null insets");
 		}
-		_insets = insets;
+		this.insets = insets;
 	}
 
 	@Override
 	public Bounds getBounds() {
-		return _bounds;
+		return bounds;
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class AbstractComponent implements Component {
 		if (bounds == null) {
 			throw new IllegalArgumentException("Cannot set null bounds");
 		}
-		_bounds = bounds;
+		this.bounds = bounds;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class AbstractComponent implements Component {
 	 * 			the shape
 	 */
 	public ComponentShape getShape() {
-		return _shape;
+		return shape;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class AbstractComponent implements Component {
 	 * 			the new shape
 	 */
 	public void setShape(ComponentShape shape) {
-		_shape = shape;
+		this.shape = shape;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class AbstractComponent implements Component {
 	 * 			the name
 	 */
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	/**
@@ -104,11 +104,11 @@ public class AbstractComponent implements Component {
 	 * 			the new name
 	 */
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + (_name.isEmpty() ? "" : "[" + _name + "]");
+		return getClass().getSimpleName() + (name.isEmpty() ? "" : "[" + name + "]");
 	}
 }

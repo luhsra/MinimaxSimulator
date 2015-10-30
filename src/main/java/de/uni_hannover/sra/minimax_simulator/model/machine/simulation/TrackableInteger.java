@@ -10,16 +10,16 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.simulation;
 public class TrackableInteger extends AbstractTrackable<Integer> {
 
 	/** The value of the {@code TrackableInteger}. */
-	private Integer _value;
+	private Integer value;
 
 	@Override
 	public Integer get() {
-		return _value;
+		return value;
 	}
 
 	@Override
 	public void set(Integer value) {
-		_value = value;
+		this.value = value;
 		fireValueChanged();
 	}
 }

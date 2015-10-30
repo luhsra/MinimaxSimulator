@@ -100,12 +100,12 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
 
     private MachineSchematics schematics;
 
-    private final TextResource _res;
+    private final TextResource res;
 
     private Map<String, Tab> tabMap;
 
-    private static final String _versionString = Main.getVersionString();
-    private static final Workspace _ws = Main.getWorkspace();
+    private static final String VERSION_STRING = Main.getVersionString();
+    private static final Workspace WORKSPACE = Main.getWorkspace();
 
     private final ExtensionFilter extFilterSignal;
     private final ExtensionFilter extFilterProject;
@@ -115,18 +115,18 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * Initializes the final variables.
      */
     public FXMainController() {
-        _res = Main.getTextResource("application");
+        res = Main.getTextResource("application");
 
-        extFilterSignal = new ExtensionFilter(_res.get("project.signalfile.description"), "*.csv", "*.html");
-        extFilterProject = new ExtensionFilter(_res.get("project.filedescription"), "*.zip");
-        extFilterSchematics = new ExtensionFilter(_res.get("project.imagefile.description"), "*.jpg", "*.png");
+        extFilterSignal = new ExtensionFilter(res.get("project.signalfile.description"), "*.csv", "*.html");
+        extFilterProject = new ExtensionFilter(res.get("project.filedescription"), "*.zip");
+        extFilterSchematics = new ExtensionFilter(res.get("project.imagefile.description"), "*.jpg", "*.png");
     }
 
     /**
      * This method is called during application start up and initializes the GUI.
      */
     public void initialize() {
-        _ws.addListener(this);
+        WORKSPACE.addListener(this);
 
         this.tabMap = ImmutableMap.<String, Tab>builder()
                 .put("view_project_overview",   tab_overview)
@@ -228,7 +228,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      *          {@code true} if the application will be shut down; {@code false} otherwise
      */
     public boolean exitApplication() {
-        if (confirmDismissUnsavedChanges(_res.get("close-project.exit.title"), _res.get("close-project.exit.message"))) {
+        if (confirmDismissUnsavedChanges(res.get("close-project.exit.title"), res.get("close-project.exit.message"))) {
             Platform.exit();
             return true;
         }
@@ -280,7 +280,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * Creates a new project with default project data and initializes the rest of the GUI.
      */
     public void newProject() {
-        if (!confirmDismissUnsavedChanges(_res.get("close-project.generic.title"), _res.get("close-project.generic.message"))) {
+        if (!confirmDismissUnsavedChanges(res.get("close-project.generic.title"), res.get("close-project.generic.message"))) {
             return;
         }
 
@@ -295,14 +295,14 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                     throw e;
                 }
             }
-        }, _res.get("wait.title"), _res.get("wait.project.new"));
+        }, res.get("wait.title"), res.get("wait.project.new"));
     }
 
     /**
      * Opens a new project from file.
      */
     public void openProject() {
-        if (!confirmDismissUnsavedChanges(_res.get("close-project.generic.title"), _res.get("close-project.generic.message"))) {
+        if (!confirmDismissUnsavedChanges(res.get("close-project.generic.title"), res.get("close-project.generic.message"))) {
             return;
         }
 
@@ -332,13 +332,13 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                     UI.invokeInFAT(new Runnable() {
                         @Override
                         public void run() {
-                            new FXDialog(Alert.AlertType.ERROR, _res.get("load-error.title"), _res.get("load-error.message")).showAndWait();
+                            new FXDialog(Alert.AlertType.ERROR, res.get("load-error.title"), res.get("load-error.message")).showAndWait();
                         }
                     });
                     //log.log(Level.WARNING, e.getMessage(), e);
                 }
             }
-        }, _res.get("wait.title"), _res.format("wait.project.load", file.getName()));
+        }, res.get("wait.title"), res.format("wait.project.load", file.getName()));
 
     }
 
@@ -373,7 +373,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         //paneOverview.setContent(this.schematics);
 
         // the canvas didn't resize itself correctly on mac; here is the workaround
-        _ws.getProject().getMachine().getDisplay().addMachineDisplayListener(this);
+        WORKSPACE.getProject().getMachine().getDisplay().addMachineDisplayListener(this);
         schematicsToImage();
     }
 
@@ -450,11 +450,11 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 try {
                     Main.getWorkspace().saveProject(fileToSave);
                 } catch (Exception e) {
-                    Main.getWorkspace().closeProject();		// TODO: really closing project if saving didn't work?
+                    Main.getWorkspace().closeProject();        // TODO: really closing project if saving didn't work?
                     throw Throwables.propagate(e);
                 }
             }
-        }, _res.get("wait.title"), _res.format("wait.project.save", file.getName()));
+        }, res.get("wait.title"), res.format("wait.project.save", file.getName()));
         return true;
     }
 
@@ -499,13 +499,13 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 try {
                     // TODO: pure JavaFX
                     if (!ImageIO.write(SwingFXUtils.fromFXImage(image, null), ending, imageFile)) {
-                        ioError(imageFile.getPath(), _res.get("project.export.error.message.ioex"));
+                        ioError(imageFile.getPath(), res.get("project.export.error.message.ioex"));
                         return;
                     }
                 } catch (IOException e1) {
                     // (almost) ignore
                     e1.printStackTrace();
-                    ioError(imageFile.getPath(), _res.get("project.export.error.message.ioex"));
+                    ioError(imageFile.getPath(), res.get("project.export.error.message.ioex"));
                     return;
                 }
                 // open the image
@@ -516,7 +516,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                     e.printStackTrace();
                 }
             }
-        }, _res.get("wait.title"), _res.get("wait.image-export"));
+        }, res.get("wait.title"), res.get("wait.image-export"));
     }
 
     /**
@@ -558,22 +558,20 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                     SignalConfiguration config = project.getSignalConfiguration();
                     if (fileToSave.getName().endsWith(".csv")) {
                         new SignalCsvExporter(fileToSave).exportSignalTable(table, config);
-                    }
-                    else if (fileToSave.getName().endsWith(".html")) {
+                    } else if (fileToSave.getName().endsWith(".html")) {
                         new SignalHtmlExporter(fileToSave).exportSignalTable(table, config);
-                    }
-                    else {
-                        ioError(fileToSave.getPath(), _res.get("project.export.error.message.wrongformat"));
+                    } else {
+                        ioError(fileToSave.getPath(), res.get("project.export.error.message.wrongformat"));
                     }
                 } catch (IOException e1) {
                     // (almost) ignore
                     e1.printStackTrace();
 
-                    ioError(fileToSave.getPath(), _res.get("project.export.error.message.ioex"));
+                    ioError(fileToSave.getPath(), res.get("project.export.error.message.ioex"));
                 }
             }
 
-        }, _res.get("wait.title"), _res.get("wait.signal-export"));
+        }, res.get("wait.title"), res.get("wait.signal-export"));
     }
 
     /**
@@ -586,8 +584,8 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      *          the reason of the error
      */
     private void ioError(String filename, String reason) {
-        String error = _res.format("project.export.error.message", filename, reason);
-        String title = _res.get("project.export.error.title");
+        String error = res.format("project.export.error.message", filename, reason);
+        String title = res.get("project.export.error.title");
 
         UI.invokeInFAT(new Runnable() {
             @Override
@@ -601,7 +599,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * Closes the current project.
      */
     public void closeProject() {
-        if (!confirmDismissUnsavedChanges(_res.get("close-project.generic.title"), _res.get("close-project.generic.message"))) {
+        if (!confirmDismissUnsavedChanges(res.get("close-project.generic.title"), res.get("close-project.generic.message"))) {
             return;
         }
 
@@ -676,7 +674,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     private String getProjectName() {
         File file = Main.getWorkspace().getCurrentProjectFile();
         if (file == null) {
-            return _res.get("project.unnamed");
+            return res.get("project.unnamed");
         }
         return file.getName();
     }
@@ -704,7 +702,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      */
     @Override
     public void onProjectOpened(Project project) {
-        setApplicationTitle(_res.format("title.open-project", _versionString, getProjectName()));
+        setApplicationTitle(res.format("title.open-project", VERSION_STRING, getProjectName()));
     }
 
     /**
@@ -715,7 +713,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      */
     @Override
     public void onProjectSaved(Project project) {
-        setApplicationTitle(_res.format("title.open-project", _versionString, getProjectName()));
+        setApplicationTitle(res.format("title.open-project", VERSION_STRING, getProjectName()));
         project_save.setDisable(true);
     }
 
@@ -727,7 +725,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      */
     @Override
     public void onProjectClosed(Project project) {
-        setApplicationTitle(_res.format("title", _versionString));
+        setApplicationTitle(res.format("title", VERSION_STRING));
     }
 
     /**
@@ -738,7 +736,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      */
     @Override
     public void onProjectDirty(Project project) {
-        setApplicationTitle(_res.format("title.open-unsaved-project", _versionString, getProjectName()));
+        setApplicationTitle(res.format("title.open-unsaved-project", VERSION_STRING, getProjectName()));
         if (Main.getWorkspace().getCurrentProjectFile() != null) {
             project_save.setDisable(false);
         }

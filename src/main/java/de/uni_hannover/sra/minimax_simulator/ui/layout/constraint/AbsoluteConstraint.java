@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class AbsoluteConstraint implements Constraint {
 
-	private final int _value;
+	private final int value;
 
 	/**
 	 * Constructs a new {@code AbsoluteConstraint} with the specified value.
@@ -19,14 +19,14 @@ public class AbsoluteConstraint implements Constraint {
 	 *          the value of the {@code AbsoluteConstraint}
 	 */
 	public AbsoluteConstraint(int value) {
-		_value = value;
+		this.value = value;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _value;
+		result = prime * result + value;
 		return result;
 	}
 
@@ -43,7 +43,7 @@ public class AbsoluteConstraint implements Constraint {
 		}
 
 		AbsoluteConstraint other = (AbsoluteConstraint) obj;
-		if (_value != other._value) {
+		if (value != other.value) {
 			return false;
 		}
 		return true;
@@ -56,11 +56,11 @@ public class AbsoluteConstraint implements Constraint {
 
 	@Override
 	public String toString() {
-		return "abs(" + _value + ")";
+		return "abs(" + value + ")";
 	}
 
 	@Override
 	public int getValue(AttributeSource attributes) {
-		return _value;
+		return value;
 	}
 }

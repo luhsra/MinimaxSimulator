@@ -17,10 +17,10 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.shape.ConstantShape;
  */
 public class MuxConstantGroup extends AbstractGroup {
 
-	private final String _pinName;
-	private final IngoingPin _muxPin;
+	private final String pinName;
+	private final IngoingPin muxPin;
 
-	private final int _value;
+	private final int value;
 
 	/**
 	 * Constructs a new {@code MuxConstantGroup} for the specified pin with the specified value.
@@ -33,21 +33,21 @@ public class MuxConstantGroup extends AbstractGroup {
 	 *          the value of the constant
 	 */
 	public MuxConstantGroup(String pinName, IngoingPin muxPin, int value) {
-		_pinName = pinName;
-		_muxPin = muxPin;
+		this.pinName = pinName;
+		this.muxPin = muxPin;
 
-		_value = value;
+		this.value = value;
 	}
 
 	@Override
 	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
-		Constant constant = new Constant(_value);
+		Constant constant = new Constant(value);
 		constant.setShape(new ConstantShape(fontProvider));
 
-		Wire wire = new Wire(2, constant.getDataOut(), _muxPin);
+		Wire wire = new Wire(2, constant.getDataOut(), muxPin);
 
-		add(constant, _pinName + Parts._CONSTANT);
-		addWire(wire, _pinName + Parts._WIRE);
+		add(constant, pinName + Parts._CONSTANT);
+		addWire(wire, pinName + Parts._WIRE);
 	}
 
 	@Override
@@ -57,6 +57,6 @@ public class MuxConstantGroup extends AbstractGroup {
 
 	@Override
 	public LayoutSet createLayouts() {
-		return new MuxConstantLayoutSet(_pinName);
+		return new MuxConstantLayoutSet(pinName);
 	}
 }

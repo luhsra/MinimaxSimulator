@@ -16,31 +16,31 @@ import java.util.Map.Entry;
 public class ConstraintContainer extends Container implements ConstraintsManager {
 
 	// every Component is an AttributeOwner, but some (virtual) AttributeOwners have no corresponding Component
-	private final Map<String, AttributeOwner>	_attributeOwners;
-	private final Map<String, Component>		_components;
-	private final Map<Component, String>		_namesOfComponents;
+	private final Map<String, AttributeOwner> attributeOwners;
+	private final Map<String, Component> components;
+	private final Map<Component, String> namesOfComponents;
 
-	private final AttributeSource				_source;
+	private final AttributeSource source;
 
-	private List<Attribute>						_sortedAttributes;
-	private Point								_offset;
+	private List<Attribute> sortedAttributes;
+	private Point offset;
 
 	/**
 	 * Constructs a new {@code ConstraintContainer}.
 	 */
 	public ConstraintContainer() {
-		_attributeOwners = new HashMap<String, AttributeOwner>();
-		_components = new HashMap<String, Component>();
-		_namesOfComponents = new HashMap<Component, String>();
+		attributeOwners = new HashMap<String, AttributeOwner>();
+		components = new HashMap<String, Component>();
+		namesOfComponents = new HashMap<Component, String>();
 
-		_sortedAttributes = Collections.emptyList();
-		_offset = new Point(0, 0);
+		sortedAttributes = Collections.emptyList();
+		offset = new Point(0, 0);
 
-		_source = new AttributeSource()
+		source = new AttributeSource()
 		{
 			@Override
 			public int getValue(Attribute attribute) {
-				AttributeOwner owner = _attributeOwners.get(attribute.getOwner());
+				AttributeOwner owner = attributeOwners.get(attribute.getOwner());
 				if (owner == null) {
 					throw new IllegalStateException("Attribute owner not existing: " + attribute.getOwner());
 				}
@@ -52,13 +52,13 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 
 	@Override
 	public void updateSize() {
-		for (Component component : _components.values()) {
+		for (Component component : components.values()) {
 			component.updateSize();
 		}
 
-		if (_sortedAttributes == null) {
+		if (sortedAttributes == null) {
 			// recollect attributes and dependencies
-			_sortedAttributes = orderAttributes();
+			sortedAttributes = orderAttributes();
 		}
 
 		resolveAttributes();
@@ -68,11 +68,11 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 		int maxRight = Integer.MIN_VALUE;
 		int maxBottom = Integer.MIN_VALUE;
 
-		if (_attributeOwners.isEmpty()) {
+		if (attributeOwners.isEmpty()) {
 			minLeft = minTop = maxRight = maxBottom = 0;
 		}
 		else {
-			for (AttributeOwner owner : _attributeOwners.values()) {
+			for (AttributeOwner owner : attributeOwners.values()) {
 				if (owner.get(AttributeType.LEFT) < minLeft) {
 					minLeft = owner.get(AttributeType.LEFT);
 				}
@@ -90,7 +90,7 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 
 		Insets insets = getInsets();
 
-		_offset = new Point(minLeft - insets.l, minTop - insets.t);
+		offset = new Point(minLeft - insets.l, minTop - insets.t);
 		setDimension(new Dimension(maxRight - minLeft + insets.l + insets.r, maxBottom - minTop + insets.t + insets.b));
 	}
 
@@ -102,9 +102,9 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 	 */
 	private List<Attribute> orderAttributes() {
 		// estimation for the list length
-		Map<Attribute, Set<Attribute>> attributes = new HashMap<Attribute, Set<Attribute>>(_attributeOwners.size());
+		Map<Attribute, Set<Attribute>> attributes = new HashMap<Attribute, Set<Attribute>>(attributeOwners.size());
 
-		for (AttributeOwner owner : _attributeOwners.values()) {
+		for (AttributeOwner owner : attributeOwners.values()) {
 			for (Attribute attribute : owner.getAttributes()) {
 				attributes.put(attribute, owner.getDependencies(attribute.getType()));
 			}
@@ -123,15 +123,15 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 	 *          the {@code Bounds} of the {@code AttributeOwner}
 	 */
 	private Bounds toBounds(AttributeOwner attr) {
-		return new Bounds(attr.get(AttributeType.LEFT) - _offset.x,
-			attr.get(AttributeType.TOP) - _offset.y, attr.get(AttributeType.WIDTH),
+		return new Bounds(attr.get(AttributeType.LEFT) - offset.x,
+			attr.get(AttributeType.TOP) - offset.y, attr.get(AttributeType.WIDTH),
 			attr.get(AttributeType.HEIGHT));
 	}
 
 	@Override
 	public void doLayout() {
-		for (Entry<String, Component> entry : _components.entrySet()) {
-			AttributeOwner attr = _attributeOwners.get(entry.getKey());
+		for (Entry<String, Component> entry : components.entrySet()) {
+			AttributeOwner attr = attributeOwners.get(entry.getKey());
 			entry.getValue().setBounds(toBounds(attr));
 			entry.getValue().doLayout();
 		}
@@ -141,18 +141,18 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 	 * Resolves the {@link Attribute}s of the container.
 	 */
 	private void resolveAttributes() {
-		for (AttributeOwner owner : _attributeOwners.values()) {
+		for (AttributeOwner owner : attributeOwners.values()) {
 			owner.clearAttributes();
 			owner.validateConstraints();
 		}
 
-		for (Attribute attr : _sortedAttributes) {
-			AttributeOwner owner = _attributeOwners.get(attr.getOwner());
+		for (Attribute attr : sortedAttributes) {
+			AttributeOwner owner = attributeOwners.get(attr.getOwner());
 			if (owner == null) {
 				throw new IllegalStateException("Missing AttributeOwner for attribute on " + attr.getOwner());
 			}
 
-			owner.computeAttribute(attr.getType(), _source);
+			owner.computeAttribute(attr.getType(), source);
 		}
 	}
 
@@ -179,29 +179,29 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 		String id = (String) constraint;
 
 		if (component != null) {
-			if (_namesOfComponents.containsKey(component)) {
-				throw new IllegalArgumentException("Component " + id + " already existing in layout under name: " + _namesOfComponents.get(component));
+			if (namesOfComponents.containsKey(component)) {
+				throw new IllegalArgumentException("Component " + id + " already existing in layout under name: " + namesOfComponents.get(component));
 			}
 
-			_components.put(id, component);
-			_namesOfComponents.put(component, id);
-			_attributeOwners.put(id, new ConstrainedComponent(id, component));
+			components.put(id, component);
+			namesOfComponents.put(component, id);
+			attributeOwners.put(id, new ConstrainedComponent(id, component));
 		}
 		else {
-			_attributeOwners.put(id, new ConstrainedArea(id));
+			attributeOwners.put(id, new ConstrainedArea(id));
 		}
 
-		_sortedAttributes = null;
+		sortedAttributes = null;
 	}
 
 	@Override
 	public void removeComponent(Component component) {
-		String name = _namesOfComponents.remove(component);
+		String name = namesOfComponents.remove(component);
 		if (name != null) {
-			_components.remove(name);
-			_attributeOwners.remove(name);
+			components.remove(name);
+			attributeOwners.remove(name);
 
-			_sortedAttributes = null;
+			sortedAttributes = null;
 		}
 	}
 
@@ -212,22 +212,22 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 	 *          the name of the {@code Component} to remove
 	 */
 	public void removeComponent(String name) {
-		_components.remove(name);
-		_attributeOwners.remove(name);
+		components.remove(name);
+		attributeOwners.remove(name);
 
-		_sortedAttributes = null;
+		sortedAttributes = null;
 	}
 
 	@Override
 	public void clearConstraints(String owner) {
-		AttributeOwner attrOwner = _attributeOwners.get(owner);
+		AttributeOwner attrOwner = attributeOwners.get(owner);
 		if (attrOwner == null) {
 			throw new IllegalStateException("Attribute owner not existing: " + owner);
 		}
 
 		attrOwner.clearConstraints();
 
-		_sortedAttributes = null;
+		sortedAttributes = null;
 	}
 
 	@Override
@@ -239,14 +239,14 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 			throw new IllegalArgumentException("Null attribute not allowed");
 		}
 
-		AttributeOwner attrOwner = _attributeOwners.get(owner);
+		AttributeOwner attrOwner = attributeOwners.get(owner);
 		if (attrOwner == null) {
 			throw new IllegalArgumentException("Attribute owner not found: " + owner);
 		}
 
 		attrOwner.setAttributeConstraint(attribute, con);
 
-		_sortedAttributes = null;
+		sortedAttributes = null;
 	}
 
 	@Override
@@ -258,7 +258,7 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 			throw new IllegalArgumentException("Null attribute not allowed");
 		}
 
-		AttributeOwner attrOwner = _attributeOwners.get(owner);
+		AttributeOwner attrOwner = attributeOwners.get(owner);
 		if (attrOwner == null) {
 			throw new IllegalArgumentException("Attribute owner not found: " + owner);
 		}
@@ -269,7 +269,7 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 
 		attrOwner.setAttributeConstraint(attribute, con);
 
-		_sortedAttributes = null;
+		sortedAttributes = null;
 	}
 
 	@Override
@@ -278,14 +278,14 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 			throw new IllegalArgumentException("Null attribute not allowed");
 		}
 
-		AttributeOwner attrOwner = _attributeOwners.get(owner);
+		AttributeOwner attrOwner = attributeOwners.get(owner);
 		if (attrOwner == null) {
 			throw new IllegalArgumentException("Attribute owner not found: " + owner);
 		}
 
 		attrOwner.removeAttributeConstraint(attribute);
 
-		_sortedAttributes = null;
+		sortedAttributes = null;
 	}
 
 	@Override

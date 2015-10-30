@@ -12,11 +12,11 @@ import java.util.Set;
  */
 class StackLayout implements Layout {
 
-	private final static EnumSet<AttributeType>	attributes	= EnumSet.of(AttributeType.HORIZONTAL_CENTER,
+	private final static EnumSet<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.HORIZONTAL_CENTER,
 																AttributeType.BOTTOM);
 
-	private final Constraint					_vertical;
-	private final Constraint					_horizontal;
+	private final Constraint vertical;
+	private final Constraint horizontal;
 
 	/**
 	 * Constructs a new {@code StackLayout} with the specified anchor and spacing.
@@ -27,17 +27,17 @@ class StackLayout implements Layout {
 	 *          the spacing
 	 */
 	StackLayout(String anchor, int spacing) {
-		_vertical = new RelativeConstraint(new Attribute(anchor, AttributeType.TOP), -spacing);
-		_horizontal = new RelativeConstraint(new Attribute(anchor, AttributeType.HORIZONTAL_CENTER));
+		vertical = new RelativeConstraint(new Attribute(anchor, AttributeType.TOP), -spacing);
+		horizontal = new RelativeConstraint(new Attribute(anchor, AttributeType.HORIZONTAL_CENTER));
 	}
 
 	@Override
 	public Constraint getConstraint(AttributeType attribute) {
 		switch (attribute) {
 			case HORIZONTAL_CENTER:
-				return _horizontal;
+				return horizontal;
 			case BOTTOM:
-				return _vertical;
+				return vertical;
 
 			default:
 				// never happens
@@ -47,6 +47,6 @@ class StackLayout implements Layout {
 
 	@Override
 	public Set<AttributeType> getConstrainedAttributes() {
-		return attributes;
+		return ATTRIBUTES;
 	}
 }

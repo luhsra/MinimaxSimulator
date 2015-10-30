@@ -30,10 +30,10 @@ import java.util.List;
  */
 public class AluView {
 
-    private final TextResource _res;
-    private final TextResource _resAlu;
+    private final TextResource res;
+    private final TextResource resAlu;
 
-    private MachineConfiguration _config;
+    private MachineConfiguration config;
 
     @FXML private TitledPane paneAddedOP;
     @FXML private TitledPane paneSelectedOP;
@@ -52,14 +52,17 @@ public class AluView {
     @FXML private TableView<AluOpTableModel> tableAvailable;
     @FXML private TableColumn<AluOpTableModel, String> col_available_op;
 
+    @FXML private Button btnMoveUp;
+    @FXML private Button btnMoveDown;
+
     private final static String ALU_RESULT = "ALU.result \u2190 ";
 
     /**
      * Initializes the final variables.
      */
     public AluView() {
-        _res = Main.getTextResource("machine");
-        _resAlu = Main.getTextResource("alu");
+        res = Main.getTextResource("machine");
+        resAlu = Main.getTextResource("alu");
     }
 
     /**
@@ -78,7 +81,7 @@ public class AluView {
     private void setLocalizedTexts() {
         final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneAddedOP, paneAvailableOP, paneSelectedOP, lblRT, lblDescription, btnAdd, btnRemove));
         for (Labeled con : controls) {
-            con.setText(_res.get(con.getId().replace("_", ".")));
+            con.setText(res.get(con.getId().replace("_", ".")));
         }
     }
 
@@ -87,7 +90,7 @@ public class AluView {
      * It initializes the two ALU operation {@link TableView}s because they need project data.
      */
     public void initAluView() {
-        _config = Main.getWorkspace().getProject().getMachineConfiguration();
+        config = Main.getWorkspace().getProject().getMachineConfiguration();
         initAddedTable();
         initAvailableTable();
     }
@@ -118,8 +121,8 @@ public class AluView {
             if (newSelection != null) {
                 tableAvailable.getSelectionModel().clearSelection();
                 AluOperation op = newSelection.getAluOP();
-                txtRT.setText(ALU_RESULT + op.getRtNotation(_resAlu));
-                txtDescription.setText(op.getDescription(_resAlu));
+                txtRT.setText(ALU_RESULT + op.getRtNotation(resAlu));
+                txtDescription.setText(op.getDescription(resAlu));
 
                 btnAdd.setDisable(true);
                 btnRemove.setDisable(false);
@@ -144,14 +147,14 @@ public class AluView {
     private void updateAddedTable() {
         ObservableList<AluOpTableModel> data = FXCollections.observableArrayList();
 
-        for (AluOperation op : _config.getAluOperations()) {
-            data.add(new AluOpTableModel(op, _config));
+        for (AluOperation op : config.getAluOperations()) {
+            data.add(new AluOpTableModel(op, config));
         }
 
-        final int size = _config.getAluOperations().size()-1;
+        final int size = config.getAluOperations().size()-1;
 
         data.forEach((model) -> {
-            int pos = _config.getAluOperations().indexOf(model.getAluOP());
+            int pos = config.getAluOperations().indexOf(model.getAluOP());
             model.setOpcode(Util.toBinaryAddress(pos, size));
         });
 
@@ -183,8 +186,8 @@ public class AluView {
             if (newSelection != null) {
                 tableAdded.getSelectionModel().clearSelection();
                 AluOperation op = newSelection.getAluOP();
-                txtRT.setText(ALU_RESULT + op.getRtNotation(_resAlu));
-                txtDescription.setText(op.getDescription(_resAlu));
+                txtRT.setText(ALU_RESULT + op.getRtNotation(resAlu));
+                txtDescription.setText(op.getDescription(resAlu));
 
                 btnAdd.setDisable(false);
                 btnRemove.setDisable(true);
@@ -204,8 +207,8 @@ public class AluView {
         ObservableList<AluOpTableModel> data = FXCollections.observableArrayList();
 
         for (AluOperation op : AluOperation.values()) {
-            if (!_config.getAluOperations().contains(op)) {
-                data.add(new AluOpTableModel(op, _config));
+            if (!config.getAluOperations().contains(op)) {
+                data.add(new AluOpTableModel(op, config));
             }
         }
 
@@ -218,7 +221,7 @@ public class AluView {
     public void addOperation() {
         AluOperation op = tableAvailable.getSelectionModel().getSelectedItem().getAluOP();
         if (op != null) {
-            _config.addAluOperation(op);
+            config.addAluOperation(op);
             updateAvailableTable();
             updateAddedTable();
             int lastItem = tableAdded.getItems().size()-1;
@@ -235,7 +238,7 @@ public class AluView {
     public void removeOperation() {
         AluOperation op = tableAdded.getSelectionModel().getSelectedItem().getAluOP();
         if (op != null) {
-            _config.removeAluOperation(op);
+            config.removeAluOperation(op);
             updateAddedTable();
             updateAvailableTable();
 
@@ -255,11 +258,6 @@ public class AluView {
             Main.getWorkspace().setProjectUnsaved();
         }
     }
-
-    @FXML
-    private Button btnMoveUp;
-    @FXML
-    private Button btnMoveDown;
 
     /**
      * Moves the currently selected operation.<br>
@@ -293,7 +291,7 @@ public class AluView {
         }
 
         // Move operations in model and adapt selection
-        _config.exchangeAluOperations(index1, index2);
+        config.exchangeAluOperations(index1, index2);
         updateAddedTable();
         tableAdded.getSelectionModel().select(index2);
 

@@ -23,19 +23,19 @@ import java.util.regex.Pattern;
  */
 public class Version {
 
-	private boolean _isJar = false;
-	private String _moduleName = "";
-	private String _revisionNumber = "";
-	private String _versionNumber = "";
-	private String _buildJdk = "";
-	private String _buildTime = "";
-	private String _authorName = "";
-	private String _companyName = "";
+	private boolean isJar = false;
+	private String moduleName = "";
+	private String revisionNumber = "";
+	private String versionNumber = "";
+	private String buildJdk = "";
+	private String buildTime = "";
+	private String authorName = "";
+	private String companyName = "";
 
-	private int _jvmMajor;
-	private int _jvmFeature;
-	private int _jvmUpdate;
-	private int _jvmBuild;
+	private int jvmMajor;
+	private int jvmFeature;
+	private int jvmUpdate;
+	private int jvmBuild;
 
 	/**
 	 * Constructs a new {@code Version} instance.<br>
@@ -117,7 +117,7 @@ public class Version {
 	private void setVersionNumber(Attributes attrs) {
 		String versionNumber = attrs.getValue("Implementation-Version");
 		if (versionNumber != null) {
-			_versionNumber = versionNumber;
+			this.versionNumber = versionNumber;
 		}
 	}
 
@@ -130,7 +130,7 @@ public class Version {
 	private void setRevisionNumber(Attributes attrs) {
 		String revisionNumber = attrs.getValue("Implementation-Build");
 		if (revisionNumber != null) {
-			_revisionNumber = revisionNumber;
+			this.revisionNumber = revisionNumber;
 		}
 	}
 
@@ -143,14 +143,14 @@ public class Version {
 	private void setBuildJdk(Attributes attrs) {
 		String buildJdk = attrs.getValue("Build-Jdk");
 		if (buildJdk != null) {
-			_buildJdk = buildJdk;
+			this.buildJdk = buildJdk;
 		}
 /*		else
 		{
 			buildJdk = attrs.getValue("Created-By");
 			if (buildJdk != null)
 			{
-				_buildJdk = buildJdk;
+				buildJdk = buildJdk;
 			}
 		}	*/
 	}
@@ -164,7 +164,7 @@ public class Version {
 	private void setBuildTime(Attributes attrs) {
 		String buildTime = attrs.getValue("Build-Time");
 		if (buildTime != null) {
-			_buildTime = buildTime;
+			this.buildTime = buildTime;
 		}
 	}
 
@@ -177,7 +177,7 @@ public class Version {
 	private void setModuleName(Attributes attrs) {
 		String moduleName = attrs.getValue("Implementation-Name");
 		if (moduleName != null) {
-			_moduleName = moduleName;
+			this.moduleName = moduleName;
 		}
 	}
 
@@ -190,7 +190,7 @@ public class Version {
 	private void setAuthor(Attributes attrs) {
 		String authorName = attrs.getValue("Additional-Author");
 		if (authorName != null) {
-			_authorName = authorName;
+			this.authorName = authorName;
 		}
 	}
 
@@ -203,7 +203,7 @@ public class Version {
 	private void setCompany(Attributes attrs) {
 		String companyName = attrs.getValue("Additional-Company");
 		if (companyName != null) {
-			_companyName = companyName;
+			this.companyName = companyName;
 		}
 	}
 
@@ -216,17 +216,17 @@ public class Version {
 			String[] p0 = jv.split("_");
 			String[] p1 = p0[0].split("\\.");
 
-			_jvmMajor = Integer.parseInt(p1[0]);
-			_jvmFeature = Integer.parseInt(p1[1]);
-			_jvmUpdate = Integer.parseInt(p1[2]);
+			jvmMajor = Integer.parseInt(p1[0]);
+			jvmFeature = Integer.parseInt(p1[1]);
+			jvmUpdate = Integer.parseInt(p1[2]);
 
 			try {
-				_jvmBuild = Integer.parseInt(p0[1]);
+				jvmBuild = Integer.parseInt(p0[1]);
 			} catch (Exception e) {
 				Pattern numberPattern = Pattern.compile("[0-9]+");
 				Matcher m = numberPattern.matcher(p0[1]);
 				if (m.find()) {
-					_jvmBuild = Integer.parseInt(m.group(0));
+					jvmBuild = Integer.parseInt(m.group(0));
 				}
 			}
 		} catch (Exception e) {
@@ -241,7 +241,7 @@ public class Version {
 	 *          whether the class was loaded from JAR or not.
 	 */
 	private void setIsJar(boolean isLoaded) {
-		_isJar = isLoaded;
+		isJar = isLoaded;
 	}
 
 	/**
@@ -251,7 +251,7 @@ public class Version {
 	 *          the application's build number
 	 */
 	public String getRevisionNumber() {
-		return _revisionNumber;
+		return revisionNumber;
 	}
 
 	/**
@@ -261,7 +261,7 @@ public class Version {
 	 *          the application's version number
 	 */
 	public String getVersionNumber() {
-		return _versionNumber;
+		return versionNumber;
 	}
 
 	/**
@@ -271,7 +271,7 @@ public class Version {
 	 *          the build JDK version
 	 */
 	public String getBuildJdk() {
-		return _buildJdk;
+		return buildJdk;
 	}
 
 	/**
@@ -281,7 +281,7 @@ public class Version {
 	 *          the application's build time
 	 */
 	public String getBuildTime() {
-		return _buildTime;
+		return buildTime;
 	}
 
 	/**
@@ -291,7 +291,7 @@ public class Version {
 	 *          the name of the application
 	 */
 	public String getModuleName() {
-		return _moduleName;
+		return moduleName;
 	}
 
 	/**
@@ -301,7 +301,7 @@ public class Version {
 	 *          the name(s) of the application's author(s).
 	 */
 	public String getAuthorName() {
-		return _authorName;
+		return authorName;
 	}
 
 	/**
@@ -311,7 +311,7 @@ public class Version {
 	 *          the name of the company of the application
 	 */
 	public String getCompanyName() {
-		return _companyName;
+		return companyName;
 	}
 
 	/**
@@ -321,7 +321,7 @@ public class Version {
 	 *          {@code true} if the application was loaded from JAR, {@code false} otherwise
 	 */
 	public boolean isJar() {
-		return _isJar;
+		return isJar;
 	}
 
 	/**
@@ -363,7 +363,7 @@ public class Version {
 	 *          the JVM's major version number
 	 */
 	public int getJvmMajor() {
-		return _jvmMajor;
+		return jvmMajor;
 	}
 
 	/**
@@ -373,7 +373,7 @@ public class Version {
 	 *          the JVM's feature version number
 	 */
 	public int getJvmFeature() {
-		return _jvmFeature;
+		return jvmFeature;
 	}
 
 	/**
@@ -383,7 +383,7 @@ public class Version {
 	 *          the JVM's update version number
 	 */
 	public int getJvmUpdate() {
-		return _jvmUpdate;
+		return jvmUpdate;
 	}
 
 	/**
@@ -393,7 +393,7 @@ public class Version {
 	 *          the JVM's build version number
 	 */
 	public int getJvmBuild() {
-		return _jvmBuild;
+		return jvmBuild;
 	}
 
 	/**
@@ -414,28 +414,28 @@ public class Version {
 		if (major == -1) {
 			return true;
 		}
-		else if (_jvmMajor != major) {
+		else if (jvmMajor != major) {
 			return false;
 		}
 
 		if (feature == -1) {
 			return true;
 		}
-		else if (_jvmFeature != feature) {
+		else if (jvmFeature != feature) {
 			return false;
 		}
 
 		if (update == -1) {
 			return true;
 		}
-		else if (_jvmUpdate != update) {
+		else if (jvmUpdate != update) {
 			return false;
 		}
 
 		if (build == -1) {
 			return true;
 		}
-		else if (_jvmBuild != build) {
+		else if (jvmBuild != build) {
 			return false;
 		}
 		return true;
@@ -459,28 +459,28 @@ public class Version {
 		if (major == -1) {
 			return true;
 		}
-		else if (_jvmMajor >= major) {
+		else if (jvmMajor >= major) {
 			return false;
 		}
 
 		if (feature == -1) {
 			return true;
 		}
-		else if (_jvmFeature >= feature) {
+		else if (jvmFeature >= feature) {
 			return false;
 		}
 
 		if (update == -1) {
 			return true;
 		}
-		else if (_jvmUpdate >= update) {
+		else if (jvmUpdate >= update) {
 			return false;
 		}
 
 		if (build == -1) {
 			return true;
 		}
-		else if (_jvmBuild >= build) {
+		else if (jvmBuild >= build) {
 			return false;
 		}
 		return true;
@@ -504,28 +504,28 @@ public class Version {
 		if (major == -1) {
 			return true;
 		}
-		else if (_jvmMajor > major) {
+		else if (jvmMajor > major) {
 			return false;
 		}
 
 		if (feature == -1) {
 			return true;
 		}
-		else if (_jvmFeature > feature) {
+		else if (jvmFeature > feature) {
 			return false;
 		}
 
 		if (update == -1) {
 			return true;
 		}
-		else if (_jvmUpdate > update) {
+		else if (jvmUpdate > update) {
 			return false;
 		}
 
 		if (build == -1) {
 			return true;
 		}
-		else if (_jvmBuild > build) {
+		else if (jvmBuild > build) {
 			return false;
 		}
 		return true;
@@ -549,28 +549,28 @@ public class Version {
 		if (major == -1) {
 			return true;
 		}
-		else if (_jvmMajor <= major) {
+		else if (jvmMajor <= major) {
 			return false;
 		}
 
 		if (feature == -1) {
 			return true;
 		}
-		else if (_jvmFeature <= feature) {
+		else if (jvmFeature <= feature) {
 			return false;
 		}
 
 		if (update == -1) {
 			return true;
 		}
-		else if (_jvmUpdate <= update) {
+		else if (jvmUpdate <= update) {
 			return false;
 		}
 
 		if (build == -1) {
 			return true;
 		}
-		else if (_jvmBuild <= build) {
+		else if (jvmBuild <= build) {
 			return false;
 		}
 		return true;
@@ -594,28 +594,28 @@ public class Version {
 		if (major == -1) {
 			return true;
 		}
-		else if (_jvmMajor < major) {
+		else if (jvmMajor < major) {
 			return false;
 		}
 
 		if (feature == -1) {
 			return true;
 		}
-		else if (_jvmFeature < feature) {
+		else if (jvmFeature < feature) {
 			return false;
 		}
 
 		if (update == -1) {
 			return true;
 		}
-		else if (_jvmUpdate < update) {
+		else if (jvmUpdate < update) {
 			return false;
 		}
 
 		if (build == -1) {
 			return true;
 		}
-		else if (_jvmBuild < build) {
+		else if (jvmBuild < build) {
 			return false;
 		}
 		return true;

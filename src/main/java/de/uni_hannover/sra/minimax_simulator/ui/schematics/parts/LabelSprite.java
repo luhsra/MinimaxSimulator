@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class LabelSprite extends CircuitSprite {
 
-	private final Label					_label;
+	private final Label label;
 
 	/**
 	 * Initializes the {@code LabelSprite}.
@@ -24,13 +24,13 @@ public class LabelSprite extends CircuitSprite {
 	 *          the {@code Label} this sprite will represent
 	 */
 	public LabelSprite(Label label) {
-		_label = checkNotNull(label);
+		this.label = checkNotNull(label);
 	}
 
 	@Override
 	public void paint(GraphicsContext gc, RenderEnvironment env) {
-		Bounds b = _label.getBounds();
+		Bounds b = label.getBounds();
 		debugBounds(gc, b);
-		gc.fillText(_label.getMessage(), b.x, b.y + b.h);
+		gc.fillText(label.getMessage(), b.x, b.y + b.h);
 	}
 }

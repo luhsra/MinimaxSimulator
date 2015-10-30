@@ -12,10 +12,10 @@ import java.util.Set;
  */
 class FlowLeftLayout implements Layout {
 
-	private final static EnumSet<AttributeType>	attributes	= EnumSet.of(AttributeType.RIGHT, AttributeType.VERTICAL_CENTER);
+	private final static EnumSet<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.RIGHT, AttributeType.VERTICAL_CENTER);
 
-	private final Constraint					_vertical;
-	private final Constraint					_horizontal;
+	private final Constraint vertical;
+	private final Constraint horizontal;
 
 	/**
 	 * Constructs a new {@code FlowLayout} with the specified anchor and spacing.
@@ -26,17 +26,17 @@ class FlowLeftLayout implements Layout {
 	 *          spacing
 	 */
 	FlowLeftLayout(String anchor, int spacing) {
-		_horizontal = new RelativeConstraint(new Attribute(anchor, AttributeType.LEFT), -spacing);
-		_vertical = new RelativeConstraint(new Attribute(anchor, AttributeType.VERTICAL_CENTER));
+		horizontal = new RelativeConstraint(new Attribute(anchor, AttributeType.LEFT), -spacing);
+		vertical = new RelativeConstraint(new Attribute(anchor, AttributeType.VERTICAL_CENTER));
 	}
 
 	@Override
 	public Constraint getConstraint(AttributeType attribute) {
 		switch (attribute) {
 			case VERTICAL_CENTER:
-				return _vertical;
+				return vertical;
 			case RIGHT:
-				return _horizontal;
+				return horizontal;
 
 			default:
 				// never happens
@@ -46,6 +46,6 @@ class FlowLeftLayout implements Layout {
 
 	@Override
 	public Set<AttributeType> getConstrainedAttributes() {
-		return attributes;
+		return ATTRIBUTES;
 	}
 }

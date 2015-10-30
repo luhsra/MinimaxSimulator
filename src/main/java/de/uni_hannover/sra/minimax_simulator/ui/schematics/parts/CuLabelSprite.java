@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 // TODO: why CircuitSprite and not LabelSprite?
 public class CuLabelSprite extends CircuitSprite {
 
-	private final Label					_label;
+	private final Label label;
 
 	/**
 	 * Initializes the {@code CuLabelSprite}.
@@ -29,15 +29,15 @@ public class CuLabelSprite extends CircuitSprite {
 	 *          the CU's label
 	 */
 	public CuLabelSprite(Label label) {
-		_label = checkNotNull(label);
+		this.label = checkNotNull(label);
 	}
 
 	@Override
 	public void paint(GraphicsContext gc, RenderEnvironment env) {
-		Bounds b = _label.getBounds();
+		Bounds b = label.getBounds();
 		debugBounds(gc, b);
 
-		String message = _label.getMessage();
+		String message = label.getMessage();
 
 		FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
 		double textWidth = fm.computeStringWidth(message);

@@ -26,11 +26,11 @@ import java.util.Map.Entry;
  */
 class RegisterInputGroupManager extends RegisterManager implements MuxInputGroupManager {
 
-	private final MachineTopology						_circuitRegistry;
-	private final GroupManager							_groupManager;
+	private final MachineTopology circuitRegistry;
+	private final GroupManager groupManager;
 
-	private final SortedMap<MuxType, List<InputEntry>>	_inputEntriesByMux;
-	private final Map<String, List<InputEntry>>			_inputsByRegisterId;
+	private final SortedMap<MuxType, List<InputEntry>> inputEntriesByMux;
+	private final Map<String, List<InputEntry>> inputsByRegisterId;
 
 	/**
 	 * Constructs a new {@code RegisterInputGroupManager} for the specified {@link MinimaxMachine}.
@@ -41,33 +41,33 @@ class RegisterInputGroupManager extends RegisterManager implements MuxInputGroup
 	public RegisterInputGroupManager(MinimaxMachine machine) {
 		super(machine.getGroupManager());
 
-		_groupManager = machine.getGroupManager();
-		_circuitRegistry = machine.getTopology();
+		groupManager = machine.getGroupManager();
+		circuitRegistry = machine.getTopology();
 
-		_inputEntriesByMux = new TreeMap<MuxType, List<InputEntry>>();
+		inputEntriesByMux = new TreeMap<MuxType, List<InputEntry>>();
 		for (MuxType type : MuxType.values()) {
-			_inputEntriesByMux.put(type, new ArrayList<InputEntry>());
+			inputEntriesByMux.put(type, new ArrayList<InputEntry>());
 		}
 
-		_inputsByRegisterId = new HashMap<String, List<InputEntry>>();
+		inputsByRegisterId = new HashMap<String, List<InputEntry>>();
 	}
 
 	@Override
 	public void update(MuxInputManager muxInputs) {
 		// replace inputs of given multiplexer
 		{
-			List<InputEntry> entries = _inputEntriesByMux.get(muxInputs.getMuxType());
+			List<InputEntry> entries = inputEntriesByMux.get(muxInputs.getMuxType());
 			entries.clear();
 			entries.addAll(muxInputs.getMuxInputs());
 		}
 
-		for (Entry<String, List<InputEntry>> registerInputs : _inputsByRegisterId.entrySet()) {
+		for (Entry<String, List<InputEntry>> registerInputs : inputsByRegisterId.entrySet()) {
 			destroyGroups(registerInputs.getKey(), registerInputs.getValue());
 		}
 
 		// rebuild input list per register
-		_inputsByRegisterId.clear();
-		for (List<InputEntry> entries : _inputEntriesByMux.values()) {
+		inputsByRegisterId.clear();
+		for (List<InputEntry> entries : inputEntriesByMux.values()) {
 			for (InputEntry entry : entries) {
 				if (entry.input instanceof RegisterMuxInput) {
 					RegisterMuxInput reg = (RegisterMuxInput) entry.input;
@@ -77,17 +77,17 @@ class RegisterInputGroupManager extends RegisterManager implements MuxInputGroup
 						throw new IllegalStateException("No register with name " + reg.getRegisterName());
 					}
 
-					List<InputEntry> regInputs = _inputsByRegisterId.get(registerId);
+					List<InputEntry> regInputs = inputsByRegisterId.get(registerId);
 					if (regInputs == null) {
 						regInputs = new ArrayList<InputEntry>();
-						_inputsByRegisterId.put(registerId, regInputs);
+						inputsByRegisterId.put(registerId, regInputs);
 					}
 					regInputs.add(entry);
 				}
 			}
 		}
 
-		for (Entry<String, List<InputEntry>> registerInputs : _inputsByRegisterId.entrySet()) {
+		for (Entry<String, List<InputEntry>> registerInputs : inputsByRegisterId.entrySet()) {
 			createGroups(registerInputs.getKey(), registerInputs.getValue());
 		}
 	}
@@ -103,11 +103,11 @@ class RegisterInputGroupManager extends RegisterManager implements MuxInputGroup
 	 */
 	private void createGroups(String registerId, List<InputEntry> entries) {
 		String sourceJunctionId = registerId + Parts._OUT_JUNCTION;
-		Junction sourceJunction = _circuitRegistry.getCircuit(Junction.class, sourceJunctionId);
+		Junction sourceJunction = circuitRegistry.getCircuit(Junction.class, sourceJunctionId);
 
 		for (InputEntry entry : Lists.reverse(entries)) {
 			RegisterInputGroup group = new RegisterInputGroup(entry, sourceJunction, sourceJunctionId);
-			_groupManager.initializeGroup(entry.pinId + Parts._REGISTER, group);
+			groupManager.initializeGroup(entry.pinId + Parts._REGISTER, group);
 
 			sourceJunction = group.junction;
 			sourceJunctionId = group.sourceJunctionId;
@@ -124,10 +124,10 @@ class RegisterInputGroupManager extends RegisterManager implements MuxInputGroup
 	 */
 	private void destroyGroups(String registerId, List<InputEntry> entries) {
 		for (InputEntry entry : entries) {
-			_groupManager.removeGroup(entry.pinId + Parts._REGISTER);
+			groupManager.removeGroup(entry.pinId + Parts._REGISTER);
 		}
 
-		Junction registerJunction = _circuitRegistry.getCircuit(Junction.class, registerId + Parts._OUT_JUNCTION);
+		Junction registerJunction = circuitRegistry.getCircuit(Junction.class, registerId + Parts._OUT_JUNCTION);
 		registerJunction.getDataOuts().clear();
 	}
 

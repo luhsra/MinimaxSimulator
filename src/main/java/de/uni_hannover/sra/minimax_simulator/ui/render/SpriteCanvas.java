@@ -23,10 +23,10 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public class SpriteCanvas<T> extends Canvas {
 
-	private final Map<T, Sprite> _sprites;
+	private final Map<T, Sprite> sprites;
 
-	private RenderEnvironment _env;
-	private SpriteFactory _spriteFactory;
+	private RenderEnvironment env;
+	private SpriteFactory spritefactory;
 
 	private final GraphicsContext gc;
 
@@ -34,7 +34,7 @@ public class SpriteCanvas<T> extends Canvas {
 	 * Initializes the {@code SpriteCanvas}.
 	 */
 	public SpriteCanvas() {
-		_sprites = new HashMap<T, Sprite>();
+		sprites = new HashMap<T, Sprite>();
 		gc = this.getGraphicsContext2D();
 	}
 
@@ -47,22 +47,22 @@ public class SpriteCanvas<T> extends Canvas {
 	 *          thrown if the {@code RenderEnvironment} was not set yet
 	 */
 	protected void draw() {
-		if (_env == null) {
+		if (env == null) {
 			throw new IllegalStateException("Cannot render SpriteCanvas without RenderEnvironment set");
 		}
-		gc.setFont(_env.getFont());
+		gc.setFont(env.getFont());
 		gc.clearRect(0, 0, getWidth(), getHeight());
 
-		gc.setFill(_env.getBackgroundColor());
+		gc.setFill(env.getBackgroundColor());
 		gc.fillRect(0, 0, getWidth(), getHeight());
 
 		drawBorder();
 
-		gc.setFill(_env.getForegroundColor());
-		gc.setStroke(_env.getForegroundColor());
+		gc.setFill(env.getForegroundColor());
+		gc.setStroke(env.getForegroundColor());
 
-		for (Sprite sprite : _sprites.values()) {
-			sprite.paint(gc, _env);
+		for (Sprite sprite : sprites.values()) {
+			sprite.paint(gc, env);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class SpriteCanvas<T> extends Canvas {
 		checkNotNull(owner, "Sprite owner must not be null");
 		checkNotNull(sprite, "Sprite must not be null");
 
-		_sprites.put(owner, sprite);
+		sprites.put(owner, sprite);
 		draw();
 	}
 
@@ -112,9 +112,9 @@ public class SpriteCanvas<T> extends Canvas {
 	 */
 	public void setSprite(T owner) {
 		checkNotNull(owner, "Sprite owner must not be null");
-		checkState(_spriteFactory != null, "Must provide a sprite or set a SpriteFactory");
+		checkState(spritefactory != null, "Must provide a sprite or set a SpriteFactory");
 
-		Sprite sprite = _spriteFactory.createSprite(owner);
+		Sprite sprite = spritefactory.createSprite(owner);
 		setSprite(owner, sprite);
 	}
 
@@ -125,7 +125,7 @@ public class SpriteCanvas<T> extends Canvas {
 	 *          the {@code SpriteOwner} for which all {@code Sprite}s will be removed
 	 */
 	public void removeSprite(T owner) {
-		if (_sprites.remove(owner) != null)
+		if (sprites.remove(owner) != null)
 			draw();
 	}
 
@@ -136,7 +136,7 @@ public class SpriteCanvas<T> extends Canvas {
 	 *          the {@code SpriteFactory} of the {@code SpriteCanvas}
 	 */
 	public SpriteFactory getSpriteFactory() {
-		return _spriteFactory;
+		return spritefactory;
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class SpriteCanvas<T> extends Canvas {
 	 *          the {@code SpriteFactory} to set
 	 */
 	public void setSpriteFactory(SpriteFactory spriteFactory) {
-		_spriteFactory = spriteFactory;
+		spritefactory = spriteFactory;
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class SpriteCanvas<T> extends Canvas {
 	 *          the {@code RenderEnvironment} of the {@code SpriteCanvas}
 	 */
 	public RenderEnvironment getRenderEnvironment() {
-		return _env;
+		return env;
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class SpriteCanvas<T> extends Canvas {
 	 *          the {@code RenderEnvironment} to set
 	 */
 	public void setEnvironment(RenderEnvironment env) {
-		_env = env;
+		this.env = env;
 	}
 
 	/**

@@ -31,9 +31,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author Philipp Rohde
  */
 public class ProjectZipImporter implements ProjectImporter {
-	// private final static Charset _charset = Charset.forName("UTF-8");
 
-	private final File	_file;
+	//private final static Charset CHARSET = Charset.forName("UTF-8");
+
+	private final File file;
 
 	/**
 	 * Prepares a new importer that will read a project as a zip archive from the given file. <br>
@@ -44,14 +45,14 @@ public class ProjectZipImporter implements ProjectImporter {
 	 *            the (non-null) file that will be read
 	 */
 	public ProjectZipImporter(File file) {
-		_file = checkNotNull(file, "Invalid Null argument: file");
+		this.file = checkNotNull(file, "Invalid Null argument: file");
 	}
 
 	@Override
 	public Project importProject() throws ProjectImportException {
 		ZipFile zip = null;
 		try {
-			zip = new ZipFile(_file);
+			zip = new ZipFile(file);
 
 			MachineConfiguration machineConfiguration = getMachineConfiguration(zip);
 			ProjectConfiguration projectConfiguration = getProjectConfiguration(zip);
@@ -59,9 +60,9 @@ public class ProjectZipImporter implements ProjectImporter {
 
 			return new Project(machineConfiguration, projectConfiguration, signalTable);
 		} catch (ZipException e) {
-			throw new ProjectImportException("Invalid zip file: " + _file.getPath(), e);
+			throw new ProjectImportException("Invalid zip file: " + file.getPath(), e);
 		} catch (IOException e) {
-			throw new ProjectImportException("I/O error while reading zip file: " + _file.getPath(), e);
+			throw new ProjectImportException("I/O error while reading zip file: " + file.getPath(), e);
 		} catch (JSONException e) {
 			throw new ProjectImportException("Error while parsing JSON string!", e);
 		}

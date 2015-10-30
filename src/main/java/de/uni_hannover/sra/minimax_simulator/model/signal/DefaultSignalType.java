@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class DefaultSignalType implements SignalType {
 
-	private final String						_id;
-	private final String						_name;
-	private final ImmutableList<SignalValue>	_values;
-	private final int							_bitWidth;
+	private final String id;
+	private final String name;
+	private final ImmutableList<SignalValue> values;
+	private final int bitWidth;
 
 	/**
 	 * Constructs a new {@code DefaultSignalType} with the specified ID, name, value count and
@@ -31,12 +31,12 @@ public class DefaultSignalType implements SignalType {
 	 *          whether the signal can be {@code don't care} or not
 	 */
 	public DefaultSignalType(String id, String name, int valueCount, boolean allowsDontCare) {
-		_id = id;
-		_name = name;
-		_values = getValues(allowsDontCare, valueCount);
+		this.id = id;
+		this.name = name;
+		values = getValues(allowsDontCare, valueCount);
 
-		int values = _values.size();
-		if (values > 0 && _values.get(0).isDontCare())
+		int values = this.values.size();
+		if (values > 0 && this.values.get(0).isDontCare())
 			values--;
 
 		if (values == 0)
@@ -46,7 +46,7 @@ public class DefaultSignalType implements SignalType {
 		if (width == 0)
 			width = 1;
 
-		_bitWidth = width;
+		bitWidth = width;
 	}
 
 	/**
@@ -74,17 +74,17 @@ public class DefaultSignalType implements SignalType {
 
 	@Override
 	public String getId() {
-		return _id;
+		return id;
 	}
 
 	@Override
 	public final String getName() {
-		return _name;
+		return name;
 	}
 
 	@Override
 	public String toString() {
-		return "Signal[" + _name + "]";
+		return "Signal[" + name + "]";
 	}
 
 	@Override
@@ -99,16 +99,16 @@ public class DefaultSignalType implements SignalType {
 
 	@Override
 	public SignalValue getDefault() {
-		return _values.get(0);
+		return values.get(0);
 	}
 
 	@Override
 	public List<SignalValue> getValues() {
-		return _values;
+		return values;
 	}
 
 	@Override
 	public int getBitWidth() {
-		return _bitWidth;
+		return bitWidth;
 	}
 }

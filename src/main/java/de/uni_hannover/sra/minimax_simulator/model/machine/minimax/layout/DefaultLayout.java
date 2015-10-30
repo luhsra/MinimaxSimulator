@@ -16,15 +16,15 @@ import java.util.Set;
  */
 public class DefaultLayout implements Layout {
 
-	private final EnumMap<AttributeType, Constraint>	_constraints;
-	private final Map<AttributeType, Constraint>		_constraintsView;
+	private final EnumMap<AttributeType, Constraint> constraints;
+	private final Map<AttributeType, Constraint> constraintsView;
 
 	/**
 	 * Constructs an empty {@code DefaultLayout}.
 	 */
 	public DefaultLayout() {
-		_constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
-		_constraintsView = Collections.unmodifiableMap(_constraints);
+		constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
+		constraintsView = Collections.unmodifiableMap(constraints);
 	}
 
 	/**
@@ -34,8 +34,8 @@ public class DefaultLayout implements Layout {
 	 *          the {@code Constraint}s to use
 	 */
 	public DefaultLayout(Map<AttributeType, ? extends Constraint> constraints) {
-		_constraints = new EnumMap<AttributeType, Constraint>(constraints);
-		_constraintsView = Collections.unmodifiableMap(_constraints);
+		this.constraints = new EnumMap<AttributeType, Constraint>(constraints);
+		constraintsView = Collections.unmodifiableMap(this.constraints);
 	}
 
 	/**
@@ -47,16 +47,16 @@ public class DefaultLayout implements Layout {
 	 *          the {@code Constraint} to set
 	 */
 	public void setConstraint(AttributeType attribute, Constraint constraint) {
-		_constraints.put(attribute, constraint);
+		constraints.put(attribute, constraint);
 	}
 
 	@Override
 	public Constraint getConstraint(AttributeType attribute) {
-		return _constraintsView.get(attribute);
+		return constraintsView.get(attribute);
 	}
 
 	@Override
 	public Set<AttributeType> getConstrainedAttributes() {
-		return _constraintsView.keySet();
+		return constraintsView.keySet();
 	}
 }

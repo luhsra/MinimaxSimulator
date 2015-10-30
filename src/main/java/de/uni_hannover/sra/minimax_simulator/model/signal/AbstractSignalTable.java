@@ -10,32 +10,32 @@ import java.util.List;
  */
 public abstract class AbstractSignalTable implements SignalTable {
 
-	private final List<SignalTableListener>	_listeners;
+	private final List<SignalTableListener> listeners;
 
 	/**
 	 * Constructs an empty {@code AbstractSignalTable}.
 	 */
 	public AbstractSignalTable() {
-		_listeners = new ArrayList<SignalTableListener>(2);
+		listeners = new ArrayList<SignalTableListener>(2);
 	}
 
 	@Override
 	public void addSignalTableListener(SignalTableListener l) {
-		if (!_listeners.contains(l)) {
-			_listeners.add(l);
+		if (!listeners.contains(l)) {
+			listeners.add(l);
 		}
 	}
 
 	@Override
 	public void removeSignalTableListener(SignalTableListener l) {
-		_listeners.remove(l);
+		listeners.remove(l);
 	}
 
 	/**
 	 * Notifies the {@link SignalTableListener}s about a change of the structure.
 	 */
 	protected void fireStructureChanged() {
-		for (SignalTableListener l : _listeners) {
+		for (SignalTableListener l : listeners) {
 			l.onStructureChanged();
 		}
 	}
@@ -49,7 +49,7 @@ public abstract class AbstractSignalTable implements SignalTable {
 	 *          the added {@code SignalRow}
 	 */
 	protected void fireRowAdded(int index, SignalRow row) {
-		for (SignalTableListener l : _listeners) {
+		for (SignalTableListener l : listeners) {
 			l.onRowAdded(index, row);
 		}
 	}
@@ -61,7 +61,7 @@ public abstract class AbstractSignalTable implements SignalTable {
 	 *          the index of the removed {@code SignalRow}
 	 */
 	protected void fireRowRemoved(int index) {
-		for (SignalTableListener l : _listeners) {
+		for (SignalTableListener l : listeners) {
 			l.onRowRemoved(index);
 		}
 	}
@@ -75,7 +75,7 @@ public abstract class AbstractSignalTable implements SignalTable {
 	 *          the new {@code SignalRow}
 	 */
 	protected void fireRowReplaced(int index, SignalRow row) {
-		for (SignalTableListener l : _listeners) {
+		for (SignalTableListener l : listeners) {
 			l.onRowReplaced(index, row);
 		}
 	}
@@ -89,7 +89,7 @@ public abstract class AbstractSignalTable implements SignalTable {
 	 *          the index of the second {@code SignalRow}
 	 */
 	protected void fireRowsExchanged(int index1, int index2) {
-		for (SignalTableListener l : _listeners) {
+		for (SignalTableListener l : listeners) {
 			l.onRowsExchanged(index1, index2);
 		}
 	}
@@ -103,7 +103,7 @@ public abstract class AbstractSignalTable implements SignalTable {
 	 *          the index of the last {@code SignalRow} that was updated
 	 */
 	protected void fireRowsUpdated(int fromIndex, int toIndex) {
-		for (SignalTableListener l : _listeners) {
+		for (SignalTableListener l : listeners) {
 			l.onRowsUpdated(fromIndex, toIndex);
 		}
 	}

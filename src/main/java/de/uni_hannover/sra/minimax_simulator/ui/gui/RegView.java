@@ -30,9 +30,9 @@ import java.util.List;
  */
 public class RegView {
 
-    private final TextResource _res;
+    private final TextResource res;
 
-    private MachineConfiguration _config;
+    private MachineConfiguration config;
 
     @FXML private TitledPane paneBaseReg;
     @FXML private TitledPane paneSelectedReg;
@@ -46,6 +46,8 @@ public class RegView {
     @FXML private Button btnSave;
     @FXML private Button btnAdd;
     @FXML private Button btnRemove;
+    @FXML private Button btnMoveUp;
+    @FXML private Button btnMoveDown;
 
     @FXML private TableView<RegisterTableModel> tableBaseReg;
     @FXML private TableColumn<RegisterTableModel, String> col_base_name;
@@ -59,7 +61,7 @@ public class RegView {
      * Initializes the final variables.
      */
     public RegView() {
-        _res = Main.getTextResource("machine").using("register");
+        res = Main.getTextResource("machine").using("register");
     }
 
     /**
@@ -111,7 +113,7 @@ public class RegView {
     private void setLocalizedTexts() {
         final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneBaseReg, paneExtendedReg, paneSelectedReg, lblName, lblDescription, btnSave, btnRemove, btnAdd, lblSize));
         for (Labeled con : controls) {
-            con.setText(_res.get(con.getId().replace("_", ".")));
+            con.setText(res.get(con.getId().replace("_", ".")));
         }
     }
 
@@ -120,7 +122,7 @@ public class RegView {
      * It initializes the two register {@link TableView}s because they need project data.
      */
     public void initRegView() {
-        _config = Main.getWorkspace().getProject().getMachineConfiguration();
+        config = Main.getWorkspace().getProject().getMachineConfiguration();
         initBaseTable();
         initExtendedTable();
     }
@@ -160,7 +162,7 @@ public class RegView {
     private void updateBaseTable() {
         ObservableList<RegisterTableModel> data = FXCollections.observableArrayList();
 
-        for (RegisterExtension reg : _config.getBaseRegisters()) {
+        for (RegisterExtension reg : config.getBaseRegisters()) {
             data.add(new RegisterTableModel(reg));
         }
 
@@ -208,7 +210,7 @@ public class RegView {
     private void updateExtendedTable() {
         ObservableList<RegisterTableModel> data = FXCollections.observableArrayList();
 
-        for (RegisterExtension reg : _config.getRegisterExtensions()) {
+        for (RegisterExtension reg : config.getRegisterExtensions()) {
             data.add(new RegisterTableModel(reg));
         }
 
@@ -220,7 +222,7 @@ public class RegView {
      */
     public void addRegister() {
         RegisterExtension reg = createNewRegister();
-        _config.addRegisterExtension(reg);
+        config.addRegisterExtension(reg);
         updateExtendedTable();
         int index = tableExtendedReg.getItems().indexOf(reg);
         tableExtendedReg.getSelectionModel().select(index);
@@ -242,10 +244,10 @@ public class RegView {
         while (true) {
             number++;
 
-            newName = _res.format("new-name", "(" + number + ")");
+            newName = res.format("new-name", "(" + number + ")");
 
             // check if this is a new name
-            for (RegisterExtension register : _config.getRegisterExtensions()) {
+            for (RegisterExtension register : config.getRegisterExtensions()) {
                 if (register.getName().equalsIgnoreCase(newName)) {
                     continue NameSearch;
                 }
@@ -267,8 +269,8 @@ public class RegView {
         }
         RegisterExtension reg = tableExtendedReg.getSelectionModel().getSelectedItem().getRegister();
 
-        if (new FXDialog(Alert.AlertType.CONFIRMATION, _res.format("dialog.delete.message", reg.getName()), _res.get("dialog.delete.title")).getChoice() == ButtonType.OK) {
-            _config.removeRegisterExtension(reg);
+        if (new FXDialog(Alert.AlertType.CONFIRMATION, res.format("dialog.delete.message", reg.getName()), res.get("dialog.delete.title")).getChoice() == ButtonType.OK) {
+            config.removeRegisterExtension(reg);
             Main.getWorkspace().setProjectUnsaved();
 
             updateExtendedTable();
@@ -283,9 +285,6 @@ public class RegView {
             }
         }
     }
-
-    @FXML private Button btnMoveUp;
-    @FXML private Button btnMoveDown;
 
     /**
      * Moves the currently selected register.
@@ -319,7 +318,7 @@ public class RegView {
         }
 
         // move registers in model and adapt selection
-        _config.exchangeRegisterExtensions(index1, index2);
+        config.exchangeRegisterExtensions(index1, index2);
         updateExtendedTable();
         tableExtendedReg.getSelectionModel().select(index2);
 
@@ -355,7 +354,7 @@ public class RegView {
             return false;
         }
 
-        for (RegisterExtension otherReg : _config.getRegisterExtensions()) {
+        for (RegisterExtension otherReg : config.getRegisterExtensions()) {
             if (!reg.getName().equals(otherReg.getName())) {
                 if (newName.equalsIgnoreCase(otherReg.getName())) {
                     return false;
@@ -408,7 +407,7 @@ public class RegView {
         int index = tableExtendedReg.getSelectionModel().getSelectedIndex();
 
         reg = new RegisterExtension(txtName.getText().trim(), cbSize.getValue(), txtDescription.getText(), reg.isExtended());
-        _config.setRegisterExtension(index, reg);
+        config.setRegisterExtension(index, reg);
         updateExtendedTable();
         updateButton();
         Main.getWorkspace().setProjectUnsaved();

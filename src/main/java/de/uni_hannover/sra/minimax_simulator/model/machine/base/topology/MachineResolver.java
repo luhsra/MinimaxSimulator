@@ -17,10 +17,10 @@ import java.util.logging.Logger;
  */
 public class MachineResolver {
 
-	private final static Logger _log = Logger.getLogger(MachineResolver.class.getName());
+	private final static Logger LOG = Logger.getLogger(MachineResolver.class.getName());
 
-	private final ImmutableList<Circuit>			_resolveOrder;
-	private final ImmutableList<SynchronousCircuit>	_synchronousCircuits;
+	private final ImmutableList<Circuit> resolveOrder;
+	private final ImmutableList<SynchronousCircuit> synchronousCircuits;
 
 	/**
 	 * Constructs a new {@code MachineResolver} with the specified set of {@code Circuits}.
@@ -37,23 +37,23 @@ public class MachineResolver {
 				}
 			}, list);
 
-		_resolveOrder = ImmutableList.copyOf(list);
-		_synchronousCircuits = ImmutableList.copyOf(Iterables.filter(circuits, SynchronousCircuit.class));
+		resolveOrder = ImmutableList.copyOf(list);
+		synchronousCircuits = ImmutableList.copyOf(Iterables.filter(circuits, SynchronousCircuit.class));
 	}
 
 	/**
 	 * Resolves the {@link Circuit}s.
 	 */
 	public void resolveCircuits() {
-		for (Circuit circuit : _resolveOrder) {
-			if (_log.isLoggable(Level.FINEST)) {
-				_log.finest("Resolving " + circuit);
+		for (Circuit circuit : resolveOrder) {
+			if (LOG.isLoggable(Level.FINEST)) {
+				LOG.finest("Resolving " + circuit);
 			}
 
 			circuit.update();
 
-			if (_log.isLoggable(Level.FINEST)) {
-				_log.finest("Resolved to " + circuit);
+			if (LOG.isLoggable(Level.FINEST)) {
+				LOG.finest("Resolved to " + circuit);
 			}
 		}
 	}
@@ -62,15 +62,15 @@ public class MachineResolver {
 	 * Switches the cycles in {@link SynchronousCircuit}s.
 	 */
 	public void nextCycle() {
-		for (SynchronousCircuit circuit : _synchronousCircuits) {
-			if (_log.isLoggable(Level.FINEST)) {
-				_log.finest("Switching cycle in " + circuit);
+		for (SynchronousCircuit circuit : synchronousCircuits) {
+			if (LOG.isLoggable(Level.FINEST)) {
+				LOG.finest("Switching cycle in " + circuit);
 			}
 
 			circuit.nextCycle();
 
-			if (_log.isLoggable(Level.FINEST)) {
-				_log.finest("Switched cycle in " + circuit);
+			if (LOG.isLoggable(Level.FINEST)) {
+				LOG.finest("Switched cycle in " + circuit);
 			}
 		}
 	}
@@ -79,7 +79,7 @@ public class MachineResolver {
 	 * Resets the {@link Circuit}s to their default state.
 	 */
 	public void resetCircuits() {
-		for (Circuit circuit : _resolveOrder) {
+		for (Circuit circuit : resolveOrder) {
 			circuit.reset();
 		}
 	}

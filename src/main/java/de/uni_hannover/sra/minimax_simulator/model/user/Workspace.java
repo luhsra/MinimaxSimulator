@@ -15,16 +15,16 @@ import java.io.File;
  */
 public class Workspace extends ListenerContainer<WorkspaceListener> {
 
-	private Project	_currentProject;
-	private File	_currentProjectFile;
+	private Project currentProject;
+	private File currentProjectFile;
 
-	private File	_lastProjectFolder;
+	private File lastProjectFolder;
 
 	public Workspace() {
 		// on application start, no project is loaded
-		_currentProject = null;
-		_currentProjectFile = null;
-		_lastProjectFolder = null;
+		currentProject = null;
+		currentProjectFile = null;
+		lastProjectFolder = null;
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 *          the current {@code Project}
 	 */
 	public Project getProject() {
-		return _currentProject;
+		return currentProject;
 	}
 
 	/**
@@ -52,16 +52,16 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 *          thrown if there was a failure during opening
 	 */
 	public void openProject(File file) throws ProjectImportException {
-		if (_currentProject != null) {
+		if (currentProject != null) {
 			closeProject();
 		}
 
-		_currentProject = new ProjectZipImporter(file).importProject();
-		_currentProjectFile = file;
-		_lastProjectFolder = file.getParentFile();
+		currentProject = new ProjectZipImporter(file).importProject();
+		currentProjectFile = file;
+		lastProjectFolder = file.getParentFile();
 
 		for (WorkspaceListener l : getListeners()) {
-			l.onProjectOpened(_currentProject);
+			l.onProjectOpened(currentProject);
 		}
 	}
 
@@ -74,9 +74,9 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 * Discards any unsaved project data.
 	 */
 	public void closeProject() {
-		Project oldProject = _currentProject;
-		_currentProject = null;
-		_currentProjectFile = null;
+		Project oldProject = currentProject;
+		currentProject = null;
+		currentProjectFile = null;
 
 		if (oldProject == null) {
 			return;
@@ -100,14 +100,14 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 *          thrown if there was a failure during saving
 	 */
 	public void saveProject(File file) throws ProjectExportException {
-		new ProjectZipExporter(file).exportProject(_currentProject);
+		new ProjectZipExporter(file).exportProject(currentProject);
 
-		_currentProject.setIsSaved();
-		_currentProjectFile = file;
-		_lastProjectFolder = file.getParentFile();
+		currentProject.setIsSaved();
+		currentProjectFile = file;
+		lastProjectFolder = file.getParentFile();
 
 		for (WorkspaceListener l : getListeners()) {
-			l.onProjectSaved(_currentProject);
+			l.onProjectSaved(currentProject);
 		}
 	}
 
@@ -120,13 +120,13 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 * Discards any unsaved data.
 	 */
 	public void newProject() {
-		if (_currentProject != null) {
+		if (currentProject != null) {
 			closeProject();
 		}
-		_currentProject = new NewProjectBuilder().buildProject();
+		currentProject = new NewProjectBuilder().buildProject();
 
 		for (WorkspaceListener l : getListeners()) {
-			l.onProjectOpened(_currentProject);
+			l.onProjectOpened(currentProject);
 		}
 	}
 
@@ -136,17 +136,17 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 * Does nothing if there is currently no open project or if it is already marked as unsaved.
 	 */
 	public void setProjectUnsaved() {
-		if (_currentProject == null) {
+		if (currentProject == null) {
 			return;
 		}
-		else if (_currentProject.isUnsaved()) {
+		else if (currentProject.isUnsaved()) {
 			return;
 		}
 
-		_currentProject.setIsUnsaved();
+		currentProject.setIsUnsaved();
 
 		for (WorkspaceListener l : getListeners()) {
-			l.onProjectDirty(_currentProject);
+			l.onProjectDirty(currentProject);
 		}
 	}
 
@@ -158,7 +158,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 *          the last project folder
 	 */
 	public File getLastProjectFolder() {
-		return _lastProjectFolder;
+		return lastProjectFolder;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 *          the current {@code Project}'s {@code File}
 	 */
 	public File getCurrentProjectFile() {
-		return _currentProjectFile;
+		return currentProjectFile;
 	}
 
 	/**
@@ -181,6 +181,6 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	 *          unsaved changes, {@code false} otherwise. A newly created project has no unsaved changes.
 	 */
 	public boolean isUnsaved() {
-		return _currentProject != null && _currentProject.isUnsaved();
+		return currentProject != null && currentProject.isUnsaved();
 	}
 }

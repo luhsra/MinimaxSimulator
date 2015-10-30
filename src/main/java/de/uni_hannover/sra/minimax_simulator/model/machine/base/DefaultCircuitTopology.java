@@ -17,8 +17,8 @@ public class DefaultCircuitTopology implements MachineTopology {
 	 */
 	private static class CircuitEntry {
 
-		Class<? extends Circuit>	clazz;
-		Circuit						circuit;
+		Class<? extends Circuit> clazz;
+		Circuit circuit;
 
 		/**
 		 * Constructs a new {@code CircuitEntry} with the specified class and {@link Circuit}.
@@ -34,25 +34,25 @@ public class DefaultCircuitTopology implements MachineTopology {
 		}
 	}
 
-	private final Set<Circuit>									_allCircuits;
-	private final Map<String, CircuitEntry>						_circuits;
+	private final Set<Circuit> allCircuits;
+	private final Map<String, CircuitEntry> circuits;
 
 	/**
 	 * Initializes an empty {@code DefaultCircuitTopology} instance.
 	 */
 	public DefaultCircuitTopology() {
-		_allCircuits = new HashSet<Circuit>();
-		_circuits = new HashMap<String, CircuitEntry>();
+		allCircuits = new HashSet<Circuit>();
+		circuits = new HashMap<String, CircuitEntry>();
 	}
 
 	@Override
 	public Set<Circuit> getAllCircuits() {
-		return Collections.unmodifiableSet(_allCircuits);
+		return Collections.unmodifiableSet(allCircuits);
 	}
 
 	@Override
 	public <T extends Circuit> T getCircuit(Class<T> clazz, String id) {
-		CircuitEntry entry = _circuits.get(id);
+		CircuitEntry entry = circuits.get(id);
 		if (entry == null) {
 			throw new NullPointerException("No circuit for the id " + id);
 		}
@@ -67,33 +67,33 @@ public class DefaultCircuitTopology implements MachineTopology {
 
 	@Override
 	public <T extends Circuit> void addCircuit(Class<T> clazz, String id, T circuit) {
-		CircuitEntry entry = _circuits.get(id);
+		CircuitEntry entry = circuits.get(id);
 		if (entry != null) {
 			throw new IllegalStateException("Circuit already defined as: " + entry.circuit);
 		}
 
-		_circuits.put(id, new CircuitEntry(clazz, circuit));
-		_allCircuits.add(circuit);
+		circuits.put(id, new CircuitEntry(clazz, circuit));
+		allCircuits.add(circuit);
 		//fireCircuitAdded(circuit);
 	}
 
 	@Override
 	public void addCircuit(String id, Circuit circuit) {
-		CircuitEntry entry = _circuits.get(id);
+		CircuitEntry entry = circuits.get(id);
 		if (entry != null) {
 			throw new IllegalStateException("Circuit " + id + " already defined as: " + entry.circuit);
 		}
 
-		_circuits.put(id, new CircuitEntry(circuit.getClass(), circuit));
-		_allCircuits.add(circuit);
+		circuits.put(id, new CircuitEntry(circuit.getClass(), circuit));
+		allCircuits.add(circuit);
 		//fireCircuitAdded(circuit);
 	}
 
 	@Override
 	public void removeCircuit(String id) {
-		CircuitEntry entry = _circuits.remove(id);
+		CircuitEntry entry = circuits.remove(id);
 		if (entry != null) {
-			_allCircuits.remove(entry.circuit);
+			allCircuits.remove(entry.circuit);
 			//fireCircuitRemoved(entry.circuit);
 		}
 	}

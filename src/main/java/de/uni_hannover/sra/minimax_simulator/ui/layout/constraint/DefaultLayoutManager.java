@@ -10,8 +10,8 @@ import java.util.Map;
  */
 public class DefaultLayoutManager implements LayoutManager {
 
-	private final ConstraintContainer	_container;
-	private final Map<String, Layout>	_layouts;
+	private final ConstraintContainer container;
+	private final Map<String, Layout> layouts;
 
 	/**
 	 * Constructs a new {@code DefaultLayoutManager} for the specified {@link ConstraintContainer}.
@@ -20,8 +20,8 @@ public class DefaultLayoutManager implements LayoutManager {
 	 *          the {@code ConstraintContainer} to use
 	 */
 	public DefaultLayoutManager(ConstraintContainer container) {
-		_container = container;
-		_layouts = new HashMap<String, Layout>();
+		this.container = container;
+		layouts = new HashMap<String, Layout>();
 	}
 
 	@Override
@@ -30,23 +30,23 @@ public class DefaultLayoutManager implements LayoutManager {
 			throw new NullPointerException("layout must not be null");
 		}
 
-		Layout l = _layouts.put(name, layout);
+		Layout l = layouts.put(name, layout);
 		refreshConstraints(name, layout);
 		return l;
 	}
 
 	@Override
 	public Layout removeLayout(String name) {
-		Layout layout = _layouts.remove(name);
+		Layout layout = layouts.remove(name);
 		if (layout != null) {
-			_container.clearConstraints(name);
+			container.clearConstraints(name);
 		}
 		return layout;
 	}
 
 	@Override
 	public void updateLayout(String name) {
-		Layout layout = _layouts.get(name);
+		Layout layout = layouts.get(name);
 		if (layout == null) {
 			throw new IllegalArgumentException("Component has no layout: " + name);
 		}
@@ -63,35 +63,35 @@ public class DefaultLayoutManager implements LayoutManager {
 	 *          the {@code Layout} to use for getting the new {@code Constraint}s
 	 */
 	private void refreshConstraints(String name, Layout layout) {
-		_container.clearConstraints(name);
+		container.clearConstraints(name);
 		for (AttributeType attribute : layout.getConstrainedAttributes()) {
 			Constraint constraint = layout.getConstraint(attribute);
-			_container.setConstraint(name, attribute, constraint);
+			container.setConstraint(name, attribute, constraint);
 		}
 	}
 
 	@Override
 	public void addConstraint(String owner, AttributeType attribute, Constraint con) {
-		_container.addConstraint(owner, attribute, con);
+		container.addConstraint(owner, attribute, con);
 	}
 
 	@Override
 	public void setConstraint(String owner, AttributeType attribute, Constraint con) {
-		_container.setConstraint(owner, attribute, con);
+		container.setConstraint(owner, attribute, con);
 	}
 
 	@Override
 	public void clearConstraints(String owner) {
-		_container.clearConstraints(owner);
+		container.clearConstraints(owner);
 	}
 
 	@Override
 	public void removeConstraint(String owner, AttributeType attribute) {
-		_container.removeConstraint(owner, attribute);
+		container.removeConstraint(owner, attribute);
 	}
 
 	@Override
 	public ConstraintFactory createConstraintFactory() {
-		return _container.createConstraintFactory();
+		return container.createConstraintFactory();
 	}
 }

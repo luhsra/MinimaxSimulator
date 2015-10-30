@@ -11,8 +11,8 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.SignExtSprite;
  */
 public class SignExtension extends SimplePart implements SpriteOwner {
 
-	private final IngoingPin	_dataIn;
-	private final String _label;
+	private final IngoingPin dataIn;
+	private final String label;
 
 	/**
 	 * Constructs a new {@code SignExtension} with the specified display name.
@@ -21,8 +21,8 @@ public class SignExtension extends SimplePart implements SpriteOwner {
 	 *          the display name of the {@code SignExtension}
 	 */
 	public SignExtension(String label) {
-		_dataIn = new IngoingPin(this);
-		_label = label;
+		dataIn = new IngoingPin(this);
+		this.label = label;
 	}
 
 	/**
@@ -32,12 +32,12 @@ public class SignExtension extends SimplePart implements SpriteOwner {
 	 *          the input pin
 	 */
 	public IngoingPin getDataIn() {
-		return _dataIn;
+		return dataIn;
 	}
 
 	@Override
 	public void update() {
-		int value = _dataIn.read();
+		int value = dataIn.read();
 		
 		int bit24 = value & 0x00800000;
 
@@ -56,7 +56,7 @@ public class SignExtension extends SimplePart implements SpriteOwner {
 	 *          the display name
 	 */
 	public String getLabel() {
-		return _label;
+		return label;
 	}
 
 	@Override

@@ -11,10 +11,10 @@ import java.util.Set;
  */
 abstract class AbstractAttributeOwner implements AttributeOwner {
 
-	private final String								_name;
+	private final String name;
 
-	private final EnumMap<AttributeType, Integer>		_values;
-	private final EnumMap<AttributeType, Constraint>	_constraints;
+	private final EnumMap<AttributeType, Integer> values;
+	private final EnumMap<AttributeType, Constraint> constraints;
 
 	/**
 	 * Constructs a new {@code AbstractAttributeOwner} with the specified name.
@@ -27,79 +27,79 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
 			throw new IllegalArgumentException("Name must not be null");
 		}
 
-		_name = name;
-		_values = new EnumMap<AttributeType, Integer>(AttributeType.class);
-		_constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
+		this.name = name;
+		values = new EnumMap<AttributeType, Integer>(AttributeType.class);
+		constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
 	}
 
 	@Override
 	public boolean hasSet(AttributeType attribute) {
 		if (attribute == null) {
-			throw new NullPointerException(_name + ": attribute is null");
+			throw new NullPointerException(name + ": attribute is null");
 		}
 
-		return _values.containsKey(attribute);
+		return values.containsKey(attribute);
 	}
 
 	@Override
 	public void set(AttributeType attribute, int value) {
 		if (attribute == null) {
-			throw new NullPointerException(_name + ": attribute is null");
+			throw new NullPointerException(name + ": attribute is null");
 		}
 
-		if (_values.containsKey(attribute)) {
-			throw new IllegalStateException(_name + ": Value for " + attribute + " already set");
+		if (values.containsKey(attribute)) {
+			throw new IllegalStateException(name + ": Value for " + attribute + " already set");
 		}
-		_values.put(attribute, value);
+		values.put(attribute, value);
 	}
 
 	@Override
 	public int get(AttributeType attribute) {
 		if (attribute == null) {
-			throw new NullPointerException(_name + ": attribute is null");
+			throw new NullPointerException(name + ": attribute is null");
 		}
 
-		if (!_values.containsKey(attribute)) {
-			throw new IllegalStateException(_name + ": Unresolved attribute " + attribute);
+		if (!values.containsKey(attribute)) {
+			throw new IllegalStateException(name + ": Unresolved attribute " + attribute);
 		}
-		return _values.get(attribute);
+		return values.get(attribute);
 	}
 
 	@Override
 	public void clearAttributes() {
-		_values.clear();
+		values.clear();
 	}
 
 	@Override
 	public void clearConstraints() {
-		_constraints.clear();
+		constraints.clear();
 	}
 
 	@Override
 	public Constraint getAttributeConstraint(AttributeType attribute) {
 		if (attribute == null) {
-			throw new IllegalArgumentException(_name + ": Attribute type must not be null");
+			throw new IllegalArgumentException(name + ": Attribute type must not be null");
 		}
 
-		return _constraints.get(attribute);
+		return constraints.get(attribute);
 	}
 
 	@Override
 	public void setAttributeConstraint(AttributeType attribute, Constraint constraint) {
 		if (attribute == null) {
-			throw new IllegalArgumentException(_name + ": Attribute type must not be null");
+			throw new IllegalArgumentException(name + ": Attribute type must not be null");
 		}
 		if (constraint == null) {
-			throw new IllegalArgumentException(_name + ": Constraint must not be null");
+			throw new IllegalArgumentException(name + ": Constraint must not be null");
 		}
 
 		// Allow replacing existing constraint
-//		if (_constraints.containsKey(attribute))
-//			throw new IllegalStateException(_name + ": Duplicate constraint on "
+//		if (constraints.containsKey(attribute))
+//			throw new IllegalStateException(name + ": Duplicate constraint on "
 //				+ attribute);
 
 		Set<AttributeType> constrainedSameAxisAttrs =
-				new HashSet<AttributeType>(_constraints.keySet());
+				new HashSet<AttributeType>(constraints.keySet());
 		constrainedSameAxisAttrs
 				.retainAll(AttributeType.getAxisTypes(attribute.getAxis()));
 
@@ -107,47 +107,47 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
 		constrainedSameAxisAttrs.remove(attribute);
 
 		if (constrainedSameAxisAttrs.size() >= 2) {
-			throw new IllegalStateException(_name + ": At most 2 constraints on the " + attribute.getAxis() + " axis allowed");
+			throw new IllegalStateException(name + ": At most 2 constraints on the " + attribute.getAxis() + " axis allowed");
 		}
 
-		_constraints.put(attribute, constraint);
+		constraints.put(attribute, constraint);
 	}
 
 	@Override
 	public void removeAttributeConstraint(AttributeType attribute) {
 		if (attribute == null) {
-			throw new IllegalArgumentException(_name + ": Attribute type must not be null");
+			throw new IllegalArgumentException(name + ": Attribute type must not be null");
 		}
 
-		_constraints.remove(attribute);
+		constraints.remove(attribute);
 	}
 
 	@Override
 	public void validateConstraints() {
-		Set<AttributeType> axisConstraints = new HashSet<AttributeType>(_constraints.keySet());
+		Set<AttributeType> axisConstraints = new HashSet<AttributeType>(constraints.keySet());
 		axisConstraints.retainAll(AttributeType.getAxisTypes(AttributeAxis.HORIZONTAL));
 		if (axisConstraints.size() < 1 || (axisConstraints.size() == 1 && axisConstraints.contains(AttributeType.WIDTH))) {
-			throw new IllegalStateException(_name + ": underconstrained in x axis");
+			throw new IllegalStateException(name + ": underconstrained in x axis");
 		}
-		axisConstraints.addAll(_constraints.keySet());
+		axisConstraints.addAll(constraints.keySet());
 		axisConstraints.retainAll(AttributeType.getAxisTypes(AttributeAxis.VERTICAL));
 		if (axisConstraints.size() < 1 || (axisConstraints.size() == 1 && axisConstraints.contains(AttributeType.HEIGHT))) {
-			throw new IllegalStateException(_name + ": is underconstrained in y axis");
+			throw new IllegalStateException(name + ": is underconstrained in y axis");
 		}
 	}
 
 	@Override
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	@Override
 	public void computeAttribute(AttributeType attribute, AttributeSource source) {
 		if (source == null) {
-			throw new NullPointerException(_name + ": source is null");
+			throw new NullPointerException(name + ": source is null");
 		}
 
-		Constraint constraint = _constraints.get(attribute);
+		Constraint constraint = constraints.get(attribute);
 		if (constraint != null) {
 			set(attribute, constraint.getValue(source));
 		}
@@ -169,7 +169,7 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
 	public Set<Attribute> getDependencies(AttributeType attribute) {
 		Set<Attribute> attrs = new HashSet<Attribute>();
 
-		Constraint constraint = _constraints.get(attribute);
+		Constraint constraint = constraints.get(attribute);
 
 		if (constraint != null) {
 			// if an attribute is constrained, it depends on some attributes of (other) AttributeOwners
@@ -182,9 +182,9 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
 			// on all constrained attributes on the same axis, since they are
 			// required for attribute derivation.
 			// These are dependencies on the instance itself.
-			for (AttributeType constrainedAttr : _constraints.keySet()) {
+			for (AttributeType constrainedAttr : constraints.keySet()) {
 				if (constrainedAttr.getAxis() == attribute.getAxis()) {
-					attrs.add(new Attribute(_name, constrainedAttr));
+					attrs.add(new Attribute(name, constrainedAttr));
 				}
 			}
 		}
@@ -194,6 +194,6 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
 
 	@Override
 	public String toString() {
-		return _name;
+		return name;
 	}
 }

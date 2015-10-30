@@ -18,14 +18,14 @@ import java.util.Set;
  */
 public class Register extends SimplePart implements SynchronousCircuit, SpriteOwner {
 
-	private final RegisterSize	_size;
-	private final boolean		_isExtended;
-	private final IngoingPin	_dataIn;
-	private final IngoingPin	_writeEnabled;
+	private final RegisterSize size;
+	private final boolean isExtended;
+	private final IngoingPin dataIn;
+	private final IngoingPin writeEnabled;
 
-	private final String		_label;
+	private final String label;
 
-	private int					_value;
+	private int value;
 
 	/**
 	 * Constructs a new 32 Bits not-extended {@code Register} with the specified name.
@@ -48,14 +48,14 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 	 *          whether the {@code Register} is a base register or not
 	 */
 	public Register(String label, RegisterSize size, boolean isExtended) {
-		_label = label;
-		_size = size;
+		this.label = label;
+		this.size = size;
 
-		_value = 0;
-		_isExtended = isExtended;
+		value = 0;
+		this.isExtended = isExtended;
 
-		_dataIn = new IngoingPin(this);
-		_writeEnabled = new IngoingPin(this);
+		dataIn = new IngoingPin(this);
+		writeEnabled = new IngoingPin(this);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 	 *          the value
 	 */
 	public int getValue() {
-		return _value;
+		return value;
 	}
 
 	/**
@@ -85,8 +85,8 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 	 *          the new value
 	 */
 	public void setValue(int value) {
-		value = _size.getBitMask() & value;
-		_value = value;
+		value = size.getBitMask() & value;
+		this.value = value;
 		getDataOut().setValue(value);
 	}
 
@@ -107,7 +107,7 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 	 *          the data in pin
 	 */
 	public IngoingPin getDataIn() {
-		return _dataIn;
+		return dataIn;
 	}
 
 	/**
@@ -117,14 +117,14 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 	 *          the control pin
 	 */
 	public IngoingPin getWriteEnabled() {
-		return _writeEnabled;
+		return writeEnabled;
 	}
 
 	@Override
 	public void nextCycle() {
-		if (_writeEnabled.read() != 0) {
-			_value = _dataIn.read();
-			getDataOut().write(_value);
+		if (writeEnabled.read() != 0) {
+			value = dataIn.read();
+			getDataOut().write(value);
 		}
 	}
 
@@ -135,7 +135,7 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 	 *          {@code false} if the {@code Register} is part of the base machine, {@code true} otherwise
 	 */
 	public boolean isExtended() {
-		return _isExtended;
+		return isExtended;
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 	 *          the name of the {@code Register}
 	 */
 	public String getLabel() {
-		return _label;
+		return label;
 	}
 
 	@Override
@@ -160,7 +160,7 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 	 *          the size of the {@code Register}
 	 */
 	public RegisterSize getSize() {
-		return _size;
+		return size;
 	}
 
 	@Override
@@ -170,6 +170,6 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 
 	@Override
 	public String toString() {
-		return "Register[name=" + getName() + ", value=" + _value + "]";
+		return "Register[name=" + getName() + ", value=" + value + "]";
 	}
 }

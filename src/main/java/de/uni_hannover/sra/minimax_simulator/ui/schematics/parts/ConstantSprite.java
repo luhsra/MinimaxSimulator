@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ConstantSprite extends CircuitSprite {
 
-	private final Constant	_constant;
+	private final Constant constant;
 
 	/**
 	 * Initializes the {@code ConstantSprite}.
@@ -24,14 +24,14 @@ public class ConstantSprite extends CircuitSprite {
 	 *          the {@code Constant} this sprite will represent
 	 */
 	public ConstantSprite(Constant constant) {
-		_constant = checkNotNull(constant);
+		this.constant = checkNotNull(constant);
 	}
 
 	@Override
 	public void paint(GraphicsContext gc, RenderEnvironment env) {
-		Bounds b = _constant.getBounds();
+		Bounds b = constant.getBounds();
 		debugBounds(gc, b);
 
-		gc.fillText(_constant.getConstantStr(), b.x, b.y + b.h);
+		gc.fillText(constant.getConstantStr(), b.x, b.y + b.h);
 	}
 }

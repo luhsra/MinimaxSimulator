@@ -25,16 +25,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class Project {
 
 	// the part that is actually export-friendly
-	private final MachineConfiguration	_machineConfiguration;
-	private final ProjectConfiguration	_projectConfiguration;
-	private final SignalTable			_signalTable;
+	private final MachineConfiguration machineConfiguration;
+	private final ProjectConfiguration projectConfiguration;
+	private final SignalTable signalTable;
 
 	// the simulated machine
-	private final ConfigurableMachine	_machine;
-	private final SignalConfiguration	_signalConfig;
-	private final Simulation			_simulation;
+	private final ConfigurableMachine machine;
+	private final SignalConfiguration signalConfiguration;
+	private final Simulation simulation;
 
-	private boolean						_unsaved;
+	private boolean isUnsaved;
 
 	/**
 	 * Constructs a new {@code Project} with the specified {@link MachineConfiguration}, {@link ProjectConfiguration} and control table.
@@ -47,19 +47,19 @@ public class Project {
 	 *          the machine's control table
 	 */
 	public Project(MachineConfiguration machineConfig, ProjectConfiguration projectConfig, SignalTable signalTable) {
-		_unsaved = false;
+		isUnsaved = false;
 
-		_machineConfiguration = checkNotNull(machineConfig);
-		_projectConfiguration = checkNotNull(projectConfig);
-		_signalConfig = new MinimaxSignalConfiguration(_machineConfiguration);
-		_signalTable = new MachineSignalTable(signalTable, _machineConfiguration, new MinimaxSignalDescription(_machineConfiguration), _signalConfig);
+		machineConfiguration = checkNotNull(machineConfig);
+		projectConfiguration = checkNotNull(projectConfig);
+		signalConfiguration = new MinimaxSignalConfiguration(machineConfiguration);
+		this.signalTable = new MachineSignalTable(signalTable, machineConfiguration, new MinimaxSignalDescription(machineConfiguration), signalConfiguration);
 		MinimaxMachine minimax = new MinimaxMachine();
-		_machine = minimax;
-		_machineConfiguration.addMachineConfigListener(new MachineConfigurator(_machine, _machineConfiguration));
-		MinimaxSimulation simulation = new MinimaxSimulation(minimax, _signalTable);
-		_simulation = simulation;
-		_machineConfiguration.addMachineConfigListener(simulation);
-		_signalConfig.addSignalConfigListener(simulation);
+		machine = minimax;
+		machineConfiguration.addMachineConfigListener(new MachineConfigurator(machine, machineConfiguration));
+		MinimaxSimulation simulation = new MinimaxSimulation(minimax, this.signalTable);
+		this.simulation = simulation;
+		machineConfiguration.addMachineConfigListener(simulation);
+		signalConfiguration.addSignalConfigListener(simulation);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class Project {
 	 *          the machine's configuration
 	 */
 	public MachineConfiguration getMachineConfiguration() {
-		return _machineConfiguration;
+		return machineConfiguration;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class Project {
 	 *          the project configuration
 	 */
 	public ProjectConfiguration getProjectConfiguration() {
-		return _projectConfiguration;
+		return projectConfiguration;
 	}
 
 	/**
@@ -89,31 +89,31 @@ public class Project {
 	 *          the machine's control table
 	 */
 	public SignalTable getSignalTable() {
-		return _signalTable;
+		return signalTable;
 	}
 
 	/**
-	 * Gets the value of the {@code unsaved} property.
+	 * Gets the value of the {@code isUnsaved} property.
 	 *
 	 * @return
 	 *          {@code true} if the project has unsaved changes, {@code false} otherwise
 	 */
 	public boolean isUnsaved() {
-		return _unsaved;
+		return isUnsaved;
 	}
 
 	/**
 	 * Marks the {@code Project} as unsaved.
 	 */
 	public void setIsUnsaved() {
-		_unsaved = true;
+		isUnsaved = true;
 	}
 
 	/**
 	 * Marks the {@code Project} as saved.
 	 */
 	public void setIsSaved() {
-		_unsaved = false;
+		isUnsaved = false;
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class Project {
 	 *          the machine
 	 */
 	public Machine getMachine() {
-		return _machine;
+		return machine;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Project {
 	 *          the signal configuration
 	 */
 	public SignalConfiguration getSignalConfiguration() {
-		return _signalConfig;
+		return signalConfiguration;
 	}
 
 	/**
@@ -143,6 +143,6 @@ public class Project {
 	 *          the simulation
 	 */
 	public Simulation getSimulation() {
-		return _simulation;
+		return simulation;
 	}
 }

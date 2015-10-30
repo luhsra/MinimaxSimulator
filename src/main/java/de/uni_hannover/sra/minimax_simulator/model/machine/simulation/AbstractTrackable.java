@@ -12,13 +12,13 @@ import java.util.ArrayList;
  */
 public abstract class AbstractTrackable<T> implements Trackable<T> {
 
-	private final ArrayList<TrackableChangeListener<T>>	_listeners;
+	private final ArrayList<TrackableChangeListener<T>> listeners;
 
 	/**
 	 * Constructs a new {@code AbstractTrackable}.
 	 */
 	public AbstractTrackable() {
-		_listeners = new ArrayList<TrackableChangeListener<T>>(2);
+		listeners = new ArrayList<TrackableChangeListener<T>>(2);
 	}
 
 	/**
@@ -26,25 +26,25 @@ public abstract class AbstractTrackable<T> implements Trackable<T> {
 	 */
 	protected void fireValueChanged() {
 		T value = get();
-		for (TrackableChangeListener<T> listener : _listeners) {
+		for (TrackableChangeListener<T> listener : listeners) {
 			listener.onValueChanged(value);
 		}
 	}
 
 	@Override
 	public void clearListeners() {
-		_listeners.clear();
+		listeners.clear();
 	}
 
 	@Override
 	public void addChangeListener(TrackableChangeListener<T> listener) {
-		if (!_listeners.contains(listener)) {
-			_listeners.add(listener);
+		if (!listeners.contains(listener)) {
+			listeners.add(listener);
 		}
 	}
 
 	@Override
 	public void removeChangeListener(TrackableChangeListener<T> listener) {
-		_listeners.remove(listener);
+		listeners.remove(listener);
 	}
 }

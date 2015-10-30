@@ -12,15 +12,15 @@ import java.util.List;
 // TODO: finish
 public class ProjectConfiguration {
 
-	private List<String> _openTabKeys;
-	private String _selectedTabKey;
+	private List<String> openTabKeys;
+	private String selectedTabKey;
 
 	/**
 	 * Constructs a new {@code ProjectConfiguration}.
 	 */
 	public ProjectConfiguration() {
-		_openTabKeys = new ArrayList<String>();
-		_selectedTabKey = "";
+		openTabKeys = new ArrayList<String>();
+		selectedTabKey = "";
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class ProjectConfiguration {
 	 *          a list of the keys of the open tabs
 	 */
 	public List<String> getOpenTabKeys() {
-		return _openTabKeys;
+		return openTabKeys;
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class ProjectConfiguration {
 	 *          the key of the selected tab
 	 */
 	public String getSelectedTabKey() {
-		return _selectedTabKey;
+		return selectedTabKey;
 	}
 
 	/**
@@ -50,6 +50,6 @@ public class ProjectConfiguration {
 	 *          the key of the selected tab
 	 */
 	public void setSelectedTabKey(String key) {
-		_selectedTabKey = key;
+		selectedTabKey = key;
 	}
 }

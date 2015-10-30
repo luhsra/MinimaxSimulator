@@ -8,8 +8,8 @@ package de.uni_hannover.sra.minimax_simulator.model.signal.jump;
  */
 public final class ConditionalJump implements Jump {
 
-	private final int _condZeroTarget;
-	private final int _condOneTarget;
+	private final int condZeroTarget;
+	private final int condOneTarget;
 
 	/**
 	 * Constructs a new {@code ConditionalJump} with the specified target rows.
@@ -20,8 +20,8 @@ public final class ConditionalJump implements Jump {
 	 *          the index of the target row if ALU condition is {@code 1}
 	 */
 	public ConditionalJump(int condZeroTarget, int condOneTarget) {
-		_condZeroTarget = condZeroTarget;
-		_condOneTarget = condOneTarget;
+		this.condZeroTarget = condZeroTarget;
+		this.condOneTarget = condOneTarget;
 	}
 
 	@Override
@@ -39,15 +39,15 @@ public final class ConditionalJump implements Jump {
 	 *          the index of the {@code SignalRow} that will be executed next if ALU condition is as specified
 	 */
 	public int getTargetRow(int condition) {
-		return condition == 0 ? _condZeroTarget : _condOneTarget;
+		return condition == 0 ? condZeroTarget : condOneTarget;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _condOneTarget;
-		result = prime * result + _condZeroTarget;
+		result = prime * result + condOneTarget;
+		result = prime * result + condZeroTarget;
 		return result;
 	}
 
@@ -64,10 +64,10 @@ public final class ConditionalJump implements Jump {
 		}
 
 		ConditionalJump other = (ConditionalJump) obj;
-		if (_condOneTarget != other._condOneTarget) {
+		if (condOneTarget != other.condOneTarget) {
 			return false;
 		}
-		if (_condZeroTarget != other._condZeroTarget) {
+		if (condZeroTarget != other.condZeroTarget) {
 			return false;
 		}
 		return true;

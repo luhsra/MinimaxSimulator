@@ -12,7 +12,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
  */
 public class RegisterUpdateDialog extends ValueUpdateDialog {
 
-	private final Trackable<Integer>	_value;
+	private final Trackable<Integer> value;
 
 	/**
 	 * Constructs a new {@code RegisterUpdateDialog} for the register with the specified name
@@ -26,7 +26,7 @@ public class RegisterUpdateDialog extends ValueUpdateDialog {
 	public RegisterUpdateDialog(String register, Trackable<Integer> value) {
 		super(value.get());
 
-		_value = value;
+		this.value = value;
 
 		TextResource res = Main.getTextResource("debugger").using("register.update");
 
@@ -41,6 +41,6 @@ public class RegisterUpdateDialog extends ValueUpdateDialog {
 	 */
 	@Override
 	protected void setValue(int value) {
-		_value.set(value);
+		this.value.set(value);
 	}
 }

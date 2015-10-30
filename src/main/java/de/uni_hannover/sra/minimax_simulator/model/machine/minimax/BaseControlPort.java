@@ -18,13 +18,13 @@ public enum BaseControlPort {
 	MEM_RW,
 	ALU_CTRL;
 
-	private final Port _port;
+	private final Port port;
 
 	/**
 	 * Sets the {@link Port} belonging to the {@code BaseControlPort}.
 	 */
 	private BaseControlPort() {
-		_port = new Port(this.name());
+		port = new Port(this.name());
 	}
 
 	/**
@@ -34,6 +34,6 @@ public enum BaseControlPort {
 	 *          the {@code Port}
 	 */
 	public Port port() {
-		return _port;
+		return port;
 	}
 }

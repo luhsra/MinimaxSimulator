@@ -11,9 +11,9 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.ConstantSprite;
  */
 public class Constant extends SimplePart implements SpriteOwner {
 
-	private final int		_constant;
+	private final int constant;
 
-	private final String	_constantStr;
+	private final String constantStr;
 
 	/**
 	 * Constructs a new {@code Constant} with the specified value.
@@ -22,14 +22,14 @@ public class Constant extends SimplePart implements SpriteOwner {
 	 *          the value of the constant
 	 */
 	public Constant(int constantValue) {
-		_constant = constantValue;
+		constant = constantValue;
 
 		// Later: Let the user decide when he creates the constant in the GUI?
 		if ((0xFFFFFFFFL & constantValue) >= 0x0000FFFFL) {
-			_constantStr = String.format("0x%X", constantValue);
+			constantStr = String.format("0x%X", constantValue);
 		}
 		else {
-			_constantStr = Integer.toString(constantValue);
+			constantStr = Integer.toString(constantValue);
 		}
 	}
 
@@ -40,7 +40,7 @@ public class Constant extends SimplePart implements SpriteOwner {
 	 *          the value of the constant
 	 */
 	public int getConstant() {
-		return _constant;
+		return constant;
 	}
 
 	/**
@@ -50,12 +50,12 @@ public class Constant extends SimplePart implements SpriteOwner {
 	 *          the string representation of the value of the constant
 	 */
 	public String getConstantStr() {
-		return _constantStr;
+		return constantStr;
 	}
 
 	@Override
 	public void update() {
-		getDataOut().write(_constant);
+		getDataOut().write(constant);
 	}
 
 	@Override
@@ -65,6 +65,6 @@ public class Constant extends SimplePart implements SpriteOwner {
 
 	@Override
 	public String toString() {
-		return "Constant[" + _constantStr + "]";
+		return "Constant[" + constantStr + "]";
 	}
 }

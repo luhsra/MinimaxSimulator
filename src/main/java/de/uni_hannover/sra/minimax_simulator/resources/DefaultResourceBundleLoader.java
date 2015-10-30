@@ -15,10 +15,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class DefaultResourceBundleLoader implements ResourceBundleLoader {
 
-	private final Control					_defaultControl;
-	private final Locale					_defaultLocale;
+	private final Control defaultControl;
+	private final Locale defaultLocale;
 
-	private final Map<String, TextResource>	_resourceCache;
+	private final Map<String, TextResource> resourceCache;
 
 	/**
 	 * Constructs a new {@code DefaultResourceBundleLoader} with the specified {@link Control} and {@link Locale}.
@@ -29,10 +29,10 @@ public class DefaultResourceBundleLoader implements ResourceBundleLoader {
 	 *          the {@code Locale}
 	 */
 	public DefaultResourceBundleLoader(Control defaultControl, Locale defaultLocale) {
-		_defaultControl = checkNotNull(defaultControl, "Invalid null argument: defaultControl");
-			_defaultLocale = checkNotNull(defaultLocale, "Invalid null argument: defaultLocale");
+		this.defaultControl = checkNotNull(defaultControl, "Invalid null argument: defaultControl");
+			this.defaultLocale = checkNotNull(defaultLocale, "Invalid null argument: defaultLocale");
 
-		_resourceCache = new HashMap<String, TextResource>();
+		resourceCache = new HashMap<String, TextResource>();
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class DefaultResourceBundleLoader implements ResourceBundleLoader {
 	 *          the {@code Control}
 	 */
 	public Control getDefaultControl() {
-		return _defaultControl;
+		return defaultControl;
 	}
 
 	/**
@@ -52,18 +52,18 @@ public class DefaultResourceBundleLoader implements ResourceBundleLoader {
 	 *          the {@code Locale}
 	 */
 	public Locale getDefaultLocale() {
-		return _defaultLocale;
+		return defaultLocale;
 	}
 
 	@Override
 	public ResourceBundle getBundle(String bundleName) {
-		ResourceBundle res = ResourceBundle.getBundle(bundleName, _defaultLocale, _defaultControl);
+		ResourceBundle res = ResourceBundle.getBundle(bundleName, defaultLocale, defaultControl);
 		return res;
 	}
 
 	@Override
 	public TextResource getTextResource(String bundleName) {
-		TextResource res = _resourceCache.get(bundleName);
+		TextResource res = resourceCache.get(bundleName);
 		if (res != null) {
 			return res;
 		}
@@ -71,7 +71,7 @@ public class DefaultResourceBundleLoader implements ResourceBundleLoader {
 		final ResourceBundle bundle = getBundle(bundleName);
 		res = new DefaultTextResource(bundle);
 
-		_resourceCache.put(bundleName, res);
+		resourceCache.put(bundleName, res);
 		return res;
 	}
 }

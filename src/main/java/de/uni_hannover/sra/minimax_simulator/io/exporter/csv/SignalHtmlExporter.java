@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 // TODO: create abstract parent class SignalExporter
 public class SignalHtmlExporter {
 
-	private final File	_file;
+	private final File file;
 
 	/**
 	 * Creates a new instance of the {@code SignalHtmlExporter} and sets the file.
@@ -30,7 +30,7 @@ public class SignalHtmlExporter {
 	 *          the {@code File} to save to
 	 */
 	public SignalHtmlExporter(File file) {
-		_file = checkNotNull(file, "Invalid Null argument: file");
+		this.file = checkNotNull(file, "Invalid Null argument: file");
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class SignalHtmlExporter {
 		Writer wr = null;
 
 		try {
-			wr = IOUtils.toBufferedWriter(new FileWriter(_file));
+			wr = IOUtils.toBufferedWriter(new FileWriter(file));
 
 			wr.append("<!doctype html>\n" +
 					"<html>" +

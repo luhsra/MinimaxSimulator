@@ -17,10 +17,11 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.shape.LabelShape;
  * @author Martin L&uuml;ck
  */
 public class MultiplexerGroup extends AbstractGroup {
-	private final String		_muxName;
-	private final String		_muxLabel;
-	private final boolean		_topDown;
-	private final Port			_port;
+
+	private final String muxName;
+	private final String muxLabel;
+	private final boolean topDown;
+	private final Port port;
 
 	/**
 	 * Constructs a new {@code MultiplexerGroup} with the specified multiplexer name,
@@ -36,24 +37,24 @@ public class MultiplexerGroup extends AbstractGroup {
 	 *          the {@code Port} of the multiplexer
 	 */
 	public MultiplexerGroup(String muxName, String muxLabel, boolean topDown, Port port) {
-		_muxName = muxName;
-		_muxLabel = muxLabel;
-		_topDown = topDown;
-		_port = port;
+		this.muxName = muxName;
+		this.muxLabel = muxLabel;
+		this.topDown = topDown;
+		this.port = port;
 	}
 
 	@Override
 	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
-		Multiplexer mux = cr.getCircuit(Multiplexer.class, _muxName);
+		Multiplexer mux = cr.getCircuit(Multiplexer.class, muxName);
 
-		Label label = new Label(_muxLabel);
+		Label label = new Label(muxLabel);
 		label.setShape(new LabelShape(fontProvider));
 
-		Wire selectWire = new Wire(2, _port.getDataOut(), mux.getSelectPin());
+		Wire selectWire = new Wire(2, port.getDataOut(), mux.getSelectPin());
 
-		add(label, _muxName + Parts._LABEL);
-		add(_port, _muxName + Parts._PORT);
-		addWire(selectWire, _muxName + Parts._WIRE_SELECT);
+		add(label, muxName + Parts._LABEL);
+		add(port, muxName + Parts._PORT);
+		addWire(selectWire, muxName + Parts._WIRE_SELECT);
 	}
 
 	@Override
@@ -63,6 +64,6 @@ public class MultiplexerGroup extends AbstractGroup {
 
 	@Override
 	public LayoutSet createLayouts() {
-		return new MultiplexerLayoutSet(_muxName, _topDown);
+		return new MultiplexerLayoutSet(muxName, topDown);
 	}
 }

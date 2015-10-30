@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class JunctionSprite implements Sprite {
 
-	private final Junction _junction;
+	private final Junction junction;
 
 	/**
 	 * Initializes the  {@code JunctionSprite}.
@@ -24,18 +24,18 @@ public class JunctionSprite implements Sprite {
 	 *          the {@code Junction} this sprite will represent
 	 */
 	public JunctionSprite(Junction junction) {
-		_junction = checkNotNull(junction);
+		this.junction = checkNotNull(junction);
 	}
 
 	@Override
 	public void paint(GraphicsContext gc, RenderEnvironment env) {
 		// draw only junction with 0, 2 or more outgoing wires
-		if (_junction.getDataOuts().size() == 1) {
+		if (junction.getDataOuts().size() == 1) {
 			return;
 		}
 
-		int x = _junction.getBounds().x;
-		int y = _junction.getBounds().y;
+		int x = junction.getBounds().x;
+		int y = junction.getBounds().y;
 
 		gc.fillOval(x - 2 + 0.5, y - 2 + 0.5, 5, 5);
 	}

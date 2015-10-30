@@ -54,8 +54,8 @@ import java.util.Optional;
  */
 public class DebuggerView implements SimulationListener, MachineConfigListener, SignalTableListener {
 
-    private final TextResource _resSignal;
-    private final TextResource _res;
+    private final TextResource resSignal;
+    private final TextResource res;
 
     @FXML private TableView<RegisterTableModel> regTable;
     @FXML private TableColumn<RegisterTableModel, String> col_reg_name;
@@ -75,22 +75,40 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     @FXML private TableColumn<SimulationTableModel, String> col_sim_next;
     @FXML private TableColumn<SimulationTableModel, String> col_sim_desc;
 
-    private Simulation _simulation;
+    @FXML private TitledPane paneRegister;
+    @FXML private TitledPane paneALU;
+    @FXML private TitledPane paneSimulation;
+    @FXML private Label lblCycles;
+
+    @FXML private Button btnSimInit;
+    @FXML private Button btnSimQuit;
+    @FXML private Button btnSimCycle;
+    @FXML private Button btnSimRun;
+
+    private Simulation simulation;
 
     private final Tooltip simInit;
     private final Tooltip simStop;
 
     @FXML MemoryTable embeddedMemoryTableController;
 
+    private final static int NO_ROW_MARKED	= -1;
+    private static int lastExecutedRow = -1;
+
+    private MessageFormat cyclesFormatHalted;
+    private MessageFormat cyclesFormatRead;
+    private MessageFormat cyclesFormatWrite;
+    private Object[] cyclesFormatParam = new Object[1];
+
     /**
      * Initializes the final variables.
      */
     public DebuggerView() {
-        _resSignal = Main.getTextResource("signal");
-        _res = Main.getTextResource("debugger");
+        resSignal = Main.getTextResource("signal");
+        res = Main.getTextResource("debugger");
 
-        simInit = new Tooltip(_res.get("action.init.tip"));
-        simStop = new Tooltip(_res.get("action.stop.tip"));
+        simInit = new Tooltip(res.get("action.init.tip"));
+        simStop = new Tooltip(res.get("action.stop.tip"));
     }
 
     /**
@@ -102,40 +120,35 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         setTooltips();
     }
 
-    @FXML private TitledPane paneRegister;
-    @FXML private TitledPane paneALU;
-    @FXML private TitledPane paneSimulation;
-    @FXML private Label lblCycles;
-
     /**
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
         final List<TableColumn> tableColumnsSignal = new ArrayList<>(Arrays.asList(col_sim_label, col_sim_adr, col_sim_alu, col_sim_next, col_sim_desc));
         for (TableColumn col : tableColumnsSignal) {
-            col.setText(_resSignal.get(col.getId().replace("_", ".")));
+            col.setText(resSignal.get(col.getId().replace("_", ".")));
         }
 
         final List<TableColumn> tableColumns = new ArrayList<>(Arrays.asList(col_reg_name, col_reg_dec, col_reg_hex, col_alu_dec, col_alu_hex));
         for (TableColumn col : tableColumns) {
-            col.setText(_res.get(col.getId().replace("_", ".")));
+            col.setText(res.get(col.getId().replace("_", ".")));
         }
 
         final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneRegister, paneALU, paneSimulation));
         for (Labeled con : controls) {
-            con.setText(_res.get(con.getId().replace("_", ".")));
+            con.setText(res.get(con.getId().replace("_", ".")));
         }
 
-        lblCycles.setText(_res.format(lblCycles.getId().replace("_", "."), "---"));
+        lblCycles.setText(res.format(lblCycles.getId().replace("_", "."), "---"));
     }
 
     /**
      * Sets the {@link Tooltip}s for the {@link Button}s.
      */
     private void setTooltips() {
-        btnSimCycle.setTooltip(new Tooltip(_res.get("action.step.tip")));
-        btnSimRun.setTooltip(new Tooltip(_res.get("action.run.tip")));
-        btnSimQuit.setTooltip(new Tooltip(_res.get("action.reset.tip")));
+        btnSimCycle.setTooltip(new Tooltip(res.get("action.step.tip")));
+        btnSimRun.setTooltip(new Tooltip(res.get("action.run.tip")));
+        btnSimQuit.setTooltip(new Tooltip(res.get("action.reset.tip")));
         btnSimInit.setTooltip(simInit);
     }
 
@@ -144,15 +157,15 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * It initializes the {@link TableView}s because they need project data.
      */
     public void initDebuggerView() {
-        _simulation = Main.getWorkspace().getProject().getSimulation();
-        _simulation.addSimulationListener(this);
+        simulation = Main.getWorkspace().getProject().getSimulation();
+        simulation.addSimulationListener(this);
 
         Main.getWorkspace().getProject().getMachineConfiguration().addMachineConfigListener(this);
         Main.getWorkspace().getProject().getSignalTable().addSignalTableListener(this);
 
-        _cyclesFormatHalted = _res.createFormat("cycles.label");
-        _cyclesFormatRead = _res.createFormat("cycles.read.label");
-        _cyclesFormatWrite = _res.createFormat("cycles.write.label");
+        cyclesFormatHalted = res.createFormat("cycles.label");
+        cyclesFormatRead = res.createFormat("cycles.read.label");
+        cyclesFormatWrite = res.createFormat("cycles.write.label");
 
         embeddedMemoryTableController.initMemTable();
         initRegTable();
@@ -183,9 +196,9 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
-                        if (_simulation.getState() == SimulationState.IDLE) {
+                        if (simulation.getState() == SimulationState.IDLE) {
                             String register = regTable.getSelectionModel().getSelectedItem().getName();
-                            Trackable<Integer> value = _simulation.getRegisterValue(register);
+                            Trackable<Integer> value = simulation.getRegisterValue(register);
                             // open edit dialog
                             Optional<ButtonType> result = new RegisterUpdateDialog(register, value).showAndWait();
                             if (result.get() == ButtonType.OK) {
@@ -223,8 +236,8 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             String name = register.getName();
             Trackable<Integer> value = null;
 
-            if (_simulation.getState() != SimulationState.OFF) {
-                value = _simulation.getRegisterValue(name);
+            if (simulation.getState() != SimulationState.OFF) {
+                value = simulation.getRegisterValue(name);
             }
 
             data.add(new RegisterTableModel(register, value));
@@ -326,9 +339,6 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         updateSimulationTable();
     }
 
-    private final static int	NO_ROW_MARKED	= -1;
-    private static int			_lastExecutedRow = -1;
-
     /**
      * Gets the index of the last executed row of the simulation.
      *
@@ -336,7 +346,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      *          the index of the last executed row
      */
     public static int getLastExecutedRow() {
-        return _lastExecutedRow;
+        return lastExecutedRow;
     }
 
     /**
@@ -359,11 +369,11 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     private void updateAluTable() {
         ObservableList<AluTableModel> data = FXCollections.observableArrayList();
 
-        if (_simulation.getState().equals(SimulationState.OFF)) {
+        if (simulation.getState().equals(SimulationState.OFF)) {
            data.add(new AluTableModel(null));
         }
         else {
-            data.add(new AluTableModel(_simulation.getAluResult().get()));
+            data.add(new AluTableModel(simulation.getAluResult().get()));
         }
 
         aluTable.setItems(data);
@@ -373,36 +383,31 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     public void stateChanged(SimulationState state) {
         if (state == SimulationState.IDLE) {
             // simulation has done a step
-            _lastExecutedRow = _simulation.getCurrentSignalRow();
+            lastExecutedRow = simulation.getCurrentSignalRow();
         }
         else if (state == SimulationState.HALTED) {
             // simulation ended
-            if (_lastExecutedRow != NO_ROW_MARKED) {
-                _lastExecutedRow = NO_ROW_MARKED;
+            if (lastExecutedRow != NO_ROW_MARKED) {
+                lastExecutedRow = NO_ROW_MARKED;
             }
             btnSimCycle.setDisable(true);
             btnSimRun.setDisable(true);
         }
         else if (state == SimulationState.OFF) {
             // simulation canceled
-            if (_lastExecutedRow != NO_ROW_MARKED) {
-                _lastExecutedRow = NO_ROW_MARKED;
+            if (lastExecutedRow != NO_ROW_MARKED) {
+                lastExecutedRow = NO_ROW_MARKED;
             }
         }
     }
-
-    @FXML private Button btnSimInit;
-    @FXML private Button btnSimQuit;
-    @FXML private Button btnSimCycle;
-    @FXML private Button btnSimRun;
 
     /**
      * Initializes the simulation of the machine.
      */
     public void initSimulation() {
         try {
-            if (_simulation.getState().equals(SimulationState.OFF)) {
-                _simulation.init();
+            if (simulation.getState().equals(SimulationState.OFF)) {
+                simulation.init();
                 btnSimQuit.setDisable(false);
                 btnSimCycle.setDisable(false);
                 btnSimRun.setDisable(false);
@@ -410,7 +415,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                 btnSimInit.setTooltip(simStop);
             }
             else {
-                _simulation.reset();
+                simulation.reset();
                 btnSimCycle.setDisable(false);
                 btnSimRun.setDisable(false);
             }
@@ -432,7 +437,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      */
     public void quitSimulation() {
         try {
-            _simulation.stop();
+            simulation.stop();
             btnSimQuit.setDisable(true);
             btnSimCycle.setDisable(true);
             btnSimRun.setDisable(true);
@@ -456,7 +461,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      */
     public void nextCycle() {
         try {
-            _simulation.step();
+            simulation.step();
         } catch (Exception e) {
             UI.invokeInFAT(new Runnable() {
                 @Override
@@ -479,7 +484,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                                  @Override
                                  public void run() {
                                      try {
-                                         _simulation.run();
+                                         simulation.run();
                                      } catch (Exception e) {
                                          UI.invokeInFAT(new Runnable() {
                                              @Override
@@ -490,38 +495,33 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                                      }
 
                                  }
-                             }, _res.get("simulation.wait.title"), _res.get("simulation.wait.message"),
+                             }, res.get("simulation.wait.title"), res.get("simulation.wait.message"),
                 new Runnable() {
                     @Override
                     public void run() {
                         // on cancel
-                        _simulation.pause();
+                        simulation.pause();
                     }
                 });
         updateAllTables();
         updateCyclesText();
     }
 
-    private MessageFormat _cyclesFormatHalted;
-    private MessageFormat	_cyclesFormatRead;
-    private MessageFormat	_cyclesFormatWrite;
-    private Object[]		_cyclesFormatParam	= new Object[1];
-
     /**
      * Updates the cycle {@link Label} with the current cycle.
      */
     private void updateCyclesText() {
         String text;
-        if (_simulation.getState() == SimulationState.OFF)
+        if (simulation.getState() == SimulationState.OFF)
         {
-            _cyclesFormatParam[0] = "---";
-            text = _cyclesFormatHalted.format(_cyclesFormatParam);
+            cyclesFormatParam[0] = "---";
+            text = cyclesFormatHalted.format(cyclesFormatParam);
         }
         else
         {
-            MessageFormat format = _simulation.isResolved() ? _cyclesFormatWrite : _cyclesFormatRead;
-            _cyclesFormatParam[0] = Integer.valueOf(_simulation.getCyclesCount());
-            text = format.format(_cyclesFormatParam);
+            MessageFormat format = simulation.isResolved() ? cyclesFormatWrite : cyclesFormatRead;
+            cyclesFormatParam[0] = Integer.valueOf(simulation.getCyclesCount());
+            text = format.format(cyclesFormatParam);
         }
         lblCycles.setText(text);
     }

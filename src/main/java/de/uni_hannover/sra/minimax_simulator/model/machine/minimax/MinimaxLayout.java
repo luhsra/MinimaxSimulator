@@ -33,17 +33,17 @@ import java.util.Arrays;
  */
 class MinimaxLayout {
 
-	private final ConstraintContainer	_container;
-	private final LayoutManager			_layout;
+	private final ConstraintContainer container;
+	private final LayoutManager layout;
 
-	private Dimension					_dimension;
+	private Dimension dimension;
 
 	/**
 	 * Constructs a new and empty {@code MinimaxLayout}.
 	 */
 	public MinimaxLayout() {
-		_container = new ConstraintContainer();
-		_layout = new DefaultLayoutManager(_container);
+		container = new ConstraintContainer();
+		layout = new DefaultLayoutManager(container);
 	}
 
 	/**
@@ -53,7 +53,7 @@ class MinimaxLayout {
 	 *          the {@code Dimension} of the {@code MinimaxLayout}
 	 */
 	public Dimension getDimension() {
-		return _dimension;
+		return dimension;
 	}
 
 	/**
@@ -63,20 +63,20 @@ class MinimaxLayout {
 	 *          the {@code ConstraintContainer} of the {@code MinimaxLayout}
 	 */
 	public ConstraintContainer getContainer() {
-		return _container;
+		return container;
 	}
 
 	/**
 	 * Updates the {@code MinimaxLayout}.
 	 */
 	public void updateLayout() {
-		_container.updateSize();
+		container.updateSize();
 
-		_dimension = _container.getDimension();
-		Insets in = _container.getInsets();
+		dimension = container.getDimension();
+		Insets in = container.getInsets();
 
-		_container.setBounds(new Bounds(in.l, in.t, _dimension.w, _dimension.h));
-		_container.doLayout();
+		container.setBounds(new Bounds(in.l, in.t, dimension.w, dimension.h));
+		container.doLayout();
 	}
 
 	/**
@@ -118,10 +118,10 @@ class MinimaxLayout {
 	 */
 	public void addGroup(Group group) {
 		for (Component component : group.getComponents()) {
-			_container.addComponent(component, group.getName(component));
+			container.addComponent(component, group.getName(component));
 		}
 		for (String virtual : group.getVirtualComponents()) {
-			_container.addVirtualComponent(virtual);
+			container.addVirtualComponent(virtual);
 		}
 	}
 
@@ -133,10 +133,10 @@ class MinimaxLayout {
 	 */
 	public void removeGroup(Group group) {
 		for (Component component : group.getComponents()) {
-			_container.removeComponent(component);
+			container.removeComponent(component);
 		}
 		for (String virtual : group.getVirtualComponents()) {
-			_container.removeComponent(virtual);
+			container.removeComponent(virtual);
 		}
 	}
 
@@ -149,7 +149,7 @@ class MinimaxLayout {
 	 *          the {@code Layout} to add
 	 */
 	public void putLayout(String name, Layout layout) {
-		_layout.putLayout(name, layout);
+		this.layout.putLayout(name, layout);
 	}
 
 	/**
@@ -159,7 +159,7 @@ class MinimaxLayout {
 	 *          the name of the {@code Layout} to remove
 	 */
 	public void removeLayout(String name) {
-		_layout.removeLayout(name);
+		layout.removeLayout(name);
 	}
 
 	/**
@@ -169,7 +169,7 @@ class MinimaxLayout {
 	 *          the name of the {@code Layout} to update
 	 */
 	public void updateLayout(String name) {
-		_layout.updateLayout(name);
+		layout.updateLayout(name);
 	}
 
 	/**
@@ -207,7 +207,7 @@ class MinimaxLayout {
 	private void addWire(Wire wire, String name) {
 		int index = 0;
 		for (Component component : wire.createWireComponents()) {
-			_container.addComponent(component, name + "." + index);
+			container.addComponent(component, name + "." + index);
 			index++;
 		}
 	}
@@ -219,7 +219,7 @@ class MinimaxLayout {
 	 *          the machine's topology
 	 */
 	private void alignMdrSelect(MachineTopology cr) {
-		ConstraintContainer c = _container;
+		ConstraintContainer c = container;
 
 		Multiplexer mdrSel = cr.getCircuit(Multiplexer.class, Parts.MDR_SELECT);
 		mdrSel.setShape(new MuxShape());
@@ -264,7 +264,7 @@ class MinimaxLayout {
 		Wire muxOutA = cr.getCircuit(Wire.class, Parts.MUX_A + "_WIRE_OUT");
 		Wire muxOutB = cr.getCircuit(Wire.class, Parts.MUX_B + "_WIRE_OUT");
 
-		ConstraintContainer c = _container;
+		ConstraintContainer c = container;
 		c.addComponent(multiplexerA.getDataOut(), Parts.MUX_A_OUT);
 		c.addComponent(multiplexerB.getDataOut(), Parts.MUX_B_OUT);
 		c.addComponent(multiplexerA.getSelectPin(), Parts.MUX_A_SELECT);
@@ -320,7 +320,7 @@ class MinimaxLayout {
 	 *          the machine's topology
 	 */
 	private void alignAlu(MachineTopology cr) {
-		ConstraintContainer c = _container;
+		ConstraintContainer c = container;
 
 		Alu alu = cr.getCircuit(Alu.class, Parts.ALU);
 		alu.setShape(new AluShape());
@@ -365,7 +365,7 @@ class MinimaxLayout {
 		Memory mem = cr.getCircuit(Memory.class, Parts.MEMORY);
 		mem.setShape(new MemoryShape());
 
-		ConstraintContainer c = _container;
+		ConstraintContainer c = container;
 
 		// memory
 		putLayout(Parts.MEMORY, new OriginLayout());
@@ -376,7 +376,7 @@ class MinimaxLayout {
 		c.addComponent(mem.getDataOut(), Parts.MEMORY_DO);
 		c.addComponent(mem.getRw(), Parts.MEMORY_RW);
 
-		ConstraintFactory cf = _container.createConstraintFactory();
+		ConstraintFactory cf = container.createConstraintFactory();
 		cf.leftTo(Parts.MEMORY_ADR, Parts.MEMORY);
 		cf.above(Parts.MEMORY_ADR, Parts.MEMORY, -14);
 		cf.above(Parts.MEMORY_CS, Parts.MEMORY);

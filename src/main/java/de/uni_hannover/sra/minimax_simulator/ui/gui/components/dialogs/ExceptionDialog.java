@@ -20,7 +20,7 @@ import java.io.StringWriter;
  */
 public class ExceptionDialog extends FXDialog {
 
-    private final TextResource _res;
+    private final TextResource res;
 
     /**
      * Constructs a new {@code ExceptionDialog} for the specified {@link Exception}.
@@ -31,13 +31,13 @@ public class ExceptionDialog extends FXDialog {
     public ExceptionDialog(Exception e) {
         super(AlertType.ERROR, "title", "message");
 
-        _res = Main.getTextResource("exception").using("exception-dialog");
-        this.setTitle(_res.get("title"));
+        res = Main.getTextResource("exception").using("exception-dialog");
+        this.setTitle(res.get("title"));
 
         // create dialog content
         VBox vbox = new VBox();
         vbox.setSpacing(10.0);
-        Label message = new Label(_res.get("message"));
+        Label message = new Label(res.get("message"));
         Label cause = new Label(e.getClass().getSimpleName() + ": " + e.getLocalizedMessage());
         cause.setStyle("-fx-font-weight: bold");
 
@@ -50,7 +50,7 @@ public class ExceptionDialog extends FXDialog {
         e.printStackTrace(pw);
         String exceptionText = sw.toString();
 
-        Label stacktrace = new Label(_res.get("stacktrace"));
+        Label stacktrace = new Label(res.get("stacktrace"));
 
         TextArea textArea = new TextArea(exceptionText);
         textArea.setEditable(false);

@@ -21,26 +21,26 @@ import static com.google.common.base.Preconditions.checkArgument;
 public final class SignalValue {
 
 	/** An unspecified signal. This object is the only instance whose method {@link #isDontCare()} returns {@code true}. */
-	public final static SignalValue		DONT_CARE	= new SignalValue();
+	public final static SignalValue DONT_CARE	= new SignalValue();
 
 	/** Caching {@code 0} to {@code 19} as {@code SignalValue}. */
-	private final static SignalValue	cache[];
+	private final static SignalValue CACHE[];
 	static {
-		cache = new SignalValue[20];
-		for (int i = 0; i < cache.length; i++) {
-			cache[i] = new SignalValue(i);
+		CACHE = new SignalValue[20];
+		for (int i = 0; i < CACHE.length; i++) {
+			CACHE[i] = new SignalValue(i);
 		}
 	}
 
-	private final int					_value;
-	private final boolean				_isDontCare;
+	private final int value;
+	private final boolean isDontCare;
 
 	/**
 	 * Constructs an {@code don't care} {@code SignalValue}.
 	 */
 	private SignalValue() {
-		_isDontCare = true;
-		_value = 0;
+		isDontCare = true;
+		value = 0;
 	}
 
 	/**
@@ -50,8 +50,8 @@ public final class SignalValue {
 	 *          the value of the {@code SignalValue}
 	 */
 	private SignalValue(int value) {
-		_isDontCare = false;
-		_value = value;
+		isDontCare = false;
+		this.value = value;
 	}
 
 	/**
@@ -62,7 +62,7 @@ public final class SignalValue {
 	 *          {@code true} if the {@code SignalValue} is unspecified, {@code} false otherwise
 	 */
 	public boolean isDontCare() {
-		return _isDontCare;
+		return isDontCare;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public final class SignalValue {
 	 *          the value
 	 */
 	public int intValue() {
-		return _value;
+		return value;
 	}
 
 	/**
@@ -89,11 +89,11 @@ public final class SignalValue {
 	public static SignalValue valueOf(int value) {
 		checkArgument(value >= 0);
 
-		if (value >= cache.length) {
+		if (value >= CACHE.length) {
 			return new SignalValue(value);
 		}
 		else {
-			return cache[value];
+			return CACHE[value];
 		}
 	}
 
@@ -101,8 +101,8 @@ public final class SignalValue {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (_isDontCare ? 1231 : 1237);
-		result = prime * result + _value;
+		result = prime * result + (isDontCare ? 1231 : 1237);
+		result = prime * result + value;
 		return result;
 	}
 
@@ -119,10 +119,10 @@ public final class SignalValue {
 		}
 
 		SignalValue other = (SignalValue) obj;
-		if (_isDontCare != other._isDontCare) {
+		if (isDontCare != other.isDontCare) {
 			return false;
 		}
-		if (_value != other._value) {
+		if (value != other.value) {
 			return false;
 		}
 		return true;
@@ -130,6 +130,6 @@ public final class SignalValue {
 
 	@Override
 	public String toString() {
-		return "SignalValue[" + (_isDontCare ? "DONT_CARE" : _value) + "]";
+		return "SignalValue[" + (isDontCare ? "DONT_CARE" : value) + "]";
 	}
 }

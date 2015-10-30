@@ -19,25 +19,25 @@ import java.util.*;
 // TODO: should be an interface rather than know details of Minimax internals
 public class MachineConfigurationBuilder {
 
-	private final List<AluOperation>			_aluOperations;
-	private final List<RegisterExtension>		_baseRegisters;
-	private final List<RegisterExtension>		_registerExtensions;
-	private final List<MuxInput>				_allowedMuxInputs;
-	private final Map<MuxType, List<MuxInput>>	_selectedMuxInputs;
+	private final List<AluOperation> aluOperations;
+	private final List<RegisterExtension> baseRegisters;
+	private final List<RegisterExtension> registerExtensions;
+	private final List<MuxInput> allowedMuxInputs;
+	private final Map<MuxType, List<MuxInput>> selectedMuxInputs;
 
 	/**
 	 * Creates a new instance of the {@code MachineConfigurationBuilder}
 	 * with empty lists and gets all {@link MuxType}s via {@link MuxType#values()}.
 	 */
 	public MachineConfigurationBuilder() {
-		_aluOperations = new ArrayList<AluOperation>();
-		_baseRegisters = new ArrayList<RegisterExtension>();
-		_registerExtensions = new ArrayList<RegisterExtension>();
-		_allowedMuxInputs = new ArrayList<MuxInput>();
-		_selectedMuxInputs = new HashMap<MuxType, List<MuxInput>>();
+		aluOperations = new ArrayList<AluOperation>();
+		baseRegisters = new ArrayList<RegisterExtension>();
+		registerExtensions = new ArrayList<RegisterExtension>();
+		allowedMuxInputs = new ArrayList<MuxInput>();
+		selectedMuxInputs = new HashMap<MuxType, List<MuxInput>>();
 
 		for (MuxType m : MuxType.values()) {
-			_selectedMuxInputs.put(m, new ArrayList<MuxInput>());
+			selectedMuxInputs.put(m, new ArrayList<MuxInput>());
 		}
 	}
 
@@ -48,7 +48,7 @@ public class MachineConfigurationBuilder {
 	 *          a list of all {@code AluOperation}s of the machine
 	 */
 	public List<AluOperation> getAluOperations() {
-		return _aluOperations;
+		return aluOperations;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class MachineConfigurationBuilder {
 	 *          a list of all extended {@code RegisterExtension}s
 	 */
 	public List<RegisterExtension> getRegisterExtensions() {
-		return _registerExtensions;
+		return registerExtensions;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class MachineConfigurationBuilder {
 	 *          a list of all base {@code RegisterExtension}s
 	 */
 	public List<RegisterExtension> getBaseRegisters() {
-		return _baseRegisters;
+		return baseRegisters;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class MachineConfigurationBuilder {
 	 *          a list of all {@code MuxInput}s
 	 */
 	public List<MuxInput> getMuxInputs() {
-		return _allowedMuxInputs;
+		return allowedMuxInputs;
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class MachineConfigurationBuilder {
 	 *          a list of all allowed {@code MuxInput}s
 	 */
 	public List<MuxInput> getAllowedMuxInputs() {
-		return _allowedMuxInputs;
+		return allowedMuxInputs;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class MachineConfigurationBuilder {
 	 *          a list of all {@code MuxInputs} selected by the {@code MuxType}
 	 */
 	public List<MuxInput> getSelectedMuxInputs(MuxType mux) {
-		return _selectedMuxInputs.get(mux);
+		return selectedMuxInputs.get(mux);
 	}
 
 	/**
@@ -116,10 +116,10 @@ public class MachineConfigurationBuilder {
 	 * </ul>
 	 */
 	private void addDefaultAluOperations() {
-		_aluOperations.add(AluOperation.A_ADD_B);
-		_aluOperations.add(AluOperation.B_SUB_A);
-		_aluOperations.add(AluOperation.TRANS_A);
-		_aluOperations.add(AluOperation.TRANS_B);
+		aluOperations.add(AluOperation.A_ADD_B);
+		aluOperations.add(AluOperation.B_SUB_A);
+		aluOperations.add(AluOperation.TRANS_A);
+		aluOperations.add(AluOperation.TRANS_B);
 	}
 
 	/**
@@ -136,14 +136,14 @@ public class MachineConfigurationBuilder {
 	 * Adds all registers ({@link RegisterExtension}) to the list of allowed {@link MuxInput}s.
 	 */
 	private void addRegistersAsMuxSources() {
-		for (RegisterExtension reg : _registerExtensions) {
+		for (RegisterExtension reg : registerExtensions) {
 			if (reg.getSize() == RegisterSize.BITS_24) {
 				continue;
 			}
 
-			_allowedMuxInputs.add(new RegisterMuxInput(reg.getName()));
+			allowedMuxInputs.add(new RegisterMuxInput(reg.getName()));
 		}
-		for (RegisterExtension reg : _baseRegisters) {
+		for (RegisterExtension reg : baseRegisters) {
 			if (reg.getSize() == RegisterSize.BITS_24) {
 				continue;
 			}
@@ -152,16 +152,16 @@ public class MachineConfigurationBuilder {
 			if (name.equals("IR")) {
 				name = "AT";
 			}
-			_allowedMuxInputs.add(new RegisterMuxInput(reg.getName(), name));
+			allowedMuxInputs.add(new RegisterMuxInput(reg.getName(), name));
 		}
 
 		ListIterator<MuxInput> inputIter;
-		for (inputIter = _selectedMuxInputs.get(MuxType.A).listIterator(); inputIter.hasNext(); ) {
+		for (inputIter = selectedMuxInputs.get(MuxType.A).listIterator(); inputIter.hasNext(); ) {
 			if (inputIter.next().getName().equals("IR")) {
 				inputIter.set(new RegisterMuxInput("IR", "AT"));
 			}
 		}
-		for (inputIter = _selectedMuxInputs.get(MuxType.B).listIterator(); inputIter.hasNext(); ) {
+		for (inputIter = selectedMuxInputs.get(MuxType.B).listIterator(); inputIter.hasNext(); ) {
 			if (inputIter.next().getName().equals("IR")) {
 				inputIter.set(new RegisterMuxInput("IR", "AT"));
 			}
@@ -196,12 +196,12 @@ public class MachineConfigurationBuilder {
 	 * </table>
 	 */
 	private void addDefaultSelectedMuxSources() {
-		List<MuxInput> listA = _selectedMuxInputs.get(MuxType.A);
+		List<MuxInput> listA = selectedMuxInputs.get(MuxType.A);
 		listA.add(new ConstantMuxInput(0));
 		listA.add(new ConstantMuxInput(1));
 		listA.add(new RegisterMuxInput("ACCU"));
 
-		List<MuxInput> listB = _selectedMuxInputs.get(MuxType.B);
+		List<MuxInput> listB = selectedMuxInputs.get(MuxType.B);
 		listB.add(new RegisterMuxInput("MDR"));
 		listB.add(new RegisterMuxInput("PC"));
 		listB.add(new RegisterMuxInput("IR", "AT"));
@@ -224,11 +224,11 @@ public class MachineConfigurationBuilder {
 	 *          the {@link TextResource} used for getting localized texts
 	 */
 	public void addDefaultBaseRegisters(TextResource textResource) {
-		_baseRegisters.add(new RegisterExtension("PC", RegisterSize.BITS_32, textResource.get("register.pc.description"), false));
-		_baseRegisters.add(new RegisterExtension("IR", RegisterSize.BITS_32, textResource.get("register.ir.description"), false));
-		_baseRegisters.add(new RegisterExtension("MDR", RegisterSize.BITS_32, textResource.get("register.mdr.description"), false));
-		_baseRegisters.add(new RegisterExtension("MAR", RegisterSize.BITS_24, textResource.get("register.mar.description"), false));
-		_baseRegisters.add(new RegisterExtension("ACCU", RegisterSize.BITS_32, textResource.get("register.accu.description"), false));
+		baseRegisters.add(new RegisterExtension("PC", RegisterSize.BITS_32, textResource.get("register.pc.description"), false));
+		baseRegisters.add(new RegisterExtension("IR", RegisterSize.BITS_32, textResource.get("register.ir.description"), false));
+		baseRegisters.add(new RegisterExtension("MDR", RegisterSize.BITS_32, textResource.get("register.mdr.description"), false));
+		baseRegisters.add(new RegisterExtension("MAR", RegisterSize.BITS_24, textResource.get("register.mar.description"), false));
+		baseRegisters.add(new RegisterExtension("ACCU", RegisterSize.BITS_32, textResource.get("register.accu.description"), false));
 	}
 
 	/**
@@ -241,16 +241,16 @@ public class MachineConfigurationBuilder {
 	 *          the {@code MachineConfigurationBuilder} instance with the default values
 	 */
 	public MachineConfigurationBuilder loadDefaultValues(TextResource registerDescriptionResource) {
-		_aluOperations.clear();
+		aluOperations.clear();
 		addDefaultAluOperations();
 
-		_baseRegisters.clear();
+		baseRegisters.clear();
 		addDefaultBaseRegisters(registerDescriptionResource);
 
-		_registerExtensions.clear();
+		registerExtensions.clear();
 		addDefaultRegisterExtensions(registerDescriptionResource);
 
-		for (List<MuxInput> list : _selectedMuxInputs.values()) {
+		for (List<MuxInput> list : selectedMuxInputs.values()) {
 			list.clear();
 		}
 		addDefaultSelectedMuxSources();
@@ -268,6 +268,6 @@ public class MachineConfigurationBuilder {
 	 */
 	public MachineConfiguration build() {
 		addRegistersAsMuxSources();
-		return new MachineConfiguration(_aluOperations, _baseRegisters, _registerExtensions, _allowedMuxInputs, _selectedMuxInputs);
+		return new MachineConfiguration(aluOperations, baseRegisters, registerExtensions, allowedMuxInputs, selectedMuxInputs);
 	}
 }

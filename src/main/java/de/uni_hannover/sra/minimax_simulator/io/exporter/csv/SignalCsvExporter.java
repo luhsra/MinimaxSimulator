@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 // TODO: create abstract parent class SignalExporter
 public class SignalCsvExporter {
 
-	private final File	_file;
+	private final File file;
 
 	/**
 	 * Creates a new instance of the {@code SignalCsvExporter} and sets the file.
@@ -28,7 +28,7 @@ public class SignalCsvExporter {
 	 *          the {@code File} to save to
 	 */
 	public SignalCsvExporter(File file) {
-		_file = checkNotNull(file, "Invalid Null argument: file");
+		this.file = checkNotNull(file, "Invalid Null argument: file");
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class SignalCsvExporter {
 		// write the table to disk
 		Writer wr = null;
 		try {
-			wr = IOUtils.toBufferedWriter(new FileWriter(_file));
+			wr = IOUtils.toBufferedWriter(new FileWriter(file));
 
 			// header line
 			wr.append("#,Label");

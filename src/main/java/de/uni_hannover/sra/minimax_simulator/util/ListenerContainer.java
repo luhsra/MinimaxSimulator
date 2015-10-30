@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ListenerContainer<L> {
 
-	private List<L> _listeners = new ArrayList<L>(2);
+	private List<L> listeners = new ArrayList<L>(2);
 
 	/**
 	 * Adds the specified listener to the internal list if it is not already added
@@ -24,8 +24,8 @@ public class ListenerContainer<L> {
 	 *          the listener to register
 	 */
 	public void addListener(L listener) {
-		if (!_listeners.contains(listener)) {
-			_listeners.add(listener);
+		if (!listeners.contains(listener)) {
+			listeners.add(listener);
 		}
 	}
 
@@ -36,7 +36,7 @@ public class ListenerContainer<L> {
 	 *          the listener to remove
 	 */
 	public void removeListener(L listener) {
-		_listeners.remove(listener);
+		listeners.remove(listener);
 	}
 
 	/**
@@ -46,6 +46,6 @@ public class ListenerContainer<L> {
 	 *          a list of the registered listeners
 	 */
 	protected List<L> getListeners() {
-		return _listeners;
+		return listeners;
 	}
 }

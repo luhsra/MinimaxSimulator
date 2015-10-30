@@ -23,47 +23,47 @@ import java.util.Set;
  */
 class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 
-	private final List<MachineDisplayListener>	_listeners;
+	private final List<MachineDisplayListener> listeners;
 
-	private final Set<SpriteOwner>				_spriteOwners;
+	private final Set<SpriteOwner> spriteOwners;
 
-	private RenderEnvironment					_renderEnvironment;
-	private Dimension							_dimension;
+	private RenderEnvironment renderEnvironment;
+	private Dimension dimension;
 
 	/**
 	 * Constructs a new and empty {@code MinimaxDisplay}.
 	 */
 	public MinimaxDisplay() {
-		_listeners = new ArrayList<MachineDisplayListener>(1);
-		_spriteOwners = new HashSet<SpriteOwner>();
+		listeners = new ArrayList<MachineDisplayListener>(1);
+		spriteOwners = new HashSet<SpriteOwner>();
 
-		_renderEnvironment = new DummyRenderEnvironment();
-		_dimension = Dimension.ZERO;
+		renderEnvironment = new DummyRenderEnvironment();
+		dimension = Dimension.ZERO;
 	}
 
 	@Override
 	public RenderEnvironment getRenderEnvironment() {
-		return _renderEnvironment;
+		return renderEnvironment;
 	}
 
 	@Override
 	public void setRenderEnvironment(RenderEnvironment env) {
-		_renderEnvironment = env;
+		renderEnvironment = env;
 
-		for (MachineDisplayListener l : _listeners) {
+		for (MachineDisplayListener l : listeners) {
 			l.machineDisplayChanged();
 		}
 	}
 
 	@Override
 	public void addSpriteOwner(SpriteOwner spriteOwner) {
-		_spriteOwners.add(spriteOwner);
+		spriteOwners.add(spriteOwner);
 		fireSpriteOwnerAdded(spriteOwner);
 	}
 
 	@Override
 	public void removeSpriteOwner(SpriteOwner spriteOwner) {
-		_spriteOwners.remove(spriteOwner);
+		spriteOwners.remove(spriteOwner);
 		fireSpriteOwnerRemoved(spriteOwner);
 	}
 
@@ -103,12 +103,12 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 
 	@Override
 	public void addMachineDisplayListener(MachineDisplayListener l) {
-		_listeners.add(l);
+		listeners.add(l);
 	}
 
 	@Override
 	public void removeMachineDisplayListener(MachineDisplayListener l) {
-		_listeners.add(l);
+		listeners.add(l);
 	}
 
 	/**
@@ -119,21 +119,21 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 	 *          the new {@code Dimension}
 	 */
 	public void setDimension(Dimension dimension) {
-		_dimension = dimension;
+		this.dimension = dimension;
 
-		for (MachineDisplayListener l : _listeners) {
+		for (MachineDisplayListener l : listeners) {
 			l.machineSizeChanged();
 		}
 	}
 
 	@Override
 	public Dimension getDimension() {
-		return _dimension;
+		return dimension;
 	}
 
 	@Override
 	public Set<SpriteOwner> getAllSpriteOwners() {
-		return _spriteOwners;
+		return spriteOwners;
 	}
 
 	/**
@@ -143,7 +143,7 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 	 *          the added {@code SpriteOwner}
 	 */
 	protected void fireSpriteOwnerAdded(SpriteOwner spriteOwner) {
-		for (MachineDisplayListener l : _listeners) {
+		for (MachineDisplayListener l : listeners) {
 			l.onSpriteOwnerAdded(spriteOwner);
 		}
 	}
@@ -155,7 +155,7 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 	 *          the removed {@code SpriteOwner}
 	 */
 	protected void fireSpriteOwnerRemoved(SpriteOwner spriteOwner) {
-		for (MachineDisplayListener l : _listeners) {
+		for (MachineDisplayListener l : listeners) {
 			l.onSpriteOwnerRemoved(spriteOwner);
 		}
 	}
@@ -167,18 +167,18 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 	 *          the changed {@code SpriteOwner}
 	 */
 	protected void fireSpriteOwnerChanged(SpriteOwner spriteOwner) {
-		for (MachineDisplayListener l : _listeners) {
+		for (MachineDisplayListener l : listeners) {
 			l.onSpriteOwnerChanged(spriteOwner);
 		}
 	}
 
 	@Override
 	public Font getFont() {
-		return _renderEnvironment.getFont();
+		return renderEnvironment.getFont();
 	}
 
 	@Override
 	public FontMetrics getFontMetrics() {
-		return _renderEnvironment.getFontMetrics();
+		return renderEnvironment.getFontMetrics();
 	}
 }

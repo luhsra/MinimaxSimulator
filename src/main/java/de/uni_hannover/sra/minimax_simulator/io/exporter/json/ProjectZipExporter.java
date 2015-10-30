@@ -27,9 +27,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ProjectZipExporter implements ProjectExporter {
 
-	private final static Charset	charset	= Charset.forName("UTF-8");
+	private final static Charset CHARSET = Charset.forName("UTF-8");
 
-	private final File				_file;
+	private final File file;
 
 	/**
 	 * Prepares a new exporter that will write an exported project as a zip archive to the given
@@ -39,7 +39,7 @@ public class ProjectZipExporter implements ProjectExporter {
 	 *            the (non-null) file that will be (over-)written
 	 */
 	public ProjectZipExporter(File file) {
-		_file = checkNotNull(file, "Invalid Null argument: file");
+		this.file = checkNotNull(file, "Invalid Null argument: file");
 	}
 
 	@Override
@@ -48,35 +48,35 @@ public class ProjectZipExporter implements ProjectExporter {
 
 		FileOutputStream fos = null;
 		try {
-			fos = new FileOutputStream(_file);
+			fos = new FileOutputStream(file);
 
 			ZipOutputStream zos = new ZipOutputStream(fos);
 			try {
 				ZipEntry machineFile = new ZipEntry("machine.json");
 				zos.putNextEntry(machineFile);
-				new MachineJsonExporter().write(new OutputStreamWriter(zos, charset),
+				new MachineJsonExporter().write(new OutputStreamWriter(zos, CHARSET),
 					project.getMachineConfiguration());
 
 				zos.closeEntry();
 
 				ZipEntry userFile = new ZipEntry("user.json");
 				zos.putNextEntry(userFile);
-				new UserJsonExporter().write(new OutputStreamWriter(zos, charset),
+				new UserJsonExporter().write(new OutputStreamWriter(zos, CHARSET),
 					project.getProjectConfiguration());
 
 				zos.closeEntry();
 
 				ZipEntry signalTableEntry = new ZipEntry("signal.json");
 				zos.putNextEntry(signalTableEntry);
-				new SignalJsonExporter().write(new OutputStreamWriter(zos, charset),
+				new SignalJsonExporter().write(new OutputStreamWriter(zos, CHARSET),
 					project.getSignalTable());
 			} catch (IOException ioe) {
-				throw new ProjectExportException("I/O Error while exporting project into file: " + _file.getPath(), ioe);
+				throw new ProjectExportException("I/O Error while exporting project into file: " + file.getPath(), ioe);
 			} finally {
 				IOUtils.closeQuietly(zos);
 			}
 		} catch (FileNotFoundException e) {
-			throw new ProjectExportException("Target file for export of project cannot be opened: " + _file.getPath(), e);
+			throw new ProjectExportException("Target file for export of project cannot be opened: " + file.getPath(), e);
 		} finally {
 			IOUtils.closeQuietly(fos);
 		}

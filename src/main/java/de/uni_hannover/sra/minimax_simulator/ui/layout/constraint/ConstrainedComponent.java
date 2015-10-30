@@ -9,7 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
  */
 class ConstrainedComponent extends AbstractAttributeOwner {
 
-	private final Component								_component;
+	private final Component component;
 
 	/**
 	 * Constructs a new {@code ConstrainedComponent} with the specified name and {@link Component}.
@@ -21,16 +21,16 @@ class ConstrainedComponent extends AbstractAttributeOwner {
 	 */
 	public ConstrainedComponent(String name, Component component) {
 		super(name);
-		_component = component;
+		this.component = component;
 	}
 
 	@Override
 	public int getPreferredWidth() {
-		return _component.getDimension().w;
+		return component.getDimension().w;
 	}
 
 	@Override
 	public int getPreferredHeight() {
-		return _component.getDimension().h;
+		return component.getDimension().h;
 	}
 }

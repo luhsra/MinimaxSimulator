@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class MinimaxSignalDescription implements DescriptionFactory {
 
-	private final MachineConfiguration	_configuration;
-	private final TextResource			_aluRes;
+	private final MachineConfiguration configuration;
+	private final TextResource aluRes;
 
 	/**
 	 * Constructs a new {@code MinimaxSignalDescription} using the specified {@link MachineConfiguration}.
@@ -31,8 +31,8 @@ public class MinimaxSignalDescription implements DescriptionFactory {
 	 *          the machine's configuration
 	 */
 	public MinimaxSignalDescription(MachineConfiguration machineConfiguration) {
-		_configuration = machineConfiguration;
-		_aluRes = Main.getTextResource("alu");
+		configuration = machineConfiguration;
+		aluRes = Main.getTextResource("alu");
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class MinimaxSignalDescription implements DescriptionFactory {
 	private List<String> getWritingRegisterNames(SignalRow row) {
 		List<String> registersWrittenByAlu = new ArrayList<String>();
 		int mdrSelect = row.getSignalValue(BaseControlPort.MDR_SEL.name());
-		for (RegisterExtension register : _configuration.getBaseRegisters()) {
+		for (RegisterExtension register : configuration.getBaseRegisters()) {
 			int value = row.getSignalValue(register.getName() + ".W");
 			if (value == 0) {
 				continue;
@@ -59,7 +59,7 @@ public class MinimaxSignalDescription implements DescriptionFactory {
 
 			registersWrittenByAlu.add(register.getName());
 		}
-		for (RegisterExtension register : _configuration.getRegisterExtensions()) {
+		for (RegisterExtension register : configuration.getRegisterExtensions()) {
 			Integer value = row.getSignalValue(register.getName() + ".W");
 			if (value == 1) {
 				registersWrittenByAlu.add(register.getName());
@@ -82,24 +82,24 @@ public class MinimaxSignalDescription implements DescriptionFactory {
 		SignalValue aluCtrl = row.getSignal(BaseControlPort.ALU_CTRL.name(), SignalValue.DONT_CARE);
 
 		String muxNameA;
-		if (!paramA.isDontCare() && paramA.intValue() < _configuration.getMuxSources(MuxType.A).size()) {
-			muxNameA = _configuration.getMuxSources(MuxType.A).get(paramA.intValue()).getName();
+		if (!paramA.isDontCare() && paramA.intValue() < configuration.getMuxSources(MuxType.A).size()) {
+			muxNameA = configuration.getMuxSources(MuxType.A).get(paramA.intValue()).getName();
 		}
 		else {
 			muxNameA = "?";
 		}
 
 		String muxNameB;
-		if (!paramB.isDontCare() && paramB.intValue() < _configuration.getMuxSources(MuxType.B).size()) {
-			muxNameB = _configuration.getMuxSources(MuxType.B).get(paramB.intValue()).getName();
+		if (!paramB.isDontCare() && paramB.intValue() < configuration.getMuxSources(MuxType.B).size()) {
+			muxNameB = configuration.getMuxSources(MuxType.B).get(paramB.intValue()).getName();
 		}
 		else {
 			muxNameB = "?";
 		}
 
-		if (!aluCtrl.isDontCare() && aluCtrl.intValue() < _configuration.getAluOperations().size()) {
-			AluOperation op = _configuration.getAluOperation(aluCtrl.intValue());
-			return op.getRtOperation(_aluRes, muxNameA, muxNameB);
+		if (!aluCtrl.isDontCare() && aluCtrl.intValue() < configuration.getAluOperations().size()) {
+			AluOperation op = configuration.getAluOperation(aluCtrl.intValue());
+			return op.getRtOperation(aluRes, muxNameA, muxNameB);
 		}
 		else {
 			return muxNameA + " ? " + muxNameB;

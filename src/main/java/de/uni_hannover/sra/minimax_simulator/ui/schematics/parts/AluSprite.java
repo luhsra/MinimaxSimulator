@@ -31,7 +31,7 @@ public class AluSprite extends CircuitSprite {
 	private final static String PIN_A = "A";
 	private final static String PIN_B = "B";
 
-	private final Alu _alu;
+	private final Alu alu;
 
 	/**
 	 * Initializes the {@code AluSprite}.
@@ -40,15 +40,15 @@ public class AluSprite extends CircuitSprite {
 	 *          the {@link Alu} this sprite will represent
 	 */
 	public AluSprite(Alu alu) {
-		_alu = checkNotNull(alu);
+		this.alu = checkNotNull(alu);
 	}
 
 	@Override
 	public void paint(GraphicsContext gc) {
-		debugBounds(gc, _alu.getBounds());
+		debugBounds(gc, alu.getBounds());
 
-		double xCenter = _alu.getBounds().x + _alu.getBounds().w / 2;
-		double yCenter = _alu.getBounds().y + _alu.getBounds().h / 2;
+		double xCenter = alu.getBounds().x + alu.getBounds().w / 2;
+		double yCenter = alu.getBounds().y + alu.getBounds().h / 2;
 
 		gc.save();
 		gc.setLineWidth(1);
@@ -72,11 +72,11 @@ public class AluSprite extends CircuitSprite {
 		gc.fillText(PIN_A, xTextA, yTextA);
 		gc.fillText(PIN_B, xTextB, yTextB);
 
-		debugPin(gc, _alu.getInA());
-		debugPin(gc, _alu.getInB());
-		debugPin(gc, _alu.getInCtrl());
-		debugPin(gc, _alu.getOutData());
-		debugPin(gc, _alu.getOutZero());
+		debugPin(gc, alu.getInA());
+		debugPin(gc, alu.getInB());
+		debugPin(gc, alu.getInCtrl());
+		debugPin(gc, alu.getOutData());
+		debugPin(gc, alu.getOutZero());
 	}
 
 }

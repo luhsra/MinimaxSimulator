@@ -29,15 +29,11 @@ class Importer {
 			throw new ProjectImportException("Content " + element + " is null");
 		}
 
-		try
-		{
+		try {
 			return Enum.valueOf(enumClass, value);
-		}
-		catch (IllegalArgumentException e)
-		{
-			throw new ProjectImportException("Content " + element
-					+ " is not a valid member of enum " + enumClass.getSimpleName() + ": "
-					+ value, e);
+		} catch (IllegalArgumentException e) {
+			throw new ProjectImportException("Content " + element + " is not a valid member of enum "
+					+ enumClass.getSimpleName() + ": " + value, e);
 		}
 	}
 
