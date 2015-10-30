@@ -15,20 +15,37 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class Project
-{
-	// The part that is actually export-friendly
+/**
+ * The {@code Project} holds every information of the current machine, i.e. the {@link MachineConfiguration},
+ * {@link ProjectConfiguration}, {@link SignalTable}, {@link ConfigurableMachine}, {@link SignalConfiguration} and
+ * {@link Simulation}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class Project {
+
+	// the part that is actually export-friendly
 	private final MachineConfiguration	_machineConfiguration;
 	private final ProjectConfiguration	_projectConfiguration;
 	private final SignalTable			_signalTable;
 
-	// The simulated machine
+	// the simulated machine
 	private final ConfigurableMachine	_machine;
 	private final SignalConfiguration	_signalConfig;
 	private final Simulation			_simulation;
 
 	private boolean						_unsaved;
 
+	/**
+	 * Constructs a new {@code Project} with the specified {@link MachineConfiguration}, {@link ProjectConfiguration} and control table.
+	 *
+	 * @param machineConfig
+	 *          the machine's configuration
+	 * @param projectConfig
+	 *          the project configuration
+	 * @param signalTable
+	 *          the machine's control table
+	 */
 	public Project(MachineConfiguration machineConfig, ProjectConfiguration projectConfig, SignalTable signalTable) {
 		_unsaved = false;
 
@@ -45,38 +62,86 @@ public class Project
 		_signalConfig.addSignalConfigListener(simulation);
 	}
 
+	/**
+	 * Gets the {@link MachineConfiguration}.
+	 *
+	 * @return
+	 *          the machine's configuration
+	 */
 	public MachineConfiguration getMachineConfiguration() {
 		return _machineConfiguration;
 	}
 
+	/**
+	 * Gets the {@link ProjectConfiguration}.
+	 *
+	 * @return
+	 *          the project configuration
+	 */
 	public ProjectConfiguration getProjectConfiguration() {
 		return _projectConfiguration;
 	}
 
+	/**
+	 * Gets the {@link SignalTable}.
+	 *
+	 * @return
+	 *          the machine's control table
+	 */
 	public SignalTable getSignalTable() {
 		return _signalTable;
 	}
 
+	/**
+	 * Gets the value of the {@code unsaved} property.
+	 *
+	 * @return
+	 *          {@code true} if the project has unsaved changes, {@code false} otherwise
+	 */
 	public boolean isUnsaved() {
 		return _unsaved;
 	}
 
+	/**
+	 * Marks the {@code Project} as unsaved.
+	 */
 	public void setIsUnsaved() {
 		_unsaved = true;
 	}
 
+	/**
+	 * Marks the {@code Project} as saved.
+	 */
 	public void setIsSaved() {
 		_unsaved = false;
 	}
 
+	/**
+	 * Gets the {@link Machine}.
+	 *
+	 * @return
+	 *          the machine
+	 */
 	public Machine getMachine() {
 		return _machine;
 	}
 
+	/**
+	 * Gets the {@link SignalConfiguration}.
+	 *
+	 * @return
+	 *          the signal configuration
+	 */
 	public SignalConfiguration getSignalConfiguration() {
 		return _signalConfig;
 	}
 
+	/**
+	 * Gets the {@link Simulation} instance.
+	 *
+	 * @return
+	 *          the simulation
+	 */
 	public Simulation getSimulation() {
 		return _simulation;
 	}

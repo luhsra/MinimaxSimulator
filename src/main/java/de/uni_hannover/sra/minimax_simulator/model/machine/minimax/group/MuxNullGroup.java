@@ -9,20 +9,31 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.IngoingPin;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
 
-public class MuxNullGroup extends AbstractGroup
-{
+/**
+ * Groups the parts of a {@link de.uni_hannover.sra.minimax_simulator.model.configuration.mux.NullMuxInput}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class MuxNullGroup extends AbstractGroup {
+
 	private final String _pinName;
 	private final IngoingPin _muxPin;
 
-	public MuxNullGroup(String pinName, IngoingPin muxPin)
-	{
+	/**
+	 * Constructs a new {@code MuxNullGroup} with the specified pin name and {@link IngoingPin}.
+	 *
+	 * @param pinName
+	 *          the name of the pin
+	 * @param muxPin
+	 *          the {@code IngoingPin} which is {@code NullMuxInput}
+	 */
+	public MuxNullGroup(String pinName, IngoingPin muxPin) {
 		_pinName = pinName;
 		_muxPin = muxPin;
 	}
 
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		Junction deadEnd = new Junction(2);
 		Wire wire = new Wire(2, deadEnd.getDataOuts().get(0), _muxPin);
 
@@ -31,14 +42,12 @@ public class MuxNullGroup extends AbstractGroup
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return true;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		return new MuxNullLayoutSet(_pinName);
 	}
 }

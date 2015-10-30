@@ -15,16 +15,38 @@ public class DummyRenderEnvironment implements RenderEnvironment {
 	private final Font font;
 	private final FontMetrics fontMetrics;
 
+	/**
+	 * Constructs a new {@code DummyRenderEnvironment} for font measuring with the font
+	 * "SansSerif" and size 17.
+	 */
 	public DummyRenderEnvironment() {
 		font = new Font("SansSerif", 17);
 		fontMetrics = Toolkit.getToolkit().getFontLoader().getFontMetrics(font);
 	}
 
+	/**
+	 * Gets the background {@link Color}.<br>
+	 * <b>Caution:</b> Throws {@link UnsupportedOperationException}.
+	 *
+	 * @return
+	 *          the {@code Color} of the background
+	 * @throws UnsupportedOperationException
+	 *          thrown because {@code DummyRenderEnvironment} is for font measuring only
+	 */
 	@Override
 	public Color getBackgroundColor() {
 		throw new UnsupportedOperationException("This is a dummy render environment for font measuring");
 	}
 
+	/**
+	 * Gets the foreground {@link Color}.<br>
+	 * <b>Caution:</b> Throws {@link UnsupportedOperationException}.
+	 *
+	 * @return
+	 *          the {@code Color} of the foreground
+	 * @throws UnsupportedOperationException
+	 *          thrown because {@code DummyRenderEnvironment} is for font measuring only
+	 */
 	@Override
 	public Color getForegroundColor() {
 		throw new UnsupportedOperationException("This is a dummy render environment for font measuring");

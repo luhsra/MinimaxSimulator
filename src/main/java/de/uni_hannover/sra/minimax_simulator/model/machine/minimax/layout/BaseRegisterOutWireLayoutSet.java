@@ -3,18 +3,28 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 
-public class BaseRegisterOutWireLayoutSet extends DefaultLayoutSet
-{
-	public BaseRegisterOutWireLayoutSet()
-	{
+/**
+ * The container for the {@link de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.Layout}s
+ * of the base register's output wires.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class BaseRegisterOutWireLayoutSet extends DefaultLayoutSet {
+
+	/**
+	 * Initializes the {@code BaseRegisterOutWireLayoutSet}.
+	 */
+	public BaseRegisterOutWireLayoutSet() {
 		layoutMdr();
 		layoutIr();
 		layoutPc();
 		layoutAccu();
 	}
 
-	private void layoutMdr()
-	{
+	/**
+	 * Initializes the {@code Layout}s of the MDR's output wires.
+	 */
+	private void layoutMdr() {
 		ConstraintBuilder cb = new ConstraintBuilder();
 
 		String mdrMemJunction = Parts.MEMORY + Parts._JUNCTION;
@@ -35,29 +45,29 @@ public class BaseRegisterOutWireLayoutSet extends DefaultLayoutSet
 		String memDiWire = Parts.MEMORY + Parts._WIRE_DATA_IN;
 
 		addLayout(memDiWire + ".0", cb.align(mdrMemJunction));
-		addLayout(memDiWire + ".1",
-			cb.alignHorizontally(mdrMemJunction).alignVertically(Parts.MEMORY_DI));
+		addLayout(memDiWire + ".1", cb.alignHorizontally(mdrMemJunction).alignVertically(Parts.MEMORY_DI));
 		addLayout(memDiWire + ".2", cb.align(Parts.MEMORY_DI));
 	}
 
-	private void layoutIr()
-	{
+	/**
+	 * Initializes the {@code Layout}s of the IR's output wires.
+	 */
+	private void layoutIr() {
 		ConstraintBuilder cb = new ConstraintBuilder();
 
 		String irOutJunction = Parts.IR + Parts._OUT_JUNCTION;
 		String irOutWire = Parts.IR + Parts._WIRE_DATA_OUT;
 
-		addLayout(irOutJunction,
-			cb.above(Parts.SIGN_EXTENSION, 15).left(Parts.PC + Parts._OUT_JUNCTION, 10));
-		addLayout(irOutWire + ".0",
-			cb.above(Parts.SIGN_EXTENSION).alignHorizontally(Parts.SIGN_EXTENSION));
-		addLayout(irOutWire + ".1",
-			cb.alignVertically(irOutJunction).alignHorizontally(Parts.SIGN_EXTENSION));
+		addLayout(irOutJunction, cb.above(Parts.SIGN_EXTENSION, 15).left(Parts.PC + Parts._OUT_JUNCTION, 10));
+		addLayout(irOutWire + ".0", cb.above(Parts.SIGN_EXTENSION).alignHorizontally(Parts.SIGN_EXTENSION));
+		addLayout(irOutWire + ".1", cb.alignVertically(irOutJunction).alignHorizontally(Parts.SIGN_EXTENSION));
 		addLayout(irOutWire + ".2", cb.align(irOutJunction));
 	}
 
-	private void layoutPc()
-	{
+	/**
+	 * Initializes the {@code Layout}s of the PC's output wires.
+	 */
+	private void layoutPc() {
 		ConstraintBuilder cb = new ConstraintBuilder();
 
 		String pcOutJunction = Parts.PC + Parts._OUT_JUNCTION;
@@ -68,6 +78,9 @@ public class BaseRegisterOutWireLayoutSet extends DefaultLayoutSet
 		addLayout(pcOutWire + ".1", cb.align(pcOutJunction));
 	}
 
+	/**
+	 * Initializes the {@code Layout}s of the ACCU's output wires.
+	 */
 	private void layoutAccu() {
 		ConstraintBuilder cb = new ConstraintBuilder();
 

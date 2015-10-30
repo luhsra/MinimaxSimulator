@@ -1,7 +1,18 @@
 package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
 
-public interface MuxInput
-{
+/**
+ * A {@code MuxInput} is the input of a multiplexer.
+ *
+ * @author Martin L&uuml;ck
+ */
+public interface MuxInput {
+
+	/**
+	 * Gets the name of the {@code MuxInput}.
+	 *
+	 * @return
+	 *          the name of the {@code MuxInput}
+	 */
 	public String getName();
 
 	@Override

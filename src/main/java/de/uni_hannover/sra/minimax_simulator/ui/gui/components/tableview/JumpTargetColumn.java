@@ -12,12 +12,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 /**
- * An extended {@link SignalTableColumn} for the UI representation of the jump attribute.
+ * An extended {@link SignalTableColumn} for the UI representation of the jump attribute of a {@link SignalRow}.
  *
  * @author Philipp Rohde
  */
 public class JumpTargetColumn extends SignalTableColumn {
 
+    /** The style for highlighting invalid jump targets. */
     private final String invalidJumpStyle = "-fx-text-fill: red; -fx-font-weight: bold;";
 
     /**

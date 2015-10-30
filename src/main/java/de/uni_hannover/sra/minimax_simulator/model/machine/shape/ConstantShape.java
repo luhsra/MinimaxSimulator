@@ -11,6 +11,12 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Constant;
  */
 public class ConstantShape extends TextRenderShape {
 
+	/**
+	 * Initializes the {@code ConstantShape}.
+	 *
+	 * @param fontProvider
+	 *          the {@link FontMetricsProvider} used for font measuring
+	 */
 	public ConstantShape(FontMetricsProvider fontProvider) {
 		super(fontProvider);
 	}
@@ -19,7 +25,7 @@ public class ConstantShape extends TextRenderShape {
 	public void updateShape(Component component) {
 		Constant constant = (Constant) component;
 
-		// Likely to be cached
+		// likely to be cached
 		component.setDimension(getStringDimension(constant.getConstantStr()));
 	}
 

@@ -6,6 +6,11 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Multiplexer;
 
+/**
+ * The shape of a multiplexer.
+ *
+ * @author Martin L&uuml;ck
+ */
 public class MuxShape implements ComponentShape {
 
 	private final static int	MUX_WIDTH			= 20;

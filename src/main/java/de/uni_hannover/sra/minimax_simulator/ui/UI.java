@@ -11,12 +11,15 @@ import java.util.concurrent.TimeoutException;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
+ * Provides methods to invoke {@link Runnable}s in the FX application thread.
  *
  * @author Philipp Rohde
  * @author Martin L&uuml;ck
  */
-public class UI
-{
+// TODO: remove the instance; all methods are static
+// TODO: merge with UIUtil?
+public class UI {
+
 	private static UI	instance;
 
 	/**
@@ -50,8 +53,8 @@ public class UI
 	}
 
 	/**
-	 * If called from the FX application thread, just calls {@link Runnable#run()} on <code>r</code>.<br>
-	 * Otherwise, schedules its execution there.
+	 * If called from the FX application thread, just calls {@link Runnable#run()} on {@code r}.<br>
+	 * Otherwise schedules its execution there.
 	 *
 	 * @param r
 	 * 			the {@code Runnable} to execute in FX application thread
@@ -68,12 +71,13 @@ public class UI
 	}
 
 	/**
-	 * Schedule execution of the {@link Runnable} in the Swing event dispatch thread and blocks
-	 * until the call succeeded or an exception or error occurs during the execution. <br>
-	 * In the second case, this method will throw the occured {@link RuntimeException} or wrap the
-	 * occured checked exception into one.
+	 * Schedules execution of the {@link Runnable} in the FX application thread and blocks
+	 * until the call succeeded or an exception or error occurs during the execution.<br>
+	 * In the second case this method will throw the occurred {@link RuntimeException} or wrap the
+	 * occurred checked exception into one.
 	 * 
 	 * @param r
+	 *          the {@code Runnable} to execute in FX application thread
 	 */
 	// This would work if invokeAndWait() would.
 	public static void invokeNowFX(Runnable r) {
@@ -81,17 +85,26 @@ public class UI
 		try {
 			System.out.println("I am trying to invokeAndWait()");
 			invokeAndWait(r);
-		}
-		catch (ExecutionException e) {
+		} catch (ExecutionException e) {
 			System.out.println("Error: ExecutionException");
 			throw Throwables.propagate(e.getCause());
-		}
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			System.out.println("Error: InterruptedException");
 			throw new Error("Invoking thread interrupted while waiting: " + Thread.currentThread().getName(), e);
 		}
 	}
 
+	/**
+	 * Schedules execution of the {@link Runnable} in the FX application thread and waits until
+	 * the call succeeded or an exception occurred.
+	 *
+	 * @param r
+	 *          the {@code Runnable} to execute in FX application thread
+	 * @throws InterruptedException
+	 *          thrown if the execution was interrupted
+	 * @throws ExecutionException
+	 *          thrown if an error occurred during execution
+	 */
 	// According to https://community.oracle.com/thread/2372263 this should do the trick
 	// but the runnable is not executed before task.get() finishes. This is the reason for the timeout.
 	private static void invokeAndWait(Runnable r) throws InterruptedException, ExecutionException {
@@ -112,8 +125,7 @@ public class UI
 //		System.out.println("finished waiting");
 		try {
 			task.get(10, TimeUnit.SECONDS);
-		}
-		catch (TimeoutException e) {
+		} catch (TimeoutException e) {
 			// timed out
 			return;
 		}

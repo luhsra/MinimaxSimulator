@@ -48,7 +48,7 @@ import java.util.Optional;
  * <b>FXController of the DebuggerView</b><br>
  * <br>
  * This controller handles every GUI interaction with the debugger {@link Tab}.
- * The DebuggerView is the part of the UI for simulating the Machine.
+ * The DebuggerView is the part of the UI for simulating the machine.
  *
  * @author Philipp Rohde
  */
@@ -83,7 +83,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     @FXML MemoryTable embeddedMemoryTableController;
 
     /**
-     * The constructor initializes the final variables.
+     * Initializes the final variables.
      */
     public DebuggerView() {
         _resSignal = Main.getTextResource("signal");
@@ -94,7 +94,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     }
 
     /**
-     * This method is called during application start up and initializes the DebuggerView
+     * This method is called during application start up and initializes the {code DebuggerView}
      * as much as possible without having any project data.
      */
     public void initialize() {
@@ -130,7 +130,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     }
 
     /**
-     * Sets the tooltips for the buttons.
+     * Sets the {@link Tooltip}s for the {@link Button}s.
      */
     private void setTooltips() {
         btnSimCycle.setTooltip(new Tooltip(_res.get("action.step.tip")));
@@ -572,10 +572,19 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * @author Philipp Rohde
      */
     public static class RegisterTableModel {
+
         private final SimpleStringProperty name;
         private final SimpleStringProperty decimal;
         private final SimpleStringProperty hex;
 
+        /**
+         * Constructs a new {@code RegisterTableModel} and sets the properties.
+         *
+         * @param register
+         *          the {@link RegisterExtension} to represent
+         * @param value
+         *          the traceable value of the register
+         */
         private RegisterTableModel(RegisterExtension register, Trackable<Integer> value) {
             this.name = new SimpleStringProperty(register.getName());
 
@@ -640,9 +649,16 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * @author Philipp Rohde
      */
     public static class AluTableModel {
+
         private final SimpleStringProperty decimal;
         private final SimpleStringProperty hex;
 
+        /**
+         * Constructs a new {@code AluTableModel} and sets the properties.
+         *
+         * @param value
+         *          the ALU result
+         */
         private AluTableModel (Integer value) {
             if (value == null) {
                 this.decimal = new SimpleStringProperty("--");
@@ -688,6 +704,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * @author Philipp Rohde
      */
     public static class SimulationTableModel {
+
         private final SimpleStringProperty label;
         private final SimpleStringProperty address;
         private final SimpleStringProperty alu;
@@ -696,6 +713,14 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         private final SimpleBooleanProperty breakpoint;
         private final SimpleBooleanProperty active;
 
+        /**
+         * Constructs a new {@code SimulationTableModel} and sets the properties.
+         *
+         * @param row
+         *          the {@link SignalRow} to represent
+         * @param rowIndex
+         *          the index of the row
+         */
         private SimulationTableModel(SignalRow row, int rowIndex) {
             if (row.isBreakpoint()) {
                 breakpoint = new SimpleBooleanProperty(true);

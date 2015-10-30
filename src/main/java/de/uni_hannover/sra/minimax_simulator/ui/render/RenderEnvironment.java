@@ -12,7 +12,7 @@ import javafx.scene.text.Font;
 public interface RenderEnvironment {
 
 	/**
-	 * Gets the background {@link javafx.scene.paint.Color}.
+	 * Gets the background {@link Color}.
 	 *
 	 * @return
 	 *          the {@code Color} of the background
@@ -20,7 +20,7 @@ public interface RenderEnvironment {
 	public Color getBackgroundColor();
 
 	/**
-	 * Gets the foreground {@link javafx.scene.paint.Color}.
+	 * Gets the foreground {@link Color}.
 	 *
 	 * @return
 	 *          the {@code Color} of the foreground
@@ -28,7 +28,7 @@ public interface RenderEnvironment {
 	public Color getForegroundColor();
 
 	/**
-	 * Gets the currently used {@link javafx.scene.text.Font}.
+	 * Gets the currently used {@link Font}.
 	 *
 	 * @return
 	 *          the currently used {@code Font}
@@ -36,7 +36,7 @@ public interface RenderEnvironment {
 	public Font getFont();
 
 	/**
-	 * Gets the {@link com.sun.javafx.tk.FontMetrics} of the {@code RenderEnvironment}.
+	 * Gets the {@link FontMetrics} of the {@code RenderEnvironment}.
 	 *
 	 * @return
 	 *          the {@code FontMetrics} of the {@code RenderEnvironment}.

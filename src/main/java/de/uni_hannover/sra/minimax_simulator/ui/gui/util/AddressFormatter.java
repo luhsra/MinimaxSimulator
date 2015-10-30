@@ -7,17 +7,17 @@ import javafx.scene.control.TextFormatter;
 import java.util.function.UnaryOperator;
 
 /**
- * The AddressFormatter is a {@link TextFormatter} for editing the {@link javafx.scene.control.Spinner}s of the {@link de.uni_hannover.sra.minimax_simulator.ui.gui.MemoryView}.
+ * The {@code AddressFormatter} is a {@link TextFormatter} for editing the {@link javafx.scene.control.Spinner}s of the {@link de.uni_hannover.sra.minimax_simulator.ui.gui.MemoryView}.
  *
  * @author Philipp Rohde
  */
 public class AddressFormatter extends TextFormatter<Integer> {
 
     /**
-     * The constructor creates a {@link TextFormatter} with an {@link HexStringConverter} and a filter for limiting the input.
+     * Creates a {@link TextFormatter} with an {@link HexStringConverter} and a filter for limiting the input.
      *
      * @param mMemory
-     * 			the MachineMemory this AddressFormatter is used for
+     * 			the {@link MachineMemory} the {@code AddressFormatter} is used for
      */
     public AddressFormatter(MachineMemory mMemory) {
         super(  new HexStringConverter(mMemory.getMinAddress(), mMemory.getMaxAddress(), Util.createHexFormatString(mMemory.getAddressWidth(), false)),

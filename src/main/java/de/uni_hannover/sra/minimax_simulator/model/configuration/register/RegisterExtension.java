@@ -1,7 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.model.configuration.register;
 
-public class RegisterExtension
-{
+/**
+ * A {@code RegisterExtension} represents a register of a register machine.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class RegisterExtension {
+
 	private final String _name;
 	private final RegisterSize _size;
 	private final String _description;
@@ -9,55 +14,89 @@ public class RegisterExtension
 
 	private final int _hashCache;
 
-	public RegisterExtension(String name, RegisterSize size, String description, boolean isExtended)
-	{
-		if (name == null)
+	/**
+	 * Constructs a new {@code RegisterExtension} with the specified information.
+	 *
+	 * @param name
+	 *          the name of the {@code RegisterExtension}
+	 * @param size
+	 *          the {@link RegisterSize} of the {@code RegisterExtension}
+	 * @param description
+	 *          the description of the {@code RegisterExtension}
+	 * @param isExtended
+	 *          whether the {@code RegisterExtension} belongs to the base machine or not
+	 */
+	public RegisterExtension(String name, RegisterSize size, String description, boolean isExtended) {
+		if (name == null) {
 			throw new IllegalArgumentException("Invalid argument: register name is null");
-		if (name.isEmpty())
+		}
+		if (name.isEmpty()) {
 			throw new IllegalArgumentException("Invalid argument: register name is empty");
+		}
 
-		if (size == null)
+		if (size == null) {
 			throw new IllegalArgumentException("Invalid argument: register size is null");
+		}
 
-		if (description == null)
+		if (description == null) {
 			description = "";
+		}
 
 		_name = name;
 		_size = size;
 		_description = description;
 		_isExtended = isExtended;
 
-		_hashCache = hashcode0();
+		_hashCache = computeHashCode();
 	}
 
-	public String getName()
-	{
+	/**
+	 * Gets the name of the {@code RegisterExtension}.
+	 *
+	 * @return
+	 *          the name of the {@code RegisterExtension}
+	 */
+	public String getName() {
 		return _name;
 	}
 
-	public RegisterSize getSize()
-	{
+	/**
+	 * Gets the {@link RegisterSize} of the {@code RegisterExtension}.
+	 *
+	 * @return
+	 *          the {@code RegisterSize} of the {@code RegisterExtension}
+	 */
+	public RegisterSize getSize() {
 		return _size;
 	}
 
-	public String getDescription()
-	{
+	/**
+	 * Gets the description of the {@code RegisterExtension}.
+	 *
+	 * @return
+	 *          the description of the {@code RegisterExtension}
+	 */
+	public String getDescription() {
 		return _description;
 	}
 
-	public boolean isExtended()
-	{
+	/**
+	 * Gets the value of the {@code isExtended} property.
+	 *
+	 * @return
+	 *          {@code false} if the {@code RegisterExtension} is part of the base machine, {@code true} otherwise
+	 */
+	public boolean isExtended() {
 		return _isExtended;
 	}
 
-	@Override
-	public int hashCode()
-	{
-		return _hashCache;
-	}
-
-	private int hashcode0()
-	{
+	/**
+	 * Computes the hash code for the {@code RegisterExtension}.
+	 *
+	 * @return
+	 *          the computed hash code
+	 */
+	private int computeHashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + _description.hashCode();
@@ -68,35 +107,45 @@ public class RegisterExtension
 	}
 
 	@Override
-	public boolean equals(Object o)
-	{
-		if (this == o)
+	public int hashCode() {
+		return _hashCache;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
 			return true;
-		if (o == null)
+		}
+		if (o == null) {
 			return false;
-		if (getClass() != o.getClass())
+		}
+		if (getClass() != o.getClass()) {
 			return false;
+		}
 
 		RegisterExtension other = (RegisterExtension) o;
 
-		if (!_name.equals(other._name))
+		if (!_name.equals(other._name)) {
 			return false;
+		}
 
-		if (!_description.equals(other._description))
+		if (!_description.equals(other._description)) {
 			return false;
+		}
 
-		if (_isExtended != other._isExtended)
+		if (_isExtended != other._isExtended) {
 			return false;
+		}
 
-		if (_size != other._size)
+		if (_size != other._size) {
 			return false;
+		}
 
 		return true;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return _name;
 	}
 }

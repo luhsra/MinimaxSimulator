@@ -3,7 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui.util;
 import javafx.util.StringConverter;
 
 /**
- * The NullAwareIntStringConverter is capable of generating a String representation of an Integer for different numeral systems e.g. unsigned hexadecimal and signed decimal.<br>
+ * The {@code NullAwareIntStringConverter} is capable of generating a String representation of an Integer for different numeral systems e.g. unsigned hexadecimal and signed decimal.<br>
  * <br>
  * <b>Caution:</b><br>
  * Due to the use of the synchronous {@link javafx.scene.control.Spinner}s at {@link de.uni_hannover.sra.minimax_simulator.ui.gui.MuxView} the fromString method interprets every String as decimal input.
@@ -16,11 +16,22 @@ public class NullAwareIntStringConverter extends StringConverter {
     private final int _radix;
     private final boolean _signed;
 
+    /**
+     * Constructs a {@code NullAwareIntStringConverter} with the specified radix and value of the {@code signed} property.
+     *
+     * @param radix
+     *          the radix
+     * @param signed
+     *          whether the Integer is signed or not
+     */
     public NullAwareIntStringConverter(int radix, boolean signed) {
         _radix = radix;
         _signed = signed;
     }
 
+    /**
+     * Constructs a {@code NullAwareIntStringConverter} for signed decimal numbers.
+     */
     public NullAwareIntStringConverter() {
         this(10, true);
     }

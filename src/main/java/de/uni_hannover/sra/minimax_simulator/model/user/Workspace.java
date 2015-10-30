@@ -14,6 +14,7 @@ import java.io.File;
  * @author Martin L&uuml;ck
  */
 public class Workspace extends ListenerContainer<WorkspaceListener> {
+
 	private Project	_currentProject;
 	private File	_currentProjectFile;
 
@@ -26,21 +27,29 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 		_lastProjectFolder = null;
 	}
 
+	/**
+	 * Gets the current {@link Project} of the {@code Workspace}.
+	 *
+	 * @return
+	 *          the current {@code Project}
+	 */
 	public Project getProject() {
 		return _currentProject;
 	}
 
 	/**
-	 * Uses the given file to import a project from it. On failure, an exception is thrown. On
-	 * success, the current project, if existing, is discarded. <br>
+	 * Uses the specified file to import a project from it. On failure, an exception is thrown. On
+	 * success, the current project, if existing, is discarded.<br>
 	 * <br>
 	 * Then all {@link WorkspaceListener}s are notified via their
-	 * {@link WorkspaceListener#onProjectOpened(Project)} method. <br>
+	 * {@link WorkspaceListener#onProjectOpened(Project)} method.<br>
 	 * <br>
 	 * This method does not check if the current project has unsaved data.
 	 * 
 	 * @param file
+	 *          the {@code File} to open
 	 * @throws ProjectImportException
+	 *          thrown if there was a failure during opening
 	 */
 	public void openProject(File file) throws ProjectImportException {
 		if (_currentProject != null) {
@@ -57,10 +66,10 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 	}
 
 	/**
-	 * Closes the current project and sets it to <code>null</code>. <br>
+	 * Closes the current project and sets it to <code>null</code>.<br>
 	 * <br>
 	 * Then all {@link WorkspaceListener}s are notified via their
-	 * {@link WorkspaceListener#onProjectOpened(Project)} method. <br>
+	 * {@link WorkspaceListener#onProjectOpened(Project)} method.<br>
 	 * <br>
 	 * Discards any unsaved project data.
 	 */
@@ -69,22 +78,26 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 		_currentProject = null;
 		_currentProjectFile = null;
 
-		if (oldProject == null)
+		if (oldProject == null) {
 			return;
+		}
 
-		for (WorkspaceListener l : getListeners())
+		for (WorkspaceListener l : getListeners()) {
 			l.onProjectClosed(oldProject);
+		}
 	}
 
 	/**
-	 * Saves the currently open project to the given file. The file is also saved as return value
-	 * for following {@link #getLastProjectFolder()} calls. <br>
+	 * Saves the currently open project to the specified file. The file is also saved as return value
+	 * for following {@link #getLastProjectFolder()} calls.<br>
 	 * <br>
 	 * Then all {@link WorkspaceListener}s are notified via their
 	 * {@link WorkspaceListener#onProjectSaved(Project)} method.
 	 * 
 	 * @param file
+	 *          the {@code File} to save to
 	 * @throws ProjectExportException
+	 *          thrown if there was a failure during saving
 	 */
 	public void saveProject(File file) throws ProjectExportException {
 		new ProjectZipExporter(file).exportProject(_currentProject);
@@ -93,15 +106,16 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 		_currentProjectFile = file;
 		_lastProjectFolder = file.getParentFile();
 
-		for (WorkspaceListener l : getListeners())
+		for (WorkspaceListener l : getListeners()) {
 			l.onProjectSaved(_currentProject);
+		}
 	}
 
 	/**
-	 * Creates a new project. <br>
+	 * Creates a new project.<br>
 	 * <br>
 	 * Then all {@link WorkspaceListener}s are notified via their
-	 * {@link WorkspaceListener#onProjectOpened(Project)} method. <br>
+	 * {@link WorkspaceListener#onProjectOpened(Project)} method.<br>
 	 * <br>
 	 * Discards any unsaved data.
 	 */
@@ -111,50 +125,60 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 		}
 		_currentProject = new NewProjectBuilder().buildProject();
 
-		for (WorkspaceListener l : getListeners())
+		for (WorkspaceListener l : getListeners()) {
 			l.onProjectOpened(_currentProject);
+		}
 	}
 
 	/**
-	 * Marks the current opened project as unsaved and notifies all listeners. <br>
+	 * Marks the current opened project as unsaved and notifies all listeners.<br>
 	 * <br>
 	 * Does nothing if there is currently no open project or if it is already marked as unsaved.
-	 * 
 	 */
 	public void setProjectUnsaved() {
-		if (_currentProject == null)
+		if (_currentProject == null) {
 			return;
-
-		if (_currentProject.isUnsaved())
+		}
+		else if (_currentProject.isUnsaved()) {
 			return;
+		}
 
 		_currentProject.setIsUnsaved();
 
-		for (WorkspaceListener l : getListeners())
+		for (WorkspaceListener l : getListeners()) {
 			l.onProjectDirty(_currentProject);
+		}
 	}
 
 	/**
-	 * @return the {@link File} representing the folder where the last save or load action for a
-	 *         Project was executed. This is only <code>null</code> if there was no project saved or
-	 *         loaded yet.
+	 * Gets the {@code File} representing the folder where the last save or load action for a
+	 * Project was executed. This is only {@code null} if there was no project saved or loaded yet.
+	 *
+	 * @return
+	 *          the last project folder
 	 */
 	public File getLastProjectFolder() {
 		return _lastProjectFolder;
 	}
 
 	/**
-	 * @return the {@link File} argument of the last {@link #saveProject(File)} call, or
-	 *         <code>null</code> if the method was not yet called for the current project, that is
-	 *         if the current project was never saved or does not exist.
+	 * Gets the {@code File} argument of the last {@link #saveProject(File)} call or {@code null}
+	 * if the method was not yet called for the current project, that is if the current project
+	 * was never saved or does not exist.
+	 *
+	 * @return
+	 *          the current {@code Project}'s {@code File}
 	 */
 	public File getCurrentProjectFile() {
 		return _currentProjectFile;
 	}
 
 	/**
-	 * @return <tt>true</tt> if there is actually an open project and if this project has unsaved
-	 *         changes, <tt>false</tt> otherwise. A newly created project has no unsaved changes.
+	 * Gets the value of the {@code unsaved} property.
+	 *
+	 * @return
+	 *          {@code true} if there is actually an open {@code Project} and if this {@code Project} has
+	 *          unsaved changes, {@code false} otherwise. A newly created project has no unsaved changes.
 	 */
 	public boolean isUnsaved() {
 		return _currentProject != null && _currentProject.isUnsaved();

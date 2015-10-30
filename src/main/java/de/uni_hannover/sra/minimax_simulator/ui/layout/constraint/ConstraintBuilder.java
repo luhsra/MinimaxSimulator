@@ -3,129 +3,273 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout.constraint;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class ConstraintBuilder
-{
+/**
+ * The {@code ConstraintBuilder} is used for building {@link Constraint}s.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class ConstraintBuilder {
+
 	private final Map<AttributeType, Constraint>	_constraints;
 
-	public ConstraintBuilder()
-	{
+	/**
+	 * Constructs a new {@code ConstrainBuilder} without {@link Constraint}s.
+	 */
+	public ConstraintBuilder() {
 		_constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
 	}
 
-	public Map<AttributeType, Constraint> constraints()
-	{
+	/**
+	 * Gets the {@link Constraint}s built by the instance of {@code ConstraintBuilder}.
+	 *
+	 * @return
+	 *          a map of the built {@code Constraint}s
+	 */
+	public Map<AttributeType, Constraint> constraints() {
 		return _constraints;
 	}
 
-	public ConstraintBuilder clear()
-	{
+	/**
+	 * Clears the already built {@link Constraint}s of the instance of {@code ConstraintBuilder}.
+	 *
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder clear() {
 		_constraints.clear();
 		return this;
 	}
 
-	public ConstraintBuilder relative(AttributeType targetAttr, String source,
-			AttributeType sourceAttr, int offset)
-	{
+	/**
+	 * Builds a {@link RelativeConstraint} for the specified {@link AttributeType}.
+	 *
+	 * @param targetAttr
+	 *          the {@code AttributeType}
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @param sourceAttr
+	 *          the source {@code AttributeType} of the {@code RelativeConstraint}
+	 * @param offset
+	 *          the offset of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder relative(AttributeType targetAttr, String source, AttributeType sourceAttr, int offset) {
 		_constraints.put(targetAttr, new RelativeConstraint(source, sourceAttr, offset));
 		return this;
 	}
 
-	public ConstraintBuilder relative(AttributeType targetAttr, String source, AttributeType sourceAttr)
-	{
+	/**
+	 * Builds a {@link RelativeConstraint} for the specified {@link AttributeType}.
+	 *
+	 * @param targetAttr
+	 *          the {@code AttributeType}
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @param sourceAttr
+	 *          the source {@code AttributeType} of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder relative(AttributeType targetAttr, String source, AttributeType sourceAttr) {
 		_constraints.put(targetAttr, new RelativeConstraint(source, sourceAttr));
 		return this;
 	}
 
-	public ConstraintBuilder relative(AttributeType attr, String source, int offset)
-	{
+	/**
+	 * Builds a {@link RelativeConstraint} for the specified {@link AttributeType}.
+	 *
+	 * @param attr
+	 *          the {@code AttributeType}
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @param offset
+	 *          the offset of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder relative(AttributeType attr, String source, int offset) {
 		_constraints.put(attr, new RelativeConstraint(source, attr, offset));
 		return this;
 	}
 
-	public ConstraintBuilder relative(AttributeType attr, String source)
-	{
+	/**
+	 * Builds a {@link RelativeConstraint} for the specified {@link AttributeType}.
+	 *
+	 * @param attr
+	 *          the {@code AttributeType}
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder relative(AttributeType attr, String source) {
 		_constraints.put(attr, new RelativeConstraint(source, attr));
 		return this;
 	}
 
-	public ConstraintBuilder absolute(AttributeType targetAttr, int offset)
-	{
+	/**
+	 * Builds an {@link AbsoluteConstraint} for the specified target {@link AttributeType}.
+	 *
+	 * @param targetAttr
+	 *          the {@code AttributeType}
+	 * @param offset
+	 *          the offset of the {@code AbsoluteConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder absolute(AttributeType targetAttr, int offset) {
 		_constraints.put(targetAttr, new AbsoluteConstraint(offset));
 		return this;
 	}
 
-	public ConstraintBuilder below(String source, int offset)
-	{
-		_constraints.put(AttributeType.TOP, new RelativeConstraint(source,
-			AttributeType.BOTTOM, offset));
+	/**
+	 * Builds a {@link RelativeConstraint} to arrange things below the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @param offset
+	 *          the offset of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder below(String source, int offset) {
+		_constraints.put(AttributeType.TOP, new RelativeConstraint(source, AttributeType.BOTTOM, offset));
 		return this;
 	}
 
-	public ConstraintBuilder below(String source)
-	{
-		_constraints.put(AttributeType.TOP, new RelativeConstraint(source,
-			AttributeType.BOTTOM, 0));
+	/**
+	 * Builds a {@link RelativeConstraint} to arrange things below the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder below(String source) {
+		_constraints.put(AttributeType.TOP, new RelativeConstraint(source, AttributeType.BOTTOM, 0));
 		return this;
 	}
 
-	public ConstraintBuilder above(String source, int offset)
-	{
-		_constraints.put(AttributeType.BOTTOM, new RelativeConstraint(source,
-			AttributeType.TOP, -offset));
+	/**
+	 * Builds a {@link RelativeConstraint} to arrange things above the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @param offset
+	 *          the offset of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder above(String source, int offset) {
+		_constraints.put(AttributeType.BOTTOM, new RelativeConstraint(source, AttributeType.TOP, -offset));
 		return this;
 	}
 
-	public ConstraintBuilder above(String source)
-	{
-		_constraints.put(AttributeType.BOTTOM, new RelativeConstraint(source,
-			AttributeType.TOP, 0));
+	/**
+	 * Builds a {@link RelativeConstraint} to arrange things above the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder above(String source) {
+		_constraints.put(AttributeType.BOTTOM, new RelativeConstraint(source, AttributeType.TOP, 0));
 		return this;
 	}
 
-	public ConstraintBuilder left(String source, int offset)
-	{
-		_constraints.put(AttributeType.RIGHT, new RelativeConstraint(source,
-			AttributeType.LEFT, -offset));
+	/**
+	 * Builds a {@link RelativeConstraint} to arrange things left of the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @param offset
+	 *          the offset of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder left(String source, int offset) {
+		_constraints.put(AttributeType.RIGHT, new RelativeConstraint(source, AttributeType.LEFT, -offset));
 		return this;
 	}
 
-	public ConstraintBuilder left(String source)
-	{
-		_constraints.put(AttributeType.RIGHT, new RelativeConstraint(source,
-			AttributeType.LEFT, 0));
+	/**
+	 * Builds a {@link RelativeConstraint} to arrange things left of the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder left(String source) {
+		_constraints.put(AttributeType.RIGHT, new RelativeConstraint(source, AttributeType.LEFT, 0));
 		return this;
 	}
 
-	public ConstraintBuilder right(String source, int offset)
-	{
-		_constraints.put(AttributeType.LEFT, new RelativeConstraint(source,
-			AttributeType.RIGHT, offset));
+	/**
+	 * Builds a {@link RelativeConstraint} to arrange things right of the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @param offset
+	 *          the offset of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder right(String source, int offset) {
+		_constraints.put(AttributeType.LEFT, new RelativeConstraint(source, AttributeType.RIGHT, offset));
 		return this;
 	}
 
-	public ConstraintBuilder right(String source)
-	{
-		_constraints.put(AttributeType.LEFT, new RelativeConstraint(source,
-			AttributeType.RIGHT, 0));
+	/**
+	 * Builds a {@link RelativeConstraint} to arrange things right of the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder right(String source) {
+		_constraints.put(AttributeType.LEFT, new RelativeConstraint(source, AttributeType.RIGHT, 0));
 		return this;
 	}
 
-	public ConstraintBuilder alignHorizontally(String source)
-	{
-		_constraints.put(AttributeType.HORIZONTAL_CENTER, new RelativeConstraint(source,
-			AttributeType.HORIZONTAL_CENTER));
+	/**
+	 * Builds a {@link RelativeConstraint} to align things horizontally with the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder alignHorizontally(String source) {
+		_constraints.put(AttributeType.HORIZONTAL_CENTER, new RelativeConstraint(source, AttributeType.HORIZONTAL_CENTER));
 		return this;
 	}
 
-	public ConstraintBuilder alignVertically(String source)
-	{
-		_constraints.put(AttributeType.VERTICAL_CENTER, new RelativeConstraint(source,
-			AttributeType.VERTICAL_CENTER));
+	/**
+	 * Builds a {@link RelativeConstraint} to align things vertically with the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder alignVertically(String source) {
+		_constraints.put(AttributeType.VERTICAL_CENTER, new RelativeConstraint(source, AttributeType.VERTICAL_CENTER));
 		return this;
 	}
 
-	public ConstraintBuilder align(String source)
-	{
+	/**
+	 * Builds two {@link RelativeConstraint}s to align things vertically and horizontally with the specified source.
+	 *
+	 * @param source
+	 *          the source of the {@code RelativeConstraint}
+	 * @return
+	 *          the instance
+	 */
+	public ConstraintBuilder align(String source) {
 		alignHorizontally(source);
 		return alignVertically(source);
 	}

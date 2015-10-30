@@ -15,15 +15,37 @@ public class FixedShape implements ComponentShape {
 	private final Dimension _dimension;
 	private final Insets _insets;
 
+	/**
+	 * Initializes the {@code FixedShape} with the specified {@link Dimension} and {@link Insets}.
+	 *
+	 * @param dim
+	 *          the {@code Dimension} of the shape
+	 * @param insets
+	 *          the {@code Insets} of the shape
+	 */
 	public FixedShape(Dimension dim, Insets insets) {
 		_dimension = dim;
 		_insets = insets;
 	}
 
+	/**
+	 * Initializes the {@code FixedShape} with the specified {@link Dimension}.
+	 *
+	 * @param dim
+	 *          the {@code Dimension} of the shape
+	 */
 	public FixedShape(Dimension dim) {
 		this(dim, new Insets(0, 0, 0, 0));
 	}
 
+	/**
+	 * Initializes the {@code FixedShape} with the specified width and height.
+	 *
+	 * @param w
+	 *          the width of the shape
+	 * @param h
+	 *          the height of the shape
+	 */
 	public FixedShape(int w, int h) {
 		this(new Dimension(w, h));
 	}

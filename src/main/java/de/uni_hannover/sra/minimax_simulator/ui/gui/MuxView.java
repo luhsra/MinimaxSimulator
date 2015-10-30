@@ -74,14 +74,14 @@ public class MuxView implements MachineConfigListener {
     private ToggleGroup tgroup = new ToggleGroup();
 
     /**
-     * The constructor initializes the final variables.
+     * Initializes the final variables.
      */
     public MuxView() {
         _res = Main.getTextResource("machine").using("mux");
     }
 
     /**
-     * This method is called during application start up and initializes the MuxView
+     * This method is called during application start up and initializes the {@code MuxView}
      * as much as possible without having any project data.
      */
     public void initialize() {
@@ -325,7 +325,7 @@ public class MuxView implements MachineConfigListener {
 
     /**
      * Moves the currently selected source of the currently selected multiplexer.
-     * It moves the source up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
+     * It moves the source up if the caller is the {@code moveUp} {@link Button} or down if the caller is the {@code moveDown Button}.
      * The selected multiplexer is identified by the caller object.
      *
      * @param ae
@@ -547,14 +547,14 @@ public class MuxView implements MachineConfigListener {
     /**
      * Checks if the save {@link Button} should be enabled and updates the disableProperty.
      */
-    protected void updateSaveButton()
-    {
+    protected void updateSaveButton() {
         boolean isValid = isInputValid();
         boolean isUnsaved = isUnsaved();
 
         boolean saveEnabled = isValid && isUnsaved;
-        if (btnSave.isDisable() == saveEnabled)
+        if (btnSave.isDisable() == saveEnabled) {
             btnSave.setDisable(!saveEnabled);
+        }
     }
 
     /**
@@ -563,17 +563,14 @@ public class MuxView implements MachineConfigListener {
      * @return
      *          whether the input of either the register or constant is valid
      */
-    private boolean isInputValid()
-    {
-        if (radioConstant.isSelected())
-        {
+    private boolean isInputValid() {
+        if (radioConstant.isSelected()) {
             if (spinnerDec.getValue() == null) {
                 return false;
             }
             return true;
         }
-        else if (radioRegister.isSelected())
-        {
+        else if (radioRegister.isSelected()) {
             if (cbRegister.getSelectionModel().getSelectedItem() == null) {
                 return false;
             }
@@ -589,9 +586,7 @@ public class MuxView implements MachineConfigListener {
      * @return
      *          whether the selected source is modified
      */
-    private boolean isUnsaved()
-    {
-
+    private boolean isUnsaved() {
         MuxInput source = null;
         if (!tableMuxA.getSelectionModel().getSelectedItems().isEmpty()) {
             source = tableMuxA.getSelectionModel().getSelectedItem().getMuxInput();
@@ -612,22 +607,19 @@ public class MuxView implements MachineConfigListener {
         else if (source instanceof NullMuxInput && (radioConstant.isSelected() || radioRegister.isSelected())) {
             return true;
         }
-        else if (source instanceof ConstantMuxInput)
-        {
+        else if (source instanceof ConstantMuxInput) {
             Integer value = ((ConstantMuxInput) source).getConstant();
             if (!value.equals(spinnerDec.getValue())) {
                 return true;
             }
         }
-        else if (source instanceof RegisterMuxInput)
-        {
+        else if (source instanceof RegisterMuxInput) {
             // comparison by object always is false so I used the String comparison
             String srcName = source.getName();
             String selectedName = "";
             try {
                 selectedName = cbRegister.getSelectionModel().getSelectedItem().getName();
-            }
-            catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 return false;
             }
             if (!srcName.equals(selectedName)) {
@@ -653,11 +645,22 @@ public class MuxView implements MachineConfigListener {
      * @author Philipp Rohde
      */
     public static class MuxTableModel {
+
         private final SimpleStringProperty code;
         private final SimpleStringProperty source;
         private final SimpleStringProperty extended;
         private final MuxInput muxInput;
 
+        /**
+         * Constructs a new {@code MuxTableModel} and sets the properties.
+         *
+         * @param muxInput
+         *          the {@link MuxInput} to represent
+         * @param index
+         *          the index of the {@code MuxInput}
+         * @param size
+         *          numbers of {@code MuxInput}
+         */
         private MuxTableModel(MuxInput muxInput, int index, int size) {
             this.muxInput = muxInput;
             this.code = new SimpleStringProperty(Util.toBinaryAddress(index, size));
@@ -666,8 +669,7 @@ public class MuxView implements MachineConfigListener {
         }
 
         private String getExtendedSourceInfo() {
-            if (this.muxInput instanceof ConstantMuxInput)
-            {
+            if (this.muxInput instanceof ConstantMuxInput) {
                 int value = ((ConstantMuxInput) this.muxInput).getConstant();
                 return String.format("0x%08X", value);
             }

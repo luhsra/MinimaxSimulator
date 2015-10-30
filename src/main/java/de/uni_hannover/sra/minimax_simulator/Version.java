@@ -12,12 +12,17 @@ import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/*
- * According to http://stackoverflow.com/questions/1272648/reading-my-own-jars-manifest
+/**
+ * Provides methods for reading version information from JAR's manifest, Java version of the running JVM
+ * and to check Java versions against each other.
+ *
+ * @author Martin L&uuml;ck
+ */
+/* According to http://stackoverflow.com/questions/1272648/reading-my-own-jars-manifest
  * this is probably possible with less complexity
  */
-public class Version
-{
+public class Version {
+
 	private boolean _isJar = false;
 	private String _moduleName = "";
 	private String _revisionNumber = "";
@@ -32,23 +37,29 @@ public class Version
 	private int _jvmUpdate;
 	private int _jvmBuild;
 
-	public Version(Class<?> c)
-	{
+	/**
+	 * Constructs a new {@code Version} instance.<br>
+	 * Tries to read version information from JAR's manifest and reads the Java version of the running JVM.
+	 *
+	 * @param c
+	 *          the class to use for getting the JAR file
+	 */
+	public Version(Class<?> c) {
 		setJavaVersion();
 
-		if (c == null)
+		if (c == null) {
 			return;
+		}
 
 		File jarName = null;
-		try
-		{
+		try {
 			jarName = getResourceJar(c);
-			if (jarName == null)
+			if (jarName == null) {
 				return;
+			}
 
 			JarFile jarFile = null;
-			try
-			{
+			try {
 				jarFile = new JarFile(jarName);
 				
 				Attributes attrs = jarFile.getManifest().getMainAttributes();
@@ -62,40 +73,34 @@ public class Version
 				setCompany(attrs);
 
 				setIsJar(true);
-			}
-			finally
-			{
+			} finally {
 				IOUtils.closeQuietly(jarFile);
 			}
-		}
-		catch (IOException e)
-		{
-			// No jar file
+		} catch (IOException e) {
+			// no jar file
 		}
 	}
 
-	/*
-	 * Convert the given class name to URL to get
-	 * the file path of the JAR that contains the class.
+	/**
+	 * Convert the specified class name to URL to get the file path of the JAR that contains the class.
+	 *
+	 * @param c
+	 *          the class to get the JAR containing the class
+	 * @return
+	 *          the JAR containing the class or {@code null} if the class is not contained in a JAR
 	 */
-	private static File getResourceJar(Class<?> c)
-	{
+	private static File getResourceJar(Class<?> c) {
 		String resource = c.getName().replace('.', '/') + ".class";
 
 		URL url = ClassLoader.getSystemResource(resource);
-		if (url != null)
-		{
+		if (url != null) {
 			String u = url.toString();
-			if (u.startsWith("jar:file:"))
-			{
+			if (u.startsWith("jar:file:")) {
 				int idx = u.indexOf("!");
 				String jarName = u.substring(4, idx);
-				try
-				{
+				try {
 					return new File(new URI(jarName));
-				}
-				catch (URISyntaxException e)
-				{
+				} catch (URISyntaxException e) {
 					return null;
 				}
 			}
@@ -103,29 +108,41 @@ public class Version
 		return null;
 	}
 
-	private void setVersionNumber(Attributes attrs)
-	{
+	/**
+	 * Reads the application version number from the manifest.
+	 *
+	 * @param attrs
+	 *          the {@code Attributes} from the manifest
+	 */
+	private void setVersionNumber(Attributes attrs) {
 		String versionNumber = attrs.getValue("Implementation-Version");
-		if (versionNumber != null)
-		{
+		if (versionNumber != null) {
 			_versionNumber = versionNumber;
 		}
 	}
 
-	private void setRevisionNumber(Attributes attrs)
-	{
+	/**
+	 * Reads the application build number from the manifest.
+	 *
+	 * @param attrs
+	 *          the {@code Attributes} from the manifest
+	 */
+	private void setRevisionNumber(Attributes attrs) {
 		String revisionNumber = attrs.getValue("Implementation-Build");
-		if (revisionNumber != null)
-		{
+		if (revisionNumber != null) {
 			_revisionNumber = revisionNumber;
 		}
 	}
 
-	private void setBuildJdk(Attributes attrs)
-	{
+	/**
+	 * Reads the build JDK version from the manifest.
+	 *
+	 * @param attrs
+	 *          the {@code Attributes} from the manifest
+	 */
+	private void setBuildJdk(Attributes attrs) {
 		String buildJdk = attrs.getValue("Build-Jdk");
-		if (buildJdk != null)
-		{
+		if (buildJdk != null) {
 			_buildJdk = buildJdk;
 		}
 /*		else
@@ -138,47 +155,64 @@ public class Version
 		}	*/
 	}
 
-	private void setBuildTime(Attributes attrs)
-	{
+	/**
+	 * Reads the build time from the manifest.
+	 *
+	 * @param attrs
+	 *          the {@code Attributes} from the manifest
+	 */
+	private void setBuildTime(Attributes attrs) {
 		String buildTime = attrs.getValue("Build-Time");
-		if (buildTime != null)
-		{
+		if (buildTime != null) {
 			_buildTime = buildTime;
 		}
 	}
 
-	private void setModuleName(Attributes attrs)
-	{
+	/**
+	 * Reads the application's name from the manifest.
+	 *
+	 * @param attrs
+	 *          the {@code Attributes} from the manifest
+	 */
+	private void setModuleName(Attributes attrs) {
 		String moduleName = attrs.getValue("Implementation-Name");
-		if (moduleName != null)
-		{
+		if (moduleName != null) {
 			_moduleName = moduleName;
 		}
 	}
 
-	private void setAuthor(Attributes attrs)
-	{
+	/**
+	 * Reads the application's authors from the manifest.
+	 *
+	 * @param attrs
+	 *          the {@code Attributes} from the manifest
+	 */
+	private void setAuthor(Attributes attrs) {
 		String authorName = attrs.getValue("Additional-Author");
-		if (authorName != null)
-		{
+		if (authorName != null) {
 			_authorName = authorName;
 		}
 	}
 
-	private void setCompany(Attributes attrs)
-	{
+	/**
+	 * Reads the application's company from the manifest.
+	 *
+	 * @param attrs
+	 *          the {@code Attributes} from the manifest
+	 */
+	private void setCompany(Attributes attrs) {
 		String companyName = attrs.getValue("Additional-Company");
-		if (companyName != null)
-		{
+		if (companyName != null) {
 			_companyName = companyName;
 		}
 	}
 
-	private void setJavaVersion()
-	{
+	/**
+	 * Reads the Java version of the currently running JVM.
+	 */
+	private void setJavaVersion() {
 		String jv = System.getProperty("java.version");
-		try
-		{
+		try {
 			String[] p0 = jv.split("_");
 			String[] p1 = p0[0].split("\\.");
 
@@ -186,71 +220,119 @@ public class Version
 			_jvmFeature = Integer.parseInt(p1[1]);
 			_jvmUpdate = Integer.parseInt(p1[2]);
 
-			try
-			{
+			try {
 				_jvmBuild = Integer.parseInt(p0[1]);
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				Pattern numberPattern = Pattern.compile("[0-9]+");
 				Matcher m = numberPattern.matcher(p0[1]);
-				if (m.find())
+				if (m.find()) {
 					_jvmBuild = Integer.parseInt(m.group(0));
+				}
 			}
-		}
-		catch (Exception e)
-		{
-			// Ignore
+		} catch (Exception e) {
+			// ignore
 		}
 	}
 
-	private void setIsJar(boolean isLoaded)
-	{
+	/**
+	 * Sets the value of the {@code is JAR} property.
+	 *
+	 * @param isLoaded
+	 *          whether the class was loaded from JAR or not.
+	 */
+	private void setIsJar(boolean isLoaded) {
 		_isJar = isLoaded;
 	}
 
-	public String getRevisionNumber()
-	{
+	/**
+	 * Gets the application's build number.
+	 *
+	 * @return
+	 *          the application's build number
+	 */
+	public String getRevisionNumber() {
 		return _revisionNumber;
 	}
 
-	public String getVersionNumber()
-	{
+	/**
+	 * Gets the application's version number.
+	 *
+	 * @return
+	 *          the application's version number
+	 */
+	public String getVersionNumber() {
 		return _versionNumber;
 	}
 
-	public String getBuildJdk()
-	{
+	/**
+	 * Gets the JDK version the application was built with.
+	 *
+	 * @return
+	 *          the build JDK version
+	 */
+	public String getBuildJdk() {
 		return _buildJdk;
 	}
 
-	public String getBuildTime()
-	{
+	/**
+	 * Gets the application's build time.
+	 *
+	 * @return
+	 *          the application's build time
+	 */
+	public String getBuildTime() {
 		return _buildTime;
 	}
 
-	public String getModuleName()
-	{
+	/**
+	 * Gets the application's name.
+	 *
+	 * @return
+	 *          the name of the application
+	 */
+	public String getModuleName() {
 		return _moduleName;
 	}
 
-	public String getAuthorName()
-	{
+	/**
+	 * Gets the name(s) of the application's author(s).
+	 *
+	 * @return
+	 *          the name(s) of the application's author(s).
+	 */
+	public String getAuthorName() {
 		return _authorName;
 	}
 
-	public String getCompanyName()
-	{
+	/**
+	 * Gets the name of the application's company.
+	 *
+	 * @return
+	 *          the name of the company of the application
+	 */
+	public String getCompanyName() {
 		return _companyName;
 	}
 
-	public boolean isJar()
-	{
+	/**
+	 * Gets the value of the {@code is JAR} property.
+	 *
+	 * @return
+	 *          {@code true} if the application was loaded from JAR, {@code false} otherwise
+	 */
+	public boolean isJar() {
 		return _isJar;
 	}
 
-	public String[] getFullInfoStrings()
-	{
+	/**
+	 * Gets the full information of the application's version.<br>
+	 * <br>
+	 * This includes the application's name, version number, build number, build time and build JDK.
+	 *
+	 * @return
+	 *          an array containing the full information of the version
+	 */
+	public String[] getFullInfoStrings() {
 		return new String[] {
 				"[Module: " + getModuleName() + "]",
 				"Version: " + getVersionNumber() + " - "
@@ -259,151 +341,283 @@ public class Version
 						+ "Build JDK: " + getBuildJdk() };
 	}
 
-	public String[] getShortInfoStrings()
-	{
+	/**
+	 * Gets the short information of the application's version.<br>
+	 * <br>
+	 * This includes the application's name, version number and build number.
+	 *
+	 * @return
+	 *          an array containing the short information of the version
+	 */
+	public String[] getShortInfoStrings() {
 		return new String[] {
 				"[Module: " + getModuleName() + "]",
 				"Version: " + getVersionNumber() + " - "
 						+ "Revision: " + getRevisionNumber() };
 	}
 
-	public int getJvmMajor()
-	{
+	/**
+	 * Gets the major version number of the currently running JVM.
+	 *
+	 * @return
+	 *          the JVM's major version number
+	 */
+	public int getJvmMajor() {
 		return _jvmMajor;
 	}
 
-	public int getJvmFeature()
-	{
+	/**
+	 * Gets the feature version number of the currently running JVM.
+	 *
+	 * @return
+	 *          the JVM's feature version number
+	 */
+	public int getJvmFeature() {
 		return _jvmFeature;
 	}
 
-	public int getJvmUpdate()
-	{
+	/**
+	 * Gets the update version number of the currently running JVM.
+	 *
+	 * @return
+	 *          the JVM's update version number
+	 */
+	public int getJvmUpdate() {
 		return _jvmUpdate;
 	}
 
-	public int getJvmBuild()
-	{
+	/**
+	 * Gets the build version number of the currently running JVM.
+	 *
+	 * @return
+	 *          the JVM's build version number
+	 */
+	public int getJvmBuild() {
 		return _jvmBuild;
 	}
 
-	public boolean isJvmEqual(int major, int feature, int update, int build)
-	{
-		if (major == -1)
+	/**
+	 * Checks if the Java version of the currently running JVM is equal to the specified Java version.
+	 *
+	 * @param major
+	 *          the major version number
+	 * @param feature
+	 *          the feature version number
+	 * @param update
+	 *          the update version number
+	 * @param build
+	 *          the build version number
+	 * @return
+	 *          {@code true} if the version numbers are equal, {@code false} otherwise
+	 */
+	public boolean isJvmEqual(int major, int feature, int update, int build) {
+		if (major == -1) {
 			return true;
-		if (_jvmMajor != major)
+		}
+		else if (_jvmMajor != major) {
 			return false;
+		}
 
-		if (feature == -1)
+		if (feature == -1) {
 			return true;
-		if (_jvmFeature != feature)
+		}
+		else if (_jvmFeature != feature) {
 			return false;
+		}
 
-		if (update == -1)
+		if (update == -1) {
 			return true;
-		if (_jvmUpdate != update)
+		}
+		else if (_jvmUpdate != update) {
 			return false;
+		}
 
-		if (build == -1)
+		if (build == -1) {
 			return true;
-		if (_jvmBuild != build)
+		}
+		else if (_jvmBuild != build) {
 			return false;
+		}
 		return true;
 	}
 
-	public boolean isJvmLower(int major, int feature, int update, int build)
-	{
-		if (major == -1)
+	/**
+	 * Checks if the Java version of the currently running JVM is lower than the specified version number.
+	 *
+	 * @param major
+	 *          the major version number
+	 * @param feature
+	 *          the feature version number
+	 * @param update
+	 *          the update version number
+	 * @param build
+	 *          the build version number
+	 * @return
+	 *          {@code true} if the current Java version is lower, {@code false} otherwise
+	 */
+	public boolean isJvmLower(int major, int feature, int update, int build) {
+		if (major == -1) {
 			return true;
-		if (_jvmMajor >= major)
+		}
+		else if (_jvmMajor >= major) {
 			return false;
+		}
 
-		if (feature == -1)
+		if (feature == -1) {
 			return true;
-		if (_jvmFeature >= feature)
+		}
+		else if (_jvmFeature >= feature) {
 			return false;
+		}
 
-		if (update == -1)
+		if (update == -1) {
 			return true;
-		if (_jvmUpdate >= update)
+		}
+		else if (_jvmUpdate >= update) {
 			return false;
+		}
 
-		if (build == -1)
+		if (build == -1) {
 			return true;
-		if (_jvmBuild >= build)
+		}
+		else if (_jvmBuild >= build) {
 			return false;
+		}
 		return true;
 	}
 
-	public boolean isJvmLowerOrEqual(int major, int feature, int update, int build)
-	{
-		if (major == -1)
+	/**
+	 * Checks if the Java version of the currently running JVM is lower or equal to the specified version number.
+	 *
+	 * @param major
+	 *          the major version number
+	 * @param feature
+	 *          the feature version number
+	 * @param update
+	 *          the update version number
+	 * @param build
+	 *          the build version number
+	 * @return
+	 *          {@code true} if the current Java version of lower or equal, {@code false} otherwise
+	 */
+	public boolean isJvmLowerOrEqual(int major, int feature, int update, int build) {
+		if (major == -1) {
 			return true;
-		if (_jvmMajor > major)
+		}
+		else if (_jvmMajor > major) {
 			return false;
+		}
 
-		if (feature == -1)
+		if (feature == -1) {
 			return true;
-		if (_jvmFeature > feature)
+		}
+		else if (_jvmFeature > feature) {
 			return false;
+		}
 
-		if (update == -1)
+		if (update == -1) {
 			return true;
-		if (_jvmUpdate > update)
+		}
+		else if (_jvmUpdate > update) {
 			return false;
+		}
 
-		if (build == -1)
+		if (build == -1) {
 			return true;
-		if (_jvmBuild > build)
+		}
+		else if (_jvmBuild > build) {
 			return false;
+		}
 		return true;
 	}
 
-	public boolean isJvmHigher(int major, int feature, int update, int build)
-	{
-		if (major == -1)
+	/**
+	 * Checks if the Java version of the currently running JVM is higher than the specified version number.
+	 *
+	 * @param major
+	 *          the major version number
+	 * @param feature
+	 *          the feature version number
+	 * @param update
+	 *          the update version number
+	 * @param build
+	 *          the build version number
+	 * @return
+	 *          {@code true} if the current Java version is higher, {@code false} otherwise
+	 */
+	public boolean isJvmHigher(int major, int feature, int update, int build) {
+		if (major == -1) {
 			return true;
-		if (_jvmMajor <= major)
+		}
+		else if (_jvmMajor <= major) {
 			return false;
+		}
 
-		if (feature == -1)
+		if (feature == -1) {
 			return true;
-		if (_jvmFeature <= feature)
+		}
+		else if (_jvmFeature <= feature) {
 			return false;
+		}
 
-		if (update == -1)
+		if (update == -1) {
 			return true;
-		if (_jvmUpdate <= update)
+		}
+		else if (_jvmUpdate <= update) {
 			return false;
+		}
 
-		if (build == -1)
+		if (build == -1) {
 			return true;
-		if (_jvmBuild <= build)
+		}
+		else if (_jvmBuild <= build) {
 			return false;
+		}
 		return true;
 	}
 
-	public boolean isJvmHigherOrEqual(int major, int feature, int update, int build)
-	{
-		if (major == -1)
+	/**
+	 * Checks if the Java version of the currently running JVM is higher or equal to the specified version number.
+	 *
+	 * @param major
+	 *          the major version number
+	 * @param feature
+	 *          the feature version number
+	 * @param update
+	 *          the update version number
+	 * @param build
+	 *          the build version number
+	 * @return
+	 *          {@code true} if the current Java version is higher or equal, {@code false} otherwise
+	 */
+	public boolean isJvmHigherOrEqual(int major, int feature, int update, int build) {
+		if (major == -1) {
 			return true;
-		if (_jvmMajor < major)
+		}
+		else if (_jvmMajor < major) {
 			return false;
+		}
 
-		if (feature == -1)
+		if (feature == -1) {
 			return true;
-		if (_jvmFeature < feature)
+		}
+		else if (_jvmFeature < feature) {
 			return false;
+		}
 
-		if (update == -1)
+		if (update == -1) {
 			return true;
-		if (_jvmUpdate < update)
+		}
+		else if (_jvmUpdate < update) {
 			return false;
+		}
 
-		if (build == -1)
+		if (build == -1) {
 			return true;
-		if (_jvmBuild < build)
+		}
+		else if (_jvmBuild < build) {
 			return false;
+		}
 		return true;
 	}
 }

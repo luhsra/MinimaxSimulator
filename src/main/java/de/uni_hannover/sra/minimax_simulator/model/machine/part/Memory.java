@@ -6,8 +6,13 @@ import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.MemorySprite;
 
-public class Memory extends SimplePart implements SpriteOwner, SynchronousCircuit
-{
+/**
+ * Implementation of the memory as component part of a machine.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class Memory extends SimplePart implements SpriteOwner, SynchronousCircuit {
+
 	private final MachineMemory	_memory;
 
 	private final IngoingPin	_dataIn;
@@ -15,8 +20,13 @@ public class Memory extends SimplePart implements SpriteOwner, SynchronousCircui
 	private final IngoingPin	_cs;
 	private final IngoingPin	_rw;
 
-	public Memory(MachineMemory memory)
-	{
+	/**
+	 * Constructs a new {@code Memory} related to the specified {@link MachineMemory}.
+	 *
+	 * @param memory
+	 *          the memory of the machine
+	 */
+	public Memory(MachineMemory memory) {
 		_memory = memory;
 
 		_dataIn = new IngoingPin(this);
@@ -25,47 +35,62 @@ public class Memory extends SimplePart implements SpriteOwner, SynchronousCircui
 		_rw = new IngoingPin(this);
 	}
 
-	public IngoingPin getDataIn()
-	{
+	/**
+	 * Gets the data {@link IngoingPin}.
+	 *
+	 * @return
+	 *          the data input pin
+	 */
+	public IngoingPin getDataIn() {
 		return _dataIn;
 	}
 
-	public IngoingPin getAdr()
-	{
+	/**
+	 * Gets the address {@link IngoingPin}.
+	 *
+	 * @return
+	 *          the address input pin
+	 */
+	public IngoingPin getAdr() {
 		return _adr;
 	}
 
-	public IngoingPin getCs()
-	{
+	/**
+	 * Gets the {@link IngoingPin} of the {@code HS.CS} signal.
+	 *
+	 * @return
+	 *          the {@code HS.CS IngoingPin}
+	 */
+	public IngoingPin getCs() {
 		return _cs;
 	}
 
-	public IngoingPin getRw()
-	{
+	/**
+	 * Gets the {@link IngoingPin} of the {code HS.RW} signal.
+	 *
+	 * @return
+	 *          the {@code HS.RW IngoingPin}
+	 */
+	public IngoingPin getRw() {
 		return _rw;
 	}
 
 	@Override
-	public void update()
-	{
-		if (_cs.read() != 0 && _rw.read() != 0)
-		{
+	public void update() {
+		if (_cs.read() != 0 && _rw.read() != 0) {
 			// read
 			int value = _memory.getMemoryState().getInt(_adr.read());
 			getDataOut().write(value);
 		}
-		else
-		{
+		else {
 			getDataOut().write(0);
 		}
 	}
 
 	@Override
-	public void nextCycle()
-	{
-		// Write only on cycle transition
-		if (_cs.read() != 0 && _rw.read() == 0)
-		{
+	public void nextCycle() {
+		// write only on cycle transition
+		if (_cs.read() != 0 && _rw.read() == 0) {
 			// write
 			int value = _dataIn.read();
 			_memory.getMemoryState().setInt(_adr.read(), value);
@@ -73,8 +98,7 @@ public class Memory extends SimplePart implements SpriteOwner, SynchronousCircui
 	}
 
 	@Override
-	public Sprite createSprite()
-	{
+	public Sprite createSprite() {
 		return new MemorySprite(this);
 	}
 }

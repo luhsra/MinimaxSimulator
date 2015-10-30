@@ -19,68 +19,90 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-class SimulationInstance
-{
-	private class AluResult extends AbstractTrackable<Integer>
-	{
+/**
+ * The instance of the {@link MinimaxSimulation}.
+ *
+ * @author Martin L&uuml;ck
+ */
+class SimulationInstance {
+
+	/**
+	 * Represents the the result of the ALU.
+	 */
+	private class AluResult extends AbstractTrackable<Integer> {
 		private int			_lastPostedValue;
 		private final Alu	_alu;
 
-		public AluResult(Alu alu)
-		{
+		/**
+		 * Constructs a new instance of the {@code AluResult} for the specified {@link Alu}.
+		 *
+		 * @param alu
+		 *          the {@code Alu} of the machine to simulate
+		 */
+		public AluResult(Alu alu) {
 			_lastPostedValue = Integer.valueOf(alu.getResult());
 			_alu = alu;
 		}
 
 		@Override
-		public Integer get()
-		{
+		public Integer get() {
 			return Integer.valueOf(_alu.getResult());
 		}
 
 		@Override
-		public void set(Integer value)
-		{
+		public void set(Integer value) {
 			throw new UnsupportedOperationException();
 		}
 
-		public void update()
-		{
-			if (_alu.getResult() == _lastPostedValue)
+		/**
+		 * Updates the value of the {@code AluResult} instance.
+		 */
+		public void update() {
+			if (_alu.getResult() == _lastPostedValue) {
 				return;
+			}
 			_lastPostedValue = _alu.getResult();
 			fireValueChanged();
 		}
 	}
 
-	private class RegisterValue extends AbstractTrackable<Integer>
-	{
+	/**
+	 * Represents the value of a register.
+	 */
+	private class RegisterValue extends AbstractTrackable<Integer> {
+
 		private int				_lastPostedValue;
 		private final Register	_register;
 
-		public RegisterValue(Register register)
-		{
+		/**
+		 * Constructs a new {@code RegisterValue} for the specified {@link Register}.
+		 *
+		 * @param register
+		 *          the {@code Register} of the machine to simulate
+		 */
+		public RegisterValue(Register register) {
 			_register = register;
 			_lastPostedValue = Integer.valueOf(_register.getValue());
 		}
 
 		@Override
-		public Integer get()
-		{
+		public Integer get() {
 			return _register.getValue();
 		}
 
 		@Override
-		public void set(Integer value)
-		{
+		public void set(Integer value) {
 			_register.setValue(value);
 			fireValueChanged();
 		}
 
-		public void update()
-		{
-			if (_register.getValue() == _lastPostedValue)
+		/**
+		 * Updates the value of the {@code RegisterValue} instance.
+		 */
+		public void update() {
+			if (_register.getValue() == _lastPostedValue) {
 				return;
+			}
 			_lastPostedValue = _register.getValue();
 			fireValueChanged();
 		}
@@ -93,8 +115,14 @@ class SimulationInstance
 
 	private final MachineResolver				_resolver;
 
-	SimulationInstance(MinimaxMachine machine)
-	{
+	/**
+	 * Constructs a new instance of the {@code SimulationInstance} for simulation of the specified
+	 * {@link MinimaxMachine}.
+	 *
+	 * @param machine
+	 *          the machine to simulate
+	 */
+	SimulationInstance(MinimaxMachine machine) {
 		MachineTopology top = machine.getTopology();
 
 		_aluResult = new AluResult(top.getCircuit(Alu.class, Parts.ALU));
@@ -116,67 +144,97 @@ class SimulationInstance
 		_resolver = new MachineResolver(circuits);
 	}
 
-	Trackable<Integer> getAluResult()
-	{
+	/**
+	 * Gets the ALU result.
+	 *
+	 * @return
+	 *          the ALU result
+	 */
+	Trackable<Integer> getAluResult() {
 		return _aluResult;
 	}
 
-	Trackable<Integer> getRegisterValue(String name)
-	{
+	/**
+	 * Gets the value of the specified register.
+	 *
+	 * @param name
+	 *          the name of the register
+	 * @return
+	 *          the value of the register
+	 */
+	Trackable<Integer> getRegisterValue(String name) {
 		return _registerValues.get(name);
 	}
 
-	void reset()
-	{
+	/**
+	 * Resets the simulation.
+	 */
+	void reset() {
 		_resolver.resetCircuits();
 	}
 
-	void resolve()
-	{
-		// Resolve ALU calculations
+	/**
+	 * Resolves the ALU calculations.
+	 */
+	void resolve() {
 		_resolver.resolveCircuits();
 	}
 
-	void nextCycle()
-	{
-		// Resolve register writings
+	/**
+	 * Resolves register writings.
+	 */
+	void nextCycle() {
 		_resolver.nextCycle();
 	}
 
-	void updateAluDisplay()
-	{
-		// broadcast value updates of parts
+	/**
+	 * Broadcasts value updates of parts.
+	 */
+	void updateAluDisplay() {
 		_aluResult.update();
 	}
 
-	void updateRegisterDisplay()
-	{
-		for (RegisterValue register : _registerValues.values())
+	/**
+	 * Triggers all instances of {@link RegisterValue} to update their value.
+	 */
+	void updateRegisterDisplay() {
+		for (RegisterValue register : _registerValues.values()) {
 			register.update();
+		}
 	}
 
-	void updateAll()
-	{
+	/**
+	 * Triggers the {@link RegisterValue} instances and the {@link AluResult} instance to update their values.
+	 */
+	void updateAll() {
 		updateAluDisplay();
 		updateRegisterDisplay();
 	}
 
-	void setPortValues(SignalRow row)
-	{
-		for (BaseControlPort port : BaseControlPort.values())
-		{
+	/**
+	 * Sets the values of the different ports according to the specified {@link SignalRow}.
+	 *
+	 * @param row
+	 *          the {@code SignalRow}
+	 */
+	void setPortValues(SignalRow row) {
+		for (BaseControlPort port : BaseControlPort.values()) {
 			int value = row.getSignalValue(port.name());
 			port.port().write(value);
 		}
-		for (Entry<String, ControlPort> entry : _registerPort.entrySet())
-		{
+		for (Entry<String, ControlPort> entry : _registerPort.entrySet()) {
 			int writeEnabled = row.getSignalValue(entry.getKey());
 			entry.getValue().write(writeEnabled);
 		}
 	}
 
-	int getCond()
-	{
+	/**
+	 * Gets the ALU condition.
+	 *
+	 * @return
+	 *          {@code 1} if the ALU result is {@code 0}, {@code 0} otherwise
+	 */
+	int getCond() {
 		return _aluCond.read();
 	}
 }

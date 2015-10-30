@@ -8,23 +8,40 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.IngoingPin;
 import java.util.Collection;
 import java.util.List;
 
-interface MuxInputManager extends ExtensionList<MuxInput>
-{
-	public class InputEntry
-	{
+/**
+ * A manager for the {@link ExtensionList} of the machine's {@link MuxInput}s.
+ */
+interface MuxInputManager extends ExtensionList<MuxInput> {
+
+	/**
+	 * Data structure of a stored {@link MuxInput}.
+	 */
+	public class InputEntry {
+
 		public MuxInput		input;
 		public IngoingPin	pin;
 		public String		pinId;
 
 		@Override
-		public String toString()
-		{
+		public String toString() {
 			return pinId + "<-" + input;
 		}
 	}
 
+	/**
+	 * Gets the {@link MuxType} the manager belongs to.
+	 *
+	 * @return
+	 *          the {@code MuxType}
+	 */
 	public MuxType getMuxType();
 
+	/**
+	 * Gets the {@link MuxInput}s the manager manages.
+	 *
+	 * @return
+	 *          a list of the {@code MuxInputs}
+	 */
 	public List<InputEntry> getMuxInputs();
 
 	@Override
@@ -42,5 +59,11 @@ interface MuxInputManager extends ExtensionList<MuxInput>
 	@Override
 	public void set(int index, MuxInput input);
 
+	/**
+	 * Registers the specified {@link MuxInputGroupManager}.
+	 *
+	 * @param inputGroupManager
+	 *          the {@code MuxInputGroupManager} to register
+	 */
 	public void registerGroupManager(MuxInputGroupManager inputGroupManager);
 }

@@ -10,14 +10,27 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.ResourceBundle.Control;
 
-public class PropertyResourceControl extends Control
-{
+/**
+ * The {@code PropertyResourceControl} is used for handling property files.
+ *
+ * @see ResourceBundle.Control
+ *
+ * @author Martin L&uuml;ck
+ */
+public class PropertyResourceControl extends Control {
+
 	private final String _basePath;
 
-	public PropertyResourceControl(String basePath)
-	{
-		if (!basePath.endsWith("/"))
+	/**
+	 * Constructs a new {@code PropertyResourceControl} with the specified base path.
+	 *
+	 * @param basePath
+	 *          the base path
+	 */
+	public PropertyResourceControl(String basePath) {
+		if (!basePath.endsWith("/")) {
 			basePath = basePath + "/";
+		}
 		_basePath = basePath;
 	}
 
@@ -62,29 +75,28 @@ public class PropertyResourceControl extends Control
 
 	@Override
 	public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader,
-			boolean reload) throws IllegalAccessException, InstantiationException, IOException
-	{
-		if (baseName == null || locale == null || format == null || loader == null)
+			boolean reload) throws IllegalAccessException, InstantiationException, IOException {
+		if (baseName == null || locale == null || format == null || loader == null) {
 			throw new NullPointerException();
+		}
 
 		String bundleName = toBundleName("", locale);
-		if (bundleName.isEmpty())
+		if (bundleName.isEmpty()) {
 			bundleName = "_base";
+		}
 
 		String bundleFile = _basePath + "loc" + bundleName + "/" + baseName + ".properties";
 
 		Map<String, Object> entries = new HashMap<String, Object>();
 		
 		InputStream is = null;
-		try
-		{
+		try {
 			is = this.getClass().getClassLoader().getResourceAsStream(bundleFile);
-			if (is == null)
+			if (is == null) {
 				throw new FileNotFoundException("Resource not found: " + (new File(bundleFile)).getAbsolutePath());
+			}
 			parsePropertiesFile(is, entries);
-		}
-		finally
-		{
+		} finally {
 			IOUtils.closeQuietly(is);
 		}
 		
@@ -92,12 +104,21 @@ public class PropertyResourceControl extends Control
 		return bundle;
 	}
 
-	protected static void parsePropertiesFile(InputStream is, Map<String, Object> map) throws IOException
-	{
+	/**
+	 * Parses a properties file as {@link InputStream} and puts the parsed properties to the
+	 * specified map.
+	 *
+	 * @param is
+	 *          the properties file as {@code InputStream}
+	 * @param map
+	 *          the map to hold the parsed properties
+	 * @throws IOException
+	 *          thrown if there was an IO error during parsing
+	 */
+	protected static void parsePropertiesFile(InputStream is, Map<String, Object> map) throws IOException {
 		Properties prop = new Properties();
 		prop.load(is);
-		for (Entry<Object, Object> e : prop.entrySet())
-		{
+		for (Entry<Object, Object> e : prop.entrySet()) {
 			map.put((String) e.getKey(), e.getValue());
 		}
 		prop.clear();

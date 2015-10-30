@@ -14,6 +14,12 @@ import javafx.scene.control.SpinnerValueFactory;
  */
 public class MemorySpinnerValueFactory extends HexSpinnerValueFactory {
 
+    /**
+     * Constructs a new {@code MemorySpinnerValueFactory} for the specified {@link MachineMemory}.
+     *
+     * @param mMemory
+     *          the machine's memory
+     */
     public MemorySpinnerValueFactory(MachineMemory mMemory) {
         super();
         this.setMin(mMemory.getMinAddress());

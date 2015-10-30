@@ -15,7 +15,7 @@ import java.util.Optional;
 public class FXDialog extends Alert {
 
     /**
-     * Creates a dialog with the given {@link javafx.scene.control.Alert.AlertType} and
+     * Creates a dialog with the specified {@link javafx.scene.control.Alert.AlertType} and
      * sets the title and message of the dialog.
      *
      * @param alertType

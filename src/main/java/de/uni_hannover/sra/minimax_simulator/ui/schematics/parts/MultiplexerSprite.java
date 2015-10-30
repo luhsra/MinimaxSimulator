@@ -1,5 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
+import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.IngoingPin;
@@ -25,13 +26,29 @@ public class MultiplexerSprite extends CircuitSprite {
 
 	private final static ArrayList<String> addressNumberCache = new ArrayList<String>();
 
+	/**
+	 * Converts the specified integer to string using a list for caching already done conversions.
+	 *
+	 * @param i
+	 *          the integer to convert
+	 * @return
+	 *          the integer as string
+	 */
 	private static String intToStr(int i) {
-		if (addressNumberCache.size() <= i)
-			for (int c = addressNumberCache.size(); c <= i; c++)
+		if (addressNumberCache.size() <= i) {
+			for (int c = addressNumberCache.size(); c <= i; c++) {
 				addressNumberCache.add(Integer.toString(c));
+			}
+		}
 		return addressNumberCache.get(i);
 	}
 
+	/**
+	 * Initializes the {@code MultiplexerSprite}.
+	 *
+	 * @param mux
+	 *          the {@code Multiplexer} this sprite will represent
+	 */
 	public MultiplexerSprite(Multiplexer mux) {
 		_mux = checkNotNull(mux);
 	}
@@ -41,7 +58,7 @@ public class MultiplexerSprite extends CircuitSprite {
 		Bounds b = _mux.getBounds();
 		debugBounds(gc, b);
 
-		com.sun.javafx.tk.FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
+		FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
 		double textHeight = fm.getAscent() - 3;
 
 		// upper / lower arc

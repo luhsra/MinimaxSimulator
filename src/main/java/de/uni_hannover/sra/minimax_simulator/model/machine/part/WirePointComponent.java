@@ -3,26 +3,37 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Point;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.PointComponent;
 
-public class WirePointComponent extends PointComponent
-{
+/**
+ * A {@code WirePointComponent} is a part of a {@link Wire}.<br>
+ * It is used for deflection of a {@code Wire}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class WirePointComponent extends PointComponent {
+
 	private final Wire _wire;
 	private final int _index;
 
-	public WirePointComponent(Wire wire, int index)
-	{
+	/**
+	 * Constructs a new {@code WirePointComponent} for the specified {@link Wire} at the specified index.
+	 *
+	 * @param wire
+	 *          the {@code Wire} the {@code WirePointComponent} belongs to
+	 * @param index
+	 *          the index of the {@code WirePointComponent}
+	 */
+	public WirePointComponent(Wire wire, int index) {
 		_wire = wire;
 		_index = index;
 	}
 
 	@Override
-	public void doLayout()
-	{
+	public void doLayout() {
 		_wire.getPoints()[_index] = new Point(getBounds().x, getBounds().y);
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return _wire.toString() + "." + _index;
 	}
 }

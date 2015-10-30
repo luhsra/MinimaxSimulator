@@ -9,37 +9,54 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
-public class DefaultLayout implements Layout
-{
+/**
+ * Default implementation of {@link Layout}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class DefaultLayout implements Layout {
+
 	private final EnumMap<AttributeType, Constraint>	_constraints;
 	private final Map<AttributeType, Constraint>		_constraintsView;
 
-	public DefaultLayout()
-	{
+	/**
+	 * Constructs an empty {@code DefaultLayout}.
+	 */
+	public DefaultLayout() {
 		_constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
 		_constraintsView = Collections.unmodifiableMap(_constraints);
 	}
 
-	public DefaultLayout(Map<AttributeType, ? extends Constraint> constraints)
-	{
+	/**
+	 * Constructs a new {@code DefaultLayout} using the specified {@link Constraint}s.
+	 *
+	 * @param constraints
+	 *          the {@code Constraint}s to use
+	 */
+	public DefaultLayout(Map<AttributeType, ? extends Constraint> constraints) {
 		_constraints = new EnumMap<AttributeType, Constraint>(constraints);
 		_constraintsView = Collections.unmodifiableMap(_constraints);
 	}
 
-	public void setConstraint(AttributeType attribute, Constraint constraint)
-	{
+	/**
+	 * Sets the specified {@link Constraint} with the specified {@link AttributeType}.
+	 *
+	 * @param attribute
+	 *          the {@code AttributeType} of the {@code Constraint}
+	 * @param constraint
+	 *          the {@code Constraint} to set
+	 */
+	public void setConstraint(AttributeType attribute, Constraint constraint) {
 		_constraints.put(attribute, constraint);
 	}
 
 	@Override
-	public Constraint getConstraint(AttributeType attribute)
-	{
+	public Constraint getConstraint(AttributeType attribute) {
 		return _constraintsView.get(attribute);
 	}
 
 	@Override
-	public Set<AttributeType> getConstrainedAttributes()
-	{
+	public Set<AttributeType> getConstrainedAttributes() {
 		return _constraintsView.keySet();
 	}
 }

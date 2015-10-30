@@ -10,20 +10,31 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.LabelShape;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.RegisterShape;
 
-public class ExtendedRegisterGroup extends AbstractGroup
-{
+/**
+ * Groups the parts of an extended register.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class ExtendedRegisterGroup extends AbstractGroup {
+
 	private final String	_registerId;
 	private final String	_label;
 
-	public ExtendedRegisterGroup(String registerId, String label)
-	{
+	/**
+	 * Constructs a new {@code ExtendedRegisterGroup} with the specified register ID and label.
+	 *
+	 * @param registerId
+	 *          the ID of the register
+	 * @param label
+	 *          the label of the group
+	 */
+	public ExtendedRegisterGroup(String registerId, String label) {
 		_registerId = registerId;
 		_label = label;
 	}
 
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		Register register = new Register(_label, RegisterSize.BITS_32, true);
 		register.setName(_registerId);
 		register.setShape(new RegisterShape(fontProvider));
@@ -62,14 +73,12 @@ public class ExtendedRegisterGroup extends AbstractGroup
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return true;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		return new ExtendedRegisterLayoutSet(_registerId);
 	}
 }

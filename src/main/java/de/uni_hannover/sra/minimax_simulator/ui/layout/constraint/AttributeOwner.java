@@ -2,140 +2,174 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout.constraint;
 
 import java.util.Set;
 
-public interface AttributeOwner
-{
+/**
+ * An {@code AttributeOwner} is a class that has at least one {@link Attribute}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public interface AttributeOwner {
+
 	/**
-	 * @return the name of this attribute owner (a non-null string).
+	 * Gets the name of the {@code AttributeOwner}.
+	 *
+	 * @return
+	 *          the name (non-null)
 	 */
 	public String getName();
 
 	/**
-	 * Returns if the given attribute is already known for this instance.
-	 * 
+	 * Checks if the specified {@link AttributeType} is already known for the instance of {@code AttributeOwner}.
+	 *
 	 * @param attribute
-	 * @return <code>true</code> if the given attribute for this instance is already set or derived from others of its attributes,
-	 * otherwise <code>false</code>
-	 * @throws NullPointerException if <code>attribute</code> is null
+	 *          the {@code AttributeType}
+	 * @return
+	 *          {@code true} if the specified {@code AttributeType} is already set for the {@code Attribute Owner}
+	 *          instance or derived from others of its attributes, {@code false} otherwise
+	 * @throws NullPointerException
+	 *          thrown if {@code attribute} is {@code null}
 	 */
 	public boolean hasSet(AttributeType attribute);
 
 	/**
-	 * Set the given attribute for this instance.
-	 * 
-	 * @param attribute the attribute type of the value
-	 * @param value the value
-	 * @throws IllegalStateException if a value for the attribute was already set or derived from other attributes.
-	 * @throws NullPointerException if <code>attribute</code> is null
-	 * 	 */
+	 * Sets the specified attribute for the instance.
+	 *
+	 * @param attribute
+	 *          the {@code AttributeType} of the attribute
+	 * @param value
+	 *          the value of the attribute
+	 * @throws IllegalStateException
+	 *          thrown if a value for the attribute was already set or derived from other attributes
+	 * @throws NullPointerException
+	 *          thrown if {@code attribute} is {@code null}
+	 */
 	public void set(AttributeType attribute, int value);
 
 	/**
-	 * Retrieves the current value for the given attribute type.<br><br>
-
-	 * @param attribute the attribute type (e.g. left, top, bottom)
-	 * @return the value that was set or derived in this instance for the given attribute type
-	 * @throws IllegalStateException if the value is not yet known
-	 * @throws NullPointerException if <code>attribute</code> is null
+	 * Gets the current value of the specified {@code AttributeType}.
+	 *
+	 * @param attribute
+	 *          the {@code AttributeType}
+	 * @return
+	 *          the value that was set or derived for the instance of {@code AttributeOwner}
+	 * @throws  IllegalStateException
+	 *          thrown if the value is not yet known
+	 * @throws NullPointerException
+	 *          thrown if {@code attribute} is {@code null}
 	 */
 	public int get(AttributeType attribute);
 
 	/**
-	 * Resets all attribute values. Until new values are set or calculated, {@link #hasSet(AttributeType)} will always return false,
-	 * and {@link #get(AttributeType)} will always throw an exception.
-	 * 
+	 * Resets all attribute values. Until new values are set or calculated, {@link #hasSet(AttributeType)} will
+	 * always return {@code false} and {@link #get(AttributeType)} will always throw an exception.
 	 */
 	public void clearAttributes();
 
 	/**
-	 * Removes all constraints that are set on attributes of this instance.
+	 * Removes all constraints that are set on attributes of the instance of {@code AttributeOwner}.
 	 */
 	public void clearConstraints();
 
 	/**
-	 * Returns the assigned constraint for the given attribute.<br><br>
-
-	 * @param attribute the constrained attribute type (e.g. left, top, bottom)
-	 * @return the constraint that was set for the attribute type, or null
-	 * @throws NullPointerException if the parameter is null
+	 * Gets the assigned {@link Constraint} for the specified {@link AttributeType}.
+	 *
+	 * @param attribute
+	 *          the constrained {@code AttributeType}
+	 * @return
+	 *          the {@code Constraint} that was set for the {@code AttributeType} or {@code null}
+	 * @throws NullPointerException
+	 *          thrown if {@code attribute} is {@code null}
 	 */
 	public Constraint getAttributeConstraint(AttributeType attribute);
 
-
 	/**
-	 * Sets the constraint for the given attribute.<br><br>
-	 * 
-	 * If the attribute is already constrained, the attribute constraint will
-	 * be replaced by the parameter.
-	 * 
-	 * @param attribute the attribute type to constrain (e.g. left, top, bottom)
-	 * @param constraint the new constraint for the given attribute type
-	 * @throws NullPointerException if any parameter is null
-	 * @throws IllegalStateException if an over-constraining would result from applying the additional constraint
+	 * Sets the {@link Constraint} for the specified {@link AttributeType}.<br>
+	 * <br>
+	 * If the attribute is already constrained the attribute constraint will be replaced.
+	 *
+	 * @param attribute
+	 *          the {@code AttributeType} to constrain
+	 * @param constraint
+	 *          the new {@code Constrain} for the {@code AttributeType}
+	 * @throws NullPointerException
+	 *          thrown if any argument is {@code null}
+	 * @throws IllegalStateException
+	 *          thrown if an over-constraining would result from applying the additionl {@code Constraint}
 	 */
 	public void setAttributeConstraint(AttributeType attribute, Constraint constraint);
 
 	/**
-	 * Clears the current constraint for the given attribute type.
-	 * If no constraint is assigned for the attribute type <code>attribute</code>,
-	 * nothing happens.
+	 * Clears the current {@link Constraint} for the specified {@link AttributeType}.
+	 * If no constraint is assigned for {@code attribute} nothing happens.
 	 * 
-	 * @param attribute the attribute whose constraints will be removed
-	 * @throws NullPointerException if <code>attribute</code> is null
+	 * @param attribute
+	 *          the {@code AttributeType} whose {@code Constraint}s will be removed
+	 * @throws NullPointerException
+	 *          thrown if {@code attribute} is {@code null}
 	 */
 	public void removeAttributeConstraint(AttributeType attribute);
 
 	/**
-	 * Computes the given attribute type for this instance, using the given attribute source.<br>
-	 * If there is a constraint for the attribute type, that constraint will determine the new value. Otherwise
-	 * the instance will try to derive the attribute from other known attributes (e.g. known values for left and right
-	 * will determine the width).<br>
-	 * 
+	 * Computes the specified {@link AttributeType} for the instance of {@code AttributeOwner} using the
+	 * specified {@link AttributeSource}.<br>
+	 * If there is a {@link Constraint} for the attribute that {@code Constraint} will determine the new value.
+	 * Otherwise the instance will try to derive the attribute from other known attributes (e.g. known values for
+	 * left and right wil determine the width).
+	 *
 	 * @param attribute
+	 *          the {@code AttributeType} to compute
 	 * @param source
-	 * @throws NullPointerException if any parameter is null
-	 * @throws IllegalStateException if the instance fails to derive the attribute
+	 *          the {@code AttributeSource} to use
+	 * @throws NullPointerException
+	 *          thrown if any argument is {@code null}
+	 * @throws IllegalStateException
+	 *          thrown if the instance fails to derive the attribute
 	 */
 	public void computeAttribute(AttributeType attribute, AttributeSource source);
 
 	/**
-	 * Creates a set containing all attributes that are associated with this instance.
-	 * 
-	 * @return the set
+	 * Gets all {@link Attribute}s associated with the instance of {@code AttributeOwner}.
+	 *
+	 * @return
+	 *          a set of the {@code Attribute}s
 	 */
 	public Set<Attribute> getAttributes();
 
 	/**
-	 * Creates a set of all attributes that are required to know for the given
-	 * attribute type to calculate.<br>
-	 * Those dependencies can either follow explicitely from constraints or can result
-	 * from an attribute depending on derivation from other attributes, which then will be 
-	 * contained in the returned set. 
-	 * 
-	 * @return the set
+	 * Gets all {@link Attribute}s that are required to know for the specified {@link AttributeType} to calculate.<br>
+	 * Those dependencies can either follow explicitly from {@link Constraint}s or can result from an {@code Attribute}
+	 * depending on derivation from other {@code Attribute}s which then will be contained in the returned set.
+	 *
+	 * @param attr
+	 *          the {@code AttributeType} to get the dependencies for
+	 * @return
+	 *          a set of the dependencies
 	 */
 	public Set<Attribute> getDependencies(AttributeType attr);
 
 	/**
-	 * Returns the preferred width of this instance that will apply if the width
-	 * is otherwise unconstrained and not derivable from other attributes.
-	 * 
-	 * @return the width
+	 * Gets the preferred width of the instance of {@code AttributeOwner} that will apply if the width
+	 * is otherwise unconstrained and not derivable from other {@link Attribute}s.
+	 *
+	 * @return
+	 *          the preferred width
 	 */
 	public int getPreferredWidth();
 
 	/**
-	 * Returns the preferred height of this instance that will apply if the height
-	 * is otherwise unconstrained and not derivable from other attributes.
-	 * 
-	 * @return the height
+	 * Gets the preferred height of the instance of {@code AttributeOwner} that will apply if the height
+	 * is otherwise unconstrained and not derivable from other {@link Attribute}s.
+	 *
+	 * @return
+	 *          the preferred height
 	 */
 	public int getPreferredHeight();
 
 	/**
-	 * Validates the constraints on this instance, that is, checks if all attributes of this
-	 * instance can be computed.
-	 * 
-	 * @throws IllegalStateException if the validation fails
+	 * Validates the {@link Constraint}s of the instance of {@code AttributeOwner}, that is checking if all
+	 * {@link Attribute}s of the instance are computable.
+	 *
+	 * @throws IllegalStateException
+	 *          thrown if the validation fails
 	 */
 	public void validateConstraints();
 }

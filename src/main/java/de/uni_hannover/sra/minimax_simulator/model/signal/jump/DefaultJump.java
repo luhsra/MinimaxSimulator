@@ -1,28 +1,34 @@
 package de.uni_hannover.sra.minimax_simulator.model.signal.jump;
 
-public final class DefaultJump implements Jump
-{
+/**
+ * The {@code DefaultJump} is the implementation of the standard behaviour which is executing the next row afterwards.
+ *
+ * @author Martin L&uuml;ck
+ */
+public final class DefaultJump implements Jump {
+
+	/** The {@code DefaultJump} instance. */
 	public final static Jump INSTANCE = new DefaultJump();
 
-	private DefaultJump()
-	{
+	/**
+	 * Constructs the singleton instance.
+	 */
+	private DefaultJump() {
+
 	}
 
 	@Override
-	public int getTargetRow(int currentRow, int condition)
-	{
+	public int getTargetRow(int currentRow, int condition) {
 		return currentRow + 1;
 	}
 
 	@Override
-	public boolean equals(Object o)
-	{
+	public boolean equals(Object o) {
 		return o == INSTANCE;
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		return 31;
 	}
 }

@@ -11,14 +11,19 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
 import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 
+/**
+ * The {@code NewProjectBuilder} builds a new {@link Project} with some default settings.
+ *
+ * @author Martin L&uuml;ck
+ */
 public class NewProjectBuilder implements ProjectBuilder {
+
 	@Override
 	public Project buildProject() {
 		ResourceBundleLoader res = Main.getResourceLoader();
 
 		MachineConfigurationBuilder mb = new MachineConfigurationBuilder();
-		MachineConfiguration conf = mb.loadDefaultValues(
-			res.getTextResource("register")).build();
+		MachineConfiguration conf = mb.loadDefaultValues(res.getTextResource("register")).build();
 
 		SignalTable table = new DefaultSignalTable();
 		createDefaultProgram(table);
@@ -26,6 +31,14 @@ public class NewProjectBuilder implements ProjectBuilder {
 		return project;
 	}
 
+	/**
+	 * Creates the default program.<br>
+	 * <br>
+	 * The default program counts up to 2048 in powers of two and stores the value at the first address of memory.
+	 *
+	 * @param table
+	 *          the machine's control table
+	 */
 	private void createDefaultProgram(SignalTable table) {
 		SignalRow[] rows = new SignalRow[4];
 		for (int i = 0; i < rows.length; i++) {

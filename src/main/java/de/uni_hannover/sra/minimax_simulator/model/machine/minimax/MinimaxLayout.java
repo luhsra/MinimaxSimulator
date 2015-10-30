@@ -23,31 +23,53 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.shape.MuxShape;
 
 import java.util.Arrays;
 
-class MinimaxLayout
-{
+/**
+ * Represents the layout of a Minimax machine.
+ *
+ * @see Layout
+ * @see MinimaxMachine
+ *
+ * @author Martin L&uuml;ck
+ */
+class MinimaxLayout {
+
 	private final ConstraintContainer	_container;
 	private final LayoutManager			_layout;
 
 	private Dimension					_dimension;
 
-	public MinimaxLayout()
-	{
+	/**
+	 * Constructs a new and empty {@code MinimaxLayout}.
+	 */
+	public MinimaxLayout() {
 		_container = new ConstraintContainer();
 		_layout = new DefaultLayoutManager(_container);
 	}
 
-	public Dimension getDimension()
-	{
+	/**
+	 * Gets the {@link Dimension} of the {@code MinimaxLayout}.
+	 *
+	 * @return
+	 *          the {@code Dimension} of the {@code MinimaxLayout}
+	 */
+	public Dimension getDimension() {
 		return _dimension;
 	}
 
-	public ConstraintContainer getContainer()
-	{
+	/**
+	 * Gets the {@link ConstraintContainer} of the {@code MinimaxLayout}.
+	 *
+	 * @return
+	 *          the {@code ConstraintContainer} of the {@code MinimaxLayout}
+	 */
+	public ConstraintContainer getContainer() {
 		return _container;
 	}
 
-	public void updateLayout()
-	{
+	/**
+	 * Updates the {@code MinimaxLayout}.
+	 */
+	public void updateLayout() {
 		_container.updateSize();
 
 		_dimension = _container.getDimension();
@@ -57,15 +79,21 @@ class MinimaxLayout
 		_container.doLayout();
 	}
 
-	public void initPartLayouts(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
-		// Layout for base registers
+	/**
+	 * Initializes the {@link Layout}s of the {@link de.uni_hannover.sra.minimax_simulator.model.machine.part.Part}s
+	 * provided by the specified {@link MachineTopology}.
+	 *
+	 * @param cr
+	 *          the {@code MachineTopology} of the {@link MinimaxMachine}
+	 * @param fontProvider
+	 *          a {@link FontMetricsProvider} for rendering text
+	 */
+	public void initPartLayouts(MachineTopology cr, FontMetricsProvider fontProvider) {
+		// layout for base registers
 		putLayouts(new StackLayoutSet(Parts.MEMORY, Arrays.asList(Parts.MAR, Parts.MDR, Parts.IR, Parts.PC, Parts.ACCU),
 				Arrays.asList(65, 45, 70, 80, 45), Parts.GROUP_BASE_REGISTERS));
 
-		putLayout(
-				Parts.GROUP_ALL_REGISTERS,
-			new GroupLayout(Arrays.asList(Parts.GROUP_BASE_REGISTERS, Parts.GROUP_EXTENDED_REGISTERS)));
+		putLayout(Parts.GROUP_ALL_REGISTERS, new GroupLayout(Arrays.asList(Parts.GROUP_BASE_REGISTERS, Parts.GROUP_EXTENDED_REGISTERS)));
 
 		alignMemory(cr);
 		alignMdrSelect(cr);
@@ -74,71 +102,123 @@ class MinimaxLayout
 
 		putLayout(Parts.GROUP_MUX_LABEL,
 			new GroupLayout(Arrays.asList(Parts.MUX_A + Parts._LABEL, Parts.MUX_B + Parts._LABEL)));
-		putLayout(
-				Parts.GROUP_MUX_LINE,
+		putLayout(Parts.GROUP_MUX_LINE,
 			new GroupLayout(Arrays.asList(Parts.GROUP_MUX_LABEL, Parts.GROUP_MUX_CONSTANTS)));
 
-		putLayout(
-				Parts.GROUP_MUX_BASE_REGISTERS,
+		putLayout(Parts.GROUP_MUX_BASE_REGISTERS,
 			new GroupLayout(Arrays.asList(Parts.MDR + Parts._OUT_JUNCTION, Parts.IR + Parts._OUT_JUNCTION, Parts.PC
 				+ Parts._OUT_JUNCTION, Parts.ACCU + Parts._OUT_JUNCTION)));
 	}
 
-	public void addGroup(Group group)
-	{
-		for (Component component : group.getComponents())
+	/**
+	 * Adds all virtual and non-virtual {@link Component}s of the specified {@link Group}.
+	 *
+	 * @param group
+	 *          the {@code Group}
+	 */
+	public void addGroup(Group group) {
+		for (Component component : group.getComponents()) {
 			_container.addComponent(component, group.getName(component));
-		for (String virtual : group.getVirtualComponents())
+		}
+		for (String virtual : group.getVirtualComponents()) {
 			_container.addVirtualComponent(virtual);
+		}
 	}
 
-	public void removeGroup(Group group)
-	{
-		for (Component component : group.getComponents())
+	/**
+	 * Removes all virtual and non-virtal {@link Component}s of the specified {@link Group}.
+	 *
+	 * @param group
+	 *          the {@code Group}
+	 */
+	public void removeGroup(Group group) {
+		for (Component component : group.getComponents()) {
 			_container.removeComponent(component);
-		for (String virtual : group.getVirtualComponents())
+		}
+		for (String virtual : group.getVirtualComponents()) {
 			_container.removeComponent(virtual);
+		}
 	}
 
-	public void putLayout(String name, Layout layout)
-	{
+	/**
+	 * Puts the specified {@link Layout} to the list of {@code Layout}s with the specified name.
+	 *
+	 * @param name
+	 *          the name of the {@code Layout}
+	 * @param layout
+	 *          the {@code Layout} to add
+	 */
+	public void putLayout(String name, Layout layout) {
 		_layout.putLayout(name, layout);
 	}
 
-	public void removeLayout(String name)
-	{
+	/**
+	 * Removes the {@link Layout} with the specified name.
+	 *
+	 * @param name
+	 *          the name of the {@code Layout} to remove
+	 */
+	public void removeLayout(String name) {
 		_layout.removeLayout(name);
 	}
 
-	public void updateLayout(String name)
-	{
+	/**
+	 * Updates the {@link Layout} with the specified name.
+	 *
+	 * @param name
+	 *          the name of the {@code Layout} to update
+	 */
+	public void updateLayout(String name) {
 		_layout.updateLayout(name);
 	}
 
-	public void putLayouts(LayoutSet set)
-	{
-		for (String name : set.getComponents())
+	/**
+	 * Puts the {@link Layout}s of the specified {@link LayoutSet} to the list of {@code Layout}s.
+	 *
+	 * @param set
+	 *          the {@code LayoutSet}
+	 */
+	public void putLayouts(LayoutSet set) {
+		for (String name : set.getComponents()) {
 			putLayout(name, set.getLayout(name));
+		}
 	}
 
-	public void removeLayouts(LayoutSet set)
-	{
-		for (String name : set.getComponents())
+	/**
+	 * Removes the {@link Layout}s of the specified {@link LayoutSet}.
+	 *
+	 * @param set
+	 *          the {@code LayoutSet}
+	 */
+	public void removeLayouts(LayoutSet set) {
+		for (String name : set.getComponents()) {
 			removeLayout(name);
+		}
 	}
 
-	private void addWire(Wire wire, String name)
-	{
+	/**
+	 * Adds the specified {@link Wire} with the specified name.
+	 *
+	 * @param wire
+	 *          the {@code Wire}
+	 * @param name
+	 *          the name of the {@code Wire}
+	 */
+	private void addWire(Wire wire, String name) {
 		int index = 0;
-		for (Component component : wire.createWireComponents())
-		{
+		for (Component component : wire.createWireComponents()) {
 			_container.addComponent(component, name + "." + index);
 			index++;
 		}
 	}
 
-	private void alignMdrSelect(MachineTopology cr)
-	{
+	/**
+	 * Aligns the layouts of the register MDR.
+	 *
+	 * @param cr
+	 *          the machine's topology
+	 */
+	private void alignMdrSelect(MachineTopology cr) {
 		ConstraintContainer c = _container;
 
 		Multiplexer mdrSel = cr.getCircuit(Multiplexer.class, Parts.MDR_SELECT);
@@ -169,8 +249,13 @@ class MinimaxLayout
 		f.above(Parts.MDR_SELECT_SELECT, Parts.MDR_SELECT);
 	}
 
-	private void alignMultiplexers(MachineTopology cr)
-	{
+	/**
+	 * Aligns the layouts of the multiplexers.
+	 *
+	 * @param cr
+	 *          the machine's topology
+	 */
+	private void alignMultiplexers(MachineTopology cr) {
 		Multiplexer multiplexerA = cr.getCircuit(Multiplexer.class, Parts.MUX_A);
 		Multiplexer multiplexerB = cr.getCircuit(Multiplexer.class, Parts.MUX_B);
 		multiplexerA.setShape(new MuxShape());
@@ -228,8 +313,13 @@ class MinimaxLayout
 		cf.alignHorizontally(Parts.MUX_SPACING, Parts.MUX_A);
 	}
 
-	private void alignAlu(MachineTopology cr)
-	{
+	/**
+	 * Aligns the layout of the ALU.
+	 *
+	 * @param cr
+	 *          the machine's topology
+	 */
+	private void alignAlu(MachineTopology cr) {
 		ConstraintContainer c = _container;
 
 		Alu alu = cr.getCircuit(Alu.class, Parts.ALU);
@@ -265,14 +355,19 @@ class MinimaxLayout
 		cf.alignVertically(Parts.ALU_LINE, Parts.ALU);
 	}
 
-	private void alignMemory(MachineTopology cr)
-	{
+	/**
+	 * Aligns the layout of the memory.
+	 *
+	 * @param cr
+	 *          the machine's topology
+	 */
+	private void alignMemory(MachineTopology cr) {
 		Memory mem = cr.getCircuit(Memory.class, Parts.MEMORY);
 		mem.setShape(new MemoryShape());
 
 		ConstraintContainer c = _container;
 
-		// Memory
+		// memory
 		putLayout(Parts.MEMORY, new OriginLayout());
 
 		c.addComponent(mem.getAdr(), Parts.MEMORY_ADR);

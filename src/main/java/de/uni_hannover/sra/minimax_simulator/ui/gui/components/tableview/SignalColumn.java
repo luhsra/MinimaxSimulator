@@ -24,7 +24,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * An extended {@link SignalTableColumn} for the UI representation of the {@link de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue}s.
+ * An extended {@link SignalTableColumn} for the UI representation of the {@link de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue}s
+ * of a {@link SignalRow}.
  *
  * @author Philipp Rohde
  */

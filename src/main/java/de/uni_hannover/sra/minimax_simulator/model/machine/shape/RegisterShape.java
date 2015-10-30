@@ -18,6 +18,12 @@ public class RegisterShape extends TextRenderShape {
 	private final static int	REGISTER_SPACING					= 50;
 	private final static int	REGISTER_TEXT_LEFT_RIGHT_PADDING	= 5;
 
+	/**
+	 * Initializes the {@code RegisterShape}.
+	 *
+	 * @param fontProvider
+	 *          the {@link FontMetricsProvider} used for font measuring
+	 */
 	public RegisterShape(FontMetricsProvider fontProvider) {
 		super(fontProvider);
 	}

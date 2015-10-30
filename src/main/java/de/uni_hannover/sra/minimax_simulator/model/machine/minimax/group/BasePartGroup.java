@@ -7,18 +7,28 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.RegisterShape;
 
-public class BasePartGroup extends AbstractGroup
-{
+/**
+ * Groups all parts of the basic Minimax machine.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class BasePartGroup extends AbstractGroup {
+
+	/** The memory of the machine. */
 	private final MachineMemory _memory;
 
-	public BasePartGroup(MachineMemory memory)
-	{
+	/**
+	 * Constructs a new {@code BasePartGroup} with the specified {@link MachineMemory}.
+	 *
+	 * @param memory
+	 *          the memory of the machine
+	 */
+	public BasePartGroup(MachineMemory memory) {
 		_memory = memory;
 	}
 
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		Memory memory = new Memory(_memory);
 		memory.setName(Parts.MEMORY);
 

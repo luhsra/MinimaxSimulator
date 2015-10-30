@@ -4,7 +4,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMe
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 
 /**
- * The {@code MemoryUpdateDialog} is basically an {@link ValueUpdateDialog}.
+ * The {@code MemoryUpdateDialog} is basically an {@link ValueUpdateDialog}.<br>
  * It prompts for which memory address the value will be changed. On confirmation the new value will be stored in the {@link MachineMemory}.
  *
  * @author Philipp Rohde
@@ -14,6 +14,14 @@ public class MemoryUpdateDialog extends ValueUpdateDialog {
 	private final MachineMemory	_memory;
 	private final int			_address;
 
+	/**
+	 * Constructs a new {@code MemoryUpdateDialog} for the specified address of the specified {@link MachineMemory}.
+	 *
+	 * @param address
+	 *          the address to change its value
+	 * @param memory
+	 *          the machine's memory
+	 */
 	public MemoryUpdateDialog(int address, MachineMemory memory) {
 		super(memory.getMemoryState().getInt(address));
 

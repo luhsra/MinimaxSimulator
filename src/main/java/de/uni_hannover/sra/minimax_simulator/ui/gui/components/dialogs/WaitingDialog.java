@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
- * An {@code WaitingDialog} is basically an {@link FXDialog}.<br>
+ * A {@code WaitingDialog} is basically an {@link FXDialog}.<br>
  * It contains an indeterminate {@link ProgressBar} indicating that some {@link Runnable} is executed at the moment.
  *
  * @author Philipp Rohde
@@ -19,6 +19,14 @@ public class WaitingDialog extends FXDialog {
 
     private final ButtonType btnTypeCancel;
 
+    /**
+     * Constructs a new {@code WaitingDialog} with the specified title and message.
+     *
+     * @param waitingTitle
+     *          the title of the dialog
+     * @param waitingMessage
+     *          the message of the dialog
+     */
     public WaitingDialog(String waitingTitle, String waitingMessage) {
         super(AlertType.NONE, waitingTitle, waitingMessage);
 
@@ -51,7 +59,7 @@ public class WaitingDialog extends FXDialog {
      * Checks if the dialog was canceled or not.
      *
      * @return
-     *          <code>true</code>, if the user closed the dialog, otherwise <code>false</code>
+     *          {@code true}, if the user closed the dialog, otherwise {@code false}
      */
     public boolean isCanceled() {
         Optional<ButtonType> result = this.showAndWait();

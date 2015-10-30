@@ -8,6 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.DefaultResourceBundleLoad
 import de.uni_hannover.sra.minimax_simulator.resources.PropertyResourceControl;
 import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -27,7 +28,8 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
- * The main class of the simulator.
+ * The main class of the simulator. It initializes and launches the JavaFX application
+ * and provides some static methods needed by several classes.
  *
  * @author Philipp Rohde
  */
@@ -131,7 +133,7 @@ public class Main extends javafx.application.Application {
      * Gets the primary {@link Stage} of the application.
      *
      * @return
-     *          the applications primary {@link Stage}
+     *          the application's primary {@code Stage}
      */
     public static Stage getPrimaryStage() {
         return _primaryStage;
@@ -148,11 +150,11 @@ public class Main extends javafx.application.Application {
     }
 
     /**
-     * Gets the {@link ResourceBundleLoader} of the application.
+     * Gets the {@link ResourceBundleLoader} of the application.<br>
      * If it does not already exist it will be initialized.
      *
      * @return
-     *          the {@link ResourceBundleLoader} used by the application
+     *          the {@code ResourceBundleLoader} used by the application
      */
     public static ResourceBundleLoader getResourceLoader() {
         if (_resourceLoader == null) {
@@ -173,6 +175,14 @@ public class Main extends javafx.application.Application {
         return _resourceLoader;
     }
 
+    /**
+     * Gets the {@link TextResource} with the specified bundle name.
+     *
+     * @param bundleName
+     *          the name of the resource bundle
+     * @return
+     *          the {@code TextResource} with the specified bundle name
+     */
     public static TextResource getTextResource(String bundleName) {
         return _resourceLoader.getTextResource(bundleName);
     }
@@ -182,8 +192,7 @@ public class Main extends javafx.application.Application {
     }
 
     /**
-     * The main method of the application. It initializes the configuration, {@link ResourceBundleLoader} and {@link Workspace}
-     * before launching the JavaFX application.
+     * Calls {@link Main#launch(String...)} for launching the JavaFX application.
      *
      * @param args
      *          the command line arguments
@@ -196,7 +205,7 @@ public class Main extends javafx.application.Application {
      * Gets the {@link Workspace} used by the application.
      *
      * @return
-     *      the application's {@link Workspace}
+     *      the application's {@code Workspace}
      */
     public static Workspace getWorkspace() {
         return _workspace;
@@ -206,7 +215,7 @@ public class Main extends javafx.application.Application {
      * Gets the version number.
      *
      * @return
-     *      the version number as {@link String}
+     *      the version number as {@code String}
      */
     public static String getVersionString() {
         return _version.getVersionNumber();
@@ -227,6 +236,13 @@ public class Main extends javafx.application.Application {
         _log = Logger.getLogger(Main.class.getName());
     }
 
+    /**
+     * Gets the {@link HostServices} of the application.<br>
+     * This method is meant to be a static version of {@link Application#getHostServices()}.
+     *
+     * @return
+     *          the {@code HostServices} of the application
+     */
     public static HostServices getHostServicesStatic() {
         return hostServices;
     }

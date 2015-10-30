@@ -42,7 +42,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
     @FXML private TableView signaltable;
 
     /**
-     * The constructor initializes the final variables.
+     * Initializes the final variables.
      */
     public SignalView() {
         _res = Main.getTextResource("signal");
@@ -273,7 +273,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
 
     /**
      * Moves the currently selected signal row.<br>
-     * It moves the row up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
+     * It moves the row up if the caller is the {@code moveUp} {@link Button} or down if the caller is the {@code moveDown Button}.
      *
      * @param ae
      *          the {@link ActionEvent} calling the method

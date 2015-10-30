@@ -1,7 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
-public class Parts
-{
+/**
+ * This class contains the IDs of several parts of a Minimax machine.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class Parts {
+
 	// Parts
 	public static final String	MEMORY						= "MEMORY";
 	public static final String	ALU							= "ALU";

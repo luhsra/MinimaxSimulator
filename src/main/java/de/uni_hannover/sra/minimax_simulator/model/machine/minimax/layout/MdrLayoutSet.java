@@ -4,10 +4,21 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.AttributeType;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 
-public class MdrLayoutSet extends DefaultLayoutSet
-{
-	public MdrLayoutSet(String registerName)
-	{
+/**
+ * Container for the {@link de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.Layout}s
+ * of {@link de.uni_hannover.sra.minimax_simulator.ui.layout.Component} of the register MDR.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class MdrLayoutSet extends DefaultLayoutSet {
+
+	/**
+	 * Initializes the {@code MdrLayoutSet}.
+	 *
+	 * @param registerName
+	 *          the name of the register MDR
+	 */
+	public MdrLayoutSet(String registerName) {
 		String junctionName = registerName + Parts._JUNCTION;
 		String portName = registerName + Parts._PORT;
 		String labelName = registerName + Parts._LABEL;

@@ -1,7 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.render;
 
 /**
- * A {@code SpriteFactory} creates the {@link Sprite}s of the sprite owners.
+ * A {@code SpriteFactory} creates the {@link Sprite}s of the {@link de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner}s.
  *
  * @param <T>
  *     the sprite owner class
@@ -11,7 +11,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.render;
 public interface SpriteFactory<T> {
 
 	/**
-	 * Creates the {@code Sprite} of the owner.
+	 * Creates the {@code Sprite} of the {@code SpriteOwner}.
 	 *
 	 * @param owner
 	 *          the owner of the {@code Sprite} that will be created

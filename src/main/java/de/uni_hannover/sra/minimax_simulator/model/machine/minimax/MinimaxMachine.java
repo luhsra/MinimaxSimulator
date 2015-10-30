@@ -18,8 +18,13 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
 
 import java.util.*;
 
-public class MinimaxMachine implements ConfigurableMachine
-{
+/**
+ * The actual implementation of a Minimax machine.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class MinimaxMachine implements ConfigurableMachine {
+
 	private final static int						ADDRESS_WIDTH	= 24;
 	private final static int						PAGE_WIDTH		= 12;
 
@@ -35,9 +40,11 @@ public class MinimaxMachine implements ConfigurableMachine
 	private final Map<MuxType, MuxInputManager>		_muxExtensions;
 	private final ExtensionList<AluOperation>		_aluExtensions;
 
-	public MinimaxMachine()
-	{
-		// Initialize basic network topology and create Part instances.
+	/**
+	 * Constructs a new {@code MinimaxMachine}.
+	 */
+	public MinimaxMachine() {
+		// initialize basic network topology and create Part instances.
 		_topology = new MinimaxTopology();
 		_display = new MinimaxDisplay();
 		_layout = new MinimaxLayout();
@@ -49,9 +56,8 @@ public class MinimaxMachine implements ConfigurableMachine
 		RegisterInputGroupManager rig = new RegisterInputGroupManager(this);
 		_registerManager = rig;
 
-		// Create part groups and add remaining parts
-		for (Group group : createGroups())
-		{
+		// create part groups and add remaining parts
+		for (Group group : createGroups()) {
 			_groupManager.initializeGroup("base-group:<" + group.toString() + ">", group);
 		}
 
@@ -75,12 +81,13 @@ public class MinimaxMachine implements ConfigurableMachine
 				Arrays.asList(Parts.MUX_A, Parts.MUX_B), this), rig, new NullInputGroupManager(
 				_groupManager));
 
-		for (MuxType mux : MuxType.values())
-			for (MuxInputGroupManager mig : inputGroupManagers)
+		for (MuxType mux : MuxType.values()) {
+			for (MuxInputGroupManager mig : inputGroupManagers) {
 				_muxExtensions.get(mux).registerGroupManager(mig);
+			}
+		}
 
-		_layout.putLayout(Parts.GROUP_MUX_CONSTANTS,
-			new GroupLayout(Arrays.asList(Parts.MUX_A, Parts.MUX_B)));
+		_layout.putLayout(Parts.GROUP_MUX_CONSTANTS, new GroupLayout(Arrays.asList(Parts.MUX_A, Parts.MUX_B)));
 
 		_aluExtensions = new AluExtensionList(_topology.getCircuit(Alu.class, Parts.ALU));
 
@@ -88,7 +95,7 @@ public class MinimaxMachine implements ConfigurableMachine
 
 		_layout.getContainer().setInsets(new Insets(40, 40, 40, 40));
 
-		// Remove visual representation of MAR junction
+		// remove visual representation of MAR junction
 		_topology.getCircuit(Junction.class, Parts.MAR + Parts._JUNCTION).getDataOuts().remove(1);
 
 		updateLayout();
@@ -97,68 +104,84 @@ public class MinimaxMachine implements ConfigurableMachine
 		// MachineDisplay.
 	}
 
-	void updateLayout()
-	{
-		// Relocate all parts based on constraints (...almost there)
+	/**
+	 * Updates the {@link MinimaxLayout} and size of the {@link MinimaxDisplay}.
+	 */
+	void updateLayout() {
+		// relocate all parts based on constraints (...almost there)
 		_layout.updateLayout();
 
-		// Setup display instance with calculated size
+		// setup display instance with calculated size
 		_display.setDimension(_layout.getDimension());
 	}
 
-	MinimaxLayout getLayout()
-	{
+	/**
+	 * Gets the {@link MinimaxLayout} of the {@code MinimaxMachine}.
+	 *
+	 * @return
+	 *          the layout
+	 */
+	MinimaxLayout getLayout() {
 		return _layout;
 	}
 
 	@Override
-	public MinimaxTopology getTopology()
-	{
+	public MinimaxTopology getTopology() {
 		return _topology;
 	}
 
 	@Override
-	public MinimaxDisplay getDisplay()
-	{
+	public MinimaxDisplay getDisplay() {
 		return _display;
 	}
 
 	@Override
-	public MachineMemory getMemory()
-	{
+	public MachineMemory getMemory() {
 		return _memory;
 	}
 
-	GroupManager getGroupManager()
-	{
+	/**
+	 * Gets the {@link GroupManager} of the {@code MinimaxMachine}.
+	 *
+	 * @return
+	 *          the {@code GroupManager}
+	 */
+	GroupManager getGroupManager() {
 		return _groupManager;
 	}
 
-	RegisterManager getRegisterManager()
-	{
+	/**
+	 * Gets the {@link RegisterManager} of the {@code MinimaxMachine}.
+	 *
+	 * @return
+	 *          the {@code RegisterManager}
+	 */
+	RegisterManager getRegisterManager() {
 		return _registerManager;
 	}
 
 	@Override
-	public ExtensionList<RegisterExtension> getRegisterExtensions()
-	{
+	public ExtensionList<RegisterExtension> getRegisterExtensions() {
 		return _registerExtensions;
 	}
 
 	@Override
-	public ExtensionList<MuxInput> getMuxInputExtensions(MuxType type)
-	{
+	public ExtensionList<MuxInput> getMuxInputExtensions(MuxType type) {
 		return _muxExtensions.get(type);
 	}
 
 	@Override
-	public ExtensionList<AluOperation> getAluOperations()
-	{
+	public ExtensionList<AluOperation> getAluOperations() {
 		return _aluExtensions;
 	}
 
-	private List<Group> createGroups()
-	{
+	/**
+	 * Creates the {@link Group}s of the base machine.
+	 *
+	 * @return
+	 *          a list of the {@code Group}s
+	 */
+	private List<Group> createGroups() {
 		List<Group> list = new ArrayList<Group>();
 
 		list.add(new BasePartGroup(_memory));
@@ -169,12 +192,9 @@ public class MinimaxMachine implements ConfigurableMachine
 		// list.add(new DefaultRegisterGroup(IR));
 		// list.add(new DefaultRegisterGroup(PC));
 		// list.add(new MdrRegisterGroup(MDR));
-		list.add(new MultiplexerGroup(Parts.MDR_SELECT, "MDR.Sel", true,
-			BaseControlPort.MDR_SEL.port()));
-		list.add(new MultiplexerGroup(Parts.MUX_A, "ALUSel.A", true,
-			BaseControlPort.ALU_SELECT_A.port()));
-		list.add(new MultiplexerGroup(Parts.MUX_B, "ALUSel.B", false,
-			BaseControlPort.ALU_SELECT_B.port()));
+		list.add(new MultiplexerGroup(Parts.MDR_SELECT, "MDR.Sel", true, BaseControlPort.MDR_SEL.port()));
+		list.add(new MultiplexerGroup(Parts.MUX_A, "ALUSel.A", true, BaseControlPort.ALU_SELECT_A.port()));
+		list.add(new MultiplexerGroup(Parts.MUX_B, "ALUSel.B", false, BaseControlPort.ALU_SELECT_B.port()));
 		list.add(new MemoryGroup());
 		list.add(new SignExtGroup());
 		list.add(new BaseRegisterOutWireGroup());

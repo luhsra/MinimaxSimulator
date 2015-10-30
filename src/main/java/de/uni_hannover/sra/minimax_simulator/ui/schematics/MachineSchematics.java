@@ -41,7 +41,7 @@ public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements Mach
 	}
 
 	/**
-	 * Updates the size of the {@code Canvas}.
+	 * Updates the size of the {@code Canvas} and redraws the content.
 	 */
 	private void updatePreferredSize() {
 		Dimension dim = this.machine.getDisplay().getDimension();

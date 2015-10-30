@@ -8,18 +8,27 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.MdrLay
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.LabelShape;
 
-public class MdrRegisterGroup extends AbstractGroup
-{
+/**
+ * Groups the parts of the register MDR.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class MdrRegisterGroup extends AbstractGroup {
+
 	private final String _registerId;
 
-	public MdrRegisterGroup(String registerId)
-	{
+	/**
+	 * Constructs a new {@code MdrRegisterGroup} with the specified register ID.
+	 *
+	 * @param registerId
+	 *          the ID of the register
+	 */
+	public MdrRegisterGroup(String registerId) {
 		_registerId = registerId;
 	}
 
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		Register register = cr.getCircuit(Register.class, _registerId);
 
 		Junction junction = new Junction();
@@ -53,14 +62,12 @@ public class MdrRegisterGroup extends AbstractGroup
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return true;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		return new MdrLayoutSet(_registerId);
 	}
 }

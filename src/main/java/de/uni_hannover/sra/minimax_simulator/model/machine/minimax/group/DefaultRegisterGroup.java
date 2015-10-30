@@ -8,18 +8,27 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.Layout
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.LabelShape;
 
-public class DefaultRegisterGroup extends AbstractGroup
-{
+/**
+ * Groups the default components of a register.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class DefaultRegisterGroup extends AbstractGroup {
+
 	private final String  _registerId;
 
-	public DefaultRegisterGroup(String registerId)
-	{
+	/**
+	 * Constructs a new {@code DefaultRegisterGroup} for the specified register.
+	 *
+	 * @param registerId
+	 *          the ID of the register
+	 */
+	public DefaultRegisterGroup(String registerId) {
 		_registerId = registerId;
 	}
 
 	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider)
-	{
+	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		Register register = cr.getCircuit(Register.class, _registerId);
 
 		Junction junction = new Junction();
@@ -49,14 +58,12 @@ public class DefaultRegisterGroup extends AbstractGroup
 	}
 
 	@Override
-	public boolean hasLayouts()
-	{
+	public boolean hasLayouts() {
 		return true;
 	}
 
 	@Override
-	public LayoutSet createLayouts()
-	{
+	public LayoutSet createLayouts() {
 		return new DefaultRegisterLayoutSet(_registerId);
 	}
 }

@@ -55,7 +55,7 @@ public class AluView {
     private final static String ALU_RESULT = "ALU.result \u2190 ";
 
     /**
-     * The constructor initializes the final variables.
+     * Initializes the final variables.
      */
     public AluView() {
         _res = Main.getTextResource("machine");
@@ -63,7 +63,7 @@ public class AluView {
     }
 
     /**
-     * This method is called during application start up and initializes the AluView
+     * This method is called during application start up and initializes the {@code AluView}
      * as much as possible without having any project data.
      */
     public void initialize() {
@@ -213,7 +213,7 @@ public class AluView {
     }
 
     /**
-     * Adds the currently selected available {@link AluOperation} to the list of added {@link AluOperation}s.
+     * Adds the currently selected available {@link AluOperation} to the list of added {@code AluOperation}s.
      */
     public void addOperation() {
         AluOperation op = tableAvailable.getSelectionModel().getSelectedItem().getAluOP();
@@ -230,7 +230,7 @@ public class AluView {
     }
 
     /**
-     * Removes the currently selected added {@link AluOperation} and adds it to the list of available {@link AluOperation}s.
+     * Removes the currently selected added {@link AluOperation} and adds it to the list of available {@code AluOperation}s.
      */
     public void removeOperation() {
         AluOperation op = tableAdded.getSelectionModel().getSelectedItem().getAluOP();
@@ -262,8 +262,8 @@ public class AluView {
     private Button btnMoveDown;
 
     /**
-     * Moves the currently selected operation.
-     * It moves the source up if the caller is the moveUp {@link Button} or down if the caller is the moveDown {@link Button}.
+     * Moves the currently selected operation.<br>
+     * It moves the source up if the caller is the {@code moveUp} {@link Button} or down if the caller is the {@code moveDown Button}.
      *
      * @param ae
      *          the {@link ActionEvent} calling the method
@@ -308,10 +308,19 @@ public class AluView {
      * @author Philipp Rohde
      */
     public static class AluOpTableModel {
+
         private final SimpleStringProperty opcode;
         private final SimpleStringProperty op;
         private final AluOperation aluOP;
 
+        /**
+         * Constructs a new {@code AluOpTableModel} and sets the properties.
+         *
+         * @param aluOP
+         *          the {@link AluOperation} to represent
+         * @param config
+         *          the {@link MachineConfiguration} for getting the op code
+         */
         private AluOpTableModel(AluOperation aluOP, MachineConfiguration config) {
             this.aluOP = aluOP;
 

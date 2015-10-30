@@ -17,7 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 /**
- * An extended {@link SignalTableColumn} for the UI representation of the label attribute.
+ * An extended {@link SignalTableColumn} for the UI representation of the label attribute of a {@link SignalRow}.
  *
  * @author Philipp Rohde
  */

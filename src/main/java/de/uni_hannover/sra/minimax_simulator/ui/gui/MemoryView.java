@@ -39,14 +39,14 @@ public class MemoryView{
     @FXML private Spinner spinnerStartAddress;
 
     /**
-     * The constructor initializes the final variables.
+     * Initializes the final variables.
      */
     public MemoryView() {
         _res = Main.getTextResource("project");
     }
 
     /**
-     * This method is called during application start up and initializes the MemoryView
+     * This method is called during application start up and initializes the {@code MemoryView}
      * as much as possible without having any project data.
      */
     public void initialize() {

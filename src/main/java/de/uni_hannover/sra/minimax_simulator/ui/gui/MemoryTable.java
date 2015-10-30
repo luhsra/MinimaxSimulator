@@ -55,7 +55,7 @@ public class MemoryTable implements MemoryAccessListener {
     @FXML private Label lblMemPage;
 
     /**
-     * The constructor initializes the variables.
+     * Initializes the variables.
      */
     public MemoryTable() {
         _res = Main.getTextResource("project");
@@ -63,7 +63,7 @@ public class MemoryTable implements MemoryAccessListener {
     }
 
     /**
-     * This method is called during application start up and initializes the DebuggerView
+     * This method is called during application start up and initializes the {@code MemoryTable}
      * as much as possible without having any project data.
      */
     public void initialize() {
@@ -101,7 +101,7 @@ public class MemoryTable implements MemoryAccessListener {
     }
 
     /**
-     * Sets the tooltips for the buttons.
+     * Sets the {@link Tooltip}s for the {@link Button}s.
      */
     private void setTooltips() {
         btnFirstPage.setTooltip(new Tooltip(_res.get("memtable.first.tip")));
@@ -300,12 +300,21 @@ public class MemoryTable implements MemoryAccessListener {
      * @author Philipp Rohde
      */
     public static class MemoryTableModel {
+
         private final SimpleStringProperty address;
         private final SimpleIntegerProperty decimal;
         private final SimpleStringProperty hex;
 
         private static final String _hexFormatString = "0x%08X";
 
+        /**
+         * Constructs a new {@code MemoryTableModel} and sets the properties.
+         *
+         * @param address
+         *          the memory address to represent
+         * @param value
+         *          the value stored at the address
+         */
         private MemoryTableModel(String address, int value) {
             this.address = new SimpleStringProperty(address);
             this.decimal = new SimpleIntegerProperty(value);

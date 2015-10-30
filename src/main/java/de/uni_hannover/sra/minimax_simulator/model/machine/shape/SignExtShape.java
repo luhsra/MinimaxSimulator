@@ -13,6 +13,12 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.SignExtension;
  */
 public class SignExtShape extends TextRenderShape {
 
+	/**
+	 * Initializes the {@code SignExtShape}.
+	 *
+	 * @param fontProvider
+	 *          the {@link FontMetricsProvider} used for font measuring
+	 */
 	public SignExtShape(FontMetricsProvider fontProvider) {
 		super(fontProvider);
 	}
