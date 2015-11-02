@@ -8,7 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationListener;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationState;
-import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Trackable;
+import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Traceable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener;
@@ -201,7 +201,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                     if (mouseEvent.getClickCount() == 2) {
                         if (simulation.getState() == SimulationState.IDLE) {
                             String register = regTable.getSelectionModel().getSelectedItem().getName();
-                            Trackable<Integer> value = simulation.getRegisterValue(register);
+                            Traceable<Integer> value = simulation.getRegisterValue(register);
                             // open edit dialog
                             Optional<ButtonType> result = new RegisterUpdateDialog(register, value).showAndWait();
                             if (result.get() == ButtonType.OK) {
@@ -237,7 +237,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
 
         for (RegisterExtension register : registers) {
             String name = register.getName();
-            Trackable<Integer> value = null;
+            Traceable<Integer> value = null;
 
             if (simulation.getState() != SimulationState.OFF) {
                 value = simulation.getRegisterValue(name);
@@ -586,7 +586,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
          * @param value
          *          the traceable value of the register
          */
-        private RegisterTableModel(RegisterExtension register, Trackable<Integer> value) {
+        private RegisterTableModel(RegisterExtension register, Traceable<Integer> value) {
             this.name = new SimpleStringProperty(register.getName());
 
             String decimal;

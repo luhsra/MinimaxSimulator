@@ -1,15 +1,15 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.simulation;
 
 /**
- * A trackable {@code Integer}.
+ * A traceable {@code Integer}.
  *
- * @see Trackable
+ * @see Traceable
  *
  * @author Martin L&uuml;ck
  */
-public class TrackableInteger extends AbstractTrackable<Integer> {
+public class TraceableInteger extends AbstractTraceable<Integer> {
 
-	/** The value of the {@code TrackableInteger}. */
+	/** The value of the {@code TraceableInteger}. */
 	private Integer value;
 
 	@Override

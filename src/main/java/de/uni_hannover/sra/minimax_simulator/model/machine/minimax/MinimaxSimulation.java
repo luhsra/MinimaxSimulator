@@ -3,7 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryAccessListener;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.AbstractSimulation;
-import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Trackable;
+import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Traceable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 
@@ -55,13 +55,13 @@ public class MinimaxSimulation extends AbstractSimulation implements MemoryAcces
 	}
 
 	@Override
-	public Trackable<Integer> getAluResult() {
+	public Traceable<Integer> getAluResult() {
 		checkState(currentInstance != null);
 		return currentInstance.getAluResult();
 	}
 
 	@Override
-	public Trackable<Integer> getRegisterValue(String name) {
+	public Traceable<Integer> getRegisterValue(String name) {
 		checkState(currentInstance != null);
 		return currentInstance.getRegisterValue(name);
 	}

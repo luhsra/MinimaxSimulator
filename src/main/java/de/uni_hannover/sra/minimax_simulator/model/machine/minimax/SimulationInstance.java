@@ -10,8 +10,8 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Alu;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Port;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.ReadablePort;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Register;
-import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.AbstractTrackable;
-import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Trackable;
+import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.AbstractTraceable;
+import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Traceable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 
 import java.util.HashMap;
@@ -29,7 +29,7 @@ class SimulationInstance {
 	/**
 	 * Represents the the result of the ALU.
 	 */
-	private class AluResult extends AbstractTrackable<Integer> {
+	private class AluResult extends AbstractTraceable<Integer> {
 		private int lastPostedValue;
 		private final Alu alu;
 
@@ -69,7 +69,7 @@ class SimulationInstance {
 	/**
 	 * Represents the value of a register.
 	 */
-	private class RegisterValue extends AbstractTrackable<Integer> {
+	private class RegisterValue extends AbstractTraceable<Integer> {
 
 		private int lastPostedValue;
 		private final Register register;
@@ -150,7 +150,7 @@ class SimulationInstance {
 	 * @return
 	 *          the ALU result
 	 */
-	Trackable<Integer> getAluResult() {
+	Traceable<Integer> getAluResult() {
 		return aluResult;
 	}
 
@@ -162,7 +162,7 @@ class SimulationInstance {
 	 * @return
 	 *          the value of the register
 	 */
-	Trackable<Integer> getRegisterValue(String name) {
+	Traceable<Integer> getRegisterValue(String name) {
 		return registerValues.get(name);
 	}
 
