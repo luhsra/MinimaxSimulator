@@ -17,7 +17,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author Martin L&uuml;ck
  * @author Philipp Rohde
  */
-// TODO: why CircuitSprite and not LabelSprite?
 public class CuLabelSprite extends CircuitSprite {
 
 	private final Label label;
