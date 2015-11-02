@@ -1,6 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import de.uni_hannover.sra.minimax_simulator.Main;
@@ -14,7 +13,6 @@ import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
 import de.uni_hannover.sra.minimax_simulator.model.user.WorkspaceListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
-import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.AboutDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.ExceptionDialog;
@@ -328,7 +326,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                     initProjectGUI();
                 } catch (ProjectImportException e) {
                     closeProject();
-                    UI.invokeInFAT(new Runnable() {
+                    UIUtil.invokeInFAT(new Runnable() {
                         @Override
                         public void run() {
                             new FXDialog(Alert.AlertType.ERROR, res.get("load-error.title"), res.get("load-error.message")).showAndWait();
@@ -345,7 +343,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * Prepares the GUI for working with a project.
      */
     private void initProjectGUI() {
-        UI.invokeInFAT(new Runnable() {
+        UIUtil.invokeInFAT(new Runnable() {
             @Override
             public void run() {
                 setDisable(false);
@@ -449,7 +447,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 try {
                     Main.getWorkspace().saveProject(fileToSave);
                 } catch (Exception e) {
-                    UI.invokeInFAT(new Runnable() {
+                    UIUtil.invokeInFAT(new Runnable() {
                         @Override
                         public void run() {
                             new ExceptionDialog(e);
@@ -590,7 +588,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         String error = res.format("project.export.error.message", filename, reason);
         String title = res.get("project.export.error.title");
 
-        UI.invokeInFAT(new Runnable() {
+        UIUtil.invokeInFAT(new Runnable() {
             @Override
             public void run() {
                 new FXDialog(Alert.AlertType.ERROR, title, error).showAndWait();
@@ -689,7 +687,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      *              the title to set
      */
     private void setApplicationTitle(String newTitle) {
-        UI.invokeInFAT(new Runnable() {
+        UIUtil.invokeInFAT(new Runnable() {
             @Override
             public void run() {
                 Main.getPrimaryStage().setTitle(newTitle);

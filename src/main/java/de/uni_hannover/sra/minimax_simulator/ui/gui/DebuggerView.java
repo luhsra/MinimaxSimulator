@@ -14,7 +14,6 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
-import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.ExceptionDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.RegisterUpdateDialog;
@@ -423,7 +422,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                 btnSimRun.setDisable(false);
             }
         } catch (Exception e) {
-            UI.invokeInFAT(new Runnable() {
+            UIUtil.invokeInFAT(new Runnable() {
                 @Override
                 public void run() {
                     new ExceptionDialog(e).show();
@@ -447,7 +446,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             btnSimInit.setGraphic(new ImageView("/images/fugue/control-green.png"));        // TODO: hold reference instead of loading from file each time
             btnSimInit.setTooltip(simInit);
         } catch (Exception e) {
-            UI.invokeInFAT(new Runnable() {
+            UIUtil.invokeInFAT(new Runnable() {
                 @Override
                 public void run() {
                     new ExceptionDialog(e).show();
@@ -466,7 +465,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         try {
             simulation.step();
         } catch (Exception e) {
-            UI.invokeInFAT(new Runnable() {
+            UIUtil.invokeInFAT(new Runnable() {
                 @Override
                 public void run() {
                     new ExceptionDialog(e).show();
@@ -489,7 +488,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                                      try {
                                          simulation.run();
                                      } catch (Exception e) {
-                                         UI.invokeInFAT(new Runnable() {
+                                         UIUtil.invokeInFAT(new Runnable() {
                                              @Override
                                              public void run() {
                                                  new ExceptionDialog(e).show();
