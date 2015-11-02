@@ -29,7 +29,7 @@ public class WireSprite extends CircuitSprite {
 	}
 
 	@Override
-	public void paint(GraphicsContext gc, RenderEnvironment env) {
+	public void paint(GraphicsContext gc) {
 		Point[] points = wire.getPoints();
 
 		double lineWidth = gc.getLineWidth();

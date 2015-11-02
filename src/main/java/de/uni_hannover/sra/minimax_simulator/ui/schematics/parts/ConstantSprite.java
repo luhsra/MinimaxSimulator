@@ -28,7 +28,7 @@ public class ConstantSprite extends CircuitSprite {
 	}
 
 	@Override
-	public void paint(GraphicsContext gc, RenderEnvironment env) {
+	public void paint(GraphicsContext gc) {
 		Bounds b = constant.getBounds();
 		debugBounds(gc, b);
 

@@ -28,7 +28,7 @@ public class LabelSprite extends CircuitSprite {
 	}
 
 	@Override
-	public void paint(GraphicsContext gc, RenderEnvironment env) {
+	public void paint(GraphicsContext gc) {
 		Bounds b = label.getBounds();
 		debugBounds(gc, b);
 		gc.fillText(label.getMessage(), b.x, b.y + b.h);

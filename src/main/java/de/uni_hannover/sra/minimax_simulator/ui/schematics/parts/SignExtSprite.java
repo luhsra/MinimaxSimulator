@@ -30,7 +30,7 @@ public class SignExtSprite extends CircuitSprite {
 	}
 
 	@Override
-	public void paint(GraphicsContext gc, RenderEnvironment env) {
+	public void paint(GraphicsContext gc) {
 		Bounds b = signExt.getBounds();
 		debugBounds(gc, b);
 

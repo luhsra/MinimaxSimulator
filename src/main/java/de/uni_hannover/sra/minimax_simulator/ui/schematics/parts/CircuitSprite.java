@@ -43,8 +43,7 @@ public abstract class CircuitSprite implements Sprite {
 	 * @param gc
 	 *          the {@code GraphicsContext} the {@code CircuitSprite} will be drawn on
 	 */
-	// TODO: make abstract?
-	public void paint(GraphicsContext gc) {}
+	public abstract void paint(GraphicsContext gc);
 
 	/**
 	 * Draws the arrow head at the end of a wire.<br>
