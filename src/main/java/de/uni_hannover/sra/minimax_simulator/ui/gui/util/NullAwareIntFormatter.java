@@ -66,7 +66,7 @@ public class NullAwareIntFormatter extends TextFormatter {
 				};
 			}
 		};
-		
+
 		/**
 		 * Gets the {@link StringConverter} for the mode.
 		 *

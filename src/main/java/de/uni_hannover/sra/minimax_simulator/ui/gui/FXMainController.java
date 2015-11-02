@@ -17,6 +17,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UI;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.AboutDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.ExceptionDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.UnsavedDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
@@ -245,7 +246,6 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * @return
      *          {@code true} if changes will be dismissed or were saved; {@code false} otherwise
      */
-    // TODO: move to UIUtil?
     private boolean confirmDismissUnsavedChanges(String dialogTitle, String dialogMessage) {
         if (Main.getWorkspace().isUnsaved()) {
             ButtonType choice = new UnsavedDialog(dialogTitle, dialogMessage).getChoice();
@@ -262,7 +262,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     }
 
     /**
-     * Calls {@link #saveProjectAs} if the project was not saved yet, calls {@link #saveProject()} otherwise.
+     * Calls {@link #saveProjectAs} if the project was not yet saved, calls {@link #saveProject()} otherwise.
      *
      * @return
      *          {@code true} if the project was saved; {@code false} otherwise
@@ -325,7 +325,6 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
             public void run() {
                 try {
                     Main.getWorkspace().openProject(file);
-                    //TODO: do all views work correctly?
                     initProjectGUI();
                 } catch (ProjectImportException e) {
                     closeProject();
@@ -450,8 +449,12 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 try {
                     Main.getWorkspace().saveProject(fileToSave);
                 } catch (Exception e) {
-                    Main.getWorkspace().closeProject();        // TODO: really closing project if saving didn't work?
-                    throw Throwables.propagate(e);
+                    UI.invokeInFAT(new Runnable() {
+                        @Override
+                        public void run() {
+                            new ExceptionDialog(e);
+                        }
+                    });
                 }
             }
         }, res.get("wait.title"), res.format("wait.project.save", file.getName()));
