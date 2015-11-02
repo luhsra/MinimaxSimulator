@@ -4,7 +4,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.SynchronousCircuit;
-import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.RegisterSprite;
 

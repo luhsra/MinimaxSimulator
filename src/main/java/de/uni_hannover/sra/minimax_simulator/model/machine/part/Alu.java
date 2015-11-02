@@ -3,7 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 import com.google.common.collect.Sets;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
-import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.AluSprite;
 

@@ -1,4 +1,4 @@
-package de.uni_hannover.sra.minimax_simulator.ui.render;
+package de.uni_hannover.sra.minimax_simulator.ui.schematics.render;
 
 import com.sun.javafx.tk.FontMetrics;
 import javafx.scene.paint.Color;

@@ -3,7 +3,6 @@ package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Point;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
-import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import javafx.scene.canvas.GraphicsContext;
 
 import static com.google.common.base.Preconditions.checkNotNull;

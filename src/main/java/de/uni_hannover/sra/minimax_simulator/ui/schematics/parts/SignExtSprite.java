@@ -4,7 +4,6 @@ import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.SignExtension;
-import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
 import javafx.scene.canvas.GraphicsContext;
 
 import static com.google.common.base.Preconditions.checkNotNull;

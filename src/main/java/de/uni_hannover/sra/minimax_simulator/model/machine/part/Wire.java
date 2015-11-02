@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Point;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
-import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.WireSprite;
 
