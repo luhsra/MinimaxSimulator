@@ -99,6 +99,9 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     private final MessageFormat cyclesFormatWrite;
     private Object[] cyclesFormatParam = new Object[1];
 
+    private static final Image INIT_SIM = new Image("/images/fugue/control-green.png");
+    private static final Image RESET_SIM = new Image("/images/fugue/arrow-circle-225-red.png");
+
     /**
      * Initializes the final variables.
      */
@@ -413,7 +416,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                 btnSimQuit.setDisable(false);
                 btnSimCycle.setDisable(false);
                 btnSimRun.setDisable(false);
-                btnSimInit.setGraphic(new ImageView("/images/fugue/arrow-circle-225-red.png"));     // TODO: hold reference instead of loading from file each time
+                btnSimInit.setGraphic(new ImageView(RESET_SIM));
                 btnSimInit.setTooltip(simStop);
             }
             else {
@@ -443,7 +446,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             btnSimQuit.setDisable(true);
             btnSimCycle.setDisable(true);
             btnSimRun.setDisable(true);
-            btnSimInit.setGraphic(new ImageView("/images/fugue/control-green.png"));        // TODO: hold reference instead of loading from file each time
+            btnSimInit.setGraphic(new ImageView(INIT_SIM));
             btnSimInit.setTooltip(simInit);
         } catch (Exception e) {
             UIUtil.invokeInFAT(new Runnable() {
