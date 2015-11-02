@@ -233,11 +233,11 @@ class MinimaxLayout {
 
 		// MDR select
 		f.alignVertically(Parts.MDR_SELECT, Parts.MDR);
-		f.rightTo(Parts.MDR_SELECT, Parts.GROUP_BASE_REGISTERS, 70);
+		f.right(Parts.MDR_SELECT, Parts.GROUP_BASE_REGISTERS, 70);
 
 		// MDR select data out
 		f.alignVertically(Parts.MDR_SELECT_OUT, Parts.MDR_SELECT);
-		f.leftTo(Parts.MDR_SELECT_OUT, Parts.MDR_SELECT);
+		f.left(Parts.MDR_SELECT_OUT, Parts.MDR_SELECT);
 
 		f.right(Parts.MDR_SELECT_IN_0, Parts.MDR_SELECT);
 		f.right(Parts.MDR_SELECT_IN_1, Parts.MDR_SELECT);
@@ -335,8 +335,8 @@ class MinimaxLayout {
 		cf.alignHorizontally(Parts.ALU, Parts.GROUP_ALL_REGISTERS);
 		cf.alignVertically(Parts.ALU, Parts.MUX_SPACING);
 
-		cf.leftTo(Parts.ALU_A_IN, Parts.ALU);
-		cf.leftTo(Parts.ALU_B_IN, Parts.ALU);
+		cf.left(Parts.ALU_A_IN, Parts.ALU);
+		cf.left(Parts.ALU_B_IN, Parts.ALU);
 		cf.alignVertically(Parts.ALU_A_IN, Parts.MUX_A_OUT);
 		cf.alignVertically(Parts.ALU_B_IN, Parts.MUX_B_OUT);
 
@@ -349,7 +349,7 @@ class MinimaxLayout {
 		cf.relative(Parts.ALU_COND_OUT, AttributeType.VERTICAL_CENTER, Parts.ALU, -4);
 
 		c.addVirtualComponent(Parts.ALU_LINE);
-		cf.rightTo(Parts.ALU_LINE, Parts.GROUP_ALL_REGISTERS, 170);
+		cf.right(Parts.ALU_LINE, Parts.GROUP_ALL_REGISTERS, 170);
 
 		// not used
 		cf.alignVertically(Parts.ALU_LINE, Parts.ALU);
@@ -377,15 +377,15 @@ class MinimaxLayout {
 		c.addComponent(mem.getRw(), Parts.MEMORY_RW);
 
 		ConstraintFactory cf = container.createConstraintFactory();
-		cf.leftTo(Parts.MEMORY_ADR, Parts.MEMORY);
+		cf.left(Parts.MEMORY_ADR, Parts.MEMORY);
 		cf.above(Parts.MEMORY_ADR, Parts.MEMORY, -14);
 		cf.above(Parts.MEMORY_CS, Parts.MEMORY);
 		cf.left(Parts.MEMORY_CS, Parts.MEMORY, -20);
-		cf.leftTo(Parts.MEMORY_DI, Parts.MEMORY);
+		cf.left(Parts.MEMORY_DI, Parts.MEMORY);
 		cf.below(Parts.MEMORY_DI, Parts.MEMORY, -14);
 		cf.right(Parts.MEMORY_DO, Parts.MEMORY);
 		cf.alignVertically(Parts.MEMORY_DO, Parts.MEMORY);
 		cf.above(Parts.MEMORY_RW, Parts.MEMORY);
-		cf.rightTo(Parts.MEMORY_RW, Parts.MEMORY, -20);
+		cf.right(Parts.MEMORY_RW, Parts.MEMORY, -20);
 	}
 }

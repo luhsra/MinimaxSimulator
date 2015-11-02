@@ -193,7 +193,6 @@ public abstract class ConstraintFactory {
 	 * @param offset
 	 *          the offset of the {@link RelativeConstraint}
 	 */
-	// TODO: rename all to left / right
 	public void left(String target, String source, int offset) {
 		setConstraint(target, AttributeType.RIGHT, new RelativeConstraint(source, AttributeType.LEFT, -offset));
 	}
@@ -206,7 +205,7 @@ public abstract class ConstraintFactory {
 	 * @param source
 	 *          the name of the source attribute
 	 */
-	public void leftTo(String target, String source) {
+	public void left(String target, String source) {
 		setConstraint(target, AttributeType.RIGHT, new RelativeConstraint(source, AttributeType.LEFT, 0));
 	}
 
@@ -220,7 +219,7 @@ public abstract class ConstraintFactory {
 	 * @param offset
 	 *          the offset of the {@link RelativeConstraint}
 	 */
-	public void rightTo(String target, String source, int offset) {
+	public void right(String target, String source, int offset) {
 		setConstraint(target, AttributeType.LEFT, new RelativeConstraint(source, AttributeType.RIGHT, offset));
 	}
 
