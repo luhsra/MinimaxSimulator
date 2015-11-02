@@ -28,7 +28,6 @@ public class NullAwareIntFormatter extends TextFormatter {
 					@Override
 					public Change apply(Change change) {
 						if (change.isContentChange()) {
-							//TODO: improve
 							try {
 								Integer.parseInt(change.getControlNewText());
 							} catch (NumberFormatException e) {
@@ -66,6 +65,7 @@ public class NullAwareIntFormatter extends TextFormatter {
 				};
 			}
 		};
+
 
 		/**
 		 * Gets the {@link StringConverter} for the mode.
