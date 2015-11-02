@@ -5,8 +5,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout;
  *
  * @author Martin L&uuml;ck
  */
-// TODO: why not abstract?
-public class AbstractComponent implements Component {
+public abstract class AbstractComponent implements Component {
 
 	private Dimension dimension = new Dimension(0, 0);
 	private Insets insets = new Insets(0, 0, 0, 0);
