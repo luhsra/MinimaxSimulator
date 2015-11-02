@@ -164,6 +164,8 @@ public class MemoryTable implements MemoryAccessListener {
         int addressRange = mMemory.getMaxAddress() - mMemory.getMinAddress();
         pageCount = (addressRange - 1) / pageSize + 1;
 
+        txtAddressField.setText("");
+        firstPage();
         updateMemPageLabel();
 
         col_mem_adr.setCellValueFactory(new PropertyValueFactory<>("address"));

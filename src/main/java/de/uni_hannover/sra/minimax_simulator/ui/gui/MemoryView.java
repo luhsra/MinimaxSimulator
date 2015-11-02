@@ -96,6 +96,16 @@ public class MemoryView{
     public void initMemoryView() {
         mMemory = Main.getWorkspace().getProject().getMachine().getMemory();
 
+        txtExport.setText("");
+        txtImport.setText("");
+        currentExportFile = null;
+        currentImportFile = null;
+        cb_partialImport.setSelected(false);
+        cb_partialImport.setDisable(true);
+        spinnerSize.setDisable(true);
+        btnExportMem.setDisable(true);
+        btnImportMem.setDisable(true);
+
         initSpinner();
         embeddedMemoryTableController.initMemTable();
     }

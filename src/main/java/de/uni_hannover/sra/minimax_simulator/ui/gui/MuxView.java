@@ -110,6 +110,19 @@ public class MuxView implements MachineConfigListener {
     public void initMuxView() {
         config = Main.getWorkspace().getProject().getMachineConfiguration();
         config.addMachineConfigListener(this);
+
+        radioConstant.setSelected(false);
+        radioConstant.setDisable(true);
+        radioRegister.setSelected(false);
+        radioRegister.setDisable(true);
+        cbRegister.getSelectionModel().clearSelection();
+        cbRegister.setDisable(true);
+        lblDec.setDisable(true);
+        lblHex.setDisable(true);
+        spinnerHex.setDisable(true);
+        spinnerDec.setDisable(true);
+        updateSaveButton();
+
         initTableMuxA();
         initTableMuxB();
 
@@ -138,6 +151,10 @@ public class MuxView implements MachineConfigListener {
         tgroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
+
+                if (t1 == null) {
+                    return;
+                }
 
                 RadioButton chk = (RadioButton) t1.getToggleGroup().getSelectedToggle();
                 boolean disable;

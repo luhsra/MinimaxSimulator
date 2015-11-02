@@ -58,6 +58,9 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
         signal = Main.getWorkspace().getProject().getSignalTable();
         signal.addSignalTableListener(this);
 
+        btnMoveDown.setDisable(true);
+        btnMoveUp.setDisable(true);
+
         Main.getWorkspace().getProject().getMachineConfiguration().addMachineConfigListener(this);
 
         signaltable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

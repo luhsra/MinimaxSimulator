@@ -123,6 +123,11 @@ public class RegView {
      */
     public void initRegView() {
         config = Main.getWorkspace().getProject().getMachineConfiguration();
+
+        txtDescription.setText("");
+        txtName.setText("");
+        cbSize.getSelectionModel().clearSelection();
+
         initBaseTable();
         initExtendedTable();
     }

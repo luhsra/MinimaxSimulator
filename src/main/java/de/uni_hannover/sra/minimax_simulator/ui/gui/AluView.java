@@ -91,6 +91,10 @@ public class AluView {
      */
     public void initAluView() {
         config = Main.getWorkspace().getProject().getMachineConfiguration();
+
+        txtDescription.setText("");
+        txtRT.setText("");
+
         initAddedTable();
         initAvailableTable();
     }

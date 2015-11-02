@@ -95,9 +95,9 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     private final static int NO_ROW_MARKED	= -1;
     private static int lastExecutedRow = -1;
 
-    private MessageFormat cyclesFormatHalted;
-    private MessageFormat cyclesFormatRead;
-    private MessageFormat cyclesFormatWrite;
+    private final MessageFormat cyclesFormatHalted;
+    private final MessageFormat cyclesFormatRead;
+    private final MessageFormat cyclesFormatWrite;
     private Object[] cyclesFormatParam = new Object[1];
 
     /**
@@ -109,6 +109,10 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
 
         simInit = new Tooltip(res.get("action.init.tip"));
         simStop = new Tooltip(res.get("action.stop.tip"));
+
+        cyclesFormatHalted = res.createFormat("cycles.label");
+        cyclesFormatRead = res.createFormat("cycles.read.label");
+        cyclesFormatWrite = res.createFormat("cycles.write.label");
     }
 
     /**
@@ -163,14 +167,13 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         Main.getWorkspace().getProject().getMachineConfiguration().addMachineConfigListener(this);
         Main.getWorkspace().getProject().getSignalTable().addSignalTableListener(this);
 
-        cyclesFormatHalted = res.createFormat("cycles.label");
-        cyclesFormatRead = res.createFormat("cycles.read.label");
-        cyclesFormatWrite = res.createFormat("cycles.write.label");
-
         embeddedMemoryTableController.initMemTable();
         initRegTable();
         initAluTable();
         initSimulationTable();
+
+        initSimulation();
+        quitSimulation();
     }
 
     /**
@@ -512,13 +515,11 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      */
     private void updateCyclesText() {
         String text;
-        if (simulation.getState() == SimulationState.OFF)
-        {
+        if (simulation.getState() == SimulationState.OFF) {
             cyclesFormatParam[0] = "---";
             text = cyclesFormatHalted.format(cyclesFormatParam);
         }
-        else
-        {
+        else {
             MessageFormat format = simulation.isResolved() ? cyclesFormatWrite : cyclesFormatRead;
             cyclesFormatParam[0] = Integer.valueOf(simulation.getCyclesCount());
             text = format.format(cyclesFormatParam);
