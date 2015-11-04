@@ -2,9 +2,12 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import javafx.event.EventHandler;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -39,6 +42,16 @@ public class WaitingDialog extends FXDialog {
         pb.setPrefWidth(300.0);
 
         this.getDialogPane().setContent(pb);
+
+        // set the result to btnTypeCancel if escape was pressed
+        this.getDialogPane().getScene().addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ESCAPE)) {
+                    setResult(btnTypeCancel);
+                }
+            }
+        });
     }
 
     /**
@@ -73,4 +86,5 @@ public class WaitingDialog extends FXDialog {
         }
         return false;
     }
+
 }

@@ -29,26 +29,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class UIUtil {
 
 	/**
-	 * Registers an Action on the dialog on the Esc key that disposes the dialog.
-	 */
-	//TODO: convert to JavaFX or delete?
-	public static void closeOnEscapePressed() //final JDialog dialog)
-	{
-/*		JRootPane rootPane = dialog.getRootPane();
-		InputMap im = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		ActionMap actionMap = rootPane.getActionMap();
-		KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
-
-		im.put(ks, "UiUtilsEscape");
-		actionMap.put("UiUtilsEscape", new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dialog.dispose();
-			}
-		});	*/
-	}
-
-	/**
 	 * Like {@link #executeWorker(Runnable, String, String)}, using an empty title and message for
 	 * the progress dialog.
 	 *
@@ -107,16 +87,14 @@ public class UIUtil {
 
 		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
-			public void handle(WorkerStateEvent t)
-			{
+			public void handle(WorkerStateEvent t) {
 				waitingDialog.close();
 			}
 		});
 
 		task.setOnCancelled(new EventHandler<WorkerStateEvent>() {
 			@Override
-			public void handle(WorkerStateEvent t)
-			{
+			public void handle(WorkerStateEvent t) {
 				if (cancelAction != null) {
 					cancelAction.run();
 				}
