@@ -65,7 +65,6 @@ public class DefaultSignalTable extends AbstractSignalTable {
 		fireRowAdded(index, row);
 	}
 
-	// TODO: make SignalRow immutable?
 	@Override
 	public void setRowSignal(int index, String signal, SignalValue value) {
 		SignalRow row = rows.get(index);

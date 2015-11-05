@@ -15,7 +15,6 @@ public interface SignalConfiguration {
 	 * @return
 	 *          a list of the {@code SignalType}s
 	 */
-	// TODO: use immutable lists for other interfaces, too
 	public ImmutableList<SignalType> getSignalTypes();
 
 	/**

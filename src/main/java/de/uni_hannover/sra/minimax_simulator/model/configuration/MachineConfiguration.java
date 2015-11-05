@@ -24,7 +24,7 @@ import java.util.*;
  * <br>
  * The purpose of this class is loose the coupling between a user-modifiable, export-friendly
  * configuration of a machine and its actual simulation, representation and persistence.<br>
- * Instances are created using an {@link MachineConfigurationBuilder}.<br>
+ * Instances are created using an {@link MinimaxConfigurationBuilder}.<br>
  * This class makes use of the <i>Listener</i> pattern: If the user wishes to visualize or simulate
  * a concrete machine represented by an instance of this class, client classes have to register as
  * {@link MachineConfigListener} to the instance and then synchronize to it on their own.
