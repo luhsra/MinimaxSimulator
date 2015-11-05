@@ -1,5 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
+import com.google.common.collect.ImmutableList;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
@@ -61,8 +62,8 @@ class DefaultMuxInputManager implements MuxInputManager {
 	}
 
 	@Override
-	public List<InputEntry> getMuxInputs() {
-		return inputs;
+	public ImmutableList<InputEntry> getMuxInputs() {
+		return ImmutableList.copyOf(inputs);
 	}
 
 	@Override

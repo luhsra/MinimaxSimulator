@@ -103,7 +103,7 @@ public class DefaultSignalType implements SignalType {
 	}
 
 	@Override
-	public List<SignalValue> getValues() {
+	public ImmutableList<SignalValue> getValues() {
 		return values;
 	}
 

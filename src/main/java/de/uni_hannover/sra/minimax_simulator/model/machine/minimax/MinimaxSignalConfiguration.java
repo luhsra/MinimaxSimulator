@@ -1,6 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
+import com.google.common.collect.ImmutableList;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
@@ -120,8 +121,8 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
 	}
 
 	@Override
-	public List<SignalType> getSignalTypes() {
-		return Collections.unmodifiableList(signalTypes);
+	public ImmutableList<SignalType> getSignalTypes() {
+		return ImmutableList.copyOf(signalTypes);
 	}
 
 	@Override
