@@ -238,14 +238,12 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	}
 
 	@Override
-	public void exchangeSignalRows(int index1, int index2)
-	{
+	public void exchangeSignalRows(int index1, int index2) {
 		theTable.exchangeSignalRows(index1, index2);
 	}
 
 	@Override
-	public void setRowSignal(int index, String signal, SignalValue value)
-	{
+	public void setRowSignal(int index, String signal, SignalValue value) {
 		SignalRow row = theTable.getRow(index);
 		row.setSignal(signal, value);
 		updateDescription(index, row);
@@ -253,8 +251,7 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	}
 
 	@Override
-	public void setRowJump(int index, Jump jump)
-	{
+	public void setRowJump(int index, Jump jump) {
 		SignalRow row = theTable.getRow(index);
 		row.setJump(jump);
 		updateDescription(index, row);

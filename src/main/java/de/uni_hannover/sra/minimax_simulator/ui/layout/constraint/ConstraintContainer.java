@@ -12,7 +12,6 @@ import java.util.Map.Entry;
  *
  * @author Martin L&uuml;ck
  */
-// TODO: insets?
 public class ConstraintContainer extends Container implements ConstraintsManager {
 
 	// every Component is an AttributeOwner, but some (virtual) AttributeOwners have no corresponding Component
@@ -36,8 +35,7 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 		sortedAttributes = Collections.emptyList();
 		offset = new Point(0, 0);
 
-		source = new AttributeSource()
-		{
+		source = new AttributeSource() {
 			@Override
 			public int getValue(Attribute attribute) {
 				AttributeOwner owner = attributeOwners.get(attribute.getOwner());

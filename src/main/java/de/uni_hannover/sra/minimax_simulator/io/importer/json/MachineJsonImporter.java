@@ -45,9 +45,7 @@ class MachineJsonImporter extends Importer {
 
 		JSONObject registers = machine.getJSONObject("registers");
 
-		// TODO: remove global access?
-		ResourceBundleLoader resourceLoader = Main.getResourceLoader();
-		TextResource registerTextResource = resourceLoader.getTextResource("register");
+		TextResource registerTextResource = Main.getTextResource("register");
 
 		MachineConfigurationBuilder mb = new MinimaxConfigurationBuilder();
 		mb.addDefaultBaseRegisters(registerTextResource);

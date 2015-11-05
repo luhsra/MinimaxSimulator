@@ -65,7 +65,7 @@ public class NullAwareIntStringConverter extends StringConverter {
             Long l = Long.valueOf(text, radix);
             return l.intValue();
         } catch (NumberFormatException nfe) {
-            return null;        //TODO: exception handling; doesn't seem to be needed
+            return null;
         }
     }
 }
