@@ -173,7 +173,7 @@ public abstract class ValueUpdateDialog extends FXDialog {
 			if (dialogButton.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
 				Integer value = _mode.decode(_field.getText());
 				if (value != null) {
-					setValue(value.intValue());
+					setValue(value);
 					return ButtonType.OK;
 				}
 			}
@@ -196,7 +196,7 @@ public abstract class ValueUpdateDialog extends FXDialog {
 
 		Integer value = _mode.decode(_field.getText().trim());
 		if (value == null) {
-			value = Integer.valueOf(0);
+			value = 0;
 		}
 		_mode = mode;
 		_field.setText(_mode.toString(this, value));

@@ -523,7 +523,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         }
         else {
             MessageFormat format = simulation.isResolved() ? cyclesFormatWrite : cyclesFormatRead;
-            cyclesFormatParam[0] = Integer.valueOf(simulation.getCyclesCount());
+            cyclesFormatParam[0] = simulation.getCyclesCount();
             text = format.format(cyclesFormatParam);
         }
         lblCycles.setText(text);

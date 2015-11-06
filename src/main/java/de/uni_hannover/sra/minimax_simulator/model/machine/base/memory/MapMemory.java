@@ -51,12 +51,12 @@ public class MapMemory extends AbstractMemory {
 		@Override
 		public int getInt(int address) {
 			checkElementIndex(address, maxAddress + 1);
-			Integer entry = valueMap.get(Integer.valueOf(address));
+			Integer entry = valueMap.get(address);
 			if (entry == null) {
 				return DEFAULT_VALUE;
 			}
 
-			int value = entry.intValue();
+			int value = entry;
 			fireReadAccess(address, value);
 			return value;
 		}
@@ -65,10 +65,10 @@ public class MapMemory extends AbstractMemory {
 		public void setInt(int address, int value) {
 			checkElementIndex(address, maxAddress + 1);
 			if (value == DEFAULT_VALUE) {
-				valueMap.remove(Integer.valueOf(address));
+				valueMap.remove(address);
 			}
 			else {
-				valueMap.put(Integer.valueOf(address), Integer.valueOf(value));
+				valueMap.put(address, value);
 			}
 			fireWriteAccess(address, value);
 		}

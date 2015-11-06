@@ -365,7 +365,7 @@ public final class MachineConfiguration {
 			List<MuxInput> inputs = getMuxSourcesInternal(type);
 			for (Integer inputIndex : indicesInUse.get(type)) {
 				MuxInput oldInput = inputs.get(inputIndex);
-				inputs.set(inputIndex.intValue(), newInput);
+				inputs.set(inputIndex, newInput);
 				postEvent(MachineConfigMuxEvent.eventReplaced(type, oldInput, newInput, inputIndex));
 			}
 		}

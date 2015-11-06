@@ -40,13 +40,13 @@ class SimulationInstance {
 		 *          the {@code Alu} of the machine to simulate
 		 */
 		public AluResult(Alu alu) {
-			lastPostedValue = Integer.valueOf(alu.getResult());
+			lastPostedValue = alu.getResult();
 			this.alu = alu;
 		}
 
 		@Override
 		public Integer get() {
-			return Integer.valueOf(alu.getResult());
+			return alu.getResult();
 		}
 
 		@Override
@@ -82,7 +82,7 @@ class SimulationInstance {
 		 */
 		public RegisterValue(Register register) {
 			this.register = register;
-			lastPostedValue = Integer.valueOf(this.register.getValue());
+			lastPostedValue = this.register.getValue();
 		}
 
 		@Override
