@@ -21,7 +21,6 @@ import java.util.List;
  */
 class DefaultMuxInputManager implements MuxInputManager {
 
-	private final MinimaxTopology topology;
 	private final MinimaxLayout layout;
 	private final MinimaxDisplay display;
 
@@ -49,7 +48,7 @@ class DefaultMuxInputManager implements MuxInputManager {
 	public DefaultMuxInputManager(MuxType type, String muxComponentName, MinimaxMachine machine) {
 		this.type = type;
 
-		topology = machine.getTopology();
+		MinimaxTopology topology = machine.getTopology();
 		layout = machine.getLayout();
 		display = machine.getDisplay();
 

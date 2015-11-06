@@ -18,9 +18,6 @@ import java.util.List;
  */
 public class JumpLabelSelector extends ComboBox {
 
-    private final TextField	rowField;
-    private final List<Target> targets;
-
     /**
      * Creates a {@code JumpLabelSelector} and sets the data.
      *
@@ -32,7 +29,7 @@ public class JumpLabelSelector extends ComboBox {
      *          the index of the row to be executed next
      */
     public JumpLabelSelector(TextField rowField, SignalTable signalTable, int currentTargetRow) {
-        this.rowField = rowField;
+        TextField rowField1 = rowField;
 
         Target selected = null;
 
@@ -48,7 +45,7 @@ public class JumpLabelSelector extends ComboBox {
 
             }
         }
-        this.targets = b.build();
+        List<Target> targets = b.build();
 
         this.setItems(FXCollections.observableList(targets));
 

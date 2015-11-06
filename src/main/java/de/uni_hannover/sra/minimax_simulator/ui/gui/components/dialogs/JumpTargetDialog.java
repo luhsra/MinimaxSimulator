@@ -49,7 +49,6 @@ public class JumpTargetDialog extends FXDialog {
     private ComboBox cbCond1 = new ComboBox();
 
     private ButtonType okButtonType;
-    private ButtonType cancelButtonType;
 
     private final TextResource res;
 
@@ -129,7 +128,7 @@ public class JumpTargetDialog extends FXDialog {
      */
     private void createUI() {
         okButtonType = new ButtonType(res.get("ok"), ButtonBar.ButtonData.OK_DONE);
-        cancelButtonType = new ButtonType(res.get("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType cancelButtonType = new ButtonType(res.get("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
         rBtnNext = new RadioButton(res.get("default"));
         rBtnUncond = new RadioButton(res.get("unconditional"));

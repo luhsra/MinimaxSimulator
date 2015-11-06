@@ -24,18 +24,14 @@ import javafx.scene.layout.VBox;
  */
 public class AboutDialog extends FXDialog {
 
-    private final ButtonType btnTypeOK;
-    private final TextResource _res;
-    private final Version ver = new Version(Main.class);        // works only with JAR files
-
     /**
      * Constructs a new {@code AboutDialog}.
      */
     public AboutDialog() {
         super(AlertType.NONE, "Info", null);
-        _res = Main.getTextResource("application").using("info");
+        TextResource _res = Main.getTextResource("application").using("info");
 
-        btnTypeOK = new ButtonType(_res.get("ok"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType btnTypeOK = new ButtonType(_res.get("ok"), ButtonBar.ButtonData.OK_DONE);
         this.getButtonTypes().setAll(btnTypeOK);
 
         GridPane grid = new GridPane();
@@ -65,8 +61,9 @@ public class AboutDialog extends FXDialog {
         VBox vb = new VBox();
         vb.setPadding(new Insets(15, 0, 15, 0));
         vb.setSpacing(5);
+        Version ver = new Version(Main.class);              // works only with JAR
         Label version = new Label("Version: " + ver.getVersionNumber());
-        Label build = new Label(_res.format("build", ver.getBuildTime() , ver.getBuildJdk()));
+        Label build = new Label(_res.format("build", ver.getBuildTime(), ver.getBuildJdk()));
         Label authors = new Label(_res.format("author", ver.getAuthorName()));
         vb.getChildren().addAll(version, build, authors);
 

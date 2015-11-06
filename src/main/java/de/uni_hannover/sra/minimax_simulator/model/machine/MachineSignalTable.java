@@ -28,7 +28,6 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 
 	private final SignalTable theTable;
 	private final DescriptionFactory descriptionFactory;
-	private final MachineConfiguration machineConfig;
 	private final SignalConfiguration signalConfig;
 
 	/** Enum used for the recalculation of the jump targets. */
@@ -81,11 +80,11 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	public MachineSignalTable(SignalTable table, MachineConfiguration machineConfig,
 			DescriptionFactory descriptionFactory, SignalConfiguration	signalConfig) {
 		theTable = checkNotNull(table);
-		this.machineConfig = checkNotNull(machineConfig);
+		MachineConfiguration machineConfig1 = checkNotNull(machineConfig);
 		this.descriptionFactory = checkNotNull(descriptionFactory);
 		this.signalConfig = checkNotNull(signalConfig);
 
-		this.machineConfig.addMachineConfigListener(this);
+		machineConfig1.addMachineConfigListener(this);
 
 		updateAllDescriptions();
 	}

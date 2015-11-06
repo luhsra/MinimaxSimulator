@@ -20,8 +20,6 @@ import java.io.StringWriter;
  */
 public class ExceptionDialog extends FXDialog {
 
-    private final TextResource res;
-
     /**
      * Constructs a new {@code ExceptionDialog} for the specified {@link Exception}.
      *
@@ -31,7 +29,7 @@ public class ExceptionDialog extends FXDialog {
     public ExceptionDialog(Exception e) {
         super(AlertType.ERROR, "title", "message");
 
-        res = Main.getTextResource("exception").using("exception-dialog");
+        TextResource res = Main.getTextResource("exception").using("exception-dialog");
         this.setTitle(res.get("title"));
 
         // create dialog content
