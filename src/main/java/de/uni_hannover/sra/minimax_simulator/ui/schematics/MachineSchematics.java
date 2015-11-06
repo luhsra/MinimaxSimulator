@@ -1,8 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics;
 
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplayListener;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.DefaultRenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.SpriteCanvas;
 import javafx.scene.text.Font;

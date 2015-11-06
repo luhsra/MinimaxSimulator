@@ -1,8 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.model.user;
 
 import de.uni_hannover.sra.minimax_simulator.io.exporter.ProjectExportException;
-import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.json.ProjectZipExporter;
+import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.io.importer.json.ProjectZipImporter;
 import de.uni_hannover.sra.minimax_simulator.util.ListenerContainer;
 

@@ -2,7 +2,6 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
 import com.google.common.collect.Lists;
-import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
@@ -15,6 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.IngoingPin;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.OutgoingPin;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 
 import java.util.*;
 import java.util.Map.Entry;

@@ -1,11 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
-import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.MachineTopology;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
@@ -20,6 +15,11 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.AluShape;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.MemoryShape;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.MuxShape;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.*;
 
 import java.util.Arrays;
 

@@ -2,9 +2,9 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.SynchronousCircuit;
-import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.MemorySprite;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 
 /**
  * Implementation of the memory as component part of a machine.

@@ -1,10 +1,10 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.shape;
 
+import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
+import de.uni_hannover.sra.minimax_simulator.model.machine.part.Label;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Label;
 
 /**
  * The shape of the control unit (CU).

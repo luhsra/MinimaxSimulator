@@ -1,8 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.components.NumberTextField;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.util.JumpLabelSelector;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
@@ -10,6 +8,8 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.jump.DefaultJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.components.NumberTextField;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.JumpLabelSelector;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;

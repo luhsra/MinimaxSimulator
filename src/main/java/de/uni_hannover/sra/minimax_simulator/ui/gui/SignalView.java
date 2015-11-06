@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.components.tableview.*;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
@@ -11,6 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.components.tableview.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

@@ -1,14 +1,14 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 import com.sun.javafx.tk.FontMetrics;
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplay;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplayListener;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.DummyRenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.RenderEnvironment;
-import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;

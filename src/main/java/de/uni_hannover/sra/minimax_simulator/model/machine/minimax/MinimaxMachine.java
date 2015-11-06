@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
@@ -15,6 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.*;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.GroupLayout;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Alu;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Junction;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
 
 import java.util.*;
 

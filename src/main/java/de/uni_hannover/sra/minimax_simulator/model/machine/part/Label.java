@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
 import de.uni_hannover.sra.minimax_simulator.ui.layout.AbstractComponent;
-import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.LabelSprite;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 
 /**
  * A {@code Label} is a component of the machine that has no functionality implemented.

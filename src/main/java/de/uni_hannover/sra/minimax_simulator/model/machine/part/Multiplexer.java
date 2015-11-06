@@ -1,8 +1,8 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
-import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.MultiplexerSprite;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;

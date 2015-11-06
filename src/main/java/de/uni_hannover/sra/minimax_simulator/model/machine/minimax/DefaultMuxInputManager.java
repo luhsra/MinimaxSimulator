@@ -1,13 +1,13 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 import com.google.common.collect.ImmutableList;
-import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.DefaultLayout;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.IngoingPin;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Multiplexer;
 import de.uni_hannover.sra.minimax_simulator.model.machine.shape.MuxShape;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;

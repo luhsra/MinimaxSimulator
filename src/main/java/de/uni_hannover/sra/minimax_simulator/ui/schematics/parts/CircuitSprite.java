@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
 import de.uni_hannover.sra.minimax_simulator.Config;
+import de.uni_hannover.sra.minimax_simulator.model.machine.part.Pin;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Point;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Pin;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.RenderEnvironment;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 import javafx.scene.canvas.GraphicsContext;

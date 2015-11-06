@@ -1,8 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.util.NullAwareIntFormatter;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.util.HexSpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent;
@@ -11,6 +9,8 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.HexSpinnerValueFactory;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.NullAwareIntFormatter;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;

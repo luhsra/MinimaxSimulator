@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.io.importer.json;
 
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
+import de.uni_hannover.sra.minimax_simulator.io.exporter.json.ProjectZipExporter;
 import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImporter;
-import de.uni_hannover.sra.minimax_simulator.io.exporter.json.ProjectZipExporter;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
