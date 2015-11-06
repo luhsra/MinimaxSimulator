@@ -14,7 +14,7 @@ import java.util.Collections;
  */
 class AluExtensionList implements ExtensionList<AluOperation> {
 
-	private final Alu	_alu;
+	private final Alu alu;
 
 	/**
 	 * Constructs a new {@code AluExtensionList} for the specified {@link Alu}.
@@ -23,27 +23,27 @@ class AluExtensionList implements ExtensionList<AluOperation> {
 	 *          the {@code Alu}
 	 */
 	public AluExtensionList(Alu alu) {
-		_alu = alu;
+		this.alu = alu;
 	}
 
 	@Override
 	public void add(AluOperation operation) {
-		_alu.getAluOperations().add(operation);
+		alu.getAluOperations().add(operation);
 	}
 
 	@Override
 	public void addAll(Collection<? extends AluOperation> elements) {
-		_alu.getAluOperations().addAll(elements);
+		alu.getAluOperations().addAll(elements);
 	}
 
 	@Override
 	public void remove(int index) {
-		_alu.getAluOperations().remove(index);
+		alu.getAluOperations().remove(index);
 	}
 
 	@Override
 	public void swap(int index1, int index2) {
-		Collections.swap(_alu.getAluOperations(), index1, index2);
+		Collections.swap(alu.getAluOperations(), index1, index2);
 	}
 
 	@Override

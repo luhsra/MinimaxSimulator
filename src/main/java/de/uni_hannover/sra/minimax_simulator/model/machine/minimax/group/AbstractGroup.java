@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group;
 
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.LayoutSet;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 
 import java.util.*;
@@ -15,13 +15,13 @@ import java.util.*;
  */
 public abstract class AbstractGroup implements Group {
 
-	private final Set<Circuit>			_circuitSet		= new HashSet<Circuit>();
-	private final Set<SpriteOwner>		_spriteSet		= new HashSet<SpriteOwner>();
-	private final Set<Component>		_componentSet	= new HashSet<Component>();
+	private final Set<Circuit> circuitSet = new HashSet<Circuit>();
+	private final Set<SpriteOwner> spriteSet = new HashSet<SpriteOwner>();
+	private final Set<Component> componentSet = new HashSet<Component>();
 
-	private final Set<String>			_virtualsSet	= new HashSet<String>();
+	private final Set<String> virtualsSet = new HashSet<String>();
 
-	private final Map<Object, String>	_names			= new HashMap<Object, String>();
+	private final Map<Object, String> names = new HashMap<Object, String>();
 
 	/**
 	 * Adds the specified {@code Object} links it with the specified name.
@@ -44,7 +44,7 @@ public abstract class AbstractGroup implements Group {
 		if (object instanceof Wire) {
 			addWireComponents((Wire) object, name);
 		}
-		_names.put(object, name);
+		names.put(object, name);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public abstract class AbstractGroup implements Group {
 	 *          the {@code Circuit} to add
 	 */
 	protected void addCircuit(Circuit circuit) {
-		_circuitSet.add(circuit);
+		circuitSet.add(circuit);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public abstract class AbstractGroup implements Group {
 	 *          the {@code Component} to add
 	 */
 	protected void addComponent(Component component) {
-		_componentSet.add(component);
+		componentSet.add(component);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public abstract class AbstractGroup implements Group {
 	 *          the sprite to add
 	 */
 	protected void addSprite(SpriteOwner sprite) {
-		_spriteSet.add(sprite);
+		spriteSet.add(sprite);
 	}
 
 	/**
@@ -120,32 +120,32 @@ public abstract class AbstractGroup implements Group {
 	 *          the name of the virtual component
 	 */
 	protected void addVirtual(String name) {
-		_virtualsSet.add(name);
+		virtualsSet.add(name);
 	}
 
 	@Override
 	public String getName(Object object) {
-		return _names.get(object);
+		return names.get(object);
 	}
 
 	@Override
 	public Set<Circuit> getGroupCircuits() {
-		return Collections.unmodifiableSet(_circuitSet);
+		return Collections.unmodifiableSet(circuitSet);
 	}
 
 	@Override
 	public Set<SpriteOwner> getSpriteOwners() {
-		return Collections.unmodifiableSet(_spriteSet);
+		return Collections.unmodifiableSet(spriteSet);
 	}
 
 	@Override
 	public Set<Component> getComponents() {
-		return Collections.unmodifiableSet(_componentSet);
+		return Collections.unmodifiableSet(componentSet);
 	}
 
 	@Override
 	public Set<String> getVirtualComponents() {
-		return Collections.unmodifiableSet(_virtualsSet);
+		return Collections.unmodifiableSet(virtualsSet);
 	}
 
 	@Override

@@ -2,9 +2,8 @@ package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
 import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Label;
-import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
@@ -17,10 +16,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author Martin L&uuml;ck
  * @author Philipp Rohde
  */
-// TODO: why CircuitSprite and not LabelSprite?
 public class CuLabelSprite extends CircuitSprite {
 
-	private final Label					_label;
+	private final Label label;
 
 	/**
 	 * Initializes the {@code CuLabelSprite}.
@@ -29,15 +27,15 @@ public class CuLabelSprite extends CircuitSprite {
 	 *          the CU's label
 	 */
 	public CuLabelSprite(Label label) {
-		_label = checkNotNull(label);
+		this.label = checkNotNull(label);
 	}
 
 	@Override
-	public void paint(GraphicsContext gc, RenderEnvironment env) {
-		Bounds b = _label.getBounds();
+	public void paint(GraphicsContext gc) {
+		Bounds b = label.getBounds();
 		debugBounds(gc, b);
 
-		String message = _label.getMessage();
+		String message = label.getMessage();
 
 		FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
 		double textWidth = fm.computeStringWidth(message);

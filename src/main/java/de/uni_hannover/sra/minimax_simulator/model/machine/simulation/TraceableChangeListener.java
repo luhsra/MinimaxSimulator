@@ -1,16 +1,15 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.simulation;
 
 /**
- * A {@code TrackableChangeListener} is a class that needs to react
- * to a change of the value of a trackable class.
+ * A {@code TraceableChangeListener} is a class that needs to react
+ * to a change of the value of a traceable class.
  *
  * @param <T>
- *          the class of the trackable value
+ *          the class of the traceable value
  *
  * @author Martin L&uuml;ck
  */
-// TODO: rename to TraceableChangeListener
-public interface TrackableChangeListener<T> {
+public interface TraceableChangeListener<T> {
 
 	/**
 	 * Notifies the listener about a change of the value.

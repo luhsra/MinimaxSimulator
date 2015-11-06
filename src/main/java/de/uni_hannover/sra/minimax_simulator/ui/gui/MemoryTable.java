@@ -35,15 +35,15 @@ public class MemoryTable implements MemoryAccessListener {
 
     @FXML private TitledPane paneMemory;
 
-    private String _addressFormatString;
+    private String addressFormatString;
     private static MachineMemory mMemory;
 
-    private final int _pageSize = 16;
-    private int _pageCount;
-    private int	_page;
-    private int	_cachedPageStart;
+    private final int pageSize = 16;
+    private int pageCount;
+    private int page;
+    private int cachedPageStart;
 
-    private final TextResource _res;
+    private final TextResource res;
 
     @FXML private TableView<MemoryTableModel> memTable;
 
@@ -58,8 +58,8 @@ public class MemoryTable implements MemoryAccessListener {
      * Initializes the variables.
      */
     public MemoryTable() {
-        _res = Main.getTextResource("project");
-        _page = _cachedPageStart = 0;
+        res = Main.getTextResource("project");
+        page = cachedPageStart = 0;
     }
 
     /**
@@ -94,9 +94,9 @@ public class MemoryTable implements MemoryAccessListener {
     private void setLocalizedTexts() {
         final List<TableColumn> tableColumnsMem = new ArrayList<>(Arrays.asList(col_mem_adr, col_mem_dec, col_mem_hex));
         for (TableColumn col : tableColumnsMem) {
-            col.setText(_res.get(col.getId().replace("_", ".")));
+            col.setText(res.get(col.getId().replace("_", ".")));
         }
-        paneMemory.setText(_res.get(paneMemory.getId().replace("_", ".")));
+        paneMemory.setText(res.get(paneMemory.getId().replace("_", ".")));
         updateMemPageLabel();
     }
 
@@ -104,16 +104,16 @@ public class MemoryTable implements MemoryAccessListener {
      * Sets the {@link Tooltip}s for the {@link Button}s.
      */
     private void setTooltips() {
-        btnFirstPage.setTooltip(new Tooltip(_res.get("memtable.first.tip")));
-        btnPrevPage.setTooltip(new Tooltip(_res.get("memtable.previous.tip")));
-        btnNextPage.setTooltip(new Tooltip(_res.get("memtable.next.tip")));
-        btnLastPage.setTooltip(new Tooltip(_res.get("memtable.last.tip")));
+        btnFirstPage.setTooltip(new Tooltip(res.get("memtable.first.tip")));
+        btnPrevPage.setTooltip(new Tooltip(res.get("memtable.previous.tip")));
+        btnNextPage.setTooltip(new Tooltip(res.get("memtable.next.tip")));
+        btnLastPage.setTooltip(new Tooltip(res.get("memtable.last.tip")));
 
-        txtAddressField.setTooltip(new Tooltip(_res.get("memtable.address.tip")));
+        txtAddressField.setTooltip(new Tooltip(res.get("memtable.address.tip")));
     }
 
     private void updateMemPageLabel() {
-        lblMemPage.setText(_res.format("memtable.page", _page + 1, _pageCount));
+        lblMemPage.setText(res.format("memtable.page", page + 1, pageCount));
     }
 
     /**
@@ -134,13 +134,13 @@ public class MemoryTable implements MemoryAccessListener {
                 address = mMemory.getMaxAddress();
             }
 
-            page = address / _pageSize;
-            if (page >= _pageCount) {
-                page = _pageCount - 1;
-                row = _pageSize - 1;
+            page = address / pageSize;
+            if (page >= pageCount) {
+                page = pageCount - 1;
+                row = pageSize - 1;
             }
             else {
-                row = address % _pageSize;
+                row = address % pageSize;
             }
         }
 
@@ -159,11 +159,13 @@ public class MemoryTable implements MemoryAccessListener {
     public void initMemTable() {
         mMemory = Main.getWorkspace().getProject().getMachine().getMemory();
         mMemory.addMemoryAccessListener(this);
-        _addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
+        addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
 
         int addressRange = mMemory.getMaxAddress() - mMemory.getMinAddress();
-        _pageCount = (addressRange - 1) / _pageSize + 1;
+        pageCount = (addressRange - 1) / pageSize + 1;
 
+        txtAddressField.setText("");
+        firstPage();
         updateMemPageLabel();
 
         col_mem_adr.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -178,7 +180,7 @@ public class MemoryTable implements MemoryAccessListener {
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
-                        int address = memTable.getSelectionModel().getSelectedIndex() + _cachedPageStart;
+                        int address = memTable.getSelectionModel().getSelectedIndex() + cachedPageStart;
                         // open edit dialog
                         new MemoryUpdateDialog(address, mMemory).show();
                     }
@@ -207,9 +209,9 @@ public class MemoryTable implements MemoryAccessListener {
         ObservableList<MemoryTableModel> data = FXCollections.observableArrayList();
 
         MemoryState mState = mMemory.getMemoryState();
-        for (int i = 0; i < _pageSize; i++) {
-            int value = mState.getInt(_cachedPageStart + i);
-            data.add(new MemoryTableModel(String.format(_addressFormatString, _cachedPageStart + i), value));
+        for (int i = 0; i < pageSize; i++) {
+            int value = mState.getInt(cachedPageStart + i);
+            data.add(new MemoryTableModel(String.format(addressFormatString, cachedPageStart + i), value));
         }
 
         memTable.setItems(data);
@@ -221,7 +223,7 @@ public class MemoryTable implements MemoryAccessListener {
      * Sets the next memory page to the {@link TableView}.
      */
     public void nextPage() {
-        this.setPage(_page+1);
+        this.setPage(page +1);
     }
 
     @FXML Button btnPrevPage;
@@ -230,7 +232,7 @@ public class MemoryTable implements MemoryAccessListener {
      * Sets the previous memory page to the {@link TableView}.
      */
     public void prevPage() {
-        this.setPage(_page - 1);
+        this.setPage(page - 1);
     }
 
     @FXML Button btnFirstPage;
@@ -248,7 +250,7 @@ public class MemoryTable implements MemoryAccessListener {
      * Sets the last memory page to the {@link TableView}.
      */
     public void lastPage() {
-        this.setPage(_pageCount - 1);
+        this.setPage(pageCount - 1);
     }
 
     /**
@@ -258,11 +260,11 @@ public class MemoryTable implements MemoryAccessListener {
      *          the number of the new page
      */
     private void setPage(int newPage) {
-        if (newPage >= _pageCount || newPage < 0) {
+        if (newPage >= pageCount || newPage < 0) {
             return;
         }
-        _page = newPage;
-        _cachedPageStart = _page * _pageSize + mMemory.getMinAddress();
+        page = newPage;
+        cachedPageStart = page * pageSize + mMemory.getMinAddress();
 
         updateMemTable();
         updateMemPageLabel();
@@ -276,7 +278,7 @@ public class MemoryTable implements MemoryAccessListener {
     @Override
     public void memoryWriteAccess(int address, int value) {
         // only update the affected table row
-        MemoryTableModel entry = memTable.getItems().get(address % _pageSize);
+        MemoryTableModel entry = memTable.getItems().get(address % pageSize);
         entry.setValue(value);
     }
 

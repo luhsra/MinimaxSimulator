@@ -19,9 +19,9 @@ import java.util.Map;
  */
 class NullInputGroupManager implements MuxInputGroupManager {
 
-	private final GroupManager						_groupManager;
+	private final GroupManager groupManager;
 
-	private final Map<MuxType, List<InputEntry>>	_inputEntries;
+	private final Map<MuxType, List<InputEntry>> inputEntries;
 
 	/**
 	 * Constructs a new {@code NullInputGroupManager} with the specified {@link GroupManager}.
@@ -30,17 +30,17 @@ class NullInputGroupManager implements MuxInputGroupManager {
 	 *          the {@code GroupManager}
 	 */
 	public NullInputGroupManager(GroupManager groupManager) {
-		_groupManager = groupManager;
+		this.groupManager = groupManager;
 
-		_inputEntries = new HashMap<MuxType, List<InputEntry>>();
+		inputEntries = new HashMap<MuxType, List<InputEntry>>();
 		for (MuxType type : MuxType.values()) {
-			_inputEntries.put(type, new ArrayList<InputEntry>());
+			inputEntries.put(type, new ArrayList<InputEntry>());
 		}
 	}
 
 	@Override
 	public void update(MuxInputManager muxInputs) {
-		List<InputEntry> entries = _inputEntries.get(muxInputs.getMuxType());
+		List<InputEntry> entries = inputEntries.get(muxInputs.getMuxType());
 
 		destroyGroups(entries);
 		entries.clear();
@@ -55,12 +55,10 @@ class NullInputGroupManager implements MuxInputGroupManager {
 	 *          a list of {@link InputEntry} to create {@code Group}s for
 	 */
 	private void createGroups(List<InputEntry> entries) {
-		for (InputEntry entry : entries) {
-			if (entry.input instanceof NullMuxInput) {
-				Group group = new MuxNullGroup(entry.pinId, entry.pin);
-				_groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
-			}
-		}
+		entries.stream().filter(entry -> entry.input instanceof NullMuxInput).forEach(entry -> {
+			Group group = new MuxNullGroup(entry.pinId, entry.pin);
+			groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
+		});
 	}
 
 	/**
@@ -70,10 +68,8 @@ class NullInputGroupManager implements MuxInputGroupManager {
 	 *          a list of {@link InputEntry} to destroy {@code Group}s for
 	 */
 	private void destroyGroups(List<InputEntry> entries) {
-		for (InputEntry entry : entries) {
-			if (entry.input instanceof NullMuxInput) {
-				_groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
-			}
-		}
+		entries.stream().filter(entry -> entry.input instanceof NullMuxInput).forEach(entry -> {
+			groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
+		});
 	}
 }

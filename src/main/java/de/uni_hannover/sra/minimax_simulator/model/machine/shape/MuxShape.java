@@ -1,10 +1,10 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.shape;
 
+import de.uni_hannover.sra.minimax_simulator.model.machine.part.Multiplexer;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.ComponentShape;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Multiplexer;
 
 /**
  * The shape of a multiplexer.
@@ -13,14 +13,14 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Multiplexer;
  */
 public class MuxShape implements ComponentShape {
 
-	private final static int	MUX_WIDTH			= 20;
-	public final static int		MUX_HEIGHT_PER_PIN	= 18;
-	private final static int	MUX_CORNER_HEIGHT	= 20;
-	public final static int		MUX_CORNER_SPACING	= 10;
+	private final static int MUX_WIDTH			= 20;
+	public final static int MUX_HEIGHT_PER_PIN	= 18;
+	private final static int MUX_CORNER_HEIGHT	= 20;
+	public final static int MUX_CORNER_SPACING	= 10;
 
-	private final static int	MUX_SPACING			= 15;
+	private final static int MUX_SPACING			= 15;
 
-	private final Insets	_insets				= new Insets(MUX_SPACING, MUX_SPACING, 0, 0);
+	private final Insets insets = new Insets(MUX_SPACING, MUX_SPACING, 0, 0);
 
 	@Override
 	public void updateShape(Component component) {
@@ -37,7 +37,7 @@ public class MuxShape implements ComponentShape {
 		}
 
 		mux.setDimension(new Dimension(MUX_WIDTH, height));
-		mux.setInsets(_insets);
+		mux.setInsets(insets);
 	}
 
 	@Override

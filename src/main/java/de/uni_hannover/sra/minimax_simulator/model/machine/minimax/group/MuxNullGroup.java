@@ -16,8 +16,8 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
  */
 public class MuxNullGroup extends AbstractGroup {
 
-	private final String _pinName;
-	private final IngoingPin _muxPin;
+	private final String pinName;
+	private final IngoingPin muxPin;
 
 	/**
 	 * Constructs a new {@code MuxNullGroup} with the specified pin name and {@link IngoingPin}.
@@ -28,17 +28,17 @@ public class MuxNullGroup extends AbstractGroup {
 	 *          the {@code IngoingPin} which is {@code NullMuxInput}
 	 */
 	public MuxNullGroup(String pinName, IngoingPin muxPin) {
-		_pinName = pinName;
-		_muxPin = muxPin;
+		this.pinName = pinName;
+		this.muxPin = muxPin;
 	}
 
 	@Override
 	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
 		Junction deadEnd = new Junction(2);
-		Wire wire = new Wire(2, deadEnd.getDataOuts().get(0), _muxPin);
+		Wire wire = new Wire(2, deadEnd.getDataOuts().get(0), muxPin);
 
-		add(deadEnd, _pinName + "_END");
-		addWire(wire, _pinName + Parts._WIRE);
+		add(deadEnd, pinName + "_END");
+		addWire(wire, pinName + Parts._WIRE);
 	}
 
 	@Override
@@ -48,6 +48,6 @@ public class MuxNullGroup extends AbstractGroup {
 
 	@Override
 	public LayoutSet createLayouts() {
-		return new MuxNullLayoutSet(_pinName);
+		return new MuxNullLayoutSet(pinName);
 	}
 }

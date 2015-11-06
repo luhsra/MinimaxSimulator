@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
-import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.JunctionSprite;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,9 +17,9 @@ import java.util.Set;
  */
 public class Junction extends Part implements SpriteOwner {
 
-	private final ArrayList<OutgoingPin> _dataOuts;
+	private final ArrayList<OutgoingPin> dataOuts;
 
-	private final IngoingPin _dataIn;
+	private final IngoingPin dataIn;
 
 	/**
 	 * Constructs a new {@code Junction} without any pin.
@@ -35,11 +35,11 @@ public class Junction extends Part implements SpriteOwner {
 	 *          the amount of pins crossing
 	 */
 	public Junction(int pinCount) {
-		_dataIn = new IngoingPin(this);
+		dataIn = new IngoingPin(this);
 
-		_dataOuts = new ArrayList<OutgoingPin>(pinCount);
+		dataOuts = new ArrayList<OutgoingPin>(pinCount);
 		for (int i = 0; i < pinCount; i++) {
-			_dataOuts.add(new OutgoingPin(this));
+			dataOuts.add(new OutgoingPin(this));
 		}
 	}
 
@@ -50,7 +50,7 @@ public class Junction extends Part implements SpriteOwner {
 	 *          a list of the {@code OutgoingPin}s
 	 */
 	public List<OutgoingPin> getDataOuts() {
-		return _dataOuts;
+		return dataOuts;
 	}
 
 	/**
@@ -60,20 +60,20 @@ public class Junction extends Part implements SpriteOwner {
 	 *          a list of the {@code IngoingPin}s
 	 */
 	public IngoingPin getDataIn() {
-		return _dataIn;
+		return dataIn;
 	}
 
 	@Override
 	public void update() {
-		int value = _dataIn.read();
-		for (OutgoingPin out : _dataOuts)
+		int value = dataIn.read();
+		for (OutgoingPin out : dataOuts)
 			out.write(value);
 	}
 
 	@Override
 	public Set<? extends Circuit> getSuccessors() {
 		Set<Circuit> successors = new HashSet<Circuit>();
-		for (OutgoingPin pin : _dataOuts) {
+		for (OutgoingPin pin : dataOuts) {
 			successors.addAll(pin.getSuccessors());
 		}
 		return successors;

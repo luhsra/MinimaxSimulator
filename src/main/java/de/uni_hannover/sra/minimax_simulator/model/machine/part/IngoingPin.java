@@ -12,8 +12,8 @@ import java.util.Set;
  */
 public class IngoingPin extends Pin {
 
-	private Wire _wire;
-	private Set<? extends Circuit> _thePart;
+	private Wire wire;
+	private Set<? extends Circuit> thePart;
 
 	/**
 	 * Constructs a new {@code IngoingPin} for the specified {@link Part}.
@@ -23,7 +23,7 @@ public class IngoingPin extends Pin {
 	 */
 	public IngoingPin(Part part) {
 		super(part);
-		_thePart = ImmutableSet.of(part); 
+		thePart = ImmutableSet.of(part);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class IngoingPin extends Pin {
 	 *          the {@code Wire}
 	 */
 	public Wire getWire() {
-		return _wire;
+		return wire;
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class IngoingPin extends Pin {
 	 *          the {@code Wire}
 	 */
 	public void setWire(Wire wire) {
-		_wire = wire;
+		this.wire = wire;
 	}
 
 	/**
@@ -64,6 +64,6 @@ public class IngoingPin extends Pin {
 	 *          a set of the successors of {@code IngoingPin}
 	 */
 	public Set<? extends Circuit> getSuccessors() {
-		return _thePart;
+		return thePart;
 	}
 }

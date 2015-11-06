@@ -10,9 +10,9 @@ import java.util.Set;
  */
 public abstract class RelativeMultiConstraint implements Constraint {
 
-	protected final int _offset;
+	protected final int offset;
 
-	protected final Set<Attribute> _anchors;
+	protected final Set<Attribute> anchors;
 
 	/**
 	 * Constructs a new {@code RelativeMultiConstraint} with the specified anchors.
@@ -20,7 +20,7 @@ public abstract class RelativeMultiConstraint implements Constraint {
 	 * @param anchors
 	 *          the anchor {@code Attribute}s
 	 */
-	public RelativeMultiConstraint(Set<Attribute> anchors) {
+	protected RelativeMultiConstraint(Set<Attribute> anchors) {
 		this(anchors, 0);
 	}
 
@@ -35,7 +35,7 @@ public abstract class RelativeMultiConstraint implements Constraint {
 	 * @param offset
 	 *          the offset
 	 */
-	public RelativeMultiConstraint(Set<String> anchors, AttributeType type, int offset) {
+	protected RelativeMultiConstraint(Set<String> anchors, AttributeType type, int offset) {
 		this(toAttributeSet(anchors, type), offset);
 	}
 
@@ -47,23 +47,23 @@ public abstract class RelativeMultiConstraint implements Constraint {
 	 * @param offset
 	 *          the offset
 	 */
-	public RelativeMultiConstraint(Set<Attribute> anchors, int offset) {
+	protected RelativeMultiConstraint(Set<Attribute> anchors, int offset) {
 		if (anchors.isEmpty()) {
 			throw new IllegalArgumentException("Empty anchor set is invalid for group");
 		}
 
-		_offset = offset;
-		_anchors = new HashSet<Attribute>(anchors);
+		this.offset = offset;
+		this.anchors = new HashSet<Attribute>(anchors);
 	}
 
 	@Override
 	public String toString() {
-		return "rel(" + _anchors + " + " + _offset + ")";
+		return "rel(" + anchors + " + " + offset + ")";
 	}
 
 	@Override
 	public Set<Attribute> getDependencies() {
-		return _anchors;
+		return anchors;
 	}
 
 	/**

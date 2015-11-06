@@ -17,8 +17,8 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.shape.RegisterShape;
  */
 public class ExtendedRegisterGroup extends AbstractGroup {
 
-	private final String	_registerId;
-	private final String	_label;
+	private final String registerId;
+	private final String label;
 
 	/**
 	 * Constructs a new {@code ExtendedRegisterGroup} with the specified register ID and label.
@@ -29,14 +29,14 @@ public class ExtendedRegisterGroup extends AbstractGroup {
 	 *          the label of the group
 	 */
 	public ExtendedRegisterGroup(String registerId, String label) {
-		_registerId = registerId;
-		_label = label;
+		this.registerId = registerId;
+		this.label = label;
 	}
 
 	@Override
 	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
-		Register register = new Register(_label, RegisterSize.BITS_32, true);
-		register.setName(_registerId);
+		Register register = new Register(label, RegisterSize.BITS_32, true);
+		register.setName(registerId);
 		register.setShape(new RegisterShape(fontProvider));
 
 		Junction junction = new Junction();
@@ -48,28 +48,28 @@ public class ExtendedRegisterGroup extends AbstractGroup {
 		Label label = new Label(register.getLabel() + ".W");
 		label.setShape(new LabelShape(fontProvider));
 
-		Port port = new Port(_label + ".W");
+		Port port = new Port(this.label + ".W");
 
 		Wire aluWire = new Wire(3, cr.getCircuit(Alu.class, Parts.ALU).getOutData(),
 			junction.getDataIn());
 		Wire dataInWire = new Wire(2, junction.getDataOuts().get(0), register.getDataIn());
 		Wire enabledWire = new Wire(2, port.getDataOut(), register.getWriteEnabled());
 
-		add(register, _registerId);
-		add(junction, _registerId + Parts._JUNCTION);
-		add(label, _registerId + Parts._LABEL);
-		add(port, _registerId + Parts._PORT);
+		add(register, registerId);
+		add(junction, registerId + Parts._JUNCTION);
+		add(label, registerId + Parts._LABEL);
+		add(port, registerId + Parts._PORT);
 
-		addWire(aluWire, _registerId + Parts._JUNCTION + Parts._WIRE_DATA_IN);
-		addWire(dataInWire, _registerId + Parts._WIRE_DATA_IN);
-		addWire(enabledWire, _registerId + Parts._WIRE_ENABLED);
+		addWire(aluWire, registerId + Parts._JUNCTION + Parts._WIRE_DATA_IN);
+		addWire(dataInWire, registerId + Parts._WIRE_DATA_IN);
+		addWire(enabledWire, registerId + Parts._WIRE_ENABLED);
 
 		Junction outJunction = new Junction();
 		Wire registerOutWire = new Wire(2, register.getDataOut(), outJunction.getDataIn());
 
-		add(outJunction, _registerId + Parts._OUT_JUNCTION);
-		addVirtual(_registerId + Parts._OUT_JUNCTION + Parts._ANCHOR);
-		addWire(registerOutWire, _registerId + Parts._WIRE_DATA_OUT);
+		add(outJunction, registerId + Parts._OUT_JUNCTION);
+		addVirtual(registerId + Parts._OUT_JUNCTION + Parts._ANCHOR);
+		addWire(registerOutWire, registerId + Parts._WIRE_DATA_OUT);
 	}
 
 	@Override
@@ -79,6 +79,6 @@ public class ExtendedRegisterGroup extends AbstractGroup {
 
 	@Override
 	public LayoutSet createLayouts() {
-		return new ExtendedRegisterLayoutSet(_registerId);
+		return new ExtendedRegisterLayoutSet(registerId);
 	}
 }

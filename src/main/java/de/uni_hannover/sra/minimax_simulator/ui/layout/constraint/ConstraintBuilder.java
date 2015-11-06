@@ -10,13 +10,13 @@ import java.util.Map;
  */
 public class ConstraintBuilder {
 
-	private final Map<AttributeType, Constraint>	_constraints;
+	private final Map<AttributeType, Constraint> constraints;
 
 	/**
 	 * Constructs a new {@code ConstrainBuilder} without {@link Constraint}s.
 	 */
 	public ConstraintBuilder() {
-		_constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
+		constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
 	}
 
 	/**
@@ -26,7 +26,7 @@ public class ConstraintBuilder {
 	 *          a map of the built {@code Constraint}s
 	 */
 	public Map<AttributeType, Constraint> constraints() {
-		return _constraints;
+		return constraints;
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder clear() {
-		_constraints.clear();
+		constraints.clear();
 		return this;
 	}
 
@@ -55,7 +55,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder relative(AttributeType targetAttr, String source, AttributeType sourceAttr, int offset) {
-		_constraints.put(targetAttr, new RelativeConstraint(source, sourceAttr, offset));
+		constraints.put(targetAttr, new RelativeConstraint(source, sourceAttr, offset));
 		return this;
 	}
 
@@ -72,7 +72,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder relative(AttributeType targetAttr, String source, AttributeType sourceAttr) {
-		_constraints.put(targetAttr, new RelativeConstraint(source, sourceAttr));
+		constraints.put(targetAttr, new RelativeConstraint(source, sourceAttr));
 		return this;
 	}
 
@@ -89,7 +89,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder relative(AttributeType attr, String source, int offset) {
-		_constraints.put(attr, new RelativeConstraint(source, attr, offset));
+		constraints.put(attr, new RelativeConstraint(source, attr, offset));
 		return this;
 	}
 
@@ -104,7 +104,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder relative(AttributeType attr, String source) {
-		_constraints.put(attr, new RelativeConstraint(source, attr));
+		constraints.put(attr, new RelativeConstraint(source, attr));
 		return this;
 	}
 
@@ -119,7 +119,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder absolute(AttributeType targetAttr, int offset) {
-		_constraints.put(targetAttr, new AbsoluteConstraint(offset));
+		constraints.put(targetAttr, new AbsoluteConstraint(offset));
 		return this;
 	}
 
@@ -134,7 +134,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder below(String source, int offset) {
-		_constraints.put(AttributeType.TOP, new RelativeConstraint(source, AttributeType.BOTTOM, offset));
+		constraints.put(AttributeType.TOP, new RelativeConstraint(source, AttributeType.BOTTOM, offset));
 		return this;
 	}
 
@@ -147,7 +147,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder below(String source) {
-		_constraints.put(AttributeType.TOP, new RelativeConstraint(source, AttributeType.BOTTOM, 0));
+		constraints.put(AttributeType.TOP, new RelativeConstraint(source, AttributeType.BOTTOM, 0));
 		return this;
 	}
 
@@ -162,7 +162,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder above(String source, int offset) {
-		_constraints.put(AttributeType.BOTTOM, new RelativeConstraint(source, AttributeType.TOP, -offset));
+		constraints.put(AttributeType.BOTTOM, new RelativeConstraint(source, AttributeType.TOP, -offset));
 		return this;
 	}
 
@@ -175,7 +175,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder above(String source) {
-		_constraints.put(AttributeType.BOTTOM, new RelativeConstraint(source, AttributeType.TOP, 0));
+		constraints.put(AttributeType.BOTTOM, new RelativeConstraint(source, AttributeType.TOP, 0));
 		return this;
 	}
 
@@ -190,7 +190,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder left(String source, int offset) {
-		_constraints.put(AttributeType.RIGHT, new RelativeConstraint(source, AttributeType.LEFT, -offset));
+		constraints.put(AttributeType.RIGHT, new RelativeConstraint(source, AttributeType.LEFT, -offset));
 		return this;
 	}
 
@@ -203,7 +203,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder left(String source) {
-		_constraints.put(AttributeType.RIGHT, new RelativeConstraint(source, AttributeType.LEFT, 0));
+		constraints.put(AttributeType.RIGHT, new RelativeConstraint(source, AttributeType.LEFT, 0));
 		return this;
 	}
 
@@ -218,7 +218,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder right(String source, int offset) {
-		_constraints.put(AttributeType.LEFT, new RelativeConstraint(source, AttributeType.RIGHT, offset));
+		constraints.put(AttributeType.LEFT, new RelativeConstraint(source, AttributeType.RIGHT, offset));
 		return this;
 	}
 
@@ -231,7 +231,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder right(String source) {
-		_constraints.put(AttributeType.LEFT, new RelativeConstraint(source, AttributeType.RIGHT, 0));
+		constraints.put(AttributeType.LEFT, new RelativeConstraint(source, AttributeType.RIGHT, 0));
 		return this;
 	}
 
@@ -244,7 +244,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder alignHorizontally(String source) {
-		_constraints.put(AttributeType.HORIZONTAL_CENTER, new RelativeConstraint(source, AttributeType.HORIZONTAL_CENTER));
+		constraints.put(AttributeType.HORIZONTAL_CENTER, new RelativeConstraint(source, AttributeType.HORIZONTAL_CENTER));
 		return this;
 	}
 
@@ -257,7 +257,7 @@ public class ConstraintBuilder {
 	 *          the instance
 	 */
 	public ConstraintBuilder alignVertically(String source) {
-		_constraints.put(AttributeType.VERTICAL_CENTER, new RelativeConstraint(source, AttributeType.VERTICAL_CENTER));
+		constraints.put(AttributeType.VERTICAL_CENTER, new RelativeConstraint(source, AttributeType.VERTICAL_CENTER));
 		return this;
 	}
 

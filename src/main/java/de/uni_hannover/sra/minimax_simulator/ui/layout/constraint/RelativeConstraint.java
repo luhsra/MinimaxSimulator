@@ -10,10 +10,10 @@ import java.util.Set;
  */
 public class RelativeConstraint implements Constraint {
 
-	private final Attribute _anchor;
-	private final int _offset;
+	private final Attribute anchor;
+	private final int offset;
 
-	private final Set<Attribute> _dependency;
+	private final Set<Attribute> dependency;
 
 	/**
 	 * Constructs a new {@code RelativeConstraint} with the specified {@link Attribute} as anchor and
@@ -29,9 +29,9 @@ public class RelativeConstraint implements Constraint {
 			throw new NullPointerException("anchor is null");
 		}
 
-		_anchor = anchor;
-		_offset = offset;
-		_dependency = Collections.singleton(_anchor);
+		this.anchor = anchor;
+		this.offset = offset;
+		dependency = Collections.singleton(this.anchor);
 	}
 
 	/**
@@ -76,8 +76,8 @@ public class RelativeConstraint implements Constraint {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((_anchor == null) ? 0 : _anchor.hashCode());
-		result = prime * result + _offset;
+		result = prime * result + ((anchor == null) ? 0 : anchor.hashCode());
+		result = prime * result + offset;
 		return result;
 	}
 
@@ -94,10 +94,10 @@ public class RelativeConstraint implements Constraint {
 		}
 
 		RelativeConstraint other = (RelativeConstraint) obj;
-		if (!_anchor.equals(other._anchor)) {
+		if (!anchor.equals(other.anchor)) {
 			return false;
 		}
-		if (_offset != other._offset) {
+		if (offset != other.offset) {
 			return false;
 		}
 		return true;
@@ -105,16 +105,16 @@ public class RelativeConstraint implements Constraint {
 
 	@Override
 	public String toString() {
-		return "rel(" + _anchor + " + " + _offset + ")";
+		return "rel(" + anchor + " + " + offset + ")";
 	}
 
 	@Override
 	public int getValue(AttributeSource attributes) {
-		return attributes.getValue(_anchor) + _offset;
+		return attributes.getValue(anchor) + offset;
 	}
 
 	@Override
 	public Set<Attribute> getDependencies() {
-		return _dependency;
+		return dependency;
 	}
 }

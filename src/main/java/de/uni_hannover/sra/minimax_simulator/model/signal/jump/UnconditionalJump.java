@@ -8,7 +8,7 @@ package de.uni_hannover.sra.minimax_simulator.model.signal.jump;
  */
 public final class UnconditionalJump implements Jump {
 
-	private final int _targetRow;
+	private final int targetRow;
 
 	/**
 	 * Constructs a new {@code UnconditionalJump} with the specified target row.
@@ -17,12 +17,12 @@ public final class UnconditionalJump implements Jump {
 	 *          the index of the target row
 	 */
 	public UnconditionalJump(int targetRow) {
-		_targetRow = targetRow;
+		this.targetRow = targetRow;
 	}
 
 	@Override
 	public int getTargetRow(int currentRow, int condition) {
-		return _targetRow;
+		return targetRow;
 	}
 
 	/**
@@ -32,14 +32,14 @@ public final class UnconditionalJump implements Jump {
 	 *          the index of the {@code SignalRow} that will be executed next
 	 */
 	public int getTargetRow() {
-		return _targetRow;
+		return targetRow;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _targetRow;
+		result = prime * result + targetRow;
 		return result;
 	}
 
@@ -56,7 +56,7 @@ public final class UnconditionalJump implements Jump {
 		}
 
 		UnconditionalJump other = (UnconditionalJump) obj;
-		if (_targetRow != other._targetRow) {
+		if (targetRow != other.targetRow) {
 			return false;
 		}
 		return true;

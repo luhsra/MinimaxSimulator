@@ -3,6 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.model.user;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfigurationBuilder;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.MinimaxConfigurationBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.BaseControlPort;
 import de.uni_hannover.sra.minimax_simulator.model.signal.DefaultSignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
@@ -22,13 +23,12 @@ public class NewProjectBuilder implements ProjectBuilder {
 	public Project buildProject() {
 		ResourceBundleLoader res = Main.getResourceLoader();
 
-		MachineConfigurationBuilder mb = new MachineConfigurationBuilder();
+		MachineConfigurationBuilder mb = new MinimaxConfigurationBuilder();
 		MachineConfiguration conf = mb.loadDefaultValues(res.getTextResource("register")).build();
 
 		SignalTable table = new DefaultSignalTable();
 		createDefaultProgram(table);
-		Project project = new Project(conf, new ProjectConfiguration(), table);
-		return project;
+		return new Project(conf, new ProjectConfiguration(), table);
 	}
 
 	/**

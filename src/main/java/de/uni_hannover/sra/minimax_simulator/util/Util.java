@@ -88,6 +88,6 @@ public class Util {
 	 *          a format string
 	 */
 	public static String toHex(int value, int wordWidth, boolean useHexPrefix) {
-		return String.format(createHexFormatString(wordWidth, useHexPrefix), Integer.valueOf(value));
+		return String.format(createHexFormatString(wordWidth, useHexPrefix), value);
 	}
 }

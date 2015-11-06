@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.signal;
 
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
 /**
  * The configuration of a signal.
@@ -15,8 +15,7 @@ public interface SignalConfiguration {
 	 * @return
 	 *          a list of the {@code SignalType}s
 	 */
-	// TODO: use immutable lists for other interfaces, too
-	public List<SignalType> getSignalTypes();
+	public ImmutableList<SignalType> getSignalTypes();
 
 	/**
 	 * Adds the specified {@code SignalType} at the specified index.

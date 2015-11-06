@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class DefaultLayoutSet implements LayoutSet {
 
-	private final Map<String, Layout> _layouts = new HashMap<String, Layout>();
+	private final Map<String, Layout> layouts = new HashMap<String, Layout>();
 
 	/**
 	 * Adds the specified {@link Layout} and links it with the specified name.
@@ -26,11 +26,11 @@ public class DefaultLayoutSet implements LayoutSet {
 	 */
 	public void addLayout(String name, Layout layout) {
 
-		if (_layouts.containsKey(name)) {
+		if (layouts.containsKey(name)) {
 			throw new IllegalStateException();
 		}
 
-		_layouts.put(name, layout);
+		layouts.put(name, layout);
 	}
 
 	/**
@@ -44,21 +44,21 @@ public class DefaultLayoutSet implements LayoutSet {
 	 *          the {@code ConstraintBuilder} for the {@code DefaultLayout}
 	 */
 	public void addLayout(String name, ConstraintBuilder cb) {
-		if (_layouts.containsKey(name)) {
+		if (layouts.containsKey(name)) {
 			throw new IllegalStateException("Duplicate layout: " + name);
 		}
 
-		_layouts.put(name, new DefaultLayout(cb.constraints()));
+		layouts.put(name, new DefaultLayout(cb.constraints()));
 		cb.clear();
 	}
 
 	@Override
 	public Set<String> getComponents() {
-		return _layouts.keySet();
+		return layouts.keySet();
 	}
 
 	@Override
 	public Layout getLayout(String component) {
-		return _layouts.get(component);
+		return layouts.get(component);
 	}
 }

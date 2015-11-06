@@ -4,7 +4,7 @@ import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
-import de.uni_hannover.sra.minimax_simulator.ui.UI;
+import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import javafx.scene.control.Alert.AlertType;
 
@@ -23,15 +23,15 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class MemoryExportWorker implements Runnable {
 
-	private final static Logger	_log	= Logger.getLogger(MemoryExportWorker.class.getName());
+	private final static Logger LOG = Logger.getLogger(MemoryExportWorker.class.getName());
 
-	private final MachineMemory	_memory;
+	private final MachineMemory memory;
 
-	private final File			_file;
-	private final TextResource	_res;
+	private final File file;
+	private final TextResource res;
 
-	private final int			_fromAddress;
-	private final int			_toAddress;
+	private final int fromAddress;
+	private final int toAddress;
 
 	/**
 	 * Constructs a new {@code MemoryExportWorker} instance.
@@ -48,13 +48,13 @@ public class MemoryExportWorker implements Runnable {
 	 *          the {@link TextResource} for getting localized texts
 	 */
 	public MemoryExportWorker(MachineMemory memory, int fromAddress, int toAddress, File file, TextResource res) {
-		_memory = memory;
+		this.memory = memory;
 
-		_file = file;
-		_res = res;
+		this.file = file;
+		this.res = res;
 
-		_fromAddress = fromAddress;
-		_toAddress = toAddress;
+		this.fromAddress = fromAddress;
+		this.toAddress = toAddress;
 
 		checkArgument(fromAddress >= memory.getMinAddress());
 		checkArgument(fromAddress <= toAddress);
@@ -68,13 +68,13 @@ public class MemoryExportWorker implements Runnable {
 	public void run() {
 		FileOutputStream fos = null;
 		try {
-			fos = new FileOutputStream(_file);
+			fos = new FileOutputStream(file);
 			doExport(fos);
 		} catch (IOException ioe) {
-			UI.invokeInFAT(new Runnable() {
+			UIUtil.invokeInFAT(new Runnable() {
 				@Override
 				public void run() {
-					FXDialog fnw = new FXDialog(AlertType.ERROR, _res.get("memory.export.error"), _res.format("memory.export.write-error", _file.getPath()));
+					FXDialog fnw = new FXDialog(AlertType.ERROR, res.get("memory.export.error"), res.format("memory.export.write-error", file.getPath()));
 					// FIXME: delete if issue with long texts in linux is resolved
 					fnw.setResizable(true);
 
@@ -95,14 +95,14 @@ public class MemoryExportWorker implements Runnable {
 	 * 			thrown if the memory image could not be written
 	 */
 	private void doExport(OutputStream os) throws IOException {
-		MemoryState state = _memory.getMemoryState();
+		MemoryState state = memory.getMemoryState();
 
 		BufferedOutputStream bos = IOUtils.toBufferedStream(os);
 
 		byte[] intBytes = new byte[4];
 
 		try {
-			for (int i = _fromAddress, n = _toAddress; i <= n; i++) {
+			for (int i = fromAddress, n = toAddress; i <= n; i++) {
 				int value = state.getInt(i);
 
 				// convert integer to little-endian byte-array
@@ -120,8 +120,8 @@ public class MemoryExportWorker implements Runnable {
 			IOUtils.closeQuietly(bos);
 		}
 
-		if (_log.isLoggable(Level.FINE)) {
-			_log.fine(((_toAddress - _fromAddress) << 2) + " bytes / " + (_toAddress - _fromAddress) + " words exported to " + _file.getPath());
+		if (LOG.isLoggable(Level.FINE)) {
+			LOG.fine(((toAddress - fromAddress) << 2) + " bytes / " + (toAddress - fromAddress) + " words exported to " + file.getPath());
 		}
 	}
 }

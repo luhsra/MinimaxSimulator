@@ -13,20 +13,20 @@ import java.util.Set;
  */
 public class ReadablePort extends Part implements ResultPort {
 
-	private final IngoingPin _in;
+	private final IngoingPin in;
 
-	private int _value;
+	private int value;
 
 	/**
 	 * Constructs a new {@code ReadablePort}.
 	 */
 	public ReadablePort() {
-		_in = new IngoingPin(this);
+		in = new IngoingPin(this);
 	}
 
 	@Override
 	public void update() {
-		_value = _in.read();
+		value = in.read();
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class ReadablePort extends Part implements ResultPort {
 	 *          the input pin
 	 */
 	public IngoingPin getIn() {
-		return _in;
+		return in;
 	}
 
 	@Override
@@ -46,16 +46,16 @@ public class ReadablePort extends Part implements ResultPort {
 
 	@Override
 	public int read() {
-		return _value;
+		return value;
 	}
 
 	@Override
 	public void reset() {
-		_value = 0;
+		value = 0;
 	}
 
 	@Override
 	public String toString() {
-		return "ReadablePort[name=" + getName() + ", value=" + _value + "]";
+		return "ReadablePort[name=" + getName() + ", value=" + value + "]";
 	}
 }

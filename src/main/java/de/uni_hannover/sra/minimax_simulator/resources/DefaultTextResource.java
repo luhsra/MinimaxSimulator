@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  */
 class DefaultTextResource implements TextResource {
 
-	private final ResourceBundle _bundle;
+	private final ResourceBundle bundle;
 
 	/**
 	 * Constructs a new {@code DefaultTextResource} using the specified {@link ResourceBundle}.
@@ -19,23 +19,23 @@ class DefaultTextResource implements TextResource {
 	 *          the bundle containing the resources
 	 */
 	DefaultTextResource(ResourceBundle bundle) {
-		_bundle = bundle;
+		this.bundle = bundle;
 	}
 
 	@Override
 	public String get(String key) {
-		return _bundle.getString(key);
+		return bundle.getString(key);
 	}
 
 	@Override
 	public String format(String key, Object... params) {
-		MessageFormat fm = new MessageFormat(_bundle.getString(key), _bundle.getLocale());
+		MessageFormat fm = new MessageFormat(bundle.getString(key), bundle.getLocale());
 		return fm.format(params);
 	}
 
 	@Override
 	public MessageFormat createFormat(String key) {
-		return new MessageFormat(_bundle.getString(key), _bundle.getLocale());
+		return new MessageFormat(bundle.getString(key), bundle.getLocale());
 	}
 
 	@Override

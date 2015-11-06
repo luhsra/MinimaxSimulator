@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.components.tableview.*;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
@@ -11,6 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.components.tableview.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,17 +35,19 @@ import java.util.Map;
  */
 public class SignalView implements SignalTableListener, MachineConfigListener {
 
-    private final TextResource _res;
+    private final TextResource res;
 
-    private SignalTable _signal;
+    private SignalTable signal;
 
     @FXML private TableView signaltable;
+    @FXML private Button btnMoveUp;
+    @FXML private Button btnMoveDown;
 
     /**
      * Initializes the final variables.
      */
     public SignalView() {
-        _res = Main.getTextResource("signal");
+        res = Main.getTextResource("signal");
     }
 
     /**
@@ -53,8 +55,11 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
      * It initializes the signal {@link TableView} because it needs project data.
      */
     public void initSignalView() {
-        _signal = Main.getWorkspace().getProject().getSignalTable();
-        _signal.addSignalTableListener(this);
+        signal = Main.getWorkspace().getProject().getSignalTable();
+        signal.addSignalTableListener(this);
+
+        btnMoveDown.setDisable(true);
+        btnMoveUp.setDisable(true);
 
         Main.getWorkspace().getProject().getMachineConfiguration().addMachineConfigListener(this);
 
@@ -108,8 +113,8 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
             signaltable.getColumns().add(col);
         }
 
-        for (int i = 0; i < _signal.getRowCount(); i++) {
-            signaltable.getItems().add(createTableRow(i, _signal.getRow(i)));
+        for (int i = 0; i < signal.getRowCount(); i++) {
+            signaltable.getItems().add(createTableRow(i, signal.getRow(i)));
         }
 
     }
@@ -183,15 +188,15 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
      */
     private List<String> getAllColumnLabels() {
         List<String> columns = new ArrayList<>();
-        columns.add(_res.get("col.breakpoint"));
-        columns.add(_res.get("col.label"));
-        columns.add(_res.get("col.address"));
-        columns.add(_res.get("col.aluselA"));
-        columns.add(_res.get("col.aluselB"));
-        columns.add(_res.get("col.mdrsel"));
-        columns.add(_res.get("col.memcs"));
-        columns.add(_res.get("col.memrw"));
-        columns.add(_res.get("col.aluctrl"));
+        columns.add(res.get("col.breakpoint"));
+        columns.add(res.get("col.label"));
+        columns.add(res.get("col.address"));
+        columns.add(res.get("col.aluselA"));
+        columns.add(res.get("col.aluselB"));
+        columns.add(res.get("col.mdrsel"));
+        columns.add(res.get("col.memcs"));
+        columns.add(res.get("col.memrw"));
+        columns.add(res.get("col.aluctrl"));
 
         for (RegisterExtension baseReg : Main.getWorkspace().getProject().getMachineConfiguration().getBaseRegisters()) {
             columns.add(baseReg.getName()+".W");
@@ -200,9 +205,9 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
             columns.add(reg.getName()+".W");
         }
 
-        columns.add(_res.get("col.condition"));
-        columns.add(_res.get("col.jumptarget"));
-        columns.add(_res.get("col.description"));
+        columns.add(res.get("col.condition"));
+        columns.add(res.get("col.jumptarget"));
+        columns.add(res.get("col.description"));
 
         return Collections.unmodifiableList(columns);
     }
@@ -248,10 +253,10 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
         int index = signaltable.getSelectionModel().getSelectedIndex();
 
         if (index == -1) {
-            _signal.addSignalRow(new SignalRow());
+            signal.addSignalRow(new SignalRow());
         }
         else {
-            _signal.addSignalRow(index+1, new SignalRow());
+            signal.addSignalRow(index + 1, new SignalRow());
         }
         Main.getWorkspace().setProjectUnsaved();
     }
@@ -263,13 +268,10 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
         int index = signaltable.getSelectionModel().getSelectedIndex();
 
         if (index != -1) {
-            _signal.removeSignalRow(index);
+            signal.removeSignalRow(index);
         }
         Main.getWorkspace().setProjectUnsaved();
     }
-
-    @FXML private Button btnMoveUp;
-    @FXML private Button btnMoveDown;
 
     /**
      * Moves the currently selected signal row.<br>
@@ -298,7 +300,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
         }
 
         int index1 = signaltable.getSelectionModel().getSelectedIndex();
-        _signal.moveSignalRows(index1, index1, difference);
+        signal.moveSignalRows(index1, index1, difference);
         signaltable.getSelectionModel().select(index1+difference);
 
         Main.getWorkspace().setProjectUnsaved();

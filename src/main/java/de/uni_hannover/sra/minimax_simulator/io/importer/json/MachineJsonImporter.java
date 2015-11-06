@@ -4,11 +4,11 @@ import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfigurationBuilder;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.MinimaxConfigurationBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
-import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,19 +44,17 @@ class MachineJsonImporter extends Importer {
 
 		JSONObject registers = machine.getJSONObject("registers");
 
-		// TODO: remove global access?
-		ResourceBundleLoader resourceLoader = Main.getResourceLoader();
-		TextResource registerTextResource = resourceLoader.getTextResource("register");
+		TextResource registerTextResource = Main.getTextResource("register");
 
-		MachineConfigurationBuilder mb = new MachineConfigurationBuilder();
+		MachineConfigurationBuilder mb = new MinimaxConfigurationBuilder();
 		mb.addDefaultBaseRegisters(registerTextResource);
-		mb.getAluOperations().addAll(loadAlu(alu));
-		mb.getRegisterExtensions().addAll(loadRegisters(registers));
+		mb.addAluOperations(loadAlu(alu));
+		mb.addRegisterExtensions(loadRegisters(registers));
 
 		JSONArray muxInputList = machine.getJSONArray("muxInputs");
 		for (int i = 0; i < muxInputList.length(); i++) {
 			MuxType type = get(MuxType.class, muxInputList.getJSONObject(i).getString("muxType"));
-			mb.getSelectedMuxInputs(type).addAll(loadMuxInputs(muxInputList.getJSONObject(i).getJSONArray("input"), mb.getAllowedMuxInputs()));
+			mb.addMuxInputs(type, loadMuxInputs(muxInputList.getJSONObject(i).getJSONArray("input"), mb.getAllowedMuxInputs()));
 		}
 
 		return mb.build();

@@ -26,10 +26,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class MachineSignalTable implements SignalTable, MachineConfigListener {
 
-	private final SignalTable			_theTable;
-	private final DescriptionFactory	_descriptionFactory;
-	private final MachineConfiguration	_machineConfig;
-	private final SignalConfiguration	_signalConfig;
+	private final SignalTable theTable;
+	private final DescriptionFactory descriptionFactory;
+	private final SignalConfiguration signalConfig;
 
 	/** Enum used for the recalculation of the jump targets. */
 	private enum Action {
@@ -80,12 +79,12 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	 */
 	public MachineSignalTable(SignalTable table, MachineConfiguration machineConfig,
 			DescriptionFactory descriptionFactory, SignalConfiguration	signalConfig) {
-		_theTable = checkNotNull(table);
-		_machineConfig = checkNotNull(machineConfig);
-		_descriptionFactory = checkNotNull(descriptionFactory);
-		_signalConfig = checkNotNull(signalConfig);
+		theTable = checkNotNull(table);
+		MachineConfiguration machineConfig1 = checkNotNull(machineConfig);
+		this.descriptionFactory = checkNotNull(descriptionFactory);
+		this.signalConfig = checkNotNull(signalConfig);
 
-		_machineConfig.addMachineConfigListener(this);
+		machineConfig1.addMachineConfigListener(this);
 
 		updateAllDescriptions();
 	}
@@ -99,55 +98,55 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	 *          the {@code SignalRow}
 	 */
 	private void updateDescription(int rowIndex, SignalRow row) {
-		row.setDescription(_descriptionFactory.createDescription(rowIndex, row));
+		row.setDescription(descriptionFactory.createDescription(rowIndex, row));
 	}
 
 	/**
 	 * Updates the description of all {@link SignalRow}s.
 	 */
 	private void updateAllDescriptions() {
-		for (int i = 0, n = _theTable.getRowCount(); i < n; i++) {
-			updateDescription(i, _theTable.getRow(i));
+		for (int i = 0, n = theTable.getRowCount(); i < n; i++) {
+			updateDescription(i, theTable.getRow(i));
 		}
 	}
 
 	@Override
 	public int getRowCount() {
-		return _theTable.getRowCount();
+		return theTable.getRowCount();
 	}
 
 	@Override
 	public SignalRow getRow(int index) {
-		return _theTable.getRow(index);
+		return theTable.getRow(index);
 	}
 
 	@Override
 	public void addSignalTableListener(SignalTableListener l) {
-		_theTable.addSignalTableListener(l);
+		theTable.addSignalTableListener(l);
 	}
 
 	@Override
 	public void removeSignalTableListener(SignalTableListener l) {
-		_theTable.removeSignalTableListener(l);
+		theTable.removeSignalTableListener(l);
 	}
 
 	@Override
 	public void addSignalRow(SignalRow row) {
-		updateDescription(_theTable.getRowCount(), row);
-		_theTable.addSignalRow(row);
+		updateDescription(theTable.getRowCount(), row);
+		theTable.addSignalRow(row);
 	}
 
 	@Override
 	public void addSignalRow(int index, SignalRow row) {
 		updateJumpTargets(index, Action.ADDED);
 		updateDescription(index, row);
-		_theTable.addSignalRow(index, row);
+		theTable.addSignalRow(index, row);
 	}
 
 	@Override
 	public void removeSignalRow(int index) {
 		updateJumpTargets(index, Action.REMOVED);
-		_theTable.removeSignalRow(index);
+		theTable.removeSignalRow(index);
 	}
 
 	/**
@@ -159,7 +158,7 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	 *          the action that triggered the update
 	 */
 	private void updateJumpTargets(int index, Action action) {
-		List<SignalRow> rows = _theTable.getRows();
+		List<SignalRow> rows = theTable.getRows();
 
 		for (int i = 0; i < rows.size(); i++) {
 			Jump j = rows.get(i).getJump();
@@ -238,27 +237,24 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	}
 
 	@Override
-	public void exchangeSignalRows(int index1, int index2)
-	{
-		_theTable.exchangeSignalRows(index1, index2);
+	public void exchangeSignalRows(int index1, int index2) {
+		theTable.exchangeSignalRows(index1, index2);
 	}
 
 	@Override
-	public void setRowSignal(int index, String signal, SignalValue value)
-	{
-		SignalRow row = _theTable.getRow(index);
+	public void setRowSignal(int index, String signal, SignalValue value) {
+		SignalRow row = theTable.getRow(index);
 		row.setSignal(signal, value);
 		updateDescription(index, row);
-		_theTable.setRowSignal(index, signal, value);
+		theTable.setRowSignal(index, signal, value);
 	}
 
 	@Override
-	public void setRowJump(int index, Jump jump)
-	{
-		SignalRow row = _theTable.getRow(index);
+	public void setRowJump(int index, Jump jump) {
+		SignalRow row = theTable.getRow(index);
 		row.setJump(jump);
 		updateDescription(index, row);
-		_theTable.setRowJump(index, jump);
+		theTable.setRowJump(index, jump);
 	}
 
 	@Override
@@ -300,11 +296,11 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 		while (iter.hasNext()) {
 			int index = iter.nextIndex();
 			SignalRow row = iter.next();
-			for (SignalType signalType : _signalConfig.getSignalTypes()) {
+			for (SignalType signalType : signalConfig.getSignalTypes()) {
 				SignalValue currentRowValue = row.getSignal(signalType);
 				if (!signalType.getValues().contains(currentRowValue)) {
 					row.setSignal(signalType, SignalValue.DONT_CARE);
-					_theTable.setRowSignal(index, signalType.getName(), SignalValue.DONT_CARE);
+					theTable.setRowSignal(index, signalType.getName(), SignalValue.DONT_CARE);
 				}
 			}
 		}
@@ -321,7 +317,7 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	private void updateAluSelectCodesRemoved(MuxType mux, int index) {
 		String lookUp = (mux == MuxType.A) ? "ALU_SELECT_A" : "ALU_SELECT_B";
 
-		for (SignalRow signalRow : _theTable.getRows()) {
+		for (SignalRow signalRow : theTable.getRows()) {
 			Map<String, SignalValue> signalValues = signalRow.getSignalValues();
 
 			if (signalValues.containsKey(lookUp)) {
@@ -350,7 +346,7 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	private void updateAluSelectCodesExchanged(MuxType mux, int index1, int index2) {
 		String lookUp = (mux == MuxType.A) ? "ALU_SELECT_A" : "ALU_SELECT_B";
 
-		for (SignalRow signalRow : _theTable.getRows()) {
+		for (SignalRow signalRow : theTable.getRows()) {
 			Map<String, SignalValue> signalValues = signalRow.getSignalValues();
 
 			if (signalValues.containsKey(lookUp)) {
@@ -374,7 +370,7 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	private void updateAluOpCodesRemoved(int index) {
 		String lookUp = "ALU_CTRL";
 
-		for (SignalRow signalRow : _theTable.getRows()) {
+		for (SignalRow signalRow : theTable.getRows()) {
 			Map<String, SignalValue> signalValues = signalRow.getSignalValues();
 
 			if (signalValues.containsKey(lookUp)) {
@@ -401,7 +397,7 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	private void updateAluOpCodesExchanged(int index1, int index2) {
 		String lookUp = "ALU_CTRL";
 
-		for (SignalRow signalRow : _theTable.getRows()) {
+		for (SignalRow signalRow : theTable.getRows()) {
 			Map<String, SignalValue> signalValues = signalRow.getSignalValues();
 
 			if (signalValues.containsKey(lookUp)) {
@@ -419,12 +415,12 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 	@Override
 	public void setSignalRow(int index, SignalRow row) {
 		updateDescription(index, row);
-		_theTable.setSignalRow(index, row);
+		theTable.setSignalRow(index, row);
 	}
 
 	@Override
 	public DescriptionFactory getDescriptionFactory() {
-		return _descriptionFactory;
+		return descriptionFactory;
 	}
 
 	@Override
@@ -434,11 +430,11 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
 		for (int i = lastIndex; i >= firstIndex; i--) {
 			updateJumpTargets(i, action);
 		}
-		_theTable.moveSignalRows(firstIndex, lastIndex, direction);
+		theTable.moveSignalRows(firstIndex, lastIndex, direction);
 	}
 
 	@Override
 	public ImmutableList<SignalRow> getRows() {
-		return _theTable.getRows();
+		return theTable.getRows();
 	}
 }

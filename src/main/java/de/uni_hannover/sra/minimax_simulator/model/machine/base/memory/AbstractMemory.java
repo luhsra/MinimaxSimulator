@@ -12,16 +12,16 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public abstract class AbstractMemory implements MachineMemory {
 
-	private List<MemoryAccessListener>	_listeners	= new ArrayList<MemoryAccessListener>();
+	private List<MemoryAccessListener> listeners = new ArrayList<MemoryAccessListener>();
 
-	private final int					_addressWidth;
-	private final int					_minAddress;
-	private final int					_maxAddress;
+	private final int addressWidth;
+	private final int minAddress;
+	private final int maxAddress;
 
-	private MemoryState					_memoryBackupState;
-	private MemoryState					_memoryWorkState;
+	private MemoryState memoryBackupState;
+	private MemoryState memoryWorkState;
 
-	private boolean						_doNotifyListeners;
+	private boolean doNotifyListeners;
 
 	/**
 	 * Constructs a new {@code AbstractMemory} with the specified address width.
@@ -29,27 +29,27 @@ public abstract class AbstractMemory implements MachineMemory {
 	 * @param addressWidth
 	 *          the width of the {@code AbstractMemory}
 	 */
-	public AbstractMemory(int addressWidth) {
-		_addressWidth = addressWidth;
-		_minAddress = 0;
-		_maxAddress = (1 << addressWidth) - 1;
+	protected AbstractMemory(int addressWidth) {
+		this.addressWidth = addressWidth;
+		minAddress = 0;
+		maxAddress = (1 << addressWidth) - 1;
 
-		_doNotifyListeners = true;
+		doNotifyListeners = true;
 	}
 
 	@Override
 	public int getAddressWidth() {
-		return _addressWidth;
+		return addressWidth;
 	}
 
 	@Override
 	public int getMinAddress() {
-		return _minAddress;
+		return minAddress;
 	}
 
 	@Override
 	public int getMaxAddress() {
-		return _maxAddress;
+		return maxAddress;
 	}
 
 	/**
@@ -72,20 +72,20 @@ public abstract class AbstractMemory implements MachineMemory {
 
 	@Override
 	public MemoryState getMemoryState() {
-		return _memoryWorkState;
+		return memoryWorkState;
 	}
 
 	@Override
 	public void markMemoryState() {
-		checkState(_memoryBackupState == null);
-		_memoryBackupState = cloneState(_memoryWorkState);
+		checkState(memoryBackupState == null);
+		memoryBackupState = cloneState(memoryWorkState);
 	}
 
 	@Override
 	public void resetMemoryState() {
-		if (_memoryBackupState != null) {
-			_memoryWorkState = _memoryBackupState;
-			_memoryBackupState = null;
+		if (memoryBackupState != null) {
+			memoryWorkState = memoryBackupState;
+			memoryBackupState = null;
 			fireMemoryReset();
 		}
 	}
@@ -94,19 +94,19 @@ public abstract class AbstractMemory implements MachineMemory {
 	 * Initializes the memory work state with a new instance of {@link MemoryState}.
 	 */
 	protected void setupMemoryState() {
-		_memoryWorkState = createMemoryState();
+		memoryWorkState = createMemoryState();
 	}
 
 	@Override
 	public void addMemoryAccessListener(MemoryAccessListener l) {
-		if (!_listeners.contains(l)) {
-			_listeners.add(l);
+		if (!listeners.contains(l)) {
+			listeners.add(l);
 		}
 	}
 
 	@Override
 	public void removeMemoryAccessListener(MemoryAccessListener l) {
-		_listeners.remove(l);
+		listeners.remove(l);
 	}
 
 	/**
@@ -119,11 +119,11 @@ public abstract class AbstractMemory implements MachineMemory {
 	 *          the read value
 	 */
 	protected void fireReadAccess(int address, int value) {
-		if (!_doNotifyListeners) {
+		if (!doNotifyListeners) {
 			return;
 		}
 
-		for (MemoryAccessListener l : _listeners) {
+		for (MemoryAccessListener l : listeners) {
 			l.memoryReadAccess(address, value);
 		}
 	}
@@ -138,11 +138,11 @@ public abstract class AbstractMemory implements MachineMemory {
 	 *          the written value
 	 */
 	protected void fireWriteAccess(int address, int value) {
-		if (!_doNotifyListeners) {
+		if (!doNotifyListeners) {
 			return;
 		}
 
-		for (MemoryAccessListener l : _listeners) {
+		for (MemoryAccessListener l : listeners) {
 			l.memoryWriteAccess(address, value);
 		}
 	}
@@ -151,37 +151,33 @@ public abstract class AbstractMemory implements MachineMemory {
 	 * Notifies listeners about a memory reset if {@link #getNotifiesListeners()} returns true.
 	 */
 	protected void fireMemoryReset() {
-		if (!_doNotifyListeners) {
+		if (!doNotifyListeners) {
 			return;
 		}
 
-		for (MemoryAccessListener l : _listeners) {
-			l.memoryReset();
-		}
+		listeners.forEach(MemoryAccessListener::memoryReset);
 	}
 
 	/**
 	 * Notifies listeners about a memory change if {@link #getNotifiesListeners()} returns true.
 	 */
 	protected void fireMemoryChanged() {
-		if (!_doNotifyListeners) {
+		if (!doNotifyListeners) {
 			return;
 		}
 
-		for (MemoryAccessListener l : _listeners) {
-			l.memoryChanged();
-		}
+		listeners.forEach(MemoryAccessListener::memoryChanged);
 	}
 
 	@Override
 	public boolean getNotifiesListeners() {
-		return _doNotifyListeners;
+		return doNotifyListeners;
 	}
 
 	@Override
 	public void setNotifiesListeners(boolean notify) {
-		boolean oldValue = _doNotifyListeners;
-		_doNotifyListeners = notify;
+		boolean oldValue = doNotifyListeners;
+		doNotifyListeners = notify;
 		if (notify && !oldValue) {
 			fireMemoryChanged();
 		}

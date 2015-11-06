@@ -19,7 +19,7 @@ import javafx.util.Callback;
  */
 public class BreakpointColumn extends SignalTableColumn {
 
-    private static final Image imgBreakpoint = new Image("/images/fugue/control-record.png");
+    private static final Image IMG_BREAKPOINT = new Image("/images/fugue/control-record.png");
 
     /**
      * Creates a {@link TableColumn} for the breakpoint attribute of a {@link SignalRow}.
@@ -43,7 +43,7 @@ public class BreakpointColumn extends SignalTableColumn {
                     @Override
                     public void updateItem(String item, boolean empty) {
                         if (item != null && item.equals("true")) {
-                            imageview.setImage(imgBreakpoint);
+                            imageview.setImage(IMG_BREAKPOINT);
                             setGraphic(new CenteredCellPane(imageview));
                         } else {
                             setGraphic(null);

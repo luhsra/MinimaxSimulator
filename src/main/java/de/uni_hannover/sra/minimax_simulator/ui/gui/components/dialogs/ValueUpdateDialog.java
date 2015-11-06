@@ -108,7 +108,7 @@ public abstract class ValueUpdateDialog extends FXDialog {
 	 * @param currentValue
 	 *          the value at the moment of opening the dialog
 	 */
-	public ValueUpdateDialog(int currentValue) {
+	protected ValueUpdateDialog(int currentValue) {
 		super(AlertType.NONE, null, null);
 
 		_res = Main.getTextResource("project").using("memory.update");
@@ -162,7 +162,7 @@ public abstract class ValueUpdateDialog extends FXDialog {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				boolean shouldEnable = _mode.decode(_field.getText()) != null;
 
-				if (_okButton.isDisabled() != !shouldEnable) {
+				if (_okButton.isDisabled() == shouldEnable) {
 					_okButton.setDisable(!shouldEnable);
 				}
 			}
@@ -173,7 +173,7 @@ public abstract class ValueUpdateDialog extends FXDialog {
 			if (dialogButton.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
 				Integer value = _mode.decode(_field.getText());
 				if (value != null) {
-					setValue(value.intValue());
+					setValue(value);
 					return ButtonType.OK;
 				}
 			}
@@ -196,7 +196,7 @@ public abstract class ValueUpdateDialog extends FXDialog {
 
 		Integer value = _mode.decode(_field.getText().trim());
 		if (value == null) {
-			value = Integer.valueOf(0);
+			value = 0;
 		}
 		_mode = mode;
 		_field.setText(_mode.toString(this, value));

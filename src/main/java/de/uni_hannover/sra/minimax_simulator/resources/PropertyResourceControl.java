@@ -19,7 +19,7 @@ import java.util.ResourceBundle.Control;
  */
 public class PropertyResourceControl extends Control {
 
-	private final String _basePath;
+	private final String basePath;
 
 	/**
 	 * Constructs a new {@code PropertyResourceControl} with the specified base path.
@@ -31,14 +31,14 @@ public class PropertyResourceControl extends Control {
 		if (!basePath.endsWith("/")) {
 			basePath = basePath + "/";
 		}
-		_basePath = basePath;
+		this.basePath = basePath;
 	}
 
 	/*
 	@Override
 	public String toBundleName(String baseName, Locale locale)
 	{
-		StringBuilder sb = new StringBuilder(_basePath);
+		StringBuilder sb = new StringBuilder(basePath);
 		sb.append("/");
 
 		if (locale == Locale.ROOT)
@@ -85,7 +85,7 @@ public class PropertyResourceControl extends Control {
 			bundleName = "_base";
 		}
 
-		String bundleFile = _basePath + "loc" + bundleName + "/" + baseName + ".properties";
+		String bundleFile = basePath + "loc" + bundleName + "/" + baseName + ".properties";
 
 		Map<String, Object> entries = new HashMap<String, Object>();
 		
@@ -99,9 +99,8 @@ public class PropertyResourceControl extends Control {
 		} finally {
 			IOUtils.closeQuietly(is);
 		}
-		
-		ResourceBundle bundle = new MapResourceBundle(entries);
-		return bundle;
+
+		return new MapResourceBundle(entries);
 	}
 
 	/**

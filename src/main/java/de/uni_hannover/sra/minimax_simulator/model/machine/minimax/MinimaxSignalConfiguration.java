@@ -1,6 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
+import com.google.common.collect.ImmutableList;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
@@ -62,12 +63,12 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
 		 *          the name of the signal
 		 */
 		public AluCtrlSignalType(String name) {
-			super(BaseControlPort.ALU_CTRL.name(), name, _config.getAluOperations().size(), true);
+			super(BaseControlPort.ALU_CTRL.name(), name, config.getAluOperations().size(), true);
 		}
 
 		@Override
 		public String getSignalName(int index) {
-			return _config.getAluOperation(index).getOperationName();
+			return config.getAluOperation(index).getOperationName();
 		}
 	}
 
@@ -76,7 +77,7 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
 	 */
 	private static class MuxInputSignalType extends DefaultSignalType {
 
-		private final List<MuxInput> _inputs;
+		private final List<MuxInput> inputs;
 
 		/**
 		 * Constructs a new {@code MuxInputSignalType} with the specified name and inputs.
@@ -90,19 +91,19 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
 		 */
 		public MuxInputSignalType(String id, String name, List<MuxInput> inputs) {
 			super(id, name, inputs.size(), true);
-			_inputs = inputs;
+			this.inputs = inputs;
 		}
 
 		@Override
 		public String getSignalName(int index) {
-			return _inputs.get(index).getName();
+			return inputs.get(index).getName();
 		}
 	}
 
-	private final List<SignalType>				_signalTypes;
-	private final List<SignalConfigListener>	_listeners;
+	private final List<SignalType> signalTypes;
+	private final List<SignalConfigListener> listeners;
 
-	private final MachineConfiguration			_config;
+	private final MachineConfiguration config;
 
 	/**
 	 * Constructs a new {@code MinimaxSignalConfiguration} using the specified {@link MachineConfiguration}.
@@ -111,44 +112,44 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
 	 *          the machine's configuration
 	 */
 	public MinimaxSignalConfiguration(MachineConfiguration config) {
-		_signalTypes = new ArrayList<SignalType>();
-		_listeners = new ArrayList<SignalConfigListener>();
+		signalTypes = new ArrayList<SignalType>();
+		listeners = new ArrayList<SignalConfigListener>();
 
-		_config = config;
-		_config.addMachineConfigListener(this);
+		this.config = config;
+		this.config.addMachineConfigListener(this);
 		updateSignals();
 	}
 
 	@Override
-	public List<SignalType> getSignalTypes() {
-		return Collections.unmodifiableList(_signalTypes);
+	public ImmutableList<SignalType> getSignalTypes() {
+		return ImmutableList.copyOf(signalTypes);
 	}
 
 	@Override
 	public void addSignalType(int index, SignalType signal) {
-		_signalTypes.add(index, signal);
+		signalTypes.add(index, signal);
 	}
 
 	@Override
 	public void removeSignalType(int index) {
-		_signalTypes.remove(index);
+		signalTypes.remove(index);
 	}
 
 	@Override
 	public void exchangeSignalsType(int index1, int index2) {
-		Collections.swap(_signalTypes, index1, index2);
+		Collections.swap(signalTypes, index1, index2);
 	}
 
 	@Override
 	public void replaceSignalType(int index, SignalType signal) {
-		_signalTypes.set(index, signal);
+		signalTypes.set(index, signal);
 	}
 
 	/**
 	 * Updates the signals of the machine.
 	 */
 	private void updateSignals() {
-		List<SignalType> l = _signalTypes;
+		List<SignalType> l = signalTypes;
 		l.clear();
 
 		SignalType signal;
@@ -156,10 +157,10 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
 		TextResource res = Main.getTextResource("signal");
 
 		// ALU select signals
-		signal = new MuxInputSignalType(BaseControlPort.ALU_SELECT_A.name(), res.get("col.aluselA"), _config.getMuxSources(MuxType.A));
+		signal = new MuxInputSignalType(BaseControlPort.ALU_SELECT_A.name(), res.get("col.aluselA"), config.getMuxSources(MuxType.A));
 		l.add(signal);
 
-		signal = new MuxInputSignalType(BaseControlPort.ALU_SELECT_B.name(), res.get("col.aluselB"), _config.getMuxSources(MuxType.B));
+		signal = new MuxInputSignalType(BaseControlPort.ALU_SELECT_B.name(), res.get("col.aluselB"), config.getMuxSources(MuxType.B));
 		l.add(signal);
 
 		// memory signals
@@ -191,11 +192,11 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
 		signal = new AluCtrlSignalType(res.get("col.aluctrl"));
 		l.add(signal);
 
-		for (RegisterExtension register : _config.getBaseRegisters()) {
+		for (RegisterExtension register : config.getBaseRegisters()) {
 			String nameW = register.getName() + ".W";
 			l.add(new WriteEnableSignalType(nameW, nameW));
 		}
-		for (RegisterExtension register : _config.getRegisterExtensions()) {
+		for (RegisterExtension register : config.getRegisterExtensions()) {
 			String nameW = register.getName() + ".W";
 			l.add(new WriteEnableSignalType(nameW, nameW));
 		}
@@ -203,14 +204,14 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
 
 	@Override
 	public void addSignalConfigListener(SignalConfigListener l) {
-		if (!_listeners.contains(l)) {
-			_listeners.add(l);
+		if (!listeners.contains(l)) {
+			listeners.add(l);
 		}
 	}
 
 	@Override
 	public void removeSignalConfigListener(SignalConfigListener l) {
-		_listeners.remove(l);
+		listeners.remove(l);
 	}
 
 	@Override
@@ -236,8 +237,6 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
 	 * Notifies the {@link MachineConfigListener}s about a structure change.
 	 */
 	private void fireStructureChanged() {
-		for (SignalConfigListener l : _listeners) {
-			l.signalStructureChanged();
-		}
+		listeners.forEach(SignalConfigListener::signalStructureChanged);
 	}
 }

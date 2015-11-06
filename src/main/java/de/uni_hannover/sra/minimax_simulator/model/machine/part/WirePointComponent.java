@@ -11,8 +11,8 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.PointComponent;
  */
 public class WirePointComponent extends PointComponent {
 
-	private final Wire _wire;
-	private final int _index;
+	private final Wire wire;
+	private final int index;
 
 	/**
 	 * Constructs a new {@code WirePointComponent} for the specified {@link Wire} at the specified index.
@@ -23,17 +23,17 @@ public class WirePointComponent extends PointComponent {
 	 *          the index of the {@code WirePointComponent}
 	 */
 	public WirePointComponent(Wire wire, int index) {
-		_wire = wire;
-		_index = index;
+		this.wire = wire;
+		this.index = index;
 	}
 
 	@Override
 	public void doLayout() {
-		_wire.getPoints()[_index] = new Point(getBounds().x, getBounds().y);
+		wire.getPoints()[index] = new Point(getBounds().x, getBounds().y);
 	}
 
 	@Override
 	public String toString() {
-		return _wire.toString() + "." + _index;
+		return wire.toString() + "." + index;
 	}
 }

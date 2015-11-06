@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.signal;
 
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
 /**
  * This interface provides the methods each implementation of a {@code SignalType} needs.
@@ -59,7 +59,7 @@ public interface SignalType {
 	 * @return
 	 *          a list of the {@code SignalValue}s
 	 */
-	public List<SignalValue> getValues();
+	public ImmutableList<SignalValue> getValues();
 
 	/**
 	 * Gets the bit width of the {@code SignalType}.

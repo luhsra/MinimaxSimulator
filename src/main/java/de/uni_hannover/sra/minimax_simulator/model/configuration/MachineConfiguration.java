@@ -16,15 +16,15 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
 import java.util.*;
 
 /**
- * This class represents the configuration of a register machine. <br>
+ * This class represents the configuration of a register machine.<br>
  * <br>
  * Represented machines consist at least of some registers (which can be divided into base registers
  * and extension (user) registers), an ALU for the execution of binary operations and two
- * multiplexers providing the input for the ALU. <br>
+ * multiplexers providing the input for the ALU.<br>
  * <br>
  * The purpose of this class is loose the coupling between a user-modifiable, export-friendly
- * configuration of a machine and its actual simulation, representation and persistence. <br>
- * Instances are created using an {@link MachineConfigurationBuilder}. <br>
+ * configuration of a machine and its actual simulation, representation and persistence.<br>
+ * Instances are created using an {@link MinimaxConfigurationBuilder}.<br>
  * This class makes use of the <i>Listener</i> pattern: If the user wishes to visualize or simulate
  * a concrete machine represented by an instance of this class, client classes have to register as
  * {@link MachineConfigListener} to the instance and then synchronize to it on their own.
@@ -34,68 +34,68 @@ import java.util.*;
 // is final since the only constructor is package-private
 public final class MachineConfiguration {
 
-	private final List<MachineConfigListener>	_listeners;
+	private final List<MachineConfigListener> listeners;
 
-	private final List<AluOperation>			_alu;
-	private final List<AluOperation>			_aluView;
+	private final List<AluOperation> alu;
+	private final List<AluOperation> aluView;
 
-	private final List<RegisterExtension>		_baseRegisters;
+	private final List<RegisterExtension> baseRegisters;
 
-	private final List<RegisterExtension>		_extendedRegisters;
-	private final List<RegisterExtension>		_registersView;
+	private final List<RegisterExtension> extendedRegisters;
+	private final List<RegisterExtension> registersView;
 
-	private final List<MuxInput>				_muxSourcesA;
-	private final List<MuxInput>				_muxSourcesB;
-	private final List<MuxInput>				_muxSourcesAView;
-	private final List<MuxInput>				_muxSourcesBView;
+	private final List<MuxInput> muxSourcesA;
+	private final List<MuxInput> muxSourcesB;
+	private final List<MuxInput> muxSourcesAView;
+	private final List<MuxInput> muxSourcesBView;
 
-	private final List<MuxInput>				_availableMuxSources;
-	private final List<MuxInput>				_availableMuxSourcesView;
+	private final List<MuxInput> availableMuxSources;
+	private final List<MuxInput> availableMuxSourcesView;
 
 	MachineConfiguration(List<AluOperation> aluOperations, List<RegisterExtension> baseRegisters, List<RegisterExtension> extendedRegisters,
 						 List<MuxInput> availableMuxInput, Map<MuxType, List<MuxInput>> selectedMuxInput) {
-		_listeners = new ArrayList<MachineConfigListener>(5);
+		listeners = new ArrayList<MachineConfigListener>(5);
 
-		_alu = new ArrayList<AluOperation>(aluOperations);
-		_aluView = Collections.unmodifiableList(_alu);
+		alu = new ArrayList<AluOperation>(aluOperations);
+		aluView = Collections.unmodifiableList(alu);
 
-		if (_alu.contains(null)) {
+		if (alu.contains(null)) {
 			throw new NullPointerException("Alu operations cannot contain null");
 		}
 
-		_baseRegisters = ImmutableList.copyOf(baseRegisters);
+		this.baseRegisters = ImmutableList.copyOf(baseRegisters);
 
 		// implicitly check for null
-		for (RegisterExtension reg : _baseRegisters) {
+		for (RegisterExtension reg : this.baseRegisters) {
 			if (reg.isExtended()) {
 				throw new IllegalArgumentException("Base register cannot have isExtended");
 			}
 		}
 
 		// implicitly check for null
-		_extendedRegisters = new ArrayList<RegisterExtension>(extendedRegisters);
-		_registersView = Collections.unmodifiableList(_extendedRegisters);
+		this.extendedRegisters = new ArrayList<RegisterExtension>(extendedRegisters);
+		registersView = Collections.unmodifiableList(this.extendedRegisters);
 
-		for (RegisterExtension reg : _extendedRegisters) {
+		for (RegisterExtension reg : this.extendedRegisters) {
 			if (!reg.isExtended()) {
 				throw new IllegalArgumentException("Extended register must have isExtended set");
 			}
 		}
 
-		_availableMuxSources = new ArrayList<MuxInput>(availableMuxInput);
-		_availableMuxSourcesView = Collections.unmodifiableList(_availableMuxSources);
+		availableMuxSources = new ArrayList<MuxInput>(availableMuxInput);
+		availableMuxSourcesView = Collections.unmodifiableList(availableMuxSources);
 
 		List<MuxInput> sourcesA = selectedMuxInput.get(MuxType.A);
 		List<MuxInput> sourcesB = selectedMuxInput.get(MuxType.B);
 
-		if (_availableMuxSources.contains(null)) {
+		if (availableMuxSources.contains(null)) {
 			throw new NullPointerException("Mux inputs cannot contain null");
 		}
 
-		_muxSourcesA = new ArrayList<MuxInput>(sourcesA);
-		_muxSourcesB = new ArrayList<MuxInput>(sourcesB);
-		_muxSourcesAView = Collections.unmodifiableList(_muxSourcesA);
-		_muxSourcesBView = Collections.unmodifiableList(_muxSourcesB);
+		muxSourcesA = new ArrayList<MuxInput>(sourcesA);
+		muxSourcesB = new ArrayList<MuxInput>(sourcesB);
+		muxSourcesAView = Collections.unmodifiableList(muxSourcesA);
+		muxSourcesBView = Collections.unmodifiableList(muxSourcesB);
 	}
 
 	/**
@@ -105,12 +105,12 @@ public final class MachineConfiguration {
 	 *          the {@code AluOperation} to add
 	 */
 	public void addAluOperation(AluOperation aluOp) {
-		if (_alu.contains(aluOp)) {
+		if (alu.contains(aluOp)) {
 			throw new IllegalStateException("Already contains " + aluOp);
 		}
 
-		_alu.add(aluOp);
-		postEvent(MachineConfigAluEvent.eventAdded(aluOp, _alu.size() - 1));
+		alu.add(aluOp);
+		postEvent(MachineConfigAluEvent.eventAdded(aluOp, alu.size() - 1));
 	}
 
 	/**
@@ -120,12 +120,12 @@ public final class MachineConfiguration {
 	 *          the {@code AluOperation} to remove
 	 */
 	public void removeAluOperation(AluOperation aluOp) {
-		int index = _alu.indexOf(aluOp);
+		int index = alu.indexOf(aluOp);
 		if (index == -1) {
 			throw new IllegalStateException(aluOp + " not in list");
 		}
 
-		_alu.remove(index);
+		alu.remove(index);
 		postEvent(MachineConfigAluEvent.eventRemoved(aluOp, index));
 	}
 
@@ -142,10 +142,10 @@ public final class MachineConfiguration {
 			return;
 		}
 
-		AluOperation alu1 = _alu.get(index1);
-		AluOperation alu2 = _alu.get(index2);
-		_alu.set(index2, alu1);
-		_alu.set(index1, alu2);
+		AluOperation alu1 = alu.get(index1);
+		AluOperation alu2 = alu.get(index2);
+		alu.set(index2, alu1);
+		alu.set(index1, alu2);
 
 		postEvent(MachineConfigAluEvent.eventExchanged(alu1, alu2, index1, index2));
 	}
@@ -159,7 +159,7 @@ public final class MachineConfiguration {
 	 *          the {@code AluOperation} at the specified index
 	 */
 	public AluOperation getAluOperation(int index) {
-		return _alu.get(index);
+		return alu.get(index);
 	}
 
 	/**
@@ -169,7 +169,7 @@ public final class MachineConfiguration {
 	 *          a list of all {@code AluOperation}s of the machine
 	 */
 	public List<AluOperation> getAluOperations() {
-		return _aluView;
+		return aluView;
 	}
 
 	/**
@@ -179,7 +179,7 @@ public final class MachineConfiguration {
 	 *          the {@code RegisterExtension} to add
 	 */
 	public void addRegisterExtension(RegisterExtension register) {
-		if (_extendedRegisters.contains(register)) {
+		if (extendedRegisters.contains(register)) {
 			throw new IllegalStateException("Already contains " + register);
 		}
 
@@ -187,12 +187,12 @@ public final class MachineConfiguration {
 			throw new IllegalArgumentException("Can only add extended registers");
 		}
 
-		_extendedRegisters.add(register);
-		postEvent(MachineConfigRegisterEvent.eventAdded(register, _extendedRegisters.size() - 1));
+		extendedRegisters.add(register);
+		postEvent(MachineConfigRegisterEvent.eventAdded(register, extendedRegisters.size() - 1));
 
 		RegisterMuxInput rm = new RegisterMuxInput(register.getName());
-		_availableMuxSources.add(rm);
-		postEvent(MachineConfigMuxEvent.eventAdded(null, rm, _availableMuxSources.size() - 1));
+		availableMuxSources.add(rm);
+		postEvent(MachineConfigMuxEvent.eventAdded(null, rm, availableMuxSources.size() - 1));
 	}
 
 	/**
@@ -202,7 +202,7 @@ public final class MachineConfiguration {
 	 *          the {@code RegisterExtension} to remove
 	 */
 	public void removeRegisterExtension(RegisterExtension register) {
-		int index = _extendedRegisters.indexOf(register);
+		int index = extendedRegisters.indexOf(register);
 		if (index == -1) {
 			throw new IllegalStateException(register + " not in list");
 		}
@@ -217,7 +217,7 @@ public final class MachineConfiguration {
 	 *          the index of the {@code RegisterExtension} to remove
 	 */
 	public void removeRegisterExtension(int index) {
-		RegisterExtension register = _extendedRegisters.get(index);
+		RegisterExtension register = extendedRegisters.get(index);
 
 		removeRegister(register, index);
 	}
@@ -231,13 +231,13 @@ public final class MachineConfiguration {
 	 *          the index of the {@code RegisterExtension}
 	 */
 	private void removeRegister(RegisterExtension register, int index) {
-		removeAllMuxInputsOfRegister(register.getName(), null, _availableMuxSources);
+		removeAllMuxInputsOfRegister(register.getName(), null, availableMuxSources);
 
 		for (MuxType type : MuxType.values()) {
 			replaceAllMuxInputsOfRegister(register.getName(), type, getMuxSourcesInternal(type));
 		}
 
-		_extendedRegisters.remove(index);
+		extendedRegisters.remove(index);
 		postEvent(MachineConfigRegisterEvent.eventRemoved(register, index));
 	}
 
@@ -328,9 +328,9 @@ public final class MachineConfiguration {
 			throw new IllegalArgumentException("Can only add extended registers");
 		}
 
-		RegisterExtension oldRegister = _extendedRegisters.get(index);
+		RegisterExtension oldRegister = extendedRegisters.get(index);
 
-		if (!oldRegister.equals(register) && _extendedRegisters.contains(register)) {
+		if (!oldRegister.equals(register) && extendedRegisters.contains(register)) {
 			throw new IllegalStateException("Already contains " + register);
 		}
 
@@ -351,13 +351,13 @@ public final class MachineConfiguration {
 		}
 
 		// now, since no mux input is pointing to the register, actually replace the register
-		_extendedRegisters.set(index, register);
+		extendedRegisters.set(index, register);
 
 		// notify clients that the register was replaced
 		postEvent(MachineConfigRegisterEvent.eventReplaced(oldRegister, register, index));
 
 		// replace the available mux input for this register since the register changed
-		replaceAllMuxInputsOfRegister(oldRegister.getName(), register.getName(), null, _availableMuxSources);
+		replaceAllMuxInputsOfRegister(oldRegister.getName(), register.getName(), null, availableMuxSources);
 
 		// put the new mux input at the places set to null before
 		RegisterMuxInput newInput = new RegisterMuxInput(register.getName());
@@ -365,7 +365,7 @@ public final class MachineConfiguration {
 			List<MuxInput> inputs = getMuxSourcesInternal(type);
 			for (Integer inputIndex : indicesInUse.get(type)) {
 				MuxInput oldInput = inputs.get(inputIndex);
-				inputs.set(inputIndex.intValue(), newInput);
+				inputs.set(inputIndex, newInput);
 				postEvent(MachineConfigMuxEvent.eventReplaced(type, oldInput, newInput, inputIndex));
 			}
 		}
@@ -410,10 +410,10 @@ public final class MachineConfiguration {
 			return;
 		}
 
-		RegisterExtension reg1 = _extendedRegisters.get(index1);
-		RegisterExtension reg2 = _extendedRegisters.get(index2);
-		_extendedRegisters.set(index2, reg1);
-		_extendedRegisters.set(index1, reg2);
+		RegisterExtension reg1 = extendedRegisters.get(index1);
+		RegisterExtension reg2 = extendedRegisters.get(index2);
+		extendedRegisters.set(index2, reg1);
+		extendedRegisters.set(index1, reg2);
 
 		postEvent(MachineConfigRegisterEvent.eventExchanged(reg1, reg2, index1, index2));
 
@@ -421,22 +421,22 @@ public final class MachineConfiguration {
 		int muxIdx2 = -1;
 		MuxInput muxInput1 = null;
 		MuxInput muxInput2 = null;
-		for (MuxInput mux : _availableMuxSources) {
+		for (MuxInput mux : availableMuxSources) {
 			if (mux instanceof RegisterMuxInput) {
 				String registerName = ((RegisterMuxInput) mux).getRegisterName();
 				if (registerName.equals(reg1.getName())) {
-					muxIdx1 = _availableMuxSources.indexOf(mux);
+					muxIdx1 = availableMuxSources.indexOf(mux);
 					muxInput1 = mux;
 				}
 				if (registerName.equals(reg2.getName())) {
-					muxIdx2 = _availableMuxSources.indexOf(mux);
+					muxIdx2 = availableMuxSources.indexOf(mux);
 					muxInput2 = mux;
 				}
 			}
 		}
 
-		_availableMuxSources.set(muxIdx1, muxInput2);
-		_availableMuxSources.set(muxIdx2, muxInput1);
+		availableMuxSources.set(muxIdx1, muxInput2);
+		availableMuxSources.set(muxIdx2, muxInput1);
 		postEvent(MachineConfigMuxEvent.eventExchanged(null, muxInput1, muxInput2, muxIdx1, muxIdx2));
 	}
 
@@ -449,7 +449,7 @@ public final class MachineConfiguration {
 	 *          the {@code RegisterExtension} at the specified index
 	 */
 	public RegisterExtension getRegisterExtension(int index) {
-		return _extendedRegisters.get(index);
+		return extendedRegisters.get(index);
 	}
 
 	/**
@@ -461,7 +461,7 @@ public final class MachineConfiguration {
 	 *          the {@code RegisterExtension} at the specified index
 	 */
 	public RegisterExtension getBaseRegister(int index) {
-		return _baseRegisters.get(index);
+		return baseRegisters.get(index);
 	}
 
 	/**
@@ -474,7 +474,7 @@ public final class MachineConfiguration {
 	 *          the {@code RegisterExtension} with the specified name, if it exists, {@code null} otherwise
 	 */
 	public RegisterExtension findRegisterExtension(String name) {
-		for (RegisterExtension reg : _extendedRegisters) {
+		for (RegisterExtension reg : extendedRegisters) {
 			if (reg.getName().equalsIgnoreCase(name)) {
 				return reg;
 			}
@@ -492,7 +492,7 @@ public final class MachineConfiguration {
 	 *          the {@code RegisterExtension} with the specified name, if it exists, {@code null} otherwise
 	 */
 	public RegisterExtension findBaseRegister(String name) {
-		for (RegisterExtension reg : _baseRegisters) {
+		for (RegisterExtension reg : baseRegisters) {
 			if (reg.getName().equalsIgnoreCase(name)) {
 				return reg;
 			}
@@ -507,7 +507,7 @@ public final class MachineConfiguration {
 	 *          a list of all extended {@code RegisterExtension}s
 	 */
 	public List<RegisterExtension> getRegisterExtensions() {
-		return _registersView;
+		return registersView;
 	}
 
 	/**
@@ -517,7 +517,7 @@ public final class MachineConfiguration {
 	 *          a list of all base {@code RegisterExtension}s
 	 */
 	public List<RegisterExtension> getBaseRegisters() {
-		return _baseRegisters;
+		return baseRegisters;
 	}
 
 	/**
@@ -527,7 +527,7 @@ public final class MachineConfiguration {
 	 *          a list of all available {@code MuxInput}s
 	 */
 	public List<MuxInput> getAvailableSources() {
-		return _availableMuxSourcesView;
+		return availableMuxSourcesView;
 	}
 
 	/**
@@ -541,9 +541,9 @@ public final class MachineConfiguration {
 	public List<MuxInput> getMuxSources(MuxType mux) {
 		switch (mux) {
 			case A:
-				return _muxSourcesAView;
+				return muxSourcesAView;
 			case B:
-				return _muxSourcesBView;
+				return muxSourcesBView;
 		}
 		throw new IllegalArgumentException(mux.toString());
 	}
@@ -559,9 +559,9 @@ public final class MachineConfiguration {
 	private List<MuxInput> getMuxSourcesInternal(MuxType mux) {
 		switch (mux) {
 			case A:
-				return _muxSourcesA;
+				return muxSourcesA;
 			case B:
-				return _muxSourcesB;
+				return muxSourcesB;
 		}
 		throw new IllegalArgumentException(mux.toString());
 	}
@@ -669,8 +669,8 @@ public final class MachineConfiguration {
 	 *          the {@code MachineConfigListener} to register
 	 */
 	public void addMachineConfigListener(MachineConfigListener listener) {
-		if (!_listeners.contains(listener)) {
-			_listeners.add(listener);
+		if (!listeners.contains(listener)) {
+			listeners.add(listener);
 		}
 	}
 
@@ -681,7 +681,7 @@ public final class MachineConfiguration {
 	 *          the {@code MachineConfigListener} to remove
 	 */
 	public void removeMachineConfigListener(MachineConfigListener listener) {
-		_listeners.remove(listener);
+		listeners.remove(listener);
 	}
 
 	/**
@@ -692,14 +692,14 @@ public final class MachineConfiguration {
 	 *          the {@code MachineConfigEvent} the listeners have to be notified of
 	 */
 	protected void postEvent(MachineConfigEvent e) {
-		for (MachineConfigListener l : _listeners) {
+		for (MachineConfigListener l : listeners) {
 			l.processEvent(e);
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "MachineConfiguration [alu=" + _alu + ", registers=" + _extendedRegisters
-			+ ", mux.A=" + _muxSourcesA + ", mux.B=" + _muxSourcesB + "]";
+		return "MachineConfiguration [alu=" + alu + ", registers=" + extendedRegisters
+			+ ", mux.A=" + muxSourcesA + ", mux.B=" + muxSourcesB + "]";
 	}
 }

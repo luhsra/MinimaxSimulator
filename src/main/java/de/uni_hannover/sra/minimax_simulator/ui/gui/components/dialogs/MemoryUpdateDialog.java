@@ -11,8 +11,8 @@ import de.uni_hannover.sra.minimax_simulator.util.Util;
  */
 public class MemoryUpdateDialog extends ValueUpdateDialog {
 
-	private final MachineMemory	_memory;
-	private final int			_address;
+	private final MachineMemory memory;
+	private final int address;
 
 	/**
 	 * Constructs a new {@code MemoryUpdateDialog} for the specified address of the specified {@link MachineMemory}.
@@ -25,8 +25,8 @@ public class MemoryUpdateDialog extends ValueUpdateDialog {
 	public MemoryUpdateDialog(int address, MachineMemory memory) {
 		super(memory.getMemoryState().getInt(address));
 
-		_memory = memory;
-		_address = address;
+		this.memory = memory;
+		this.address = address;
 
 		_messageLabel.setText(_res.format("message",
 			Util.toHex(address, memory.getAddressWidth(), true)));
@@ -40,6 +40,6 @@ public class MemoryUpdateDialog extends ValueUpdateDialog {
 	 */
 	@Override
 	protected void setValue(int value) {
-		_memory.getMemoryState().setInt(_address, value);
+		memory.getMemoryState().setInt(address, value);
 	}
 }

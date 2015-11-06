@@ -1,4 +1,4 @@
-package de.uni_hannover.sra.minimax_simulator.ui.render;
+package de.uni_hannover.sra.minimax_simulator.ui.schematics.render;
 
 /**
  * A {@code SpriteFactory} creates the {@link Sprite}s of the {@link de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner}s.

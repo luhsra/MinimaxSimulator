@@ -1,11 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
 import de.uni_hannover.sra.minimax_simulator.Config;
+import de.uni_hannover.sra.minimax_simulator.model.machine.part.Pin;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Point;
-import de.uni_hannover.sra.minimax_simulator.model.machine.part.Pin;
-import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
-import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.RenderEnvironment;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
@@ -43,8 +43,7 @@ public abstract class CircuitSprite implements Sprite {
 	 * @param gc
 	 *          the {@code GraphicsContext} the {@code CircuitSprite} will be drawn on
 	 */
-	// TODO: make abstract?
-	public void paint(GraphicsContext gc) {}
+	public abstract void paint(GraphicsContext gc);
 
 	/**
 	 * Draws the arrow head at the end of a wire.<br>

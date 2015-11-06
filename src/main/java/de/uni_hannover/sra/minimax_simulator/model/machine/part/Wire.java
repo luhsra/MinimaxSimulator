@@ -1,12 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.part;
 
 import com.google.common.collect.ImmutableSet;
+import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Point;
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.Circuit;
-import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.parts.WireSprite;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +19,12 @@ import java.util.Set;
  */
 public class Wire implements Circuit, SpriteOwner {
 
-	private OutgoingPin		_source;
-	private IngoingPin		_drain;
+	private OutgoingPin source;
+	private IngoingPin drain;
 
-	private int				_value;
+	private int value;
 
-	private final Point[]	_points;
+	private final Point[] points;
 
 	/**
 	 * Constructs a new {@code Wire} with the specified amount of points.
@@ -33,11 +33,11 @@ public class Wire implements Circuit, SpriteOwner {
 	 *          the amount of points
 	 */
 	protected Wire(int points) {
-		_points = new Point[points];
+		this.points = new Point[points];
 		for (int i = 0; i < points; i++) {
-			_points[i] = new Point(0, 0);
+			this.points[i] = new Point(0, 0);
 		}
-		_value = 0;
+		value = 0;
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class Wire implements Circuit, SpriteOwner {
 	 *          the source
 	 */
 	public Part getSource() {
-		return _source == null ? null : _source.getPart();
+		return source == null ? null : source.getPart();
 	}
 
 	/**
@@ -77,10 +77,10 @@ public class Wire implements Circuit, SpriteOwner {
 			throw new IllegalArgumentException("Cannot attach the wire to null");
 		}
 
-		if (_source != null) {
-			_source.getWires().remove(this);
+		if (source != null) {
+			source.getWires().remove(this);
 		}
-		_source = pin;
+		source = pin;
 		pin.getWires().add(this);
 	}
 
@@ -91,7 +91,7 @@ public class Wire implements Circuit, SpriteOwner {
 	 *          the drain
 	 */
 	public Part getDrain() {
-		return _drain == null ? null : _drain.getPart();
+		return drain == null ? null : drain.getPart();
 	}
 
 	/**
@@ -104,16 +104,16 @@ public class Wire implements Circuit, SpriteOwner {
 		if (pin == null) {
 			throw new IllegalArgumentException("Cannot attach the wire to null");
 		}
-		if (_drain != null) {
-			_drain.setWire(null);
+		if (drain != null) {
+			drain.setWire(null);
 		}
-		_drain = pin;
+		drain = pin;
 		pin.setWire(this);
 	}
 
 	@Override
 	public Set<Circuit> getSuccessors() {
-		return ImmutableSet.of((Circuit) _drain.getPart());
+		return ImmutableSet.of((Circuit) drain.getPart());
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class Wire implements Circuit, SpriteOwner {
 	 *          the value
 	 */
 	public int getValue() {
-		return _value;
+		return value;
 	}
 
 	/**
@@ -133,13 +133,13 @@ public class Wire implements Circuit, SpriteOwner {
 	 *          the new value
 	 */
 	public void setValue(int value) {
-		_value = value;
+		this.value = value;
 	}
 
 	@Override
 	public void update() {
-		_value = _source.getValue();
-		_drain.setValue(_value);
+		value = source.getValue();
+		drain.setValue(value);
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class Wire implements Circuit, SpriteOwner {
 	 *          an array of the {@code Point}s
 	 */
 	public Point[] getPoints() {
-		return _points;
+		return points;
 	}
 
 	/**
@@ -171,8 +171,8 @@ public class Wire implements Circuit, SpriteOwner {
 	 *          a list of the {@code Component}s created
 	 */
 	public List<Component> createWireComponents() {
-		List<Component> components = new ArrayList<Component>(_points.length);
-		for (int i = 0; i < _points.length; i++) {
+		List<Component> components = new ArrayList<Component>(points.length);
+		for (int i = 0; i < points.length; i++) {
 			components.add(createWireComponent(i));
 		}
 		return components;
@@ -180,7 +180,7 @@ public class Wire implements Circuit, SpriteOwner {
 
 	@Override
 	public String toString() {
-		return "W[" + String.valueOf(getSource()) + " >(" + _value + ")> " + String.valueOf(getDrain()) + "]";
+		return "W[" + String.valueOf(getSource()) + " >(" + value + ")> " + String.valueOf(getDrain()) + "]";
 	}
 
 	@Override
@@ -190,6 +190,6 @@ public class Wire implements Circuit, SpriteOwner {
 
 	@Override
 	public void reset() {
-		_value = 0;
+		value = 0;
 	}
 }

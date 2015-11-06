@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class IteratorEnumeration<E> implements Enumeration<E> {
 
-	private final Iterator<E>	_iterator;
+	private final Iterator<E> iterator;
 
 	/**
 	 * Constructs a new {@code IteratorEnumeration} to wrap the specified {@link Iterator}.
@@ -25,7 +25,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
 	 *          the {@code Iterator} to wrap
 	 */
 	public IteratorEnumeration(Iterator<E> iterator) {
-		_iterator = checkNotNull(iterator, "Iterator cannot be null");
+		this.iterator = checkNotNull(iterator, "Iterator cannot be null");
 	}
 
 	/**
@@ -41,11 +41,11 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
 
 	@Override
 	public boolean hasMoreElements() {
-		return _iterator.hasNext();
+		return iterator.hasNext();
 	}
 
 	@Override
 	public E nextElement() {
-		return _iterator.next();
+		return iterator.next();
 	}
 }

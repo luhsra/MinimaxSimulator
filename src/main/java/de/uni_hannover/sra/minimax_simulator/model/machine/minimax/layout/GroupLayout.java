@@ -14,15 +14,15 @@ import java.util.Set;
  */
 public class GroupLayout implements Layout {
 
-	private final static Set<AttributeType>	attributes	= EnumSet.of(AttributeType.LEFT,
+	private final static Set<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.LEFT,
 															AttributeType.RIGHT,
 															AttributeType.TOP,
 															AttributeType.BOTTOM);
 
-	private final Constraint				_top;
-	private final Constraint				_bottom;
-	private final Constraint				_left;
-	private final Constraint				_right;
+	private final Constraint top;
+	private final Constraint bottom;
+	private final Constraint left;
+	private final Constraint right;
 
 	/**
 	 * Constructs a new {@code GroupLayout} with the specified {@code Collection} of group members.
@@ -41,23 +41,23 @@ public class GroupLayout implements Layout {
 	 *          the members of the group the {@code GroupLayout} belongs to
 	 */
 	public GroupLayout(Set<String> groupMembers) {
-		_top = new RelativeMinConstraint(groupMembers, AttributeType.TOP, 0);
-		_bottom = new RelativeMaxConstraint(groupMembers, AttributeType.BOTTOM, 0);
-		_left = new RelativeMinConstraint(groupMembers, AttributeType.LEFT, 0);
-		_right = new RelativeMaxConstraint(groupMembers, AttributeType.RIGHT, 0);
+		top = new RelativeMinConstraint(groupMembers, AttributeType.TOP, 0);
+		bottom = new RelativeMaxConstraint(groupMembers, AttributeType.BOTTOM, 0);
+		left = new RelativeMinConstraint(groupMembers, AttributeType.LEFT, 0);
+		right = new RelativeMaxConstraint(groupMembers, AttributeType.RIGHT, 0);
 	}
 
 	@Override
 	public Constraint getConstraint(AttributeType attribute) {
 		switch (attribute) {
 			case TOP:
-				return _top;
+				return top;
 			case BOTTOM:
-				return _bottom;
+				return bottom;
 			case LEFT:
-				return _left;
+				return left;
 			case RIGHT:
-				return _right;
+				return right;
 
 			default:
 				// never happens
@@ -67,6 +67,6 @@ public class GroupLayout implements Layout {
 
 	@Override
 	public Set<AttributeType> getConstrainedAttributes() {
-		return attributes;
+		return ATTRIBUTES;
 	}
 }

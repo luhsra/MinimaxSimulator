@@ -9,15 +9,13 @@ import java.util.ArrayList;
  */
 public abstract class AbstractListContainer extends Container {
 
-	protected final ArrayList<Component> _children = new ArrayList<Component>();
+	protected final ArrayList<Component> children = new ArrayList<Component>();
 
 	@Override
 	public void doLayout() {
 		layoutChildren();
 
-		for (Component child : _children) {
-			child.doLayout();
-		}
+		children.forEach(Component::doLayout);
 	}
 
 	/**
@@ -27,12 +25,12 @@ public abstract class AbstractListContainer extends Container {
 
 	@Override
 	public void addComponent(Component component, Object constraint) {
-		_children.add(component);
+		children.add(component);
 	}
 
 	@Override
 	public void removeComponent(Component component) {
-		_children.remove(component);
+		children.remove(component);
 	}
 
 	/**
@@ -44,7 +42,7 @@ public abstract class AbstractListContainer extends Container {
 	 * 			the {@code Component} at the specified index
 	 */
 	public Component getComponent(int index) {
-		return _children.get(index);
+		return children.get(index);
 	}
 
 	/**
@@ -56,14 +54,12 @@ public abstract class AbstractListContainer extends Container {
 	 * 			the new {@code Component}
 	 */
 	public void setComponent(int index, Component child) {
-		_children.set(index, child);
+		children.set(index, child);
 	}
 
 	@Override
 	public void updateSize() {
-		for (Component child : _children) {
-			child.updateSize();
-		}
+		children.forEach(Component::updateSize);
 
 		updateMySize();
 	}

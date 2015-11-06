@@ -12,16 +12,16 @@ import static com.google.common.base.Preconditions.checkElementIndex;
  */
 public class MapMemory extends AbstractMemory {
 
-	private final static int	DEFAULT_VALUE	= 0;
+	private final static int DEFAULT_VALUE	= 0;
 
 	/**
 	 * The {@link MemoryState} of a {@link MapMemory}.
 	 */
 	private class MapMemoryState implements MemoryState {
 
-		private final int					_maxAddress;
+		private final int maxAddress;
 		/** The map holding the values stored in memory. */
-		private final Map<Integer, Integer>	_valueMap;
+		private final Map<Integer, Integer> valueMap;
 
 		/**
 		 * Constructs a new {@code MapMemoryState} with the specified maximum address.
@@ -30,8 +30,8 @@ public class MapMemory extends AbstractMemory {
 		 *          the highest accessible address
 		 */
 		MapMemoryState(int maxAddress) {
-			_maxAddress = maxAddress;
-			_valueMap = new HashMap<Integer, Integer>();
+			this.maxAddress = maxAddress;
+			valueMap = new HashMap<Integer, Integer>();
 		}
 
 		/**
@@ -44,31 +44,31 @@ public class MapMemory extends AbstractMemory {
 		 *          the value map of the new {@code MapMemoryState}
 		 */
 		private MapMemoryState(int maxAddress, Map<Integer, Integer> valueMap) {
-			_maxAddress = maxAddress;
-			_valueMap = new HashMap<Integer, Integer>(valueMap);
+			this.maxAddress = maxAddress;
+			this.valueMap = new HashMap<Integer, Integer>(valueMap);
 		}
 
 		@Override
 		public int getInt(int address) {
-			checkElementIndex(address, _maxAddress + 1);
-			Integer entry = _valueMap.get(Integer.valueOf(address));
+			checkElementIndex(address, maxAddress + 1);
+			Integer entry = valueMap.get(address);
 			if (entry == null) {
 				return DEFAULT_VALUE;
 			}
 
-			int value = entry.intValue();
+			int value = entry;
 			fireReadAccess(address, value);
 			return value;
 		}
 
 		@Override
 		public void setInt(int address, int value) {
-			checkElementIndex(address, _maxAddress + 1);
+			checkElementIndex(address, maxAddress + 1);
 			if (value == DEFAULT_VALUE) {
-				_valueMap.remove(Integer.valueOf(address));
+				valueMap.remove(address);
 			}
 			else {
-				_valueMap.put(Integer.valueOf(address), Integer.valueOf(value));
+				valueMap.put(address, value);
 			}
 			fireWriteAccess(address, value);
 		}
@@ -80,12 +80,12 @@ public class MapMemory extends AbstractMemory {
 		 *          the copy
 		 */
 		MapMemoryState copy() {
-			return new MapMemoryState(_maxAddress, _valueMap);
+			return new MapMemoryState(maxAddress, valueMap);
 		}
 
 		@Override
 		public void zero() {
-			_valueMap.clear();
+			valueMap.clear();
 			fireMemoryChanged();
 		}
 	}

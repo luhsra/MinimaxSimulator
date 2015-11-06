@@ -19,23 +19,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public final class SignalRow {
 
-	private final Map<String, SignalValue>	_values;
+	private final Map<String, SignalValue> values;
 
-	private String							_label;
-	private boolean							_isBreakpoint;
-	private Jump							_jump;
+	private String label;
+	private boolean isBreakpoint;
+	private Jump jump;
 
-	private String							_description;
+	private String description;
 
 	/**
 	 * Constructs a new {@code SignalRow}. All signals have their default value and the jump is
 	 * {@link DefaultJump#INSTANCE}.
 	 */
 	public SignalRow() {
-		_values = new HashMap<String, SignalValue>();
-		_label = null;
-		_isBreakpoint = false;
-		_jump = DefaultJump.INSTANCE;
+		values = new HashMap<String, SignalValue>();
+		label = null;
+		isBreakpoint = false;
+		jump = DefaultJump.INSTANCE;
 	}
 
 	/**
@@ -45,7 +45,7 @@ public final class SignalRow {
 	 *          the label
 	 */
 	public String getLabel() {
-		return _label;
+		return label;
 	}
 
 	/**
@@ -55,7 +55,7 @@ public final class SignalRow {
 	 *          the new label
 	 */
 	public void setLabel(String label) {
-		_label = label;
+		this.label = label;
 	}
 
 	/**
@@ -65,7 +65,7 @@ public final class SignalRow {
 	 *          a map of the {@code SignalValue}s
 	 */
 	public Map<String, SignalValue> getSignalValues() {
-		return Collections.unmodifiableMap(_values);
+		return Collections.unmodifiableMap(values);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public final class SignalRow {
 	 *          the value of the {@code SignalValue}
 	 */
 	public int getSignalValue(String signal) {
-		SignalValue val = _values.get(signal);
+		SignalValue val = values.get(signal);
 		if (val == null) {
 			return 0;
 		}
@@ -95,7 +95,7 @@ public final class SignalRow {
 	 *          the {@code SignalValue} with the specified name or {@code dflt} if the {@code SignalValue} does not exist
 	 */
 	public SignalValue getSignal(String signal, SignalValue dflt) {
-		SignalValue val = _values.get(signal);
+		SignalValue val = values.get(signal);
 		if (val == null) {
 			return dflt;
 		}
@@ -123,15 +123,15 @@ public final class SignalRow {
 	 *          the new value
 	 */
 	public void setSignalValue(String signal, int value) {
-		_values.put(signal, SignalValue.valueOf(value));
+		values.put(signal, SignalValue.valueOf(value));
 	}
 
 	public void setSignal(String signal, SignalValue value) {
 		if (value == null) {
-			_values.remove(signal);
+			values.remove(signal);
 		}
 		else {
-			_values.put(signal, value);
+			values.put(signal, value);
 		}
 	}
 
@@ -154,7 +154,7 @@ public final class SignalRow {
 	 *          the name of the signal
 	 */
 	public void resetSignal(String signal) {
-		_values.remove(signal);
+		values.remove(signal);
 	}
 
 	/**
@@ -174,7 +174,7 @@ public final class SignalRow {
 	 *          the {@code Jump}
 	 */
 	public Jump getJump() {
-		return _jump;
+		return jump;
 	}
 
 	/**
@@ -184,7 +184,7 @@ public final class SignalRow {
 	 *          the new {@code Jump}
 	 */
 	public void setJump(Jump jump) {
-		_jump = checkNotNull(jump);
+		this.jump = checkNotNull(jump);
 	}
 
 	/**
@@ -194,7 +194,7 @@ public final class SignalRow {
 	 *          {@code true} if the {@code SignalRow} is a breakpoint, {@code false} otherwise
 	 */
 	public boolean isBreakpoint() {
-		return _isBreakpoint;
+		return isBreakpoint;
 	}
 
 	/**
@@ -204,7 +204,7 @@ public final class SignalRow {
 	 *          the new value
 	 */
 	public void setBreakpoint(boolean isBreakpoint) {
-		_isBreakpoint = isBreakpoint;
+		this.isBreakpoint = isBreakpoint;
 	}
 
 	/**
@@ -214,7 +214,7 @@ public final class SignalRow {
 	 *          the description
 	 */
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	/**
@@ -224,21 +224,21 @@ public final class SignalRow {
 	 *          the new description
 	 */
 	public void setDescription(String description) {
-		_description = description;
+		this.description = description;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if (_isBreakpoint) {
+		if (isBreakpoint) {
 			sb.append('*');
 		}
 		sb.append('<');
-		if (_label != null) {
-			sb.append(_label);
+		if (label != null) {
+			sb.append(label);
 		}
 		sb.append(">: ");
-		sb.append(_values.toString());
+		sb.append(values.toString());
 		return sb.toString();
 	}
 }

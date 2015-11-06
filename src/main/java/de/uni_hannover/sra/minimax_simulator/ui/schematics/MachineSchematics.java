@@ -1,10 +1,10 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics;
 
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.Machine;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.MachineDisplayListener;
-import de.uni_hannover.sra.minimax_simulator.ui.render.DefaultRenderEnvironment;
-import de.uni_hannover.sra.minimax_simulator.ui.render.SpriteCanvas;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.DefaultRenderEnvironment;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.SpriteCanvas;
 import javafx.scene.text.Font;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements MachineDisplayListener {
 
-	public final static Font FONT = new Font("SansSerif", 17.0);
+	private final static Font FONT = new Font("SansSerif", 17.0);
 
 	private final Machine machine;
 
@@ -35,7 +35,7 @@ public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements Mach
 		setEnvironment(new DefaultRenderEnvironment(FONT, getFontMetrics(FONT)));
 		setSpriteFactory(new DefaultSpriteFactory());
 
-		this.machine.getDisplay().getAllSpriteOwners().forEach(sprite -> setSprite(sprite));
+		this.machine.getDisplay().getAllSpriteOwners().forEach(this::setSprite);
 
 		updatePreferredSize();
 	}

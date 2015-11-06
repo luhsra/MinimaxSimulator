@@ -8,16 +8,16 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout;
  */
 public class GridContainer extends AbstractListContainer {
 
-	private final int _cols;
-	private final int _rows;
+	private final int cols;
+	private final int rows;
 
-	private final int[] _rowHeights;
-	private final int[] _colWidths;
+	private final int[] rowHeights;
+	private final int[] colWidths;
 
 	@Override
 	protected void updateMySize() {
-		zero(_rowHeights);
-		zero(_colWidths);
+		zero(rowHeights);
+		zero(colWidths);
 
 		int x = 0;
 		int y = 0;
@@ -25,8 +25,8 @@ public class GridContainer extends AbstractListContainer {
 		int rowHeight = 0;
 
 		// calculate row heights and column widths
-		for (Component comp : _children) {
-			if (y == _rows) {
+		for (Component comp : children) {
+			if (y == rows) {
 				throw new IllegalStateException("Too many elements");
 			}
 
@@ -42,14 +42,14 @@ public class GridContainer extends AbstractListContainer {
 				rowHeight = itsHeight;
 			}
 
-			if (_colWidths[x] < itsWidth) {
-				_colWidths[x] = itsWidth;
+			if (colWidths[x] < itsWidth) {
+				colWidths[x] = itsWidth;
 			}
 
 			x++;
 
-			if (x == _cols) {
-				_rowHeights[y] = rowHeight;
+			if (x == cols) {
+				rowHeights[y] = rowHeight;
 				rowHeight = 0;
 
 				x = 0;
@@ -59,10 +59,10 @@ public class GridContainer extends AbstractListContainer {
 
 		int width = 0;
 		int height = 0;
-		for (int colW : _colWidths) {
+		for (int colW : colWidths) {
 			width += colW;
 		}
-		for (int rowH : _rowHeights) {
+		for (int rowH : rowHeights) {
 			height += rowH;
 		}
 
@@ -84,10 +84,10 @@ public class GridContainer extends AbstractListContainer {
 			throw new IllegalArgumentException("Require at least 1 col and 1 row");
 		}
 
-		_cols = cols;
-		_rows = rows;
-		_rowHeights = new int[_rows];
-		_colWidths = new int[_cols];
+		this.cols = cols;
+		this.rows = rows;
+		rowHeights = new int[this.rows];
+		colWidths = new int[this.cols];
 	}
 
 	/**
@@ -101,8 +101,8 @@ public class GridContainer extends AbstractListContainer {
 		int col = 0;
 		int row = 0;
 
-		for (Component child : _children) {
-			if (row == _rows) {
+		for (Component child : children) {
+			if (row == rows) {
 				throw new IllegalStateException("Too many elements");
 			}
 
@@ -110,14 +110,14 @@ public class GridContainer extends AbstractListContainer {
 			Insets ins = child.getInsets();
 
 			child.setBounds(new Bounds(x + ins.l, y + ins.t, dim.w, dim.h));
-			x += _colWidths[col];
+			x += colWidths[col];
 			col++;
 
-			if (col == _cols) {
+			if (col == cols) {
 				x = getBounds().x;
 				col = 0;
 
-				y += _rowHeights[row];
+				y += rowHeights[row];
 				row++;
 			}
 		}

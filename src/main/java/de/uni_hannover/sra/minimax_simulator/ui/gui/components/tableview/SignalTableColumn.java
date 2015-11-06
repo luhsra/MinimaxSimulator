@@ -26,7 +26,7 @@ public abstract class SignalTableColumn extends TableColumn {
      * @param index
      *          the column index
      */
-    public SignalTableColumn(String label, String id, int index) {
+    protected SignalTableColumn(String label, String id, int index) {
         super();
         setSortable(false);
         UIUtil.rotateColumnHeader(this, label);

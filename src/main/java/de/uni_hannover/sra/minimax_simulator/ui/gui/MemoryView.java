@@ -1,15 +1,11 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.util.NullAwareIntFormatter;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.util.AddressFormatter;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.util.MemoryExportWorker;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.util.MemoryImportWorker;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.util.MemorySpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.*;
@@ -34,24 +30,11 @@ public class MemoryView{
 
     private static FileChooser fc = new FileChooser();
 
-    private final TextResource _res;
+    private final TextResource res;
 
     @FXML private Spinner spinnerStartAddress;
-
-    /**
-     * Initializes the final variables.
-     */
-    public MemoryView() {
-        _res = Main.getTextResource("project");
-    }
-
-    /**
-     * This method is called during application start up and initializes the {@code MemoryView}
-     * as much as possible without having any project data.
-     */
-    public void initialize() {
-        setLocalizedTexts();
-    }
+    @FXML private Spinner spinnerExportStartAddress;
+    @FXML private Spinner spinnerExportEndAddress;
 
     @FXML private Label lblImportFile;
     @FXML private Label lblTargetAddress;
@@ -65,6 +48,32 @@ public class MemoryView{
 
     @FXML MemoryTable embeddedMemoryTableController;
 
+    @FXML private Button btnClear;
+    @FXML private TextField txtImport;
+    private File currentImportFile;
+    private File currentExportFile;
+
+    @FXML private Spinner<Integer> spinnerSize;
+    @FXML private CheckBox cb_partialImport;
+    @FXML private Button btnImportMem;
+    @FXML private TextField txtExport;
+    @FXML private Button btnExportMem;
+
+    /**
+     * Initializes the final variables.
+     */
+    public MemoryView() {
+        res = Main.getTextResource("project");
+    }
+
+    /**
+     * This method is called during application start up and initializes the {@code MemoryView}
+     * as much as possible without having any project data.
+     */
+    public void initialize() {
+        setLocalizedTexts();
+    }
+
     /**
      * Sets localized texts from resource for the GUI elements.
      */
@@ -72,7 +81,7 @@ public class MemoryView{
         final List<Labeled> controls = new ArrayList<>(Arrays.asList(btnImportMem, lblImportFile, lblTargetAddress, lblByteCount, cb_partialImport, paneImport, paneExport, btnExportMem, lblExportFile,
                 lblFromAddress, lblToAddress, paneClear, btnClear));
         for (Labeled con : controls) {
-            con.setText(_res.get(con.getId().replace("_", ".")));
+            con.setText(res.get(con.getId().replace("_", ".")));
         }
     }
 
@@ -83,12 +92,19 @@ public class MemoryView{
     public void initMemoryView() {
         mMemory = Main.getWorkspace().getProject().getMachine().getMemory();
 
+        txtExport.setText("");
+        txtImport.setText("");
+        currentExportFile = null;
+        currentImportFile = null;
+        cb_partialImport.setSelected(false);
+        cb_partialImport.setDisable(true);
+        spinnerSize.setDisable(true);
+        btnExportMem.setDisable(true);
+        btnImportMem.setDisable(true);
+
         initSpinner();
         embeddedMemoryTableController.initMemTable();
     }
-
-    @FXML Spinner spinnerExportStartAddress;
-    @FXML Spinner spinnerExportEndAddress;
 
     /**
      * Initializes the {@link Spinner}s.
@@ -111,36 +127,26 @@ public class MemoryView{
         spinnerSize.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.DEC));
     }
 
-    @FXML private Button btnClear;
-
     /**
      * Zeros the complete memory after confirmation.
      */
     public void clearMem() {
-        FXDialog memoryClear = new FXDialog(AlertType.CONFIRMATION, _res.get("memory.clear.confirm.title"), _res.get("memory.clear.confirm.message"));
+        FXDialog memoryClear = new FXDialog(AlertType.CONFIRMATION, res.get("memory.clear.confirm.title"), res.get("memory.clear.confirm.message"));
         if (memoryClear.getChoice() == ButtonType.OK) {
             mMemory.getMemoryState().zero();
             embeddedMemoryTableController.updateMemTable();
         }
     }
 
-    @FXML private TextField txtImport;
-    private File _currentImportFile;
-    private File _currentExportFile;
-
-    @FXML private Spinner<Integer> spinnerSize;
-    @FXML private CheckBox cb_partialImport;
-    @FXML private Button btnImportMem;
-
     /**
      * Opens a {@link FileChooser} and updates the GUI components of the import {@link TitledPane} if the selected file was not null.
      */
     public void openImportDialog() {
-        if (_currentImportFile != null && _currentImportFile.getParentFile().exists()) {
-            fc.setInitialDirectory(_currentImportFile.getParentFile());
+        if (currentImportFile != null && currentImportFile.getParentFile().exists()) {
+            fc.setInitialDirectory(currentImportFile.getParentFile());
         }
-        else if (_currentExportFile != null && _currentExportFile.getParentFile().exists()) {
-            fc.setInitialDirectory(_currentExportFile.getParentFile());
+        else if (currentExportFile != null && currentExportFile.getParentFile().exists()) {
+            fc.setInitialDirectory(currentExportFile.getParentFile());
         }
 
         File selFile = fc.showOpenDialog(Main.getPrimaryStage());
@@ -148,7 +154,7 @@ public class MemoryView{
         if (selFile == null) {
             return;
         }
-        _currentImportFile = selFile;
+        currentImportFile = selFile;
         txtImport.setText(selFile.getAbsoluteFile().toString());
 
         int length = (int) Math.min(Integer.MAX_VALUE, selFile.length());
@@ -171,7 +177,7 @@ public class MemoryView{
         }
         else {
             spinnerSize.setDisable(true);
-            spinnerSize.getValueFactory().setValue((int)_currentImportFile.length());
+            spinnerSize.getValueFactory().setValue((int) currentImportFile.length());
         }
     }
 
@@ -179,27 +185,25 @@ public class MemoryView{
      * Imports the data from the selected input file with all import options after confirmation.
      */
     public void importMemory() {
-        FXDialog memoryOverride = new FXDialog(AlertType.CONFIRMATION, _res.get("memory.import.confirm.title"), _res.get("memory.import.confirm.message"));
+        FXDialog memoryOverride = new FXDialog(AlertType.CONFIRMATION, res.get("memory.import.confirm.title"), res.get("memory.import.confirm.message"));
         if (memoryOverride.getChoice() == ButtonType.OK) {
             int address = Integer.parseInt(spinnerStartAddress.getValue().toString());
             int size = spinnerSize.getValue();
             UIUtil.executeWorker(new MemoryImportWorker(mMemory, address, size,
-                    _currentImportFile, _res), _res.get("memory.import.wait.title"), _res.get("memory.import.wait.message"));
+                    currentImportFile, res), res.get("memory.import.wait.title"), res.get("memory.import.wait.message"));
             embeddedMemoryTableController.updateMemTable();
         }
     }
-
-    @FXML private TextField txtExport;
 
     /**
      * Opens a {@link FileChooser} and sets the export file to the selected file if it was not null.
      */
     public void openExportDialog() {
-        if (_currentExportFile != null && _currentExportFile.getParentFile().exists()) {
-            fc.setInitialDirectory(_currentExportFile.getParentFile());
+        if (currentExportFile != null && currentExportFile.getParentFile().exists()) {
+            fc.setInitialDirectory(currentExportFile.getParentFile());
         }
-        else if (_currentImportFile != null && _currentImportFile.getParentFile().exists()) {
-            fc.setInitialDirectory(_currentImportFile.getParentFile());
+        else if (currentImportFile != null && currentImportFile.getParentFile().exists()) {
+            fc.setInitialDirectory(currentImportFile.getParentFile());
         }
 
         File selFile = fc.showSaveDialog(Main.getPrimaryStage());
@@ -210,12 +214,10 @@ public class MemoryView{
 
         //the file chooser itself checks if the file already exists and asks for confirmation to override
 
-        _currentExportFile = selFile;
+        currentExportFile = selFile;
         txtExport.setText(selFile.getAbsoluteFile().toString());
         btnExportMem.setDisable(false);
     }
-
-    @FXML private Button btnExportMem;
 
     /**
      * Exports the memory to the current export file with all export options.
@@ -228,7 +230,7 @@ public class MemoryView{
             return;
         }
 
-        UIUtil.executeWorker(new MemoryExportWorker(mMemory, fromAddress, toAddress, _currentExportFile, _res), _res.get("memory.export.wait.title"), _res.get("memory.export.wait.message"));
+        UIUtil.executeWorker(new MemoryExportWorker(mMemory, fromAddress, toAddress, currentExportFile, res), res.get("memory.export.wait.title"), res.get("memory.export.wait.message"));
     }
 
 }

@@ -1,4 +1,4 @@
-package de.uni_hannover.sra.minimax_simulator.ui.render;
+package de.uni_hannover.sra.minimax_simulator.ui.schematics.render;
 
 import javafx.scene.canvas.GraphicsContext;
 

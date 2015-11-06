@@ -15,7 +15,7 @@ public interface Simulation {
 	 * @return
 	 *          the ALU result
 	 */
-	public Trackable<Integer> getAluResult();
+	public Traceable<Integer> getAluResult();
 
 	/**
 	 * Gets the value of the specified register.
@@ -25,7 +25,7 @@ public interface Simulation {
 	 * @return
 	 *          the value of the register
 	 */
-	public Trackable<Integer> getRegisterValue(String name);
+	public Traceable<Integer> getRegisterValue(String name);
 
 	/**
 	 * Gets the current memory state.

@@ -7,10 +7,10 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout.constraint;
  */
 public final class Attribute {
 
-	private final String		_owner;
-	private final AttributeType	_type;
+	private final String owner;
+	private final AttributeType type;
 
-	private final int			_cachedHashCode;
+	private final int cachedHashCode;
 
 	/**
 	 * Constructs a new {@code Attribute} with the specified {@link AttributeOwner} and {@link AttributeType}.
@@ -28,9 +28,9 @@ public final class Attribute {
 			throw new NullPointerException("type is null");
 		}
 
-		_owner = owner.intern();
-		_type = type;
-		_cachedHashCode = _owner.hashCode() ^ _type.hashCode();
+		this.owner = owner.intern();
+		this.type = type;
+		cachedHashCode = this.owner.hashCode() ^ this.type.hashCode();
 	}
 
 	/**
@@ -40,7 +40,7 @@ public final class Attribute {
 	 *          the name of the owner
 	 */
 	public String getOwner() {
-		return _owner;
+		return owner;
 	}
 
 	/**
@@ -50,12 +50,12 @@ public final class Attribute {
 	 *          the type of the {@code Attribute}
 	 */
 	public AttributeType getType() {
-		return _type;
+		return type;
 	}
 
 	@Override
 	public int hashCode() {
-		return _cachedHashCode;
+		return cachedHashCode;
 	}
 
 	@Override
@@ -71,10 +71,10 @@ public final class Attribute {
 		}
 
 		Attribute other = (Attribute) obj;
-		if (!_owner.equals(other._owner)) {
+		if (!owner.equals(other.owner)) {
 			return false;
 		}
-		if (_type != other._type) {
+		if (type != other.type) {
 			return false;
 		}
 		return true;
@@ -82,6 +82,6 @@ public final class Attribute {
 
 	@Override
 	public String toString() {
-		return _owner + "." + _type;
+		return owner + "." + type;
 	}
 }

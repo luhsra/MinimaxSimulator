@@ -15,7 +15,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.shape.LabelShape;
  */
 public class DefaultRegisterGroup extends AbstractGroup {
 
-	private final String  _registerId;
+	private final String registerId;
 
 	/**
 	 * Constructs a new {@code DefaultRegisterGroup} for the specified register.
@@ -24,12 +24,12 @@ public class DefaultRegisterGroup extends AbstractGroup {
 	 *          the ID of the register
 	 */
 	public DefaultRegisterGroup(String registerId) {
-		_registerId = registerId;
+		this.registerId = registerId;
 	}
 
 	@Override
 	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
-		Register register = cr.getCircuit(Register.class, _registerId);
+		Register register = cr.getCircuit(Register.class, registerId);
 
 		Junction junction = new Junction();
 		junction.getDataOuts().add(new OutgoingPin(junction));
@@ -46,15 +46,15 @@ public class DefaultRegisterGroup extends AbstractGroup {
 		Wire dataInWire = new Wire(2, junction.getDataOuts().get(0), register.getDataIn());
 		Wire enabledWire = new Wire(2, port.getDataOut(), register.getWriteEnabled());
 
-		add(junction, _registerId + Parts._JUNCTION);
-		add(label, _registerId + Parts._LABEL);
-		add(port, _registerId + Parts._PORT);
+		add(junction, registerId + Parts._JUNCTION);
+		add(label, registerId + Parts._LABEL);
+		add(port, registerId + Parts._PORT);
 
-		//addVirtual(_registerId + _OUT_JUNCTION + _ANCHOR);
+		//addVirtual(registerId + _OUT_JUNCTION + _ANCHOR);
 
-		addWire(aluWire, _registerId + Parts._JUNCTION + Parts._WIRE_DATA_IN);
-		addWire(dataInWire, _registerId + Parts._WIRE_DATA_IN);
-		addWire(enabledWire, _registerId + Parts._WIRE_ENABLED);
+		addWire(aluWire, registerId + Parts._JUNCTION + Parts._WIRE_DATA_IN);
+		addWire(dataInWire, registerId + Parts._WIRE_DATA_IN);
+		addWire(enabledWire, registerId + Parts._WIRE_ENABLED);
 	}
 
 	@Override
@@ -64,6 +64,6 @@ public class DefaultRegisterGroup extends AbstractGroup {
 
 	@Override
 	public LayoutSet createLayouts() {
-		return new DefaultRegisterLayoutSet(_registerId);
+		return new DefaultRegisterLayoutSet(registerId);
 	}
 }

@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class OutgoingPin extends Pin {
 
-	private final Set<Wire> _wires;
+	private final Set<Wire> wires;
 
 	/**
 	 * Constructs a new {@code OutgoingPin} for the specified {@link Part}.
@@ -22,7 +22,7 @@ public class OutgoingPin extends Pin {
 	 */
 	public OutgoingPin(Part part) {
 		super(part);
-		_wires = new HashSet<Wire>();
+		wires = new HashSet<Wire>();
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class OutgoingPin extends Pin {
 	 *          a set of the successors of the {@code OutgoingPin}
 	 */
 	public Set<? extends Circuit> getSuccessors() {
-		return _wires;
+		return wires;
 	}
 
 	/**
@@ -54,6 +54,6 @@ public class OutgoingPin extends Pin {
 	 *          a set of {@code Wire}s the {@code OutgoingPin} is connected with
 	 */
 	public Set<Wire> getWires() {
-		return _wires;
+		return wires;
 	}
 }

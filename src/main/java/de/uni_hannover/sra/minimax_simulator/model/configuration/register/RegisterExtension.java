@@ -7,12 +7,12 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.register;
  */
 public class RegisterExtension {
 
-	private final String _name;
-	private final RegisterSize _size;
-	private final String _description;
-	private final boolean _isExtended;
+	private final String name;
+	private final RegisterSize size;
+	private final String description;
+	private final boolean isExtended;
 
-	private final int _hashCache;
+	private final int hashCache;
 
 	/**
 	 * Constructs a new {@code RegisterExtension} with the specified information.
@@ -42,12 +42,12 @@ public class RegisterExtension {
 			description = "";
 		}
 
-		_name = name;
-		_size = size;
-		_description = description;
-		_isExtended = isExtended;
+		this.name = name;
+		this.size = size;
+		this.description = description;
+		this.isExtended = isExtended;
 
-		_hashCache = computeHashCode();
+		hashCache = computeHashCode();
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class RegisterExtension {
 	 *          the name of the {@code RegisterExtension}
 	 */
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class RegisterExtension {
 	 *          the {@code RegisterSize} of the {@code RegisterExtension}
 	 */
 	public RegisterSize getSize() {
-		return _size;
+		return size;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class RegisterExtension {
 	 *          the description of the {@code RegisterExtension}
 	 */
 	public String getDescription() {
-		return _description;
+		return description;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class RegisterExtension {
 	 *          {@code false} if the {@code RegisterExtension} is part of the base machine, {@code true} otherwise
 	 */
 	public boolean isExtended() {
-		return _isExtended;
+		return isExtended;
 	}
 
 	/**
@@ -99,16 +99,16 @@ public class RegisterExtension {
 	private int computeHashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _description.hashCode();
-		result = prime * result + (_isExtended ? 1231 : 1237);
-		result = prime * result + _name.hashCode();
-		result = prime * result + _size.hashCode();
+		result = prime * result + description.hashCode();
+		result = prime * result + (isExtended ? 1231 : 1237);
+		result = prime * result + name.hashCode();
+		result = prime * result + size.hashCode();
 		return result;
 	}
 
 	@Override
 	public int hashCode() {
-		return _hashCache;
+		return hashCache;
 	}
 
 	@Override
@@ -125,19 +125,19 @@ public class RegisterExtension {
 
 		RegisterExtension other = (RegisterExtension) o;
 
-		if (!_name.equals(other._name)) {
+		if (!name.equals(other.name)) {
 			return false;
 		}
 
-		if (!_description.equals(other._description)) {
+		if (!description.equals(other.description)) {
 			return false;
 		}
 
-		if (_isExtended != other._isExtended) {
+		if (isExtended != other.isExtended) {
 			return false;
 		}
 
-		if (_size != other._size) {
+		if (size != other.size) {
 			return false;
 		}
 
@@ -146,6 +146,6 @@ public class RegisterExtension {
 
 	@Override
 	public String toString() {
-		return _name;
+		return name;
 	}
 }

@@ -2,8 +2,8 @@ package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
 import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Memory;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import javafx.scene.canvas.GraphicsContext;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class MemorySprite extends CircuitSprite {
 
-	private final Memory _memory;
+	private final Memory memory;
 
 	/**
 	 * Initializes the {@code MemorySprite}.
@@ -25,12 +25,12 @@ public class MemorySprite extends CircuitSprite {
 	 *          the {@code Memory} this sprite will represent
 	 */
 	public MemorySprite(Memory memory) {
-		_memory = checkNotNull(memory);
+		this.memory = checkNotNull(memory);
 	}
 
 	@Override
 	public void paint(GraphicsContext gc) {
-		Bounds b = _memory.getBounds();
+		Bounds b = memory.getBounds();
 
 		gc.strokeRect(b.x + 0.5, b.y + 0.5 , b.w, b.h);
 
@@ -46,10 +46,10 @@ public class MemorySprite extends CircuitSprite {
 
 		gc.fillText(name, textX, textY);
 
-		debugPin(gc, _memory.getDataIn());
-		debugPin(gc, _memory.getDataOut());
-		debugPin(gc, _memory.getAdr());
-		debugPin(gc, _memory.getCs());
-		debugPin(gc, _memory.getRw());
+		debugPin(gc, memory.getDataIn());
+		debugPin(gc, memory.getDataOut());
+		debugPin(gc, memory.getAdr());
+		debugPin(gc, memory.getCs());
+		debugPin(gc, memory.getRw());
 	}
 }

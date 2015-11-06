@@ -30,8 +30,8 @@ public class PropertiesFileConfigLoader implements ConfigurationLoader {
 		THROW
 	}
 
-	private final MissingConfigStrategy	_missingConfStrategy;
-	private final File					_propertiesFile;
+	private final MissingConfigStrategy missingConfigStrategy;
+	private final File propertiesFile;
 
 	/**
 	 * Creates an instance of the {@code PropertiesFileConfigLoader} without an properties file
@@ -73,8 +73,8 @@ public class PropertiesFileConfigLoader implements ConfigurationLoader {
 	 *          the {@code MissingConfigStrategy} to use
 	 */
 	public PropertiesFileConfigLoader(File file, MissingConfigStrategy missingConfigStrategy) {
-		_propertiesFile = file;
-		_missingConfStrategy = missingConfigStrategy;
+		this.propertiesFile = file;
+		this.missingConfigStrategy = missingConfigStrategy;
 	}
 
 	@Override
@@ -84,15 +84,15 @@ public class PropertiesFileConfigLoader implements ConfigurationLoader {
 
 			ConfigurationFile fileAnnotation = clazz.getAnnotation(ConfigurationFile.class);
 			if (fileAnnotation == null) {
-				if (_propertiesFile == null) {
-					if (_missingConfStrategy == MissingConfigStrategy.THROW) {
+				if (propertiesFile == null) {
+					if (missingConfigStrategy == MissingConfigStrategy.THROW) {
 						throw new ConfigurationException("Missing ConfigurationFile annotation for: " + clazz.getName());
 					}
 
 					file = null;
 				}
 				else {
-					file = _propertiesFile;
+					file = propertiesFile;
 				}
 			}
 			else {
@@ -126,12 +126,12 @@ public class PropertiesFileConfigLoader implements ConfigurationLoader {
 			r = IOUtils.toBufferedReader(new FileReader(configFile));
 			properties.load(r);
 		} catch (FileNotFoundException fnfe) {
-			if (_missingConfStrategy == MissingConfigStrategy.THROW) {
+			if (missingConfigStrategy == MissingConfigStrategy.THROW) {
 				throw new ConfigurationException("Configuration file not found: " + configFile.getPath());
 			}
 			// else: do not modify the Properties instance
 		} catch (IOException e) {
-			if (_missingConfStrategy == MissingConfigStrategy.THROW) {
+			if (missingConfigStrategy == MissingConfigStrategy.THROW) {
 				throw new ConfigurationException("Cannot read configuration file: " + configFile.getPath());
 			}
 

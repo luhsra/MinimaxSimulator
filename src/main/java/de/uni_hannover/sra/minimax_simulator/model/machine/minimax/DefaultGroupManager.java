@@ -13,12 +13,12 @@ import java.util.Map;
  */
 class DefaultGroupManager implements GroupManager {
 
-	private final MinimaxLayout		_layout;
-	private final MinimaxTopology	_topology;
-	private final MinimaxDisplay	_display;
+	private final MinimaxLayout layout;
+	private final MinimaxTopology topology;
+	private final MinimaxDisplay display;
 
-	private final Map<String, Group>		_groups		= new HashMap<String, Group>();
-	private final Map<String, LayoutSet>	_layouts	= new HashMap<String, LayoutSet>();
+	private final Map<String, Group> groups = new HashMap<String, Group>();
+	private final Map<String, LayoutSet> layouts = new HashMap<String, LayoutSet>();
 
 	/**
 	 * Constructs a new {@code DefaultGroupManager} with the specified {@link MinimaxLayout},
@@ -32,45 +32,45 @@ class DefaultGroupManager implements GroupManager {
 	 *          the display of the {@code MinimaxMachine}
 	 */
 	DefaultGroupManager(MinimaxLayout layout, MinimaxTopology topology, MinimaxDisplay display) {
-		_layout = layout;
-		_topology = topology;
-		_display = display;
+		this.layout = layout;
+		this.topology = topology;
+		this.display = display;
 	}
 
 	@Override
 	public void removeGroup(String id) {
-		Group group = _groups.remove(id);
+		Group group = groups.remove(id);
 		if (group == null) {
 			throw new IllegalArgumentException("Unknown group: " + id);
 		}
 
-		LayoutSet set = _layouts.remove(id);
+		LayoutSet set = layouts.remove(id);
 		if (set != null) {
-			_layout.removeLayouts(set);
+			layout.removeLayouts(set);
 		}
 
-		_display.removeGroup(group);
-		_layout.removeGroup(group);
-		_topology.removeGroup(group);
+		display.removeGroup(group);
+		layout.removeGroup(group);
+		topology.removeGroup(group);
 	}
 
 	@Override
 	public void initializeGroup(String id, Group group) {
-		if (_groups.containsKey(id)) {
+		if (groups.containsKey(id)) {
 			throw new IllegalArgumentException("Group already registered: " + id);
 		}
 
-		_groups.put(id, group);
+		groups.put(id, group);
 
-		group.initialize(_topology, _display);
-		_topology.addGroup(group);
-		_layout.addGroup(group);
-		_display.addGroup(group);
+		group.initialize(topology, display);
+		topology.addGroup(group);
+		layout.addGroup(group);
+		display.addGroup(group);
 
 		if (group.hasLayouts()) {
 			LayoutSet set = group.createLayouts();
-			_layouts.put(id, set);
-			_layout.putLayouts(group.createLayouts());
+			layouts.put(id, set);
+			layout.putLayouts(group.createLayouts());
 		}
 	}
 }

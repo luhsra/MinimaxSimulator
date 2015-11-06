@@ -17,31 +17,31 @@ public class PagedArrayMemory extends AbstractMemory {
 	private class PagedMemoryState implements MemoryState {
 
 		/** The paged array holding the values stored in memory. */
-		private final int[][] _pages;
+		private final int[][] pages;
 
 		/**
-		 * Constructs a new {@code PagedMemoryState} with {@link PagedArrayMemory#_pageCount} pages.
+		 * Constructs a new {@code PagedMemoryState} with {@link PagedArrayMemory#pageCount} pages.
 		 */
 		PagedMemoryState() {
-			_pages = new int[_pageCount][];
+			pages = new int[pageCount][];
 		}
 
 		@Override
 		public int getInt(int address) {
-			int value = page(address)[address & _pageAddressMask];
+			int value = page(address)[address & pageAddressMask];
 			fireReadAccess(address, value);
 			return value;
 		}
 
 		@Override
 		public void setInt(int address, int value) {
-			page(address)[address & _pageAddressMask] = value;
+			page(address)[address & pageAddressMask] = value;
 			fireWriteAccess(address, value);
 		}
 
 		@Override
 		public void zero() {
-			Arrays.fill(_pages, null);
+			Arrays.fill(pages, null);
 			fireMemoryChanged();
 		}
 
@@ -54,9 +54,9 @@ public class PagedArrayMemory extends AbstractMemory {
 		 *          the page the address belongs to
 		 */
 		int[] page(int addr) {
-			int[] p = _pages[addr >>> _pageAddressWidth];
+			int[] p = pages[addr >>> pageAddressWidth];
 			if (p == null) {
-				_pages[addr >>> _pageAddressWidth] = p = new int[_pageSize]; 
+				pages[addr >>> pageAddressWidth] = p = new int[pageSize];
 			}
 			return p;
 		}
@@ -69,20 +69,20 @@ public class PagedArrayMemory extends AbstractMemory {
 		 */
 		public MemoryState copy() {
 			PagedMemoryState c = new PagedMemoryState();
-			for (int i = 0; i < _pages.length; i++) {
-				if (_pages[i] != null) {
-					c._pages[i] = Arrays.copyOf(_pages[i], _pageSize);
+			for (int i = 0; i < pages.length; i++) {
+				if (pages[i] != null) {
+					c.pages[i] = Arrays.copyOf(pages[i], pageSize);
 				}
 			}
 			return c;
 		}
 	}
 
-	private final int _pageCount;
-	private final int _pageSize;
+	private final int pageCount;
+	private final int pageSize;
 
-	private final int _pageAddressWidth;
-	private final int _pageAddressMask;
+	private final int pageAddressWidth;
+	private final int pageAddressMask;
 
 	/**
 	 * Constructs a new {@code PagedArrayMemory} of the specified length with the
@@ -97,11 +97,11 @@ public class PagedArrayMemory extends AbstractMemory {
 		super(addressWidth);
 		checkArgument(pageAddressWidth <= addressWidth, "too big pages");
 
-		_pageSize = 1 << pageAddressWidth;
-		_pageCount = 1 << (addressWidth - pageAddressWidth);
+		pageSize = 1 << pageAddressWidth;
+		pageCount = 1 << (addressWidth - pageAddressWidth);
 
-		_pageAddressWidth = pageAddressWidth;
-		_pageAddressMask = (1 << pageAddressWidth) - 1;
+		this.pageAddressWidth = pageAddressWidth;
+		pageAddressMask = (1 << pageAddressWidth) - 1;
 
 		setupMemoryState();
 	}

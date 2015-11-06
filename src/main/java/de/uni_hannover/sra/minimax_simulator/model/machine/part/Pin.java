@@ -12,9 +12,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public abstract class Pin extends PointComponent {
 
 	/** The {@link Part} related to the {@code Pin}. */
-	private final Part _part;
+	private final Part part;
 
-	private int _value;
+	private int value;
 
 	/**
 	 * Constructs a new {@code Pin} for the specified {@link Part}.
@@ -22,8 +22,8 @@ public abstract class Pin extends PointComponent {
 	 * @param part
 	 *          the {@code Part} related to the {@code Pin}
 	 */
-	public Pin(Part part) {
-		_part = checkNotNull(part);
+	protected Pin(Part part) {
+		this.part = checkNotNull(part);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public abstract class Pin extends PointComponent {
 	 *          the {@code Part}
 	 */
 	public Part getPart() {
-		return _part;
+		return part;
 	}
 
 	/**
@@ -43,7 +43,7 @@ public abstract class Pin extends PointComponent {
 	 *          the value
 	 */
 	public int getValue() {
-		return _value;
+		return value;
 	}
 
 	/**
@@ -53,6 +53,6 @@ public abstract class Pin extends PointComponent {
 	 *          the new value
 	 */
 	public void setValue(int value) {
-		_value = value;
+		this.value = value;
 	}
 }

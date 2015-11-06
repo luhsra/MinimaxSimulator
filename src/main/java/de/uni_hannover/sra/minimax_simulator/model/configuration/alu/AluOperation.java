@@ -896,8 +896,8 @@ public enum AluOperation {
 		}
 	};
 
-	private String	_description;
-	private String	_rtNotation;
+	private String description;
+	private String rtNotation;
 
 	/**
 	 * Gets the format key of the operation.
@@ -947,16 +947,16 @@ public enum AluOperation {
 	 *          the description of this operation, for example <tt>"Multiplies A and B."</tt>
 	 */
 	public String getDescription(TextResource resource) {
-		if (_description == null) {
+		if (description == null) {
 			String param1 = "A";
 			String param2 = "B";
 			if (swapFormalParameters()) {
 				param1 = "B";
 				param2 = "A";
 			}
-			_description = resource.using("operation").format(getFormatKey() + ".description", param1, param2);
+			description = resource.using("operation").format(getFormatKey() + ".description", param1, param2);
 		}
-		return _description;
+		return description;
 	}
 
 	/**
@@ -969,16 +969,16 @@ public enum AluOperation {
 	 *          for example <b>0@A[31..1]</b> (unsigned shift right).
 	 */
 	public String getRtNotation(TextResource resource) {
-		if (_rtNotation == null) {
+		if (rtNotation == null) {
 			String param1 = "A";
 			String param2 = "B";
 			if (swapFormalParameters()) {
 				param1 = "B";
 				param2 = "A";
 			}
-			_rtNotation = resource.using("operation").format(getFormatKey() + ".rtn", param1, param2);
+			rtNotation = resource.using("operation").format(getFormatKey() + ".rtn", param1, param2);
 		}
-		return _rtNotation;
+		return rtNotation;
 	}
 
 	/**

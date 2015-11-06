@@ -28,7 +28,6 @@ public class NullAwareIntFormatter extends TextFormatter {
 					@Override
 					public Change apply(Change change) {
 						if (change.isContentChange()) {
-							//TODO: improve
 							try {
 								Integer.parseInt(change.getControlNewText());
 							} catch (NumberFormatException e) {
@@ -67,7 +66,6 @@ public class NullAwareIntFormatter extends TextFormatter {
 			}
 		};
 
-		// TODO: make abstract
 
 		/**
 		 * Gets the {@link StringConverter} for the mode.
@@ -75,9 +73,7 @@ public class NullAwareIntFormatter extends TextFormatter {
 		 * @return
 		 *          the {@code StringConverter}
 		 */
-		public StringConverter getConverter() {
-			return null;
-		}
+		public abstract StringConverter getConverter();
 
 		/**
 		 * Gets the used filter of the mode.
@@ -85,9 +81,7 @@ public class NullAwareIntFormatter extends TextFormatter {
 		 * @return
 		 *          the filter for the change
 		 */
-		public UnaryOperator<TextFormatter.Change> getFilter() {
-			return null;
-		}
+		public abstract UnaryOperator<TextFormatter.Change> getFilter();
 	}
 
 	/**

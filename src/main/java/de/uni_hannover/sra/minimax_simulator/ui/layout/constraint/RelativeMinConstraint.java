@@ -49,12 +49,12 @@ public class RelativeMinConstraint extends RelativeMultiConstraint {
 	@Override
 	public int getValue(AttributeSource attributes) {
 		int minimum = Integer.MAX_VALUE;
-		for (Attribute attr : _anchors) {
+		for (Attribute attr : anchors) {
 			int val = attributes.getValue(attr);
 			if (val < minimum) {
 				minimum = val;
 			}
 		}
-		return minimum + _offset;
+		return minimum + offset;
 	}
 }

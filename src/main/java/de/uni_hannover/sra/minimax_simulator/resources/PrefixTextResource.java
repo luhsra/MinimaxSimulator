@@ -9,8 +9,8 @@ import java.text.MessageFormat;
  */
 class PrefixTextResource implements TextResource {
 
-	private final TextResource _res;
-	private final String _prefix;
+	private final TextResource res;
+	private final String prefix;
 
 	/**
 	 * Constructs a new {@code PrefixTextResource} with the specified {@link TextResource} and key prefix.
@@ -21,23 +21,23 @@ class PrefixTextResource implements TextResource {
 	 *          the key prefix
 	 */
 	PrefixTextResource(TextResource res, String prefix) {
-		_res = res;
-		_prefix = prefix + ".";
+		this.res = res;
+		this.prefix = prefix + ".";
 	}
 
 	@Override
 	public String get(String key) {
-		return _res.get(_prefix + key);
+		return res.get(prefix + key);
 	}
 
 	@Override
 	public String format(String key, Object... params) {
-		return _res.format(_prefix + key, params);
+		return res.format(prefix + key, params);
 	}
 
 	@Override
 	public MessageFormat createFormat(String key) {
-		return _res.createFormat(_prefix + key);
+		return res.createFormat(prefix + key);
 	}
 
 	@Override

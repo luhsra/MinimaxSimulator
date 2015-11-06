@@ -15,7 +15,7 @@ public class ArrayMemory extends AbstractMemory {
 	private class ArrayMemoryState implements MemoryState {
 
 		/** The array holding the values stored in memory. */
-		private int[] _values;
+		private int[] values;
 
 		/**
 		 * Constructs a new {@code ArrayMemoryState} of the specified length.
@@ -24,7 +24,7 @@ public class ArrayMemory extends AbstractMemory {
 		 *          the length of the new {@code ArrayMemoryState}
 		 */
 		ArrayMemoryState(int length) {
-			_values = new int[length];
+			values = new int[length];
 		}
 
 		/**
@@ -34,19 +34,19 @@ public class ArrayMemory extends AbstractMemory {
 		 *          the value array of the new {@code ArrayMemoryState}
 		 */
 		private ArrayMemoryState(int[] values) {
-			_values = values;
+			this.values = values;
 		}
 
 		@Override
 		public int getInt(int address) {
-			int value = _values[address];
+			int value = values[address];
 			fireReadAccess(address, value);
 			return value;
 		}
 
 		@Override
 		public void setInt(int address, int value) {
-			_values[address] = value;
+			values[address] = value;
 			fireWriteAccess(address, value);
 		}
 
@@ -57,12 +57,12 @@ public class ArrayMemory extends AbstractMemory {
 		 *          the copy
 		 */
 		ArrayMemoryState copy() {
-			return new ArrayMemoryState(_values);
+			return new ArrayMemoryState(values);
 		}
 
 		@Override
 		public void zero() {
-			Arrays.fill(_values, 0);
+			Arrays.fill(values, 0);
 			fireMemoryChanged();
 		}
 	}

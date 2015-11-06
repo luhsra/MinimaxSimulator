@@ -18,38 +18,38 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public abstract class AbstractSimulation implements Simulation, MachineConfigListener, SignalTableListener, SignalConfigListener {
 
-	private final ArrayList<SimulationListener>	_listeners;
+	private final ArrayList<SimulationListener> listeners;
 
-	private SimulationState						_state;
-	private int									_cycleCount;
-	private boolean								_paused;
-	private boolean								_halted;
+	private SimulationState state;
+	private int cycleCount;
+	private boolean paused;
+	private boolean halted;
 
 	/**
 	 * Constructs a new {code AbstractSimulation} instance.
 	 */
-	public AbstractSimulation() {
-		_cycleCount = -1;
+	protected AbstractSimulation() {
+		cycleCount = -1;
 
-		_paused = false;
-		_halted = false;
+		paused = false;
+		halted = false;
 
-		_listeners = new ArrayList<SimulationListener>();
-		_state = SimulationState.OFF;
+		listeners = new ArrayList<SimulationListener>();
+		state = SimulationState.OFF;
 	}
 
 	/**
 	 * Checks if the simulation is in state {@link SimulationState#IDLE}.
 	 */
 	private void checkIdleState() {
-		checkState(_state == SimulationState.IDLE, "Simulation must be started");
+		checkState(state == SimulationState.IDLE, "Simulation must be started");
 	}
 
 	/**
 	 * Checks if the simulation is not in state {@link SimulationState#HALTED}.
 	 */
 	private void checkNotHalted() {
-		checkState(!_halted, "Simulation already halted");
+		checkState(!halted, "Simulation already halted");
 	}
 
 	@Override
@@ -58,9 +58,9 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 
 		resetImpl();
 
-		_state = SimulationState.IDLE;
-		_halted = false;
-		_paused = false;
+		state = SimulationState.IDLE;
+		halted = false;
+		paused = false;
 
 		fireStateChanged();
 	}
@@ -72,13 +72,13 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 
 	@Override
 	public void init() {
-		checkState(_state == SimulationState.OFF);
+		checkState(state == SimulationState.OFF);
 
 		initImpl();
 
-		_state = SimulationState.IDLE;
-		_halted = false;
-		_paused = false;
+		state = SimulationState.IDLE;
+		halted = false;
+		paused = false;
 
 		fireStateChanged();
 	}
@@ -94,9 +94,9 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 
 		stopImpl();
 
-		_state = SimulationState.OFF;
-		_halted = false;
-		_paused = false;
+		state = SimulationState.OFF;
+		halted = false;
+		paused = false;
 
 		fireStateChanged();
 	}
@@ -111,12 +111,12 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 		checkIdleState();
 		checkNotHalted();
 
-		_state = SimulationState.RUNNING;
+		state = SimulationState.RUNNING;
 		fireStateChanged();
 
 		stepImpl();
 
-		_state = SimulationState.IDLE;
+		state = SimulationState.IDLE;
 		fireStateChanged();
 	}
 
@@ -130,12 +130,12 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 		checkIdleState();
 		checkNotHalted();
 
-		_state = SimulationState.RUNNING;
+		state = SimulationState.RUNNING;
 		fireStateChanged();
 
 		runImpl();
 
-		_state = SimulationState.IDLE;
+		state = SimulationState.IDLE;
 		fireStateChanged();
 	}
 
@@ -145,18 +145,18 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 	protected abstract void runImpl();
 
 	protected void halt() {
-		checkState(!_halted, "Already halted");
+		checkState(!halted, "Already halted");
 
-		_state = SimulationState.HALTED;
+		state = SimulationState.HALTED;
 		fireStateChanged();
 
 		// the program ended
-		_halted = true;
+		halted = true;
 	}
 
 	@Override
 	public void pause() {
-		_paused = true;
+		paused = true;
 	}
 
 	/**
@@ -168,11 +168,11 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 	 *          {@code true} if the simulation is paused, {@code false} otherwise
 	 */
 	protected boolean paused() {
-		if (!_paused) {
+		if (!paused) {
 			return false;
 		}
 		else {
-			_paused = false;
+			paused = false;
 			return true;
 		}
 	}
@@ -181,33 +181,33 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 	 * Notifies the {@link SimulationListener}s about a change of the {@link SimulationState}.
 	 */
 	protected void fireStateChanged() {
-		for (SimulationListener listener : _listeners) {
-			listener.stateChanged(_state);
+		for (SimulationListener listener : listeners) {
+			listener.stateChanged(state);
 		}
 	}
 
 	@Override
 	public void addSimulationListener(SimulationListener listener) {
-		if (!_listeners.contains(listener)) {
-			_listeners.add(listener);
+		if (!listeners.contains(listener)) {
+			listeners.add(listener);
 		}
 	}
 
 	@Override
 	public void removeSimulationListener(SimulationListener listener) {
-		_listeners.remove(listener);
+		listeners.remove(listener);
 	}
 
 	@Override
 	public SimulationState getState() {
-		return _state;
+		return state;
 	}
 
 	/**
 	 * Resets the cycle count to zero.
 	 */
 	protected void resetCycles() {
-		_cycleCount = 0;
+		cycleCount = 0;
 	}
 
 	/**
@@ -215,29 +215,29 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 	 * {@link Integer#MAX_VALUE}.
 	 */
 	protected void incrementCycles() {
-		_cycleCount++;
-		if (_cycleCount == Integer.MAX_VALUE) {
+		cycleCount++;
+		if (cycleCount == Integer.MAX_VALUE) {
 			halt();
 		}
 	}
 
 	@Override
 	public int getCyclesCount() {
-		return _cycleCount;
+		return cycleCount;
 	}
 
 	@Override
 	public boolean isHalted() {
-		return _halted;
+		return halted;
 	}
 
 	/**
 	 * Stops the simulation if it is in state {@link SimulationState#RUNNING}.
 	 */
 	private void stopIfRunning() {
-		checkState(_state != SimulationState.RUNNING, "machine modified while running");
+		checkState(state != SimulationState.RUNNING, "machine modified while running");
 
-		if (_state != SimulationState.OFF) {
+		if (state != SimulationState.OFF) {
 			stop();
 		}
 	}

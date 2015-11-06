@@ -2,10 +2,10 @@ package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
 import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
-import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.IngoingPin;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Multiplexer;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Pin;
+import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.ArcType;
 
@@ -22,9 +22,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class MultiplexerSprite extends CircuitSprite {
 
-	private final Multiplexer _mux;
+	private final Multiplexer mux;
 
-	private final static ArrayList<String> addressNumberCache = new ArrayList<String>();
+	private final static ArrayList<String> ADDRESS_NUMBER_CACHE = new ArrayList<String>();
 
 	/**
 	 * Converts the specified integer to string using a list for caching already done conversions.
@@ -35,12 +35,12 @@ public class MultiplexerSprite extends CircuitSprite {
 	 *          the integer as string
 	 */
 	private static String intToStr(int i) {
-		if (addressNumberCache.size() <= i) {
-			for (int c = addressNumberCache.size(); c <= i; c++) {
-				addressNumberCache.add(Integer.toString(c));
+		if (ADDRESS_NUMBER_CACHE.size() <= i) {
+			for (int c = ADDRESS_NUMBER_CACHE.size(); c <= i; c++) {
+				ADDRESS_NUMBER_CACHE.add(Integer.toString(c));
 			}
 		}
-		return addressNumberCache.get(i);
+		return ADDRESS_NUMBER_CACHE.get(i);
 	}
 
 	/**
@@ -50,12 +50,12 @@ public class MultiplexerSprite extends CircuitSprite {
 	 *          the {@code Multiplexer} this sprite will represent
 	 */
 	public MultiplexerSprite(Multiplexer mux) {
-		_mux = checkNotNull(mux);
+		this.mux = checkNotNull(mux);
 	}
 
 	@Override
 	public void paint(GraphicsContext gc) {
-		Bounds b = _mux.getBounds();
+		Bounds b = mux.getBounds();
 		debugBounds(gc, b);
 
 		FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
@@ -75,7 +75,7 @@ public class MultiplexerSprite extends CircuitSprite {
 		int labelX = b.x + b.w / 2;
 		int labelY = 0;
 
-		List<IngoingPin> pins = _mux.getDataInputs();
+		List<IngoingPin> pins = mux.getDataInputs();
 
 		if (!pins.isEmpty()) {
 			int addr = 0;
@@ -93,7 +93,7 @@ public class MultiplexerSprite extends CircuitSprite {
 		for (Pin pin : pins) {
 			debugPin(gc, pin);
 		}
-		debugPin(gc, _mux.getDataOut());
-		debugPin(gc, _mux.getSelectPin());
+		debugPin(gc, mux.getDataOut());
+		debugPin(gc, mux.getSelectPin());
 	}
 }

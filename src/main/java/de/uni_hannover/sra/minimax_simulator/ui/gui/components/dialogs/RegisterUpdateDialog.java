@@ -1,7 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
-import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Trackable;
+import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Traceable;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 
 /**
@@ -12,7 +12,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
  */
 public class RegisterUpdateDialog extends ValueUpdateDialog {
 
-	private final Trackable<Integer>	_value;
+	private final Traceable<Integer> value;
 
 	/**
 	 * Constructs a new {@code RegisterUpdateDialog} for the register with the specified name
@@ -21,12 +21,12 @@ public class RegisterUpdateDialog extends ValueUpdateDialog {
 	 * @param register
 	 *          the name of the register
 	 * @param value
-	 *          the {@link Trackable} value of the register
+	 *          the {@link Traceable} value of the register
 	 */
-	public RegisterUpdateDialog(String register, Trackable<Integer> value) {
+	public RegisterUpdateDialog(String register, Traceable<Integer> value) {
 		super(value.get());
 
-		_value = value;
+		this.value = value;
 
 		TextResource res = Main.getTextResource("debugger").using("register.update");
 
@@ -41,6 +41,6 @@ public class RegisterUpdateDialog extends ValueUpdateDialog {
 	 */
 	@Override
 	protected void setValue(int value) {
-		_value.set(value);
+		this.value.set(value);
 	}
 }

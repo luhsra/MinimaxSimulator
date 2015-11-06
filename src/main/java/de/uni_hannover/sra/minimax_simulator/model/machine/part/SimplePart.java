@@ -12,13 +12,13 @@ import java.util.Set;
  */
 public abstract class SimplePart extends Part {
 
-	private final OutgoingPin	_dataOut;
+	private final OutgoingPin dataOut;
 
 	/**
 	 * Constructs a new {@code SimplePart}.
 	 */
-	public SimplePart() {
-		_dataOut = new OutgoingPin(this);
+	protected SimplePart() {
+		dataOut = new OutgoingPin(this);
 	}
 
 	/**
@@ -28,12 +28,12 @@ public abstract class SimplePart extends Part {
 	 *          the output pin
 	 */
 	public OutgoingPin getDataOut() {
-		return _dataOut;
+		return dataOut;
 	}
 
 	@Override
 	public Set<? extends Circuit> getSuccessors() {
-		return _dataOut.getSuccessors();
+		return dataOut.getSuccessors();
 	}
 
 	@Override

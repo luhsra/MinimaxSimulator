@@ -1,7 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
-import de.uni_hannover.sra.minimax_simulator.ui.render.RenderEnvironment;
-import de.uni_hannover.sra.minimax_simulator.ui.render.Sprite;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.RenderEnvironment;
+import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
 import javafx.scene.canvas.GraphicsContext;
 
 /**

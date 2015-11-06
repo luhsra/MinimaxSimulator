@@ -7,13 +7,13 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout;
  */
 public class PointComponent implements Component {
 
-	private Bounds _bounds;
+	private Bounds bounds;
 
 	/**
 	 * Constructs a new {@code PointComponent} at {@code (0,0)}.
 	 */
 	public PointComponent() {
-		_bounds = new Bounds();
+		bounds = new Bounds();
 	}
 
 	/**
@@ -50,12 +50,12 @@ public class PointComponent implements Component {
 
 	@Override
 	public Bounds getBounds() {
-		return _bounds;
+		return bounds;
 	}
 
 	@Override
 	public void setBounds(Bounds bounds) {
-		_bounds = bounds;
+		this.bounds = bounds;
 	}
 
 	/**
