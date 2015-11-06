@@ -50,9 +50,7 @@ public class ConstraintContainer extends Container implements ConstraintsManager
 
 	@Override
 	public void updateSize() {
-		for (Component component : components.values()) {
-			component.updateSize();
-		}
+		components.values().forEach(Component::updateSize);
 
 		if (sortedAttributes == null) {
 			// recollect attributes and dependencies

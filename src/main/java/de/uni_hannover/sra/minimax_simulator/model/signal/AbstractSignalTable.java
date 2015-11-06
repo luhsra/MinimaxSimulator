@@ -35,9 +35,7 @@ public abstract class AbstractSignalTable implements SignalTable {
 	 * Notifies the {@link SignalTableListener}s about a change of the structure.
 	 */
 	protected void fireStructureChanged() {
-		for (SignalTableListener l : listeners) {
-			l.onStructureChanged();
-		}
+		listeners.forEach(SignalTableListener::onStructureChanged);
 	}
 
 	/**

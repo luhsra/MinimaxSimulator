@@ -35,7 +35,7 @@ public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements Mach
 		setEnvironment(new DefaultRenderEnvironment(FONT, getFontMetrics(FONT)));
 		setSpriteFactory(new DefaultSpriteFactory());
 
-		this.machine.getDisplay().getAllSpriteOwners().forEach(sprite -> setSprite(sprite));
+		this.machine.getDisplay().getAllSpriteOwners().forEach(this::setSprite);
 
 		updatePreferredSize();
 	}

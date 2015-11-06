@@ -74,9 +74,7 @@ class DefaultMuxInputManager implements MuxInputManager {
 
 	@Override
 	public void addAll(Collection<? extends MuxInput> inputs) {
-		for (MuxInput element : inputs) {
-			addInternal(element);
-		}
+		inputs.forEach(this::addInternal);
 
 		update();
 	}

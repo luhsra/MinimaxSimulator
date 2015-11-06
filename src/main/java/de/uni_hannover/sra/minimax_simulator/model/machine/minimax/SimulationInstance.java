@@ -198,9 +198,7 @@ class SimulationInstance {
 	 * Triggers all instances of {@link RegisterValue} to update their value.
 	 */
 	void updateRegisterDisplay() {
-		for (RegisterValue register : registerValues.values()) {
-			register.update();
-		}
+		registerValues.values().forEach(SimulationInstance.RegisterValue::update);
 	}
 
 	/**

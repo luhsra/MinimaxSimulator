@@ -15,9 +15,7 @@ public abstract class AbstractListContainer extends Container {
 	public void doLayout() {
 		layoutChildren();
 
-		for (Component child : children) {
-			child.doLayout();
-		}
+		children.forEach(Component::doLayout);
 	}
 
 	/**
@@ -61,9 +59,7 @@ public abstract class AbstractListContainer extends Container {
 
 	@Override
 	public void updateSize() {
-		for (Component child : children) {
-			child.updateSize();
-		}
+		children.forEach(Component::updateSize);
 
 		updateMySize();
 	}

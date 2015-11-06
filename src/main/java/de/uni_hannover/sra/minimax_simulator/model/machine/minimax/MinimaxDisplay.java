@@ -50,9 +50,7 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 	public void setRenderEnvironment(RenderEnvironment env) {
 		renderEnvironment = env;
 
-		for (MachineDisplayListener l : listeners) {
-			l.machineDisplayChanged();
-		}
+		listeners.forEach(MachineDisplayListener::machineDisplayChanged);
 	}
 
 	@Override
@@ -84,9 +82,7 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 	 *          the {@code Group} whose {@code SpriteOwner}s will be added
 	 */
 	public void addGroup(Group group) {
-		for (SpriteOwner sprite : group.getSpriteOwners()) {
-			addSpriteOwner(sprite);
-		}
+		group.getSpriteOwners().forEach(this::addSpriteOwner);
 	}
 
 	/**
@@ -96,9 +92,7 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 	 *          the {@code Group} whose {@code SpriteOwner}s will be removed
 	 */
 	public void removeGroup(Group group) {
-		for (SpriteOwner sprite : group.getSpriteOwners()) {
-			removeSpriteOwner(sprite);
-		}
+		group.getSpriteOwners().forEach(this::removeSpriteOwner);
 	}
 
 	@Override
@@ -121,9 +115,7 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 	public void setDimension(Dimension dimension) {
 		this.dimension = dimension;
 
-		for (MachineDisplayListener l : listeners) {
-			l.machineSizeChanged();
-		}
+		listeners.forEach(MachineDisplayListener::machineSizeChanged);
 	}
 
 	@Override

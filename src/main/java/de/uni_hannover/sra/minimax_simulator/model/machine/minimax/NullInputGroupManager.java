@@ -55,12 +55,10 @@ class NullInputGroupManager implements MuxInputGroupManager {
 	 *          a list of {@link InputEntry} to create {@code Group}s for
 	 */
 	private void createGroups(List<InputEntry> entries) {
-		for (InputEntry entry : entries) {
-			if (entry.input instanceof NullMuxInput) {
-				Group group = new MuxNullGroup(entry.pinId, entry.pin);
-				groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
-			}
-		}
+		entries.stream().filter(entry -> entry.input instanceof NullMuxInput).forEach(entry -> {
+			Group group = new MuxNullGroup(entry.pinId, entry.pin);
+			groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
+		});
 	}
 
 	/**
@@ -70,10 +68,8 @@ class NullInputGroupManager implements MuxInputGroupManager {
 	 *          a list of {@link InputEntry} to destroy {@code Group}s for
 	 */
 	private void destroyGroups(List<InputEntry> entries) {
-		for (InputEntry entry : entries) {
-			if (entry.input instanceof NullMuxInput) {
-				groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
-			}
-		}
+		entries.stream().filter(entry -> entry.input instanceof NullMuxInput).forEach(entry -> {
+			groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
+		});
 	}
 }

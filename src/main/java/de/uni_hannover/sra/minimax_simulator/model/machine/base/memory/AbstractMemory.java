@@ -155,9 +155,7 @@ public abstract class AbstractMemory implements MachineMemory {
 			return;
 		}
 
-		for (MemoryAccessListener l : listeners) {
-			l.memoryReset();
-		}
+		listeners.forEach(MemoryAccessListener::memoryReset);
 	}
 
 	/**
@@ -168,9 +166,7 @@ public abstract class AbstractMemory implements MachineMemory {
 			return;
 		}
 
-		for (MemoryAccessListener l : listeners) {
-			l.memoryChanged();
-		}
+		listeners.forEach(MemoryAccessListener::memoryChanged);
 	}
 
 	@Override

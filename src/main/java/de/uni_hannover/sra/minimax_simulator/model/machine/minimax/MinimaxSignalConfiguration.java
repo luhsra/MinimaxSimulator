@@ -237,8 +237,6 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
 	 * Notifies the {@link MachineConfigListener}s about a structure change.
 	 */
 	private void fireStructureChanged() {
-		for (SignalConfigListener l : listeners) {
-			l.signalStructureChanged();
-		}
+		listeners.forEach(SignalConfigListener::signalStructureChanged);
 	}
 }

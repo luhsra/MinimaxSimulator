@@ -120,9 +120,7 @@ class MinimaxLayout {
 		for (Component component : group.getComponents()) {
 			container.addComponent(component, group.getName(component));
 		}
-		for (String virtual : group.getVirtualComponents()) {
-			container.addVirtualComponent(virtual);
-		}
+		group.getVirtualComponents().forEach(container::addVirtualComponent);
 	}
 
 	/**
@@ -132,12 +130,8 @@ class MinimaxLayout {
 	 *          the {@code Group}
 	 */
 	public void removeGroup(Group group) {
-		for (Component component : group.getComponents()) {
-			container.removeComponent(component);
-		}
-		for (String virtual : group.getVirtualComponents()) {
-			container.removeComponent(virtual);
-		}
+		group.getComponents().forEach(container::removeComponent);
+		group.getVirtualComponents().forEach(container::removeComponent);
 	}
 
 	/**
@@ -191,9 +185,7 @@ class MinimaxLayout {
 	 *          the {@code LayoutSet}
 	 */
 	public void removeLayouts(LayoutSet set) {
-		for (String name : set.getComponents()) {
-			removeLayout(name);
-		}
+		set.getComponents().forEach(this::removeLayout);
 	}
 
 	/**

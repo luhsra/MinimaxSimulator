@@ -79,8 +79,6 @@ public class MachineResolver {
 	 * Resets the {@link Circuit}s to their default state.
 	 */
 	public void resetCircuits() {
-		for (Circuit circuit : resolveOrder) {
-			circuit.reset();
-		}
+		resolveOrder.forEach(Circuit::reset);
 	}
 }

@@ -65,24 +65,20 @@ class ConstantInputGroupManager implements MuxInputGroupManager {
 	}
 
 	private void createGroups(List<InputEntry> entries) {
-		for (InputEntry entry : entries) {
-			if (entry.input instanceof ConstantMuxInput) {
-				int value = ((ConstantMuxInput) entry.input).getConstant();
-				Group group = new MuxConstantGroup(entry.pinId, entry.pin, value);
+		entries.stream().filter(entry -> entry.input instanceof ConstantMuxInput).forEach(entry -> {
+			int value = ((ConstantMuxInput) entry.input).getConstant();
+			Group group = new MuxConstantGroup(entry.pinId, entry.pin, value);
 
-				groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
-				namesOfConstants.add(entry.pinId + Parts._CONSTANT);
-			}
-		}
+			groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
+			namesOfConstants.add(entry.pinId + Parts._CONSTANT);
+		});
 	}
 
 	private void destroyGroups(List<InputEntry> entries) {
-		for (InputEntry entry : entries) {
-			if (entry.input instanceof ConstantMuxInput) {
-				groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
-				namesOfConstants.remove(entry.pinId + Parts._CONSTANT);
-			}
-		}
+		entries.stream().filter(entry -> entry.input instanceof ConstantMuxInput).forEach(entry -> {
+			groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
+			namesOfConstants.remove(entry.pinId + Parts._CONSTANT);
+		});
 	}
 
 	private void updateLayout() {

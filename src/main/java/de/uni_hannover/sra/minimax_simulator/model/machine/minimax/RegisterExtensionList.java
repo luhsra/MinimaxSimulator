@@ -67,8 +67,7 @@ class RegisterExtensionList implements ExtensionList<RegisterExtension> {
 	public void addAll(Collection<? extends RegisterExtension> elements) {
 		removeStackLayout();
 
-		for (RegisterExtension element : elements)
-			addInternal(element);
+		elements.forEach(this::addInternal);
 
 		// align the array of registers and display
 		setStackLayout();

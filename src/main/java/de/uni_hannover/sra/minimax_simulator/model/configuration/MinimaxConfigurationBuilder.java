@@ -211,9 +211,7 @@ public class MinimaxConfigurationBuilder implements MachineConfigurationBuilder 
 		registerExtensions.clear();
 		addDefaultRegisterExtensions(registerDescriptionResource);
 
-		for (List<MuxInput> list : selectedMuxInputs.values()) {
-			list.clear();
-		}
+		selectedMuxInputs.values().forEach(List<MuxInput>::clear);
 		addDefaultSelectedMuxSources();
 
 		return this;
