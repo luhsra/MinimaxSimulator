@@ -271,7 +271,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
 
                     @Override
                     public void updateItem(Boolean item, boolean empty) {
-                        if (item != null && item == true) {
+                        if (item != null && item) {
                             GridPane grid = new GridPane();
                             imageview.setImage(new Image("/images/fugue/control-record.png"));
                             grid.add(imageview, 0, 0);
@@ -319,7 +319,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
 
                     @Override
                     public void updateItem(Boolean item, boolean empty) {
-                        if (item != null && item == true) {
+                        if (item != null && item) {
                             GridPane grid = new GridPane();
                             imageview.setImage(new Image("/images/fugue/arrow-curve-000-left.png"));
                             grid.add(imageview, 0, 0);

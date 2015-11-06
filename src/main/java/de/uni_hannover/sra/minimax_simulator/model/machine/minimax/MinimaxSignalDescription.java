@@ -127,7 +127,7 @@ public class MinimaxSignalDescription implements DescriptionFactory {
 		else {
 			// result is not used for registers. do we have a conditional jump?
 			if (row.getJump().getTargetRow(rowIndex, 0) != row.getJump().getTargetRow(rowIndex, 1)) {
-				sb.append(getAluOperation(row) + " == 0?");
+				sb.append(getAluOperation(row)).append(" == 0?");
 			}
 		}
 

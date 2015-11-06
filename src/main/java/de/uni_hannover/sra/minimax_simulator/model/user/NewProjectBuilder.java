@@ -28,8 +28,7 @@ public class NewProjectBuilder implements ProjectBuilder {
 
 		SignalTable table = new DefaultSignalTable();
 		createDefaultProgram(table);
-		Project project = new Project(conf, new ProjectConfiguration(), table);
-		return project;
+		return new Project(conf, new ProjectConfiguration(), table);
 	}
 
 	/**

@@ -9,7 +9,6 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperatio
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
-import de.uni_hannover.sra.minimax_simulator.resources.ResourceBundleLoader;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import org.json.JSONArray;
 import org.json.JSONException;

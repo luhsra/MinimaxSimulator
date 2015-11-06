@@ -99,9 +99,8 @@ public class PropertyResourceControl extends Control {
 		} finally {
 			IOUtils.closeQuietly(is);
 		}
-		
-		ResourceBundle bundle = new MapResourceBundle(entries);
-		return bundle;
+
+		return new MapResourceBundle(entries);
 	}
 
 	/**

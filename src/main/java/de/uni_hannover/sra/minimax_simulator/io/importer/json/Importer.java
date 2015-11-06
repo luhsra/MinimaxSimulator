@@ -24,16 +24,15 @@ class Importer {
 	 *            thrown if the enum can not be created
 	 */
 	static <T extends Enum<T>> T get(Class<T> enumClass, String element) throws ProjectImportException {
-		String value = element;
-		if (value == null) {
+		if (element == null) {
 			throw new ProjectImportException("Content " + element + " is null");
 		}
 
 		try {
-			return Enum.valueOf(enumClass, value);
+			return Enum.valueOf(enumClass, element);
 		} catch (IllegalArgumentException e) {
 			throw new ProjectImportException("Content " + element + " is not a valid member of enum "
-					+ enumClass.getSimpleName() + ": " + value, e);
+					+ enumClass.getSimpleName() + ": " + element, e);
 		}
 	}
 

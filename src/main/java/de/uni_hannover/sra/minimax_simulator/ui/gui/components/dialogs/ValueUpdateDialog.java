@@ -162,7 +162,7 @@ public abstract class ValueUpdateDialog extends FXDialog {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				boolean shouldEnable = _mode.decode(_field.getText()) != null;
 
-				if (_okButton.isDisabled() != !shouldEnable) {
+				if (_okButton.isDisabled() == shouldEnable) {
 					_okButton.setDisable(!shouldEnable);
 				}
 			}

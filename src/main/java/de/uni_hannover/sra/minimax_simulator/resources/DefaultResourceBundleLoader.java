@@ -57,8 +57,7 @@ public class DefaultResourceBundleLoader implements ResourceBundleLoader {
 
 	@Override
 	public ResourceBundle getBundle(String bundleName) {
-		ResourceBundle res = ResourceBundle.getBundle(bundleName, defaultLocale, defaultControl);
-		return res;
+		return ResourceBundle.getBundle(bundleName, defaultLocale, defaultControl);
 	}
 
 	@Override

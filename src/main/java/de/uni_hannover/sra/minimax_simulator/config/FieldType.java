@@ -20,5 +20,5 @@ public enum FieldType {
 	 * If chosen, the field value can have a binary unit prefix applied, as K, M or G, for
 	 * kilo, mega, giga.
 	 */
-	BYTESIZE;
+	BYTESIZE
 }

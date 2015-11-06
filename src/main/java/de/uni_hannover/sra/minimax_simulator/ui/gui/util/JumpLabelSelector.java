@@ -29,7 +29,6 @@ public class JumpLabelSelector extends ComboBox {
      *          the index of the row to be executed next
      */
     public JumpLabelSelector(TextField rowField, SignalTable signalTable, int currentTargetRow) {
-        TextField rowField1 = rowField;
 
         Target selected = null;
 

@@ -3,8 +3,6 @@ package de.uni_hannover.sra.minimax_simulator.model.signal;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
 
-import java.util.List;
-
 /**
  * Default implementation of a {@link SignalType}.
  *

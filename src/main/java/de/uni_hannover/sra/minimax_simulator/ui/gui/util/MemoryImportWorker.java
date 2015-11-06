@@ -117,7 +117,7 @@ public class MemoryImportWorker implements Runnable {
 		// divide length by 4 (rounding up)
 		int intCount = ((effectiveByteCount - 1) >> 2) + 1;
 
-		for (int i = 0, n = intCount, a = addressStart; i < n; i++, a++) {
+		for (int i = 0, a = addressStart; i < intCount; i++, a++) {
 			// multiply by 4
 			int byteNum = i << 2;
 

@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.io;
 
 import java.io.*;
-import java.util.zip.ZipFile;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
