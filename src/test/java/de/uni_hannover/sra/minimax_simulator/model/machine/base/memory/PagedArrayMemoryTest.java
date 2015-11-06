@@ -4,11 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class PagedArrayMemoryTest
-{
+public class PagedArrayMemoryTest {
+
 	@Test
-	public void checkPagedMemory()
-	{
+	public void checkPagedMemory() {
 		PagedArrayMemory mem = new PagedArrayMemory(24, 12);
 
 		MemoryState state = mem.getMemoryState();
