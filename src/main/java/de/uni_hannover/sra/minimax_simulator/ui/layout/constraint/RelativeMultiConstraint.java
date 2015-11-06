@@ -20,7 +20,7 @@ public abstract class RelativeMultiConstraint implements Constraint {
 	 * @param anchors
 	 *          the anchor {@code Attribute}s
 	 */
-	public RelativeMultiConstraint(Set<Attribute> anchors) {
+	protected RelativeMultiConstraint(Set<Attribute> anchors) {
 		this(anchors, 0);
 	}
 
@@ -35,7 +35,7 @@ public abstract class RelativeMultiConstraint implements Constraint {
 	 * @param offset
 	 *          the offset
 	 */
-	public RelativeMultiConstraint(Set<String> anchors, AttributeType type, int offset) {
+	protected RelativeMultiConstraint(Set<String> anchors, AttributeType type, int offset) {
 		this(toAttributeSet(anchors, type), offset);
 	}
 
@@ -47,7 +47,7 @@ public abstract class RelativeMultiConstraint implements Constraint {
 	 * @param offset
 	 *          the offset
 	 */
-	public RelativeMultiConstraint(Set<Attribute> anchors, int offset) {
+	protected RelativeMultiConstraint(Set<Attribute> anchors, int offset) {
 		if (anchors.isEmpty()) {
 			throw new IllegalArgumentException("Empty anchor set is invalid for group");
 		}

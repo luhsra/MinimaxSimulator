@@ -108,7 +108,7 @@ public abstract class ValueUpdateDialog extends FXDialog {
 	 * @param currentValue
 	 *          the value at the moment of opening the dialog
 	 */
-	public ValueUpdateDialog(int currentValue) {
+	protected ValueUpdateDialog(int currentValue) {
 		super(AlertType.NONE, null, null);
 
 		_res = Main.getTextResource("project").using("memory.update");

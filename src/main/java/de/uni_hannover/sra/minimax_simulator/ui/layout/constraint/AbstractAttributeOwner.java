@@ -22,7 +22,7 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
 	 * @param name
 	 *          the name of the {@code AbstractAttributeOwner}
 	 */
-	public AbstractAttributeOwner(String name) {
+	protected AbstractAttributeOwner(String name) {
 		if (name == null) {
 			throw new IllegalArgumentException("Name must not be null");
 		}

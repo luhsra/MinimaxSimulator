@@ -29,7 +29,7 @@ public abstract class TextRenderShape implements ComponentShape {
 	 * @param fontProvider
 	 *          the {@link FontMetricsProvider} used for font measuring.
 	 */
-	public TextRenderShape(FontMetricsProvider fontProvider) {
+	protected TextRenderShape(FontMetricsProvider fontProvider) {
 		if (fontProvider == null) {
 			throw new NullPointerException("FontMetricsProvider must not be null");
 		}

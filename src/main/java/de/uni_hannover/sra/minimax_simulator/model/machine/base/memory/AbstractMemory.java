@@ -29,7 +29,7 @@ public abstract class AbstractMemory implements MachineMemory {
 	 * @param addressWidth
 	 *          the width of the {@code AbstractMemory}
 	 */
-	public AbstractMemory(int addressWidth) {
+	protected AbstractMemory(int addressWidth) {
 		this.addressWidth = addressWidth;
 		minAddress = 0;
 		maxAddress = (1 << addressWidth) - 1;

@@ -28,7 +28,7 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
 	/**
 	 * Constructs a new {code AbstractSimulation} instance.
 	 */
-	public AbstractSimulation() {
+	protected AbstractSimulation() {
 		cycleCount = -1;
 
 		paused = false;

@@ -17,7 +17,7 @@ public abstract class SimplePart extends Part {
 	/**
 	 * Constructs a new {@code SimplePart}.
 	 */
-	public SimplePart() {
+	protected SimplePart() {
 		dataOut = new OutgoingPin(this);
 	}
 

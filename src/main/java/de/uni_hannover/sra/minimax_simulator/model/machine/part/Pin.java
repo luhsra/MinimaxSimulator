@@ -22,7 +22,7 @@ public abstract class Pin extends PointComponent {
 	 * @param part
 	 *          the {@code Part} related to the {@code Pin}
 	 */
-	public Pin(Part part) {
+	protected Pin(Part part) {
 		this.part = checkNotNull(part);
 	}
 
