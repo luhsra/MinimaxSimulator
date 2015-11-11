@@ -4,8 +4,18 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * Tests the implementation of a paged array memory.
+ *
+ * @see PagedArrayMemory
+ *
+ * @author Martin L&uuml;ck
+ */
 public class PagedArrayMemoryTest {
 
+	/**
+	 * Tests the paged array memory.
+	 */
 	@Test
 	public void checkPagedMemory() {
 		PagedArrayMemory mem = new PagedArrayMemory(24, 12);

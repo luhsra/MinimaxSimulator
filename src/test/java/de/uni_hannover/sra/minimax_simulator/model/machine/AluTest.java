@@ -5,8 +5,18 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * Tests the arithmetic and logic of the ALU by testing the different ALU operations.
+ *
+ * @see AluOperation
+ *
+ * @author Martin L&uuml;ck
+ */
 public class AluTest {
 
+	/**
+	 * Tests the arithmetic of the ALU.
+	 */
 	@Test
 	public void testArithmetic() {
 		int a = 0xD030D000;			// -802107392
@@ -37,6 +47,9 @@ public class AluTest {
 		assertEquals("b_mod_a", 1, AluOperation.B_MOD_A.execute(c, d));
 	}
 
+	/**
+	 * Tests the logic of the ALU.
+	 */
 	@Test
 	public void testLogic() {
 		int a = 0xFF0F0000;
