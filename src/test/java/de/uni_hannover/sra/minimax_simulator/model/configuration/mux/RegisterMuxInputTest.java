@@ -1,4 +1,4 @@
-package de.uni_hannover.sra.minimax_simulator.model.machine.configuration.mux;
+package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
 
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.NullMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;

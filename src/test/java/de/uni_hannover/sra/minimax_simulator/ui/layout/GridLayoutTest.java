@@ -1,4 +1,4 @@
-package de.uni_hannover.sra.minimax_simulator.model.machine.layout;
+package de.uni_hannover.sra.minimax_simulator.ui.layout;
 
 import org.junit.Test;
 
