@@ -1,7 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
 
-import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.NullMuxInput;
-import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
