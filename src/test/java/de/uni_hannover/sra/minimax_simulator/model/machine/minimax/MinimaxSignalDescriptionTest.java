@@ -6,6 +6,11 @@ import de.uni_hannover.sra.minimax_simulator.model.user.NewProjectBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,11 +19,27 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Philipp Rohde
  */
+@RunWith(Parameterized.class)
 public class MinimaxSignalDescriptionTest {
 
     private static Project project;
     private static MinimaxSignalDescription signalDescription;
     private static SignalTable signalTable;
+    private int row;
+    private String expected;
+
+    /**
+     * Initializes the test instance.
+     *
+     * @param row
+     *          the index of the {@code SignalRow} to get the description for
+     * @param expected
+     *          the expected description
+     */
+    public MinimaxSignalDescriptionTest(int row, String expected) {
+        this.row = row;
+        this.expected = expected;
+    }
 
     /**
      * Builds the default project and adds an empty {@code SignalRow} before any test is executed.
@@ -32,52 +53,27 @@ public class MinimaxSignalDescriptionTest {
     }
 
     /**
-     * Checks if the description of {@code SignalRow} zero is like expected.
+     * Creates the parameters for the test.
+     *
+     * @return
+     *          the parameters for the test
      */
-    @Test
-    public void testDescriptionRowZero() {
-        String rowZero = signalDescription.createDescription(0, signalTable.getRow(0));
-        String expected = "ACCU \u2190 1 + ACCU";
-        assertEquals("description of row zero", expected, rowZero);
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                {0, "ACCU \u2190 1 + ACCU"},
+                {3, "PC \u2190 ACCU + ACCU\nACCU \u2190 ACCU + ACCU"},
+                {4, "PC == 0?"},
+                {7, "M[MAR] \u2190 MDR"},
+                {8, ""}
+        });
     }
 
     /**
-     * Checks if the description of {@code SignalRow} three is like expected.
+     * Tests the description creation.
      */
     @Test
-    public void testDescriptionRowThree() {
-        String rowThree = signalDescription.createDescription(3, signalTable.getRow(3));
-        String expected = "PC \u2190 ACCU + ACCU\nACCU \u2190 ACCU + ACCU";
-        assertEquals("description of row three", expected, rowThree);
-    }
-
-    /**
-     * Checks if the description of {@code SignalRow} four is like expected.
-     */
-    @Test
-    public void testDescriptionRowFour() {
-        String rowFour = signalDescription.createDescription(4, signalTable.getRow(4));
-        String expected = "PC == 0?";
-        assertEquals("description of row four", expected, rowFour);
-    }
-
-    /**
-     * Checks if the description of {@code SignalRow} seven is like expected.
-     */
-    @Test
-    public void testDescriptionRowSeven() {
-        String rowSeven = signalDescription.createDescription(7, signalTable.getRow(7));
-        String expected = "M[MAR] \u2190 MDR";
-        assertEquals("description of row seven", expected, rowSeven);
-    }
-
-    /**
-     * Checks if the description of {@code SignalRow} eight is like expected.
-     */
-    @Test
-    public void testDescriptionRowEight() {
-        String rowEight = signalDescription.createDescription(8, signalTable.getRow(8));
-        String expected = "";
-        assertEquals("description of row seven", expected, rowEight);
+    public void test() {
+        assertEquals("description of row " + row, expected, signalDescription.createDescription(row, signalTable.getRow(row)));
     }
 }
