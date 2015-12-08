@@ -11,6 +11,7 @@ import org.junit.Test;
  * @see AluOperation
  *
  * @author Martin L&uuml;ck
+ * @author Philipp Rohde
  */
 public class AluTest {
 

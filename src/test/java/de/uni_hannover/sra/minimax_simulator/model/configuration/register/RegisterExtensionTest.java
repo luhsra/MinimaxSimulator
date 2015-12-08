@@ -13,12 +13,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class RegisterExtensionTest {
 
-    private final static RegisterSize SIZE24 = RegisterSize.BITS_24;
-    private final static RegisterSize SIZE32 = RegisterSize.BITS_32;
-    private final static String ACCU = "ACCU";
-    private final static String ACCU_DESC = "The ACCU...";
-    private final static String MDR = "MDR";
-    private final static String MDR_DESC = "The MDR...";
+    private static final RegisterSize SIZE24 = RegisterSize.BITS_24;
+    private static final RegisterSize SIZE32 = RegisterSize.BITS_32;
+    private static final String ACCU = "ACCU";
+    private static final String ACCU_DESC = "The ACCU...";
+    private static final String MDR = "MDR";
+    private static final String MDR_DESC = "The MDR...";
 
     /**
      * Tests the register.

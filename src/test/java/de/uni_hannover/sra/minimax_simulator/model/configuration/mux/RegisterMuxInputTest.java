@@ -13,9 +13,9 @@ import static org.junit.Assert.assertEquals;
  */
 public class RegisterMuxInputTest {
 
-    private final static String PC = "PC";
-    private final static String IR = "IR";
-    private final static String AT = "AT";
+    private static final String PC = "PC";
+    private static final String IR = "IR";
+    private static final String AT = "AT";
 
     /**
      * Tests the register multiplexer input.
