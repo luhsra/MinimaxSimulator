@@ -4,7 +4,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.user.NewProjectBuilder;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -44,8 +44,8 @@ public class MinimaxSignalDescriptionTest {
     /**
      * Builds the default project and adds an empty {@code SignalRow} before any test is executed.
      */
-    @Before
-    public void initialize() {
+    @BeforeClass
+    public static void initialize() {
         project = new NewProjectBuilder().buildProject();
         signalDescription = new MinimaxSignalDescription(project.getMachineConfiguration());
         signalTable = project.getSignalTable();
