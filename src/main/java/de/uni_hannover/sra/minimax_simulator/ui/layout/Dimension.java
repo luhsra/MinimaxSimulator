@@ -9,7 +9,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout;
 public class Dimension {
 
 	/** Zero {@code Dimension} instance. */
-	public final static Dimension ZERO = new Dimension(0, 0);
+	public static final Dimension ZERO = new Dimension(0, 0);
 
 	/** The width. */
 	public final int w;

@@ -21,10 +21,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 public final class SignalValue {
 
 	/** An unspecified signal. This object is the only instance whose method {@link #isDontCare()} returns {@code true}. */
-	public final static SignalValue DONT_CARE	= new SignalValue();
+	public static final SignalValue DONT_CARE	= new SignalValue();
 
 	/** Caching {@code 0} to {@code 19} as {@code SignalValue}. */
-	private final static SignalValue CACHE[];
+	private static final SignalValue CACHE[];
 	static {
 		CACHE = new SignalValue[20];
 		for (int i = 0; i < CACHE.length; i++) {

@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class RegisterSprite extends CircuitSprite {
 
 	/** The {@code Color} to highlight extended registers. */
-	private final static Color EXTENDED_REGISTER_FX = new javafx.scene.paint.Color(0.95f, 0.95f, 0.95f, 1f);
+	private static final Color EXTENDED_REGISTER_FX = new javafx.scene.paint.Color(0.95f, 0.95f, 0.95f, 1f);
 
 	private final Register register;
 

@@ -13,12 +13,12 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
  */
 public class MuxShape implements ComponentShape {
 
-	private final static int MUX_WIDTH			= 20;
-	public final static int MUX_HEIGHT_PER_PIN	= 18;
-	private final static int MUX_CORNER_HEIGHT	= 20;
-	public final static int MUX_CORNER_SPACING	= 10;
+	private static final int MUX_WIDTH			= 20;
+	public static final int MUX_HEIGHT_PER_PIN	= 18;
+	private static final int MUX_CORNER_HEIGHT	= 20;
+	public static final int MUX_CORNER_SPACING	= 10;
 
-	private final static int MUX_SPACING			= 15;
+	private static final int MUX_SPACING			= 15;
 
 	private final Insets insets = new Insets(MUX_SPACING, MUX_SPACING, 0, 0);
 

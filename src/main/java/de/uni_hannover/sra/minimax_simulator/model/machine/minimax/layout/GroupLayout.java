@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class GroupLayout implements Layout {
 
-	private final static Set<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.LEFT,
+	private static final Set<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.LEFT,
 															AttributeType.RIGHT,
 															AttributeType.TOP,
 															AttributeType.BOTTOM);

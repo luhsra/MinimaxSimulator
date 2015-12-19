@@ -91,7 +91,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
 
     @FXML MemoryTable embeddedMemoryTableController;
 
-    private final static int NO_ROW_MARKED	= -1;
+    private static final int NO_ROW_MARKED	= -1;
     private static int lastExecutedRow = -1;
 
     private final MessageFormat cyclesFormatHalted;

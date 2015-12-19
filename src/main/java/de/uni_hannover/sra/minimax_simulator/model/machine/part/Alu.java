@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class Alu extends Part implements SpriteOwner {
 
-	private final static Logger LOG = Logger.getLogger(Alu.class.getName());
+	private static final Logger LOG = Logger.getLogger(Alu.class.getName());
 
 	private final List<AluOperation> aluOperations;
 

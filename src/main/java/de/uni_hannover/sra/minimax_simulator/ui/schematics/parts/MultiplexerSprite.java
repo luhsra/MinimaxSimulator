@@ -24,7 +24,7 @@ public class MultiplexerSprite extends CircuitSprite {
 
 	private final Multiplexer mux;
 
-	private final static ArrayList<String> ADDRESS_NUMBER_CACHE = new ArrayList<String>();
+	private static final ArrayList<String> ADDRESS_NUMBER_CACHE = new ArrayList<String>();
 
 	/**
 	 * Converts the specified integer to string using a list for caching already done conversions.

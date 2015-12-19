@@ -8,7 +8,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout;
 public class Insets {
 
 	/** Zero {@code Insets} instance. */
-	public final static Insets ZERO = new Insets(0, 0, 0, 0);
+	public static final Insets ZERO = new Insets(0, 0, 0, 0);
 
 	/** top */
 	public final int t;

@@ -32,7 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ProjectZipImporter implements ProjectImporter {
 
-	//private final static Charset CHARSET = Charset.forName("UTF-8");
+	//private static final Charset CHARSET = Charset.forName("UTF-8");
 
 	private final File file;
 

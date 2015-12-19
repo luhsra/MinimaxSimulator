@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class MachineResolver {
 
-	private final static Logger LOG = Logger.getLogger(MachineResolver.class.getName());
+	private static final Logger LOG = Logger.getLogger(MachineResolver.class.getName());
 
 	private final ImmutableList<Circuit> resolveOrder;
 	private final ImmutableList<SynchronousCircuit> synchronousCircuits;

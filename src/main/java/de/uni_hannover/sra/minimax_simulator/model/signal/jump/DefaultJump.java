@@ -8,7 +8,7 @@ package de.uni_hannover.sra.minimax_simulator.model.signal.jump;
 public final class DefaultJump implements Jump {
 
 	/** The {@code DefaultJump} instance. */
-	public final static Jump INSTANCE = new DefaultJump();
+	public static final Jump INSTANCE = new DefaultJump();
 
 	/**
 	 * Constructs the singleton instance.

@@ -13,10 +13,10 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.Dimension;
  */
 public class RegisterShape extends TextRenderShape {
 
-	private final static int REGISTER_HEIGHT						= 20;
-	private final static int REGISTER_MIN_WIDTH					= 90;
-	private final static int REGISTER_SPACING					= 50;
-	private final static int REGISTER_TEXT_LEFT_RIGHT_PADDING	= 5;
+	private static final int REGISTER_HEIGHT					= 20;
+	private static final int REGISTER_MIN_WIDTH					= 90;
+	private static final int REGISTER_SPACING					= 50;
+	private static final int REGISTER_TEXT_LEFT_RIGHT_PADDING	= 5;
 
 	/**
 	 * Initializes the {@code RegisterShape}.

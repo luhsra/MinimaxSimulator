@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkElementIndex;
  */
 public class MapMemory extends AbstractMemory {
 
-	private final static int DEFAULT_VALUE	= 0;
+	private static final int DEFAULT_VALUE	= 0;
 
 	/**
 	 * The {@link MemoryState} of a {@link MapMemory}.

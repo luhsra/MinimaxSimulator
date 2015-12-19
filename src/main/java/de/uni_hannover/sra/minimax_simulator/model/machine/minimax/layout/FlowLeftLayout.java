@@ -12,7 +12,7 @@ import java.util.Set;
  */
 class FlowLeftLayout implements Layout {
 
-	private final static EnumSet<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.RIGHT, AttributeType.VERTICAL_CENTER);
+	private static final EnumSet<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.RIGHT, AttributeType.VERTICAL_CENTER);
 
 	private final Constraint vertical;
 	private final Constraint horizontal;

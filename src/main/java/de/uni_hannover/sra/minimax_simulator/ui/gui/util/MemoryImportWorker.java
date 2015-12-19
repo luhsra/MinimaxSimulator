@@ -28,7 +28,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class MemoryImportWorker implements Runnable {
 
-	private final static Logger LOG = Logger.getLogger(MemoryImportWorker.class.getName());
+	private static final Logger LOG = Logger.getLogger(MemoryImportWorker.class.getName());
 
 	private final MachineMemory memory;
 	private final int addressStart;

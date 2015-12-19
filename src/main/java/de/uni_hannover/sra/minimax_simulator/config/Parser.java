@@ -12,11 +12,11 @@ import java.util.regex.Pattern;
 class Parser {
 
 	// used for file size parsers
-	private final static Pattern NMB = Pattern.compile("[0-9]+");
-	private final static Pattern S_B = Pattern.compile("[0-9]+(B|b)?");
-	private final static Pattern S_KB = Pattern.compile("[0-9]+(K|k)(B|b)?");
-	private final static Pattern S_MB = Pattern.compile("[0-9]+(M|m)(B|b)?");
-	private final static Pattern S_GB = Pattern.compile("[0-9]+(G|g)(B|b)?");
+	private static final Pattern NMB = Pattern.compile("[0-9]+");
+	private static final Pattern S_B = Pattern.compile("[0-9]+(B|b)?");
+	private static final Pattern S_KB = Pattern.compile("[0-9]+(K|k)(B|b)?");
+	private static final Pattern S_MB = Pattern.compile("[0-9]+(M|m)(B|b)?");
+	private static final Pattern S_GB = Pattern.compile("[0-9]+(G|g)(B|b)?");
 
 	/**
 	 * Parses the property value according to the given class.<br>

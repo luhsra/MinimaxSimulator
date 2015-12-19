@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public class MinimaxSimulation extends AbstractSimulation implements MemoryAccessListener {
 
-	private final static Logger LOG = Logger.getLogger(MinimaxSimulation.class.getName());
+	private static final Logger LOG = Logger.getLogger(MinimaxSimulation.class.getName());
 
 	private final MinimaxMachine machine;
 	private final SignalTable signalTable;
@@ -29,7 +29,7 @@ public class MinimaxSimulation extends AbstractSimulation implements MemoryAcces
 
 	private boolean resolvedRead;
 
-	private final static int CYCLE_YIELD_BITMASK = 0x00000100;
+	private static final int CYCLE_YIELD_BITMASK = 0x00000100;
 
 	/**
 	 * Constructs a new instance of the {@code MinimaxSimulation} with the specified {@link MinimaxMachine}

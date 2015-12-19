@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class MemoryExportWorker implements Runnable {
 
-	private final static Logger LOG = Logger.getLogger(MemoryExportWorker.class.getName());
+	private static final Logger LOG = Logger.getLogger(MemoryExportWorker.class.getName());
 
 	private final MachineMemory memory;
 

@@ -25,8 +25,8 @@ import java.util.*;
  */
 public class MinimaxMachine implements ConfigurableMachine {
 
-	private final static int ADDRESS_WIDTH	= 24;
-	private final static int PAGE_WIDTH		= 12;
+	private static final int ADDRESS_WIDTH	= 24;
+	private static final int PAGE_WIDTH		= 12;
 
 	private final MinimaxLayout layout;
 	private final MinimaxTopology topology;

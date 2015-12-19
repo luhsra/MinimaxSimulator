@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class AluSprite extends CircuitSprite {
 
-	private final static double[][] POINTS = new double[][] {
+	private static final double[][] POINTS = new double[][] {
 			// x      y
 			{ -9.5,   0.5},
 			{-34.5,  12.5},
@@ -27,9 +27,9 @@ public class AluSprite extends CircuitSprite {
 			{ -9.5,   0.5}
 	};
 
-	private final static String NAME = "ALU";
-	private final static String PIN_A = "A";
-	private final static String PIN_B = "B";
+	private static final String NAME = "ALU";
+	private static final String PIN_A = "A";
+	private static final String PIN_B = "B";
 
 	private final Alu alu;
 

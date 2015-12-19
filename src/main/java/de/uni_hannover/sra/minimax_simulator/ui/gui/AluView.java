@@ -55,7 +55,7 @@ public class AluView {
     @FXML private Button btnMoveUp;
     @FXML private Button btnMoveDown;
 
-    private final static String ALU_RESULT = "ALU.result \u2190 ";
+    private static final String ALU_RESULT = "ALU.result \u2190 ";
 
     /**
      * Initializes the final variables.

@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements MachineDisplayListener {
 
-	private final static Font FONT = new Font("SansSerif", 17.0);
+	private static final Font FONT = new Font("SansSerif", 17.0);
 
 	private final Machine machine;
 

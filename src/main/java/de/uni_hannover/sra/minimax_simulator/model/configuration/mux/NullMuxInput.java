@@ -9,7 +9,7 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
 public class NullMuxInput implements MuxInput {
 
 	/** The {@code NullMuxInput} instance. */
-	public final static MuxInput INSTANCE = new NullMuxInput();
+	public static final MuxInput INSTANCE = new NullMuxInput();
 
 	/**
 	 * Constructs the the instance of the {@code NullMuxInput}.

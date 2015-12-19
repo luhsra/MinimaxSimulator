@@ -25,10 +25,10 @@ public abstract class CircuitSprite implements Sprite {
 	 *
 	 * @author Philipp Rohde
 	 */
-	private final static class ArrowHead {
-		public final static double[] xPoints = {0, -3, 3};
-		public final static double[] yPoints = {0, -5, -5};
-		public final static int nPoints = 3;
+	private static final class ArrowHead {
+		public static final double[] xPoints = {0, -3, 3};
+		public static final double[] yPoints = {0, -5, -5};
+		public static final int nPoints = 3;
 	}
 
 	/** The {@code Color} for debugging the schematics. */

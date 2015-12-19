@@ -12,7 +12,7 @@ import java.util.Set;
  */
 class StackLayout implements Layout {
 
-	private final static EnumSet<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.HORIZONTAL_CENTER,
+	private static final EnumSet<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.HORIZONTAL_CENTER,
 																AttributeType.BOTTOM);
 
 	private final Constraint vertical;
