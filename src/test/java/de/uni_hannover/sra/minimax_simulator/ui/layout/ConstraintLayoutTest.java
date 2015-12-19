@@ -1,48 +1,54 @@
 package de.uni_hannover.sra.minimax_simulator.ui.layout;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import de.uni_hannover.sra.minimax_simulator.ui.layout.AbstractComponent;
+import de.uni_hannover.sra.minimax_simulator.model.machine.part.Label;
+import de.uni_hannover.sra.minimax_simulator.model.machine.shape.FixedShape;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.AttributeType;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintContainer;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.constraint.ConstraintFactory;
-import de.uni_hannover.sra.minimax_simulator.model.machine.shape.FixedShape;
+import org.junit.Test;
 
-public class ConstraintLayoutTest
-{
-	@Test
-	public void test()
-	{
-/*		ConstraintContainer c = new ConstraintContainer();
+import static org.junit.Assert.assertEquals;
 
-		AbstractComponent c1 = new AbstractComponent();
-		c1.setName("c1");
-		c1.setShape(new FixedShape(100, 100));
+/**
+ * Tests the implementation of the layout created by {@link ConstraintContainer}.
+ *
+ * @author Martin L&uuml;ck
+ */
+public class ConstraintLayoutTest {
 
-		AbstractComponent c2 = new AbstractComponent();
-		c2.setName("c2");
-		c2.setShape(new FixedShape(100, 100));
+    /**
+     * Tests the {@code ConstraintContainer} with two components.
+     */
+    @Test
+    public void test() {
+        ConstraintContainer c = new ConstraintContainer();
 
-		c.addComponent(c1, "c1");
-		c.addComponent(c2, "c2");
+        AbstractComponent c1 = new Label("c1");
+        c1.setName("c1");
+        c1.setShape(new FixedShape(100, 100));
 
-		ConstraintFactory cf = c.createConstraintFactory();
+        AbstractComponent c2 = new Label("c2");
+        c2.setName("c2");
+        c2.setShape(new FixedShape(100, 100));
 
-		cf.absolute("c1", AttributeType.TOP, 0);
-		cf.absolute("c1", AttributeType.LEFT, 0);
-		cf.absolute("c2", AttributeType.TOP, 0);
-		cf.relative("c2", AttributeType.LEFT, "c1", AttributeType.RIGHT, 10);
+        c.addComponent(c1, "c1");
+        c.addComponent(c2, "c2");
 
-		c.updateSize();
-		c.doLayout();
+        ConstraintFactory cf = c.createConstraintFactory();
 
-		assertEquals(210, c.getDimension().w);
-		assertEquals(100, c.getDimension().h);
-		assertEquals(0, c1.getBounds().x);
-		assertEquals(0, c1.getBounds().y);
-		assertEquals(110, c2.getBounds().x);
-		assertEquals(0, c2.getBounds().y);	*/
-	}
+        cf.absolute("c1", AttributeType.TOP, 0);
+        cf.absolute("c1", AttributeType.LEFT, 0);
+        cf.absolute("c2", AttributeType.TOP, 0);
+        cf.relative("c2", AttributeType.LEFT, "c1", AttributeType.RIGHT, 10);
+
+        c.updateSize();
+        c.doLayout();
+
+        assertEquals(210, c.getDimension().w);
+        assertEquals(100, c.getDimension().h);
+        assertEquals(0, c1.getBounds().x);
+        assertEquals(0, c1.getBounds().y);
+        assertEquals(110, c2.getBounds().x);
+        assertEquals(0, c2.getBounds().y);
+    }
 }
