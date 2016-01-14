@@ -30,6 +30,9 @@ public class SignalExporterTest {
     private static SignalTable table;
     private static SignalConfiguration config;
 
+    /**
+     * Initializes the test instance.
+     */
     @BeforeClass
     public static void initialize() {
         Project project = new NewProjectBuilder().buildProject();
