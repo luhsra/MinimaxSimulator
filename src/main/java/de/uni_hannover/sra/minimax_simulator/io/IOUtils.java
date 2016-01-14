@@ -1,6 +1,10 @@
 package de.uni_hannover.sra.minimax_simulator.io;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -159,5 +163,36 @@ public final class IOUtils {
 			}
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * Reads the specified file to a String using the specified encoding.
+	 *
+	 * @param path
+	 *          the path of the file to read
+	 * @param encoding
+	 *          the file's encoding
+	 * @return
+	 *          the file's content as String
+	 * @throws IOException
+	 *          thrown if the file could not be read
+     */
+	public static String readFile(String path, Charset encoding) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded, encoding);
+	}
+
+	/**
+	 * Reads the specified file to a String using UTF-8.
+	 *
+	 * @param path
+	 *          the path of the file to read
+	 * @return
+	 *          the file's content as String
+	 * @throws IOException
+	 *          thrown if the file could not be read
+	 */
+	public static String readFile(String path) throws IOException {
+		return readFile(path, StandardCharsets.UTF_8);
 	}
 }
