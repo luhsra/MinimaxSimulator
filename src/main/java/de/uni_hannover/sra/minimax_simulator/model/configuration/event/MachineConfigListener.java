@@ -8,11 +8,11 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.event;
  */
 public interface MachineConfigListener {
 
-	/**
-	 * Handles the specified {@link MachineConfigEvent}.
-	 *
-	 * @param event
-	 *          the {@code MachineConfigEvent} to handle
-	 */
-	public void processEvent(MachineConfigEvent event);
+    /**
+     * Handles the specified {@link MachineConfigEvent}.
+     *
+     * @param event
+     *          the {@code MachineConfigEvent} to handle
+     */
+    public void processEvent(MachineConfigEvent event);
 }

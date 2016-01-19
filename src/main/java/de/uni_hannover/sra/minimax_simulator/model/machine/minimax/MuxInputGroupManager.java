@@ -7,11 +7,11 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
  */
 interface MuxInputGroupManager {
 
-	/**
-	 * Updates the specified {@link MuxInputManager}.
-	 *
-	 * @param muxInputs
-	 *          the {@code MuxInputManager} to update
-	 */
-	public void update(MuxInputManager muxInputs);
+    /**
+     * Updates the specified {@link MuxInputManager}.
+     *
+     * @param muxInputs
+     *          the {@code MuxInputManager} to update
+     */
+    public void update(MuxInputManager muxInputs);
 }

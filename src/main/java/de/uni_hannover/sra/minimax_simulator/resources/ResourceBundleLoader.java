@@ -9,23 +9,23 @@ import java.util.ResourceBundle;
  */
 public interface ResourceBundleLoader {
 
-	/**
-	 * Gets the {@link ResourceBundle} with the specified name.
-	 *
-	 * @param bundleName
-	 *          the name of the bundle
-	 * @return
-	 *          the {@code ResourceBundle} with the specified name
-	 */
-	public ResourceBundle getBundle(String bundleName);
+    /**
+     * Gets the {@link ResourceBundle} with the specified name.
+     *
+     * @param bundleName
+     *          the name of the bundle
+     * @return
+     *          the {@code ResourceBundle} with the specified name
+     */
+    public ResourceBundle getBundle(String bundleName);
 
-	/**
-	 * Gets the {@link TextResource} with the specified name.
-	 *
-	 * @param bundleName
-	 *          the name of the resource
-	 * @return
-	 *          the {@code TextResource} with the specified name
-	 */
-	public TextResource getTextResource(String bundleName);
+    /**
+     * Gets the {@link TextResource} with the specified name.
+     *
+     * @param bundleName
+     *          the name of the resource
+     * @return
+     *          the {@code TextResource} with the specified name
+     */
+    public TextResource getTextResource(String bundleName);
 }

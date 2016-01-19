@@ -8,13 +8,13 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout.constraint;
  */
 public interface AttributeSource {
 
-	/**
-	 * Gets the value of the specified {@link Attribute}.
-	 *
-	 * @param attribute
-	 *          the {@code Attribute} to get the value for
-	 * @return
-	 *          the value of the {@code Attribute}
-	 */
-	public int getValue(Attribute attribute);
+    /**
+     * Gets the value of the specified {@link Attribute}.
+     *
+     * @param attribute
+     *          the {@code Attribute} to get the value for
+     * @return
+     *          the value of the {@code Attribute}
+     */
+    public int getValue(Attribute attribute);
 }

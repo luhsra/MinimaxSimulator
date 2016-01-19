@@ -19,69 +19,69 @@ import org.json.JSONObject;
  */
 class SignalJsonImporter extends Importer {
 
-	/**
-	 * Imports the {@link SignalTable} from a JSON string.
-	 *
-	 * @param input
-	 *            the JSON string containing the SignalTable
-	 * @return
-	 *            the imported SignalTable
-	 * @throws JSONException
-	 *            thrown if there is an error during parsing the JSON string
-	 */
-	SignalTable loadSignalTable(String input) throws JSONException {
-		SignalTable table = new DefaultSignalTable();
+    /**
+     * Imports the {@link SignalTable} from a JSON string.
+     *
+     * @param input
+     *            the JSON string containing the SignalTable
+     * @return
+     *            the imported SignalTable
+     * @throws JSONException
+     *            thrown if there is an error during parsing the JSON string
+     */
+    SignalTable loadSignalTable(String input) throws JSONException {
+        SignalTable table = new DefaultSignalTable();
 
-		JSONObject root = new JSONObject(input);
-		JSONObject signaltable = root.getJSONObject("signaltable");
-		JSONArray rows = signaltable.getJSONArray("row");
-		for (int i = 0; i < rows.length(); i++) {
-			SignalRow row = new SignalRow();
+        JSONObject root = new JSONObject(input);
+        JSONObject signaltable = root.getJSONObject("signaltable");
+        JSONArray rows = signaltable.getJSONArray("row");
+        for (int i = 0; i < rows.length(); i++) {
+            SignalRow row = new SignalRow();
 
-			JSONObject currentRow = rows.getJSONObject(i);
-			if (currentRow.has("label")) {
-				String label = currentRow.getString("label");
-				row.setLabel(label);
-			}
-			if (currentRow.has("breakpoint")) {
-				boolean breakpoint = currentRow.getBoolean("breakpoint");
-				row.setBreakpoint(breakpoint);
-			}
+            JSONObject currentRow = rows.getJSONObject(i);
+            if (currentRow.has("label")) {
+                String label = currentRow.getString("label");
+                row.setLabel(label);
+            }
+            if (currentRow.has("breakpoint")) {
+                boolean breakpoint = currentRow.getBoolean("breakpoint");
+                row.setBreakpoint(breakpoint);
+            }
 
-			if (currentRow.has("signal")) {
-				JSONArray signals = currentRow.getJSONArray("signal");
-				for (int j = 0; j < signals.length(); j++) {
-					JSONObject currentSignal = signals.getJSONObject(j);
-					int intValue = Integer.valueOf(currentSignal.getString("value"));
-					boolean dontcare = false;
-					if (currentSignal.has("dontcare")) {
-						dontcare = currentSignal.getBoolean("dontcare");
-					}
-					SignalValue value = dontcare ? SignalValue.DONT_CARE : SignalValue.valueOf(intValue);
-					row.setSignal(currentSignal.getString("name"), value);
-				}
-			}
-			
-			Jump jump;
+            if (currentRow.has("signal")) {
+                JSONArray signals = currentRow.getJSONArray("signal");
+                for (int j = 0; j < signals.length(); j++) {
+                    JSONObject currentSignal = signals.getJSONObject(j);
+                    int intValue = Integer.valueOf(currentSignal.getString("value"));
+                    boolean dontcare = false;
+                    if (currentSignal.has("dontcare")) {
+                        dontcare = currentSignal.getBoolean("dontcare");
+                    }
+                    SignalValue value = dontcare ? SignalValue.DONT_CARE : SignalValue.valueOf(intValue);
+                    row.setSignal(currentSignal.getString("name"), value);
+                }
+            }
 
-			if (currentRow.has("unconditional-jump")) {
-				JSONObject jmp = currentRow.getJSONObject("unconditional-jump");
-				jump = new UnconditionalJump(jmp.getInt("target"));
-			}
-			else if (currentRow.has("conditional-jump")) {
-				JSONObject jmp = currentRow.getJSONObject("conditional-jump");
-				int cond0 = jmp.getInt("cond0-target");
-				int cond1 = jmp.getInt("cond1-target");
-				jump = new ConditionalJump(cond0, cond1);
-			}
-			else {
-				jump = DefaultJump.INSTANCE;
-			}
-			row.setJump(jump);
+            Jump jump;
 
-			table.addSignalRow(row);
-		}
+            if (currentRow.has("unconditional-jump")) {
+                JSONObject jmp = currentRow.getJSONObject("unconditional-jump");
+                jump = new UnconditionalJump(jmp.getInt("target"));
+            }
+            else if (currentRow.has("conditional-jump")) {
+                JSONObject jmp = currentRow.getJSONObject("conditional-jump");
+                int cond0 = jmp.getInt("cond0-target");
+                int cond1 = jmp.getInt("cond1-target");
+                jump = new ConditionalJump(cond0, cond1);
+            }
+            else {
+                jump = DefaultJump.INSTANCE;
+            }
+            row.setJump(jump);
 
-		return table;
-	}
+            table.addSignalRow(row);
+        }
+
+        return table;
+    }
 }

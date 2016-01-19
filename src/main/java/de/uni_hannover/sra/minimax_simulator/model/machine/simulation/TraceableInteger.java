@@ -9,17 +9,17 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.simulation;
  */
 public class TraceableInteger extends AbstractTraceable<Integer> {
 
-	/** The value of the {@code TraceableInteger}. */
-	private Integer value;
+    /** The value of the {@code TraceableInteger}. */
+    private Integer value;
 
-	@Override
-	public Integer get() {
-		return value;
-	}
+    @Override
+    public Integer get() {
+        return value;
+    }
 
-	@Override
-	public void set(Integer value) {
-		this.value = value;
-		fireValueChanged();
-	}
+    @Override
+    public void set(Integer value) {
+        this.value = value;
+        fireValueChanged();
+    }
 }

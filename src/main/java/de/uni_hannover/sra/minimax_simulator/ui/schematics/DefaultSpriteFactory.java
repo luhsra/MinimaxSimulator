@@ -8,8 +8,8 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.SpriteFactory;
  */
 public class DefaultSpriteFactory implements SpriteFactory<SpriteOwner> {
 
-	@Override
-	public Sprite createSprite(SpriteOwner owner) {
-		return owner.createSprite();
-	}
+    @Override
+    public Sprite createSprite(SpriteOwner owner) {
+        return owner.createSprite();
+    }
 }

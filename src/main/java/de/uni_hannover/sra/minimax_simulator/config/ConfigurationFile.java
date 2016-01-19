@@ -14,11 +14,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ConfigurationFile {
 
-	/**
-	 * Gets the name of the configuration file.
-	 *
-	 * @return
-	 *          the name of the configuration file
-	 */
-	public String file();
+    /**
+     * Gets the name of the configuration file.
+     *
+     * @return
+     *          the name of the configuration file
+     */
+    public String file();
 }

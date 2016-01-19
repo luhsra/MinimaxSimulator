@@ -38,7 +38,7 @@ public class MemoryTable implements MemoryAccessListener {
     private String addressFormatString;
     private static MachineMemory mMemory;
 
-    private final int pageSize = 16;
+    private static final int PAGE_SIZE = 16;
     private int pageCount;
     private int page;
     private int cachedPageStart;
@@ -53,6 +53,11 @@ public class MemoryTable implements MemoryAccessListener {
 
     @FXML private TextField txtAddressField;
     @FXML private Label lblMemPage;
+
+    @FXML private Button btnNextPage;
+    @FXML Button btnPrevPage;
+    @FXML Button btnFirstPage;
+    @FXML Button btnLastPage;
 
     /**
      * Initializes the variables.
@@ -134,13 +139,13 @@ public class MemoryTable implements MemoryAccessListener {
                 address = mMemory.getMaxAddress();
             }
 
-            page = address / pageSize;
+            page = address / PAGE_SIZE;
             if (page >= pageCount) {
                 page = pageCount - 1;
-                row = pageSize - 1;
+                row = PAGE_SIZE - 1;
             }
             else {
-                row = address % pageSize;
+                row = address % PAGE_SIZE;
             }
         }
 
@@ -162,7 +167,7 @@ public class MemoryTable implements MemoryAccessListener {
         addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
 
         int addressRange = mMemory.getMaxAddress() - mMemory.getMinAddress();
-        pageCount = (addressRange - 1) / pageSize + 1;
+        pageCount = (addressRange - 1) / PAGE_SIZE + 1;
 
         txtAddressField.setText("");
         firstPage();
@@ -209,15 +214,13 @@ public class MemoryTable implements MemoryAccessListener {
         ObservableList<MemoryTableModel> data = FXCollections.observableArrayList();
 
         MemoryState mState = mMemory.getMemoryState();
-        for (int i = 0; i < pageSize; i++) {
+        for (int i = 0; i < PAGE_SIZE; i++) {
             int value = mState.getInt(cachedPageStart + i);
             data.add(new MemoryTableModel(String.format(addressFormatString, cachedPageStart + i), value));
         }
 
         memTable.setItems(data);
     }
-
-    @FXML private Button btnNextPage;
 
     /**
      * Sets the next memory page to the {@link TableView}.
@@ -226,8 +229,6 @@ public class MemoryTable implements MemoryAccessListener {
         this.setPage(page +1);
     }
 
-    @FXML Button btnPrevPage;
-
     /**
      * Sets the previous memory page to the {@link TableView}.
      */
@@ -235,16 +236,12 @@ public class MemoryTable implements MemoryAccessListener {
         this.setPage(page - 1);
     }
 
-    @FXML Button btnFirstPage;
-
     /**
      * Sets the first memory page to the {@link TableView}.
      */
     public void firstPage() {
         this.setPage(0);
     }
-
-    @FXML Button btnLastPage;
 
     /**
      * Sets the last memory page to the {@link TableView}.
@@ -264,7 +261,7 @@ public class MemoryTable implements MemoryAccessListener {
             return;
         }
         page = newPage;
-        cachedPageStart = page * pageSize + mMemory.getMinAddress();
+        cachedPageStart = page * PAGE_SIZE + mMemory.getMinAddress();
 
         updateMemTable();
         updateMemPageLabel();
@@ -278,7 +275,7 @@ public class MemoryTable implements MemoryAccessListener {
     @Override
     public void memoryWriteAccess(int address, int value) {
         // only update the affected table row
-        MemoryTableModel entry = memTable.getItems().get(address % pageSize);
+        MemoryTableModel entry = memTable.getItems().get(address % PAGE_SIZE);
         entry.setValue(value);
     }
 

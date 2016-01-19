@@ -61,7 +61,7 @@ public class Main extends javafx.application.Application {
      *          thrown if an error occurs during start up
      */
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         Main.primaryStage = primaryStage;
         version = new Version(this.getClass());
@@ -109,12 +109,9 @@ public class Main extends javafx.application.Application {
         Main.primaryStage.setScene(scene);
 
         FXMainController mainController = fxmlLoader.getController();
-        Main.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                if (!mainController.exitApplication()) {
-                    event.consume();        // do not close the application
-                }
+        Main.primaryStage.setOnCloseRequest((WindowEvent event) -> {
+            if (!mainController.exitApplication()) {
+                event.consume();            // do not close the application
             }
         });
 
@@ -168,6 +165,7 @@ public class Main extends javafx.application.Application {
                 } catch (Exception e) {
                     // locale not supported
                     locale = Locale.getDefault();
+                    log.warning("unsupported locale; fallback to english");
                 }
             }
             resourceLoader = new DefaultResourceBundleLoader(new PropertyResourceControl("text/"), locale);

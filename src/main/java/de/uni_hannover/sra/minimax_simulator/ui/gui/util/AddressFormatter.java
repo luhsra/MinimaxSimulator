@@ -17,7 +17,7 @@ public class AddressFormatter extends TextFormatter<Integer> {
      * Creates a {@link TextFormatter} with an {@link HexStringConverter} and a filter for limiting the input.
      *
      * @param mMemory
-     * 			the {@link MachineMemory} the {@code AddressFormatter} is used for
+     *          the {@link MachineMemory} the {@code AddressFormatter} is used for
      */
     public AddressFormatter(MachineMemory mMemory) {
         super(  new HexStringConverter(mMemory.getMinAddress(), mMemory.getMaxAddress(), Util.createHexFormatString(mMemory.getAddressWidth(), false)),

@@ -7,15 +7,15 @@ package de.uni_hannover.sra.minimax_simulator.model.signal;
  */
 public interface DescriptionFactory {
 
-	/**
-	 * Creates the description for the specified {@link SignalRow}.
-	 *
-	 * @param rowIndex
-	 *          the index of the {@code SignalRow}
-	 * @param row
-	 *          the {@code SignalRow}
-	 * @return
-	 *          the description of the {@code SignalRow}
-	 */
-	public String createDescription(int rowIndex, SignalRow row);
+    /**
+     * Creates the description for the specified {@link SignalRow}.
+     *
+     * @param rowIndex
+     *          the index of the {@code SignalRow}
+     * @param row
+     *          the {@code SignalRow}
+     * @return
+     *          the description of the {@code SignalRow}
+     */
+    public String createDescription(int rowIndex, SignalRow row);
 }

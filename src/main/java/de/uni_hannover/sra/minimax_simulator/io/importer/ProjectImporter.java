@@ -12,15 +12,15 @@ import de.uni_hannover.sra.minimax_simulator.model.user.Project;
  */
 public interface ProjectImporter {
 
-	/**
-	 * Imports a project from this data sink. Calling this method multiple times is not guaranteed to produce equal
-	 * {@link Project} instances since the import process is usually tied to underlying storage like file systems.<br>
-	 * A failed import will not affect the importer instance but will result in a thrown exception.
-	 * 
-	 * @return
-	 *          the successfully imported {@link Project} instance
-	 * @throws ProjectImportException
-	 *          thrown if the import failed
-	 */
-	public Project importProject() throws ProjectImportException;
+    /**
+     * Imports a project from this data sink. Calling this method multiple times is not guaranteed to produce equal
+     * {@link Project} instances since the import process is usually tied to underlying storage like file systems.<br>
+     * A failed import will not affect the importer instance but will result in a thrown exception.
+     *
+     * @return
+     *          the successfully imported {@link Project} instance
+     * @throws ProjectImportException
+     *          thrown if the import failed
+     */
+    public Project importProject() throws ProjectImportException;
 }

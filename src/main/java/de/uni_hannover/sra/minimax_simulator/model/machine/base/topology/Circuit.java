@@ -14,24 +14,24 @@ import java.util.Set;
  */
 public interface Circuit {
 
-	/**
-	 * Refresh the internal state of the instance depending on the values of its
-	 * predecessors.
-	 */
-	public void update();
+    /**
+     * Refresh the internal state of the instance depending on the values of its
+     * predecessors.
+     */
+    public void update();
 
-	/**
-	 * Returns the direct topological successors of this instance.
-	 * <br>
-	 * The Set is not modifiable.
-	 * 
-	 * @return
-	 *          the set of successor {@code Circuit}s
-	 */
-	public Set<? extends Circuit> getSuccessors();
+    /**
+     * Returns the direct topological successors of this instance.
+     * <br>
+     * The Set is not modifiable.
+     *
+     * @return
+     *          the set of successor {@code Circuit}s
+     */
+    public Set<? extends Circuit> getSuccessors();
 
-	/**
-	 * Resets the internal state of this instance to a default state.
-	 */
-	public void reset();
+    /**
+     * Resets the internal state of this instance to a default state.
+     */
+    public void reset();
 }

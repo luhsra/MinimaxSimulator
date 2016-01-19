@@ -13,51 +13,51 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class DefaultRenderEnvironment implements RenderEnvironment {
 
-	private final Font font;
-	private final FontMetrics fontMetrics;
+    private final Font font;
+    private final FontMetrics fontMetrics;
 
-	/**
-	 * Constructs a new {@code DefaultRenderEnvironment} with the specified {@link Font} and {@link FontMetrics}.
-	 *
-	 * @param font
-	 *          the font to use
-	 * @param fontMetrics
-	 *          the font metrics of the font
-	 */
-	public DefaultRenderEnvironment(Font font, FontMetrics fontMetrics) {
-		this.font = checkNotNull(font);
-		this.fontMetrics = checkNotNull(fontMetrics);
-	}
+    /**
+     * Constructs a new {@code DefaultRenderEnvironment} with the specified {@link Font} and {@link FontMetrics}.
+     *
+     * @param font
+     *          the font to use
+     * @param fontMetrics
+     *          the font metrics of the font
+     */
+    public DefaultRenderEnvironment(Font font, FontMetrics fontMetrics) {
+        this.font = checkNotNull(font);
+        this.fontMetrics = checkNotNull(fontMetrics);
+    }
 
-	/**
-	 * Gets the background {@link Color}.
-	 *
-	 * @return
-	 *          {@link Color#WHITE}
-	 */
-	@Override
-	public Color getBackgroundColor() {
-		return Color.WHITE;
-	}
+    /**
+     * Gets the background {@link Color}.
+     *
+     * @return
+     *          {@link Color#WHITE}
+     */
+    @Override
+    public Color getBackgroundColor() {
+        return Color.WHITE;
+    }
 
-	/**
-	 * Gets the foreground {@link Color}.
-	 *
-	 * @return
-	 *          {@link Color#BLACK}
-	 */
-	@Override
-	public Color getForegroundColor() {
-		return Color.BLACK;
-	}
+    /**
+     * Gets the foreground {@link Color}.
+     *
+     * @return
+     *          {@link Color#BLACK}
+     */
+    @Override
+    public Color getForegroundColor() {
+        return Color.BLACK;
+    }
 
-	@Override
-	public Font getFont() {
-		return this.font;
-	}
+    @Override
+    public Font getFont() {
+        return this.font;
+    }
 
-	@Override
-	public FontMetrics getFontMetrics() {
-		return this.fontMetrics;
-	}
+    @Override
+    public FontMetrics getFontMetrics() {
+        return this.fontMetrics;
+    }
 }

@@ -18,60 +18,60 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class MachineSchematics extends SpriteCanvas<SpriteOwner> implements MachineDisplayListener {
 
-	private static final Font FONT = new Font("SansSerif", 17.0);
+    private static final Font FONT = new Font("SansSerif", 17.0);
 
-	private final Machine machine;
+    private final Machine machine;
 
-	/**
-	 * Initializes the {@code MachineSchematics}.
-	 *
-	 * @param machine
-	 *          the {@code Machine} for which the schematics should be drawn
-	 */
-	public MachineSchematics(Machine machine) {
-		this.machine = checkNotNull(machine);
-		this.machine.getDisplay().addMachineDisplayListener(this);
+    /**
+     * Initializes the {@code MachineSchematics}.
+     *
+     * @param machine
+     *          the {@code Machine} for which the schematics should be drawn
+     */
+    public MachineSchematics(Machine machine) {
+        this.machine = checkNotNull(machine);
+        this.machine.getDisplay().addMachineDisplayListener(this);
 
-		setEnvironment(new DefaultRenderEnvironment(FONT, getFontMetrics(FONT)));
-		setSpriteFactory(new DefaultSpriteFactory());
+        setEnvironment(new DefaultRenderEnvironment(FONT, getFontMetrics(FONT)));
+        setSpriteFactory(new DefaultSpriteFactory());
 
-		this.machine.getDisplay().getAllSpriteOwners().forEach(this::setSprite);
+        this.machine.getDisplay().getAllSpriteOwners().forEach(this::setSprite);
 
-		updatePreferredSize();
-	}
+        updatePreferredSize();
+    }
 
-	/**
-	 * Updates the size of the {@code Canvas} and redraws the content.
-	 */
-	private void updatePreferredSize() {
-		Dimension dim = this.machine.getDisplay().getDimension();
-		setSize(dim.getWidth(), dim.getHeight());
-		draw();
-	}
+    /**
+     * Updates the size of the {@code Canvas} and redraws the content.
+     */
+    private void updatePreferredSize() {
+        Dimension dim = this.machine.getDisplay().getDimension();
+        setSize(dim.getWidth(), dim.getHeight());
+        draw();
+    }
 
-	@Override
-	public void machineSizeChanged() {
-		updatePreferredSize();
-	}
+    @Override
+    public void machineSizeChanged() {
+        updatePreferredSize();
+    }
 
-	@Override
-	public void machineDisplayChanged() {
-		draw();
-	}
+    @Override
+    public void machineDisplayChanged() {
+        draw();
+    }
 
-	@Override
-	public void onSpriteOwnerAdded(SpriteOwner spriteOwner) {
-		setSprite(spriteOwner);
-	}
+    @Override
+    public void onSpriteOwnerAdded(SpriteOwner spriteOwner) {
+        setSprite(spriteOwner);
+    }
 
-	@Override
-	public void onSpriteOwnerRemoved(SpriteOwner spriteOwner) {
-		removeSprite(spriteOwner);
-	}
+    @Override
+    public void onSpriteOwnerRemoved(SpriteOwner spriteOwner) {
+        removeSprite(spriteOwner);
+    }
 
-	@Override
-	public void onSpriteOwnerChanged(SpriteOwner spriteOwner) {
-		setSprite(spriteOwner);
-	}
+    @Override
+    public void onSpriteOwnerChanged(SpriteOwner spriteOwner) {
+        setSprite(spriteOwner);
+    }
 
 }

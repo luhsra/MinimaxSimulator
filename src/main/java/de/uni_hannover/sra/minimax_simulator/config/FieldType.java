@@ -10,15 +10,15 @@ package de.uni_hannover.sra.minimax_simulator.config;
  */
 public enum FieldType {
 
-	/**
-	 * Automatically deduce the parsing mode from the field type (String, int, long, ...).
-	 */
-	AUTO,
+    /**
+     * Automatically deduce the parsing mode from the field type (String, int, long, ...).
+     */
+    AUTO,
 
-	/**
-	 * Interpret the string value of the configuration for this field as a size given in bytes.
-	 * If chosen, the field value can have a binary unit prefix applied, as K, M or G, for
-	 * kilo, mega, giga.
-	 */
-	BYTESIZE
+    /**
+     * Interpret the string value of the configuration for this field as a size given in bytes.
+     * If chosen, the field value can have a binary unit prefix applied, as K, M or G, for
+     * kilo, mega, giga.
+     */
+    BYTESIZE
 }

@@ -7,11 +7,11 @@ package de.uni_hannover.sra.minimax_simulator.model.user;
  */
 public interface ProjectBuilder {
 
-	/**
-	 * Builds a {@link Project}.
-	 *
-	 * @return
-	 *          the built {@code Project}
-	 */
-	public Project buildProject();
+    /**
+     * Builds a {@link Project}.
+     *
+     * @return
+     *          the built {@code Project}
+     */
+    public Project buildProject();
 }

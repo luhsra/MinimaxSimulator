@@ -10,40 +10,40 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.simulation;
  */
 public interface Traceable<T> {
 
-	/**
-	 * Gets the value of the {@code Traceable}.
-	 *
-	 * @return
-	 *          the value
-	 */
-	public T get();
+    /**
+     * Gets the value of the {@code Traceable}.
+     *
+     * @return
+     *          the value
+     */
+    public T get();
 
-	/**
-	 * Sets the value of the {@code Traceable}.
-	 *
-	 * @param value
-	 *          the new value
-	 */
-	public void set(T value);
+    /**
+     * Sets the value of the {@code Traceable}.
+     *
+     * @param value
+     *          the new value
+     */
+    public void set(T value);
 
-	/**
-	 * Registers the specified {@link TraceableChangeListener}.
-	 *
-	 * @param listener
-	 *          the listener to register
-	 */
-	public void addChangeListener(TraceableChangeListener<T> listener);
+    /**
+     * Registers the specified {@link TraceableChangeListener}.
+     *
+     * @param listener
+     *          the listener to register
+     */
+    public void addChangeListener(TraceableChangeListener<T> listener);
 
-	/**
-	 * Removes the specified {@link TraceableChangeListener}.
-	 *
-	 * @param listener
-	 *          the listener to remove
-	 */
-	public void removeChangeListener(TraceableChangeListener<T> listener);
+    /**
+     * Removes the specified {@link TraceableChangeListener}.
+     *
+     * @param listener
+     *          the listener to remove
+     */
+    public void removeChangeListener(TraceableChangeListener<T> listener);
 
-	/**
-	 * Removes all {@link TraceableChangeListener}s.
-	 */
-	public void clearListeners();
+    /**
+     * Removes all {@link TraceableChangeListener}s.
+     */
+    public void clearListeners();
 }

@@ -12,102 +12,102 @@ import static com.google.common.base.Preconditions.checkElementIndex;
  */
 public class MapMemory extends AbstractMemory {
 
-	private static final int DEFAULT_VALUE	= 0;
+    private static final int DEFAULT_VALUE = 0;
 
-	/**
-	 * The {@link MemoryState} of a {@link MapMemory}.
-	 */
-	private class MapMemoryState implements MemoryState {
+    /**
+     * The {@link MemoryState} of a {@link MapMemory}.
+     */
+    private class MapMemoryState implements MemoryState {
 
-		private final int maxAddress;
-		/** The map holding the values stored in memory. */
-		private final Map<Integer, Integer> valueMap;
+        private final int maxAddress;
+        /** The map holding the values stored in memory. */
+        private final Map<Integer, Integer> valueMap;
 
-		/**
-		 * Constructs a new {@code MapMemoryState} with the specified maximum address.
-		 *
-		 * @param maxAddress
-		 *          the highest accessible address
-		 */
-		MapMemoryState(int maxAddress) {
-			this.maxAddress = maxAddress;
-			valueMap = new HashMap<Integer, Integer>();
-		}
+        /**
+         * Constructs a new {@code MapMemoryState} with the specified maximum address.
+         *
+         * @param maxAddress
+         *          the highest accessible address
+         */
+        MapMemoryState(int maxAddress) {
+            this.maxAddress = maxAddress;
+            valueMap = new HashMap<Integer, Integer>();
+        }
 
-		/**
-		 * Constructs a new {@code MapMemoryState} with the specified maximum address
-		 * and map of values.
-		 *
-		 * @param maxAddress
-		 *          the highest accessible address
-		 * @param valueMap
-		 *          the value map of the new {@code MapMemoryState}
-		 */
-		private MapMemoryState(int maxAddress, Map<Integer, Integer> valueMap) {
-			this.maxAddress = maxAddress;
-			this.valueMap = new HashMap<Integer, Integer>(valueMap);
-		}
+        /**
+         * Constructs a new {@code MapMemoryState} with the specified maximum address
+         * and map of values.
+         *
+         * @param maxAddress
+         *          the highest accessible address
+         * @param valueMap
+         *          the value map of the new {@code MapMemoryState}
+         */
+        private MapMemoryState(int maxAddress, Map<Integer, Integer> valueMap) {
+            this.maxAddress = maxAddress;
+            this.valueMap = new HashMap<Integer, Integer>(valueMap);
+        }
 
-		@Override
-		public int getInt(int address) {
-			checkElementIndex(address, maxAddress + 1);
-			Integer entry = valueMap.get(address);
-			if (entry == null) {
-				return DEFAULT_VALUE;
-			}
+        @Override
+        public int getInt(int address) {
+            checkElementIndex(address, maxAddress + 1);
+            Integer entry = valueMap.get(address);
+            if (entry == null) {
+                return DEFAULT_VALUE;
+            }
 
-			int value = entry;
-			fireReadAccess(address, value);
-			return value;
-		}
+            int value = entry;
+            fireReadAccess(address, value);
+            return value;
+        }
 
-		@Override
-		public void setInt(int address, int value) {
-			checkElementIndex(address, maxAddress + 1);
-			if (value == DEFAULT_VALUE) {
-				valueMap.remove(address);
-			}
-			else {
-				valueMap.put(address, value);
-			}
-			fireWriteAccess(address, value);
-		}
+        @Override
+        public void setInt(int address, int value) {
+            checkElementIndex(address, maxAddress + 1);
+            if (value == DEFAULT_VALUE) {
+                valueMap.remove(address);
+            }
+            else {
+                valueMap.put(address, value);
+            }
+            fireWriteAccess(address, value);
+        }
 
-		/**
-		 * Creates a copy of the {@code MapMemoryState}.
-		 *
-		 * @return
-		 *          the copy
-		 */
-		MapMemoryState copy() {
-			return new MapMemoryState(maxAddress, valueMap);
-		}
+        /**
+         * Creates a copy of the {@code MapMemoryState}.
+         *
+         * @return
+         *          the copy
+         */
+        MapMemoryState copy() {
+            return new MapMemoryState(maxAddress, valueMap);
+        }
 
-		@Override
-		public void zero() {
-			valueMap.clear();
-			fireMemoryChanged();
-		}
-	}
+        @Override
+        public void zero() {
+            valueMap.clear();
+            fireMemoryChanged();
+        }
+    }
 
-	/**
-	 * Constructs a new {@code MapMemory} of the specified length.
-	 *
-	 * @param addressWidth
-	 *          the length of the new {@code MapMemory}
-	 */
-	public MapMemory(int addressWidth) {
-		super(addressWidth);
-		setupMemoryState();
-	}
+    /**
+     * Constructs a new {@code MapMemory} of the specified length.
+     *
+     * @param addressWidth
+     *          the length of the new {@code MapMemory}
+     */
+    public MapMemory(int addressWidth) {
+        super(addressWidth);
+        setupMemoryState();
+    }
 
-	@Override
-	protected MemoryState createMemoryState() {
-		return new MapMemoryState(getMaxAddress());
-	}
+    @Override
+    protected MemoryState createMemoryState() {
+        return new MapMemoryState(getMaxAddress());
+    }
 
-	@Override
-	protected MemoryState cloneState(MemoryState state) {
-		return ((MapMemoryState) state).copy();
-	}
+    @Override
+    protected MemoryState cloneState(MemoryState state) {
+        return ((MapMemoryState) state).copy();
+    }
 }

@@ -7,8 +7,8 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.base.topology;
  */
 public interface SynchronousCircuit extends Circuit {
 
-	/**
-	 * Switches the cycle in a {@code SynchronousCircuit}.
-	 */
-	public void nextCycle();
+    /**
+     * Switches the cycle in a {@code SynchronousCircuit}.
+     */
+    public void nextCycle();
 }

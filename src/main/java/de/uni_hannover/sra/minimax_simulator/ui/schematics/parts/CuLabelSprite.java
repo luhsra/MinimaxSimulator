@@ -18,47 +18,47 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CuLabelSprite extends CircuitSprite {
 
-	private final Label label;
+    private final Label label;
 
-	/**
-	 * Initializes the {@code CuLabelSprite}.
-	 *
-	 * @param label
-	 *          the CU's label
-	 */
-	public CuLabelSprite(Label label) {
-		this.label = checkNotNull(label);
-	}
+    /**
+     * Initializes the {@code CuLabelSprite}.
+     *
+     * @param label
+     *          the CU's label
+     */
+    public CuLabelSprite(Label label) {
+        this.label = checkNotNull(label);
+    }
 
-	@Override
-	public void paint(GraphicsContext gc) {
-		Bounds b = label.getBounds();
-		debugBounds(gc, b);
+    @Override
+    public void paint(GraphicsContext gc) {
+        Bounds b = label.getBounds();
+        debugBounds(gc, b);
 
-		String message = label.getMessage();
+        String message = label.getMessage();
 
-		FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
-		double textWidth = fm.computeStringWidth(message);
-		double textHeight = fm.getLineHeight();
+        FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
+        double textWidth = fm.computeStringWidth(message);
+        double textHeight = fm.getLineHeight();
 
-		double textX = b.x + b.w / 2 - textWidth / 2;
-		double textY = b.y + b.h / 2 + textHeight / 4 + 1;
+        double textX = b.x + b.w / 2 - textWidth / 2;
+        double textY = b.y + b.h / 2 + textHeight / 4 + 1;
 
-		gc.fillText(message, textX, textY);
+        gc.fillText(message, textX, textY);
 
-		// save parameters
-		gc.save();
+        // save parameters
+        gc.save();
 
-		// change parameters and stroke rectangle
-		gc.setLineWidth(1.0f);
-		gc.setLineCap(StrokeLineCap.BUTT);
-		gc.setLineJoin(StrokeLineJoin.MITER);
-		gc.setMiterLimit(10.0f);
-		gc.setLineDashes(10.0f);
-		gc.setLineDashOffset(0.0f);
-		gc.strokeRect(b.x + 0.5, b.y + 0.5, b.w, b.h);
+        // change parameters and stroke rectangle
+        gc.setLineWidth(1.0f);
+        gc.setLineCap(StrokeLineCap.BUTT);
+        gc.setLineJoin(StrokeLineJoin.MITER);
+        gc.setMiterLimit(10.0f);
+        gc.setLineDashes(10.0f);
+        gc.setLineDashOffset(0.0f);
+        gc.strokeRect(b.x + 0.5, b.y + 0.5, b.w, b.h);
 
-		// restore old parameters
-		gc.restore();
-	}
+        // restore old parameters
+        gc.restore();
+    }
 }

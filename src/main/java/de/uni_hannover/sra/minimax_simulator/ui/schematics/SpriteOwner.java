@@ -9,12 +9,12 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
  */
 public interface SpriteOwner {
 
-	/**
-	 * Creates the {@code Sprite} of the owner.
-	 *
-	 * @return
-	 *          the created {@code Sprite}
-	 */
-	public Sprite createSprite();
+    /**
+     * Creates the {@code Sprite} of the owner.
+     *
+     * @return
+     *          the created {@code Sprite}
+     */
+    public Sprite createSprite();
 
 }

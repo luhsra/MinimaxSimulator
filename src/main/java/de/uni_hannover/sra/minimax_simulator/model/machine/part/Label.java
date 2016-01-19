@@ -13,30 +13,30 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
  */
 public class Label extends AbstractComponent implements SpriteOwner {
 
-	private final String message;
+    private final String message;
 
-	/**
-	 * Constructs a new {@code Label} with the specified message.
-	 *
-	 * @param message
-	 *          the message of the {@code Label}
-	 */
-	public Label(String message) {
-		this.message = message;
-	}
+    /**
+     * Constructs a new {@code Label} with the specified message.
+     *
+     * @param message
+     *          the message of the {@code Label}
+     */
+    public Label(String message) {
+        this.message = message;
+    }
 
-	/**
-	 * Gets the message of the {@code Label}.
-	 *
-	 * @return
-	 *          the message
-	 */
-	public String getMessage() {
-		return message;
-	}
+    /**
+     * Gets the message of the {@code Label}.
+     *
+     * @return
+     *          the message
+     */
+    public String getMessage() {
+        return message;
+    }
 
-	@Override
-	public Sprite createSprite() {
-		return new LabelSprite(this);
-	}
+    @Override
+    public Sprite createSprite() {
+        return new LabelSprite(this);
+    }
 }

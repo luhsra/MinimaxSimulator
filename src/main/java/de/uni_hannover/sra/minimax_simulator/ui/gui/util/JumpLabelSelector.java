@@ -64,8 +64,8 @@ public class JumpLabelSelector extends ComboBox {
      * @author Martin L&uuml;ck
      */
     private static class Target {
-        public int		row;
-        public String	label;
+        public int      row;
+        public String   label;
 
         public Target(int row, String label) {
             this.row = row;

@@ -7,28 +7,28 @@ package de.uni_hannover.sra.minimax_simulator.model.signal.jump;
  */
 public final class DefaultJump implements Jump {
 
-	/** The {@code DefaultJump} instance. */
-	public static final Jump INSTANCE = new DefaultJump();
+    /** The {@code DefaultJump} instance. */
+    public static final Jump INSTANCE = new DefaultJump();
 
-	/**
-	 * Constructs the singleton instance.
-	 */
-	private DefaultJump() {
+    /**
+     * Constructs the singleton instance.
+     */
+    private DefaultJump() {
 
-	}
+    }
 
-	@Override
-	public int getTargetRow(int currentRow, int condition) {
-		return currentRow + 1;
-	}
+    @Override
+    public int getTargetRow(int currentRow, int condition) {
+        return currentRow + 1;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		return o == INSTANCE;
-	}
+    @Override
+    public boolean equals(Object o) {
+        return o == INSTANCE;
+    }
 
-	@Override
-	public int hashCode() {
-		return 31;
-	}
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

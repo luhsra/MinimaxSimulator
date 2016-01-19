@@ -6,30 +6,30 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.base.memory;
  * @author Martin L&uuml;ck
  */
 public interface MemoryState {
-	//public int[] getInts(int fromAddress, int length);
+    //public int[] getInts(int fromAddress, int length);
 
-	/**
-	 * Gets the value at the specified memory address.
-	 *
-	 * @param address
-	 *          the memory address whose value will be read
-	 * @return
-	 *          the value of the memory address
-	 */
-	public int getInt(int address);
+    /**
+     * Gets the value at the specified memory address.
+     *
+     * @param address
+     *          the memory address whose value will be read
+     * @return
+     *          the value of the memory address
+     */
+    public int getInt(int address);
 
-	/**
-	 * Sets the specified value at the specified memory address.
-	 *
-	 * @param address
-	 *          the memory address whose value will be set
-	 * @param value
-	 *          the new value of the memory address
-	 */
-	public void setInt(int address, int value);
+    /**
+     * Sets the specified value at the specified memory address.
+     *
+     * @param address
+     *          the memory address whose value will be set
+     * @param value
+     *          the new value of the memory address
+     */
+    public void setInt(int address, int value);
 
-	/**
-	 * Zeros the entire {@code MemoryState}.
-	 */
-	public void zero();
+    /**
+     * Zeros the entire {@code MemoryState}.
+     */
+    public void zero();
 }

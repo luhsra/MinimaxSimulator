@@ -11,56 +11,56 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
  */
 public class SignExtension extends SimplePart implements SpriteOwner {
 
-	private final IngoingPin dataIn;
-	private final String label;
+    private final IngoingPin dataIn;
+    private final String label;
 
-	/**
-	 * Constructs a new {@code SignExtension} with the specified display name.
-	 *
-	 * @param label
-	 *          the display name of the {@code SignExtension}
-	 */
-	public SignExtension(String label) {
-		dataIn = new IngoingPin(this);
-		this.label = label;
-	}
+    /**
+     * Constructs a new {@code SignExtension} with the specified display name.
+     *
+     * @param label
+     *          the display name of the {@code SignExtension}
+     */
+    public SignExtension(String label) {
+        dataIn = new IngoingPin(this);
+        this.label = label;
+    }
 
-	/**
-	 * Gets the {@link IngoingPin}.
-	 *
-	 * @return
-	 *          the input pin
-	 */
-	public IngoingPin getDataIn() {
-		return dataIn;
-	}
+    /**
+     * Gets the {@link IngoingPin}.
+     *
+     * @return
+     *          the input pin
+     */
+    public IngoingPin getDataIn() {
+        return dataIn;
+    }
 
-	@Override
-	public void update() {
-		int value = dataIn.read();
-		
-		int bit24 = value & 0x00800000;
+    @Override
+    public void update() {
+        int value = dataIn.read();
 
-		if (bit24 == 0)
-			value = value & 0x00FFFFFF; // zero first 8 bits
-		else
-			value = value | 0xFF000000; // set first 8 bits
-		
-		getDataOut().write(value);
-	}
+        int bit24 = value & 0x00800000;
 
-	/**
-	 * Gets the display name of the {@code SignExtension}.
-	 *
-	 * @return
-	 *          the display name
-	 */
-	public String getLabel() {
-		return label;
-	}
+        if (bit24 == 0)
+            value = value & 0x00FFFFFF; // zero first 8 bits
+        else
+            value = value | 0xFF000000; // set first 8 bits
 
-	@Override
-	public Sprite createSprite() {
-		return new SignExtSprite(this);
-	}
+        getDataOut().write(value);
+    }
+
+    /**
+     * Gets the display name of the {@code SignExtension}.
+     *
+     * @return
+     *          the display name
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    @Override
+    public Sprite createSprite() {
+        return new SignExtSprite(this);
+    }
 }

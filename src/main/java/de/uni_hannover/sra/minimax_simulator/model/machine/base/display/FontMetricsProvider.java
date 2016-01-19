@@ -11,19 +11,19 @@ import javafx.scene.text.Font;
  */
 public interface FontMetricsProvider {
 
-	/**
-	 * Gets the used {@code Font}.
-	 *
-	 * @return
-	 *          the used {@code Font}
-	 */
-	public Font getFont();
+    /**
+     * Gets the used {@code Font}.
+     *
+     * @return
+     *          the used {@code Font}
+     */
+    public Font getFont();
 
-	/**
-	 * Gets the {@code FontMetrics} of the used {@code Font}.
-	 *
-	 * @return
-	 *          the {@code FontMetrics} of the used {@code Font}
-	 */
-	public FontMetrics getFontMetrics();
+    /**
+     * Gets the {@code FontMetrics} of the used {@code Font}.
+     *
+     * @return
+     *          the {@code FontMetrics} of the used {@code Font}
+     */
+    public FontMetrics getFontMetrics();
 }

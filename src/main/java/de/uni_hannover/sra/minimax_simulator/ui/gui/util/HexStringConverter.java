@@ -18,9 +18,9 @@ public class HexStringConverter extends StringConverter<Integer> {
      * The default constructor takes the minimal and maximal value. No format string is set.
      *
      * @param minValue
-     * 			the minimal value that is allowed
+     *          the minimal value that is allowed
      * @param maxValue
-     * 			the maximal value that is allowed
+     *          the maximal value that is allowed
      */
     public HexStringConverter(int minValue, int maxValue) {
         super();
@@ -34,11 +34,11 @@ public class HexStringConverter extends StringConverter<Integer> {
      * the format string.
      *
      * @param minValue
-     * 			the minimal value that is allowed
+     *          the minimal value that is allowed
      * @param maxValue
-     * 			the maximal value that is allowed
+     *          the maximal value that is allowed
      * @param formatString
-     * 			the format string to use for conversion
+     *          the format string to use for conversion
      */
     public HexStringConverter(int minValue, int maxValue, String formatString) {
         super();

@@ -25,179 +25,179 @@ import java.util.*;
  */
 public class MinimaxMachine implements ConfigurableMachine {
 
-	private static final int ADDRESS_WIDTH	= 24;
-	private static final int PAGE_WIDTH		= 12;
+    private static final int ADDRESS_WIDTH  = 24;
+    private static final int PAGE_WIDTH     = 12;
 
-	private final MinimaxLayout layout;
-	private final MinimaxTopology topology;
-	private final MinimaxDisplay display;
-	private final MachineMemory memory;
+    private final MinimaxLayout layout;
+    private final MinimaxTopology topology;
+    private final MinimaxDisplay display;
+    private final MachineMemory memory;
 
-	private final GroupManager groupManager;
-	private final RegisterManager registerManager;
+    private final GroupManager groupManager;
+    private final RegisterManager registerManager;
 
-	private final ExtensionList<RegisterExtension> registerExtensions;
-	private final Map<MuxType, MuxInputManager> muxExtensions;
-	private final ExtensionList<AluOperation> aluExtensions;
+    private final ExtensionList<RegisterExtension> registerExtensions;
+    private final Map<MuxType, MuxInputManager> muxExtensions;
+    private final ExtensionList<AluOperation> aluExtensions;
 
-	/**
-	 * Constructs a new {@code MinimaxMachine}.
-	 */
-	public MinimaxMachine() {
-		// initialize basic network topology and create Part instances.
-		topology = new MinimaxTopology();
-		display = new MinimaxDisplay();
-		layout = new MinimaxLayout();
+    /**
+     * Constructs a new {@code MinimaxMachine}.
+     */
+    public MinimaxMachine() {
+        // initialize basic network topology and create Part instances.
+        topology = new MinimaxTopology();
+        display = new MinimaxDisplay();
+        layout = new MinimaxLayout();
 
-		memory = new PagedArrayMemory(ADDRESS_WIDTH, PAGE_WIDTH);
+        memory = new PagedArrayMemory(ADDRESS_WIDTH, PAGE_WIDTH);
 
-		groupManager = new DefaultGroupManager(layout, topology, display);
+        groupManager = new DefaultGroupManager(layout, topology, display);
 
-		RegisterInputGroupManager rig = new RegisterInputGroupManager(this);
-		registerManager = rig;
+        RegisterInputGroupManager rig = new RegisterInputGroupManager(this);
+        registerManager = rig;
 
-		// create part groups and add remaining parts
-		for (Group group : createGroups()) {
-			groupManager.initializeGroup("base-group:<" + group.toString() + ">", group);
-		}
+        // create part groups and add remaining parts
+        for (Group group : createGroups()) {
+            groupManager.initializeGroup("base-group:<" + group.toString() + ">", group);
+        }
 
-		registerManager.addRegister(RegisterType.MDR, Parts.MDR);
-		registerManager.addRegister(RegisterType.BASE, Parts.IR);
-		registerManager.addRegister(RegisterType.BASE, Parts.MAR);
-		registerManager.addRegister(RegisterType.BASE, Parts.PC);
-		registerManager.addRegister(RegisterType.BASE, Parts.ACCU);
+        registerManager.addRegister(RegisterType.MDR, Parts.MDR);
+        registerManager.addRegister(RegisterType.BASE, Parts.IR);
+        registerManager.addRegister(RegisterType.BASE, Parts.MAR);
+        registerManager.addRegister(RegisterType.BASE, Parts.PC);
+        registerManager.addRegister(RegisterType.BASE, Parts.ACCU);
 
-		// Layout base parts and group parts
-		layout.initPartLayouts(topology, display);
+        // Layout base parts and group parts
+        layout.initPartLayouts(topology, display);
 
-		registerExtensions = new RegisterExtensionList(this, registerManager);
+        registerExtensions = new RegisterExtensionList(this, registerManager);
 
-		muxExtensions = new EnumMap<MuxType, MuxInputManager>(MuxType.class);
-		muxExtensions.put(MuxType.A, new DefaultMuxInputManager(MuxType.A, Parts.MUX_A, this));
-		muxExtensions.put(MuxType.B, new DefaultMuxInputManager(MuxType.B, Parts.MUX_B, this));
+        muxExtensions = new EnumMap<MuxType, MuxInputManager>(MuxType.class);
+        muxExtensions.put(MuxType.A, new DefaultMuxInputManager(MuxType.A, Parts.MUX_A, this));
+        muxExtensions.put(MuxType.B, new DefaultMuxInputManager(MuxType.B, Parts.MUX_B, this));
 
-		List<MuxInputGroupManager> inputGroupManagers = Arrays.asList(
-			new ConstantInputGroupManager(Parts.GROUP_MUX_CONSTANTS,
-				Arrays.asList(Parts.MUX_A, Parts.MUX_B), this), rig, new NullInputGroupManager(
-						groupManager));
+        List<MuxInputGroupManager> inputGroupManagers = Arrays.asList(
+            new ConstantInputGroupManager(Parts.GROUP_MUX_CONSTANTS,
+                Arrays.asList(Parts.MUX_A, Parts.MUX_B), this), rig, new NullInputGroupManager(
+                        groupManager));
 
-		for (MuxType mux : MuxType.values()) {
-			for (MuxInputGroupManager mig : inputGroupManagers) {
-				muxExtensions.get(mux).registerGroupManager(mig);
-			}
-		}
+        for (MuxType mux : MuxType.values()) {
+            for (MuxInputGroupManager mig : inputGroupManagers) {
+                muxExtensions.get(mux).registerGroupManager(mig);
+            }
+        }
 
-		layout.putLayout(Parts.GROUP_MUX_CONSTANTS, new GroupLayout(Arrays.asList(Parts.MUX_A, Parts.MUX_B)));
+        layout.putLayout(Parts.GROUP_MUX_CONSTANTS, new GroupLayout(Arrays.asList(Parts.MUX_A, Parts.MUX_B)));
 
-		aluExtensions = new AluExtensionList(topology.getCircuit(Alu.class, Parts.ALU));
+        aluExtensions = new AluExtensionList(topology.getCircuit(Alu.class, Parts.ALU));
 
-		// == Tweaks ==
+        // == Tweaks ==
 
-		layout.getContainer().setInsets(new Insets(40, 40, 40, 40));
+        layout.getContainer().setInsets(new Insets(40, 40, 40, 40));
 
-		// remove visual representation of MAR junction
-		topology.getCircuit(Junction.class, Parts.MAR + Parts._JUNCTION).getDataOuts().remove(1);
+        // remove visual representation of MAR junction
+        topology.getCircuit(Junction.class, Parts.MAR + Parts._JUNCTION).getDataOuts().remove(1);
 
-		updateLayout();
+        updateLayout();
 
-		// Now, the machine is displayable, as soon as a RenderEnvironment is set on the
-		// MachineDisplay.
-	}
+        // Now, the machine is displayable, as soon as a RenderEnvironment is set on the
+        // MachineDisplay.
+    }
 
-	/**
-	 * Updates the {@link MinimaxLayout} and size of the {@link MinimaxDisplay}.
-	 */
-	void updateLayout() {
-		// relocate all parts based on constraints (...almost there)
-		layout.updateLayout();
+    /**
+     * Updates the {@link MinimaxLayout} and size of the {@link MinimaxDisplay}.
+     */
+    void updateLayout() {
+        // relocate all parts based on constraints (...almost there)
+        layout.updateLayout();
 
-		// setup display instance with calculated size
-		display.setDimension(layout.getDimension());
-	}
+        // setup display instance with calculated size
+        display.setDimension(layout.getDimension());
+    }
 
-	/**
-	 * Gets the {@link MinimaxLayout} of the {@code MinimaxMachine}.
-	 *
-	 * @return
-	 *          the layout
-	 */
-	MinimaxLayout getLayout() {
-		return layout;
-	}
+    /**
+     * Gets the {@link MinimaxLayout} of the {@code MinimaxMachine}.
+     *
+     * @return
+     *          the layout
+     */
+    MinimaxLayout getLayout() {
+        return layout;
+    }
 
-	@Override
-	public MinimaxTopology getTopology() {
-		return topology;
-	}
+    @Override
+    public MinimaxTopology getTopology() {
+        return topology;
+    }
 
-	@Override
-	public MinimaxDisplay getDisplay() {
-		return display;
-	}
+    @Override
+    public MinimaxDisplay getDisplay() {
+        return display;
+    }
 
-	@Override
-	public MachineMemory getMemory() {
-		return memory;
-	}
+    @Override
+    public MachineMemory getMemory() {
+        return memory;
+    }
 
-	/**
-	 * Gets the {@link GroupManager} of the {@code MinimaxMachine}.
-	 *
-	 * @return
-	 *          the {@code GroupManager}
-	 */
-	GroupManager getGroupManager() {
-		return groupManager;
-	}
+    /**
+     * Gets the {@link GroupManager} of the {@code MinimaxMachine}.
+     *
+     * @return
+     *          the {@code GroupManager}
+     */
+    GroupManager getGroupManager() {
+        return groupManager;
+    }
 
-	/**
-	 * Gets the {@link RegisterManager} of the {@code MinimaxMachine}.
-	 *
-	 * @return
-	 *          the {@code RegisterManager}
-	 */
-	RegisterManager getRegisterManager() {
-		return registerManager;
-	}
+    /**
+     * Gets the {@link RegisterManager} of the {@code MinimaxMachine}.
+     *
+     * @return
+     *          the {@code RegisterManager}
+     */
+    RegisterManager getRegisterManager() {
+        return registerManager;
+    }
 
-	@Override
-	public ExtensionList<RegisterExtension> getRegisterExtensions() {
-		return registerExtensions;
-	}
+    @Override
+    public ExtensionList<RegisterExtension> getRegisterExtensions() {
+        return registerExtensions;
+    }
 
-	@Override
-	public ExtensionList<MuxInput> getMuxInputExtensions(MuxType type) {
-		return muxExtensions.get(type);
-	}
+    @Override
+    public ExtensionList<MuxInput> getMuxInputExtensions(MuxType type) {
+        return muxExtensions.get(type);
+    }
 
-	@Override
-	public ExtensionList<AluOperation> getAluOperations() {
-		return aluExtensions;
-	}
+    @Override
+    public ExtensionList<AluOperation> getAluOperations() {
+        return aluExtensions;
+    }
 
-	/**
-	 * Creates the {@link Group}s of the base machine.
-	 *
-	 * @return
-	 *          a list of the {@code Group}s
-	 */
-	private List<Group> createGroups() {
-		List<Group> list = new ArrayList<Group>();
+    /**
+     * Creates the {@link Group}s of the base machine.
+     *
+     * @return
+     *          a list of the {@code Group}s
+     */
+    private List<Group> createGroups() {
+        List<Group> list = new ArrayList<Group>();
 
-		list.add(new BasePartGroup(memory));
-		list.add(new AluGroup());
+        list.add(new BasePartGroup(memory));
+        list.add(new AluGroup());
 
-		// now done by RegisterManager
-		// list.add(new DefaultRegisterGroup(MAR));
-		// list.add(new DefaultRegisterGroup(IR));
-		// list.add(new DefaultRegisterGroup(PC));
-		// list.add(new MdrRegisterGroup(MDR));
-		list.add(new MultiplexerGroup(Parts.MDR_SELECT, "MDR.Sel", true, BaseControlPort.MDR_SEL.port()));
-		list.add(new MultiplexerGroup(Parts.MUX_A, "ALUSel.A", true, BaseControlPort.ALU_SELECT_A.port()));
-		list.add(new MultiplexerGroup(Parts.MUX_B, "ALUSel.B", false, BaseControlPort.ALU_SELECT_B.port()));
-		list.add(new MemoryGroup());
-		list.add(new SignExtGroup());
-		list.add(new BaseRegisterOutWireGroup());
-		return list;
-	}
+        // now done by RegisterManager
+        // list.add(new DefaultRegisterGroup(MAR));
+        // list.add(new DefaultRegisterGroup(IR));
+        // list.add(new DefaultRegisterGroup(PC));
+        // list.add(new MdrRegisterGroup(MDR));
+        list.add(new MultiplexerGroup(Parts.MDR_SELECT, "MDR.Sel", true, BaseControlPort.MDR_SEL.port()));
+        list.add(new MultiplexerGroup(Parts.MUX_A, "ALUSel.A", true, BaseControlPort.ALU_SELECT_A.port()));
+        list.add(new MultiplexerGroup(Parts.MUX_B, "ALUSel.B", false, BaseControlPort.ALU_SELECT_B.port()));
+        list.add(new MemoryGroup());
+        list.add(new SignExtGroup());
+        list.add(new BaseRegisterOutWireGroup());
+        return list;
+    }
 }

@@ -11,11 +11,11 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.simulation;
  */
 public interface TraceableChangeListener<T> {
 
-	/**
-	 * Notifies the listener about a change of the value.
-	 *
-	 * @param value
-	 *          the new value
-	 */
-	public void onValueChanged(T value);
+    /**
+     * Notifies the listener about a change of the value.
+     *
+     * @param value
+     *          the new value
+     */
+    public void onValueChanged(T value);
 }

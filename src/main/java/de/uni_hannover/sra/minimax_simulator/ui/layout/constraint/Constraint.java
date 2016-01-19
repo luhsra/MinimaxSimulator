@@ -9,21 +9,21 @@ import java.util.Set;
  */
 public interface Constraint {
 
-	/**
-	 * Gets the value of the {@code Constraint} using the specified {@link AttributeSource} for derivation.
-	 *
-	 * @param attributes
-	 *          the {@code AttributeSource}
-	 * @return
-	 *          the computed value
-	 */
-	public int getValue(AttributeSource attributes);
+    /**
+     * Gets the value of the {@code Constraint} using the specified {@link AttributeSource} for derivation.
+     *
+     * @param attributes
+     *          the {@code AttributeSource}
+     * @return
+     *          the computed value
+     */
+    public int getValue(AttributeSource attributes);
 
-	/**
-	 * Gets the dependencies of the {@code Constraint}.
-	 *
-	 * @return
-	 *          a set of the dependencies
-	 */
-	public Set<Attribute> getDependencies();
+    /**
+     * Gets the dependencies of the {@code Constraint}.
+     *
+     * @return
+     *          a set of the dependencies
+     */
+    public Set<Attribute> getDependencies();
 }

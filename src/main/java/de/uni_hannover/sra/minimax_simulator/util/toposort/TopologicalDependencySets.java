@@ -12,13 +12,13 @@ import java.util.Set;
  */
 public interface TopologicalDependencySets<T> {
 
-	/**
-	 * Gets the dependencies of the specified {@code TopologicalSortable}.
-	 *
-	 * @param element
-	 *          the {@code TopologicalSortable}
-	 * @return
-	 *          a set of the dependencies of the {@code TopologicalSortable}
-	 */
-	public Set<T> dependenciesOf(T element);
+    /**
+     * Gets the dependencies of the specified {@code TopologicalSortable}.
+     *
+     * @param element
+     *          the {@code TopologicalSortable}
+     * @return
+     *          a set of the dependencies of the {@code TopologicalSortable}
+     */
+    public Set<T> dependenciesOf(T element);
 }

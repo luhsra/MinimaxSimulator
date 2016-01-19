@@ -11,8 +11,8 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class EmptySprite implements Sprite {
 
-	@Override
-	public void paint(GraphicsContext gc, RenderEnvironment env) {
+    @Override
+    public void paint(GraphicsContext gc, RenderEnvironment env) {
 
-	}
+    }
 }

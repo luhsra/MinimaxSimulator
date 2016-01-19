@@ -9,63 +9,63 @@ import java.util.ArrayList;
  */
 public abstract class AbstractListContainer extends Container {
 
-	protected final ArrayList<Component> children = new ArrayList<Component>();
+    protected final ArrayList<Component> children = new ArrayList<Component>();
 
-	@Override
-	public void doLayout() {
-		layoutChildren();
+    @Override
+    public void doLayout() {
+        layoutChildren();
 
-		children.forEach(Component::doLayout);
-	}
+        children.forEach(Component::doLayout);
+    }
 
-	/**
-	 * Layouts the child {@link Component}s to the container before their own layout is done.
-	 */
-	protected abstract void layoutChildren();
+    /**
+     * Layouts the child {@link Component}s to the container before their own layout is done.
+     */
+    protected abstract void layoutChildren();
 
-	@Override
-	public void addComponent(Component component, Object constraint) {
-		children.add(component);
-	}
+    @Override
+    public void addComponent(Component component, Object constraint) {
+        children.add(component);
+    }
 
-	@Override
-	public void removeComponent(Component component) {
-		children.remove(component);
-	}
+    @Override
+    public void removeComponent(Component component) {
+        children.remove(component);
+    }
 
-	/**
-	 * Gets the {@link Component} at the specified index.
-	 *
-	 * @param index
-	 * 			the index of the {@code Component}
-	 * @return
-	 * 			the {@code Component} at the specified index
-	 */
-	public Component getComponent(int index) {
-		return children.get(index);
-	}
+    /**
+     * Gets the {@link Component} at the specified index.
+     *
+     * @param index
+     *          the index of the {@code Component}
+     * @return
+     *          the {@code Component} at the specified index
+     */
+    public Component getComponent(int index) {
+        return children.get(index);
+    }
 
-	/**
-	 * Sets the specified {@link Component} to the specified index.
-	 *
-	 * @param index
-	 * 			the index of the new {@code Component}
-	 * @param child
-	 * 			the new {@code Component}
-	 */
-	public void setComponent(int index, Component child) {
-		children.set(index, child);
-	}
+    /**
+     * Sets the specified {@link Component} to the specified index.
+     *
+     * @param index
+     *          the index of the new {@code Component}
+     * @param child
+     *          the new {@code Component}
+     */
+    public void setComponent(int index, Component child) {
+        children.set(index, child);
+    }
 
-	@Override
-	public void updateSize() {
-		children.forEach(Component::updateSize);
+    @Override
+    public void updateSize() {
+        children.forEach(Component::updateSize);
 
-		updateMySize();
-	}
+        updateMySize();
+    }
 
-	/**
-	 * Updates the size of the {@code AbstractListContainer}.
-	 */
-	protected abstract void updateMySize();
+    /**
+     * Updates the size of the {@code AbstractListContainer}.
+     */
+    protected abstract void updateMySize();
 }

@@ -7,13 +7,13 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
  */
 public enum MuxType {
 
-	/**
-	 * multiplexer A
-	 */
-	A,
+    /**
+     * multiplexer A
+     */
+    A,
 
-	/**
-	 * multiplexer B
-	 */
-	B
+    /**
+     * multiplexer B
+     */
+    B
 }
