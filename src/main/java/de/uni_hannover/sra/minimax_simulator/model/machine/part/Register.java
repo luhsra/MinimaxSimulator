@@ -92,7 +92,7 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 
     @Override
     public void update() {
-
+        // there is nothing that needs to be updated by this method
     }
 
     @Override

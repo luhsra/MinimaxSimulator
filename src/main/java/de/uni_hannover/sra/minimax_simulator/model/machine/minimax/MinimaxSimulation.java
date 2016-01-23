@@ -182,12 +182,12 @@ public class MinimaxSimulation extends AbstractSimulation implements MemoryAcces
 
     @Override
     public void memoryReadAccess(int address, int value) {
-
+        // not interested
     }
 
     @Override
     public void memoryWriteAccess(int address, int value) {
-
+        // not interested
     }
 
     @Override

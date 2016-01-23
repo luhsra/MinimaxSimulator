@@ -31,6 +31,6 @@ public class ConstantShape extends TextRenderShape {
 
     @Override
     public void layout(Component component) {
-
+        // there is no need for this method for a ConstantShape
     }
 }

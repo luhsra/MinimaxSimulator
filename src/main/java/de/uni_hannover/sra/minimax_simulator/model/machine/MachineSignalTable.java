@@ -62,7 +62,9 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
          * @param value
          *          the new value
          */
-        public void setDirection(int value) {}
+        public void setDirection(int value) {
+            // is empty instead of being abstract so only MOVED has so override it
+        }
     }
 
     /**

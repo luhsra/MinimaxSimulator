@@ -42,6 +42,6 @@ public class MuxShape implements ComponentShape {
 
     @Override
     public void layout(Component component) {
-
+        // there is no need for this method for a MuxShape
     }
 }

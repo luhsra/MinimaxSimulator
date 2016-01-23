@@ -86,6 +86,6 @@ public class Junction extends Part implements SpriteOwner {
 
     @Override
     public void reset() {
-
+        // there is nothing to reset for a Junction
     }
 }

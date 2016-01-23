@@ -29,6 +29,6 @@ public class LabelShape extends TextRenderShape {
 
     @Override
     public void layout(Component component) {
-
+        // there is no need for this method for a LabelShape
     }
 }

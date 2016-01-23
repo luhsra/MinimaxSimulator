@@ -13,6 +13,6 @@ public class EmptySprite implements Sprite {
 
     @Override
     public void paint(GraphicsContext gc, RenderEnvironment env) {
-
+        // this is an empty sprite
     }
 }
