@@ -29,7 +29,7 @@ public class MachineResolver {
      *          the {@code Circuit}s to resolve
      */
     public MachineResolver(Set<Circuit> circuits) {
-        ArrayList<Circuit> list = new ArrayList<Circuit>(circuits);
+        ArrayList<Circuit> list = new ArrayList<>(circuits);
         new SimpleTopologicalSorter().sort(circuits, new TopologicalDependencyRelation<Circuit>() {
                 @Override
                 public boolean dependsOn(Circuit element, Circuit dependency) {

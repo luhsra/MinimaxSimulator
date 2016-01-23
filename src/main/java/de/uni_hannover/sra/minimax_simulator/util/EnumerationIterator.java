@@ -56,7 +56,7 @@ public class EnumerationIterator<E> implements Iterator<E> {
      *          an {@code Iterable} wrapping the {@code Enumeration}
      */
     public static <E> Iterable<E> iterate(Enumeration<E> enumeration) {
-        final Iterator<E> iterator = new EnumerationIterator<E>(enumeration);
+        final Iterator<E> iterator = new EnumerationIterator<>(enumeration);
         return new Iterable<E>() {
             @Override
             public Iterator<E> iterator() {

@@ -34,7 +34,7 @@ public abstract class AbstractSimulation implements Simulation, MachineConfigLis
         paused = false;
         halted = false;
 
-        listeners = new ArrayList<SimulationListener>();
+        listeners = new ArrayList<>();
         state = SimulationState.OFF;
     }
 

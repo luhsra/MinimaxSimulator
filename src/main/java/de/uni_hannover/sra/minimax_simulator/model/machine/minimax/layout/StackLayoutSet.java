@@ -89,7 +89,7 @@ public class StackLayoutSet extends DefaultLayoutSet {
         // Add group layout
         if (groupName != null) {
             if (targetArr.length > 0) {
-                addLayout(groupName, new GroupLayout(new HashSet<String>(targets)));
+                addLayout(groupName, new GroupLayout(new HashSet<>(targets)));
             }
             else {
                 addLayout(groupName, new StackLayout(anchor, 0));

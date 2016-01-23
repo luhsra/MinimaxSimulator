@@ -28,9 +28,9 @@ public class ConstraintContainer extends Container implements ConstraintsManager
      * Constructs a new {@code ConstraintContainer}.
      */
     public ConstraintContainer() {
-        attributeOwners = new HashMap<String, AttributeOwner>();
-        components = new HashMap<String, Component>();
-        namesOfComponents = new HashMap<Component, String>();
+        attributeOwners = new HashMap<>();
+        components = new HashMap<>();
+        namesOfComponents = new HashMap<>();
 
         sortedAttributes = Collections.emptyList();
         offset = new Point(0, 0);
@@ -98,7 +98,7 @@ public class ConstraintContainer extends Container implements ConstraintsManager
      */
     private List<Attribute> orderAttributes() {
         // estimation for the list length
-        Map<Attribute, Set<Attribute>> attributes = new HashMap<Attribute, Set<Attribute>>(attributeOwners.size());
+        Map<Attribute, Set<Attribute>> attributes = new HashMap<>(attributeOwners.size());
 
         for (AttributeOwner owner : attributeOwners.values()) {
             for (Attribute attribute : owner.getAttributes()) {

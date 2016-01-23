@@ -31,7 +31,7 @@ public class Multiplexer extends SimplePart implements SpriteOwner {
      *          the amount of data ins
      */
     public Multiplexer(int numberOfInputs) {
-        dataIns = new ArrayList<IngoingPin>(numberOfInputs);
+        dataIns = new ArrayList<>(numberOfInputs);
         for (int i = 0; i < numberOfInputs; i++) {
             dataIns.add(new IngoingPin(this));
         }

@@ -86,7 +86,7 @@ public class SignalColumn extends SignalTableColumn {
                             rowIndex = cell.getTableView().getSelectionModel().getSelectedIndex();
                             signalTable = Main.getWorkspace().getProject().getSignalTable();
                             signalRow = signalTable.getRow(rowIndex);
-                            ComboBox<String> cbRegister = new ComboBox<String>();
+                            ComboBox<String> cbRegister = new ComboBox<>();
 
                             ObservableList<String> data = FXCollections.observableArrayList();
 

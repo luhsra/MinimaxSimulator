@@ -112,8 +112,8 @@ public class MinimaxSignalConfiguration implements SignalConfiguration, MachineC
      *          the machine's configuration
      */
     public MinimaxSignalConfiguration(MachineConfiguration config) {
-        signalTypes = new ArrayList<SignalType>();
-        listeners = new ArrayList<SignalConfigListener>();
+        signalTypes = new ArrayList<>();
+        listeners = new ArrayList<>();
 
         this.config = config;
         this.config.addMachineConfigListener(this);

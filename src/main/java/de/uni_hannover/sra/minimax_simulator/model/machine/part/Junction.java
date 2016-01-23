@@ -37,7 +37,7 @@ public class Junction extends Part implements SpriteOwner {
     public Junction(int pinCount) {
         dataIn = new IngoingPin(this);
 
-        dataOuts = new ArrayList<OutgoingPin>(pinCount);
+        dataOuts = new ArrayList<>(pinCount);
         for (int i = 0; i < pinCount; i++) {
             dataOuts.add(new OutgoingPin(this));
         }
@@ -72,7 +72,7 @@ public class Junction extends Part implements SpriteOwner {
 
     @Override
     public Set<? extends Circuit> getSuccessors() {
-        Set<Circuit> successors = new HashSet<Circuit>();
+        Set<Circuit> successors = new HashSet<>();
         for (OutgoingPin pin : dataOuts) {
             successors.addAll(pin.getSuccessors());
         }

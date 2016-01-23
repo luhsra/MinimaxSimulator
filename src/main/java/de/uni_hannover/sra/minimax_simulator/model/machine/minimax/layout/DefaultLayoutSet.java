@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class DefaultLayoutSet implements LayoutSet {
 
-    private final Map<String, Layout> layouts = new HashMap<String, Layout>();
+    private final Map<String, Layout> layouts = new HashMap<>();
 
     /**
      * Adds the specified {@link Layout} and links it with the specified name.

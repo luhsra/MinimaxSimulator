@@ -31,7 +31,7 @@ public class MapMemory extends AbstractMemory {
          */
         MapMemoryState(int maxAddress) {
             this.maxAddress = maxAddress;
-            valueMap = new HashMap<Integer, Integer>();
+            valueMap = new HashMap<>();
         }
 
         /**
@@ -45,7 +45,7 @@ public class MapMemory extends AbstractMemory {
          */
         private MapMemoryState(int maxAddress, Map<Integer, Integer> valueMap) {
             this.maxAddress = maxAddress;
-            this.valueMap = new HashMap<Integer, Integer>(valueMap);
+            this.valueMap = new HashMap<>(valueMap);
         }
 
         @Override

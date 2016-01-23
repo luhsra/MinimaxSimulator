@@ -44,7 +44,7 @@ public class MinimaxSignalDescription implements DescriptionFactory {
      *          a list of all write enabled registers at {@code SignalRow}
      */
     private List<String> getWritingRegisterNames(SignalRow row) {
-        List<String> registersWrittenByAlu = new ArrayList<String>();
+        List<String> registersWrittenByAlu = new ArrayList<>();
         int mdrSelect = row.getSignalValue(BaseControlPort.MDR_SEL.name());
         for (RegisterExtension register : configuration.getBaseRegisters()) {
             int value = row.getSignalValue(register.getName() + ".W");

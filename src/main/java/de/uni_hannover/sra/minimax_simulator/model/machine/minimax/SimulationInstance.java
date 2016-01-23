@@ -128,8 +128,8 @@ class SimulationInstance {
         aluResult = new AluResult(top.getCircuit(Alu.class, Parts.ALU));
         aluCond = top.getCircuit(ReadablePort.class, Parts.ALU_COND_PORT);
 
-        registerValues = new HashMap<String, RegisterValue>();
-        registerPort = new HashMap<String, ControlPort>();
+        registerValues = new HashMap<>();
+        registerPort = new HashMap<>();
         Map<String, String> registerIdsByName = machine.getRegisterManager().getRegisterIdsByName();
         for (Entry<String, String> entry : registerIdsByName.entrySet())
         {

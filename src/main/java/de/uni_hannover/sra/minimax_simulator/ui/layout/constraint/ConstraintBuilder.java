@@ -16,7 +16,7 @@ public class ConstraintBuilder {
      * Constructs a new {@code ConstrainBuilder} without {@link Constraint}s.
      */
     public ConstraintBuilder() {
-        constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
+        constraints = new EnumMap<>(AttributeType.class);
     }
 
     /**

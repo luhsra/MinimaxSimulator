@@ -28,8 +28,8 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
         }
 
         this.name = name;
-        values = new EnumMap<AttributeType, Integer>(AttributeType.class);
-        constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
+        values = new EnumMap<>(AttributeType.class);
+        constraints = new EnumMap<>(AttributeType.class);
     }
 
     @Override
@@ -99,7 +99,7 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
 //              + attribute);
 
         Set<AttributeType> constrainedSameAxisAttrs =
-                new HashSet<AttributeType>(constraints.keySet());
+                new HashSet<>(constraints.keySet());
         constrainedSameAxisAttrs
                 .retainAll(AttributeType.getAxisTypes(attribute.getAxis()));
 
@@ -124,7 +124,7 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
 
     @Override
     public void validateConstraints() {
-        Set<AttributeType> axisConstraints = new HashSet<AttributeType>(constraints.keySet());
+        Set<AttributeType> axisConstraints = new HashSet<>(constraints.keySet());
         axisConstraints.retainAll(AttributeType.getAxisTypes(AttributeAxis.HORIZONTAL));
         if (axisConstraints.size() < 1 || (axisConstraints.size() == 1 && axisConstraints.contains(AttributeType.WIDTH))) {
             throw new IllegalStateException(name + ": underconstrained in x axis");
@@ -158,7 +158,7 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
 
     @Override
     public Set<Attribute> getAttributes() {
-        Set<Attribute> attrs = new HashSet<Attribute>();
+        Set<Attribute> attrs = new HashSet<>();
         for (AttributeType type : AttributeType.values()) {
             attrs.add(new Attribute(getName(), type));
         }
@@ -167,7 +167,7 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
 
     @Override
     public Set<Attribute> getDependencies(AttributeType attribute) {
-        Set<Attribute> attrs = new HashSet<Attribute>();
+        Set<Attribute> attrs = new HashSet<>();
 
         Constraint constraint = constraints.get(attribute);
 

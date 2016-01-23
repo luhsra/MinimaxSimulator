@@ -19,7 +19,7 @@ public class ProjectConfiguration {
      * Constructs a new {@code ProjectConfiguration}.
      */
     public ProjectConfiguration() {
-        openTabKeys = new ArrayList<String>();
+        openTabKeys = new ArrayList<>();
         selectedTabKey = "";
     }
 

@@ -38,16 +38,16 @@ class ConstantInputGroupManager implements MuxInputGroupManager {
      *          the {@code MinimaxMachine}
      */
     public ConstantInputGroupManager(String layoutGroupName, Collection<String> defaultGroupSet, MinimaxMachine machine) {
-        this.defaultGroupSet = new HashSet<String>(defaultGroupSet);
+        this.defaultGroupSet = new HashSet<>(defaultGroupSet);
         this.layoutGroupName = layoutGroupName;
         groupManager = machine.getGroupManager();
         layout = machine.getLayout();
 
-        namesOfConstants = new HashSet<String>();
+        namesOfConstants = new HashSet<>();
 
-        inputEntries = new HashMap<MuxType, List<InputEntry>>();
+        inputEntries = new HashMap<>();
         for (MuxType type : MuxType.values())
-            inputEntries.put(type, new ArrayList<InputEntry>());
+            inputEntries.put(type, new ArrayList<>());
 
         updateLayout();
     }

@@ -44,8 +44,8 @@ class RegisterExtensionList implements ExtensionList<RegisterExtension> {
         this.machine = machine;
         layout = machine.getLayout();
 
-        registerNames = new ArrayList<String>();
-        registerextensions = new ArrayList<RegisterExtension>();
+        registerNames = new ArrayList<>();
+        registerextensions = new ArrayList<>();
 
         this.registerManager = registerManager;
 
@@ -149,12 +149,12 @@ class RegisterExtensionList implements ExtensionList<RegisterExtension> {
      * Sets a {@link StackLayoutSet}.
      */
     private void setStackLayout() {
-        List<String> outJunctionNames = new ArrayList<String>(registerNames.size());
+        List<String> outJunctionNames = new ArrayList<>(registerNames.size());
         for (String name : registerNames) {
             outJunctionNames.add(name + Parts._OUT_JUNCTION + Parts._ANCHOR);
         }
 
-        List<String> names = new ArrayList<String>(registerNames);
+        List<String> names = new ArrayList<>(registerNames);
         Collections.reverse(names);
 
         stackLayout = new StackLayoutSet(Parts.GROUP_BASE_REGISTERS, names, 40, Parts.GROUP_EXTENDED_REGISTERS);

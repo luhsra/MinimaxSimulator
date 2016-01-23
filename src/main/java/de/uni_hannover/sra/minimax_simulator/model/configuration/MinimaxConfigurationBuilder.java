@@ -31,14 +31,14 @@ public class MinimaxConfigurationBuilder implements MachineConfigurationBuilder 
      * with empty lists and gets all {@link MuxType}s via {@link MuxType#values()}.
      */
     public MinimaxConfigurationBuilder() {
-        aluOperations = new ArrayList<AluOperation>();
-        baseRegisters = new ArrayList<RegisterExtension>();
-        registerExtensions = new ArrayList<RegisterExtension>();
-        allowedMuxInputs = new ArrayList<MuxInput>();
-        selectedMuxInputs = new HashMap<MuxType, List<MuxInput>>();
+        aluOperations = new ArrayList<>();
+        baseRegisters = new ArrayList<>();
+        registerExtensions = new ArrayList<>();
+        allowedMuxInputs = new ArrayList<>();
+        selectedMuxInputs = new HashMap<>();
 
         for (MuxType m : MuxType.values()) {
-            selectedMuxInputs.put(m, new ArrayList<MuxInput>());
+            selectedMuxInputs.put(m, new ArrayList<>());
         }
     }
 

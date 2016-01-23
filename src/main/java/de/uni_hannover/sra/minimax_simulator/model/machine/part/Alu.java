@@ -36,7 +36,7 @@ public class Alu extends Part implements SpriteOwner {
      * Constructs a new instance of the {@code Alu}.
      */
     public Alu() {
-        aluOperations = new ArrayList<AluOperation>();
+        aluOperations = new ArrayList<>();
 
         inCtrl = new IngoingPin(this);
         inA = new IngoingPin(this);

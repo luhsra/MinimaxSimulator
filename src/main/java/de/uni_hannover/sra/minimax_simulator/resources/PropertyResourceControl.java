@@ -87,7 +87,7 @@ public class PropertyResourceControl extends Control {
 
         String bundleFile = basePath + "loc" + bundleName + "/" + baseName + ".properties";
 
-        Map<String, Object> entries = new HashMap<String, Object>();
+        Map<String, Object> entries = new HashMap<>();
 
         InputStream is = null;
         try {

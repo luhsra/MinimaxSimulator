@@ -22,7 +22,7 @@ public class OutgoingPin extends Pin {
      */
     public OutgoingPin(Part part) {
         super(part);
-        wires = new HashSet<Wire>();
+        wires = new HashSet<>();
     }
 
     /**

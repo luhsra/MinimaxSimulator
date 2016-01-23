@@ -305,7 +305,7 @@ public abstract class ConstraintFactory {
      *          the names of the anchors
      */
     public void group(String target, String... anchors) {
-        group(target, new HashSet<String>(Arrays.asList(anchors)));
+        group(target, new HashSet<>(Arrays.asList(anchors)));
     }
 
     /**

@@ -18,7 +18,7 @@ public abstract class AbstractTraceable<T> implements Traceable<T> {
      * Constructs a new {@code AbstractTraceable}.
      */
     protected AbstractTraceable() {
-        listeners = new ArrayList<TraceableChangeListener<T>>(2);
+        listeners = new ArrayList<>(2);
     }
 
     /**

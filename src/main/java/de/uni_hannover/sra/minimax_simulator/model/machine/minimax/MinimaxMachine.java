@@ -72,7 +72,7 @@ public class MinimaxMachine implements ConfigurableMachine {
 
         registerExtensions = new RegisterExtensionList(this, registerManager);
 
-        muxExtensions = new EnumMap<MuxType, MuxInputManager>(MuxType.class);
+        muxExtensions = new EnumMap<>(MuxType.class);
         muxExtensions.put(MuxType.A, new DefaultMuxInputManager(MuxType.A, Parts.MUX_A, this));
         muxExtensions.put(MuxType.B, new DefaultMuxInputManager(MuxType.B, Parts.MUX_B, this));
 
@@ -182,7 +182,7 @@ public class MinimaxMachine implements ConfigurableMachine {
      *          a list of the {@code Group}s
      */
     private List<Group> createGroups() {
-        List<Group> list = new ArrayList<Group>();
+        List<Group> list = new ArrayList<>();
 
         list.add(new BasePartGroup(memory));
         list.add(new AluGroup());

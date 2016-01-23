@@ -32,7 +32,7 @@ public final class SignalRow {
      * {@link DefaultJump#INSTANCE}.
      */
     public SignalRow() {
-        values = new HashMap<String, SignalValue>();
+        values = new HashMap<>();
         label = null;
         isBreakpoint = false;
         jump = DefaultJump.INSTANCE;

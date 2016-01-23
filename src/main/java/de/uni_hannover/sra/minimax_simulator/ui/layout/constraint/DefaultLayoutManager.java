@@ -21,7 +21,7 @@ public class DefaultLayoutManager implements LayoutManager {
      */
     public DefaultLayoutManager(ConstraintContainer container) {
         this.container = container;
-        layouts = new HashMap<String, Layout>();
+        layouts = new HashMap<>();
     }
 
     @Override

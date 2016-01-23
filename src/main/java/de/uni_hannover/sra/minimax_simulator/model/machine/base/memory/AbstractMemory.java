@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public abstract class AbstractMemory implements MachineMemory {
 
-    private List<MemoryAccessListener> listeners = new ArrayList<MemoryAccessListener>();
+    private List<MemoryAccessListener> listeners = new ArrayList<>();
 
     private final int addressWidth;
     private final int minAddress;

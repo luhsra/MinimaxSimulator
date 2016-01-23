@@ -34,7 +34,7 @@ public class SpriteCanvas<T> extends Canvas {
      * Initializes the {@code SpriteCanvas}.
      */
     public SpriteCanvas() {
-        sprites = new HashMap<T, Sprite>();
+        sprites = new HashMap<>();
         gc = this.getGraphicsContext2D();
     }
 

@@ -41,8 +41,8 @@ public class DefaultCircuitTopology implements MachineTopology {
      * Initializes an empty {@code DefaultCircuitTopology} instance.
      */
     public DefaultCircuitTopology() {
-        allCircuits = new HashSet<Circuit>();
-        circuits = new HashMap<String, CircuitEntry>();
+        allCircuits = new HashSet<>();
+        circuits = new HashMap<>();
     }
 
     @Override

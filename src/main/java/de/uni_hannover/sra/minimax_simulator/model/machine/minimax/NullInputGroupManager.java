@@ -32,9 +32,9 @@ class NullInputGroupManager implements MuxInputGroupManager {
     public NullInputGroupManager(GroupManager groupManager) {
         this.groupManager = groupManager;
 
-        inputEntries = new HashMap<MuxType, List<InputEntry>>();
+        inputEntries = new HashMap<>();
         for (MuxType type : MuxType.values()) {
-            inputEntries.put(type, new ArrayList<InputEntry>());
+            inputEntries.put(type, new ArrayList<>());
         }
     }
 

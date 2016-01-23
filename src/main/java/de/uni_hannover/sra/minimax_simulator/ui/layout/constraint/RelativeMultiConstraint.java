@@ -53,7 +53,7 @@ public abstract class RelativeMultiConstraint implements Constraint {
         }
 
         this.offset = offset;
-        this.anchors = new HashSet<Attribute>(anchors);
+        this.anchors = new HashSet<>(anchors);
     }
 
     @Override
@@ -77,7 +77,7 @@ public abstract class RelativeMultiConstraint implements Constraint {
      *          a set of the {@code Attribute}s with the specified names and {@code AttributeType}
      */
     private static Set<Attribute> toAttributeSet(Set<String> anchors, AttributeType type) {
-        Set<Attribute> attrs = new HashSet<Attribute>(anchors.size());
+        Set<Attribute> attrs = new HashSet<>(anchors.size());
         for (String anchor : anchors) {
             attrs.add(new Attribute(anchor, type));
         }

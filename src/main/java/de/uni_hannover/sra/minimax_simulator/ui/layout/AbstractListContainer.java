@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public abstract class AbstractListContainer extends Container {
 
-    protected final ArrayList<Component> children = new ArrayList<Component>();
+    protected final ArrayList<Component> children = new ArrayList<>();
 
     @Override
     public void doLayout() {

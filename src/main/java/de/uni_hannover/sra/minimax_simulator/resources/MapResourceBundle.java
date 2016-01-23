@@ -34,6 +34,6 @@ public class MapResourceBundle extends ResourceBundle {
 
     @Override
     public Enumeration<String> getKeys() {
-        return new IteratorEnumeration<String>(map.keySet());
+        return new IteratorEnumeration<>(map.keySet());
     }
 }

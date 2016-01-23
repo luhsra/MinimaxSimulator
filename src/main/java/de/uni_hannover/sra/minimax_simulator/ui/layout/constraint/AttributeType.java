@@ -344,7 +344,7 @@ public enum AttributeType {
     public abstract int deriveValue(AttributeOwner owner);
 
     static {
-        AXIS_ATTRS = new EnumMap<AttributeAxis, Set<AttributeType>>(AttributeAxis.class);
+        AXIS_ATTRS = new EnumMap<>(AttributeAxis.class);
         for (AttributeAxis axis : AttributeAxis.values()) {
             AXIS_ATTRS.put(axis, EnumSet.noneOf(AttributeType.class));
         }

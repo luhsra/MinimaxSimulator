@@ -24,7 +24,7 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
 
     @Override
     public <T> List<T> sort(Collection<T> elements, TopologicalDependencySets<T> dependencyRelation) {
-        Map<T, Set<T>> dependencies = new HashMap<T, Set<T>>();
+        Map<T, Set<T>> dependencies = new HashMap<>();
 
         for (T element : elements) {
             dependencies.put(element, dependencyRelation.dependenciesOf(element));
@@ -35,10 +35,10 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
 
     @Override
     public <T> List<T> sort(Collection<T> elements, TopologicalDependencyRelation<T> dependencyRelation) {
-        Map<T, Set<T>> dependencies = new HashMap<T, Set<T>>();
+        Map<T, Set<T>> dependencies = new HashMap<>();
 
         for (T element1 : elements) {
-            HashSet<T> depsOfElement1 = new HashSet<T>();
+            HashSet<T> depsOfElement1 = new HashSet<>();
             dependencies.put(element1, depsOfElement1);
             for (T element2 : elements) {
                 if (dependencyRelation.dependsOn(element1, element2)) {
@@ -52,7 +52,7 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
 
     @Override
     public <T> List<T> sort(Map<T, Set<T>> elementsAndDependencies) {
-        return resolveDependencyMap(new HashMap<T, Set<T>>(elementsAndDependencies));
+        return resolveDependencyMap(new HashMap<>(elementsAndDependencies));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
 
     @Override
     public <T> void sort(Collection<T> elements, TopologicalDependencySets<T> dependencySets, List<? super T> list) {
-        Map<T, Set<T>> dependencies = new HashMap<T, Set<T>>();
+        Map<T, Set<T>> dependencies = new HashMap<>();
 
         for (T element : elements) {
             dependencies.put(element, dependencySets.dependenciesOf(element));
@@ -78,10 +78,10 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
 
     @Override
     public <T> void sort(Collection<T> elements, TopologicalDependencyRelation<T> dependencyRelation, List<? super T> list) {
-        Map<T, Set<T>> dependencies = new HashMap<T, Set<T>>();
+        Map<T, Set<T>> dependencies = new HashMap<>();
 
         for (T element1 : elements) {
-            HashSet<T> depsOfElement1 = new HashSet<T>();
+            HashSet<T> depsOfElement1 = new HashSet<>();
             dependencies.put(element1, depsOfElement1);
             for (T element2 : elements) {
                 if (dependencyRelation.dependsOn(element1, element2)) {
@@ -95,7 +95,7 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
 
     @Override
     public <T> void sort(Map<T, Set<T>> elementsAndDependencies, List<? super T> list) {
-        resolveDependencyMap(new HashMap<T, Set<T>>(elementsAndDependencies), list);
+        resolveDependencyMap(new HashMap<>(elementsAndDependencies), list);
     }
 
     /**
@@ -109,7 +109,7 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
      *          the class of the {@code TopologicalSortable}
      */
     private <T> void resolveDependencyMap(Map<T, Set<T>> dependencies, List<? super T> list) {
-        Set<T> resolved = new HashSet<T>();
+        Set<T> resolved = new HashSet<>();
         if (!list.isEmpty()) {
             list.clear();
         }
@@ -157,7 +157,7 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
      *          a list of the resolved dependencies
      */
     private <T> List<T> resolveDependencyMap(Map<T, Set<T>> dependencies) {
-        List<T> result = new ArrayList<T>(dependencies.size());
+        List<T> result = new ArrayList<>(dependencies.size());
         resolveDependencyMap(dependencies, result);
         return result;
     }

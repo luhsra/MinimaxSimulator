@@ -54,9 +54,9 @@ public final class MachineConfiguration {
 
     MachineConfiguration(List<AluOperation> aluOperations, List<RegisterExtension> baseRegisters, List<RegisterExtension> extendedRegisters,
                          List<MuxInput> availableMuxInput, Map<MuxType, List<MuxInput>> selectedMuxInput) {
-        listeners = new ArrayList<MachineConfigListener>(5);
+        listeners = new ArrayList<>(5);
 
-        alu = new ArrayList<AluOperation>(aluOperations);
+        alu = new ArrayList<>(aluOperations);
         aluView = Collections.unmodifiableList(alu);
 
         if (alu.contains(null)) {
@@ -73,7 +73,7 @@ public final class MachineConfiguration {
         }
 
         // implicitly check for null
-        this.extendedRegisters = new ArrayList<RegisterExtension>(extendedRegisters);
+        this.extendedRegisters = new ArrayList<>(extendedRegisters);
         registersView = Collections.unmodifiableList(this.extendedRegisters);
 
         for (RegisterExtension reg : this.extendedRegisters) {
@@ -82,7 +82,7 @@ public final class MachineConfiguration {
             }
         }
 
-        availableMuxSources = new ArrayList<MuxInput>(availableMuxInput);
+        availableMuxSources = new ArrayList<>(availableMuxInput);
         availableMuxSourcesView = Collections.unmodifiableList(availableMuxSources);
 
         List<MuxInput> sourcesA = selectedMuxInput.get(MuxType.A);
@@ -92,8 +92,8 @@ public final class MachineConfiguration {
             throw new NullPointerException("Mux inputs cannot contain null");
         }
 
-        muxSourcesA = new ArrayList<MuxInput>(sourcesA);
-        muxSourcesB = new ArrayList<MuxInput>(sourcesB);
+        muxSourcesA = new ArrayList<>(sourcesA);
+        muxSourcesB = new ArrayList<>(sourcesB);
         muxSourcesAView = Collections.unmodifiableList(muxSourcesA);
         muxSourcesBView = Collections.unmodifiableList(muxSourcesB);
     }
@@ -335,7 +335,7 @@ public final class MachineConfiguration {
         }
 
         // fetch the indices of the mux inputs that currently use this register
-        Map<MuxType, List<Integer>> indicesInUse = new EnumMap<MuxType, List<Integer>>(MuxType.class);
+        Map<MuxType, List<Integer>> indicesInUse = new EnumMap<>(MuxType.class);
         for (MuxType type : MuxType.values()) {
             indicesInUse.put(type, fetchRegisterInputIndices(oldRegister.getName(), getMuxSourcesInternal(type)));
         }
@@ -383,7 +383,7 @@ public final class MachineConfiguration {
      *          a list containing the indices of all occurrences of the {@code RegisterExtension}
      */
     private List<Integer> fetchRegisterInputIndices(String registerName, List<MuxInput> list) {
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
         ListIterator<MuxInput> iter = list.listIterator();
         while (iter.hasNext()) {
             int idx = iter.nextIndex();

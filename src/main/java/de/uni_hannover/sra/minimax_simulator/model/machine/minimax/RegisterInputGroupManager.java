@@ -44,12 +44,12 @@ class RegisterInputGroupManager extends RegisterManager implements MuxInputGroup
         groupManager = machine.getGroupManager();
         circuitRegistry = machine.getTopology();
 
-        inputEntriesByMux = new TreeMap<MuxType, List<InputEntry>>();
+        inputEntriesByMux = new TreeMap<>();
         for (MuxType type : MuxType.values()) {
-            inputEntriesByMux.put(type, new ArrayList<InputEntry>());
+            inputEntriesByMux.put(type, new ArrayList<>());
         }
 
-        inputsByRegisterId = new HashMap<String, List<InputEntry>>();
+        inputsByRegisterId = new HashMap<>();
     }
 
     @Override
@@ -79,7 +79,7 @@ class RegisterInputGroupManager extends RegisterManager implements MuxInputGroup
 
                     List<InputEntry> regInputs = inputsByRegisterId.get(registerId);
                     if (regInputs == null) {
-                        regInputs = new ArrayList<InputEntry>();
+                        regInputs = new ArrayList<>();
                         inputsByRegisterId.put(registerId, regInputs);
                     }
                     regInputs.add(entry);

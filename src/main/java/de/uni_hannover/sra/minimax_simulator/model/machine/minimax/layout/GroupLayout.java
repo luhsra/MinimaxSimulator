@@ -31,7 +31,7 @@ public class GroupLayout implements Layout {
      *          the members of the group the {@code GroupLayout} belongs to
      */
     public GroupLayout(Collection<String> groupMembers) {
-        this(new HashSet<String>(groupMembers));
+        this(new HashSet<>(groupMembers));
     }
 
     /**

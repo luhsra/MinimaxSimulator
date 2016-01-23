@@ -24,7 +24,7 @@ public class MultiplexerSprite extends CircuitSprite {
 
     private final Multiplexer mux;
 
-    private static final ArrayList<String> ADDRESS_NUMBER_CACHE = new ArrayList<String>();
+    private static final ArrayList<String> ADDRESS_NUMBER_CACHE = new ArrayList<>();
 
     /**
      * Initializes the {@code MultiplexerSprite}.

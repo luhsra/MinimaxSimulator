@@ -171,7 +171,7 @@ public class Wire implements Circuit, SpriteOwner {
      *          a list of the {@code Component}s created
      */
     public List<Component> createWireComponents() {
-        List<Component> components = new ArrayList<Component>(points.length);
+        List<Component> components = new ArrayList<>(points.length);
         for (int i = 0; i < points.length; i++) {
             components.add(createWireComponent(i));
         }

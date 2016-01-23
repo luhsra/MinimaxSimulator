@@ -23,7 +23,7 @@ public class DefaultLayout implements Layout {
      * Constructs an empty {@code DefaultLayout}.
      */
     public DefaultLayout() {
-        constraints = new EnumMap<AttributeType, Constraint>(AttributeType.class);
+        constraints = new EnumMap<>(AttributeType.class);
         constraintsView = Collections.unmodifiableMap(constraints);
     }
 
@@ -34,7 +34,7 @@ public class DefaultLayout implements Layout {
      *          the {@code Constraint}s to use
      */
     public DefaultLayout(Map<AttributeType, ? extends Constraint> constraints) {
-        this.constraints = new EnumMap<AttributeType, Constraint>(constraints);
+        this.constraints = new EnumMap<>(constraints);
         constraintsView = Collections.unmodifiableMap(this.constraints);
     }
 

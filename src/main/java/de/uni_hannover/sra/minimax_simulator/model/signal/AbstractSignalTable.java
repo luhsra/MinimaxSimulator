@@ -16,7 +16,7 @@ public abstract class AbstractSignalTable implements SignalTable {
      * Constructs an empty {@code AbstractSignalTable}.
      */
     protected AbstractSignalTable() {
-        listeners = new ArrayList<SignalTableListener>(2);
+        listeners = new ArrayList<>(2);
     }
 
     @Override

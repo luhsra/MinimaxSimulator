@@ -22,7 +22,7 @@ public class DefaultSignalTable extends AbstractSignalTable {
      * Constructs a new and empty {@code DefaultSignalTable}.
      */
     public DefaultSignalTable() {
-        rows = new ArrayList<SignalRow>();
+        rows = new ArrayList<>();
     }
 
     @Override

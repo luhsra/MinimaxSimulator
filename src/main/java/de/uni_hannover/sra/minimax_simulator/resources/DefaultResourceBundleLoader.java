@@ -32,7 +32,7 @@ public class DefaultResourceBundleLoader implements ResourceBundleLoader {
         this.defaultControl = checkNotNull(defaultControl, "Invalid null argument: defaultControl");
             this.defaultLocale = checkNotNull(defaultLocale, "Invalid null argument: defaultLocale");
 
-        resourceCache = new HashMap<String, TextResource>();
+        resourceCache = new HashMap<>();
     }
 
     /**

@@ -34,8 +34,8 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
      * Constructs a new and empty {@code MinimaxDisplay}.
      */
     public MinimaxDisplay() {
-        listeners = new ArrayList<MachineDisplayListener>(1);
-        spriteOwners = new HashSet<SpriteOwner>();
+        listeners = new ArrayList<>(1);
+        spriteOwners = new HashSet<>();
 
         renderEnvironment = new DummyRenderEnvironment();
         dimension = Dimension.ZERO;

@@ -17,8 +17,8 @@ class DefaultGroupManager implements GroupManager {
     private final MinimaxTopology topology;
     private final MinimaxDisplay display;
 
-    private final Map<String, Group> groups = new HashMap<String, Group>();
-    private final Map<String, LayoutSet> layouts = new HashMap<String, LayoutSet>();
+    private final Map<String, Group> groups = new HashMap<>();
+    private final Map<String, LayoutSet> layouts = new HashMap<>();
 
     /**
      * Constructs a new {@code DefaultGroupManager} with the specified {@link MinimaxLayout},

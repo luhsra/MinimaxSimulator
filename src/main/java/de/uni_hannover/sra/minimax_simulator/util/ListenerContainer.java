@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ListenerContainer<L> {
 
-    private List<L> listeners = new ArrayList<L>(2);
+    private List<L> listeners = new ArrayList<>(2);
 
     /**
      * Adds the specified listener to the internal list if it is not already added

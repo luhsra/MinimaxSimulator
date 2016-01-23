@@ -55,9 +55,9 @@ class DefaultMuxInputManager implements MuxInputManager {
         mux = topology.getCircuit(Multiplexer.class, muxComponentName);
         this.muxComponentName = muxComponentName;
 
-        inputs = new ArrayList<InputEntry>();
+        inputs = new ArrayList<>();
 
-        groupManagers = new ArrayList<MuxInputGroupManager>();
+        groupManagers = new ArrayList<>();
     }
 
     @Override

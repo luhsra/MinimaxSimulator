@@ -36,7 +36,7 @@ class RegisterManager {
      */
     public RegisterManager(GroupManager groupManager) {
         this.groupManager = groupManager;
-        registerIds = new HashMap<String, String>();
+        registerIds = new HashMap<>();
     }
 
     /**

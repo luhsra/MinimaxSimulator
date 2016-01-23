@@ -15,13 +15,13 @@ import java.util.*;
  */
 public abstract class AbstractGroup implements Group {
 
-    private final Set<Circuit> circuitSet = new HashSet<Circuit>();
-    private final Set<SpriteOwner> spriteSet = new HashSet<SpriteOwner>();
-    private final Set<Component> componentSet = new HashSet<Component>();
+    private final Set<Circuit> circuitSet = new HashSet<>();
+    private final Set<SpriteOwner> spriteSet = new HashSet<>();
+    private final Set<Component> componentSet = new HashSet<>();
 
-    private final Set<String> virtualsSet = new HashSet<String>();
+    private final Set<String> virtualsSet = new HashSet<>();
 
-    private final Map<Object, String> names = new HashMap<Object, String>();
+    private final Map<Object, String> names = new HashMap<>();
 
     /**
      * Adds the specified {@code Object} links it with the specified name.
