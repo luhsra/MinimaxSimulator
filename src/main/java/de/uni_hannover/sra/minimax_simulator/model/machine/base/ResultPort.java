@@ -5,6 +5,7 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.base;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface ResultPort {
 
     /**

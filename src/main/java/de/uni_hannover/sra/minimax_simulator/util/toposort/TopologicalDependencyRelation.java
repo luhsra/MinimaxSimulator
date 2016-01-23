@@ -8,6 +8,7 @@ package de.uni_hannover.sra.minimax_simulator.util.toposort;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface TopologicalDependencyRelation<T> {
 
     /**

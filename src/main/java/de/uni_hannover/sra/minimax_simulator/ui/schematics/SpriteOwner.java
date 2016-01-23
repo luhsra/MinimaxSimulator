@@ -7,6 +7,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface SpriteOwner {
 
     /**

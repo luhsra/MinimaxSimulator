@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface Sprite {
 
     /**

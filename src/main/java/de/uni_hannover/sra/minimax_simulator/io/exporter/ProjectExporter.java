@@ -10,18 +10,19 @@ import de.uni_hannover.sra.minimax_simulator.model.user.Project;
  * 
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface ProjectExporter {
 
-	/**
-	 * Exports a project into this data sink. Calling this method successfully will overwrite
-	 * previously exported projects.<br>
-	 * A failed export will leave the exporter in a undetermined, possibly corrupted, state.
-	 * This behaviour is implementation dependent.
-	 * 
-	 * @param project
-	 *          the {@link Project} instance to export. May not be null.
-	 * @throws ProjectExportException
-	 *          thrown if the export failed
-	 */
-	public void exportProject(Project project) throws ProjectExportException;
+    /**
+     * Exports a project into this data sink. Calling this method successfully will overwrite
+     * previously exported projects.<br>
+     * A failed export will leave the exporter in a undetermined, possibly corrupted, state.
+     * This behaviour is implementation dependent.
+     *
+     * @param project
+     *          the {@link Project} instance to export. May not be null.
+     * @throws ProjectExportException
+     *          thrown if the export failed
+     */
+    public void exportProject(Project project) throws ProjectExportException;
 }

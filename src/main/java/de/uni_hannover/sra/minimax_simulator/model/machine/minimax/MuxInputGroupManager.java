@@ -5,6 +5,7 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 interface MuxInputGroupManager {
 
     /**

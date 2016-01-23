@@ -10,6 +10,7 @@ import java.util.Set;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface TopologicalDependencySets<T> {
 
     /**

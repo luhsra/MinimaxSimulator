@@ -10,6 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.model.user.Project;
  * 
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface ProjectImporter {
 
     /**

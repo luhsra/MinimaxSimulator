@@ -5,6 +5,7 @@ package de.uni_hannover.sra.minimax_simulator.model.signal;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface SignalConfigListener {
 
 //  public void signalAdded(int index, SignalType signal);

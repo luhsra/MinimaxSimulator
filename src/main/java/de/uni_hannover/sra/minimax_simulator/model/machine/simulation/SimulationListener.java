@@ -5,6 +5,7 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.simulation;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface SimulationListener {
 
     /**

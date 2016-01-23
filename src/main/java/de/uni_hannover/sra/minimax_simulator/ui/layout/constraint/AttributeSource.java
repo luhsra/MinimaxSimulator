@@ -6,6 +6,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout.constraint;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface AttributeSource {
 
     /**

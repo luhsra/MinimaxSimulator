@@ -6,6 +6,7 @@ package de.uni_hannover.sra.minimax_simulator.model.signal.jump;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface Jump {
 
     /**

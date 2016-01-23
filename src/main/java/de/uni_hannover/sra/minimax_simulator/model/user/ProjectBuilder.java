@@ -5,6 +5,7 @@ package de.uni_hannover.sra.minimax_simulator.model.user;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface ProjectBuilder {
 
     /**

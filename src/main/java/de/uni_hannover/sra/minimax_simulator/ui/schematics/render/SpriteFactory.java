@@ -8,6 +8,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.schematics.render;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface SpriteFactory<T> {
 
     /**
