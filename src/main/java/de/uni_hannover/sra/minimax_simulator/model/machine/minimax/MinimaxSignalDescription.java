@@ -52,7 +52,7 @@ public class MinimaxSignalDescription implements DescriptionFactory {
                 continue;
             }
 
-            if (register.getName().equals("MDR") && mdrSelect != 0) {
+            if ("MDR".equals(register.getName()) && mdrSelect != 0) {
                 // MDR is only written if MDR select is 0
                 continue;
             }

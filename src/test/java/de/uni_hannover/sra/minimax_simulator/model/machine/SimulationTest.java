@@ -44,7 +44,7 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU")) {
+            if ("ACCU".equals(name)) {
                 expected = 1;
             }
             assertEquals("Register " + name + " value first cycle", expected, simulation.getRegisterValue(name).get());
@@ -57,7 +57,7 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("PC")) {
+            if ("ACCU".equals(name) || "PC".equals(name)) {
                 expected = 2;
             }
             assertEquals("Register " + name + " value second cycle", expected, simulation.getRegisterValue(name).get());
@@ -70,7 +70,7 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("PC")) {
+            if ("ACCU".equals(name) || "PC".equals(name)) {
                 expected = 4;
             }
             assertEquals("Register " + name + " value third cycle", expected, simulation.getRegisterValue(name).get());
@@ -83,7 +83,7 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("PC")) {
+            if ("ACCU".equals(name) || "PC".equals(name)) {
                 expected = 8;
             }
             assertEquals("Register " + name + " value fourth cycle", expected, simulation.getRegisterValue(name).get());
@@ -100,10 +100,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 16;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 8;
             }
             assertEquals("Register " + name + " value sixth cycle", expected, simulation.getRegisterValue(name).get());
@@ -116,10 +116,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 16;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 7;
             }
             assertEquals("Register " + name + " value seventh cycle", expected, simulation.getRegisterValue(name).get());
@@ -136,10 +136,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 32;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 7;
             }
             assertEquals("Register " + name + " value ninth cycle", expected, simulation.getRegisterValue(name).get());
@@ -152,10 +152,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 32;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 6;
             }
             assertEquals("Register " + name + " value tenth cycle", expected, simulation.getRegisterValue(name).get());
@@ -172,10 +172,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 64;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 6;
             }
             assertEquals("Register " + name + " value twelfth cycle", expected, simulation.getRegisterValue(name).get());
@@ -188,10 +188,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 64;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 5;
             }
             assertEquals("Register " + name + " value thirteenth cycle", expected, simulation.getRegisterValue(name).get());
@@ -208,10 +208,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 128;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 5;
             }
             assertEquals("Register " + name + " value fifteenth cycle", expected, simulation.getRegisterValue(name).get());
@@ -224,10 +224,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 128;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 4;
             }
             assertEquals("Register " + name + " value sixteenth cycle", expected, simulation.getRegisterValue(name).get());
@@ -244,10 +244,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 256;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 4;
             }
             assertEquals("Register " + name + " value eighteenth cycle", expected, simulation.getRegisterValue(name).get());
@@ -260,10 +260,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 256;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 3;
             }
             assertEquals("Register " + name + " value nineteenth cycle", expected, simulation.getRegisterValue(name).get());
@@ -280,10 +280,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 512;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 3;
             }
             assertEquals("Register " + name + " value twenty-first cycle", expected, simulation.getRegisterValue(name).get());
@@ -296,10 +296,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 512;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 2;
             }
             assertEquals("Register " + name + " value twenty-second cycle", expected, simulation.getRegisterValue(name).get());
@@ -316,10 +316,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 1024;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 2;
             }
             assertEquals("Register " + name + " value twenty-fourth cycle", expected, simulation.getRegisterValue(name).get());
@@ -332,10 +332,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 1024;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 1;
             }
             assertEquals("Register " + name + " value twenty-fifth cycle", expected, simulation.getRegisterValue(name).get());
@@ -352,10 +352,10 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 2048;
             }
-            else if (name.equals("PC")) {
+            else if ("PC".equals(name)) {
                 expected = 1;
             }
             assertEquals("Register " + name + " value twenty-seventh cycle", expected, simulation.getRegisterValue(name).get());
@@ -368,7 +368,7 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 2048;
             }
             assertEquals("Register " + name + " value twenty-eighth cycle", expected, simulation.getRegisterValue(name).get());
@@ -385,7 +385,7 @@ public class SimulationTest {
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
-            if (name.equals("ACCU") || name.equals("MDR")) {
+            if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 2048;
             }
             assertEquals("Register " + name + " value twenty-eighth cycle", expected, simulation.getRegisterValue(name).get());

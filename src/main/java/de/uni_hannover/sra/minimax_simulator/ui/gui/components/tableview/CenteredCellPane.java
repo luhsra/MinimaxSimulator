@@ -61,7 +61,7 @@ public class CenteredCellPane extends GridPane {
      */
     public CenteredCellPane(String label, String style) {
         this(label);
-        if (style != null && !style.equals("")) {
+        if (style != null && !"".equals(style)) {
             child.setStyle(style);
         }
     }

@@ -58,15 +58,15 @@ public class SignalColumn extends SignalTableColumn {
 
                         if (item == null) {
                             setGraphic(null);
-                        } else if (!item.equals("-")) {
+                        } else if (!"-".equals(item)) {
                             // set text of label according to the current column
                             MachineConfiguration mConfig = Main.getWorkspace().getProject().getMachineConfiguration();
                             String newText;
-                            if (getId().equals("ALU_SELECT_A")) {
+                            if ("ALU_SELECT_A".equals(getId())) {
                                 newText = Util.toBinaryAddress(Integer.parseInt(item), mConfig.getMuxSources(MuxType.A).size() - 1);
-                            } else if (getId().equals("ALU_SELECT_B")) {
+                            } else if ("ALU_SELECT_B".equals(getId())) {
                                 newText = Util.toBinaryAddress(Integer.parseInt(item), mConfig.getMuxSources(MuxType.B).size() - 1);
-                            } else if (getId().equals("ALU_CTRL")) {
+                            } else if ("ALU_CTRL".equals(getId())) {
                                 newText = Util.toBinaryAddress(Integer.parseInt(item), mConfig.getAluOperations().size() - 1);
                             } else {
                                 newText = item;

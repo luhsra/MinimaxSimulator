@@ -52,7 +52,7 @@ public class HexStringConverter extends StringConverter<Integer> {
         if (value == null) {
             return "";
         }
-        else if (formatString.equals("")) {
+        else if ("".equals(formatString)) {
             return Long.toString(value & 0xFFFFFFFFL, 16).toUpperCase();
         }
         else {

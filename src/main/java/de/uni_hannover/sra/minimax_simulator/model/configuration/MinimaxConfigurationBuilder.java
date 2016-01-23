@@ -117,7 +117,7 @@ public class MinimaxConfigurationBuilder implements MachineConfigurationBuilder 
             }
 
             String name = reg.getName();
-            if (name.equals("IR")) {
+            if ("IR".equals(name)) {
                 name = "AT";
             }
             allowedMuxInputs.add(new RegisterMuxInput(reg.getName(), name));
@@ -125,12 +125,12 @@ public class MinimaxConfigurationBuilder implements MachineConfigurationBuilder 
 
         ListIterator<MuxInput> inputIter;
         for (inputIter = selectedMuxInputs.get(MuxType.A).listIterator(); inputIter.hasNext(); ) {
-            if (inputIter.next().getName().equals("IR")) {
+            if ("IR".equals(inputIter.next().getName())) {
                 inputIter.set(new RegisterMuxInput("IR", "AT"));
             }
         }
         for (inputIter = selectedMuxInputs.get(MuxType.B).listIterator(); inputIter.hasNext(); ) {
-            if (inputIter.next().getName().equals("IR")) {
+            if ("IR".equals(inputIter.next().getName())) {
                 inputIter.set(new RegisterMuxInput("IR", "AT"));
             }
         }

@@ -214,7 +214,7 @@ public class JumpTargetDialog extends FXDialog {
     private void validateTargetRow() {
         Button btnOK = (Button) this.getDialogPane().lookupButton(okButtonType);
         if (rBtnUncond.isSelected()) {
-            if (txtUncond.getText().equals("")) {
+            if ("".equals(txtUncond.getText())) {
                 btnOK.setDisable(true);
             }
             else {
@@ -222,7 +222,7 @@ public class JumpTargetDialog extends FXDialog {
             }
         }
         else if (rBtnCond.isSelected()) {
-            if (txtCond0.getText().equals("") || txtCond1.getText().equals("")) {
+            if ("".equals(txtCond0.getText()) || "".equals(txtCond1.getText())) {
                 btnOK.setDisable(true);
             }
             else {

@@ -42,7 +42,7 @@ public class BreakpointColumn extends SignalTableColumn {
 
                     @Override
                     public void updateItem(String item, boolean empty) {
-                        if (item != null && item.equals("true")) {
+                        if ("true".equals(item)) {
                             imageview.setImage(IMG_BREAKPOINT);
                             setGraphic(new CenteredCellPane(imageview));
                         } else {

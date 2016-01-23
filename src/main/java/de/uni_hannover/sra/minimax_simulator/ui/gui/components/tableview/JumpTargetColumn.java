@@ -46,7 +46,7 @@ public class JumpTargetColumn extends SignalTableColumn {
                             setGraphic(null);
                         }
                         else {
-                            if ( item.contains("-") && id.equals("JUMPTARGET") ) {
+                            if ( item.contains("-") && "JUMPTARGET".equals(id) ) {
                                 // the JumpTarget is invalid
                                 setGraphic(new CenteredCellPane(item, INVALID_JUMP_STYLE));
                             }
