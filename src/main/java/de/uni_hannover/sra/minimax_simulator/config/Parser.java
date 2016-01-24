@@ -19,6 +19,13 @@ class Parser {
     private static final Pattern S_GB = Pattern.compile("[0-9]+(G|g)(B|b)?");
 
     /**
+     * Prevents instance creation of this utility class.
+     */
+    private Parser() {
+
+    }
+
+    /**
      * Parses the property value according to the given class.<br>
      * This method is used for {@link FieldType#AUTO} configuration fields.
      *

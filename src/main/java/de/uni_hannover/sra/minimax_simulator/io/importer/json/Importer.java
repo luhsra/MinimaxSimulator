@@ -10,6 +10,13 @@ import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImportException;
 class Importer {
 
     /**
+     * Allows instance creation only for classes of the same package and subclasses.
+     */
+    protected Importer() {
+
+    }
+
+    /**
      * Creates an enum.
      *
      * @param enumClass

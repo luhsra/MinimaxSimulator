@@ -85,4 +85,11 @@ public class Parts {
     public static final String _WIRE_ENABLED                = "_WIRE_ENABLED";
     public static final String _WIRE_CTRL                   = "_WIRE_CTRL";
     public static final String _WIRE_SELECT                 = "_WIRE_SELECT";
+
+    /**
+     * Prevents instance creation of this utility class.
+     */
+    private Parts() {
+
+    }
 }

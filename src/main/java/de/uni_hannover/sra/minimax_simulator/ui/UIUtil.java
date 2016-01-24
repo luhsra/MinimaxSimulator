@@ -29,6 +29,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class UIUtil {
 
     /**
+     * Prevents instance creation of this utility class.
+     */
+    private UIUtil() {
+
+    }
+
+    /**
      * Like {@link #executeWorker(Runnable, String, String)}, using an empty title and message for
      * the progress dialog.
      *

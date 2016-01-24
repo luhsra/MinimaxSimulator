@@ -14,6 +14,13 @@ import de.uni_hannover.sra.minimax_simulator.config.ConfigurationFile;
 @ConfigurationFile(file = "config.properties")
 public class Config {
 
+    /**
+     * Prevents instance creation of this utility class.
+     */
+    private Config() {
+
+    }
+
     /** The language key of the language to use for localized texts. */
     @Configuration(key = "locale", defaultValue = "")
     public static String LOCALE;

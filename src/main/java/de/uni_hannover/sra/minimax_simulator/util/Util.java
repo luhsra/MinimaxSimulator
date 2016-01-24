@@ -10,6 +10,13 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class Util {
 
     /**
+     * Prevents instance creation of this utility class.
+     */
+    private Util() {
+
+    }
+
+    /**
      * Returns the specified {@code index} as a binary string.<br>
      * The string is padded with zeros to the left such that its length would equal the minimal
      * length of the binary string representing {@code maxIndex}.<br>
