@@ -71,15 +71,12 @@ public class MemoryExportWorker implements Runnable {
             fos = new FileOutputStream(file);
             doExport(fos);
         } catch (IOException ioe) {
-            UIUtil.invokeInFAT(new Runnable() {
-                @Override
-                public void run() {
-                    FXDialog fnw = new FXDialog(AlertType.ERROR, res.get("memory.export.error"), res.format("memory.export.write-error", file.getPath()));
-                    // FIXME: delete if issue with long texts in linux is resolved
-                    fnw.setResizable(true);
+            UIUtil.invokeInFAT(() -> {
+                FXDialog fnw = new FXDialog(AlertType.ERROR, res.get("memory.export.error"), res.format("memory.export.write-error", file.getPath()));
+                // FIXME: delete if issue with long texts in linux is resolved
+                fnw.setResizable(true);
 
-                    fnw.showAndWait();
-                }
+                fnw.showAndWait();
             });
         } finally {
             IOUtils.closeQuietly(fos);

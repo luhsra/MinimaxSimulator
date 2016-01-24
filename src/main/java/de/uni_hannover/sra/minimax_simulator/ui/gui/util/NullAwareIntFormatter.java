@@ -24,18 +24,15 @@ public class NullAwareIntFormatter extends TextFormatter {
 
             @Override
             public UnaryOperator<TextFormatter.Change> getFilter() {
-                return new UnaryOperator<Change>() {
-                    @Override
-                    public Change apply(Change change) {
-                        if (change.isContentChange()) {
-                            try {
-                                Integer.parseInt(change.getControlNewText());
-                            } catch (NumberFormatException e) {
-                                return null;
-                            }
+                return change -> {
+                    if (change.isContentChange()) {
+                        try {
+                            Integer.parseInt(change.getControlNewText());
+                        } catch (NumberFormatException e) {
+                            return null;
                         }
-                        return change;
                     }
+                    return change;
                 };
             }
         },
@@ -48,20 +45,17 @@ public class NullAwareIntFormatter extends TextFormatter {
 
             @Override
             public UnaryOperator<TextFormatter.Change> getFilter() {
-                return new UnaryOperator<Change>() {
-                    @Override
-                    public Change apply(Change change) {
-                        if (change.isContentChange()) {
-                            String newValue = change.getControlNewText();
-                            if (!newValue.matches("-?[0-9a-fA-F]+") || newValue.length() > 8) {
-                                return null;
-                            }
-                            if (newValue.length() == 8 && newValue.compareTo("7FFFFFFF") == 1) {
-                                return null;
-                            }
+                return change -> {
+                    if (change.isContentChange()) {
+                        String newValue = change.getControlNewText();
+                        if (!newValue.matches("-?[0-9a-fA-F]+") || newValue.length() > 8) {
+                            return null;
                         }
-                        return change;
+                        if (newValue.length() == 8 && newValue.compareTo("7FFFFFFF") == 1) {
+                            return null;
+                        }
                     }
+                    return change;
                 };
             }
         };

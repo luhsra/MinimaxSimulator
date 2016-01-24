@@ -35,16 +35,13 @@ public class ConstraintContainer extends Container implements ConstraintsManager
         sortedAttributes = Collections.emptyList();
         offset = new Point(0, 0);
 
-        source = new AttributeSource() {
-            @Override
-            public int getValue(Attribute attribute) {
-                AttributeOwner owner = attributeOwners.get(attribute.getOwner());
-                if (owner == null) {
-                    throw new IllegalStateException("Attribute owner not existing: " + attribute.getOwner());
-                }
-
-                return owner.get(attribute.getType());
+        source = attribute -> {
+            AttributeOwner owner = attributeOwners.get(attribute.getOwner());
+            if (owner == null) {
+                throw new IllegalStateException("Attribute owner not existing: " + attribute.getOwner());
             }
+
+            return owner.get(attribute.getType());
         };
     }
 

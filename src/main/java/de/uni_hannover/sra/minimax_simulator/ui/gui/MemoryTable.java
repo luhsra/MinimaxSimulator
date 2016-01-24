@@ -180,29 +180,21 @@ public class MemoryTable implements MemoryAccessListener {
         updateMemTable();
 
         // open edit dialog at double click
-        memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        int address = memTable.getSelectionModel().getSelectedIndex() + cachedPageStart;
-                        // open edit dialog
-                        new MemoryUpdateDialog(address, mMemory).show();
-                    }
-                }
+        memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
+                int address = memTable.getSelectionModel().getSelectedIndex() + cachedPageStart;
+                // open edit dialog
+                new MemoryUpdateDialog(address, mMemory).show();
             }
         });
 
         // set next/previous page at scroll
-        memTable.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent scrollEvent) {
-                double deltaY = scrollEvent.getDeltaY();
-                if (deltaY > 0) {
-                    prevPage();
-                } else {
-                    nextPage();
-                }
+        memTable.addEventFilter(ScrollEvent.ANY, scrollEvent -> {
+            double deltaY = scrollEvent.getDeltaY();
+            if (deltaY > 0) {
+                prevPage();
+            } else {
+                nextPage();
             }
         });
     }

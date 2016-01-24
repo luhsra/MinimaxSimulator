@@ -44,12 +44,9 @@ public class WaitingDialog extends FXDialog {
         this.getDialogPane().setContent(pb);
 
         // set the result to btnTypeCancel if escape was pressed
-        this.getDialogPane().getScene().addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode().equals(KeyCode.ESCAPE)) {
-                    setResult(btnTypeCancel);
-                }
+        this.getDialogPane().getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().equals(KeyCode.ESCAPE)) {
+                setResult(btnTypeCancel);
             }
         });
     }

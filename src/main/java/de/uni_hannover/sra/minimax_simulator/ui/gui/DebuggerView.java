@@ -196,20 +196,15 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         col_reg_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
         // open edit dialog at double click
-        regTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        if (simulation.getState() == SimulationState.IDLE) {
-                            String register = regTable.getSelectionModel().getSelectedItem().getName();
-                            Traceable<Integer> value = simulation.getRegisterValue(register);
-                            // open edit dialog
-                            Optional<ButtonType> result = new RegisterUpdateDialog(register, value).showAndWait();
-                            if (result.get() == ButtonType.OK) {
-                                updateRegTable();
-                            }
-                        }
+        regTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
+                if (simulation.getState() == SimulationState.IDLE) {
+                    String register = regTable.getSelectionModel().getSelectedItem().getName();
+                    Traceable<Integer> value = simulation.getRegisterValue(register);
+                    // open edit dialog
+                    Optional<ButtonType> result = new RegisterUpdateDialog(register, value).showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        updateRegTable();
                     }
                 }
             }
@@ -263,83 +258,70 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         col_sim_next.setCellValueFactory(new PropertyValueFactory<>("next"));
         col_sim_desc.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        col_sim_2.setCellFactory(new Callback<TableColumn<SimulationTableModel, Boolean>, TableCell<SimulationTableModel, Boolean>>() {
-            @Override
-            public TableCell<SimulationTableModel, Boolean> call(TableColumn<SimulationTableModel, Boolean> param) {
-                TableCell<SimulationTableModel, Boolean> cell = new TableCell<SimulationTableModel, Boolean>() {
-                    ImageView imageview = new ImageView();
+        col_sim_2.setCellFactory(param -> {
+            TableCell<SimulationTableModel, Boolean> cell = new TableCell<SimulationTableModel, Boolean>() {
+                ImageView imageview = new ImageView();
 
-                    @Override
-                    public void updateItem(Boolean item, boolean empty) {
-                        if (item != null && item) {
-                            GridPane grid = new GridPane();
-                            imageview.setImage(new Image("/images/fugue/control-record.png"));
-                            grid.add(imageview, 0, 0);
-                            ColumnConstraints columnConstraints = new ColumnConstraints();
-                            columnConstraints.setFillWidth(true);
-                            columnConstraints.setHgrow(Priority.ALWAYS);
-                            grid.getColumnConstraints().add(columnConstraints);
-                            RowConstraints rowConstraints = new RowConstraints();
-                            rowConstraints.setFillHeight(true);
-                            rowConstraints.setVgrow(Priority.ALWAYS);
-                            grid.getRowConstraints().add(rowConstraints);
-                            grid.setHalignment(imageview, HPos.CENTER);
-                            grid.setValignment(imageview, VPos.CENTER);
-                            setGraphic(grid);
-                        }
-                        else {
-                            setGraphic(null);
-                        }
+                @Override
+                public void updateItem(Boolean item, boolean empty) {
+                    if (item != null && item) {
+                        GridPane grid = new GridPane();
+                        imageview.setImage(new Image("/images/fugue/control-record.png"));
+                        grid.add(imageview, 0, 0);
+                        ColumnConstraints columnConstraints = new ColumnConstraints();
+                        columnConstraints.setFillWidth(true);
+                        columnConstraints.setHgrow(Priority.ALWAYS);
+                        grid.getColumnConstraints().add(columnConstraints);
+                        RowConstraints rowConstraints = new RowConstraints();
+                        rowConstraints.setFillHeight(true);
+                        rowConstraints.setVgrow(Priority.ALWAYS);
+                        grid.getRowConstraints().add(rowConstraints);
+                        grid.setHalignment(imageview, HPos.CENTER);
+                        grid.setValignment(imageview, VPos.CENTER);
+                        setGraphic(grid);
                     }
-                };
-
-                cell.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getClickCount() == 2) {
-                            int index = cell.getTableView().getSelectionModel().getSelectedIndex();
-                            SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
-                            SignalRow signalRow = signalTable.getRow(index);
-                            signalRow.setBreakpoint(!signalRow.isBreakpoint());
-                            updateSimulationTable();
-                        }
+                    else {
+                        setGraphic(null);
                     }
-                });
+                }
+            };
 
-                return cell;
-            }
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getClickCount() == 2 ) {
+                    int index = cell.getTableView().getSelectionModel().getSelectedIndex();
+                    SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
+                    SignalRow signalRow = signalTable.getRow(index);
+                    signalRow.setBreakpoint(!signalRow.isBreakpoint());
+                    updateSimulationTable();
+                }
+            });
 
+            return cell;
         });
 
-        col_sim_1.setCellFactory(new Callback<TableColumn<SimulationTableModel, Boolean>, TableCell<SimulationTableModel, Boolean>>() {
-            @Override
-            public TableCell<SimulationTableModel, Boolean> call(TableColumn<SimulationTableModel, Boolean> param) {
-                TableCell<SimulationTableModel, Boolean> cell = new TableCell<SimulationTableModel, Boolean>() {
-                    ImageView imageview = new ImageView();
+        col_sim_1.setCellFactory(param ->
+            new TableCell<SimulationTableModel, Boolean>() {
+                ImageView imageview = new ImageView();
 
-                    @Override
-                    public void updateItem(Boolean item, boolean empty) {
-                        if (item != null && item) {
-                            GridPane grid = new GridPane();
-                            imageview.setImage(new Image("/images/fugue/arrow-curve-000-left.png"));
-                            grid.add(imageview, 0, 0);
-                            ColumnConstraints columnConstraints = new ColumnConstraints();
-                            columnConstraints.setFillWidth(true);
-                            columnConstraints.setHgrow(Priority.ALWAYS);
-                            grid.getColumnConstraints().add(columnConstraints);
-                            grid.setHalignment(imageview, HPos.CENTER);
-                            grid.setValignment(imageview, VPos.CENTER);
-                            setGraphic(grid);
-                        }
-                        else {
-                            setGraphic(null);
-                        }
+                @Override
+                public void updateItem(Boolean item, boolean empty) {
+                    if (item != null && item) {
+                        GridPane grid = new GridPane();
+                        imageview.setImage(new Image("/images/fugue/arrow-curve-000-left.png"));
+                        grid.add(imageview, 0, 0);
+                        ColumnConstraints columnConstraints = new ColumnConstraints();
+                        columnConstraints.setFillWidth(true);
+                        columnConstraints.setHgrow(Priority.ALWAYS);
+                        grid.getColumnConstraints().add(columnConstraints);
+                        grid.setHalignment(imageview, HPos.CENTER);
+                        grid.setValignment(imageview, VPos.CENTER);
+                        setGraphic(grid);
+                    } else {
+                        setGraphic(null);
                     }
-                };
-                return cell;
+                }
             }
-
-        });
+        );
 
         updateSimulationTable();
     }
@@ -425,12 +407,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                 btnSimRun.setDisable(false);
             }
         } catch (Exception e) {
-            UIUtil.invokeInFAT(new Runnable() {
-                @Override
-                public void run() {
-                    new ExceptionDialog(e).show();
-                }
-            });
+            UIUtil.invokeInFAT(() -> new ExceptionDialog(e).show());
         }
 
         updateAllTables();
@@ -449,12 +426,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             btnSimInit.setGraphic(new ImageView(INIT_SIM));
             btnSimInit.setTooltip(simInit);
         } catch (Exception e) {
-            UIUtil.invokeInFAT(new Runnable() {
-                @Override
-                public void run() {
-                    new ExceptionDialog(e).show();
-                }
-            });
+            UIUtil.invokeInFAT(() -> new ExceptionDialog(e).show());
         }
 
         updateAllTables();
@@ -468,12 +440,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         try {
             simulation.step();
         } catch (Exception e) {
-            UIUtil.invokeInFAT(new Runnable() {
-                @Override
-                public void run() {
-                    new ExceptionDialog(e).show();
-                }
-            });
+            UIUtil.invokeInFAT(() -> new ExceptionDialog(e).show());
         }
 
         updateAllTables();
@@ -484,30 +451,15 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Simulates the machine until it reaches a breakpoint or the end of the program.
      */
     public void runSimulation() {
-        UIUtil.executeWorker(new Runnable() {
-                                 // background task
-                                 @Override
-                                 public void run() {
-                                     try {
-                                         simulation.run();
-                                     } catch (Exception e) {
-                                         UIUtil.invokeInFAT(new Runnable() {
-                                             @Override
-                                             public void run() {
-                                                 new ExceptionDialog(e).show();
-                                             }
-                                         });
-                                     }
+        UIUtil.executeWorker(() -> {
+            // background task
+            try {
+                simulation.run();
+            } catch (Exception e) {
+                UIUtil.invokeInFAT(() -> new ExceptionDialog(e).show());
+            }
+        }, res.get("simulation.wait.title"), res.get("simulation.wait.message"), () -> simulation.pause());
 
-                                 }
-                             }, res.get("simulation.wait.title"), res.get("simulation.wait.message"),
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        // on cancel
-                        simulation.pause();
-                    }
-                });
         updateAllTables();
         updateCyclesText();
     }

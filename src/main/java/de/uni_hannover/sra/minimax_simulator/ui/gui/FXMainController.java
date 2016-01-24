@@ -282,16 +282,13 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
             return;
         }
 
-        UIUtil.executeWorker(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Main.getWorkspace().newProject();
-                    initProjectGUI();
-                } catch (RuntimeException e) {
-                    closeProject();
-                    throw e;
-                }
+        UIUtil.executeWorker(() -> {
+            try {
+                Main.getWorkspace().newProject();
+                initProjectGUI();
+            } catch (RuntimeException e) {
+                closeProject();
+                throw e;
             }
         }, res.get("wait.title"), res.get("wait.project.new"));
     }
@@ -318,22 +315,12 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
             return;
         }
 
-        UIUtil.executeWorker(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Main.getWorkspace().openProject(file);
-                    initProjectGUI();
-                } catch (ProjectImportException e) {
-                    closeProject();
-                    UIUtil.invokeInFAT(new Runnable() {
-                        @Override
-                        public void run() {
-                            new FXDialog(Alert.AlertType.ERROR, res.get("load-error.title"), res.get("load-error.message")).showAndWait();
-                        }
-                    });
-                    //log.log(Level.WARNING, e.getMessage(), e);
-                }
+        UIUtil.executeWorker(() -> {
+            try {
+                Main.getWorkspace().openProject(file);
+                initProjectGUI();
+            } catch (ProjectImportException e) {
+                UIUtil.invokeInFAT(() -> new FXDialog(Alert.AlertType.ERROR, res.get("load-error.title"), res.get("load-error.message")).showAndWait());
             }
         }, res.get("wait.title"), res.format("wait.project.load", file.getName()));
 
@@ -343,13 +330,10 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * Prepares the GUI for working with a project.
      */
     private void initProjectGUI() {
-        UIUtil.invokeInFAT(new Runnable() {
-            @Override
-            public void run() {
-                setDisable(false);
-                initTabs();
-                closeNonDefaultTabs();
-            }
+        UIUtil.invokeInFAT(() -> {
+            setDisable(false);
+            initTabs();
+            closeNonDefaultTabs();
         });
     }
 
@@ -441,19 +425,11 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
 
         final File fileToSave = file;
 
-        UIUtil.executeWorker(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Main.getWorkspace().saveProject(fileToSave);
-                } catch (Exception e) {
-                    UIUtil.invokeInFAT(new Runnable() {
-                        @Override
-                        public void run() {
-                            new ExceptionDialog(e);
-                        }
-                    });
-                }
+        UIUtil.executeWorker(() -> {
+            try {
+                Main.getWorkspace().saveProject(fileToSave);
+            } catch (Exception e) {
+                UIUtil.invokeInFAT(() -> new ExceptionDialog(e).show());
             }
         }, res.get("wait.title"), res.format("wait.project.save", file.getName()));
         return true;
@@ -493,29 +469,26 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         // get an image of the schematics
         final WritableImage image = this.schematics.snapshot(null, null);
 
-        UIUtil.executeWorker(new Runnable() {
-            @Override
-            public void run() {
-                // write the image to disk
-                try {
-                    // TODO: pure JavaFX
-                    if (!ImageIO.write(SwingFXUtils.fromFXImage(image, null), ending, imageFile)) {
-                        ioError(imageFile.getPath(), res.get("project.export.error.message.ioex"));
-                        return;
-                    }
-                } catch (IOException e1) {
-                    // (almost) ignore
-                    e1.printStackTrace();
+        UIUtil.executeWorker(() -> {
+            // write the image to disk
+            try {
+                // TODO: pure JavaFX
+                if (!ImageIO.write(SwingFXUtils.fromFXImage(image, null), ending, imageFile)) {
                     ioError(imageFile.getPath(), res.get("project.export.error.message.ioex"));
                     return;
                 }
-                // open the image
-                try {
-                    Main.getHostServicesStatic().showDocument(imageFile.getAbsolutePath());
-                } catch (Exception e) {
-                    // (almost) ignore
-                    e.printStackTrace();
-                }
+            } catch (IOException e1) {
+                // (almost) ignore
+                e1.printStackTrace();
+                ioError(imageFile.getPath(), res.get("project.export.error.message.ioex"));
+                return;
+            }
+            // open the image
+            try {
+                Main.getHostServicesStatic().showDocument(imageFile.getAbsolutePath());
+            } catch (Exception e) {
+                // (almost) ignore
+                e.printStackTrace();
             }
         }, res.get("wait.title"), res.get("wait.image-export"));
     }
@@ -551,27 +524,23 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
 
         final File fileToSave = file;
 
-        UIUtil.executeWorker(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    SignalTable table = project.getSignalTable();
-                    SignalConfiguration config = project.getSignalConfiguration();
-                    if (fileToSave.getName().endsWith(".csv")) {
-                        new SignalCsvExporter(fileToSave).exportSignalTable(table, config);
-                    } else if (fileToSave.getName().endsWith(".html")) {
-                        new SignalHtmlExporter(fileToSave).exportSignalTable(table, config);
-                    } else {
-                        ioError(fileToSave.getPath(), res.get("project.export.error.message.wrongformat"));
-                    }
-                } catch (IOException e1) {
-                    // (almost) ignore
-                    e1.printStackTrace();
-
-                    ioError(fileToSave.getPath(), res.get("project.export.error.message.ioex"));
+        UIUtil.executeWorker(() -> {
+            try {
+                SignalTable table = project.getSignalTable();
+                SignalConfiguration config = project.getSignalConfiguration();
+                if (fileToSave.getName().endsWith(".csv")) {
+                    new SignalCsvExporter(fileToSave).exportSignalTable(table, config);
+                } else if (fileToSave.getName().endsWith(".html")) {
+                    new SignalHtmlExporter(fileToSave).exportSignalTable(table, config);
+                } else {
+                    ioError(fileToSave.getPath(), res.get("project.export.error.message.wrongformat"));
                 }
-            }
+            } catch (IOException e1) {
+                // (almost) ignore
+                e1.printStackTrace();
 
+                ioError(fileToSave.getPath(), res.get("project.export.error.message.ioex"));
+            }
         }, res.get("wait.title"), res.get("wait.signal-export"));
     }
 
@@ -588,12 +557,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         String error = res.format("project.export.error.message", filename, reason);
         String title = res.get("project.export.error.title");
 
-        UIUtil.invokeInFAT(new Runnable() {
-            @Override
-            public void run() {
-                new FXDialog(Alert.AlertType.ERROR, title, error).showAndWait();
-            }
-        });
+        UIUtil.invokeInFAT(() -> new FXDialog(Alert.AlertType.ERROR, title, error).showAndWait());
     }
 
     /**
@@ -687,12 +651,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      *              the title to set
      */
     private void setApplicationTitle(String newTitle) {
-        UIUtil.invokeInFAT(new Runnable() {
-            @Override
-            public void run() {
-                Main.getPrimaryStage().setTitle(newTitle);
-            }
-        });
+        UIUtil.invokeInFAT(() -> Main.getPrimaryStage().setTitle(newTitle));
     }
 
     /**

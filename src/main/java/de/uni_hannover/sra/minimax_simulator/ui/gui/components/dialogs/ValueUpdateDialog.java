@@ -134,28 +134,22 @@ public abstract class ValueUpdateDialog extends FXDialog {
         this.getDialogPane().setContent(pane);
         this.getDialogPane().getButtonTypes().addAll(_okButtonType, ButtonType.CANCEL);
 
-        _swapMode.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    Mode newMode = _mode == Mode.DEC ? Mode.HEX : Mode.DEC;
-                    updateTextFieldMode(newMode);
-                    updateLabelMode();
-                }
+        _swapMode.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                Mode newMode = _mode == Mode.DEC ? Mode.HEX : Mode.DEC;
+                updateTextFieldMode(newMode);
+                updateLabelMode();
             }
         });
 
         _okButton = (Button) this.getDialogPane().lookupButton(_okButtonType);
 
         // invalid input should disable the OK button
-        _field.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                boolean shouldEnable = _mode.decode(_field.getText()) != null;
+        _field.textProperty().addListener((observable, oldValue, newValue) -> {
+            boolean shouldEnable = _mode.decode(_field.getText()) != null;
 
-                if (_okButton.isDisabled() == shouldEnable) {
-                    _okButton.setDisable(!shouldEnable);
-                }
+            if (_okButton.isDisabled() == shouldEnable) {
+                _okButton.setDisable(!shouldEnable);
             }
         });
 

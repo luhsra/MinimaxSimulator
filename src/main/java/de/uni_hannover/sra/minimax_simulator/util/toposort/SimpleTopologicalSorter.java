@@ -14,12 +14,7 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
 
     @Override
     public <T extends TopologicalSortable<T>> List<T> sort(Collection<T> elements) {
-        return sort(elements, new TopologicalDependencySets<T>() {
-            @Override
-            public Set<T> dependenciesOf(T element) {
-                return element.getDependencies();
-            }
-        });
+        return sort(elements, element -> element.getDependencies());
     }
 
     @Override
@@ -57,12 +52,7 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
 
     @Override
     public <T extends TopologicalSortable<T>> void sort(Collection<T> elements, List<? super T> list) {
-        sort(elements, new TopologicalDependencySets<T>() {
-            @Override
-            public Set<T> dependenciesOf(T element) {
-                return element.getDependencies();
-            }
-        }, list);
+        sort(elements, element -> element.getDependencies(), list);
     }
 
     @Override

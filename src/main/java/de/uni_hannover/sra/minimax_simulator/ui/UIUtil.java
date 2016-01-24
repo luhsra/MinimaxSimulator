@@ -92,19 +92,11 @@ public class UIUtil {
             }
         };
 
-        task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent t) {
-                waitingDialog.close();
-            }
-        });
+        task.setOnSucceeded(workerStateEvent -> waitingDialog.close());
 
-        task.setOnCancelled(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent t) {
-                if (cancelAction != null) {
-                    cancelAction.run();
-                }
+        task.setOnCancelled(workerStateEvent -> {
+            if (cancelAction != null) {
+                cancelAction.run();
             }
         });
 
@@ -208,12 +200,9 @@ public class UIUtil {
     private static void invokeAndWait(Runnable r) throws InterruptedException, ExecutionException {
         checkNotNull(r);
 //      FutureTask<Boolean> task = new FutureTask<>(r, true);
-        FutureTask<Boolean> task = new FutureTask<>(new Runnable() {
-            @Override
-            public void run() {
-                // Do something on FX thread
-                System.out.println("NOW IT IS WORKING!");
-            }
+        FutureTask<Boolean> task = new FutureTask<>(() -> {
+            // do something on FX thread
+            System.out.println("NOW IT IS WORKING!");
         }, true);
 
         System.out.println("Call: runLater()");

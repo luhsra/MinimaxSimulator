@@ -83,15 +83,12 @@ public class MemoryImportWorker implements Runnable {
             memory.setNotifiesListeners(false);
             doImport(fis);
         } catch (IOException ioe) {
-            UIUtil.invokeInFAT(new Runnable() {
-                @Override
-                public void run() {
-                    FXDialog fne = new FXDialog(AlertType.ERROR, res.get("memory.import.error"), res.format("memory.import.file-not-existing", file.getPath()));
-                    // FIXME: delete if issue with long texts in linux is resolved
-                    fne.setResizable(true);
+            UIUtil.invokeInFAT(() -> {
+                FXDialog fne = new FXDialog(AlertType.ERROR, res.get("memory.import.error"), res.format("memory.import.file-not-existing", file.getPath()));
+                // FIXME: delete if issue with long texts in linux is resolved
+                fne.setResizable(true);
 
-                    fne.showAndWait();
-                }
+                fne.showAndWait();
             });
         } finally {
             memory.setNotifiesListeners(memoryNotifiesListeners);
@@ -152,15 +149,12 @@ public class MemoryImportWorker implements Runnable {
             int maxAddress = memory.getMaxAddress();
             int width = memory.getAddressWidth();
 
-            UIUtil.invokeInFAT(new Runnable() {
-                @Override
-                public void run() {
-                    FXDialog trunc = new FXDialog(AlertType.WARNING, res.get("memory.import.warning"), res.format("memory.import.bytes-truncated", Util.toHex(maxAddress, width, true), truncated));
-                    // FIXME: delete if issue with long texts in linux is resolved
-                    trunc.setResizable(true);
+            UIUtil.invokeInFAT(() -> {
+                FXDialog trunc = new FXDialog(AlertType.WARNING, res.get("memory.import.warning"), res.format("memory.import.bytes-truncated", Util.toHex(maxAddress, width, true), truncated));
+                // FIXME: delete if issue with long texts in linux is resolved
+                trunc.setResizable(true);
 
-                    trunc.showAndWait();
-                }
+                trunc.showAndWait();
             });
         }
     }

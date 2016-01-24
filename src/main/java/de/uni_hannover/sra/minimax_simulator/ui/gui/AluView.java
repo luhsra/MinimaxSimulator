@@ -107,15 +107,10 @@ public class AluView {
         col_added_opcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
 
         // remove operation with double click
-        tableAdded.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        if (!tableAdded.getSelectionModel().getSelectedItems().isEmpty()) {
-                            removeOperation();
-                        }
-                    }
+        tableAdded.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
+                if (!tableAdded.getSelectionModel().getSelectedItems().isEmpty()) {
+                    removeOperation();
                 }
             }
         });
@@ -172,15 +167,10 @@ public class AluView {
         col_available_op.setCellValueFactory(new PropertyValueFactory<>("op"));
 
         // add operation with double click
-        tableAvailable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        if (!tableAvailable.getSelectionModel().getSelectedItems().isEmpty()) {
-                            addOperation();
-                        }
-                    }
+        tableAvailable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
+                if (!tableAvailable.getSelectionModel().getSelectedItems().isEmpty()) {
+                    addOperation();
                 }
             }
         });

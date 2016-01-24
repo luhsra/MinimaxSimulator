@@ -22,17 +22,14 @@ public class AddressFormatter extends TextFormatter<Integer> {
     public AddressFormatter(MachineMemory mMemory) {
         super(  new HexStringConverter(mMemory.getMinAddress(), mMemory.getMaxAddress(), Util.createHexFormatString(mMemory.getAddressWidth(), false)),
                 0,
-                new UnaryOperator<Change>() {
-                    @Override
-                    public Change apply(Change change) {
-                        if (change.isContentChange()) {
-                            String newValue = change.getControlNewText();
-                            if (!newValue.matches("-?[0-9a-fA-F]+") || newValue.length() > Long.toHexString((long) mMemory.getMaxAddress()).length()) {
-                                return null;
-                            }
+                change -> {
+                    if (change.isContentChange()) {
+                        String newValue = change.getControlNewText();
+                        if (!newValue.matches("-?[0-9a-fA-F]+") || newValue.length() > Long.toHexString((long) mMemory.getMaxAddress()).length()) {
+                            return null;
                         }
-                        return change;
                     }
+                    return change;
                 });
     }
 }

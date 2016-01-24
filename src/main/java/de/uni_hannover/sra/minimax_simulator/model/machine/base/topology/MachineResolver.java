@@ -30,12 +30,7 @@ public class MachineResolver {
      */
     public MachineResolver(Set<Circuit> circuits) {
         ArrayList<Circuit> list = new ArrayList<>(circuits);
-        new SimpleTopologicalSorter().sort(circuits, new TopologicalDependencyRelation<Circuit>() {
-                @Override
-                public boolean dependsOn(Circuit element, Circuit dependency) {
-                    return dependency.getSuccessors().contains(element);
-                }
-            }, list);
+        new SimpleTopologicalSorter().sort(circuits, (element, dependency) -> dependency.getSuccessors().contains(element), list);
 
         resolveOrder = ImmutableList.copyOf(list);
         synchronousCircuits = ImmutableList.copyOf(Iterables.filter(circuits, SynchronousCircuit.class));

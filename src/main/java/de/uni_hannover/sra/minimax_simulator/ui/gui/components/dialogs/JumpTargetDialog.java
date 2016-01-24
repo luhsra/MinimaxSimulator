@@ -144,12 +144,7 @@ public class JumpTargetDialog extends FXDialog {
             tf.setPrefWidth(60);
             tf.setMaxWidth(60);
 
-            tf.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    validateTargetRow();
-                }
-            });
+            tf.textProperty().addListener((observable, oldValue, newValue) -> validateTargetRow());
         }
 
         cbUncond = new JumpLabelSelector(txtUncond, table, getCurrentUnconditionalRow());

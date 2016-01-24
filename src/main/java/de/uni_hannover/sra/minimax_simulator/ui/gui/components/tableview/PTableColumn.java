@@ -24,16 +24,12 @@ public class PTableColumn<S, T> extends javafx.scene.control.TableColumn<S, T> {
      * Constructs a new {@code PTableColumn}.
      */
     public PTableColumn() {
-        tableViewProperty().addListener(new ChangeListener<TableView<S>>() {
-
-            @Override
-            public void changed(ObservableValue<? extends TableView<S>> ov, TableView<S> t, TableView<S> t1) {
-                if(PTableColumn.this.prefWidthProperty().isBound()) {
-                    PTableColumn.this.prefWidthProperty().unbind();
-                }
-
-                PTableColumn.this.prefWidthProperty().bind(t1.widthProperty().multiply(percentageWidth));
+        tableViewProperty().addListener((ov, t, t1) -> {
+            if(PTableColumn.this.prefWidthProperty().isBound()) {
+                PTableColumn.this.prefWidthProperty().unbind();
             }
+
+            PTableColumn.this.prefWidthProperty().bind(t1.widthProperty().multiply(percentageWidth));
         });
     }
 

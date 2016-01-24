@@ -34,46 +34,39 @@ public class JumpTargetColumn extends SignalTableColumn {
     public JumpTargetColumn(String label, String id, int index) {
         super(label, id, index);
 
-        setCellFactory(new Callback<TableColumn<ObservableList, String>, TableCell<ObservableList, String>>() {
-            @Override
-            public TableCell<ObservableList, String> call(TableColumn<ObservableList, String> param) {
-                TableCell<ObservableList, String> cell = new TableCell<ObservableList, String>() {
+        setCellFactory(param -> {
+            TableCell<ObservableList, String> cell = new TableCell<ObservableList, String>() {
 
-                    @Override
-                    public void updateItem(String item, boolean empty) {
+                @Override
+                public void updateItem(String item, boolean empty) {
 
-                        if (item == null) {
-                            setGraphic(null);
+                    if (item == null) {
+                        setGraphic(null);
+                    }
+                    else {
+                        if ( item.contains("-") && "JUMPTARGET".equals(id) ) {
+                            // the JumpTarget is invalid
+                            setGraphic(new CenteredCellPane(item, INVALID_JUMP_STYLE));
                         }
                         else {
-                            if ( item.contains("-") && "JUMPTARGET".equals(id) ) {
-                                // the JumpTarget is invalid
-                                setGraphic(new CenteredCellPane(item, INVALID_JUMP_STYLE));
-                            }
-                            else {
-                                setGraphic(new CenteredCellPane(item));
-                            }
+                            setGraphic(new CenteredCellPane(item));
                         }
                     }
+                }
 
-                };
+            };
 
-                cell.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getClickCount() == 2) {
-                            int index = cell.getTableView().getSelectionModel().getSelectedIndex();
-                            SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
-                            SignalRow signalRow = signalTable.getRow(index);
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getClickCount() == 2) {
+                    int cIndex = cell.getTableView().getSelectionModel().getSelectedIndex();
+                    SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
+                    SignalRow signalRow = signalTable.getRow(cIndex);
 
-                            new JumpTargetDialog(signalTable, signalRow, index).showAndApply();
-                        }
-                    }
-                });
+                    new JumpTargetDialog(signalTable, signalRow, cIndex).showAndApply();
+                }
+            });
 
-                return cell;
-            }
-
+            return cell;
         });
     }
 

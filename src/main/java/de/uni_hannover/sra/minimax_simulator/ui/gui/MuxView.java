@@ -148,31 +148,27 @@ public class MuxView implements MachineConfigListener {
 
         updateRegisterComboBox();
 
-        tgroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
-
-                if (t1 == null) {
-                    return;
-                }
-
-                RadioButton chk = (RadioButton) t1.getToggleGroup().getSelectedToggle();
-                boolean disable;
-                if (chk.equals(radioRegister)) {
-                    disable = true;
-                } else if (chk.equals(radioConstant)) {
-                    disable = false;
-                } else {
-                    return;
-                }
-                cbRegister.setDisable(!disable);
-                lblDec.setDisable(disable);
-                lblHex.setDisable(disable);
-                spinnerHex.setDisable(disable);
-                spinnerDec.setDisable(disable);
-
-                updateSaveButton();
+        tgroup.selectedToggleProperty().addListener((ov, t, t1) -> {
+            if (t1 == null) {
+                return;
             }
+
+            RadioButton chk = (RadioButton) t1.getToggleGroup().getSelectedToggle();
+            boolean disable;
+            if (chk.equals(radioRegister)) {
+                disable = true;
+            } else if (chk.equals(radioConstant)) {
+                disable = false;
+            } else {
+                return;
+            }
+            cbRegister.setDisable(!disable);
+            lblDec.setDisable(disable);
+            lblHex.setDisable(disable);
+            spinnerHex.setDisable(disable);
+            spinnerDec.setDisable(disable);
+
+            updateSaveButton();
         });
 
         initSpinners();
