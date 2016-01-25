@@ -151,7 +151,7 @@ public class AluView {
 
         final int size = config.getAluOperations().size()-1;
 
-        data.forEach((model) -> {
+        data.forEach(model -> {
             int pos = config.getAluOperations().indexOf(model.getAluOP());
             model.setOpcode(Util.toBinaryAddress(pos, size));
         });

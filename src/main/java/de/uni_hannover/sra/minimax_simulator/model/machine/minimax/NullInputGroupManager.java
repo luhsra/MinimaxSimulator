@@ -68,8 +68,7 @@ class NullInputGroupManager implements MuxInputGroupManager {
      *          a list of {@link InputEntry} to destroy {@code Group}s for
      */
     private void destroyGroups(List<InputEntry> entries) {
-        entries.stream().filter(entry -> entry.input instanceof NullMuxInput).forEach(entry -> {
-            groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
-        });
+        entries.stream().filter(entry -> entry.input instanceof NullMuxInput).forEach(entry ->
+            groupManager.removeGroup(entry.pinId + Parts._CONSTANT));
     }
 }

@@ -14,7 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
  *
  * @author Martin L&uuml;ck
  */
-public abstract class MachineConfigListEvent<T> extends MachineConfigEvent {
+public abstract class MachineConfigListEvent<T> implements MachineConfigEvent {
 
     /**
      * The first machine component affected by the event.<br>

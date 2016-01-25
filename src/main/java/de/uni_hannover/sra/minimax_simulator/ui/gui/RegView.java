@@ -85,13 +85,9 @@ public class RegView {
         });
 
         // ComboBox and TextFields check if the save button will be enabled
-        cbSize.valueProperty().addListener((observable, oldValue, newValue) -> {
-            updateButton();
-        });
+        cbSize.valueProperty().addListener((observable, oldValue, newValue) -> updateButton());
 
-        txtName.textProperty().addListener((observable, oldValue, newValue) -> {
-            updateButton();
-        });
+        txtName.textProperty().addListener((observable, oldValue, newValue) -> updateButton());
 
         txtName.lengthProperty().addListener((observable, oldValue, newValue) -> {
             int limit = Config.EDITOR_MAX_REGISTER_LENGTH;
@@ -100,9 +96,7 @@ public class RegView {
             }
         });
 
-        txtDescription.textProperty().addListener((observable, oldValue, newValue) -> {
-            updateButton();
-        });
+        txtDescription.textProperty().addListener((observable, oldValue, newValue) -> updateButton());
 
         setLocalizedTexts();
     }
