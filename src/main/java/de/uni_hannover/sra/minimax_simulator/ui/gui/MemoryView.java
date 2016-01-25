@@ -54,7 +54,7 @@ public class MemoryView{
     private File currentExportFile;
 
     @FXML private Spinner<Integer> spinnerSize;
-    @FXML private CheckBox cb_partialImport;
+    @FXML private CheckBox cbPartialImport;
     @FXML private Button btnImportMem;
     @FXML private TextField txtExport;
     @FXML private Button btnExportMem;
@@ -78,7 +78,7 @@ public class MemoryView{
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
-        final List<Labeled> controls = new ArrayList<>(Arrays.asList(btnImportMem, lblImportFile, lblTargetAddress, lblByteCount, cb_partialImport, paneImport, paneExport, btnExportMem, lblExportFile,
+        final List<Labeled> controls = new ArrayList<>(Arrays.asList(btnImportMem, lblImportFile, lblTargetAddress, lblByteCount, cbPartialImport, paneImport, paneExport, btnExportMem, lblExportFile,
                 lblFromAddress, lblToAddress, paneClear, btnClear));
         for (Labeled con : controls) {
             con.setText(res.get(con.getId().replace("_", ".")));
@@ -96,8 +96,8 @@ public class MemoryView{
         txtImport.setText("");
         currentExportFile = null;
         currentImportFile = null;
-        cb_partialImport.setSelected(false);
-        cb_partialImport.setDisable(true);
+        cbPartialImport.setSelected(false);
+        cbPartialImport.setDisable(true);
         spinnerSize.setDisable(true);
         btnExportMem.setDisable(true);
         btnImportMem.setDisable(true);
@@ -164,7 +164,7 @@ public class MemoryView{
         sizeValueFactory.setValue(length);
         spinnerSize.setValueFactory(sizeValueFactory);
 
-        cb_partialImport.setDisable(false);
+        cbPartialImport.setDisable(false);
         btnImportMem.setDisable(false);
     }
 
@@ -172,7 +172,7 @@ public class MemoryView{
      * Enables/disables the {@link Spinner} for the partial import according to the state of the {@link CheckBox}.
      */
     public void cbPartialImportAction() {
-        if (cb_partialImport.isSelected()) {
+        if (cbPartialImport.isSelected()) {
             spinnerSize.setDisable(false);
         }
         else {

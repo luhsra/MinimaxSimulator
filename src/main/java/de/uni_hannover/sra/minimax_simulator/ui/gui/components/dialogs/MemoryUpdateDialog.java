@@ -28,7 +28,7 @@ public class MemoryUpdateDialog extends ValueUpdateDialog {
         this.memory = memory;
         this.address = address;
 
-        _messageLabel.setText(_res.format("message",
+        messageLabel.setText(res.format("message",
             Util.toHex(address, memory.getAddressWidth(), true)));
     }
 

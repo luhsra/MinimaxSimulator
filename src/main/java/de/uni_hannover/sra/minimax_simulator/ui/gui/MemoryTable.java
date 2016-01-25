@@ -11,7 +11,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -47,9 +46,9 @@ public class MemoryTable implements MemoryAccessListener {
 
     @FXML private TableView<MemoryTableModel> memTable;
 
-    @FXML private TableColumn<MemoryTableModel, String> col_mem_adr;
-    @FXML private TableColumn<MemoryTableModel, String> col_mem_dec;
-    @FXML private TableColumn<MemoryTableModel, String> col_mem_hex;
+    @FXML private TableColumn<MemoryTableModel, String> colMemAdr;
+    @FXML private TableColumn<MemoryTableModel, String> colMemDec;
+    @FXML private TableColumn<MemoryTableModel, String> colMemHex;
 
     @FXML private TextField txtAddressField;
     @FXML private Label lblMemPage;
@@ -97,7 +96,7 @@ public class MemoryTable implements MemoryAccessListener {
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
-        final List<TableColumn> tableColumnsMem = new ArrayList<>(Arrays.asList(col_mem_adr, col_mem_dec, col_mem_hex));
+        final List<TableColumn> tableColumnsMem = new ArrayList<>(Arrays.asList(colMemAdr, colMemDec, colMemHex));
         for (TableColumn col : tableColumnsMem) {
             col.setText(res.get(col.getId().replace("_", ".")));
         }
@@ -173,9 +172,9 @@ public class MemoryTable implements MemoryAccessListener {
         firstPage();
         updateMemPageLabel();
 
-        col_mem_adr.setCellValueFactory(new PropertyValueFactory<>("address"));
-        col_mem_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
-        col_mem_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
+        colMemAdr.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colMemDec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
+        colMemHex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
         updateMemTable();
 
@@ -296,7 +295,7 @@ public class MemoryTable implements MemoryAccessListener {
         private final SimpleIntegerProperty decimal;
         private final SimpleStringProperty hex;
 
-        private static final String _hexFormatString = "0x%08X";
+        private static final String HEX_FORMAT_STRING = "0x%08X";
 
         /**
          * Constructs a new {@code MemoryTableModel} and sets the properties.
@@ -309,7 +308,7 @@ public class MemoryTable implements MemoryAccessListener {
         private MemoryTableModel(String address, int value) {
             this.address = new SimpleStringProperty(address);
             this.decimal = new SimpleIntegerProperty(value);
-            this.hex = new SimpleStringProperty(String.format(_hexFormatString, value));
+            this.hex = new SimpleStringProperty(String.format(HEX_FORMAT_STRING, value));
         }
 
         public String getAddress() {
@@ -338,7 +337,7 @@ public class MemoryTable implements MemoryAccessListener {
 
         public void setValue(int value) {
             this.decimal.set(value);
-            this.hex.set(String.format(_hexFormatString, value));
+            this.hex.set(String.format(HEX_FORMAT_STRING, value));
         }
     }
 

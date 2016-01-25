@@ -29,9 +29,9 @@ public class AboutDialog extends FXDialog {
      */
     public AboutDialog() {
         super(AlertType.NONE, "Info", null);
-        TextResource _res = Main.getTextResource("application").using("info");
+        TextResource res = Main.getTextResource("application").using("info");
 
-        ButtonType btnTypeOK = new ButtonType(_res.get("ok"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType btnTypeOK = new ButtonType(res.get("ok"), ButtonBar.ButtonData.OK_DONE);
         this.getButtonTypes().setAll(btnTypeOK);
 
         GridPane grid = new GridPane();
@@ -63,8 +63,8 @@ public class AboutDialog extends FXDialog {
         vb.setSpacing(5);
         Version ver = new Version(Main.class);              // works only with JAR
         Label version = new Label("Version: " + ver.getVersionNumber());
-        Label build = new Label(_res.format("build", ver.getBuildTime(), ver.getBuildJdk()));
-        Label authors = new Label(_res.format("author", ver.getAuthorName()));
+        Label build = new Label(res.format("build", ver.getBuildTime(), ver.getBuildJdk()));
+        Label authors = new Label(res.format("author", ver.getAuthorName()));
         vb.getChildren().addAll(version, build, authors);
 
         // create university label

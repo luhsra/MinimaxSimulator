@@ -31,9 +31,9 @@
                     <children>
                         <TableView fx:id="tableMuxA" prefHeight="548.0" prefWidth="472.0">
                             <columns>
-                                <TableColumn fx:id="col_mux_a_code" prefWidth="90.0" resizable="false" text=""/>
-                                <TableColumn fx:id="col_mux_a_source" prefWidth="135.0" resizable="false" text=""/>
-                                <TableColumn fx:id="col_mux_a_extended" prefWidth="120.0" resizable="false" text=""/>
+                                <TableColumn fx:id="colMuxAcode" prefWidth="90.0" resizable="false" text=""/>
+                                <TableColumn fx:id="colMuxAsource" prefWidth="135.0" resizable="false" text=""/>
+                                <TableColumn fx:id="colMuxAextended" prefWidth="120.0" resizable="false" text=""/>
                             </columns>
                         </TableView>
                         <VBox maxHeight="50.0" prefHeight="100.0" prefWidth="80.0" spacing="15.0"
@@ -172,9 +172,9 @@
                     <children>
                         <TableView fx:id="tableMuxB" prefHeight="548.0" prefWidth="472.0" GridPane.columnIndex="1">
                             <columns>
-                                <TableColumn fx:id="col_mux_b_code" prefWidth="90.0" resizable="false" text=""/>
-                                <TableColumn fx:id="col_mux_b_source" prefWidth="135.0" resizable="false" text=""/>
-                                <TableColumn fx:id="col_mux_b_extended" prefWidth="120.0" resizable="false" text=""/>
+                                <TableColumn fx:id="colMuxBcode" prefWidth="90.0" resizable="false" text=""/>
+                                <TableColumn fx:id="colMuxBsource" prefWidth="135.0" resizable="false" text=""/>
+                                <TableColumn fx:id="colMuxBextended" prefWidth="120.0" resizable="false" text=""/>
                             </columns>
                         </TableView>
                         <VBox maxHeight="50.0" prefHeight="100.0" prefWidth="80.0" spacing="15.0"

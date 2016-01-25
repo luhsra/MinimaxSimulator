@@ -61,11 +61,11 @@
                            prefWidth="561.0" GridPane.columnSpan="5" GridPane.halignment="CENTER"
                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                     <columns>
-                        <PTableColumn id="memtable_address" fx:id="col_mem_adr" percentageWidth="0.251"
+                        <PTableColumn id="memtable_address" fx:id="colMemAdr" percentageWidth="0.251"
                                       prefWidth="143.0" resizable="false" sortable="false" text="Adresse"/>
-                        <PTableColumn id="memtable_dec" fx:id="col_mem_dec" percentageWidth="0.337" prefWidth="189.0"
+                        <PTableColumn id="memtable_dec" fx:id="colMemDec" percentageWidth="0.337" prefWidth="189.0"
                                       resizable="false" sortable="false" text="Dezimal"/>
-                        <PTableColumn id="memtable_hex" fx:id="col_mem_hex" percentageWidth="0.408" prefWidth="229.0"
+                        <PTableColumn id="memtable_hex" fx:id="colMemHex" percentageWidth="0.408" prefWidth="229.0"
                                       resizable="false" sortable="false" text="Hexadezimal"/>
                     </columns>
                     <GridPane.margin>

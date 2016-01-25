@@ -27,9 +27,9 @@ public abstract class CircuitSprite implements Sprite {
      */
     private static final class ArrowHead {
 
-        public static final double[] xPoints = {0, -3, 3};
-        public static final double[] yPoints = {0, -5, -5};
-        public static final int nPoints = 3;
+        private static final double[] X_POINTS = {0, -3, 3};
+        private static final double[] Y_POINTS = {0, -5, -5};
+        public static final int N_POINTS = 3;
 
         /**
          * Prevents instance creation.
@@ -73,7 +73,7 @@ public abstract class CircuitSprite implements Sprite {
 
         Transform oldTransform = gc.getTransform();
         gc.setTransform(tx);
-        gc.fillPolygon(ArrowHead.xPoints, ArrowHead.yPoints, ArrowHead.nPoints);
+        gc.fillPolygon(ArrowHead.X_POINTS, ArrowHead.Y_POINTS, ArrowHead.N_POINTS);
         gc.setTransform((Affine)oldTransform);
 
     }

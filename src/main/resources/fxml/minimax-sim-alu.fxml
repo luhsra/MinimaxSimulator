@@ -58,9 +58,9 @@
                 <TableView fx:id="tableAdded" prefHeight="548.0" prefWidth="333.0" AnchorPane.bottomAnchor="0.0"
                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                        <PTableColumn id="alu_addedOP_code" fx:id="col_added_opcode" percentageWidth="0.29"
+                        <PTableColumn id="alu_addedOP_code" fx:id="colAddedOpcode" percentageWidth="0.29"
                                       prefWidth="90.0" resizable="false" text="OpCode"/>
-                        <PTableColumn fx:id="col_added_op" percentageWidth="0.706" prefWidth="221.0" resizable="false"
+                        <PTableColumn fx:id="colAddedOp" percentageWidth="0.706" prefWidth="221.0" resizable="false"
                                       text="Operation"/>
                     </columns>
                 </TableView>
@@ -124,7 +124,7 @@
             <content>
                 <TableView fx:id="tableAvailable" prefHeight="548.0" prefWidth="240.0">
                     <columns>
-                        <PTableColumn fx:id="col_available_op" percentageWidth="0.935" resizable="false"
+                        <PTableColumn fx:id="colAvailableOp" percentageWidth="0.935" resizable="false"
                                       text="Operation"/>
                     </columns>
                 </TableView>

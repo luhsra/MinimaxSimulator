@@ -7,7 +7,7 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
  */
 public class ConstantMuxInput implements MuxInput {
 
-    private final int CONSTANT;
+    private final int constant;
 
     /**
      * Constructs a new {@code ConstantMuxInput} with the specified constant.
@@ -16,7 +16,7 @@ public class ConstantMuxInput implements MuxInput {
      *          the constant to set to the {@code ConstantMuxInput}
      */
     public ConstantMuxInput(int constant) {
-        this.CONSTANT = constant;
+        this.constant = constant;
     }
 
     /**
@@ -26,12 +26,12 @@ public class ConstantMuxInput implements MuxInput {
      *          the constant of the {@code ConstantMuxInput}
      */
     public int getConstant() {
-        return CONSTANT;
+        return constant;
     }
 
     @Override
     public String toString() {
-        return "ConstantMuxInput[" + CONSTANT + "]";
+        return "ConstantMuxInput[" + constant + "]";
     }
 
     @Override
@@ -46,16 +46,16 @@ public class ConstantMuxInput implements MuxInput {
             return false;
         }
 
-        return ((ConstantMuxInput) o).CONSTANT == this.CONSTANT;
+        return ((ConstantMuxInput) o).constant == this.constant;
     }
 
     @Override
     public int hashCode() {
-        return 31 * CONSTANT;
+        return 31 * constant;
     }
 
     @Override
     public String getName() {
-        return Integer.toString(CONSTANT);
+        return Integer.toString(constant);
     }
 }

@@ -21,7 +21,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -35,7 +34,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.util.Callback;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -57,22 +55,22 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     private final TextResource res;
 
     @FXML private TableView<RegisterTableModel> regTable;
-    @FXML private TableColumn<RegisterTableModel, String> col_reg_name;
-    @FXML private TableColumn<RegisterTableModel, String> col_reg_dec;
-    @FXML private TableColumn<RegisterTableModel, String> col_reg_hex;
+    @FXML private TableColumn<RegisterTableModel, String> colRegName;
+    @FXML private TableColumn<RegisterTableModel, String> colRegDec;
+    @FXML private TableColumn<RegisterTableModel, String> colRegHex;
 
     @FXML private TableView<AluTableModel> aluTable;
-    @FXML private TableColumn<AluTableModel, String> col_alu_dec;
-    @FXML private TableColumn<AluTableModel, String> col_alu_hex;
+    @FXML private TableColumn<AluTableModel, String> colAluDec;
+    @FXML private TableColumn<AluTableModel, String> colAluHex;
 
     @FXML private TableView<SimulationTableModel> simTable;
-    @FXML private TableColumn<SimulationTableModel, Boolean> col_sim_1;
-    @FXML private TableColumn<SimulationTableModel, Boolean> col_sim_2;
-    @FXML private TableColumn<SimulationTableModel, String> col_sim_label;
-    @FXML private TableColumn<SimulationTableModel, String> col_sim_adr;
-    @FXML private TableColumn<SimulationTableModel, String> col_sim_alu;
-    @FXML private TableColumn<SimulationTableModel, String> col_sim_next;
-    @FXML private TableColumn<SimulationTableModel, String> col_sim_desc;
+    @FXML private TableColumn<SimulationTableModel, Boolean> colSim1;
+    @FXML private TableColumn<SimulationTableModel, Boolean> colSim2;
+    @FXML private TableColumn<SimulationTableModel, String> colSimLabel;
+    @FXML private TableColumn<SimulationTableModel, String> colSimAdr;
+    @FXML private TableColumn<SimulationTableModel, String> colSimAlu;
+    @FXML private TableColumn<SimulationTableModel, String> colSimNext;
+    @FXML private TableColumn<SimulationTableModel, String> colSimDesc;
 
     @FXML private TitledPane paneRegister;
     @FXML private TitledPane paneALU;
@@ -130,12 +128,12 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
-        final List<TableColumn> tableColumnsSignal = new ArrayList<>(Arrays.asList(col_sim_label, col_sim_adr, col_sim_alu, col_sim_next, col_sim_desc));
+        final List<TableColumn> tableColumnsSignal = new ArrayList<>(Arrays.asList(colSimLabel, colSimAdr, colSimAlu, colSimNext, colSimDesc));
         for (TableColumn col : tableColumnsSignal) {
             col.setText(resSignal.get(col.getId().replace("_", ".")));
         }
 
-        final List<TableColumn> tableColumns = new ArrayList<>(Arrays.asList(col_reg_name, col_reg_dec, col_reg_hex, col_alu_dec, col_alu_hex));
+        final List<TableColumn> tableColumns = new ArrayList<>(Arrays.asList(colRegName, colRegDec, colRegHex, colAluDec, colAluHex));
         for (TableColumn col : tableColumns) {
             col.setText(res.get(col.getId().replace("_", ".")));
         }
@@ -191,9 +189,9 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Initializes the {@link TableView} for the registers.
      */
     private void initRegTable() {
-        col_reg_name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        col_reg_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
-        col_reg_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
+        colRegName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colRegDec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
+        colRegHex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
         // open edit dialog at double click
         regTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
@@ -217,8 +215,8 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Initializes the {@link TableView} for the ALU result.
      */
     private void initAluTable() {
-        col_alu_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
-        col_alu_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
+        colAluDec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
+        colAluHex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
         updateAluTable();
     }
@@ -250,15 +248,15 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Initializes the {@link TableView} for the simulation overview.
      */
     private void initSimulationTable() {
-        col_sim_1.setCellValueFactory(new PropertyValueFactory<>("active"));
-        col_sim_2.setCellValueFactory(new PropertyValueFactory<>("breakpoint"));
-        col_sim_label.setCellValueFactory(new PropertyValueFactory<>("label"));
-        col_sim_adr.setCellValueFactory(new PropertyValueFactory<>("address"));
-        col_sim_alu.setCellValueFactory(new PropertyValueFactory<>("alu"));
-        col_sim_next.setCellValueFactory(new PropertyValueFactory<>("next"));
-        col_sim_desc.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colSim1.setCellValueFactory(new PropertyValueFactory<>("active"));
+        colSim2.setCellValueFactory(new PropertyValueFactory<>("breakpoint"));
+        colSimLabel.setCellValueFactory(new PropertyValueFactory<>("label"));
+        colSimAdr.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colSimAlu.setCellValueFactory(new PropertyValueFactory<>("alu"));
+        colSimNext.setCellValueFactory(new PropertyValueFactory<>("next"));
+        colSimDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        col_sim_2.setCellFactory(param -> {
+        colSim2.setCellFactory(param -> {
             TableCell<SimulationTableModel, Boolean> cell = new TableCell<SimulationTableModel, Boolean>() {
                 ImageView imageview = new ImageView();
 
@@ -299,7 +297,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             return cell;
         });
 
-        col_sim_1.setCellFactory(param ->
+        colSim1.setCellFactory(param ->
             new TableCell<SimulationTableModel, Boolean>() {
                 ImageView imageview = new ImageView();
 

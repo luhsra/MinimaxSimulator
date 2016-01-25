@@ -13,8 +13,6 @@ import de.uni_hannover.sra.minimax_simulator.ui.gui.util.HexSpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.NullAwareIntFormatter;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,18 +43,18 @@ public class MuxView implements MachineConfigListener {
     @FXML private TitledPane paneSelectedConnection;
 
     @FXML private TableView<MuxTableModel> tableMuxA;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_a_code;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_a_source;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_a_extended;
+    @FXML private TableColumn<MuxTableModel, String> colMuxAcode;
+    @FXML private TableColumn<MuxTableModel, String> colMuxAsource;
+    @FXML private TableColumn<MuxTableModel, String> colMuxAextended;
     @FXML private Button btnMoveUpMuxA;
     @FXML private Button btnMoveDownMuxA;
     @FXML private Button btnNewMuxA;
     @FXML private Button btnRemoveMuxA;
 
     @FXML private TableView<MuxTableModel> tableMuxB;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_b_code;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_b_source;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_b_extended;
+    @FXML private TableColumn<MuxTableModel, String> colMuxBcode;
+    @FXML private TableColumn<MuxTableModel, String> colMuxBsource;
+    @FXML private TableColumn<MuxTableModel, String> colMuxBextended;
     @FXML private Button btnMoveUpMuxB;
     @FXML private Button btnMoveDownMuxB;
     @FXML private Button btnNewMuxB;
@@ -211,9 +209,9 @@ public class MuxView implements MachineConfigListener {
      * Initializes the {@link TableView} for multiplexer A.
      */
     private void initTableMuxA() {
-        col_mux_a_code.setCellValueFactory(new PropertyValueFactory<>("code"));
-        col_mux_a_source.setCellValueFactory(new PropertyValueFactory<>("source"));
-        col_mux_a_extended.setCellValueFactory(new PropertyValueFactory<>("extended"));
+        colMuxAcode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colMuxAsource.setCellValueFactory(new PropertyValueFactory<>("source"));
+        colMuxAextended.setCellValueFactory(new PropertyValueFactory<>("extended"));
 
         tableMuxA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -253,9 +251,9 @@ public class MuxView implements MachineConfigListener {
      * Initializes the {@link TableView} for multiplexer B.
      */
     private void initTableMuxB() {
-        col_mux_b_code.setCellValueFactory(new PropertyValueFactory<>("code"));
-        col_mux_b_source.setCellValueFactory(new PropertyValueFactory<>("source"));
-        col_mux_b_extended.setCellValueFactory(new PropertyValueFactory<>("extended"));
+        colMuxBcode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colMuxBsource.setCellValueFactory(new PropertyValueFactory<>("source"));
+        colMuxBextended.setCellValueFactory(new PropertyValueFactory<>("extended"));
 
         tableMuxB.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {

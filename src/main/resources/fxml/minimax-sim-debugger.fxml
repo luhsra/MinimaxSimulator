@@ -33,12 +33,12 @@
                             <children>
                                 <TableView fx:id="regTable" prefWidth="532.0" GridPane.halignment="CENTER">
                                     <columns>
-                                        <PTableColumn id="register_name" fx:id="col_reg_name" percentageWidth="0.385"
+                                        <PTableColumn id="register_name" fx:id="colRegName" percentageWidth="0.385"
                                                       prefWidth="214.0" resizable="false" sortable="false" text="Name"/>
-                                        <PTableColumn id="register_dec" fx:id="col_reg_dec" percentageWidth="0.29"
+                                        <PTableColumn id="register_dec" fx:id="colRegDec" percentageWidth="0.29"
                                                       prefWidth="150.0" resizable="false" sortable="false"
                                                       text="Dezimal"/>
-                                        <PTableColumn id="register_hex" fx:id="col_reg_hex" percentageWidth="0.29"
+                                        <PTableColumn id="register_hex" fx:id="colRegHex" percentageWidth="0.29"
                                                       prefWidth="150.0" resizable="false" sortable="false"
                                                       text="Hexadezimal"/>
                                     </columns>
@@ -73,9 +73,9 @@
                                 <TableView fx:id="aluTable" maxHeight="52.0" minHeight="52.0" prefHeight="52.0"
                                            GridPane.halignment="CENTER" GridPane.valignment="TOP">
                                     <columns>
-                                        <PTableColumn id="alu_dec" fx:id="col_alu_dec" percentageWidth="0.498"
+                                        <PTableColumn id="alu_dec" fx:id="colAluDec" percentageWidth="0.498"
                                                       resizable="false" sortable="false" text="Dezimal"/>
-                                        <PTableColumn id="alu_hex" fx:id="col_alu_hex" percentageWidth="0.498"
+                                        <PTableColumn id="alu_hex" fx:id="colAluHex" percentageWidth="0.498"
                                                       resizable="false" sortable="false" text="Hexadezimal"/>
                                     </columns>
                                 </TableView>
@@ -155,19 +155,19 @@
                                 <TableView id="simtable" fx:id="simTable" prefWidth="550.0" GridPane.halignment="CENTER"
                                            GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                                     <columns>
-                                        <TableColumn fx:id="col_sim_1" prefWidth="35.0" resizable="false"
+                                        <TableColumn fx:id="colSim1" prefWidth="35.0" resizable="false"
                                                      sortable="false"/>
-                                        <TableColumn fx:id="col_sim_2" prefWidth="35.0" resizable="false"
+                                        <TableColumn fx:id="colSim2" prefWidth="35.0" resizable="false"
                                                      sortable="false"/>
-                                        <TableColumn id="col_label" fx:id="col_sim_label" prefWidth="95.0"
+                                        <TableColumn id="col_label" fx:id="colSimLabel" prefWidth="95.0"
                                                      sortable="false" text="Label"/>
-                                        <TableColumn id="col_address" fx:id="col_sim_adr" prefWidth="40.0"
+                                        <TableColumn id="col_address" fx:id="colSimAdr" prefWidth="40.0"
                                                      resizable="false" sortable="false" text="Adr."/>
-                                        <TableColumn id="col_condition" fx:id="col_sim_alu" prefWidth="85.0"
+                                        <TableColumn id="col_condition" fx:id="colSimAlu" prefWidth="85.0"
                                                      resizable="false" sortable="false" text="ALU == 0?"/>
-                                        <TableColumn id="col_jumptarget" fx:id="col_sim_next" prefWidth="90.0"
+                                        <TableColumn id="col_jumptarget" fx:id="colSimNext" prefWidth="90.0"
                                                      resizable="false" sortable="false" text="Folgebefehl"/>
-                                        <TableColumn id="col_description" fx:id="col_sim_desc" prefWidth="151.0"
+                                        <TableColumn id="col_description" fx:id="colSimDesc" prefWidth="151.0"
                                                      sortable="false" text="Beschreibung"/>
                                     </columns>
                                 </TableView>

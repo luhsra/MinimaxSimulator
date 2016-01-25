@@ -50,12 +50,12 @@ public class RegView {
     @FXML private Button btnMoveDown;
 
     @FXML private TableView<RegisterTableModel> tableBaseReg;
-    @FXML private TableColumn<RegisterTableModel, String> col_base_name;
-    @FXML private TableColumn<RegisterTableModel, String> col_base_size;
+    @FXML private TableColumn<RegisterTableModel, String> colBaseName;
+    @FXML private TableColumn<RegisterTableModel, String> colBaseSize;
 
     @FXML private TableView<RegisterTableModel> tableExtendedReg;
-    @FXML private TableColumn<RegisterTableModel, String> col_extended_name;
-    @FXML private TableColumn<RegisterTableModel, String> col_extended_size;
+    @FXML private TableColumn<RegisterTableModel, String> colExtendedName;
+    @FXML private TableColumn<RegisterTableModel, String> colExtendedSize;
 
     /**
      * Initializes the final variables.
@@ -136,8 +136,8 @@ public class RegView {
      * Initializes the {@link TableView} for the base registers.
      */
     private void initBaseTable() {
-        col_base_size.setCellValueFactory(new PropertyValueFactory<>("size"));
-        col_base_name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colBaseSize.setCellValueFactory(new PropertyValueFactory<>("size"));
+        colBaseName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         // set selected register and clear selection of other table
         tableBaseReg.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -178,8 +178,8 @@ public class RegView {
      * Initializes the {@link TableView} for the extended registers.
      */
     private void initExtendedTable() {
-        col_extended_name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        col_extended_size.setCellValueFactory(new PropertyValueFactory<>("size"));
+        colExtendedName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colExtendedSize.setCellValueFactory(new PropertyValueFactory<>("size"));
 
         // set selected register and clear selection of other table
         tableExtendedReg.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

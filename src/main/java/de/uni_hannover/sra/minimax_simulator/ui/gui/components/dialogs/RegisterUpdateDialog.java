@@ -30,7 +30,7 @@ public class RegisterUpdateDialog extends ValueUpdateDialog {
 
         TextResource res = Main.getTextResource("debugger").using("register.update");
 
-        _messageLabel.setText(res.format("message", register));
+        messageLabel.setText(res.format("message", register));
     }
 
     /**

@@ -53,38 +53,38 @@ import java.util.Map;
 public class FXMainController implements WorkspaceListener, MachineDisplayListener {
 
     @FXML private Menu menuProject;
-    @FXML private MenuItem project_new;
-    @FXML private MenuItem project_open;
-    @FXML private MenuItem project_save;
-    @FXML private MenuItem project_saveas;
-    @FXML private MenuItem project_export_schematics;
-    @FXML private MenuItem project_export_signal;
-    @FXML private MenuItem project_close;
+    @FXML private MenuItem projectNew;
+    @FXML private MenuItem projectOpen;
+    @FXML private MenuItem projectSave;
+    @FXML private MenuItem projectSaveAs;
+    @FXML private MenuItem projectExportSchematics;
+    @FXML private MenuItem projectExportSignal;
+    @FXML private MenuItem projectClose;
     @FXML private MenuItem exitApplication;
     private List<MenuItem> disabledMenuItems = null;
 
     @FXML private Menu menuView;
-    @FXML private MenuItem view_overview;
-    @FXML private MenuItem view_memory;
-    @FXML private MenuItem view_debugger;
+    @FXML private MenuItem viewOverview;
+    @FXML private MenuItem viewMemory;
+    @FXML private MenuItem viewDebugger;
 
     @FXML private Menu menuMachineConfiguration;
-    @FXML private MenuItem view_conf_alu;
-    @FXML private MenuItem view_conf_reg;
-    @FXML private MenuItem view_conf_mux;
-    @FXML private MenuItem view_conf_signal;
+    @FXML private MenuItem viewConfAlu;
+    @FXML private MenuItem viewConfReg;
+    @FXML private MenuItem viewConfMux;
+    @FXML private MenuItem viewConfSignal;
 
     @FXML private Menu menuHelp;
-    @FXML private MenuItem help_about;
+    @FXML private MenuItem helpAbout;
 
     @FXML private TabPane tabpane;
-    @FXML private Tab tab_overview;
-    @FXML private Tab tab_signal;
-    @FXML private Tab tab_memory;
-    @FXML private Tab tab_debugger;
-    @FXML private Tab tab_alu;
-    @FXML private Tab tab_reg;
-    @FXML private Tab tab_mux;
+    @FXML private Tab tabOverview;
+    @FXML private Tab tabSignal;
+    @FXML private Tab tabMemory;
+    @FXML private Tab tabDebugger;
+    @FXML private Tab tabAlu;
+    @FXML private Tab tabReg;
+    @FXML private Tab tabMux;
 
     @FXML private ScrollPane paneOverview;
 
@@ -128,17 +128,17 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         WORKSPACE.addListener(this);
 
         this.tabMap = ImmutableMap.<String, Tab>builder()
-                .put("view_project_overview",   tab_overview)
-                .put("view_machine_alu", tab_alu)
-                .put("view_machine_register",   tab_reg)
-                .put("view_machine_mux",        tab_mux)
-                .put("view_machine_signal",     tab_signal)
-                .put("view_project_memory", tab_memory)
-                .put("view_project_debugger", tab_debugger)
+                .put("view_project_overview", tabOverview)
+                .put("view_machine_alu", tabAlu)
+                .put("view_machine_register", tabReg)
+                .put("view_machine_mux", tabMux)
+                .put("view_machine_signal", tabSignal)
+                .put("view_project_memory", tabMemory)
+                .put("view_project_debugger", tabDebugger)
                 .build();
 
         this.disabledMenuItems = ImmutableList.<MenuItem>builder()
-                .add(project_saveas, project_export_schematics, project_export_signal, project_close, view_overview, view_memory, view_debugger)
+                .add(projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, viewOverview, viewMemory, viewDebugger)
                 .build();
 
         setShortcuts();
@@ -150,22 +150,22 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      */
     private void setShortcuts() {
         // menu: project
-        this.project_new.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
-        this.project_open.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
-        this.project_save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
-        this.project_close.setAccelerator(new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN));
+        this.projectNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
+        this.projectOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
+        this.projectSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
+        this.projectClose.setAccelerator(new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN));
         this.exitApplication.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.SHORTCUT_DOWN));
 
         // menu: view
-        this.view_overview.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
-        this.view_memory.setAccelerator(new KeyCodeCombination(KeyCode.M, KeyCombination.SHORTCUT_DOWN));
-        this.view_debugger.setAccelerator(new KeyCodeCombination(KeyCode.D, KeyCombination.SHORTCUT_DOWN));
+        this.viewOverview.setAccelerator(new KeyCodeCombination(KeyCode.B, KeyCombination.SHORTCUT_DOWN));
+        this.viewMemory.setAccelerator(new KeyCodeCombination(KeyCode.M, KeyCombination.SHORTCUT_DOWN));
+        this.viewDebugger.setAccelerator(new KeyCodeCombination(KeyCode.D, KeyCombination.SHORTCUT_DOWN));
 
         // menu: machine configuration
-        this.view_conf_alu.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.SHORTCUT_DOWN));
-        this.view_conf_reg.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN));
-        this.view_conf_mux.setAccelerator(new KeyCodeCombination(KeyCode.U, KeyCombination.SHORTCUT_DOWN));
-        this.view_conf_signal.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN));
+        this.viewConfAlu.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.SHORTCUT_DOWN));
+        this.viewConfReg.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN));
+        this.viewConfMux.setAccelerator(new KeyCodeCombination(KeyCode.U, KeyCombination.SHORTCUT_DOWN));
+        this.viewConfSignal.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.SHORTCUT_DOWN));
     }
 
     /**
@@ -175,8 +175,8 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         TextResource res = Main.getTextResource("menu");
         // menu: project
         menuProject.setText(res.get("project"));
-        final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(project_new, project_open, project_save, project_saveas, project_export_schematics, project_export_signal, project_close, exitApplication,
-                view_overview, view_memory, view_debugger, view_conf_alu, view_conf_mux, view_conf_reg, view_conf_signal, help_about));
+        final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, exitApplication,
+                viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout));
         for (MenuItem mi : projectMenu) {
             String id = mi.getId().replace("_", ".");
             String mne = res.get(id + ".mne");
@@ -207,13 +207,13 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
 
         // tabs
         res = Main.getTextResource("project");
-        final List<Tab> tabsProject = new ArrayList<>(Arrays.asList(tab_debugger, tab_memory, tab_overview));
+        final List<Tab> tabsProject = new ArrayList<>(Arrays.asList(tabDebugger, tabMemory, tabOverview));
         for (Tab tab : tabsProject) {
             String id = tab.getId();
             tab.setText(res.get(id.replace("_", ".")+".title"));
         }
         res = Main.getTextResource("machine");
-        final List<Tab> tabsMachine = new ArrayList<>(Arrays.asList(tab_alu, tab_mux, tab_reg, tab_signal));
+        final List<Tab> tabsMachine = new ArrayList<>(Arrays.asList(tabAlu, tabMux, tabReg, tabSignal));
         for (Tab tab : tabsMachine) {
             String id = tab.getId();
             tab.setText(res.get(id.replace("_", ".") + ".title"));
@@ -379,7 +379,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * Removes the non-default {@link Tab}s from the {@link TabPane}
      */
     private void closeNonDefaultTabs() {
-        tabpane.getTabs().removeAll(tab_alu, tab_reg, tab_mux);
+        tabpane.getTabs().removeAll(tabAlu, tabReg, tabMux);
     }
 
     /**
@@ -613,8 +613,8 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         }
 
         if (!tabpane.getTabs().contains(toAdd)) {
-            if (toAdd.equals(tab_overview)) {
-                tabpane.getTabs().add(0, tab_overview);
+            if (toAdd.equals(tabOverview)) {
+                tabpane.getTabs().add(0, tabOverview);
             }
             else {
                 tabpane.getTabs().add(toAdd);
@@ -674,7 +674,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     @Override
     public void onProjectSaved(Project project) {
         setApplicationTitle(res.format("title.open-project", VERSION_STRING, getProjectName()));
-        project_save.setDisable(true);
+        projectSave.setDisable(true);
     }
 
     /**
@@ -698,7 +698,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     public void onProjectDirty(Project project) {
         setApplicationTitle(res.format("title.open-unsaved-project", VERSION_STRING, getProjectName()));
         if (Main.getWorkspace().getCurrentProjectFile() != null) {
-            project_save.setDisable(false);
+            projectSave.setDisable(false);
         }
     }
 

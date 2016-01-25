@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -46,11 +45,11 @@ public class AluView {
     @FXML private Button btnRemove;
 
     @FXML private TableView<AluOpTableModel> tableAdded;
-    @FXML private TableColumn<AluOpTableModel, String> col_added_opcode;
-    @FXML private TableColumn<AluOpTableModel, String> col_added_op;
+    @FXML private TableColumn<AluOpTableModel, String> colAddedOpcode;
+    @FXML private TableColumn<AluOpTableModel, String> colAddedOp;
 
     @FXML private TableView<AluOpTableModel> tableAvailable;
-    @FXML private TableColumn<AluOpTableModel, String> col_available_op;
+    @FXML private TableColumn<AluOpTableModel, String> colAvailableOp;
 
     @FXML private Button btnMoveUp;
     @FXML private Button btnMoveDown;
@@ -103,8 +102,8 @@ public class AluView {
      * Initializes the {@link TableView} for the added {@link AluOperation}s.
      */
     private void initAddedTable() {
-        col_added_op.setCellValueFactory(new PropertyValueFactory<>("op"));
-        col_added_opcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
+        colAddedOp.setCellValueFactory(new PropertyValueFactory<>("op"));
+        colAddedOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
 
         // remove operation with double click
         tableAdded.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
@@ -164,7 +163,7 @@ public class AluView {
      * Initializes the {@link TableView} for the available {@link AluOperation}s.
      */
     private void initAvailableTable() {
-        col_available_op.setCellValueFactory(new PropertyValueFactory<>("op"));
+        colAvailableOp.setCellValueFactory(new PropertyValueFactory<>("op"));
 
         // add operation with double click
         tableAvailable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
