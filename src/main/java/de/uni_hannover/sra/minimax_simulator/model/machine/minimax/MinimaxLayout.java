@@ -1,7 +1,5 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
-
-import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.MachineTopology;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.layout.GroupLayout;
@@ -85,10 +83,8 @@ class MinimaxLayout {
      *
      * @param cr
      *          the {@code MachineTopology} of the {@link MinimaxMachine}
-     * @param fontProvider
-     *          a {@link FontMetricsProvider} for rendering text
      */
-    public void initPartLayouts(MachineTopology cr, FontMetricsProvider fontProvider) {
+    public void initPartLayouts(MachineTopology cr) {
         // layout for base registers
         putLayouts(new StackLayoutSet(Parts.MEMORY, Arrays.asList(Parts.MAR, Parts.MDR, Parts.IR, Parts.PC, Parts.ACCU),
                 Arrays.asList(65, 45, 70, 80, 45), Parts.GROUP_BASE_REGISTERS));

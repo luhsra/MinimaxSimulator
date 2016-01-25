@@ -4,8 +4,6 @@ import com.google.common.base.Throwables;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.WaitingDialog;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -86,7 +84,6 @@ public class UIUtil {
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                //Thread.sleep(5*1000);
                 runnable.run();
                 return null;
             }
@@ -156,7 +153,7 @@ public class UIUtil {
         }
         else {
             Platform.runLater(r);
-            //invokeNowFX(r);
+            //invokeNowFX(r)
         }
     }
 
@@ -199,7 +196,7 @@ public class UIUtil {
     // but the runnable is not executed before task.get() finishes. This is the reason for the timeout.
     private static void invokeAndWait(Runnable r) throws InterruptedException, ExecutionException {
         checkNotNull(r);
-//      FutureTask<Boolean> task = new FutureTask<>(r, true);
+//      FutureTask<Boolean> task = new FutureTask<>(r, true)
         FutureTask<Boolean> task = new FutureTask<>(() -> {
             // do something on FX thread
             System.out.println("NOW IT IS WORKING!");
@@ -207,9 +204,9 @@ public class UIUtil {
 
         System.out.println("Call: runLater()");
         Platform.runLater(task);
-//      System.out.println("Call: task.get()");
-//      task.get();
-//      System.out.println("finished waiting");
+//      System.out.println("Call: task.get()")
+//      task.get()
+//      System.out.println("finished waiting")
         try {
             task.get(10, TimeUnit.SECONDS);
         } catch (TimeoutException e) {

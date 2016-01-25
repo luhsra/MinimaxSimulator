@@ -34,45 +34,6 @@ public class PropertyResourceControl extends Control {
         this.basePath = basePath;
     }
 
-    /*
-    @Override
-    public String toBundleName(String baseName, Locale locale)
-    {
-        StringBuilder sb = new StringBuilder(basePath);
-        sb.append("/");
-
-        if (locale == Locale.ROOT)
-        {
-            sb.append("root");
-            return sb.toString();
-        }
-
-        String language = locale.getLanguage();
-        String country = locale.getCountry();
-        String variant = locale.getVariant();
-
-        if (language.isEmpty() && country.isEmpty() && variant.isEmpty())
-        {
-            sb.append("root");
-            return sb.toString();
-        }
-
-        if (!variant.isEmpty())
-        {
-            sb.append(language).append('_').append(country).append('_').append(variant);
-        }
-        else if (!country.isEmpty())
-        {
-            sb.append(language).append('_').append(country);
-        }
-        else
-        {
-            sb.append(language);
-        }
-        return sb.toString();
-    }
-    */
-
     @Override
     public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader,
             boolean reload) throws IllegalAccessException, InstantiationException, IOException {

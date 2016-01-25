@@ -50,8 +50,6 @@ public class DefaultRegisterGroup extends AbstractGroup {
         add(label, registerId + Parts._LABEL);
         add(port, registerId + Parts._PORT);
 
-        //addVirtual(registerId + _OUT_JUNCTION + _ANCHOR);
-
         addWire(aluWire, registerId + Parts._JUNCTION + Parts._WIRE_DATA_IN);
         addWire(dataInWire, registerId + Parts._WIRE_DATA_IN);
         addWire(enabledWire, registerId + Parts._WIRE_ENABLED);

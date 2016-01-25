@@ -68,7 +68,7 @@ public class MinimaxMachine implements ConfigurableMachine {
         registerManager.addRegister(RegisterType.BASE, Parts.ACCU);
 
         // Layout base parts and group parts
-        layout.initPartLayouts(topology, display);
+        layout.initPartLayouts(topology);
 
         registerExtensions = new RegisterExtensionList(this, registerManager);
 
@@ -187,11 +187,7 @@ public class MinimaxMachine implements ConfigurableMachine {
         list.add(new BasePartGroup(memory));
         list.add(new AluGroup());
 
-        // now done by RegisterManager
-        // list.add(new DefaultRegisterGroup(MAR));
-        // list.add(new DefaultRegisterGroup(IR));
-        // list.add(new DefaultRegisterGroup(PC));
-        // list.add(new MdrRegisterGroup(MDR));
+        // added Registers is done by RegisterManager
         list.add(new MultiplexerGroup(Parts.MDR_SELECT, "MDR.Sel", true, BaseControlPort.MDR_SEL.port()));
         list.add(new MultiplexerGroup(Parts.MUX_A, "ALUSel.A", true, BaseControlPort.ALU_SELECT_A.port()));
         list.add(new MultiplexerGroup(Parts.MUX_B, "ALUSel.B", false, BaseControlPort.ALU_SELECT_B.port()));

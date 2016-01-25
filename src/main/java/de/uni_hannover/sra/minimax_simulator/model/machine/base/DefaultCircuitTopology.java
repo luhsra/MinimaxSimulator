@@ -74,7 +74,6 @@ public class DefaultCircuitTopology implements MachineTopology {
 
         circuits.put(id, new CircuitEntry(clazz, circuit));
         allCircuits.add(circuit);
-        //fireCircuitAdded(circuit);
     }
 
     @Override
@@ -86,7 +85,6 @@ public class DefaultCircuitTopology implements MachineTopology {
 
         circuits.put(id, new CircuitEntry(circuit.getClass(), circuit));
         allCircuits.add(circuit);
-        //fireCircuitAdded(circuit);
     }
 
     @Override
@@ -94,7 +92,6 @@ public class DefaultCircuitTopology implements MachineTopology {
         CircuitEntry entry = circuits.remove(id);
         if (entry != null) {
             allCircuits.remove(entry.circuit);
-            //fireCircuitRemoved(entry.circuit);
         }
     }
 }

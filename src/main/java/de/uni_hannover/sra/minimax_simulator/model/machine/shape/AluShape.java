@@ -10,8 +10,6 @@ public class AluShape extends FixedShape {
     private static final int ALU_WIDTH  = 69;
     private static final int ALU_HEIGHT = 88;
 
-    // private static final int ALU_UPPER_SPACING = 30;
-
     /**
      * Initializes the {@code AluShape}.
      */

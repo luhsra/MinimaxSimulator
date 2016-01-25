@@ -15,7 +15,6 @@ public class RegisterShape extends TextRenderShape {
 
     private static final int REGISTER_HEIGHT                    = 20;
     private static final int REGISTER_MIN_WIDTH                 = 90;
-    private static final int REGISTER_SPACING                   = 50;
     private static final int REGISTER_TEXT_LEFT_RIGHT_PADDING   = 5;
 
     /**

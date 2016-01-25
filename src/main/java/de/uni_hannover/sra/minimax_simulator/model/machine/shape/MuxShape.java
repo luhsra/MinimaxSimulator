@@ -15,7 +15,6 @@ public class MuxShape implements ComponentShape {
 
     private static final int MUX_WIDTH          = 20;
     public static final int MUX_HEIGHT_PER_PIN  = 18;
-    private static final int MUX_CORNER_HEIGHT  = 20;
     public static final int MUX_CORNER_SPACING  = 10;
 
     private static final int MUX_SPACING        = 15;

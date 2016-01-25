@@ -15,10 +15,6 @@ public interface MachineMemory extends AddressRange {
      */
     public MemoryState getMemoryState();
 
-//  public void pushMemoryState();
-//
-//  public void popMemoryState();
-
     /**
      * Marks the {@link MemoryState} of the {@code MachineMemory}.
      */

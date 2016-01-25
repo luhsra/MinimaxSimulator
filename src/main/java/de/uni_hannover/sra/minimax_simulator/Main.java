@@ -11,7 +11,6 @@ import de.uni_hannover.sra.minimax_simulator.ui.gui.FXMainController;
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;

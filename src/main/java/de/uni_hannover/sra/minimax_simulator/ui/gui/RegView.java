@@ -299,7 +299,7 @@ public class RegView {
         }
 
         Object caller = ae.getSource();
-        int difference = 0;
+        int difference;
         if (caller.equals(btnMoveUp)) {
             difference = -1;
         }

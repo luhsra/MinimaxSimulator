@@ -93,15 +93,8 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
             throw new IllegalArgumentException(name + ": Constraint must not be null");
         }
 
-        // Allow replacing existing constraint
-//      if (constraints.containsKey(attribute))
-//          throw new IllegalStateException(name + ": Duplicate constraint on "
-//              + attribute);
-
-        Set<AttributeType> constrainedSameAxisAttrs =
-                new HashSet<>(constraints.keySet());
-        constrainedSameAxisAttrs
-                .retainAll(AttributeType.getAxisTypes(attribute.getAxis()));
+        Set<AttributeType> constrainedSameAxisAttrs = new HashSet<>(constraints.keySet());
+        constrainedSameAxisAttrs.retainAll(AttributeType.getAxisTypes(attribute.getAxis()));
 
         // Allow replacing existing constraint
         constrainedSameAxisAttrs.remove(attribute);

@@ -54,7 +54,7 @@ class MachineJsonImporter extends Importer {
         JSONArray muxInputList = machine.getJSONArray("muxInputs");
         for (int i = 0; i < muxInputList.length(); i++) {
             MuxType type = get(MuxType.class, muxInputList.getJSONObject(i).getString("muxType"));
-            mb.addMuxInputs(type, loadMuxInputs(muxInputList.getJSONObject(i).getJSONArray("input"), mb.getAllowedMuxInputs()));
+            mb.addMuxInputs(type, loadMuxInputs(muxInputList.getJSONObject(i).getJSONArray("input")));
         }
 
         return mb.build();
@@ -115,14 +115,12 @@ class MachineJsonImporter extends Importer {
      *
      * @param muxInputList
      *            the JSONArray containing the MuxInputs
-     * @param available
-     *            a list of all available MuxInputs (not used)
      * @return
      *            a list of all saved MuxInputs
      * @throws JSONException
      *            thrown if there is an error during parsing the JSON string
      */
-    private List<MuxInput> loadMuxInputs(JSONArray muxInputList, List<MuxInput> available) throws JSONException {
+    private List<MuxInput> loadMuxInputs(JSONArray muxInputList) throws JSONException {
         ArrayList<MuxInput> result = new ArrayList<>();
 
         for (int i = 0; i < muxInputList.length(); i++) {
@@ -140,18 +138,6 @@ class MachineJsonImporter extends Importer {
             }
 
             // TODO: remove old element names that are clashing with stored registers of the machine
-//          else if ("constant".equals(elem.getName()))
-//          {
-//              result.add(new ConstantMuxInput(getInt(elem)));
-//          }
-//          else if ("register".equals(elem.getName()))
-//          {
-//              result.add(new RegisterMuxInput(getNonEmptyString(elem)));
-//          }
-//          else if ("null".equals(elem.getName()))
-//          {
-//              result.add(NullMuxInput.INSTANCE);
-//          }
         }
         return result;
     }

@@ -2,8 +2,6 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui.components.tableview;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableView;
 
 /**

@@ -45,16 +45,5 @@ public class MdrLayoutSet extends DefaultLayoutSet {
         String mdrSelectInput0Wire = registerName + "_WIRE_MDR_SELECT_INPUT0";
         addLayout(mdrSelectInput0Wire + ".0", cb.align(junctionName));
         addLayout(mdrSelectInput0Wire + ".1", cb.alignVertically(mdrSelectInput0Wire + ".0").right(Parts.MDR_SELECT));
-//
-//      String mdrOutJunction = registerName + _WIRE_DATA_OUT + _JUNCTION;
-//      String mdrOutWire = registerName + _WIRE_DATA_OUT;
-//      addLayout(mdrOutJunction, cb.alignVertically(MDR).left(MDR, 90));
-//      addLayout(mdrOutWire + ".0", cb.alignVertically(MDR).left(MDR));
-//      addLayout(mdrOutWire + ".1", cb.align(mdrOutJunction));
-//
-//      String memDiWire = MEMORY + _WIRE_DATA_IN;
-//      addLayout(memDiWire + ".0", cb.align(mdrOutJunction));
-//      addLayout(memDiWire + ".1", cb.alignHorizontally(mdrOutJunction).alignVertically(MEMORY_DI));
-//      addLayout(memDiWire + ".2", cb.align(MEMORY_DI));
     }
 }

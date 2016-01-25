@@ -93,10 +93,8 @@ public class MinimaxConfigurationBuilder implements MachineConfigurationBuilder 
     /**
      * Adds the default extended registers ({@link RegisterExtension}) to the machine.
      *
-     * @param textResource
-     *          the {@link TextResource} used for getting localized texts
      */
-    private void addDefaultRegisterExtensions(TextResource textResource) {
+    private void addDefaultRegisterExtensions() {
         // actually the base machine has no default extended registers
     }
 
@@ -209,7 +207,7 @@ public class MinimaxConfigurationBuilder implements MachineConfigurationBuilder 
         addDefaultBaseRegisters(registerDescriptionResource);
 
         registerExtensions.clear();
-        addDefaultRegisterExtensions(registerDescriptionResource);
+        addDefaultRegisterExtensions();
 
         selectedMuxInputs.values().forEach(List<MuxInput>::clear);
         addDefaultSelectedMuxSources();

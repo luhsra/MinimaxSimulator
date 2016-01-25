@@ -577,10 +577,6 @@ public final class MachineConfiguration {
     public void addMuxSource(MuxType mux, MuxInput source) {
         List<MuxInput> muxList = getMuxSourcesInternal(mux);
 
-        // it is allowed to have duplicate inputs at the same multiplexer
-        // if (muxList.contains(source))
-        // throw new IllegalStateException("Mux " + mux + " already contains " + source);
-
         muxList.add(source);
         postEvent(MachineConfigMuxEvent.eventAdded(mux, source, muxList.size() - 1));
     }

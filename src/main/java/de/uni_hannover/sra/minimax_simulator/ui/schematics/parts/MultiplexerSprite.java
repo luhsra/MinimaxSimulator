@@ -70,8 +70,6 @@ public class MultiplexerSprite extends CircuitSprite {
         gc.strokeLine(b.x + b.w + 0.5, b.y + b.w / 2 + 0.5, b.x + b.w + 0.5, b.y + b.h - b.w / 2 + 0.5);
 
         // pin addresses
-        //int availableHeight = b.h - 24;
-        //int paY = b.y + (b.h - availableHeight) / 2;
         int labelX = b.x + b.w / 2;
         int labelY = 0;
 

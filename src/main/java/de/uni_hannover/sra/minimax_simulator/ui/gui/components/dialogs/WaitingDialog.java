@@ -2,7 +2,6 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
-import javafx.event.EventHandler;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ProgressBar;

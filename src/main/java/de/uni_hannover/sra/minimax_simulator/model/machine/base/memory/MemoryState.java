@@ -6,7 +6,6 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.base.memory;
  * @author Martin L&uuml;ck
  */
 public interface MemoryState {
-    //public int[] getInts(int fromAddress, int length);
 
     /**
      * Gets the value at the specified memory address.

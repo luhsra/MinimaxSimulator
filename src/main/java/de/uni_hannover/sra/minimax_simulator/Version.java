@@ -19,9 +19,6 @@ import java.util.regex.Pattern;
  *
  * @author Martin L&uuml;ck
  */
-/* According to http://stackoverflow.com/questions/1272648/reading-my-own-jars-manifest
- * this is probably possible with less complexity
- */
 public class Version {
 
     private boolean isJar = false;
@@ -150,14 +147,6 @@ public class Version {
         if (buildJdk != null) {
             this.buildJdk = buildJdk;
         }
-/*      else
-        {
-            buildJdk = attrs.getValue("Created-By");
-            if (buildJdk != null)
-            {
-                buildJdk = buildJdk;
-            }
-        }  */
     }
 
     /**

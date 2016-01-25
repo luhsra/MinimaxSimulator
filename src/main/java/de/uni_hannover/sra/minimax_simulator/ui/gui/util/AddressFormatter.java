@@ -4,8 +4,6 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMe
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.scene.control.TextFormatter;
 
-import java.util.function.UnaryOperator;
-
 /**
  * The {@code AddressFormatter} is a {@link TextFormatter} for editing the {@link javafx.scene.control.Spinner}s of the {@link de.uni_hannover.sra.minimax_simulator.ui.gui.MemoryView}.
  *

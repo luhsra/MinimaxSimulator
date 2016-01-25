@@ -5,11 +5,9 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.JumpTargetDialog;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 
 /**
  * An extended {@link SignalTableColumn} for the UI representation of the jump attribute of a {@link SignalRow}.

@@ -350,8 +350,8 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
 
         // init overview tab
         this.schematics = new MachineSchematics(Main.getWorkspace().getProject().getMachine());
-        //this.schematics.translateXProperty().bind(paneOverview.widthProperty().subtract(schematics.widthProperty()).divide(2));
-        //paneOverview.setContent(this.schematics);
+        //this.schematics.translateXProperty().bind(paneOverview.widthProperty().subtract(schematics.widthProperty()).divide(2))
+        //paneOverview.setContent(this.schematics)
 
         // the canvas didn't resize itself correctly on mac; here is the workaround
         WORKSPACE.getProject().getMachine().getDisplay().addMachineDisplayListener(this);

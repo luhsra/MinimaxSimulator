@@ -10,8 +10,6 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.NumberTextField;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.JumpLabelSelector;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
