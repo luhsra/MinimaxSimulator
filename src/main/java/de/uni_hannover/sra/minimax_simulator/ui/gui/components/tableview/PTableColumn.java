@@ -59,7 +59,7 @@ public class PTableColumn<S, T> extends javafx.scene.control.TableColumn<S, T> {
      * @throws IllegalArgumentException
      *          thrown if the argument was not in the range 0.0 to 1.0
      */
-    public final void setPercentageWidth(double value) throws IllegalArgumentException {
+    public final void setPercentageWidth(double value) {
         if(value >= 0 && value <= 1) {
             this.percentageWidthProperty().set(value);
         } else {

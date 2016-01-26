@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class PartNameTest {
 
     @Test
-    public void checkNames() throws IllegalArgumentException, IllegalAccessException {
+    public void checkNames() throws IllegalAccessException {
         for (Field field : Parts.class.getDeclaredFields()) {
             assertEquals(field.getName(), field.get(null));
         }

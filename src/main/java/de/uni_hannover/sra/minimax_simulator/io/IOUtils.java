@@ -5,6 +5,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -15,6 +17,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author Philipp Rohde
  */
 public final class IOUtils {
+
+    private static final Logger LOG = Logger.getLogger("de.uni_hannover.sra.minimax_simulator");
 
     /**
      * Prevents creating instances of the utility class.
@@ -40,6 +44,7 @@ public final class IOUtils {
             }
         } catch (Exception e) {
             // ignore
+            LOG.log(Level.FINE, "could not close " + closeable.toString() + " quietly", e);
         }
     }
 
@@ -152,13 +157,13 @@ public final class IOUtils {
                 sb.append(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "could not read input stream", e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOG.log(Level.FINE, "could not close buffered reader", e);
                 }
             }
         }

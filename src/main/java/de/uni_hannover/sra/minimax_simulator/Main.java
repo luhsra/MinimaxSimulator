@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
+import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -82,7 +83,8 @@ public class Main extends javafx.application.Application {
         try {
             new PropertiesFileConfigLoader(PropertiesFileConfigLoader.MissingConfigStrategy.USE_DEFAULT).configure(Config.class);
         } catch (ConfigurationLoader.ConfigurationException e) {
-            throw new Error("Cannot initialize configuration", e);
+            LOG.severe("Can not initialize configuration!");
+            throw e;
         }
         LOG.info("Configuration loaded.");
 
@@ -161,7 +163,7 @@ public class Main extends javafx.application.Application {
                 } catch (Exception e) {
                     // locale not supported
                     locale = Locale.getDefault();
-                    LOG.warning("unsupported locale; fallback to english");
+                    LOG.log(Level.WARNING, "unsupported locale; fallback to default", e);
                 }
             }
             resourceLoader = new DefaultResourceBundleLoader(new PropertyResourceControl("text/"), locale);

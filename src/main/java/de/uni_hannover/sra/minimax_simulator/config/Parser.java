@@ -264,7 +264,7 @@ class Parser {
      * @throws IllegalArgumentException
      *          thrown if the parameter {@code value} had the wrong format
      */
-    public static long toFileSize(String value) throws IllegalArgumentException {
+    public static long toFileSize(String value) {
         Matcher m = NMB.matcher(value);
 
         long size;
@@ -310,7 +310,7 @@ class Parser {
         try {
             return Enum.valueOf(clazz, val.toUpperCase());
         } catch (Exception e) {
-            throw new IllegalArgumentException("Enum value \"" + val + "\" not found in class: " + clazz.getSimpleName());
+            throw new IllegalArgumentException("Enum value \"" + val + "\" not found in class: " + clazz.getSimpleName(), e);
         }
     }
 }

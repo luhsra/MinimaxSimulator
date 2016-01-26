@@ -23,7 +23,7 @@ class UserJsonImporter extends Importer {
      * @throws ProjectImportException
      *            thrown if there is an error during import
      */
-    ProjectConfiguration loadProjectConfiguration(String input) throws JSONException, ProjectImportException {
+    ProjectConfiguration loadProjectConfiguration(String input) throws ProjectImportException {
 //      Element root = rootOf(parseAndValidate(inputStream), "project");
         return new ProjectConfiguration();
     }

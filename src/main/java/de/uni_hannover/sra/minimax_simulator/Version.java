@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +36,7 @@ public class Version {
     private int jvmUpdate;
     private int jvmBuild;
 
-    private static final Logger LOG = Logger.getLogger(Version.class.getName());
+    private static final Logger LOG = Logger.getLogger("de.uni_hannover.sra.minimax_simulator");
 
     /**
      * Constructs a new {@code Version} instance.<br>
@@ -78,7 +79,7 @@ public class Version {
             }
         } catch (IOException e) {
             // no jar file
-            LOG.finest("application not running from JAR file");
+            LOG.log(Level.CONFIG, "application not running from JAR", e);
         }
     }
 
@@ -102,7 +103,7 @@ public class Version {
                 try {
                     return new File(new URI(jarName));
                 } catch (URISyntaxException e) {
-                    LOG.finest("could not find JAR file containing the class");
+                    LOG.log(Level.CONFIG, "could not find JAR file containing the class: " + c.getSimpleName(), e);
                     return null;
                 }
             }
@@ -217,7 +218,7 @@ public class Version {
             try {
                 jvmBuild = Integer.parseInt(p0[1]);
             } catch (Exception e) {
-                LOG.finest("could not parse JVM build");
+                LOG.log(Level.CONFIG, "could not parse JVM build", e);
                 Pattern numberPattern = Pattern.compile("[0-9]+");
                 Matcher m = numberPattern.matcher(p0[1]);
                 if (m.find()) {
@@ -226,7 +227,7 @@ public class Version {
             }
         } catch (Exception e) {
             // ignore
-            LOG.finest("could not parse Java version");
+            LOG.log(Level.CONFIG, "could not parse Java version", e);
         }
     }
 

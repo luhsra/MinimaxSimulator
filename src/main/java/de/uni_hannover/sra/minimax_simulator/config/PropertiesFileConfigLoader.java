@@ -6,6 +6,8 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A basic implementation of {@link ConfigurationLoader} using <i>.properties</i> files.
@@ -127,12 +129,12 @@ public class PropertiesFileConfigLoader implements ConfigurationLoader {
             properties.load(r);
         } catch (FileNotFoundException fnfe) {
             if (missingConfigStrategy == MissingConfigStrategy.THROW) {
-                throw new ConfigurationException("Configuration file not found: " + configFile.getPath());
+                throw new ConfigurationException("Configuration file not found: " + configFile.getPath(), fnfe);
             }
             // else: do not modify the Properties instance
         } catch (IOException e) {
             if (missingConfigStrategy == MissingConfigStrategy.THROW) {
-                throw new ConfigurationException("Cannot read configuration file: " + configFile.getPath());
+                throw new ConfigurationException("Cannot read configuration file: " + configFile.getPath(), e);
             }
 
             // else: do not modify the Properties instance
@@ -197,7 +199,7 @@ public class PropertiesFileConfigLoader implements ConfigurationLoader {
                 f.set(null, value);
             } catch (Exception e) {
                 // should never happen since the field is writable
-                throw new AssertionError();
+                throw new AssertionError(e);
             }
         }
     }

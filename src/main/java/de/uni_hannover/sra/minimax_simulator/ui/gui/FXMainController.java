@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * <b>The main controller for the JavaFX GUI.</b><br>
@@ -109,6 +111,8 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     private final ExtensionFilter extFilterSignal;
     private final ExtensionFilter extFilterProject;
     private final ExtensionFilter extFilterSchematics;
+
+    private static final Logger LOG = Logger.getLogger("de.uni_hannover.sra.minimax_simulator");
 
     /**
      * Initializes the final variables.
@@ -320,6 +324,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 Main.getWorkspace().openProject(file);
                 initProjectGUI();
             } catch (ProjectImportException e) {
+                LOG.log(Level.WARNING, "error during project import", e);
                 UIUtil.invokeInFAT(() -> new FXDialog(Alert.AlertType.ERROR, res.get("load-error.title"), res.get("load-error.message")).showAndWait());
             }
         }, res.get("wait.title"), res.format("wait.project.load", file.getName()));
@@ -479,7 +484,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 }
             } catch (IOException e1) {
                 // (almost) ignore
-                e1.printStackTrace();
+                LOG.log(Level.WARNING, "can not save the schematics", e1);
                 ioError(imageFile.getPath(), res.get("project.export.error.message.ioex"));
                 return;
             }
@@ -488,7 +493,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 Main.getHostServicesStatic().showDocument(imageFile.getAbsolutePath());
             } catch (Exception e) {
                 // (almost) ignore
-                e.printStackTrace();
+                LOG.log(Level.WARNING, "can not open the schematics", e);
             }
         }, res.get("wait.title"), res.get("wait.image-export"));
     }
@@ -537,7 +542,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 }
             } catch (IOException e1) {
                 // (almost) ignore
-                e1.printStackTrace();
+                LOG.log(Level.WARNING, "can not save the signal table", e1);
 
                 ioError(fileToSave.getPath(), res.get("project.export.error.message.ioex"));
             }

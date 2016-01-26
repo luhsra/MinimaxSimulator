@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * <b>FXController of the MuxView</b><br>
@@ -631,6 +633,7 @@ public class MuxView implements MachineConfigListener {
             try {
                 selectedName = cbRegister.getSelectionModel().getSelectedItem().getName();
             } catch (NullPointerException e) {
+                Logger.getLogger("de.uni_hannover.sra.minimax_simulator").log(Level.FINEST, "no mux input was selected", e);
                 return false;
             }
             if (!srcName.equals(selectedName)) {

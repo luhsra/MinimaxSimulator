@@ -36,7 +36,7 @@ class MachineJsonImporter extends Importer {
      * @throws ProjectImportException
      *            thrown if there is an error during import
      */
-    MachineConfiguration loadMachine(String input) throws JSONException, ProjectImportException {
+    MachineConfiguration loadMachine(String input) throws ProjectImportException {
         JSONObject root = new JSONObject(input);
         JSONObject machine = root.getJSONObject("machine");
 
@@ -72,7 +72,7 @@ class MachineJsonImporter extends Importer {
      * @throws ProjectImportException
      *            thrown if creation of object of type {@code AluOperation} fails
      */
-    private List<AluOperation> loadAlu(JSONObject aluElem) throws JSONException, ProjectImportException {
+    private List<AluOperation> loadAlu(JSONObject aluElem) throws ProjectImportException {
         List<AluOperation> ops = new ArrayList<>();
 
         JSONArray savedOPs = aluElem.getJSONArray("operation");
@@ -95,7 +95,7 @@ class MachineJsonImporter extends Importer {
      * @throws ProjectImportException
      *            thrown if creation of object of type {@code RegisterSize} fails
      */
-    private List<RegisterExtension> loadRegisters(JSONObject registerList) throws JSONException, ProjectImportException {
+    private List<RegisterExtension> loadRegisters(JSONObject registerList) throws ProjectImportException {
         List<RegisterExtension> registers = new ArrayList<>();
         JSONArray savedRegisters = registerList.getJSONArray("register");
         for (int i = 0; i < savedRegisters.length(); i++) {
@@ -120,7 +120,7 @@ class MachineJsonImporter extends Importer {
      * @throws JSONException
      *            thrown if there is an error during parsing the JSON string
      */
-    private List<MuxInput> loadMuxInputs(JSONArray muxInputList) throws JSONException {
+    private List<MuxInput> loadMuxInputs(JSONArray muxInputList) {
         ArrayList<MuxInput> result = new ArrayList<>();
 
         for (int i = 0; i < muxInputList.length(); i++) {

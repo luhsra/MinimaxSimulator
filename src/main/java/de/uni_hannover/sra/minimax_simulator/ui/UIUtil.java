@@ -14,6 +14,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -25,6 +27,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author Martin L&uuml;ck
  */
 public class UIUtil {
+
+    private static final Logger LOG = Logger.getLogger("de.uni_hannover.sra.minimax_simulator");
 
     /**
      * Prevents instance creation of this utility class.
@@ -170,14 +174,14 @@ public class UIUtil {
     public static void invokeNowFX(Runnable r) {
         checkNotNull(r);
         try {
-            System.out.println("I am trying to invokeAndWait()");
+            LOG.log(Level.ALL, "trying invokeNowFX");
             invokeAndWait(r);
         } catch (ExecutionException e) {
-            System.out.println("Error: ExecutionException");
+            LOG.log(Level.SEVERE, "ExecutionException in invokeNowFX", e);
             throw Throwables.propagate(e.getCause());
         } catch (InterruptedException e) {
-            System.out.println("Error: InterruptedException");
-            throw new Error("Invoking thread interrupted while waiting: " + Thread.currentThread().getName(), e);
+            LOG.log(Level.SEVERE, "InterruptedException in invokeNowFX");
+            throw new IllegalStateException("Invoking thread interrupted while waiting: " + Thread.currentThread().getName(), e);
         }
     }
 
