@@ -394,6 +394,37 @@ public class Version {
     }
 
     /**
+     * Compares the Java version of the currently running JVM with the specified Java version.
+     *
+     * @param major
+     *          the major version number
+     * @param feature
+     *          the feature version number
+     * @param update
+     *          the update version number
+     * @param build
+     *          the build version number
+     * @return
+     *          {@code -1} if the version of the running JVM is lower than the specified one,<br>
+     *          {@code 1} if it is higher and<br>
+     *          {@code 0} if they are equal
+     */
+    private int compareTo(int major, int feature, int update, int build) {
+        final int[] jvm = {jvmMajor, jvmFeature, jvmUpdate, jvmBuild};
+        final int[] compareTo = {major, feature, update, build};
+
+        for (int i = 0; i < jvm.length; i++) {
+            if (jvm[i] < compareTo[i]) {
+                return -1;
+            }
+            else if (jvm[i] > compareTo[i]) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    /**
      * Checks if the Java version of the currently running JVM is equal to the specified Java version.
      *
      * @param major
@@ -408,34 +439,7 @@ public class Version {
      *          {@code true} if the version numbers are equal, {@code false} otherwise
      */
     public boolean isJvmEqual(int major, int feature, int update, int build) {
-        if (major == -1) {
-            return true;
-        }
-        else if (jvmMajor != major) {
-            return false;
-        }
-
-        if (feature == -1) {
-            return true;
-        }
-        else if (jvmFeature != feature) {
-            return false;
-        }
-
-        if (update == -1) {
-            return true;
-        }
-        else if (jvmUpdate != update) {
-            return false;
-        }
-
-        if (build == -1) {
-            return true;
-        }
-        else if (jvmBuild != build) {
-            return false;
-        }
-        return true;
+        return compareTo(major, feature, update, build) == 0;
     }
 
     /**
@@ -453,34 +457,7 @@ public class Version {
      *          {@code true} if the current Java version is lower, {@code false} otherwise
      */
     public boolean isJvmLower(int major, int feature, int update, int build) {
-        if (major == -1) {
-            return true;
-        }
-        else if (jvmMajor >= major) {
-            return false;
-        }
-
-        if (feature == -1) {
-            return true;
-        }
-        else if (jvmFeature >= feature) {
-            return false;
-        }
-
-        if (update == -1) {
-            return true;
-        }
-        else if (jvmUpdate >= update) {
-            return false;
-        }
-
-        if (build == -1) {
-            return true;
-        }
-        else if (jvmBuild >= build) {
-            return false;
-        }
-        return true;
+        return compareTo(major, feature, update, build) == -1;
     }
 
     /**
@@ -498,34 +475,8 @@ public class Version {
      *          {@code true} if the current Java version of lower or equal, {@code false} otherwise
      */
     public boolean isJvmLowerOrEqual(int major, int feature, int update, int build) {
-        if (major == -1) {
-            return true;
-        }
-        else if (jvmMajor > major) {
-            return false;
-        }
-
-        if (feature == -1) {
-            return true;
-        }
-        else if (jvmFeature > feature) {
-            return false;
-        }
-
-        if (update == -1) {
-            return true;
-        }
-        else if (jvmUpdate > update) {
-            return false;
-        }
-
-        if (build == -1) {
-            return true;
-        }
-        else if (jvmBuild > build) {
-            return false;
-        }
-        return true;
+        int compare = compareTo(major, feature, update, build);
+        return compare == 0 || compare == -1;
     }
 
     /**
@@ -543,34 +494,7 @@ public class Version {
      *          {@code true} if the current Java version is higher, {@code false} otherwise
      */
     public boolean isJvmHigher(int major, int feature, int update, int build) {
-        if (major == -1) {
-            return true;
-        }
-        else if (jvmMajor <= major) {
-            return false;
-        }
-
-        if (feature == -1) {
-            return true;
-        }
-        else if (jvmFeature <= feature) {
-            return false;
-        }
-
-        if (update == -1) {
-            return true;
-        }
-        else if (jvmUpdate <= update) {
-            return false;
-        }
-
-        if (build == -1) {
-            return true;
-        }
-        else if (jvmBuild <= build) {
-            return false;
-        }
-        return true;
+        return compareTo(major, feature, update, build) == 1;
     }
 
     /**
@@ -588,33 +512,7 @@ public class Version {
      *          {@code true} if the current Java version is higher or equal, {@code false} otherwise
      */
     public boolean isJvmHigherOrEqual(int major, int feature, int update, int build) {
-        if (major == -1) {
-            return true;
-        }
-        else if (jvmMajor < major) {
-            return false;
-        }
-
-        if (feature == -1) {
-            return true;
-        }
-        else if (jvmFeature < feature) {
-            return false;
-        }
-
-        if (update == -1) {
-            return true;
-        }
-        else if (jvmUpdate < update) {
-            return false;
-        }
-
-        if (build == -1) {
-            return true;
-        }
-        else if (jvmBuild < build) {
-            return false;
-        }
-        return true;
+        int compare = compareTo(major, feature, update, build);
+        return compare == 0 || compare == 1;
     }
 }
