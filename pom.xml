@@ -2,6 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <prerequisites>
+        <maven>3.0.5</maven>
+    </prerequisites>
+    
     <groupId>de.uni_hannover.sra.minimax_simulator</groupId>
     <artifactId>minimax_simulator</artifactId>
     <version>1.0.1</version>
@@ -53,6 +57,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+	    <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
@@ -64,10 +69,25 @@
     <build>
         <pluginManagement>
             <plugins>
+	      
+
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.maven.surefire</groupId>
+        <artifactId>surefire-junit47</artifactId>
+        <version>2.19.1</version>
+      </dependency>
+    </dependencies>
+  </plugin>
+
+	      
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.1</version>
+                    <version>3.5</version>
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
@@ -75,6 +95,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
+		    <version>2.6</version>
                     <configuration>
                         <descriptorRefs>
                             <descriptorRef>jar-with-dependencies</descriptorRef>
