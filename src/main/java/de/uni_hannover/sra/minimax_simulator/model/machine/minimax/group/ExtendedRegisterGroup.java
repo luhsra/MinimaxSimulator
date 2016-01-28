@@ -45,8 +45,8 @@ public class ExtendedRegisterGroup extends AbstractGroup {
         // just create an empty port for the looks
         junction.getDataOuts().add(new OutgoingPin(junction));
 
-        Label label = new Label(register.getLabel() + ".W");
-        label.setShape(new LabelShape(fontProvider));
+        Label lbl = new Label(register.getLabel() + ".W");
+        lbl.setShape(new LabelShape(fontProvider));
 
         Port port = new Port(this.label + ".W");
 
@@ -57,7 +57,7 @@ public class ExtendedRegisterGroup extends AbstractGroup {
 
         add(register, registerId);
         add(junction, registerId + Parts._JUNCTION);
-        add(label, registerId + Parts._LABEL);
+        add(lbl, registerId + Parts._LABEL);
         add(port, registerId + Parts._PORT);
 
         addWire(aluWire, registerId + Parts._JUNCTION + Parts._WIRE_DATA_IN);

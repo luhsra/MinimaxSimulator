@@ -107,10 +107,9 @@ public class AluView {
 
         // remove operation with double click
         tableAdded.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
-                if (!tableAdded.getSelectionModel().getSelectedItems().isEmpty()) {
-                    removeOperation();
-                }
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2
+                    && !tableAdded.getSelectionModel().getSelectedItems().isEmpty()) {
+                removeOperation();
             }
         });
 
@@ -167,10 +166,9 @@ public class AluView {
 
         // add operation with double click
         tableAvailable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
-                if (!tableAvailable.getSelectionModel().getSelectedItems().isEmpty()) {
-                    addOperation();
-                }
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2
+                    && !tableAvailable.getSelectionModel().getSelectedItems().isEmpty()) {
+                addOperation();
             }
         });
 

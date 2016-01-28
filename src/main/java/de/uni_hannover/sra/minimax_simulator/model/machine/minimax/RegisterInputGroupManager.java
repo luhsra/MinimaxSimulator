@@ -2,6 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
 import com.google.common.collect.Lists;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
@@ -55,11 +56,7 @@ class RegisterInputGroupManager extends RegisterManager implements MuxInputGroup
     @Override
     public void update(MuxInputManager muxInputs) {
         // replace inputs of given multiplexer
-        {
-            List<InputEntry> entries = inputEntriesByMux.get(muxInputs.getMuxType());
-            entries.clear();
-            entries.addAll(muxInputs.getMuxInputs());
-        }
+        clearMuxInputs(muxInputs);
 
         for (Entry<String, List<InputEntry>> registerInputs : inputsByRegisterId.entrySet()) {
             destroyGroups(registerInputs.getKey(), registerInputs.getValue());
@@ -90,6 +87,18 @@ class RegisterInputGroupManager extends RegisterManager implements MuxInputGroup
         for (Entry<String, List<InputEntry>> registerInputs : inputsByRegisterId.entrySet()) {
             createGroups(registerInputs.getKey(), registerInputs.getValue());
         }
+    }
+
+    /**
+     * Clears the {@code MuxInputs} contained by the specified {@code MuxInputManager}.
+     *
+     * @param muxInputs
+     *          the {@code MuxInputManager} holding the {@code MuxInput}s
+     */
+    private void clearMuxInputs(MuxInputManager muxInputs) {
+        List<InputEntry> entries = inputEntriesByMux.get(muxInputs.getMuxType());
+        entries.clear();
+        entries.addAll(muxInputs.getMuxInputs());
     }
 
     /**
@@ -136,12 +145,12 @@ class RegisterInputGroupManager extends RegisterManager implements MuxInputGroup
      */
     private class RegisterInputGroup extends AbstractGroup {
 
-        public IngoingPin   pin;
-        public String       pinId;
-        public Junction     junction;
-        public String       junctionId;
-        public Junction     sourceJunction;
-        public String       sourceJunctionId;
+        protected IngoingPin   pin;
+        protected String       pinId;
+        protected Junction     junction;
+        protected String       junctionId;
+        protected Junction     sourceJunction;
+        protected String       sourceJunctionId;
 
         /**
          * Constructs a new {@code RegisterInputGroup} with the specified entry, source junction and source junction ID.

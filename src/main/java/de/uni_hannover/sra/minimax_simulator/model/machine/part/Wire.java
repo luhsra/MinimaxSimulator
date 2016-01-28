@@ -180,7 +180,7 @@ public class Wire implements Circuit, SpriteOwner {
 
     @Override
     public String toString() {
-        return "W[" + String.valueOf(getSource()) + " >(" + value + ")> " + String.valueOf(getDrain()) + "]";
+        return "W[" + getSource() + " >(" + value + ")> " + getDrain() + "]";
     }
 
     @Override

@@ -29,7 +29,7 @@ class SignalJsonImporter extends Importer {
      * @throws JSONException
      *            thrown if there is an error during parsing the JSON string
      */
-    SignalTable loadSignalTable(String input) throws JSONException {
+    SignalTable loadSignalTable(String input) {
         SignalTable table = new DefaultSignalTable();
 
         JSONObject root = new JSONObject(input);
@@ -49,17 +49,7 @@ class SignalJsonImporter extends Importer {
             }
 
             if (currentRow.has("signal")) {
-                JSONArray signals = currentRow.getJSONArray("signal");
-                for (int j = 0; j < signals.length(); j++) {
-                    JSONObject currentSignal = signals.getJSONObject(j);
-                    int intValue = Integer.valueOf(currentSignal.getString("value"));
-                    boolean dontcare = false;
-                    if (currentSignal.has("dontcare")) {
-                        dontcare = currentSignal.getBoolean("dontcare");
-                    }
-                    SignalValue value = dontcare ? SignalValue.DONT_CARE : SignalValue.valueOf(intValue);
-                    row.setSignal(currentSignal.getString("name"), value);
-                }
+                setSignals(row, currentRow);
             }
 
             Jump jump;
@@ -83,5 +73,27 @@ class SignalJsonImporter extends Importer {
         }
 
         return table;
+    }
+
+    /**
+     * Sets the signals the specified {@code SignalRow} to the ones imported from the specified {@code JSONObject}.
+     *
+     * @param row
+     *          the {@code SignalRow} to set the signals for
+     * @param currentRow
+     *          the {@code JSONObject} containing the imported signals
+     */
+    private static void setSignals(SignalRow row, JSONObject currentRow) {
+        JSONArray signals = currentRow.getJSONArray("signal");
+        for (int j = 0; j < signals.length(); j++) {
+            JSONObject currentSignal = signals.getJSONObject(j);
+            int intValue = Integer.parseInt(currentSignal.getString("value"));
+            boolean dontcare = false;
+            if (currentSignal.has("dontcare")) {
+                dontcare = currentSignal.getBoolean("dontcare");
+            }
+            SignalValue value = dontcare ? SignalValue.DONT_CARE : SignalValue.valueOf(intValue);
+            row.setSignal(currentSignal.getString("name"), value);
+        }
     }
 }

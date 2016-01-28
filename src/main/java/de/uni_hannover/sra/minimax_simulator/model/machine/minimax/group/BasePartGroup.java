@@ -15,21 +15,21 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.shape.RegisterShape;
 public class BasePartGroup extends AbstractGroup {
 
     /** The memory of the machine. */
-    private final MachineMemory memory;
+    private final MachineMemory mMemory;
 
     /**
      * Constructs a new {@code BasePartGroup} with the specified {@link MachineMemory}.
      *
-     * @param memory
+     * @param mMemory
      *          the memory of the machine
      */
-    public BasePartGroup(MachineMemory memory) {
-        this.memory = memory;
+    public BasePartGroup(MachineMemory mMemory) {
+        this.mMemory = mMemory;
     }
 
     @Override
     public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
-        Memory memory = new Memory(this.memory);
+        Memory memory = new Memory(this.mMemory);
         memory.setName(Parts.MEMORY);
 
         Alu alu = new Alu();

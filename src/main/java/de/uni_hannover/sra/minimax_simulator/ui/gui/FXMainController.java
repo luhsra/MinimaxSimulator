@@ -210,17 +210,17 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         menuHelp.setText(res.get("help"));
 
         // tabs
-        res = Main.getTextResource("project");
+        TextResource resProject = Main.getTextResource("project");
         final List<Tab> tabsProject = new ArrayList<>(Arrays.asList(tabDebugger, tabMemory, tabOverview));
         for (Tab tab : tabsProject) {
             String id = tab.getId();
-            tab.setText(res.get(id.replace("_", ".")+".title"));
+            tab.setText(resProject.get(id.replace("_", ".")+".title"));
         }
-        res = Main.getTextResource("machine");
+        TextResource resMachine = Main.getTextResource("machine");
         final List<Tab> tabsMachine = new ArrayList<>(Arrays.asList(tabAlu, tabMux, tabReg, tabSignal));
         for (Tab tab : tabsMachine) {
             String id = tab.getId();
-            tab.setText(res.get(id.replace("_", ".") + ".title"));
+            tab.setText(resMachine.get(id.replace("_", ".") + ".title"));
         }
     }
 
@@ -264,6 +264,19 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     }
 
     /**
+     * Asks the user to dismiss unsaved changes.<br>
+     * <br>
+     * Calls {@link FXMainController#confirmDismissUnsavedChanges(String, String)} with the title and message
+     * used if the user wants to open, close or create a new project and the current project has unsaved changes.
+     *
+     * @return
+     *          {@code true} if changes will be dismissed or were saved; {@code false} otherwise
+     */
+    private boolean confirmDismissUnsavedChanges() {
+        return confirmDismissUnsavedChanges(res.get("close-project.generic.title"), res.get("close-project.generic.message"));
+    }
+
+    /**
      * Calls {@link #saveProjectAs} if the project was not yet saved, calls {@link #saveProject()} otherwise.
      *
      * @return
@@ -282,7 +295,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * Creates a new project with default project data and initializes the rest of the GUI.
      */
     public void newProject() {
-        if (!confirmDismissUnsavedChanges(res.get("close-project.generic.title"), res.get("close-project.generic.message"))) {
+        if (!confirmDismissUnsavedChanges()) {
             return;
         }
 
@@ -301,7 +314,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * Opens a new project from file.
      */
     public void openProject() {
-        if (!confirmDismissUnsavedChanges(res.get("close-project.generic.title"), res.get("close-project.generic.message"))) {
+        if (!confirmDismissUnsavedChanges()) {
             return;
         }
 
@@ -479,13 +492,13 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
             try {
                 // TODO: pure JavaFX
                 if (!ImageIO.write(SwingFXUtils.fromFXImage(image, null), ending, imageFile)) {
-                    ioError(imageFile.getPath(), res.get("project.export.error.message.ioex"));
+                    ioError(imageFile.getPath());
                     return;
                 }
             } catch (IOException e1) {
                 // (almost) ignore
                 LOG.log(Level.WARNING, "can not save the schematics", e1);
-                ioError(imageFile.getPath(), res.get("project.export.error.message.ioex"));
+                ioError(imageFile.getPath());
                 return;
             }
             // open the image
@@ -544,7 +557,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 // (almost) ignore
                 LOG.log(Level.WARNING, "can not save the signal table", e1);
 
-                ioError(fileToSave.getPath(), res.get("project.export.error.message.ioex"));
+                ioError(fileToSave.getPath());
             }
         }, res.get("wait.title"), res.get("wait.signal-export"));
     }
@@ -566,10 +579,23 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     }
 
     /**
+     * Opens an error dialog if an {@code IOException} was thrown during export of the {@code MachineSchematics}
+     * or {@code SignalTable}.<br>
+     * <br>
+     * The method calls {@link FXMainController#ioError(String, String)} with the commonly used reason.
+     *
+     * @param filename
+     *          the filename of the {@code File} where something went wrong
+     */
+    private void ioError(String filename) {
+        ioError(filename, res.get("project.export.error.message.ioex"));
+    }
+
+    /**
      * Closes the current project.
      */
     public void closeProject() {
-        if (!confirmDismissUnsavedChanges(res.get("close-project.generic.title"), res.get("close-project.generic.message"))) {
+        if (!confirmDismissUnsavedChanges()) {
             return;
         }
 

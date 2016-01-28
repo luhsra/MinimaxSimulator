@@ -69,7 +69,7 @@ public class Util {
         StringBuilder sb = useHexPrefix ? new StringBuilder("0x") : new StringBuilder();
 
         // divide by 4 because of 4 bits per hex digit
-        sb.append("%0").append((((wordWidth - 1) >> 2) + 1)).append('X');
+        sb.append("%0").append(((wordWidth - 1) >> 2) + 1).append('X');
 
         return sb.toString();
     }

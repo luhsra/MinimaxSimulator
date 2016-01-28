@@ -98,7 +98,7 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
      * @param <T>
      *          the class of the {@code TopologicalSortable}
      */
-    private <T> void resolveDependencyMap(Map<T, Set<T>> dependencies, List<? super T> list) {
+    private static  <T> void resolveDependencyMap(Map<T, Set<T>> dependencies, List<? super T> list) {
         Set<T> resolved = new HashSet<>();
         if (!list.isEmpty()) {
             list.clear();

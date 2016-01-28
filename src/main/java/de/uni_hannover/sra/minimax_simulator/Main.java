@@ -10,6 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.FXMainController;
 import javafx.application.Application;
 import javafx.application.HostServices;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -76,7 +77,8 @@ public class Main extends javafx.application.Application {
         if (version.isJvmLower(1, 8, 0, 40)) {
             String jvmVersion = version.getJvmMajor() + "." + version.getJvmFeature() + "." + version.getJvmUpdate() + "_" + version.getJvmBuild();
             LOG.severe("Java 1.8.0_40 or higher needed but found " + jvmVersion);
-            System.exit(-1);
+            Platform.exit();        // shut down JavaFX application
+            return;                 // prevent further initialization because shutdown needs some time
         }
 
         // Initialize config, read from file if existing

@@ -48,11 +48,8 @@ public class MinimaxSignalDescription implements DescriptionFactory {
         int mdrSelect = row.getSignalValue(BaseControlPort.MDR_SEL.name());
         for (RegisterExtension register : configuration.getBaseRegisters()) {
             int value = row.getSignalValue(register.getName() + ".W");
-            if (value == 0) {
-                continue;
-            }
 
-            if ("MDR".equals(register.getName()) && mdrSelect != 0) {
+            if (value == 0 || ("MDR".equals(register.getName()) && mdrSelect != 0)) {
                 // MDR is only written if MDR select is 0
                 continue;
             }
@@ -113,7 +110,7 @@ public class MinimaxSignalDescription implements DescriptionFactory {
         List<String> registersWrittenByAlu = getWritingRegisterNames(row);
 
         // check if the ALU result is written into registers.
-        if (registersWrittenByAlu.size() > 0) {
+        if (!registersWrittenByAlu.isEmpty()) {
             // there is an ALU operation, fetch the parameters
             String aluOp = " \u2190 " + getAluOperation(row);
 

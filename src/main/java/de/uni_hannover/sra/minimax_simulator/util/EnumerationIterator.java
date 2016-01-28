@@ -2,6 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.util;
 
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -35,6 +36,9 @@ public class EnumerationIterator<E> implements Iterator<E> {
 
     @Override
     public E next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
         return enumeration.nextElement();
     }
 

@@ -129,7 +129,7 @@ public class GridContainer extends AbstractListContainer {
      * @param array
      *          the array to zero
      */
-    private void zero(int[] array) {
+    private static void zero(int[] array) {
         for (int i = 0; i < array.length; i++) {
             array[i] = 0;
         }

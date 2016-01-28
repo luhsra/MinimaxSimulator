@@ -18,9 +18,9 @@ interface MuxInputManager extends ExtensionList<MuxInput> {
      */
     public class InputEntry {
 
-        public MuxInput input;
-        public IngoingPin pin;
-        public String pinId;
+        protected MuxInput input;
+        protected IngoingPin pin;
+        protected String pinId;
 
         @Override
         public String toString() {

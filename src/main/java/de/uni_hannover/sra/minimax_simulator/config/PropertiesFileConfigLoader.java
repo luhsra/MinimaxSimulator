@@ -6,8 +6,6 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A basic implementation of {@link ConfigurationLoader} using <i>.properties</i> files.
@@ -20,7 +18,7 @@ public class PropertiesFileConfigLoader implements ConfigurationLoader {
      * Defines the behavior of the {@code PropertiesFileConfigLoader} in case
      * a property is missing in the property file.
      */
-    public static enum MissingConfigStrategy {
+    public enum MissingConfigStrategy {
         /**
          * Use the default value if a property is missing.
          */

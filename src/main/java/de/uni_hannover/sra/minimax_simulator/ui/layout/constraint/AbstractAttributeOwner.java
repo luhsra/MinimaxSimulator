@@ -119,12 +119,12 @@ abstract class AbstractAttributeOwner implements AttributeOwner {
     public void validateConstraints() {
         Set<AttributeType> axisConstraints = new HashSet<>(constraints.keySet());
         axisConstraints.retainAll(AttributeType.getAxisTypes(AttributeAxis.HORIZONTAL));
-        if (axisConstraints.size() < 1 || (axisConstraints.size() == 1 && axisConstraints.contains(AttributeType.WIDTH))) {
+        if (axisConstraints.isEmpty() || (axisConstraints.size() == 1 && axisConstraints.contains(AttributeType.WIDTH))) {
             throw new IllegalStateException(name + ": underconstrained in x axis");
         }
         axisConstraints.addAll(constraints.keySet());
         axisConstraints.retainAll(AttributeType.getAxisTypes(AttributeAxis.VERTICAL));
-        if (axisConstraints.size() < 1 || (axisConstraints.size() == 1 && axisConstraints.contains(AttributeType.HEIGHT))) {
+        if (axisConstraints.isEmpty() || (axisConstraints.size() == 1 && axisConstraints.contains(AttributeType.HEIGHT))) {
             throw new IllegalStateException(name + ": is underconstrained in y axis");
         }
     }

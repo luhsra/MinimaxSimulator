@@ -12,7 +12,7 @@ import java.util.Set;
 public abstract class ConstraintFactory {
 
     /** The align mode. */
-    public static enum AlignMode {
+    public enum AlignMode {
         /** align horizontally */
         HORIZONTALLY,
         /** align vertically */

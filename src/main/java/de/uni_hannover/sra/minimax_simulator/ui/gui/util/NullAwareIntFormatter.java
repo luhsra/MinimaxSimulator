@@ -51,7 +51,7 @@ public class NullAwareIntFormatter extends TextFormatter {
                         if (!newValue.matches("-?[0-9a-fA-F]+") || newValue.length() > 8) {
                             return null;
                         }
-                        if (newValue.length() == 8 && newValue.compareTo("7FFFFFFF") == 1) {
+                        if (newValue.length() == 8 && newValue.compareTo("7FFFFFFF") > 0) {
                             return null;
                         }
                     }

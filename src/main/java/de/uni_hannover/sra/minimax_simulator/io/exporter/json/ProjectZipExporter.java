@@ -51,34 +51,46 @@ public class ProjectZipExporter implements ProjectExporter {
             fos = new FileOutputStream(file);
 
             ZipOutputStream zos = new ZipOutputStream(fos);
-            try {
-                ZipEntry machineFile = new ZipEntry("machine.json");
-                zos.putNextEntry(machineFile);
-                new MachineJsonExporter().write(new OutputStreamWriter(zos, CHARSET),
-                    project.getMachineConfiguration());
-
-                zos.closeEntry();
-
-                ZipEntry userFile = new ZipEntry("user.json");
-                zos.putNextEntry(userFile);
-                new UserJsonExporter().write(new OutputStreamWriter(zos, CHARSET),
-                    project.getProjectConfiguration());
-
-                zos.closeEntry();
-
-                ZipEntry signalTableEntry = new ZipEntry("signal.json");
-                zos.putNextEntry(signalTableEntry);
-                new SignalJsonExporter().write(new OutputStreamWriter(zos, CHARSET),
-                    project.getSignalTable());
-            } catch (IOException ioe) {
-                throw new ProjectExportException("I/O Error while exporting project into file: " + file.getPath(), ioe);
-            } finally {
-                IOUtils.closeQuietly(zos);
-            }
+            writeZipEntries(zos, project);
         } catch (FileNotFoundException e) {
             throw new ProjectExportException("Target file for export of project cannot be opened: " + file.getPath(), e);
         } finally {
             IOUtils.closeQuietly(fos);
+        }
+    }
+
+    /**
+     * Actually writes the specified {@link Project} to disk. The method creates an own {@code ZipEntry} for the
+     * {@code MachineConfiguration}, {@code ProjectConfiguration} and {@code SignalTable}.
+     *
+     * @param zos
+     *          the {@code ZipOutputStream} used for writing
+     * @param project
+     *          the {@code Project} to export
+     * @throws ProjectExportException
+     *          thrown if the project could not be saved
+     */
+    private void writeZipEntries(ZipOutputStream zos, Project project) throws ProjectExportException {
+        try {
+            ZipEntry machineFile = new ZipEntry("machine.json");
+            zos.putNextEntry(machineFile);
+            new MachineJsonExporter().write(new OutputStreamWriter(zos, CHARSET), project.getMachineConfiguration());
+
+            zos.closeEntry();
+
+            ZipEntry userFile = new ZipEntry("user.json");
+            zos.putNextEntry(userFile);
+            new UserJsonExporter().write(new OutputStreamWriter(zos, CHARSET), project.getProjectConfiguration());
+
+            zos.closeEntry();
+
+            ZipEntry signalTableEntry = new ZipEntry("signal.json");
+            zos.putNextEntry(signalTableEntry);
+            new SignalJsonExporter().write(new OutputStreamWriter(zos, CHARSET), project.getSignalTable());
+        } catch (IOException ioe) {
+            throw new ProjectExportException("I/O Error while exporting project into file: " + file.getPath(), ioe);
+        } finally {
+            IOUtils.closeQuietly(zos);
         }
     }
 }

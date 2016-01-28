@@ -382,16 +382,14 @@ public final class MachineConfiguration {
      * @return
      *          a list containing the indices of all occurrences of the {@code RegisterExtension}
      */
-    private List<Integer> fetchRegisterInputIndices(String registerName, List<MuxInput> list) {
+    private static List<Integer> fetchRegisterInputIndices(String registerName, List<MuxInput> list) {
         List<Integer> result = new ArrayList<>();
         ListIterator<MuxInput> iter = list.listIterator();
         while (iter.hasNext()) {
             int idx = iter.nextIndex();
             MuxInput mux = iter.next();
-            if (mux instanceof RegisterMuxInput) {
-                if (((RegisterMuxInput) mux).getRegisterName().equals(registerName)) {
-                    result.add(idx);
-                }
+            if (mux instanceof RegisterMuxInput && ((RegisterMuxInput) mux).getRegisterName().equals(registerName)) {
+                result.add(idx);
             }
         }
         return result;

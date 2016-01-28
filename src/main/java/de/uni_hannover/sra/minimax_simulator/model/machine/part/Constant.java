@@ -11,7 +11,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
  */
 public class Constant extends SimplePart implements SpriteOwner {
 
-    private final int constant;
+    private final int constantValue;
 
     private final String constantStr;
 
@@ -22,7 +22,7 @@ public class Constant extends SimplePart implements SpriteOwner {
      *          the value of the constant
      */
     public Constant(int constantValue) {
-        constant = constantValue;
+        this.constantValue = constantValue;
 
         // Later: Let the user decide when he creates the constant in the GUI?
         if ((0xFFFFFFFFL & constantValue) >= 0x0000FFFFL) {
@@ -40,7 +40,7 @@ public class Constant extends SimplePart implements SpriteOwner {
      *          the value of the constant
      */
     public int getConstant() {
-        return constant;
+        return constantValue;
     }
 
     /**
@@ -55,7 +55,7 @@ public class Constant extends SimplePart implements SpriteOwner {
 
     @Override
     public void update() {
-        getDataOut().write(constant);
+        getDataOut().write(constantValue);
     }
 
     @Override

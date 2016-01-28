@@ -13,7 +13,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
  */
 public class Memory extends SimplePart implements SpriteOwner, SynchronousCircuit {
 
-    private final MachineMemory memory;
+    private final MachineMemory mMemory;
 
     private final IngoingPin dataIn;
     private final IngoingPin adr;
@@ -23,11 +23,11 @@ public class Memory extends SimplePart implements SpriteOwner, SynchronousCircui
     /**
      * Constructs a new {@code Memory} related to the specified {@link MachineMemory}.
      *
-     * @param memory
+     * @param mMemory
      *          the memory of the machine
      */
-    public Memory(MachineMemory memory) {
-        this.memory = memory;
+    public Memory(MachineMemory mMemory) {
+        this.mMemory = mMemory;
 
         dataIn = new IngoingPin(this);
         adr = new IngoingPin(this);
@@ -79,7 +79,7 @@ public class Memory extends SimplePart implements SpriteOwner, SynchronousCircui
     public void update() {
         if (cs.read() != 0 && rw.read() != 0) {
             // read
-            int value = memory.getMemoryState().getInt(adr.read());
+            int value = mMemory.getMemoryState().getInt(adr.read());
             getDataOut().write(value);
         }
         else {
@@ -93,7 +93,7 @@ public class Memory extends SimplePart implements SpriteOwner, SynchronousCircui
         if (cs.read() != 0 && rw.read() == 0) {
             // write
             int value = dataIn.read();
-            memory.getMemoryState().setInt(adr.read(), value);
+            mMemory.getMemoryState().setInt(adr.read(), value);
         }
     }
 

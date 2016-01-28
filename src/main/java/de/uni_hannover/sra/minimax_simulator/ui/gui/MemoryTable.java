@@ -21,6 +21,7 @@ import javafx.scene.input.ScrollEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * <b>FXController of the MemoryTable</b><br>
@@ -31,6 +32,8 @@ import java.util.List;
  * @author Philipp Rohde
  */
 public class MemoryTable implements MemoryAccessListener {
+
+    private static final Logger LOG = Logger.getLogger("de.uni_hannover.sra.minimax_simulator");
 
     @FXML private TitledPane paneMemory;
 
@@ -81,7 +84,7 @@ public class MemoryTable implements MemoryAccessListener {
             }
             try {
                 int value = Integer.parseInt(text, 16);
-                System.out.println("select address: " + value);
+                LOG.finest("select address: " + value);
                 selectAddress(value);
             } catch (NumberFormatException nfe) {
                 // ignore malformed input

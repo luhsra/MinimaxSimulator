@@ -33,16 +33,19 @@ public class DefaultSignalType implements SignalType {
         this.name = name;
         values = getValues(allowsDontCare, valueCount);
 
-        int values = this.values.size();
-        if (values > 0 && this.values.get(0).isDontCare())
-            values--;
+        int nrValues = values.size();
+        if (nrValues > 0 && values.get(0).isDontCare()) {
+            nrValues--;
+        }
 
-        if (values == 0)
-            values = 1;
+        if (nrValues == 0) {
+            nrValues = 1;
+        }
 
-        int width = 32 - Integer.numberOfLeadingZeros(values - 1);
-        if (width == 0)
+        int width = 32 - Integer.numberOfLeadingZeros(nrValues - 1);
+        if (width == 0) {
             width = 1;
+        }
 
         bitWidth = width;
     }

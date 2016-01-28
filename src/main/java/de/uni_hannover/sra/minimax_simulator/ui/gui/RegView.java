@@ -354,10 +354,9 @@ public class RegView {
         }
 
         for (RegisterExtension otherReg : config.getRegisterExtensions()) {
-            if (!reg.getName().equals(otherReg.getName())) {
-                if (newName.equalsIgnoreCase(otherReg.getName())) {
-                    return false;
-                }
+            if (!reg.getName().equals(otherReg.getName())
+                    && newName.equalsIgnoreCase(otherReg.getName())) {
+                return false;
             }
         }
 

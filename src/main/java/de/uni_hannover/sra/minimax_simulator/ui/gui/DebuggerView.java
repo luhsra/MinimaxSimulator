@@ -195,15 +195,14 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
 
         // open edit dialog at double click
         regTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
-                if (simulation.getState() == SimulationState.IDLE) {
-                    String register = regTable.getSelectionModel().getSelectedItem().getName();
-                    Traceable<Integer> value = simulation.getRegisterValue(register);
-                    // open edit dialog
-                    Optional<ButtonType> result = new RegisterUpdateDialog(register, value).showAndWait();
-                    if (result.get() == ButtonType.OK) {
-                        updateRegTable();
-                    }
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2
+                    && simulation.getState() == SimulationState.IDLE) {
+                String register = regTable.getSelectionModel().getSelectedItem().getName();
+                Traceable<Integer> value = simulation.getRegisterValue(register);
+                // open edit dialog
+                Optional<ButtonType> result = new RegisterUpdateDialog(register, value).showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    updateRegTable();
                 }
             }
         });
@@ -549,8 +548,8 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             }
             else {
                 String formatString = register.getSize().getHexFormat();
-                decimal = Integer.toString(value.get().intValue());
-                hex = String.format(formatString, value.get().intValue());
+                decimal = Integer.toString(value.get());
+                hex = String.format(formatString, value.get());
             }
             this.decimal = new SimpleStringProperty(decimal);
             this.hex = new SimpleStringProperty(hex);

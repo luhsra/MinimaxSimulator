@@ -107,7 +107,7 @@ public class UIUtil {
 
         if (waitingDialog.isCanceled()) {
             task.cancel(true);
-            System.out.println("canceled...");
+            LOG.fine("executeWorker: execution canceled");
         }
 
     }
@@ -198,15 +198,15 @@ public class UIUtil {
      */
     // According to https://community.oracle.com/thread/2372263 this should do the trick
     // but the runnable is not executed before task.get() finishes. This is the reason for the timeout.
+    // TODO: make it working or delte it
     private static void invokeAndWait(Runnable r) throws InterruptedException, ExecutionException {
         checkNotNull(r);
 //      FutureTask<Boolean> task = new FutureTask<>(r, true)
         FutureTask<Boolean> task = new FutureTask<>(() -> {
             // do something on FX thread
-            System.out.println("NOW IT IS WORKING!");
+            LOG.info("invokeAndWait is WORKING NOW");
         }, true);
-
-        System.out.println("Call: runLater()");
+        LOG.info("Call: runLater()");
         Platform.runLater(task);
 //      System.out.println("Call: task.get()")
 //      task.get()
