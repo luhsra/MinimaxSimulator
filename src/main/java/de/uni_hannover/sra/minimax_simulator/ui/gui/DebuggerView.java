@@ -17,6 +17,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.ExceptionDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.RegisterUpdateDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.components.tableview.CenteredCellPane;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -262,20 +263,8 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                 @Override
                 public void updateItem(Boolean item, boolean empty) {
                     if (item != null && item) {
-                        GridPane grid = new GridPane();
                         imageview.setImage(new Image("/images/fugue/control-record.png"));
-                        grid.add(imageview, 0, 0);
-                        ColumnConstraints columnConstraints = new ColumnConstraints();
-                        columnConstraints.setFillWidth(true);
-                        columnConstraints.setHgrow(Priority.ALWAYS);
-                        grid.getColumnConstraints().add(columnConstraints);
-                        RowConstraints rowConstraints = new RowConstraints();
-                        rowConstraints.setFillHeight(true);
-                        rowConstraints.setVgrow(Priority.ALWAYS);
-                        grid.getRowConstraints().add(rowConstraints);
-                        grid.setHalignment(imageview, HPos.CENTER);
-                        grid.setValignment(imageview, VPos.CENTER);
-                        setGraphic(grid);
+                        setGraphic(new CenteredCellPane(imageview));
                     }
                     else {
                         setGraphic(null);
@@ -303,16 +292,8 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                 @Override
                 public void updateItem(Boolean item, boolean empty) {
                     if (item != null && item) {
-                        GridPane grid = new GridPane();
                         imageview.setImage(new Image("/images/fugue/arrow-curve-000-left.png"));
-                        grid.add(imageview, 0, 0);
-                        ColumnConstraints columnConstraints = new ColumnConstraints();
-                        columnConstraints.setFillWidth(true);
-                        columnConstraints.setHgrow(Priority.ALWAYS);
-                        grid.getColumnConstraints().add(columnConstraints);
-                        grid.setHalignment(imageview, HPos.CENTER);
-                        grid.setValignment(imageview, VPos.CENTER);
-                        setGraphic(grid);
+                        setGraphic(new CenteredCellPane(imageview));
                     } else {
                         setGraphic(null);
                     }
@@ -322,6 +303,8 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
 
         updateSimulationTable();
     }
+
+
 
     /**
      * Gets the index of the last executed row of the simulation.
