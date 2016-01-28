@@ -437,30 +437,52 @@ public class RegView {
             this.register = register;
         }
 
+        /**
+         * Gets the register's name.
+         *
+         * @return
+         *          the register's name
+         */
         public String getName() {
             return name.get();
         }
 
-        public SimpleStringProperty nameProperty() {
-            return name;
-        }
-
+        /**
+         * Sets the name of the register to the specified value.
+         *
+         * @param name
+         *          the new name
+         */
         public void setName(String name) {
             this.name.set(name);
         }
 
+        /**
+         * Gets the bit width of the register.
+         *
+         * @return
+         *          the register's bit width
+         */
         public String getSize() {
             return size.get();
         }
 
-        public SimpleStringProperty sizeProperty() {
-            return size;
-        }
-
+        /**
+         * Sets the bit width of the register to the specified value.
+         *
+         * @param size
+         *          the new bit width
+         */
         public void setSize(String size) {
             this.size.set(size);
         }
 
+        /**
+         * Gets the register.
+         *
+         * @return
+         *          the register
+         */
         public RegisterExtension getRegister() {
             return register;
         }

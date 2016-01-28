@@ -320,30 +320,52 @@ public class AluView {
             this.op = new SimpleStringProperty(aluOP.getOperationName());
         }
 
+        /**
+         * Gets the ALU operation code of the {@code AluOperation}.
+         *
+         * @return
+         *          the ALU operation code
+         */
         public String getOpcode() {
             return opcode.get();
         }
 
-        public SimpleStringProperty opcodeProperty() {
-            return opcode;
-        }
-
+        /**
+         * Sets the ALU operation code of the {@code AluOperation} to the specified value.
+         *
+         * @param opcode
+         *          the new value
+         */
         public void setOpcode(String opcode) {
             this.opcode.set(opcode);
         }
 
+        /**
+         * Gets the name of the {@code AluOperation}.
+         *
+         * @return
+         *         the name of the {@code AluOperation}.
+         */
         public String getOp() {
             return op.get();
         }
 
-        public SimpleStringProperty opProperty() {
-            return op;
-        }
-
+        /**
+         * Sets the name of the {@code AluOperation} to the specified value.
+         *
+         * @param op
+         *          the new value
+         */
         public void setOp(String op) {
             this.op.set(op);
         }
 
+        /**
+         * Gets the {@code AluOperation}.
+         *
+         * @return
+         *          the {@code AluOperation}
+         */
         public AluOperation getAluOP() {
             return aluOP;
         }

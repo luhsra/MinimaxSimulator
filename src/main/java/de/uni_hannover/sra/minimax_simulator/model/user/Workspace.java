@@ -20,8 +20,12 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 
     private File lastProjectFolder;
 
+    /**
+     * Creates an empty {@code Workspace}.<br>
+     * <br>
+     * On application start no project is loaded.
+     */
     public Workspace() {
-        // on application start, no project is loaded
         currentProject = null;
         currentProjectFile = null;
         lastProjectFolder = null;

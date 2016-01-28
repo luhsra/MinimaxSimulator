@@ -682,6 +682,13 @@ public class MuxView implements MachineConfigListener {
             this.extended = new SimpleStringProperty(getExtendedSourceInfo());
         }
 
+        /**
+         * Creates the extended source information of the {@code MuxInput}.<br>
+         * The extended source information is the hexadecimal value of the constant.
+         *
+         * @return
+         *         the extended source information of the {@code MuxInput}
+         */
         private String getExtendedSourceInfo() {
             if (this.muxInput instanceof ConstantMuxInput) {
                 int value = ((ConstantMuxInput) this.muxInput).getConstant();
@@ -690,42 +697,72 @@ public class MuxView implements MachineConfigListener {
             return "";
         }
 
+        /**
+         * Gets the selection code of the {@code MuxInput}.
+         *
+         * @return
+         *        the selection code of the {@code MuxInput}
+         */
         public String getCode() {
             return code.get();
         }
 
-        public SimpleStringProperty codeProperty() {
-            return code;
-        }
-
+        /**
+         * Sets the selection code of the {@code MuxInput} to the specified value.
+         *
+         * @param code
+         *          the new value
+         */
         public void setCode(String code) {
             this.code.set(code);
         }
 
+        /**
+         * Gets the source of the {@code MuxInput}.
+         *
+         * @return
+         *          the source of the {@code MuxInput}
+         */
         public String getSource() {
             return source.get();
         }
 
-        public SimpleStringProperty sourceProperty() {
-            return source;
-        }
-
+        /**
+         * Sets the source of the {@code MuxInput} to the specified value.
+         *
+         * @param source
+         *          the new value
+         */
         public void setSource(String source) {
             this.source.set(source);
         }
 
+        /**
+         * Gets the extended source information of the {@code MuxInput}.
+         *
+         * @return
+         *          the extended source information of the {@code MuxInput}
+         */
         public String getExtended() {
             return extended.get();
         }
 
-        public SimpleStringProperty extendedProperty() {
-            return extended;
-        }
-
+        /**
+         * Sets the extended source information of the {@code MuxInput} to the specified value.
+         *
+         * @param extended
+         *          the new value
+         */
         public void setExtended(String extended) {
             this.extended.set(extended);
         }
 
+        /**
+         * Gets the {@code MuxInput}.
+         *
+         * @return
+         *          the {@code MuxInput}
+         */
         public MuxInput getMuxInput() {
             return muxInput;
         }

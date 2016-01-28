@@ -314,30 +314,43 @@ public class MemoryTable implements MemoryAccessListener {
             this.hex = new SimpleStringProperty(String.format(HEX_FORMAT_STRING, value));
         }
 
+        /**
+         * Gets the address of the memory address.
+         *
+         * @return
+         *          the address
+         */
         public String getAddress() {
             return address.get();
         }
 
-        public SimpleStringProperty addressProperty() {
-            return address;
-        }
-
+        /**
+         * Gets the decimal value stored at the address.
+         *
+         * @return
+         *          the decimal value
+         */
         public int getDecimal() {
             return decimal.get();
         }
 
-        public SimpleIntegerProperty decimalProperty() {
-            return decimal;
-        }
-
+        /**
+         * Gets the hexadecimal value stored at the address.
+         *
+         * @return
+         *          the hexadecimal value
+         */
         public String getHex() {
             return hex.get();
         }
 
-        public SimpleStringProperty hexProperty() {
-            return hex;
-        }
-
+        /**
+         * Sets the decimal and hexadecimal value to the specified decimal value.<br>
+         * The hexadecimal value will be converted from decimal to hexadecimal.
+         *
+         * @param value
+         *          the new value
+         */
         public void setValue(int value) {
             this.decimal.set(value);
             this.hex.set(String.format(HEX_FORMAT_STRING, value));

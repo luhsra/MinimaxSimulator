@@ -126,6 +126,16 @@ public final class SignalRow {
         values.put(signal, SignalValue.valueOf(value));
     }
 
+    /**
+     * Sets the specified {@link SignalValue} with the specified name to the row's signals.<br>
+     * <br>
+     * Removes the signal with the specified name if {@code value} is {@code null}.
+     *
+     * @param signal
+     *          the name of the signal
+     * @param value
+     *          the {@code SignalValue} to set
+     */
     public void setSignal(String signal, SignalValue value) {
         if (value == null) {
             values.remove(signal);

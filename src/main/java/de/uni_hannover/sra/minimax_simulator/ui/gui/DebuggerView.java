@@ -555,38 +555,62 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             this.hex = new SimpleStringProperty(hex);
         }
 
+        /**
+         * Gets the name of the register.
+         *
+         * @return
+         *          the name of the register
+         */
         public String getName() {
             return name.get();
         }
 
-        public SimpleStringProperty nameProperty() {
-            return name;
-        }
-
+        /**
+         * Sets the name of the register.
+         *
+         * @param name
+         *          the new name of the register
+         */
         public void setName(String name) {
             this.name.set(name);
         }
 
+        /**
+         * Gets the register value as decimal number.
+         *
+         * @return
+         *          the register's value as decimal number
+         */
         public String getDecimal() {
             return decimal.get();
         }
 
-        public SimpleStringProperty decimalProperty() {
-            return decimal;
-        }
-
+        /**
+         * Sets the decimal representation of the register's value to the specified value.
+         *
+         * @param decimal
+         *          the new decimal value
+         */
         public void setDecimal(String decimal) {
             this.decimal.set(decimal);
         }
 
+        /**
+         * Gets the register value as hexadecimal number.
+         *
+         * @return
+         *         the register's value as hexadecimal number
+         */
         public String getHex() {
             return hex.get();
         }
 
-        public SimpleStringProperty hexProperty() {
-            return hex;
-        }
-
+        /**
+         * Sets the hexadecimal representation of the register's value to the specified value.
+         *
+         * @param hex
+         *          the new hexadecimal value
+         */
         public void setHex(String hex) {
             this.hex.set(hex);
         }
@@ -622,26 +646,42 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             }
         }
 
+        /**
+         * Gets the ALU result as decimal number.
+         *
+         * @return
+         *         the ALU result as decimal number
+         */
         public String getDecimal() {
             return decimal.get();
         }
 
-        public SimpleStringProperty decimalProperty() {
-            return decimal;
-        }
-
+        /**
+         * Sets the decimal representation of the ALU result to the specified value.
+         *
+         * @param decimal
+         *         the new decimal value
+         */
         public void setDecimal(String decimal) {
             this.decimal.set(decimal);
         }
 
+        /**
+         * Gets the ALU result as hexadecimal number.
+         *
+         * @return
+         *         the ALU result as hexadecimal number
+         */
         public String getHex() {
             return hex.get();
         }
 
-        public SimpleStringProperty hexProperty() {
-            return hex;
-        }
-
+        /**
+         * Sets the hexadecimal representation of the ALU result to the specified value.
+         *
+         * @param hex
+         *         the new hexadecimal value
+         */
         public void setHex(String hex) {
             this.hex.set(hex);
         }
@@ -711,86 +751,142 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             this.description = new SimpleStringProperty(row.getDescription());
         }
 
+        /**
+         * Gets the label of the {@code SignalRow}.
+         *
+         * @return
+         *          the row's label
+         */
         public String getLabel() {
             return label.get();
         }
 
-        public SimpleStringProperty labelProperty() {
-            return label;
-        }
-
+        /**
+         * Sets the row's label to the specified value.
+         *
+         * @param label
+         *          the new label
+         */
         public void setLabel(String label) {
             this.label.set(label);
         }
 
+        /**
+         * Gets the index of the {@code SignalRow}.
+         *
+         * @return
+         *          the row's index
+         */
         public String getAddress() {
             return address.get();
         }
 
-        public SimpleStringProperty addressProperty() {
-            return address;
-        }
-
+        /**
+         * Sets the index of the row.
+         *
+         * @param address
+         *          the new index
+         */
         public void setAddress(String address) {
             this.address.set(address);
         }
 
+        /**
+         * Gets the string representation of the ALU.ResultFlag check.
+         *
+         * @return
+         *          the string representation of the flag
+         */
         public String getAlu() {
             return alu.get();
         }
 
-        public SimpleStringProperty aluProperty() {
-            return alu;
-        }
-
+        /**
+         * Sets the string representation of the ALU.ResultFlag to the specified value.
+         *
+         * @param alu
+         *          the new value
+         */
         public void setAlu(String alu) {
             this.alu.set(alu);
         }
 
+        /**
+         * Gets the string representation of the next row to be executed.
+         *
+         * @return
+         *         the next row to be executed
+         */
         public String getNext() {
             return next.get();
         }
 
-        public SimpleStringProperty nextProperty() {
-            return next;
-        }
-
+        /**
+         * Sets the string representation of the next row to be executed to the specified value.
+         *
+         * @param next
+         *          the new value
+         */
         public void setNext(String next) {
             this.next.set(next);
         }
 
+        /**
+         * Gets the description of the {@code SignalRow}.
+         *
+         * @return
+         *         the row's description
+         */
         public String getDescription() {
             return description.get();
         }
 
-        public SimpleStringProperty descriptionProperty() {
-            return description;
-        }
-
+        /**
+         * Sets the row's description to the specified value.
+         *
+         * @param description
+         *          the new value
+         */
         public void setDescription(String description) {
             this.description.set(description);
         }
 
+        /**
+         * Gets the value of the {@code isBreakpoint} property of the {@code SignalRow}.
+         *
+         * @return
+         *          {@code true} if the row has a breakpoint, {@code false} otherwise
+         */
         public Boolean getBreakpoint() {
             return breakpoint.get();
         }
 
-        public SimpleBooleanProperty breakpointProperty() {
-            return breakpoint;
-        }
-
+        /**
+         * Sets the {@code isBreakpoint} property to the specified value.
+         *
+         * @param breakpoint
+         *          the new value
+         */
         public void setBreakpoint(Boolean breakpoint) {
             this.breakpoint.set(breakpoint);
         }
 
+        /**
+         * Gets the value of the {@code isActive} property of the {@code SignalRow}.
+         *
+         * @return
+         *          {@code true} if the row is currently executed, {@code false} otherwise
+         */
         public Boolean getActive() {
             return active.get();
         }
 
-        public SimpleBooleanProperty activeProperty() {
-            return active;
-        }
-
+        /**
+         * Sets the {@code isActive} property to the specified value.
+         *
+         * @param active
+         *         the new value
+         */
         public void setActive(Boolean active) {
             this.active.set(active);
         }

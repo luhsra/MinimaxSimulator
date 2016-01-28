@@ -30,6 +30,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class ProjectImporterTest {
 
+    /** temporary folder */
     @Rule
     public TemporaryFolder tmpDir = new TemporaryFolder();
 
