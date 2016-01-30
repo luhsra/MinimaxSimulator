@@ -13,8 +13,6 @@ import de.uni_hannover.sra.minimax_simulator.ui.gui.util.HexSpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.NullAwareIntFormatter;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * <b>FXController of the MuxView</b><br>
@@ -45,18 +45,18 @@ public class MuxView implements MachineConfigListener {
     @FXML private TitledPane paneSelectedConnection;
 
     @FXML private TableView<MuxTableModel> tableMuxA;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_a_code;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_a_source;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_a_extended;
+    @FXML private TableColumn<MuxTableModel, String> colMuxAcode;
+    @FXML private TableColumn<MuxTableModel, String> colMuxAsource;
+    @FXML private TableColumn<MuxTableModel, String> colMuxAextended;
     @FXML private Button btnMoveUpMuxA;
     @FXML private Button btnMoveDownMuxA;
     @FXML private Button btnNewMuxA;
     @FXML private Button btnRemoveMuxA;
 
     @FXML private TableView<MuxTableModel> tableMuxB;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_b_code;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_b_source;
-    @FXML private TableColumn<MuxTableModel, String> col_mux_b_extended;
+    @FXML private TableColumn<MuxTableModel, String> colMuxBcode;
+    @FXML private TableColumn<MuxTableModel, String> colMuxBsource;
+    @FXML private TableColumn<MuxTableModel, String> colMuxBextended;
     @FXML private Button btnMoveUpMuxB;
     @FXML private Button btnMoveDownMuxB;
     @FXML private Button btnNewMuxB;
@@ -148,31 +148,27 @@ public class MuxView implements MachineConfigListener {
 
         updateRegisterComboBox();
 
-        tgroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
-
-                if (t1 == null) {
-                    return;
-                }
-
-                RadioButton chk = (RadioButton) t1.getToggleGroup().getSelectedToggle();
-                boolean disable;
-                if (chk.equals(radioRegister)) {
-                    disable = true;
-                } else if (chk.equals(radioConstant)) {
-                    disable = false;
-                } else {
-                    return;
-                }
-                cbRegister.setDisable(!disable);
-                lblDec.setDisable(disable);
-                lblHex.setDisable(disable);
-                spinnerHex.setDisable(disable);
-                spinnerDec.setDisable(disable);
-
-                updateSaveButton();
+        tgroup.selectedToggleProperty().addListener((ov, t, t1) -> {
+            if (t1 == null) {
+                return;
             }
+
+            RadioButton chk = (RadioButton) t1.getToggleGroup().getSelectedToggle();
+            boolean disable;
+            if (chk.equals(radioRegister)) {
+                disable = true;
+            } else if (chk.equals(radioConstant)) {
+                disable = false;
+            } else {
+                return;
+            }
+            cbRegister.setDisable(!disable);
+            lblDec.setDisable(disable);
+            lblHex.setDisable(disable);
+            spinnerHex.setDisable(disable);
+            spinnerDec.setDisable(disable);
+
+            updateSaveButton();
         });
 
         initSpinners();
@@ -215,9 +211,9 @@ public class MuxView implements MachineConfigListener {
      * Initializes the {@link TableView} for multiplexer A.
      */
     private void initTableMuxA() {
-        col_mux_a_code.setCellValueFactory(new PropertyValueFactory<>("code"));
-        col_mux_a_source.setCellValueFactory(new PropertyValueFactory<>("source"));
-        col_mux_a_extended.setCellValueFactory(new PropertyValueFactory<>("extended"));
+        colMuxAcode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colMuxAsource.setCellValueFactory(new PropertyValueFactory<>("source"));
+        colMuxAextended.setCellValueFactory(new PropertyValueFactory<>("extended"));
 
         tableMuxA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -257,9 +253,9 @@ public class MuxView implements MachineConfigListener {
      * Initializes the {@link TableView} for multiplexer B.
      */
     private void initTableMuxB() {
-        col_mux_b_code.setCellValueFactory(new PropertyValueFactory<>("code"));
-        col_mux_b_source.setCellValueFactory(new PropertyValueFactory<>("source"));
-        col_mux_b_extended.setCellValueFactory(new PropertyValueFactory<>("extended"));
+        colMuxBcode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colMuxBsource.setCellValueFactory(new PropertyValueFactory<>("source"));
+        colMuxBextended.setCellValueFactory(new PropertyValueFactory<>("extended"));
 
         tableMuxB.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -503,7 +499,7 @@ public class MuxView implements MachineConfigListener {
      * @return
      *          the default {@link MuxInput}
      */
-    private MuxInput createDefaultMuxSource()
+    private static MuxInput createDefaultMuxSource()
     {
         return new ConstantMuxInput(0);
     }
@@ -637,6 +633,7 @@ public class MuxView implements MachineConfigListener {
             try {
                 selectedName = cbRegister.getSelectionModel().getSelectedItem().getName();
             } catch (NullPointerException e) {
+                Logger.getLogger("de.uni_hannover.sra.minimax_simulator").log(Level.FINEST, "no mux input was selected", e);
                 return false;
             }
             if (!srcName.equals(selectedName)) {
@@ -685,6 +682,13 @@ public class MuxView implements MachineConfigListener {
             this.extended = new SimpleStringProperty(getExtendedSourceInfo());
         }
 
+        /**
+         * Creates the extended source information of the {@code MuxInput}.<br>
+         * The extended source information is the hexadecimal value of the constant.
+         *
+         * @return
+         *         the extended source information of the {@code MuxInput}
+         */
         private String getExtendedSourceInfo() {
             if (this.muxInput instanceof ConstantMuxInput) {
                 int value = ((ConstantMuxInput) this.muxInput).getConstant();
@@ -693,42 +697,72 @@ public class MuxView implements MachineConfigListener {
             return "";
         }
 
+        /**
+         * Gets the selection code of the {@code MuxInput}.
+         *
+         * @return
+         *        the selection code of the {@code MuxInput}
+         */
         public String getCode() {
             return code.get();
         }
 
-        public SimpleStringProperty codeProperty() {
-            return code;
-        }
-
+        /**
+         * Sets the selection code of the {@code MuxInput} to the specified value.
+         *
+         * @param code
+         *          the new value
+         */
         public void setCode(String code) {
             this.code.set(code);
         }
 
+        /**
+         * Gets the source of the {@code MuxInput}.
+         *
+         * @return
+         *          the source of the {@code MuxInput}
+         */
         public String getSource() {
             return source.get();
         }
 
-        public SimpleStringProperty sourceProperty() {
-            return source;
-        }
-
+        /**
+         * Sets the source of the {@code MuxInput} to the specified value.
+         *
+         * @param source
+         *          the new value
+         */
         public void setSource(String source) {
             this.source.set(source);
         }
 
+        /**
+         * Gets the extended source information of the {@code MuxInput}.
+         *
+         * @return
+         *          the extended source information of the {@code MuxInput}
+         */
         public String getExtended() {
             return extended.get();
         }
 
-        public SimpleStringProperty extendedProperty() {
-            return extended;
-        }
-
+        /**
+         * Sets the extended source information of the {@code MuxInput} to the specified value.
+         *
+         * @param extended
+         *          the new value
+         */
         public void setExtended(String extended) {
             this.extended.set(extended);
         }
 
+        /**
+         * Gets the {@code MuxInput}.
+         *
+         * @return
+         *          the {@code MuxInput}
+         */
         public MuxInput getMuxInput() {
             return muxInput;
         }

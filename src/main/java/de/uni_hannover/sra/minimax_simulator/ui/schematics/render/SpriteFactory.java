@@ -8,15 +8,16 @@ package de.uni_hannover.sra.minimax_simulator.ui.schematics.render;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface SpriteFactory<T> {
 
-	/**
-	 * Creates the {@code Sprite} of the {@code SpriteOwner}.
-	 *
-	 * @param owner
-	 *          the owner of the {@code Sprite} that will be created
-	 * @return
-	 *          the created {@code Sprite}
-	 */
-	public Sprite createSprite(T owner);
+    /**
+     * Creates the {@code Sprite} of the {@code SpriteOwner}.
+     *
+     * @param owner
+     *          the owner of the {@code Sprite} that will be created
+     * @return
+     *          the created {@code Sprite}
+     */
+    public Sprite createSprite(T owner);
 }

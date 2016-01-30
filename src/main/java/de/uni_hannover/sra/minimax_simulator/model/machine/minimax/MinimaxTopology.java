@@ -13,27 +13,27 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
  */
 class MinimaxTopology extends DefaultCircuitTopology {
 
-	/**
-	 * Adds all {@link Circuit}s of the specified {@link Group}.
-	 *
-	 * @param group
-	 *          the {@code Group} whose {@code Circuit}s will be added
-	 */
-	public void addGroup(Group group) {
-		for (Circuit circuit : group.getGroupCircuits()) {
-			addCircuit(group.getName(circuit), circuit);
-		}
-	}
+    /**
+     * Adds all {@link Circuit}s of the specified {@link Group}.
+     *
+     * @param group
+     *          the {@code Group} whose {@code Circuit}s will be added
+     */
+    public void addGroup(Group group) {
+        for (Circuit circuit : group.getGroupCircuits()) {
+            addCircuit(group.getName(circuit), circuit);
+        }
+    }
 
-	/**
-	 * Removes all {@link Circuit}s of the specified {@link Group}.
-	 *
-	 * @param group
-	 *          the {@code Group} whose {@code Circuit}s will be removed
-	 */
-	public void removeGroup(Group group) {
-		for (Circuit circuit : group.getGroupCircuits()) {
-			removeCircuit(group.getName(circuit));
-		}
-	}
+    /**
+     * Removes all {@link Circuit}s of the specified {@link Group}.
+     *
+     * @param group
+     *          the {@code Group} whose {@code Circuit}s will be removed
+     */
+    public void removeGroup(Group group) {
+        for (Circuit circuit : group.getGroupCircuits()) {
+            removeCircuit(group.getName(circuit));
+        }
+    }
 }

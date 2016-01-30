@@ -7,16 +7,17 @@ import javafx.scene.canvas.GraphicsContext;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface Sprite {
 
-	/**
-	 * Draws the {@code Sprite} on a {@link GraphicsContext} of a {@link javafx.scene.canvas.Canvas}
-	 * using a {@link RenderEnvironment}.
-	 *
-	 * @param gc
-	 *          the {@code GraphicsContext} the {@code Sprite} will be drawn on
-	 * @param env
-	 *          the {@code RenderEnvironment} used for rendering
-	 */
-	public void paint(GraphicsContext gc, RenderEnvironment env);
+    /**
+     * Draws the {@code Sprite} on a {@link GraphicsContext} of a {@link javafx.scene.canvas.Canvas}
+     * using a {@link RenderEnvironment}.
+     *
+     * @param gc
+     *          the {@code GraphicsContext} the {@code Sprite} will be drawn on
+     * @param env
+     *          the {@code RenderEnvironment} used for rendering
+     */
+    public void paint(GraphicsContext gc, RenderEnvironment env);
 }

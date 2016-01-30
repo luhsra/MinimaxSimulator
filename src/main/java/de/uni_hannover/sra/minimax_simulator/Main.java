@@ -10,8 +10,8 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.FXMainController;
 import javafx.application.Application;
 import javafx.application.HostServices;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
+import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -46,7 +47,7 @@ public class Main extends javafx.application.Application {
 
     private static Version version;
 
-    private static Logger log;
+    private static final Logger LOG = setupLogger();
 
     private static HostServices hostServices;
 
@@ -61,7 +62,7 @@ public class Main extends javafx.application.Application {
      *          thrown if an error occurs during start up
      */
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         Main.primaryStage = primaryStage;
         version = new Version(this.getClass());
@@ -70,25 +71,24 @@ public class Main extends javafx.application.Application {
 
         hostServices = getHostServices();
 
-        // Read logger settings from .properties inside jar
-        setupLogger();
-
-        log.info("Starting version " + version.getVersionNumber());
+        LOG.info("Starting version " + version.getVersionNumber());
 
         // check if Java 8u40 or higher is available
         if (version.isJvmLower(1, 8, 0, 40)) {
             String jvmVersion = version.getJvmMajor() + "." + version.getJvmFeature() + "." + version.getJvmUpdate() + "_" + version.getJvmBuild();
-            log.severe("Java 1.8.0_40 or higher needed but found " + jvmVersion);
-            System.exit(-1);
+            LOG.severe("Java 1.8.0_40 or higher needed but found " + jvmVersion);
+            Platform.exit();        // shut down JavaFX application
+            return;                 // prevent further initialization because shutdown needs some time
         }
 
         // Initialize config, read from file if existing
         try {
             new PropertiesFileConfigLoader(PropertiesFileConfigLoader.MissingConfigStrategy.USE_DEFAULT).configure(Config.class);
         } catch (ConfigurationLoader.ConfigurationException e) {
-            throw new Error("Cannot initialize configuration", e);
+            LOG.severe("Can not initialize configuration!");
+            throw e;
         }
-        log.info("Configuration loaded.");
+        LOG.info("Configuration loaded.");
 
         // Initialize resource loader for clients (text boxes etc...)
         getResourceLoader();
@@ -96,7 +96,7 @@ public class Main extends javafx.application.Application {
         // Initialize empty workspace (no project loaded)
         workspace = new Workspace();
 
-        log.info("Initializing UI...");
+        LOG.info("Initializing UI...");
 
         URL location = getClass().getResource("/fxml/minimax-sim.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -109,12 +109,9 @@ public class Main extends javafx.application.Application {
         Main.primaryStage.setScene(scene);
 
         FXMainController mainController = fxmlLoader.getController();
-        Main.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                if (!mainController.exitApplication()) {
-                    event.consume();        // do not close the application
-                }
+        Main.primaryStage.setOnCloseRequest((WindowEvent event) -> {
+            if (!mainController.exitApplication()) {
+                event.consume();            // do not close the application
             }
         });
 
@@ -168,6 +165,7 @@ public class Main extends javafx.application.Application {
                 } catch (Exception e) {
                     // locale not supported
                     locale = Locale.getDefault();
+                    LOG.log(Level.WARNING, "unsupported locale; fallback to default", e);
                 }
             }
             resourceLoader = new DefaultResourceBundleLoader(new PropertyResourceControl("text/"), locale);
@@ -224,7 +222,7 @@ public class Main extends javafx.application.Application {
     /**
      * Initializes the application's logger.
      */
-    private static void setupLogger() {
+    private static Logger setupLogger() {
         final InputStream inputStream = Main.class.getResourceAsStream("/logging.properties");
 
         try {
@@ -233,7 +231,7 @@ public class Main extends javafx.application.Application {
             throw new Error("Cannot initialize logging", e);
         }
 
-        log = Logger.getLogger(Main.class.getName());
+        return Logger.getLogger(Main.class.getName());
     }
 
     /**

@@ -17,25 +17,18 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.ExceptionDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.RegisterUpdateDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.components.tableview.CenteredCellPane;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
-import javafx.util.Callback;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -57,22 +50,22 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     private final TextResource res;
 
     @FXML private TableView<RegisterTableModel> regTable;
-    @FXML private TableColumn<RegisterTableModel, String> col_reg_name;
-    @FXML private TableColumn<RegisterTableModel, String> col_reg_dec;
-    @FXML private TableColumn<RegisterTableModel, String> col_reg_hex;
+    @FXML private TableColumn<RegisterTableModel, String> colRegName;
+    @FXML private TableColumn<RegisterTableModel, String> colRegDec;
+    @FXML private TableColumn<RegisterTableModel, String> colRegHex;
 
     @FXML private TableView<AluTableModel> aluTable;
-    @FXML private TableColumn<AluTableModel, String> col_alu_dec;
-    @FXML private TableColumn<AluTableModel, String> col_alu_hex;
+    @FXML private TableColumn<AluTableModel, String> colAluDec;
+    @FXML private TableColumn<AluTableModel, String> colAluHex;
 
     @FXML private TableView<SimulationTableModel> simTable;
-    @FXML private TableColumn<SimulationTableModel, Boolean> col_sim_1;
-    @FXML private TableColumn<SimulationTableModel, Boolean> col_sim_2;
-    @FXML private TableColumn<SimulationTableModel, String> col_sim_label;
-    @FXML private TableColumn<SimulationTableModel, String> col_sim_adr;
-    @FXML private TableColumn<SimulationTableModel, String> col_sim_alu;
-    @FXML private TableColumn<SimulationTableModel, String> col_sim_next;
-    @FXML private TableColumn<SimulationTableModel, String> col_sim_desc;
+    @FXML private TableColumn<SimulationTableModel, Boolean> colSim1;
+    @FXML private TableColumn<SimulationTableModel, Boolean> colSim2;
+    @FXML private TableColumn<SimulationTableModel, String> colSimLabel;
+    @FXML private TableColumn<SimulationTableModel, String> colSimAdr;
+    @FXML private TableColumn<SimulationTableModel, String> colSimAlu;
+    @FXML private TableColumn<SimulationTableModel, String> colSimNext;
+    @FXML private TableColumn<SimulationTableModel, String> colSimDesc;
 
     @FXML private TitledPane paneRegister;
     @FXML private TitledPane paneALU;
@@ -91,7 +84,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
 
     @FXML MemoryTable embeddedMemoryTableController;
 
-    private static final int NO_ROW_MARKED	= -1;
+    private static final int NO_ROW_MARKED = -1;
     private static int lastExecutedRow = -1;
 
     private final MessageFormat cyclesFormatHalted;
@@ -130,12 +123,12 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
-        final List<TableColumn> tableColumnsSignal = new ArrayList<>(Arrays.asList(col_sim_label, col_sim_adr, col_sim_alu, col_sim_next, col_sim_desc));
+        final List<TableColumn> tableColumnsSignal = new ArrayList<>(Arrays.asList(colSimLabel, colSimAdr, colSimAlu, colSimNext, colSimDesc));
         for (TableColumn col : tableColumnsSignal) {
             col.setText(resSignal.get(col.getId().replace("_", ".")));
         }
 
-        final List<TableColumn> tableColumns = new ArrayList<>(Arrays.asList(col_reg_name, col_reg_dec, col_reg_hex, col_alu_dec, col_alu_hex));
+        final List<TableColumn> tableColumns = new ArrayList<>(Arrays.asList(colRegName, colRegDec, colRegHex, colAluDec, colAluHex));
         for (TableColumn col : tableColumns) {
             col.setText(res.get(col.getId().replace("_", ".")));
         }
@@ -191,26 +184,20 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Initializes the {@link TableView} for the registers.
      */
     private void initRegTable() {
-        col_reg_name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        col_reg_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
-        col_reg_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
+        colRegName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colRegDec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
+        colRegHex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
         // open edit dialog at double click
-        regTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        if (simulation.getState() == SimulationState.IDLE) {
-                            String register = regTable.getSelectionModel().getSelectedItem().getName();
-                            Traceable<Integer> value = simulation.getRegisterValue(register);
-                            // open edit dialog
-                            Optional<ButtonType> result = new RegisterUpdateDialog(register, value).showAndWait();
-                            if (result.get() == ButtonType.OK) {
-                                updateRegTable();
-                            }
-                        }
-                    }
+        regTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2
+                    && simulation.getState() == SimulationState.IDLE) {
+                String register = regTable.getSelectionModel().getSelectedItem().getName();
+                Traceable<Integer> value = simulation.getRegisterValue(register);
+                // open edit dialog
+                Optional<ButtonType> result = new RegisterUpdateDialog(register, value).showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    updateRegTable();
                 }
             }
         });
@@ -222,8 +209,8 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Initializes the {@link TableView} for the ALU result.
      */
     private void initAluTable() {
-        col_alu_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
-        col_alu_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
+        colAluDec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
+        colAluHex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
         updateAluTable();
     }
@@ -255,94 +242,63 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Initializes the {@link TableView} for the simulation overview.
      */
     private void initSimulationTable() {
-        col_sim_1.setCellValueFactory(new PropertyValueFactory<>("active"));
-        col_sim_2.setCellValueFactory(new PropertyValueFactory<>("breakpoint"));
-        col_sim_label.setCellValueFactory(new PropertyValueFactory<>("label"));
-        col_sim_adr.setCellValueFactory(new PropertyValueFactory<>("address"));
-        col_sim_alu.setCellValueFactory(new PropertyValueFactory<>("alu"));
-        col_sim_next.setCellValueFactory(new PropertyValueFactory<>("next"));
-        col_sim_desc.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colSim1.setCellValueFactory(new PropertyValueFactory<>("active"));
+        colSim2.setCellValueFactory(new PropertyValueFactory<>("breakpoint"));
+        colSimLabel.setCellValueFactory(new PropertyValueFactory<>("label"));
+        colSimAdr.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colSimAlu.setCellValueFactory(new PropertyValueFactory<>("alu"));
+        colSimNext.setCellValueFactory(new PropertyValueFactory<>("next"));
+        colSimDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        col_sim_2.setCellFactory(new Callback<TableColumn<SimulationTableModel, Boolean>, TableCell<SimulationTableModel, Boolean>>() {
-            @Override
-            public TableCell<SimulationTableModel, Boolean> call(TableColumn<SimulationTableModel, Boolean> param) {
-                TableCell<SimulationTableModel, Boolean> cell = new TableCell<SimulationTableModel, Boolean>() {
-                    ImageView imageview = new ImageView();
+        colSim2.setCellFactory(param -> {
+            TableCell<SimulationTableModel, Boolean> cell = new TableCell<SimulationTableModel, Boolean>() {
+                ImageView imageview = new ImageView();
 
-                    @Override
-                    public void updateItem(Boolean item, boolean empty) {
-                        if (item != null && item) {
-                            GridPane grid = new GridPane();
-                            imageview.setImage(new Image("/images/fugue/control-record.png"));
-                            grid.add(imageview, 0, 0);
-                            ColumnConstraints columnConstraints = new ColumnConstraints();
-                            columnConstraints.setFillWidth(true);
-                            columnConstraints.setHgrow(Priority.ALWAYS);
-                            grid.getColumnConstraints().add(columnConstraints);
-                            RowConstraints rowConstraints = new RowConstraints();
-                            rowConstraints.setFillHeight(true);
-                            rowConstraints.setVgrow(Priority.ALWAYS);
-                            grid.getRowConstraints().add(rowConstraints);
-                            grid.setHalignment(imageview, HPos.CENTER);
-                            grid.setValignment(imageview, VPos.CENTER);
-                            setGraphic(grid);
-                        }
-                        else {
-                            setGraphic(null);
-                        }
+                @Override
+                public void updateItem(Boolean item, boolean empty) {
+                    if (item != null && item) {
+                        imageview.setImage(new Image("/images/fugue/control-record.png"));
+                        setGraphic(new CenteredCellPane(imageview));
                     }
-                };
-
-                cell.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getClickCount() == 2) {
-                            int index = cell.getTableView().getSelectionModel().getSelectedIndex();
-                            SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
-                            SignalRow signalRow = signalTable.getRow(index);
-                            signalRow.setBreakpoint(!signalRow.isBreakpoint());
-                            updateSimulationTable();
-                        }
+                    else {
+                        setGraphic(null);
                     }
-                });
+                }
+            };
 
-                return cell;
-            }
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getClickCount() == 2 ) {
+                    int index = cell.getTableView().getSelectionModel().getSelectedIndex();
+                    SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
+                    SignalRow signalRow = signalTable.getRow(index);
+                    signalRow.setBreakpoint(!signalRow.isBreakpoint());
+                    updateSimulationTable();
+                }
+            });
 
+            return cell;
         });
 
-        col_sim_1.setCellFactory(new Callback<TableColumn<SimulationTableModel, Boolean>, TableCell<SimulationTableModel, Boolean>>() {
-            @Override
-            public TableCell<SimulationTableModel, Boolean> call(TableColumn<SimulationTableModel, Boolean> param) {
-                TableCell<SimulationTableModel, Boolean> cell = new TableCell<SimulationTableModel, Boolean>() {
-                    ImageView imageview = new ImageView();
+        colSim1.setCellFactory(param ->
+            new TableCell<SimulationTableModel, Boolean>() {
+                ImageView imageview = new ImageView();
 
-                    @Override
-                    public void updateItem(Boolean item, boolean empty) {
-                        if (item != null && item) {
-                            GridPane grid = new GridPane();
-                            imageview.setImage(new Image("/images/fugue/arrow-curve-000-left.png"));
-                            grid.add(imageview, 0, 0);
-                            ColumnConstraints columnConstraints = new ColumnConstraints();
-                            columnConstraints.setFillWidth(true);
-                            columnConstraints.setHgrow(Priority.ALWAYS);
-                            grid.getColumnConstraints().add(columnConstraints);
-                            grid.setHalignment(imageview, HPos.CENTER);
-                            grid.setValignment(imageview, VPos.CENTER);
-                            setGraphic(grid);
-                        }
-                        else {
-                            setGraphic(null);
-                        }
+                @Override
+                public void updateItem(Boolean item, boolean empty) {
+                    if (item != null && item) {
+                        imageview.setImage(new Image("/images/fugue/arrow-curve-000-left.png"));
+                        setGraphic(new CenteredCellPane(imageview));
+                    } else {
+                        setGraphic(null);
                     }
-                };
-                return cell;
+                }
             }
-
-        });
+        );
 
         updateSimulationTable();
     }
+
+
 
     /**
      * Gets the index of the last executed row of the simulation.
@@ -425,12 +381,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
                 btnSimRun.setDisable(false);
             }
         } catch (Exception e) {
-            UIUtil.invokeInFAT(new Runnable() {
-                @Override
-                public void run() {
-                    new ExceptionDialog(e).show();
-                }
-            });
+            UIUtil.invokeInFAT(() -> new ExceptionDialog(e).show());
         }
 
         updateAllTables();
@@ -449,12 +400,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             btnSimInit.setGraphic(new ImageView(INIT_SIM));
             btnSimInit.setTooltip(simInit);
         } catch (Exception e) {
-            UIUtil.invokeInFAT(new Runnable() {
-                @Override
-                public void run() {
-                    new ExceptionDialog(e).show();
-                }
-            });
+            UIUtil.invokeInFAT(() -> new ExceptionDialog(e).show());
         }
 
         updateAllTables();
@@ -468,12 +414,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         try {
             simulation.step();
         } catch (Exception e) {
-            UIUtil.invokeInFAT(new Runnable() {
-                @Override
-                public void run() {
-                    new ExceptionDialog(e).show();
-                }
-            });
+            UIUtil.invokeInFAT(() -> new ExceptionDialog(e).show());
         }
 
         updateAllTables();
@@ -484,30 +425,15 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
      * Simulates the machine until it reaches a breakpoint or the end of the program.
      */
     public void runSimulation() {
-        UIUtil.executeWorker(new Runnable() {
-                                 // background task
-                                 @Override
-                                 public void run() {
-                                     try {
-                                         simulation.run();
-                                     } catch (Exception e) {
-                                         UIUtil.invokeInFAT(new Runnable() {
-                                             @Override
-                                             public void run() {
-                                                 new ExceptionDialog(e).show();
-                                             }
-                                         });
-                                     }
+        UIUtil.executeWorker(() -> {
+            // background task
+            try {
+                simulation.run();
+            } catch (Exception e) {
+                UIUtil.invokeInFAT(() -> new ExceptionDialog(e).show());
+            }
+        }, res.get("simulation.wait.title"), res.get("simulation.wait.message"), () -> simulation.pause());
 
-                                 }
-                             }, res.get("simulation.wait.title"), res.get("simulation.wait.message"),
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        // on cancel
-                        simulation.pause();
-                    }
-                });
         updateAllTables();
         updateCyclesText();
     }
@@ -599,45 +525,69 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             }
             else {
                 String formatString = register.getSize().getHexFormat();
-                decimal = Integer.toString(value.get().intValue());
-                hex = String.format(formatString, value.get().intValue());
+                decimal = Integer.toString(value.get());
+                hex = String.format(formatString, value.get());
             }
             this.decimal = new SimpleStringProperty(decimal);
             this.hex = new SimpleStringProperty(hex);
         }
 
+        /**
+         * Gets the name of the register.
+         *
+         * @return
+         *          the name of the register
+         */
         public String getName() {
             return name.get();
         }
 
-        public SimpleStringProperty nameProperty() {
-            return name;
-        }
-
+        /**
+         * Sets the name of the register.
+         *
+         * @param name
+         *          the new name of the register
+         */
         public void setName(String name) {
             this.name.set(name);
         }
 
+        /**
+         * Gets the register value as decimal number.
+         *
+         * @return
+         *          the register's value as decimal number
+         */
         public String getDecimal() {
             return decimal.get();
         }
 
-        public SimpleStringProperty decimalProperty() {
-            return decimal;
-        }
-
+        /**
+         * Sets the decimal representation of the register's value to the specified value.
+         *
+         * @param decimal
+         *          the new decimal value
+         */
         public void setDecimal(String decimal) {
             this.decimal.set(decimal);
         }
 
+        /**
+         * Gets the register value as hexadecimal number.
+         *
+         * @return
+         *         the register's value as hexadecimal number
+         */
         public String getHex() {
             return hex.get();
         }
 
-        public SimpleStringProperty hexProperty() {
-            return hex;
-        }
-
+        /**
+         * Sets the hexadecimal representation of the register's value to the specified value.
+         *
+         * @param hex
+         *          the new hexadecimal value
+         */
         public void setHex(String hex) {
             this.hex.set(hex);
         }
@@ -673,26 +623,42 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             }
         }
 
+        /**
+         * Gets the ALU result as decimal number.
+         *
+         * @return
+         *         the ALU result as decimal number
+         */
         public String getDecimal() {
             return decimal.get();
         }
 
-        public SimpleStringProperty decimalProperty() {
-            return decimal;
-        }
-
+        /**
+         * Sets the decimal representation of the ALU result to the specified value.
+         *
+         * @param decimal
+         *         the new decimal value
+         */
         public void setDecimal(String decimal) {
             this.decimal.set(decimal);
         }
 
+        /**
+         * Gets the ALU result as hexadecimal number.
+         *
+         * @return
+         *         the ALU result as hexadecimal number
+         */
         public String getHex() {
             return hex.get();
         }
 
-        public SimpleStringProperty hexProperty() {
-            return hex;
-        }
-
+        /**
+         * Sets the hexadecimal representation of the ALU result to the specified value.
+         *
+         * @param hex
+         *         the new hexadecimal value
+         */
         public void setHex(String hex) {
             this.hex.set(hex);
         }
@@ -762,86 +728,142 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             this.description = new SimpleStringProperty(row.getDescription());
         }
 
+        /**
+         * Gets the label of the {@code SignalRow}.
+         *
+         * @return
+         *          the row's label
+         */
         public String getLabel() {
             return label.get();
         }
 
-        public SimpleStringProperty labelProperty() {
-            return label;
-        }
-
+        /**
+         * Sets the row's label to the specified value.
+         *
+         * @param label
+         *          the new label
+         */
         public void setLabel(String label) {
             this.label.set(label);
         }
 
+        /**
+         * Gets the index of the {@code SignalRow}.
+         *
+         * @return
+         *          the row's index
+         */
         public String getAddress() {
             return address.get();
         }
 
-        public SimpleStringProperty addressProperty() {
-            return address;
-        }
-
+        /**
+         * Sets the index of the row.
+         *
+         * @param address
+         *          the new index
+         */
         public void setAddress(String address) {
             this.address.set(address);
         }
 
+        /**
+         * Gets the string representation of the ALU.ResultFlag check.
+         *
+         * @return
+         *          the string representation of the flag
+         */
         public String getAlu() {
             return alu.get();
         }
 
-        public SimpleStringProperty aluProperty() {
-            return alu;
-        }
-
+        /**
+         * Sets the string representation of the ALU.ResultFlag to the specified value.
+         *
+         * @param alu
+         *          the new value
+         */
         public void setAlu(String alu) {
             this.alu.set(alu);
         }
 
+        /**
+         * Gets the string representation of the next row to be executed.
+         *
+         * @return
+         *         the next row to be executed
+         */
         public String getNext() {
             return next.get();
         }
 
-        public SimpleStringProperty nextProperty() {
-            return next;
-        }
-
+        /**
+         * Sets the string representation of the next row to be executed to the specified value.
+         *
+         * @param next
+         *          the new value
+         */
         public void setNext(String next) {
             this.next.set(next);
         }
 
+        /**
+         * Gets the description of the {@code SignalRow}.
+         *
+         * @return
+         *         the row's description
+         */
         public String getDescription() {
             return description.get();
         }
 
-        public SimpleStringProperty descriptionProperty() {
-            return description;
-        }
-
+        /**
+         * Sets the row's description to the specified value.
+         *
+         * @param description
+         *          the new value
+         */
         public void setDescription(String description) {
             this.description.set(description);
         }
 
+        /**
+         * Gets the value of the {@code isBreakpoint} property of the {@code SignalRow}.
+         *
+         * @return
+         *          {@code true} if the row has a breakpoint, {@code false} otherwise
+         */
         public Boolean getBreakpoint() {
             return breakpoint.get();
         }
 
-        public SimpleBooleanProperty breakpointProperty() {
-            return breakpoint;
-        }
-
+        /**
+         * Sets the {@code isBreakpoint} property to the specified value.
+         *
+         * @param breakpoint
+         *          the new value
+         */
         public void setBreakpoint(Boolean breakpoint) {
             this.breakpoint.set(breakpoint);
         }
 
+        /**
+         * Gets the value of the {@code isActive} property of the {@code SignalRow}.
+         *
+         * @return
+         *          {@code true} if the row is currently executed, {@code false} otherwise
+         */
         public Boolean getActive() {
             return active.get();
         }
 
-        public SimpleBooleanProperty activeProperty() {
-            return active;
-        }
-
+        /**
+         * Sets the {@code isActive} property to the specified value.
+         *
+         * @param active
+         *         the new value
+         */
         public void setActive(Boolean active) {
             this.active.set(active);
         }

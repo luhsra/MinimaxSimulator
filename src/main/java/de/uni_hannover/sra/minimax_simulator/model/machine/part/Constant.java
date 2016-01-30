@@ -11,60 +11,60 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
  */
 public class Constant extends SimplePart implements SpriteOwner {
 
-	private final int constant;
+    private final int constantValue;
 
-	private final String constantStr;
+    private final String constantStr;
 
-	/**
-	 * Constructs a new {@code Constant} with the specified value.
-	 *
-	 * @param constantValue
-	 *          the value of the constant
-	 */
-	public Constant(int constantValue) {
-		constant = constantValue;
+    /**
+     * Constructs a new {@code Constant} with the specified value.
+     *
+     * @param constantValue
+     *          the value of the constant
+     */
+    public Constant(int constantValue) {
+        this.constantValue = constantValue;
 
-		// Later: Let the user decide when he creates the constant in the GUI?
-		if ((0xFFFFFFFFL & constantValue) >= 0x0000FFFFL) {
-			constantStr = String.format("0x%X", constantValue);
-		}
-		else {
-			constantStr = Integer.toString(constantValue);
-		}
-	}
+        // Later: Let the user decide when he creates the constant in the GUI?
+        if ((0xFFFFFFFFL & constantValue) >= 0x0000FFFFL) {
+            constantStr = String.format("0x%X", constantValue);
+        }
+        else {
+            constantStr = Integer.toString(constantValue);
+        }
+    }
 
-	/**
-	 * Gets the value of the constant.
-	 *
-	 * @return
-	 *          the value of the constant
-	 */
-	public int getConstant() {
-		return constant;
-	}
+    /**
+     * Gets the value of the constant.
+     *
+     * @return
+     *          the value of the constant
+     */
+    public int getConstant() {
+        return constantValue;
+    }
 
-	/**
-	 * Gets the string representation of the constant value.
-	 *
-	 * @return
-	 *          the string representation of the value of the constant
-	 */
-	public String getConstantStr() {
-		return constantStr;
-	}
+    /**
+     * Gets the string representation of the constant value.
+     *
+     * @return
+     *          the string representation of the value of the constant
+     */
+    public String getConstantStr() {
+        return constantStr;
+    }
 
-	@Override
-	public void update() {
-		getDataOut().write(constant);
-	}
+    @Override
+    public void update() {
+        getDataOut().write(constantValue);
+    }
 
-	@Override
-	public Sprite createSprite() {
-		return new ConstantSprite(this);
-	}
+    @Override
+    public Sprite createSprite() {
+        return new ConstantSprite(this);
+    }
 
-	@Override
-	public String toString() {
-		return "Constant[" + constantStr + "]";
-	}
+    @Override
+    public String toString() {
+        return "Constant[" + constantStr + "]";
+    }
 }

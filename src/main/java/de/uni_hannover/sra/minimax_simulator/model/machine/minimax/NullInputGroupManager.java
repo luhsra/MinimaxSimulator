@@ -7,10 +7,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.MuxInputManag
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.MuxNullGroup;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A {@link MuxInputGroupManager} for {@link NullMuxInput}s.
@@ -19,57 +16,56 @@ import java.util.Map;
  */
 class NullInputGroupManager implements MuxInputGroupManager {
 
-	private final GroupManager groupManager;
+    private final GroupManager groupManager;
 
-	private final Map<MuxType, List<InputEntry>> inputEntries;
+    private final Map<MuxType, List<InputEntry>> inputEntries;
 
-	/**
-	 * Constructs a new {@code NullInputGroupManager} with the specified {@link GroupManager}.
-	 *
-	 * @param groupManager
-	 *          the {@code GroupManager}
-	 */
-	public NullInputGroupManager(GroupManager groupManager) {
-		this.groupManager = groupManager;
+    /**
+     * Constructs a new {@code NullInputGroupManager} with the specified {@link GroupManager}.
+     *
+     * @param groupManager
+     *          the {@code GroupManager}
+     */
+    public NullInputGroupManager(GroupManager groupManager) {
+        this.groupManager = groupManager;
 
-		inputEntries = new HashMap<MuxType, List<InputEntry>>();
-		for (MuxType type : MuxType.values()) {
-			inputEntries.put(type, new ArrayList<InputEntry>());
-		}
-	}
+        inputEntries = new EnumMap<>(MuxType.class);
+        for (MuxType type : MuxType.values()) {
+            inputEntries.put(type, new ArrayList<>());
+        }
+    }
 
-	@Override
-	public void update(MuxInputManager muxInputs) {
-		List<InputEntry> entries = inputEntries.get(muxInputs.getMuxType());
+    @Override
+    public void update(MuxInputManager muxInputs) {
+        List<InputEntry> entries = inputEntries.get(muxInputs.getMuxType());
 
-		destroyGroups(entries);
-		entries.clear();
-		entries.addAll(muxInputs.getMuxInputs());
-		createGroups(entries);
-	}
+        destroyGroups(entries);
+        entries.clear();
+        entries.addAll(muxInputs.getMuxInputs());
+        createGroups(entries);
+    }
 
-	/**
-	 * Creates {@link MuxNullGroup}s for the {@link NullMuxInput}s of the specified entries.
-	 *
-	 * @param entries
-	 *          a list of {@link InputEntry} to create {@code Group}s for
-	 */
-	private void createGroups(List<InputEntry> entries) {
-		entries.stream().filter(entry -> entry.input instanceof NullMuxInput).forEach(entry -> {
-			Group group = new MuxNullGroup(entry.pinId, entry.pin);
-			groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
-		});
-	}
+    /**
+     * Creates {@link MuxNullGroup}s for the {@link NullMuxInput}s of the specified entries.
+     *
+     * @param entries
+     *          a list of {@link InputEntry} to create {@code Group}s for
+     */
+    private void createGroups(List<InputEntry> entries) {
+        entries.stream().filter(entry -> entry.input instanceof NullMuxInput).forEach(entry -> {
+            Group group = new MuxNullGroup(entry.pinId, entry.pin);
+            groupManager.initializeGroup(entry.pinId + Parts._CONSTANT, group);
+        });
+    }
 
-	/**
-	 * Removes the {@link MuxNullGroup}s of the {@link NullMuxInput}s of the specified entries.
-	 *
-	 * @param entries
-	 *          a list of {@link InputEntry} to destroy {@code Group}s for
-	 */
-	private void destroyGroups(List<InputEntry> entries) {
-		entries.stream().filter(entry -> entry.input instanceof NullMuxInput).forEach(entry -> {
-			groupManager.removeGroup(entry.pinId + Parts._CONSTANT);
-		});
-	}
+    /**
+     * Removes the {@link MuxNullGroup}s of the {@link NullMuxInput}s of the specified entries.
+     *
+     * @param entries
+     *          a list of {@link InputEntry} to destroy {@code Group}s for
+     */
+    private void destroyGroups(List<InputEntry> entries) {
+        entries.stream().filter(entry -> entry.input instanceof NullMuxInput).forEach(entry ->
+            groupManager.removeGroup(entry.pinId + Parts._CONSTANT));
+    }
 }

@@ -15,18 +15,18 @@ import java.util.Set;
  */
 public class OriginLayout implements Layout {
 
-	private static final Set<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.HORIZONTAL_CENTER,
-															AttributeType.VERTICAL_CENTER);
+    private static final Set<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.HORIZONTAL_CENTER,
+                                                            AttributeType.VERTICAL_CENTER);
 
-	private static final Constraint ZERO = new AbsoluteConstraint(0);
+    private static final Constraint ZERO = new AbsoluteConstraint(0);
 
-	@Override
-	public Constraint getConstraint(AttributeType attribute) {
-		return ZERO;
-	}
+    @Override
+    public Constraint getConstraint(AttributeType attribute) {
+        return ZERO;
+    }
 
-	@Override
-	public Set<AttributeType> getConstrainedAttributes() {
-		return ATTRIBUTES;
-	}
+    @Override
+    public Set<AttributeType> getConstrainedAttributes() {
+        return ATTRIBUTES;
+    }
 }

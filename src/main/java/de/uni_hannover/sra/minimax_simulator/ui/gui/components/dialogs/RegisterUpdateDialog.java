@@ -12,35 +12,35 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
  */
 public class RegisterUpdateDialog extends ValueUpdateDialog {
 
-	private final Traceable<Integer> value;
+    private final Traceable<Integer> value;
 
-	/**
-	 * Constructs a new {@code RegisterUpdateDialog} for the register with the specified name
-	 * and the specified value.
-	 *
-	 * @param register
-	 *          the name of the register
-	 * @param value
-	 *          the {@link Traceable} value of the register
-	 */
-	public RegisterUpdateDialog(String register, Traceable<Integer> value) {
-		super(value.get());
+    /**
+     * Constructs a new {@code RegisterUpdateDialog} for the register with the specified name
+     * and the specified value.
+     *
+     * @param register
+     *          the name of the register
+     * @param value
+     *          the {@link Traceable} value of the register
+     */
+    public RegisterUpdateDialog(String register, Traceable<Integer> value) {
+        super(value.get());
 
-		this.value = value;
+        this.value = value;
 
-		TextResource res = Main.getTextResource("debugger").using("register.update");
+        TextResource res = Main.getTextResource("debugger").using("register.update");
 
-		_messageLabel.setText(res.format("message", register));
-	}
+        messageLabel.setText(res.format("message", register));
+    }
 
-	/**
-	 * Sets the new value to the register for which the dialog was opened.
-	 *
-	 * @param value
-	 *          the new value
-	 */
-	@Override
-	protected void setValue(int value) {
-		this.value.set(value);
-	}
+    /**
+     * Sets the new value to the register for which the dialog was opened.
+     *
+     * @param value
+     *          the new value
+     */
+    @Override
+    protected void setValue(int value) {
+        this.value.set(value);
+    }
 }

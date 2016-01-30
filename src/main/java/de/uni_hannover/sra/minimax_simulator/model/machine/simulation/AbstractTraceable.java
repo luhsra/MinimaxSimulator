@@ -12,39 +12,39 @@ import java.util.ArrayList;
  */
 public abstract class AbstractTraceable<T> implements Traceable<T> {
 
-	private final ArrayList<TraceableChangeListener<T>> listeners;
+    private final ArrayList<TraceableChangeListener<T>> listeners;
 
-	/**
-	 * Constructs a new {@code AbstractTraceable}.
-	 */
-	protected AbstractTraceable() {
-		listeners = new ArrayList<TraceableChangeListener<T>>(2);
-	}
+    /**
+     * Constructs a new {@code AbstractTraceable}.
+     */
+    protected AbstractTraceable() {
+        listeners = new ArrayList<>(2);
+    }
 
-	/**
-	 * Notifies the {@link TraceableChangeListener}s of a value change.
-	 */
-	protected void fireValueChanged() {
-		T value = get();
-		for (TraceableChangeListener<T> listener : listeners) {
-			listener.onValueChanged(value);
-		}
-	}
+    /**
+     * Notifies the {@link TraceableChangeListener}s of a value change.
+     */
+    protected void fireValueChanged() {
+        T value = get();
+        for (TraceableChangeListener<T> listener : listeners) {
+            listener.onValueChanged(value);
+        }
+    }
 
-	@Override
-	public void clearListeners() {
-		listeners.clear();
-	}
+    @Override
+    public void clearListeners() {
+        listeners.clear();
+    }
 
-	@Override
-	public void addChangeListener(TraceableChangeListener<T> listener) {
-		if (!listeners.contains(listener)) {
-			listeners.add(listener);
-		}
-	}
+    @Override
+    public void addChangeListener(TraceableChangeListener<T> listener) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
+    }
 
-	@Override
-	public void removeChangeListener(TraceableChangeListener<T> listener) {
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeChangeListener(TraceableChangeListener<T> listener) {
+        listeners.remove(listener);
+    }
 }

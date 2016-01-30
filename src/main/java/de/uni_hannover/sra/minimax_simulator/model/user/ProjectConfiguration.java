@@ -12,44 +12,44 @@ import java.util.List;
 // TODO: finish
 public class ProjectConfiguration {
 
-	private List<String> openTabKeys;
-	private String selectedTabKey;
+    private List<String> openTabKeys;
+    private String selectedTabKey;
 
-	/**
-	 * Constructs a new {@code ProjectConfiguration}.
-	 */
-	public ProjectConfiguration() {
-		openTabKeys = new ArrayList<String>();
-		selectedTabKey = "";
-	}
+    /**
+     * Constructs a new {@code ProjectConfiguration}.
+     */
+    public ProjectConfiguration() {
+        openTabKeys = new ArrayList<>();
+        selectedTabKey = "";
+    }
 
-	/**
-	 * Gets the keys of the open tabs.
-	 *
-	 * @return
-	 *          a list of the keys of the open tabs
-	 */
-	public List<String> getOpenTabKeys() {
-		return openTabKeys;
-	}
+    /**
+     * Gets the keys of the open tabs.
+     *
+     * @return
+     *          a list of the keys of the open tabs
+     */
+    public List<String> getOpenTabKeys() {
+        return openTabKeys;
+    }
 
-	/**
-	 * Gets the key of the selected tab.
-	 *
-	 * @return
-	 *          the key of the selected tab
-	 */
-	public String getSelectedTabKey() {
-		return selectedTabKey;
-	}
+    /**
+     * Gets the key of the selected tab.
+     *
+     * @return
+     *          the key of the selected tab
+     */
+    public String getSelectedTabKey() {
+        return selectedTabKey;
+    }
 
-	/**
-	 * Sets the key of the selected tab.
-	 *
-	 * @param key
-	 *          the key of the selected tab
-	 */
-	public void setSelectedTabKey(String key) {
-		selectedTabKey = key;
-	}
+    /**
+     * Sets the key of the selected tab.
+     *
+     * @param key
+     *          the key of the selected tab
+     */
+    public void setSelectedTabKey(String key) {
+        selectedTabKey = key;
+    }
 }

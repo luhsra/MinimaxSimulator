@@ -22,78 +22,76 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class MultiplexerSprite extends CircuitSprite {
 
-	private final Multiplexer mux;
+    private final Multiplexer mux;
 
-	private static final ArrayList<String> ADDRESS_NUMBER_CACHE = new ArrayList<String>();
+    private static final ArrayList<String> ADDRESS_NUMBER_CACHE = new ArrayList<>();
 
-	/**
-	 * Converts the specified integer to string using a list for caching already done conversions.
-	 *
-	 * @param i
-	 *          the integer to convert
-	 * @return
-	 *          the integer as string
-	 */
-	private static String intToStr(int i) {
-		if (ADDRESS_NUMBER_CACHE.size() <= i) {
-			for (int c = ADDRESS_NUMBER_CACHE.size(); c <= i; c++) {
-				ADDRESS_NUMBER_CACHE.add(Integer.toString(c));
-			}
-		}
-		return ADDRESS_NUMBER_CACHE.get(i);
-	}
+    /**
+     * Initializes the {@code MultiplexerSprite}.
+     *
+     * @param mux
+     *          the {@code Multiplexer} this sprite will represent
+     */
+    public MultiplexerSprite(Multiplexer mux) {
+        this.mux = checkNotNull(mux);
+    }
 
-	/**
-	 * Initializes the {@code MultiplexerSprite}.
-	 *
-	 * @param mux
-	 *          the {@code Multiplexer} this sprite will represent
-	 */
-	public MultiplexerSprite(Multiplexer mux) {
-		this.mux = checkNotNull(mux);
-	}
+    /**
+     * Converts the specified integer to string using a list for caching already done conversions.
+     *
+     * @param i
+     *          the integer to convert
+     * @return
+     *          the integer as string
+     */
+    private static String intToStr(int i) {
+        if (ADDRESS_NUMBER_CACHE.size() <= i) {
+            for (int c = ADDRESS_NUMBER_CACHE.size(); c <= i; c++) {
+                ADDRESS_NUMBER_CACHE.add(Integer.toString(c));
+            }
+        }
+        return ADDRESS_NUMBER_CACHE.get(i);
+    }
 
-	@Override
-	public void paint(GraphicsContext gc) {
-		Bounds b = mux.getBounds();
-		debugBounds(gc, b);
+    @Override
+    public void paint(GraphicsContext gc) {
+        Bounds b = mux.getBounds();
+        debugBounds(gc, b);
 
-		FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
-		double textHeight = fm.getAscent() - 3;
+        FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
+        double textHeight = fm.getAscent() - 3;
 
-		// upper / lower arc
-		gc.strokeArc(b.x + 0.5, b.y + 0.5, b.w, b.w, 0, 180, ArcType.OPEN);
-		gc.strokeArc(b.x + 0.5, b.y + b.h - b.w + 0.5, b.w, b.w, 180, 180, ArcType.OPEN);
+        // upper / lower arc
+        gc.strokeArc(b.x + 0.5, b.y + 0.5, b.w, b.w, 0, 180, ArcType.OPEN);
+        gc.strokeArc(b.x + 0.5, b.y + b.h - b.w + 0.5, b.w, b.w, 180, 180, ArcType.OPEN);
 
-		// left / right line
-		gc.strokeLine(b.x + 0.5, b.y + b.w / 2 + 0.5, b.x + 0.5, b.y + b.h - b.w / 2 + 0.5);
-		gc.strokeLine(b.x + b.w + 0.5, b.y + b.w / 2 + 0.5, b.x + b.w + 0.5, b.y + b.h - b.w / 2 + 0.5);
+        // left / right line
+        gc.strokeLine(b.x + 0.5, b.y + b.w / 2 + 0.5, b.x + 0.5, b.y + b.h - b.w / 2 + 0.5);
+        gc.strokeLine(b.x + b.w + 0.5, b.y + b.w / 2 + 0.5, b.x + b.w + 0.5, b.y + b.h - b.w / 2 + 0.5);
 
-		// pin addresses
-		//int availableHeight = b.h - 24;
-		//int paY = b.y + (b.h - availableHeight) / 2;
-		int labelX = b.x + b.w / 2;
-		int labelY = 0;
+        // pin addresses
+        int labelX = b.x + b.w / 2;
+        int labelY = 0;
 
-		List<IngoingPin> pins = mux.getDataInputs();
+        List<IngoingPin> pins = mux.getDataInputs();
 
-		if (!pins.isEmpty()) {
-			int addr = 0;
-			for (Pin pin : pins) {
-				String nrStr = intToStr(addr);
-				double textWidth = fm.computeStringWidth(nrStr);
+        if (!pins.isEmpty()) {
+            int addr = 0;
+            for (Pin pin : pins) {
+                String nrStr = intToStr(addr);
+                double textWidth = fm.computeStringWidth(nrStr);
 
-				labelY = pin.getY();
+                labelY = pin.getY();
 
-				gc.fillText(nrStr, labelX - textWidth / 2, labelY + textHeight / 2);
-				addr++;
-			}
-		}
+                gc.fillText(nrStr, labelX - textWidth / 2, labelY + textHeight / 2);
+                addr++;
+            }
+        }
 
-		for (Pin pin : pins) {
-			debugPin(gc, pin);
-		}
-		debugPin(gc, mux.getDataOut());
-		debugPin(gc, mux.getSelectPin());
-	}
+        for (Pin pin : pins) {
+            debugPin(gc, pin);
+        }
+        debugPin(gc, mux.getDataOut());
+        debugPin(gc, mux.getSelectPin());
+    }
 }

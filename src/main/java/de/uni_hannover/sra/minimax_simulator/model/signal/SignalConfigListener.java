@@ -5,18 +5,11 @@ package de.uni_hannover.sra.minimax_simulator.model.signal;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface SignalConfigListener {
 
-//	public void signalAdded(int index, SignalType signal);
-//
-//	public void signalRemoved(int index);
-//
-//	public void signalReplaced(int index, SignalType signal);
-//
-//	public void signalsExchanged(int index1, int index2);
-
-	/**
-	 * Notifies the listener about a change of the structure.
-	 */
-	public void signalStructureChanged();
+    /**
+     * Notifies the listener about a change of the structure.
+     */
+    public void signalStructureChanged();
 }

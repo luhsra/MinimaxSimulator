@@ -16,38 +16,38 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.part.Wire;
  */
 public class MuxNullGroup extends AbstractGroup {
 
-	private final String pinName;
-	private final IngoingPin muxPin;
+    private final String pinName;
+    private final IngoingPin muxPin;
 
-	/**
-	 * Constructs a new {@code MuxNullGroup} with the specified pin name and {@link IngoingPin}.
-	 *
-	 * @param pinName
-	 *          the name of the pin
-	 * @param muxPin
-	 *          the {@code IngoingPin} which is {@code NullMuxInput}
-	 */
-	public MuxNullGroup(String pinName, IngoingPin muxPin) {
-		this.pinName = pinName;
-		this.muxPin = muxPin;
-	}
+    /**
+     * Constructs a new {@code MuxNullGroup} with the specified pin name and {@link IngoingPin}.
+     *
+     * @param pinName
+     *          the name of the pin
+     * @param muxPin
+     *          the {@code IngoingPin} which is {@code NullMuxInput}
+     */
+    public MuxNullGroup(String pinName, IngoingPin muxPin) {
+        this.pinName = pinName;
+        this.muxPin = muxPin;
+    }
 
-	@Override
-	public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
-		Junction deadEnd = new Junction(2);
-		Wire wire = new Wire(2, deadEnd.getDataOuts().get(0), muxPin);
+    @Override
+    public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
+        Junction deadEnd = new Junction(2);
+        Wire wire = new Wire(2, deadEnd.getDataOuts().get(0), muxPin);
 
-		add(deadEnd, pinName + "_END");
-		addWire(wire, pinName + Parts._WIRE);
-	}
+        add(deadEnd, pinName + "_END");
+        addWire(wire, pinName + Parts._WIRE);
+    }
 
-	@Override
-	public boolean hasLayouts() {
-		return true;
-	}
+    @Override
+    public boolean hasLayouts() {
+        return true;
+    }
 
-	@Override
-	public LayoutSet createLayouts() {
-		return new MuxNullLayoutSet(pinName);
-	}
+    @Override
+    public LayoutSet createLayouts() {
+        return new MuxNullLayoutSet(pinName);
+    }
 }

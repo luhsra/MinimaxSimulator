@@ -2,8 +2,6 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui.components.tableview;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableView;
 
 /**
@@ -24,16 +22,12 @@ public class PTableColumn<S, T> extends javafx.scene.control.TableColumn<S, T> {
      * Constructs a new {@code PTableColumn}.
      */
     public PTableColumn() {
-        tableViewProperty().addListener(new ChangeListener<TableView<S>>() {
-
-            @Override
-            public void changed(ObservableValue<? extends TableView<S>> ov, TableView<S> t, TableView<S> t1) {
-                if(PTableColumn.this.prefWidthProperty().isBound()) {
-                    PTableColumn.this.prefWidthProperty().unbind();
-                }
-
-                PTableColumn.this.prefWidthProperty().bind(t1.widthProperty().multiply(percentageWidth));
+        tableViewProperty().addListener((ov, t, t1) -> {
+            if(PTableColumn.this.prefWidthProperty().isBound()) {
+                PTableColumn.this.prefWidthProperty().unbind();
             }
+
+            PTableColumn.this.prefWidthProperty().bind(t1.widthProperty().multiply(percentageWidth));
         });
     }
 
@@ -65,7 +59,7 @@ public class PTableColumn<S, T> extends javafx.scene.control.TableColumn<S, T> {
      * @throws IllegalArgumentException
      *          thrown if the argument was not in the range 0.0 to 1.0
      */
-    public final void setPercentageWidth(double value) throws IllegalArgumentException {
+    public final void setPercentageWidth(double value) {
         if(value >= 0 && value <= 1) {
             this.percentageWidthProperty().set(value);
         } else {

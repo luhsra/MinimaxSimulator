@@ -13,64 +13,64 @@ import java.util.Map;
  */
 class DefaultGroupManager implements GroupManager {
 
-	private final MinimaxLayout layout;
-	private final MinimaxTopology topology;
-	private final MinimaxDisplay display;
+    private final MinimaxLayout layout;
+    private final MinimaxTopology topology;
+    private final MinimaxDisplay display;
 
-	private final Map<String, Group> groups = new HashMap<String, Group>();
-	private final Map<String, LayoutSet> layouts = new HashMap<String, LayoutSet>();
+    private final Map<String, Group> groups = new HashMap<>();
+    private final Map<String, LayoutSet> layouts = new HashMap<>();
 
-	/**
-	 * Constructs a new {@code DefaultGroupManager} with the specified {@link MinimaxLayout},
-	 * {@link MinimaxTopology} and {@link MinimaxDisplay}.
-	 *
-	 * @param layout
-	 *          the layout of the {@link MinimaxMachine}
-	 * @param topology
-	 *          the topology of the {@code MinimaxMachine}
-	 * @param display
-	 *          the display of the {@code MinimaxMachine}
-	 */
-	DefaultGroupManager(MinimaxLayout layout, MinimaxTopology topology, MinimaxDisplay display) {
-		this.layout = layout;
-		this.topology = topology;
-		this.display = display;
-	}
+    /**
+     * Constructs a new {@code DefaultGroupManager} with the specified {@link MinimaxLayout},
+     * {@link MinimaxTopology} and {@link MinimaxDisplay}.
+     *
+     * @param layout
+     *          the layout of the {@link MinimaxMachine}
+     * @param topology
+     *          the topology of the {@code MinimaxMachine}
+     * @param display
+     *          the display of the {@code MinimaxMachine}
+     */
+    DefaultGroupManager(MinimaxLayout layout, MinimaxTopology topology, MinimaxDisplay display) {
+        this.layout = layout;
+        this.topology = topology;
+        this.display = display;
+    }
 
-	@Override
-	public void removeGroup(String id) {
-		Group group = groups.remove(id);
-		if (group == null) {
-			throw new IllegalArgumentException("Unknown group: " + id);
-		}
+    @Override
+    public void removeGroup(String id) {
+        Group group = groups.remove(id);
+        if (group == null) {
+            throw new IllegalArgumentException("Unknown group: " + id);
+        }
 
-		LayoutSet set = layouts.remove(id);
-		if (set != null) {
-			layout.removeLayouts(set);
-		}
+        LayoutSet set = layouts.remove(id);
+        if (set != null) {
+            layout.removeLayouts(set);
+        }
 
-		display.removeGroup(group);
-		layout.removeGroup(group);
-		topology.removeGroup(group);
-	}
+        display.removeGroup(group);
+        layout.removeGroup(group);
+        topology.removeGroup(group);
+    }
 
-	@Override
-	public void initializeGroup(String id, Group group) {
-		if (groups.containsKey(id)) {
-			throw new IllegalArgumentException("Group already registered: " + id);
-		}
+    @Override
+    public void initializeGroup(String id, Group group) {
+        if (groups.containsKey(id)) {
+            throw new IllegalArgumentException("Group already registered: " + id);
+        }
 
-		groups.put(id, group);
+        groups.put(id, group);
 
-		group.initialize(topology, display);
-		topology.addGroup(group);
-		layout.addGroup(group);
-		display.addGroup(group);
+        group.initialize(topology, display);
+        topology.addGroup(group);
+        layout.addGroup(group);
+        display.addGroup(group);
 
-		if (group.hasLayouts()) {
-			LayoutSet set = group.createLayouts();
-			layouts.put(id, set);
-			layout.putLayouts(group.createLayouts());
-		}
-	}
+        if (group.hasLayouts()) {
+            LayoutSet set = group.createLayouts();
+            layouts.put(id, set);
+            layout.putLayouts(group.createLayouts());
+        }
+    }
 }

@@ -15,21 +15,21 @@ import java.util.Set;
  */
 public interface Layout {
 
-	/**
-	 * Gets all {@link AttributeType}s with {@link Constraint}s.
-	 *
-	 * @return
-	 *          a set of the {@code AttributeType}s
-	 */
-	public Set<AttributeType> getConstrainedAttributes();
+    /**
+     * Gets all {@link AttributeType}s with {@link Constraint}s.
+     *
+     * @return
+     *          a set of the {@code AttributeType}s
+     */
+    public Set<AttributeType> getConstrainedAttributes();
 
-	/**
-	 * Gets the {@link Constraint} of the specified {@link AttributeType}.
-	 *
-	 * @param attribute
-	 *          the {@code AttributeType}
-	 * @return
-	 *          the {@code Constraint}
-	 */
-	public Constraint getConstraint(AttributeType attribute);
+    /**
+     * Gets the {@link Constraint} of the specified {@link AttributeType}.
+     *
+     * @param attribute
+     *          the {@code AttributeType}
+     * @return
+     *          the {@code Constraint}
+     */
+    public Constraint getConstraint(AttributeType attribute);
 }

@@ -13,23 +13,23 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.Insets;
  */
 public class CuLabelShape extends LabelShape {
 
-	/**
-	 * Initializes the {@code CuLabelShape}.
-	 *
-	 * @param fontProvider
-	 *          the {@link FontMetricsProvider} used for font measuring
-	 */
-	public CuLabelShape(FontMetricsProvider fontProvider) {
-		super(fontProvider);
-	}
+    /**
+     * Initializes the {@code CuLabelShape}.
+     *
+     * @param fontProvider
+     *          the {@link FontMetricsProvider} used for font measuring
+     */
+    public CuLabelShape(FontMetricsProvider fontProvider) {
+        super(fontProvider);
+    }
 
-	@Override
-	public void updateShape(Component component) {
-		Label label = (Label) component;
-		Dimension textDim = getStringDimension(label.getMessage());
+    @Override
+    public void updateShape(Component component) {
+        Label label = (Label) component;
+        Dimension textDim = getStringDimension(label.getMessage());
 
-		Insets in = new Insets(15, 15, 20, 20);
-		textDim = textDim.addInsets(in);
-		component.setDimension(textDim);
-	}
+        Insets in = new Insets(15, 15, 20, 20);
+        textDim = textDim.addInsets(in);
+        component.setDimension(textDim);
+    }
 }

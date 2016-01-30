@@ -11,35 +11,35 @@ import de.uni_hannover.sra.minimax_simulator.util.Util;
  */
 public class MemoryUpdateDialog extends ValueUpdateDialog {
 
-	private final MachineMemory memory;
-	private final int address;
+    private final MachineMemory memory;
+    private final int address;
 
-	/**
-	 * Constructs a new {@code MemoryUpdateDialog} for the specified address of the specified {@link MachineMemory}.
-	 *
-	 * @param address
-	 *          the address to change its value
-	 * @param memory
-	 *          the machine's memory
-	 */
-	public MemoryUpdateDialog(int address, MachineMemory memory) {
-		super(memory.getMemoryState().getInt(address));
+    /**
+     * Constructs a new {@code MemoryUpdateDialog} for the specified address of the specified {@link MachineMemory}.
+     *
+     * @param address
+     *          the address to change its value
+     * @param memory
+     *          the machine's memory
+     */
+    public MemoryUpdateDialog(int address, MachineMemory memory) {
+        super(memory.getMemoryState().getInt(address));
 
-		this.memory = memory;
-		this.address = address;
+        this.memory = memory;
+        this.address = address;
 
-		_messageLabel.setText(_res.format("message",
-			Util.toHex(address, memory.getAddressWidth(), true)));
-	}
+        messageLabel.setText(res.format("message",
+            Util.toHex(address, memory.getAddressWidth(), true)));
+    }
 
-	/**
-	 * Sets the new value to the memory address for which the dialog was opened.
-	 *
-	 * @param value
-	 * 			the new value
-	 */
-	@Override
-	protected void setValue(int value) {
-		memory.getMemoryState().setInt(address, value);
-	}
+    /**
+     * Sets the new value to the memory address for which the dialog was opened.
+     *
+     * @param value
+     *          the new value
+     */
+    @Override
+    protected void setValue(int value) {
+        memory.getMemoryState().setInt(address, value);
+    }
 }

@@ -20,162 +20,162 @@ import java.util.List;
  */
 class RegisterExtensionList implements ExtensionList<RegisterExtension> {
 
-	private final MinimaxMachine machine;
-	private final MinimaxLayout layout;
+    private final MinimaxMachine machine;
+    private final MinimaxLayout layout;
 
-	private final List<String> registerNames;
-	private final List<RegisterExtension> registerextensions;
+    private final List<String> registerNames;
+    private final List<RegisterExtension> registerextensions;
 
-	private LayoutSet stackLayout;
-	private LayoutSet flowLayout;
+    private LayoutSet stackLayout;
+    private LayoutSet flowLayout;
 
-	private RegisterManager registerManager;
+    private RegisterManager registerManager;
 
-	/**
-	 * Constructs a new {@code RegisterExtensionList} for the specified {@link MinimaxMachine}
-	 * using the specified {@link RegisterManager}.
-	 *
-	 * @param machine
-	 *          the {@code MinimaxMachine}
-	 * @param registerManager
-	 *          the {@code RegisterManager}
-	 */
-	public RegisterExtensionList(MinimaxMachine machine, RegisterManager registerManager) {
-		this.machine = machine;
-		layout = machine.getLayout();
+    /**
+     * Constructs a new {@code RegisterExtensionList} for the specified {@link MinimaxMachine}
+     * using the specified {@link RegisterManager}.
+     *
+     * @param machine
+     *          the {@code MinimaxMachine}
+     * @param registerManager
+     *          the {@code RegisterManager}
+     */
+    public RegisterExtensionList(MinimaxMachine machine, RegisterManager registerManager) {
+        this.machine = machine;
+        layout = machine.getLayout();
 
-		registerNames = new ArrayList<String>();
-		registerextensions = new ArrayList<RegisterExtension>();
+        registerNames = new ArrayList<>();
+        registerextensions = new ArrayList<>();
 
-		this.registerManager = registerManager;
+        this.registerManager = registerManager;
 
-		setStackLayout();
-	}
+        setStackLayout();
+    }
 
-	@Override
-	public void add(RegisterExtension element) {
-		removeStackLayout();
+    @Override
+    public void add(RegisterExtension element) {
+        removeStackLayout();
 
-		addInternal(element);
+        addInternal(element);
 
-		// align the array of registers and display
-		setStackLayout();
-		machine.updateLayout();
-	}
+        // align the array of registers and display
+        setStackLayout();
+        machine.updateLayout();
+    }
 
-	@Override
-	public void addAll(Collection<? extends RegisterExtension> elements) {
-		removeStackLayout();
+    @Override
+    public void addAll(Collection<? extends RegisterExtension> elements) {
+        removeStackLayout();
 
-		elements.forEach(this::addInternal);
+        elements.forEach(this::addInternal);
 
-		// align the array of registers and display
-		setStackLayout();
-		machine.updateLayout();
-	}
+        // align the array of registers and display
+        setStackLayout();
+        machine.updateLayout();
+    }
 
-	@Override
-	public void remove(int index) {
-		removeStackLayout();
+    @Override
+    public void remove(int index) {
+        removeStackLayout();
 
-		removeInternal(index);
+        removeInternal(index);
 
-		// align the array of registers and display
-		setStackLayout();
-		machine.updateLayout();
-	}
+        // align the array of registers and display
+        setStackLayout();
+        machine.updateLayout();
+    }
 
-	@Override
-	public void swap(int index1, int index2) {
-		removeStackLayout();
+    @Override
+    public void swap(int index1, int index2) {
+        removeStackLayout();
 
-		Collections.swap(registerNames, index1, index2);
-		Collections.swap(registerextensions, index1, index2);
+        Collections.swap(registerNames, index1, index2);
+        Collections.swap(registerextensions, index1, index2);
 
-		// align the array of registers and display
-		setStackLayout();
-		machine.updateLayout();
-	}
+        // align the array of registers and display
+        setStackLayout();
+        machine.updateLayout();
+    }
 
-	@Override
-	public void set(int index, RegisterExtension element) {
-		removeStackLayout();
+    @Override
+    public void set(int index, RegisterExtension element) {
+        removeStackLayout();
 
-		removeInternal(index);
-		addInternal(index, element);
+        removeInternal(index);
+        addInternal(index, element);
 
-		// align the array of registers and display
-		setStackLayout();
-		machine.updateLayout();
-	}
+        // align the array of registers and display
+        setStackLayout();
+        machine.updateLayout();
+    }
 
-	/**
-	 * Adds the specified {@link RegisterExtension} to the end of the internal list.
-	 *
-	 * @param element
-	 *          the {@code RegisterExtension} to add
-	 */
-	private void addInternal(RegisterExtension element) {
-		addInternal(registerNames.size(), element);
-	}
+    /**
+     * Adds the specified {@link RegisterExtension} to the end of the internal list.
+     *
+     * @param element
+     *          the {@code RegisterExtension} to add
+     */
+    private void addInternal(RegisterExtension element) {
+        addInternal(registerNames.size(), element);
+    }
 
-	/**
-	 * Adds the specified {@link RegisterExtension} at the specified index to the internal list.
-	 *
-	 * @param index
-	 *          the index of the new {@code RegisterExtension}
-	 * @param element
-	 *          the {@code RegisterExtension} to add
-	 */
-	private void addInternal(int index, RegisterExtension element) {
-		String registerId = registerManager.addRegister(RegisterType.EXTENDED, element.getName());
-		registerNames.add(index, registerId);
-		registerextensions.add(index, element);
-	}
+    /**
+     * Adds the specified {@link RegisterExtension} at the specified index to the internal list.
+     *
+     * @param index
+     *          the index of the new {@code RegisterExtension}
+     * @param element
+     *          the {@code RegisterExtension} to add
+     */
+    private void addInternal(int index, RegisterExtension element) {
+        String registerId = registerManager.addRegister(RegisterType.EXTENDED, element.getName());
+        registerNames.add(index, registerId);
+        registerextensions.add(index, element);
+    }
 
-	/**
-	 * Removes the {@link RegisterExtension} at the specified index of the internal list.
-	 *
-	 * @param index
-	 *          the index of the {@code RegisterExtension} to remove
-	 */
-	private void removeInternal(int index) {
-		RegisterExtension ext = registerextensions.remove(index);
-		registerNames.remove(index);
-		registerManager.removeRegister(ext.getName());
-	}
+    /**
+     * Removes the {@link RegisterExtension} at the specified index of the internal list.
+     *
+     * @param index
+     *          the index of the {@code RegisterExtension} to remove
+     */
+    private void removeInternal(int index) {
+        RegisterExtension ext = registerextensions.remove(index);
+        registerNames.remove(index);
+        registerManager.removeRegister(ext.getName());
+    }
 
-	/**
-	 * Sets a {@link StackLayoutSet}.
-	 */
-	private void setStackLayout() {
-		List<String> outJunctionNames = new ArrayList<String>(registerNames.size());
-		for (String name : registerNames) {
-			outJunctionNames.add(name + Parts._OUT_JUNCTION + Parts._ANCHOR);
-		}
+    /**
+     * Sets a {@link StackLayoutSet}.
+     */
+    private void setStackLayout() {
+        List<String> outJunctionNames = new ArrayList<>(registerNames.size());
+        for (String name : registerNames) {
+            outJunctionNames.add(name + Parts._OUT_JUNCTION + Parts._ANCHOR);
+        }
 
-		List<String> names = new ArrayList<String>(registerNames);
-		Collections.reverse(names);
+        List<String> names = new ArrayList<>(registerNames);
+        Collections.reverse(names);
 
-		stackLayout = new StackLayoutSet(Parts.GROUP_BASE_REGISTERS, names, 40, Parts.GROUP_EXTENDED_REGISTERS);
-		layout.putLayouts(stackLayout);
+        stackLayout = new StackLayoutSet(Parts.GROUP_BASE_REGISTERS, names, 40, Parts.GROUP_EXTENDED_REGISTERS);
+        layout.putLayouts(stackLayout);
 
-		flowLayout = new FlowLeftLayoutSet(Parts.GROUP_MUX_LINE, outJunctionNames, 8, Parts.GROUP_MUX_EXT_REGISTERS);
-		layout.putLayouts(flowLayout);
-	}
+        flowLayout = new FlowLeftLayoutSet(Parts.GROUP_MUX_LINE, outJunctionNames, 8, Parts.GROUP_MUX_EXT_REGISTERS);
+        layout.putLayouts(flowLayout);
+    }
 
-	/**
-	 * Removes the {@link StackLayoutSet}.
-	 */
-	private void removeStackLayout() {
-		if (stackLayout != null) {
-			layout.removeLayouts(stackLayout);
-			stackLayout = null;
-		}
+    /**
+     * Removes the {@link StackLayoutSet}.
+     */
+    private void removeStackLayout() {
+        if (stackLayout != null) {
+            layout.removeLayouts(stackLayout);
+            stackLayout = null;
+        }
 
-		if (flowLayout != null) {
-			layout.removeLayouts(flowLayout);
-			flowLayout = null;
-		}
-	}
+        if (flowLayout != null) {
+            layout.removeLayouts(flowLayout);
+            flowLayout = null;
+        }
+    }
 }

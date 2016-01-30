@@ -2,6 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.minimax;
 
 
 import com.google.common.collect.Lists;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
@@ -26,175 +27,183 @@ import java.util.Map.Entry;
  */
 class RegisterInputGroupManager extends RegisterManager implements MuxInputGroupManager {
 
-	private final MachineTopology circuitRegistry;
-	private final GroupManager groupManager;
+    private final MachineTopology circuitRegistry;
+    private final GroupManager groupManager;
 
-	private final SortedMap<MuxType, List<InputEntry>> inputEntriesByMux;
-	private final Map<String, List<InputEntry>> inputsByRegisterId;
+    private final SortedMap<MuxType, List<InputEntry>> inputEntriesByMux;
+    private final Map<String, List<InputEntry>> inputsByRegisterId;
 
-	/**
-	 * Constructs a new {@code RegisterInputGroupManager} for the specified {@link MinimaxMachine}.
-	 *
-	 * @param machine
-	 *          the Minimax machine
-	 */
-	public RegisterInputGroupManager(MinimaxMachine machine) {
-		super(machine.getGroupManager());
+    /**
+     * Constructs a new {@code RegisterInputGroupManager} for the specified {@link MinimaxMachine}.
+     *
+     * @param machine
+     *          the Minimax machine
+     */
+    public RegisterInputGroupManager(MinimaxMachine machine) {
+        super(machine.getGroupManager());
 
-		groupManager = machine.getGroupManager();
-		circuitRegistry = machine.getTopology();
+        groupManager = machine.getGroupManager();
+        circuitRegistry = machine.getTopology();
 
-		inputEntriesByMux = new TreeMap<MuxType, List<InputEntry>>();
-		for (MuxType type : MuxType.values()) {
-			inputEntriesByMux.put(type, new ArrayList<InputEntry>());
-		}
+        inputEntriesByMux = new TreeMap<>();
+        for (MuxType type : MuxType.values()) {
+            inputEntriesByMux.put(type, new ArrayList<>());
+        }
 
-		inputsByRegisterId = new HashMap<String, List<InputEntry>>();
-	}
+        inputsByRegisterId = new HashMap<>();
+    }
 
-	@Override
-	public void update(MuxInputManager muxInputs) {
-		// replace inputs of given multiplexer
-		{
-			List<InputEntry> entries = inputEntriesByMux.get(muxInputs.getMuxType());
-			entries.clear();
-			entries.addAll(muxInputs.getMuxInputs());
-		}
+    @Override
+    public void update(MuxInputManager muxInputs) {
+        // replace inputs of given multiplexer
+        clearMuxInputs(muxInputs);
 
-		for (Entry<String, List<InputEntry>> registerInputs : inputsByRegisterId.entrySet()) {
-			destroyGroups(registerInputs.getKey(), registerInputs.getValue());
-		}
+        for (Entry<String, List<InputEntry>> registerInputs : inputsByRegisterId.entrySet()) {
+            destroyGroups(registerInputs.getKey(), registerInputs.getValue());
+        }
 
-		// rebuild input list per register
-		inputsByRegisterId.clear();
-		for (List<InputEntry> entries : inputEntriesByMux.values()) {
-			for (InputEntry entry : entries) {
-				if (entry.input instanceof RegisterMuxInput) {
-					RegisterMuxInput reg = (RegisterMuxInput) entry.input;
+        // rebuild input list per register
+        inputsByRegisterId.clear();
+        for (List<InputEntry> entries : inputEntriesByMux.values()) {
+            for (InputEntry entry : entries) {
+                if (entry.input instanceof RegisterMuxInput) {
+                    RegisterMuxInput reg = (RegisterMuxInput) entry.input;
 
-					String registerId = getRegisterId(reg);
-					if (registerId == null) {
-						throw new IllegalStateException("No register with name " + reg.getRegisterName());
-					}
+                    String registerId = getRegisterId(reg);
+                    if (registerId == null) {
+                        throw new IllegalStateException("No register with name " + reg.getRegisterName());
+                    }
 
-					List<InputEntry> regInputs = inputsByRegisterId.get(registerId);
-					if (regInputs == null) {
-						regInputs = new ArrayList<InputEntry>();
-						inputsByRegisterId.put(registerId, regInputs);
-					}
-					regInputs.add(entry);
-				}
-			}
-		}
+                    List<InputEntry> regInputs = inputsByRegisterId.get(registerId);
+                    if (regInputs == null) {
+                        regInputs = new ArrayList<>();
+                        inputsByRegisterId.put(registerId, regInputs);
+                    }
+                    regInputs.add(entry);
+                }
+            }
+        }
 
-		for (Entry<String, List<InputEntry>> registerInputs : inputsByRegisterId.entrySet()) {
-			createGroups(registerInputs.getKey(), registerInputs.getValue());
-		}
-	}
+        for (Entry<String, List<InputEntry>> registerInputs : inputsByRegisterId.entrySet()) {
+            createGroups(registerInputs.getKey(), registerInputs.getValue());
+        }
+    }
 
-	/**
-	 * Creates {@link RegisterInputGroup}s for the specified entries.
-	 *
-	 *
-	 * @param registerId
-	 *          the ID of the register
-	 * @param entries
-	 *          the {@link InputEntry} list
-	 */
-	private void createGroups(String registerId, List<InputEntry> entries) {
-		String sourceJunctionId = registerId + Parts._OUT_JUNCTION;
-		Junction sourceJunction = circuitRegistry.getCircuit(Junction.class, sourceJunctionId);
+    /**
+     * Clears the {@code MuxInputs} contained by the specified {@code MuxInputManager}.
+     *
+     * @param muxInputs
+     *          the {@code MuxInputManager} holding the {@code MuxInput}s
+     */
+    private void clearMuxInputs(MuxInputManager muxInputs) {
+        List<InputEntry> entries = inputEntriesByMux.get(muxInputs.getMuxType());
+        entries.clear();
+        entries.addAll(muxInputs.getMuxInputs());
+    }
 
-		for (InputEntry entry : Lists.reverse(entries)) {
-			RegisterInputGroup group = new RegisterInputGroup(entry, sourceJunction, sourceJunctionId);
-			groupManager.initializeGroup(entry.pinId + Parts._REGISTER, group);
+    /**
+     * Creates {@link RegisterInputGroup}s for the specified entries.
+     *
+     *
+     * @param registerId
+     *          the ID of the register
+     * @param entries
+     *          the {@link InputEntry} list
+     */
+    private void createGroups(String registerId, List<InputEntry> entries) {
+        String sourceJunctionId = registerId + Parts._OUT_JUNCTION;
+        Junction sourceJunction = circuitRegistry.getCircuit(Junction.class, sourceJunctionId);
 
-			sourceJunction = group.junction;
-			sourceJunctionId = group.sourceJunctionId;
-		}
-	}
+        for (InputEntry entry : Lists.reverse(entries)) {
+            RegisterInputGroup group = new RegisterInputGroup(entry, sourceJunction, sourceJunctionId);
+            groupManager.initializeGroup(entry.pinId + Parts._REGISTER, group);
 
-	/**
-	 * Removes the {@link RegisterInputGroup}s for the specified entries.
-	 *
-	 * @param registerId
-	 *          the ID of the register
-	 * @param entries
-	 *          the {@link InputEntry} list
-	 */
-	private void destroyGroups(String registerId, List<InputEntry> entries) {
-		for (InputEntry entry : entries) {
-			groupManager.removeGroup(entry.pinId + Parts._REGISTER);
-		}
+            sourceJunction = group.junction;
+            sourceJunctionId = group.sourceJunctionId;
+        }
+    }
 
-		Junction registerJunction = circuitRegistry.getCircuit(Junction.class, registerId + Parts._OUT_JUNCTION);
-		registerJunction.getDataOuts().clear();
-	}
+    /**
+     * Removes the {@link RegisterInputGroup}s for the specified entries.
+     *
+     * @param registerId
+     *          the ID of the register
+     * @param entries
+     *          the {@link InputEntry} list
+     */
+    private void destroyGroups(String registerId, List<InputEntry> entries) {
+        for (InputEntry entry : entries) {
+            groupManager.removeGroup(entry.pinId + Parts._REGISTER);
+        }
 
-	/**
-	 * Groups the parts of a {@link RegisterMuxInput}.
-	 */
-	private class RegisterInputGroup extends AbstractGroup {
+        Junction registerJunction = circuitRegistry.getCircuit(Junction.class, registerId + Parts._OUT_JUNCTION);
+        registerJunction.getDataOuts().clear();
+    }
 
-		public IngoingPin	pin;
-		public String		pinId;
-		public Junction		junction;
-		public String		junctionId;
-		public Junction		sourceJunction;
-		public String		sourceJunctionId;
+    /**
+     * Groups the parts of a {@link RegisterMuxInput}.
+     */
+    private class RegisterInputGroup extends AbstractGroup {
 
-		/**
-		 * Constructs a new {@code RegisterInputGroup} with the specified entry, source junction and source junction ID.
-		 *
-		 * @param entry
-		 *          the {@link InputEntry}
-		 * @param sourceJunction
-		 *          the source {@link Junction}
-		 * @param sourceJunctionId
-		 *          the ID of the source {@code Junction}
-		 */
-		public RegisterInputGroup(InputEntry entry, Junction sourceJunction, String sourceJunctionId) {
-			pin = entry.pin;
-			pinId = entry.pinId;
-			junction = new Junction(1);
-			junctionId = pinId + Parts._JUNCTION;
-			this.sourceJunction = sourceJunction;
-			this.sourceJunctionId = sourceJunctionId;
-		}
+        protected IngoingPin   pin;
+        protected String       pinId;
+        protected Junction     junction;
+        protected String       junctionId;
+        protected Junction     sourceJunction;
+        protected String       sourceJunctionId;
 
-		@Override
-		public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
-			Wire wireOut = new Wire(2, junction.getDataOuts().get(0), pin);
-			add(junction, junctionId);
-			addWire(wireOut, junctionId + Parts._WIRE_DATA_OUT);
+        /**
+         * Constructs a new {@code RegisterInputGroup} with the specified entry, source junction and source junction ID.
+         *
+         * @param entry
+         *          the {@link InputEntry}
+         * @param sourceJunction
+         *          the source {@link Junction}
+         * @param sourceJunctionId
+         *          the ID of the source {@code Junction}
+         */
+        public RegisterInputGroup(InputEntry entry, Junction sourceJunction, String sourceJunctionId) {
+            pin = entry.pin;
+            pinId = entry.pinId;
+            junction = new Junction(1);
+            junctionId = pinId + Parts._JUNCTION;
+            this.sourceJunction = sourceJunction;
+            this.sourceJunctionId = sourceJunctionId;
+        }
 
-			OutgoingPin sourcePin = new OutgoingPin(sourceJunction);
-			sourceJunction.getDataOuts().add(sourcePin);
+        @Override
+        public void initialize(MachineTopology cr, FontMetricsProvider fontProvider) {
+            Wire wireOut = new Wire(2, junction.getDataOuts().get(0), pin);
+            add(junction, junctionId);
+            addWire(wireOut, junctionId + Parts._WIRE_DATA_OUT);
 
-			Wire wireIn = new Wire(2, sourcePin, junction.getDataIn());
-			addWire(wireIn, junctionId + Parts._WIRE_DATA_IN);
-		}
+            OutgoingPin sourcePin = new OutgoingPin(sourceJunction);
+            sourceJunction.getDataOuts().add(sourcePin);
 
-		@Override
-		public boolean hasLayouts() {
-			return true;
-		}
+            Wire wireIn = new Wire(2, sourcePin, junction.getDataIn());
+            addWire(wireIn, junctionId + Parts._WIRE_DATA_IN);
+        }
 
-		@Override
-		public LayoutSet createLayouts() {
-			String junction = pinId + Parts._JUNCTION;
-			String wireOut = pinId + Parts._JUNCTION + Parts._WIRE_DATA_OUT;
-			String wireIn = pinId + Parts._JUNCTION + Parts._WIRE_DATA_IN;
+        @Override
+        public boolean hasLayouts() {
+            return true;
+        }
 
-			ConstraintBuilder cb = new ConstraintBuilder();
-			DefaultLayoutSet set = new DefaultLayoutSet();
-			set.addLayout(junction, cb.alignVertically(pinId).alignHorizontally(sourceJunctionId));
-			set.addLayout(wireOut + ".0", cb.align(junction));
-			set.addLayout(wireOut + ".1", cb.align(pinId));
-			set.addLayout(wireIn + ".0", cb.align(sourceJunctionId));
-			set.addLayout(wireIn + ".1", cb.align(junction));
+        @Override
+        public LayoutSet createLayouts() {
+            String junction = pinId + Parts._JUNCTION;
+            String wireOut = pinId + Parts._JUNCTION + Parts._WIRE_DATA_OUT;
+            String wireIn = pinId + Parts._JUNCTION + Parts._WIRE_DATA_IN;
 
-			return set;
-		}
-	}
+            ConstraintBuilder cb = new ConstraintBuilder();
+            DefaultLayoutSet set = new DefaultLayoutSet();
+            set.addLayout(junction, cb.alignVertically(pinId).alignHorizontally(sourceJunctionId));
+            set.addLayout(wireOut + ".0", cb.align(junction));
+            set.addLayout(wireOut + ".1", cb.align(pinId));
+            set.addLayout(wireIn + ".0", cb.align(sourceJunctionId));
+            set.addLayout(wireIn + ".1", cb.align(junction));
+
+            return set;
+        }
+    }
 }

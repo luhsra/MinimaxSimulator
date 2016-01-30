@@ -33,6 +33,9 @@ public class SignalTableUpdateAluSelCodeTest {
     private static final String SEL_A = "ALU_SELECT_A";
     private static final String SEL_B = "ALU_SELECT_B";
 
+    /**
+     * Initializes the test setup.
+     */
     @BeforeClass
     public static void initialize() {
         Project project = new NewProjectBuilder().buildProject();

@@ -11,7 +11,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,6 +21,7 @@ import javafx.scene.input.ScrollEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * <b>FXController of the MemoryTable</b><br>
@@ -33,12 +33,14 @@ import java.util.List;
  */
 public class MemoryTable implements MemoryAccessListener {
 
+    private static final Logger LOG = Logger.getLogger("de.uni_hannover.sra.minimax_simulator");
+
     @FXML private TitledPane paneMemory;
 
     private String addressFormatString;
     private static MachineMemory mMemory;
 
-    private final int pageSize = 16;
+    private static final int PAGE_SIZE = 16;
     private int pageCount;
     private int page;
     private int cachedPageStart;
@@ -47,12 +49,17 @@ public class MemoryTable implements MemoryAccessListener {
 
     @FXML private TableView<MemoryTableModel> memTable;
 
-    @FXML private TableColumn<MemoryTableModel, String> col_mem_adr;
-    @FXML private TableColumn<MemoryTableModel, String> col_mem_dec;
-    @FXML private TableColumn<MemoryTableModel, String> col_mem_hex;
+    @FXML private TableColumn<MemoryTableModel, String> colMemAdr;
+    @FXML private TableColumn<MemoryTableModel, String> colMemDec;
+    @FXML private TableColumn<MemoryTableModel, String> colMemHex;
 
     @FXML private TextField txtAddressField;
     @FXML private Label lblMemPage;
+
+    @FXML private Button btnNextPage;
+    @FXML Button btnPrevPage;
+    @FXML Button btnFirstPage;
+    @FXML Button btnLastPage;
 
     /**
      * Initializes the variables.
@@ -77,7 +84,7 @@ public class MemoryTable implements MemoryAccessListener {
             }
             try {
                 int value = Integer.parseInt(text, 16);
-                System.out.println("select address: " + value);
+                LOG.finest("select address: " + value);
                 selectAddress(value);
             } catch (NumberFormatException nfe) {
                 // ignore malformed input
@@ -92,7 +99,7 @@ public class MemoryTable implements MemoryAccessListener {
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
-        final List<TableColumn> tableColumnsMem = new ArrayList<>(Arrays.asList(col_mem_adr, col_mem_dec, col_mem_hex));
+        final List<TableColumn> tableColumnsMem = new ArrayList<>(Arrays.asList(colMemAdr, colMemDec, colMemHex));
         for (TableColumn col : tableColumnsMem) {
             col.setText(res.get(col.getId().replace("_", ".")));
         }
@@ -134,13 +141,13 @@ public class MemoryTable implements MemoryAccessListener {
                 address = mMemory.getMaxAddress();
             }
 
-            page = address / pageSize;
+            page = address / PAGE_SIZE;
             if (page >= pageCount) {
                 page = pageCount - 1;
-                row = pageSize - 1;
+                row = PAGE_SIZE - 1;
             }
             else {
-                row = address % pageSize;
+                row = address % PAGE_SIZE;
             }
         }
 
@@ -162,42 +169,34 @@ public class MemoryTable implements MemoryAccessListener {
         addressFormatString = Util.createHexFormatString(mMemory.getAddressWidth(), false);
 
         int addressRange = mMemory.getMaxAddress() - mMemory.getMinAddress();
-        pageCount = (addressRange - 1) / pageSize + 1;
+        pageCount = (addressRange - 1) / PAGE_SIZE + 1;
 
         txtAddressField.setText("");
         firstPage();
         updateMemPageLabel();
 
-        col_mem_adr.setCellValueFactory(new PropertyValueFactory<>("address"));
-        col_mem_dec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
-        col_mem_hex.setCellValueFactory(new PropertyValueFactory<>("hex"));
+        colMemAdr.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colMemDec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
+        colMemHex.setCellValueFactory(new PropertyValueFactory<>("hex"));
 
         updateMemTable();
 
         // open edit dialog at double click
-        memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        int address = memTable.getSelectionModel().getSelectedIndex() + cachedPageStart;
-                        // open edit dialog
-                        new MemoryUpdateDialog(address, mMemory).show();
-                    }
-                }
+        memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
+                int address = memTable.getSelectionModel().getSelectedIndex() + cachedPageStart;
+                // open edit dialog
+                new MemoryUpdateDialog(address, mMemory).show();
             }
         });
 
         // set next/previous page at scroll
-        memTable.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent scrollEvent) {
-                double deltaY = scrollEvent.getDeltaY();
-                if (deltaY > 0) {
-                    prevPage();
-                } else {
-                    nextPage();
-                }
+        memTable.addEventFilter(ScrollEvent.ANY, scrollEvent -> {
+            double deltaY = scrollEvent.getDeltaY();
+            if (deltaY > 0) {
+                prevPage();
+            } else {
+                nextPage();
             }
         });
     }
@@ -209,15 +208,13 @@ public class MemoryTable implements MemoryAccessListener {
         ObservableList<MemoryTableModel> data = FXCollections.observableArrayList();
 
         MemoryState mState = mMemory.getMemoryState();
-        for (int i = 0; i < pageSize; i++) {
+        for (int i = 0; i < PAGE_SIZE; i++) {
             int value = mState.getInt(cachedPageStart + i);
             data.add(new MemoryTableModel(String.format(addressFormatString, cachedPageStart + i), value));
         }
 
         memTable.setItems(data);
     }
-
-    @FXML private Button btnNextPage;
 
     /**
      * Sets the next memory page to the {@link TableView}.
@@ -226,8 +223,6 @@ public class MemoryTable implements MemoryAccessListener {
         this.setPage(page +1);
     }
 
-    @FXML Button btnPrevPage;
-
     /**
      * Sets the previous memory page to the {@link TableView}.
      */
@@ -235,16 +230,12 @@ public class MemoryTable implements MemoryAccessListener {
         this.setPage(page - 1);
     }
 
-    @FXML Button btnFirstPage;
-
     /**
      * Sets the first memory page to the {@link TableView}.
      */
     public void firstPage() {
         this.setPage(0);
     }
-
-    @FXML Button btnLastPage;
 
     /**
      * Sets the last memory page to the {@link TableView}.
@@ -264,7 +255,7 @@ public class MemoryTable implements MemoryAccessListener {
             return;
         }
         page = newPage;
-        cachedPageStart = page * pageSize + mMemory.getMinAddress();
+        cachedPageStart = page * PAGE_SIZE + mMemory.getMinAddress();
 
         updateMemTable();
         updateMemPageLabel();
@@ -278,7 +269,7 @@ public class MemoryTable implements MemoryAccessListener {
     @Override
     public void memoryWriteAccess(int address, int value) {
         // only update the affected table row
-        MemoryTableModel entry = memTable.getItems().get(address % pageSize);
+        MemoryTableModel entry = memTable.getItems().get(address % PAGE_SIZE);
         entry.setValue(value);
     }
 
@@ -307,7 +298,7 @@ public class MemoryTable implements MemoryAccessListener {
         private final SimpleIntegerProperty decimal;
         private final SimpleStringProperty hex;
 
-        private static final String _hexFormatString = "0x%08X";
+        private static final String HEX_FORMAT_STRING = "0x%08X";
 
         /**
          * Constructs a new {@code MemoryTableModel} and sets the properties.
@@ -320,36 +311,49 @@ public class MemoryTable implements MemoryAccessListener {
         private MemoryTableModel(String address, int value) {
             this.address = new SimpleStringProperty(address);
             this.decimal = new SimpleIntegerProperty(value);
-            this.hex = new SimpleStringProperty(String.format(_hexFormatString, value));
+            this.hex = new SimpleStringProperty(String.format(HEX_FORMAT_STRING, value));
         }
 
+        /**
+         * Gets the address of the memory address.
+         *
+         * @return
+         *          the address
+         */
         public String getAddress() {
             return address.get();
         }
 
-        public SimpleStringProperty addressProperty() {
-            return address;
-        }
-
+        /**
+         * Gets the decimal value stored at the address.
+         *
+         * @return
+         *          the decimal value
+         */
         public int getDecimal() {
             return decimal.get();
         }
 
-        public SimpleIntegerProperty decimalProperty() {
-            return decimal;
-        }
-
+        /**
+         * Gets the hexadecimal value stored at the address.
+         *
+         * @return
+         *          the hexadecimal value
+         */
         public String getHex() {
             return hex.get();
         }
 
-        public SimpleStringProperty hexProperty() {
-            return hex;
-        }
-
+        /**
+         * Sets the decimal and hexadecimal value to the specified decimal value.<br>
+         * The hexadecimal value will be converted from decimal to hexadecimal.
+         *
+         * @param value
+         *          the new value
+         */
         public void setValue(int value) {
             this.decimal.set(value);
-            this.hex.set(String.format(_hexFormatString, value));
+            this.hex.set(String.format(HEX_FORMAT_STRING, value));
         }
     }
 

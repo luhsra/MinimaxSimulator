@@ -9,28 +9,28 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
  */
 class ConstrainedComponent extends AbstractAttributeOwner {
 
-	private final Component component;
+    private final Component component;
 
-	/**
-	 * Constructs a new {@code ConstrainedComponent} with the specified name and {@link Component}.
-	 *
-	 * @param name
-	 *          the name of the {@code ConstrainedComponent}
-	 * @param component
-	 *          the {@code Component} to constrain
-	 */
-	public ConstrainedComponent(String name, Component component) {
-		super(name);
-		this.component = component;
-	}
+    /**
+     * Constructs a new {@code ConstrainedComponent} with the specified name and {@link Component}.
+     *
+     * @param name
+     *          the name of the {@code ConstrainedComponent}
+     * @param component
+     *          the {@code Component} to constrain
+     */
+    public ConstrainedComponent(String name, Component component) {
+        super(name);
+        this.component = component;
+    }
 
-	@Override
-	public int getPreferredWidth() {
-		return component.getDimension().w;
-	}
+    @Override
+    public int getPreferredWidth() {
+        return component.getDimension().w;
+    }
 
-	@Override
-	public int getPreferredHeight() {
-		return component.getDimension().h;
-	}
+    @Override
+    public int getPreferredHeight() {
+        return component.getDimension().h;
+    }
 }

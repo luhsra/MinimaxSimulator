@@ -50,12 +50,12 @@ public class RegView {
     @FXML private Button btnMoveDown;
 
     @FXML private TableView<RegisterTableModel> tableBaseReg;
-    @FXML private TableColumn<RegisterTableModel, String> col_base_name;
-    @FXML private TableColumn<RegisterTableModel, String> col_base_size;
+    @FXML private TableColumn<RegisterTableModel, String> colBaseName;
+    @FXML private TableColumn<RegisterTableModel, String> colBaseSize;
 
     @FXML private TableView<RegisterTableModel> tableExtendedReg;
-    @FXML private TableColumn<RegisterTableModel, String> col_extended_name;
-    @FXML private TableColumn<RegisterTableModel, String> col_extended_size;
+    @FXML private TableColumn<RegisterTableModel, String> colExtendedName;
+    @FXML private TableColumn<RegisterTableModel, String> colExtendedSize;
 
     /**
      * Initializes the final variables.
@@ -85,13 +85,9 @@ public class RegView {
         });
 
         // ComboBox and TextFields check if the save button will be enabled
-        cbSize.valueProperty().addListener((observable, oldValue, newValue) -> {
-            updateButton();
-        });
+        cbSize.valueProperty().addListener((observable, oldValue, newValue) -> updateButton());
 
-        txtName.textProperty().addListener((observable, oldValue, newValue) -> {
-            updateButton();
-        });
+        txtName.textProperty().addListener((observable, oldValue, newValue) -> updateButton());
 
         txtName.lengthProperty().addListener((observable, oldValue, newValue) -> {
             int limit = Config.EDITOR_MAX_REGISTER_LENGTH;
@@ -100,9 +96,7 @@ public class RegView {
             }
         });
 
-        txtDescription.textProperty().addListener((observable, oldValue, newValue) -> {
-            updateButton();
-        });
+        txtDescription.textProperty().addListener((observable, oldValue, newValue) -> updateButton());
 
         setLocalizedTexts();
     }
@@ -136,8 +130,8 @@ public class RegView {
      * Initializes the {@link TableView} for the base registers.
      */
     private void initBaseTable() {
-        col_base_size.setCellValueFactory(new PropertyValueFactory<>("size"));
-        col_base_name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colBaseSize.setCellValueFactory(new PropertyValueFactory<>("size"));
+        colBaseName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         // set selected register and clear selection of other table
         tableBaseReg.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -178,8 +172,8 @@ public class RegView {
      * Initializes the {@link TableView} for the extended registers.
      */
     private void initExtendedTable() {
-        col_extended_name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        col_extended_size.setCellValueFactory(new PropertyValueFactory<>("size"));
+        colExtendedName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colExtendedSize.setCellValueFactory(new PropertyValueFactory<>("size"));
 
         // set selected register and clear selection of other table
         tableExtendedReg.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -305,7 +299,7 @@ public class RegView {
         }
 
         Object caller = ae.getSource();
-        int difference = 0;
+        int difference;
         if (caller.equals(btnMoveUp)) {
             difference = -1;
         }
@@ -360,10 +354,9 @@ public class RegView {
         }
 
         for (RegisterExtension otherReg : config.getRegisterExtensions()) {
-            if (!reg.getName().equals(otherReg.getName())) {
-                if (newName.equalsIgnoreCase(otherReg.getName())) {
-                    return false;
-                }
+            if (!reg.getName().equals(otherReg.getName())
+                    && newName.equalsIgnoreCase(otherReg.getName())) {
+                return false;
             }
         }
 
@@ -444,30 +437,52 @@ public class RegView {
             this.register = register;
         }
 
+        /**
+         * Gets the register's name.
+         *
+         * @return
+         *          the register's name
+         */
         public String getName() {
             return name.get();
         }
 
-        public SimpleStringProperty nameProperty() {
-            return name;
-        }
-
+        /**
+         * Sets the name of the register to the specified value.
+         *
+         * @param name
+         *          the new name
+         */
         public void setName(String name) {
             this.name.set(name);
         }
 
+        /**
+         * Gets the bit width of the register.
+         *
+         * @return
+         *          the register's bit width
+         */
         public String getSize() {
             return size.get();
         }
 
-        public SimpleStringProperty sizeProperty() {
-            return size;
-        }
-
+        /**
+         * Sets the bit width of the register to the specified value.
+         *
+         * @param size
+         *          the new bit width
+         */
         public void setSize(String size) {
             this.size.set(size);
         }
 
+        /**
+         * Gets the register.
+         *
+         * @return
+         *          the register
+         */
         public RegisterExtension getRegister() {
             return register;
         }

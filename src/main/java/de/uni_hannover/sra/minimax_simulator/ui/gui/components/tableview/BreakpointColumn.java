@@ -4,13 +4,11 @@ import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 
 /**
  * An extended {@link SignalTableColumn} for the UI representation of the breakpoint attribute of a {@link SignalRow}.
@@ -34,40 +32,33 @@ public class BreakpointColumn extends SignalTableColumn {
         setResizable(false);
         setWidth(30);
 
-        setCellFactory(new Callback<TableColumn<ObservableList, String>, TableCell<ObservableList, String>>() {
-            @Override
-            public TableCell<ObservableList, String> call(TableColumn<ObservableList, String> param) {
-                TableCell<ObservableList, String> cell = new TableCell<ObservableList, String>() {
-                    ImageView imageview = new ImageView();
+        setCellFactory(param -> {
+            TableCell<ObservableList, String> cell = new TableCell<ObservableList, String>() {
+                ImageView imageview = new ImageView();
 
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-                        if (item != null && item.equals("true")) {
-                            imageview.setImage(IMG_BREAKPOINT);
-                            setGraphic(new CenteredCellPane(imageview));
-                        } else {
-                            setGraphic(null);
-                        }
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    if ("true".equals(item)) {
+                        imageview.setImage(IMG_BREAKPOINT);
+                        setGraphic(new CenteredCellPane(imageview));
+                    } else {
+                        setGraphic(null);
                     }
-                };
+                }
+            };
 
-                cell.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getClickCount() == 2) {
-                            int index = cell.getTableView().getSelectionModel().getSelectedIndex();
-                            SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
-                            SignalRow signalRow = signalTable.getRow(index);
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getClickCount() == 2) {
+                    int cIndex = cell.getTableView().getSelectionModel().getSelectedIndex();
+                    SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
+                    SignalRow signalRow = signalTable.getRow(cIndex);
 
-                            signalRow.setBreakpoint(!signalRow.isBreakpoint());
-                            signalTable.setSignalRow(index, signalRow);
-                        }
-                    }
-                });
+                    signalRow.setBreakpoint(!signalRow.isBreakpoint());
+                    signalTable.setSignalRow(cIndex, signalRow);
+                }
+            });
 
-                return cell;
-            }
-
+            return cell;
         });
     }
 }

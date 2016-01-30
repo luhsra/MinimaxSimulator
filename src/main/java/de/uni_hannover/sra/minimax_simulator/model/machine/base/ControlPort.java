@@ -5,13 +5,14 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.base;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface ControlPort {
 
-	/**
-	 * Writes the specified value.
-	 *
-	 * @param value
-	 *          the value to write
-	 */
-	public void write(int value);
+    /**
+     * Writes the specified value.
+     *
+     * @param value
+     *          the value to write
+     */
+    public void write(int value);
 }

@@ -13,57 +13,57 @@ import java.util.Collection;
  */
 interface MuxInputManager extends ExtensionList<MuxInput> {
 
-	/**
-	 * Data structure of a stored {@link MuxInput}.
-	 */
-	public class InputEntry {
+    /**
+     * Data structure of a stored {@link MuxInput}.
+     */
+    public class InputEntry {
 
-		public MuxInput		input;
-		public IngoingPin	pin;
-		public String		pinId;
+        protected MuxInput input;
+        protected IngoingPin pin;
+        protected String pinId;
 
-		@Override
-		public String toString() {
-			return pinId + "<-" + input;
-		}
-	}
+        @Override
+        public String toString() {
+            return pinId + "<-" + input;
+        }
+    }
 
-	/**
-	 * Gets the {@link MuxType} the manager belongs to.
-	 *
-	 * @return
-	 *          the {@code MuxType}
-	 */
-	public MuxType getMuxType();
+    /**
+     * Gets the {@link MuxType} the manager belongs to.
+     *
+     * @return
+     *          the {@code MuxType}
+     */
+    public MuxType getMuxType();
 
-	/**
-	 * Gets the {@link MuxInput}s the manager manages.
-	 *
-	 * @return
-	 *          a list of the {@code MuxInputs}
-	 */
-	public ImmutableList<InputEntry> getMuxInputs();
+    /**
+     * Gets the {@link MuxInput}s the manager manages.
+     *
+     * @return
+     *          a list of the {@code MuxInputs}
+     */
+    public ImmutableList<InputEntry> getMuxInputs();
 
-	@Override
-	public void add(MuxInput input);
+    @Override
+    public void add(MuxInput input);
 
-	@Override
-	public void addAll(Collection<? extends MuxInput> inputs);
+    @Override
+    public void addAll(Collection<? extends MuxInput> inputs);
 
-	@Override
-	public void remove(int index);
+    @Override
+    public void remove(int index);
 
-	@Override
-	public void swap(int index1, int index2);
+    @Override
+    public void swap(int index1, int index2);
 
-	@Override
-	public void set(int index, MuxInput input);
+    @Override
+    public void set(int index, MuxInput input);
 
-	/**
-	 * Registers the specified {@link MuxInputGroupManager}.
-	 *
-	 * @param inputGroupManager
-	 *          the {@code MuxInputGroupManager} to register
-	 */
-	public void registerGroupManager(MuxInputGroupManager inputGroupManager);
+    /**
+     * Registers the specified {@link MuxInputGroupManager}.
+     *
+     * @param inputGroupManager
+     *          the {@code MuxInputGroupManager} to register
+     */
+    public void registerGroupManager(MuxInputGroupManager inputGroupManager);
 }

@@ -20,81 +20,81 @@ import java.util.Map.Entry;
  */
 class SignalJsonExporter {
 
-	/**
-	 * Writes the {@link SignalTable} as a JSON string using the given {@link Writer}.
-	 *
-	 * @param wr
-	 *             the writer to use for output
-	 * @param table
-	 *              the SignalTable to export
-	 * @throws ProjectExportException
-	 *              thrown if there is an I/O error during export
-	 */
-	void write(Writer wr, SignalTable table) throws ProjectExportException {
+    /**
+     * Writes the {@link SignalTable} as a JSON string using the given {@link Writer}.
+     *
+     * @param wr
+     *             the writer to use for output
+     * @param table
+     *              the SignalTable to export
+     * @throws ProjectExportException
+     *              thrown if there is an I/O error during export
+     */
+    void write(Writer wr, SignalTable table) throws ProjectExportException {
 
-		JSONObject root = new JSONObject();
-		JSONObject signaltable = new JSONObject();
+        JSONObject root = new JSONObject();
+        JSONObject signaltable = new JSONObject();
 
-		for (int i = 0; i < table.getRowCount(); i++) {
-			signaltable.accumulate("row", createRowElement(table.getRow(i)));
-		}
-		root.put("signaltable", signaltable);
+        for (int i = 0; i < table.getRowCount(); i++) {
+            signaltable.accumulate("row", createRowElement(table.getRow(i)));
+        }
+        root.put("signaltable", signaltable);
 
-		try {
-			wr.write(root.toString(2));
-			wr.flush();
-		} catch (IOException e) {
-			throw new ProjectExportException("Cannot export due to I/O error: " + e.getMessage(), e);
-		}
-	}
+        try {
+            wr.write(root.toString(2));
+            wr.flush();
+        } catch (IOException e) {
+            throw new ProjectExportException("Cannot export due to I/O error: " + e.getMessage(), e);
+        }
+    }
 
-	/**
-	 * Creates a {@link JSONObject} of a {@link SignalRow}.
-	 *
-	 * @param row
-	 *              the SignalRow to process
-	 * @return
-	 *              the SignalRow as JSONObject
-	 */
-	private JSONObject createRowElement(SignalRow row) {
-		JSONObject rowObj = new JSONObject();
+    /**
+     * Creates a {@link JSONObject} of a {@link SignalRow}.
+     *
+     * @param row
+     *              the SignalRow to process
+     * @return
+     *              the SignalRow as JSONObject
+     */
+    private JSONObject createRowElement(SignalRow row) {
+        JSONObject rowObj = new JSONObject();
 
-		if (row.getLabel() != null) {
-			rowObj.put("label", row.getLabel());
-		}
-		if (row.isBreakpoint()) {
-			rowObj.put("breakpoint", true);
-		}
+        if (row.getLabel() != null) {
+            rowObj.put("label", row.getLabel());
+        }
+        if (row.isBreakpoint()) {
+            rowObj.put("breakpoint", true);
+        }
 
-		for (Entry<String, SignalValue> entry : row.getSignalValues().entrySet()) {
-			SignalValue value = entry.getValue();
+        for (Entry<String, SignalValue> entry : row.getSignalValues().entrySet()) {
+            SignalValue value = entry.getValue();
 
-			JSONObject signal = new JSONObject();
-			signal.put("name", entry.getKey());
-			signal.put("value", Integer.toString(value.intValue()));
-			if (value.isDontCare()) {
-				signal.put("dontcare", true);
-			}
-			rowObj.accumulate("signal", signal);
-		}
+            JSONObject signal = new JSONObject();
+            signal.put("name", entry.getKey());
+            signal.put("value", Integer.toString(value.intValue()));
+            if (value.isDontCare()) {
+                signal.put("dontcare", true);
+            }
+            rowObj.accumulate("signal", signal);
+        }
 
-		Jump j = row.getJump();
-		if (j instanceof UnconditionalJump) {
-			String target = Integer.toString(((UnconditionalJump) j).getTargetRow());
-			JSONObject uncondJmp = new JSONObject();
-			uncondJmp.put("target", target);
-			rowObj.put("unconditional-jump", uncondJmp);
-		}
-		else if (j instanceof ConditionalJump) {
-			ConditionalJump cj = (ConditionalJump) j;
-			String target0 = Integer.toString(cj.getTargetRow(0));
-			String target1 = Integer.toString(cj.getTargetRow(1));
-			JSONObject condJmp = new JSONObject();
-			condJmp.put("cond0-target", target0);
-			condJmp.put("cond1-target", target1);
-			rowObj.put("conditional-jump", condJmp);
-		}
+        Jump j = row.getJump();
+        if (j instanceof UnconditionalJump) {
+            String target = Integer.toString(((UnconditionalJump) j).getTargetRow());
+            JSONObject uncondJmp = new JSONObject();
+            uncondJmp.put("target", target);
+            rowObj.put("unconditional-jump", uncondJmp);
+        }
+        else if (j instanceof ConditionalJump) {
+            ConditionalJump cj = (ConditionalJump) j;
+            String target0 = Integer.toString(cj.getTargetRow(0));
+            String target1 = Integer.toString(cj.getTargetRow(1));
+            JSONObject condJmp = new JSONObject();
+            condJmp.put("cond0-target", target0);
+            condJmp.put("cond1-target", target1);
+            rowObj.put("conditional-jump", condJmp);
+        }
 
-		return rowObj;
-	}
+        return rowObj;
+    }
 }

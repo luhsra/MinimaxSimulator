@@ -2,6 +2,9 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui.util;
 
 import javafx.util.StringConverter;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * The {@code HexStringConverter} is a {@link StringConverter} that converts decimal values to their hexadecimal representation.<br>
  * It may use a format string for the conversion.
@@ -18,9 +21,9 @@ public class HexStringConverter extends StringConverter<Integer> {
      * The default constructor takes the minimal and maximal value. No format string is set.
      *
      * @param minValue
-     * 			the minimal value that is allowed
+     *          the minimal value that is allowed
      * @param maxValue
-     * 			the maximal value that is allowed
+     *          the maximal value that is allowed
      */
     public HexStringConverter(int minValue, int maxValue) {
         super();
@@ -34,11 +37,11 @@ public class HexStringConverter extends StringConverter<Integer> {
      * the format string.
      *
      * @param minValue
-     * 			the minimal value that is allowed
+     *          the minimal value that is allowed
      * @param maxValue
-     * 			the maximal value that is allowed
+     *          the maximal value that is allowed
      * @param formatString
-     * 			the format string to use for conversion
+     *          the format string to use for conversion
      */
     public HexStringConverter(int minValue, int maxValue, String formatString) {
         super();
@@ -52,7 +55,7 @@ public class HexStringConverter extends StringConverter<Integer> {
         if (value == null) {
             return "";
         }
-        else if (formatString.equals("")) {
+        else if ("".equals(formatString)) {
             return Long.toString(value & 0xFFFFFFFFL, 16).toUpperCase();
         }
         else {
@@ -74,7 +77,7 @@ public class HexStringConverter extends StringConverter<Integer> {
                 value = maxValue;
             return value;
         } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
+            Logger.getLogger("de.uni_hannover.sra.minimax_simulator").log(Level.FINEST, "invalid hex string", nfe);
         }
         return null;
     }

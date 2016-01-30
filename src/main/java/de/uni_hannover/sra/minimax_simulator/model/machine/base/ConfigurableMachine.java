@@ -12,29 +12,29 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
  */
 public interface ConfigurableMachine extends Machine {
 
-	/**
-	 * Gets all {@link AluOperation}s of the machine.
-	 *
-	 * @return
-	 *          an {@link ExtensionList} of the machine's {@code AluOperation}s
-	 */
-	public ExtensionList<AluOperation> getAluOperations();
+    /**
+     * Gets all {@link AluOperation}s of the machine.
+     *
+     * @return
+     *          an {@link ExtensionList} of the machine's {@code AluOperation}s
+     */
+    public ExtensionList<AluOperation> getAluOperations();
 
-	/**
-	 * Gets all registers ({@link RegisterExtension}) of the machine.
-	 *
-	 * @return
-	 *          an {@link ExtensionList} of the machine's {@code RegisterExtension}s
-	 */
-	public ExtensionList<RegisterExtension> getRegisterExtensions();
+    /**
+     * Gets all registers ({@link RegisterExtension}) of the machine.
+     *
+     * @return
+     *          an {@link ExtensionList} of the machine's {@code RegisterExtension}s
+     */
+    public ExtensionList<RegisterExtension> getRegisterExtensions();
 
-	/**
-	 * Gets all {@link MuxInput}s of the specified multiplexer.
-	 *
-	 * @param type
-	 *          the multiplexer whose inputs will be returned
-	 * @return
-	 *          an {@link ExtensionList} of the multiplexer's {@code MuxInput}s
-	 */
-	public ExtensionList<MuxInput> getMuxInputExtensions(MuxType type);
+    /**
+     * Gets all {@link MuxInput}s of the specified multiplexer.
+     *
+     * @param type
+     *          the multiplexer whose inputs will be returned
+     * @return
+     *          an {@link ExtensionList} of the multiplexer's {@code MuxInput}s
+     */
+    public ExtensionList<MuxInput> getMuxInputExtensions(MuxType type);
 }

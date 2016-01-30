@@ -53,9 +53,9 @@
                     <content>
                         <TableView fx:id="tableBaseReg" prefHeight="134.0" prefWidth="333.0">
                             <columns>
-                                <PTableColumn fx:id="col_base_name" percentageWidth="0.71" prefWidth="221.0"
+                                <PTableColumn fx:id="colBaseName" percentageWidth="0.71" prefWidth="221.0"
                                               resizable="false" text="RegName"/>
-                                <PTableColumn fx:id="col_base_size" percentageWidth="0.286" prefWidth="90.0"
+                                <PTableColumn fx:id="colBaseSize" percentageWidth="0.286" prefWidth="90.0"
                                               resizable="false" text="Size"/>
                             </columns>
                         </TableView>
@@ -72,9 +72,9 @@
                     <content>
                         <TableView fx:id="tableExtendedReg" prefWidth="333.0">
                             <columns>
-                                <PTableColumn fx:id="col_extended_name" percentageWidth="0.71" prefWidth="221.0"
+                                <PTableColumn fx:id="colExtendedName" percentageWidth="0.71" prefWidth="221.0"
                                               resizable="false" text="RegName"/>
-                                <PTableColumn fx:id="col_extended_size" percentageWidth="0.225" prefWidth="90.0"
+                                <PTableColumn fx:id="colExtendedSize" percentageWidth="0.225" prefWidth="90.0"
                                               resizable="false" text="Size"/>
                             </columns>
                         </TableView>

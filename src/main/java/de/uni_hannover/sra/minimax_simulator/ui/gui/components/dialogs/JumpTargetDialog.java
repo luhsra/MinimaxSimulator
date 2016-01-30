@@ -10,8 +10,6 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.NumberTextField;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.JumpLabelSelector;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
@@ -144,12 +142,7 @@ public class JumpTargetDialog extends FXDialog {
             tf.setPrefWidth(60);
             tf.setMaxWidth(60);
 
-            tf.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    validateTargetRow();
-                }
-            });
+            tf.textProperty().addListener((observable, oldValue, newValue) -> validateTargetRow());
         }
 
         cbUncond = new JumpLabelSelector(txtUncond, table, getCurrentUnconditionalRow());
@@ -214,7 +207,7 @@ public class JumpTargetDialog extends FXDialog {
     private void validateTargetRow() {
         Button btnOK = (Button) this.getDialogPane().lookupButton(okButtonType);
         if (rBtnUncond.isSelected()) {
-            if (txtUncond.getText().equals("")) {
+            if ("".equals(txtUncond.getText())) {
                 btnOK.setDisable(true);
             }
             else {
@@ -222,7 +215,7 @@ public class JumpTargetDialog extends FXDialog {
             }
         }
         else if (rBtnCond.isSelected()) {
-            if (txtCond0.getText().equals("") || txtCond1.getText().equals("")) {
+            if ("".equals(txtCond0.getText()) || "".equals(txtCond1.getText())) {
                 btnOK.setDisable(true);
             }
             else {

@@ -31,7 +31,7 @@ public class NumberTextField extends TextField {
      * @return
      *          {@code true} if the String is empty or a number, {@code false} otherwise
      */
-    private boolean validate(String text) {
-        return ("".equals(text) || text.matches("[0-9]"));
+    private static boolean validate(String text) {
+        return "".equals(text) || text.matches("[0-9]");
     }
 }

@@ -6,13 +6,14 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.event;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface MachineConfigListener {
 
-	/**
-	 * Handles the specified {@link MachineConfigEvent}.
-	 *
-	 * @param event
-	 *          the {@code MachineConfigEvent} to handle
-	 */
-	public void processEvent(MachineConfigEvent event);
+    /**
+     * Handles the specified {@link MachineConfigEvent}.
+     *
+     * @param event
+     *          the {@code MachineConfigEvent} to handle
+     */
+    public void processEvent(MachineConfigEvent event);
 }

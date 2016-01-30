@@ -97,7 +97,7 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                             </rowConstraints>
                                             <children>
-                                                <CheckBox id="memory_import_partial" fx:id="cb_partialImport"
+                                                <CheckBox id="memory_import_partial" fx:id="cbPartialImport"
                                                           disable="true" mnemonicParsing="false"
                                                           onAction="#cbPartialImportAction" text="Partieller Import"
                                                           GridPane.columnIndex="1">

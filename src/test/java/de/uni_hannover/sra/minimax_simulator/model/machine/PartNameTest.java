@@ -7,12 +7,23 @@ import org.junit.Test;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.Parts;
 import static org.junit.Assert.*;
 
+/**
+ * Tests the access to the part names listed in {@link Parts}.
+ *
+ * @author Martin L&uuml;ck
+ */
 public class PartNameTest {
 
-	@Test
-	public void checkNames() throws IllegalArgumentException, IllegalAccessException {
-		for (Field field : Parts.class.getDeclaredFields()) {
-			assertEquals(field.getName(), field.get(null));
-		}
-	}
+    /**
+     * Checks the names provided by {@code Parts}.
+     *
+     * @throws IllegalAccessException
+     *          thrown if a field could not be accessed
+     */
+    @Test
+    public void checkNames() throws IllegalAccessException {
+        for (Field field : Parts.class.getDeclaredFields()) {
+            assertEquals(field.getName(), field.get(null));
+        }
+    }
 }

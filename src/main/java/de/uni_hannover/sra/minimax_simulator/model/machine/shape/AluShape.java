@@ -7,15 +7,13 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.shape;
  */
 public class AluShape extends FixedShape {
 
-	private static final int ALU_WIDTH	= 69;
-	private static final int ALU_HEIGHT	= 88;
+    private static final int ALU_WIDTH  = 69;
+    private static final int ALU_HEIGHT = 88;
 
-	// private static final int ALU_UPPER_SPACING = 30;
-
-	/**
-	 * Initializes the {@code AluShape}.
-	 */
-	public AluShape() {
-		super(ALU_WIDTH, ALU_HEIGHT);
-	}
+    /**
+     * Initializes the {@code AluShape}.
+     */
+    public AluShape() {
+        super(ALU_WIDTH, ALU_HEIGHT);
+    }
 }

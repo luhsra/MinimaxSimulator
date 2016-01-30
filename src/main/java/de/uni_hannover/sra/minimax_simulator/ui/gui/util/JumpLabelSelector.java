@@ -64,9 +64,17 @@ public class JumpLabelSelector extends ComboBox {
      * @author Martin L&uuml;ck
      */
     private static class Target {
-        public int		row;
-        public String	label;
+        protected int      row;
+        protected String   label;
 
+        /**
+         * Creates a new instance of {@code Target} with the specified index and label.
+         *
+         * @param row
+         *          the index of the row
+         * @param label
+         *          the row's label
+         */
         public Target(int row, String label) {
             this.row = row;
             this.label = label;

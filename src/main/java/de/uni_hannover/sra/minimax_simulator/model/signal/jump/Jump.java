@@ -6,17 +6,18 @@ package de.uni_hannover.sra.minimax_simulator.model.signal.jump;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface Jump {
 
-	/**
-	 * Gets the index of the {@code SignalRow} that will be executed next.
-	 *
-	 * @param currentRow
-	 *          the index of the current {@code SignalRow}
-	 * @param condition
-	 *          the ALU condition
-	 * @return
-	 *          the index of the {@code SignalRow} that will be executed next
-	 */
-	public int getTargetRow(int currentRow, int condition);
+    /**
+     * Gets the index of the {@code SignalRow} that will be executed next.
+     *
+     * @param currentRow
+     *          the index of the current {@code SignalRow}
+     * @param condition
+     *          the ALU condition
+     * @return
+     *          the index of the {@code SignalRow} that will be executed next
+     */
+    public int getTargetRow(int currentRow, int condition);
 }

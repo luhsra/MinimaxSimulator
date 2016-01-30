@@ -23,174 +23,174 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public class SpriteCanvas<T> extends Canvas {
 
-	private final Map<T, Sprite> sprites;
+    private final Map<T, Sprite> sprites;
 
-	private RenderEnvironment env;
-	private SpriteFactory spritefactory;
+    private RenderEnvironment env;
+    private SpriteFactory spritefactory;
 
-	private final GraphicsContext gc;
+    private final GraphicsContext gc;
 
-	/**
-	 * Initializes the {@code SpriteCanvas}.
-	 */
-	public SpriteCanvas() {
-		sprites = new HashMap<T, Sprite>();
-		gc = this.getGraphicsContext2D();
-	}
+    /**
+     * Initializes the {@code SpriteCanvas}.
+     */
+    public SpriteCanvas() {
+        sprites = new HashMap<>();
+        gc = this.getGraphicsContext2D();
+    }
 
-	/**
-	 * Draws all {@code Sprite}s on a {@code Canvas} with a black border.<br>
-	 * The background color is defined by {@link RenderEnvironment#getBackgroundColor()} and the
-	 * {@code Sprite}'s color by {@link RenderEnvironment#getForegroundColor()}.
-	 *
-	 * @throws IllegalStateException
-	 *          thrown if the {@code RenderEnvironment} was not set yet
-	 */
-	protected void draw() {
-		if (env == null) {
-			throw new IllegalStateException("Cannot render SpriteCanvas without RenderEnvironment set");
-		}
-		gc.setFont(env.getFont());
-		gc.clearRect(0, 0, getWidth(), getHeight());
+    /**
+     * Draws all {@code Sprite}s on a {@code Canvas} with a black border.<br>
+     * The background color is defined by {@link RenderEnvironment#getBackgroundColor()} and the
+     * {@code Sprite}'s color by {@link RenderEnvironment#getForegroundColor()}.
+     *
+     * @throws IllegalStateException
+     *          thrown if the {@code RenderEnvironment} was not set yet
+     */
+    protected void draw() {
+        if (env == null) {
+            throw new IllegalStateException("Cannot render SpriteCanvas without RenderEnvironment set");
+        }
+        gc.setFont(env.getFont());
+        gc.clearRect(0, 0, getWidth(), getHeight());
 
-		gc.setFill(env.getBackgroundColor());
-		gc.fillRect(0, 0, getWidth(), getHeight());
+        gc.setFill(env.getBackgroundColor());
+        gc.fillRect(0, 0, getWidth(), getHeight());
 
-		drawBorder();
+        drawBorder();
 
-		gc.setFill(env.getForegroundColor());
-		gc.setStroke(env.getForegroundColor());
+        gc.setFill(env.getForegroundColor());
+        gc.setStroke(env.getForegroundColor());
 
-		for (Sprite sprite : sprites.values()) {
-			sprite.paint(gc, env);
-		}
-	}
+        for (Sprite sprite : sprites.values()) {
+            sprite.paint(gc, env);
+        }
+    }
 
-	/**
-	 * Draws a thin border around the {@code SpriteCanvas}.
-	 */
-	private void drawBorder() {
-		double maxY = getHeight();
-		double maxX = getWidth();
+    /**
+     * Draws a thin border around the {@code SpriteCanvas}.
+     */
+    private void drawBorder() {
+        double maxY = getHeight();
+        double maxX = getWidth();
 
-		gc.save();
-		gc.setLineWidth(1);
+        gc.save();
+        gc.setLineWidth(1);
 
-		gc.beginPath();
-		gc.moveTo(0, 0);
-		gc.lineTo(0, maxY);
-		gc.lineTo(maxX, maxY);
-		gc.lineTo(maxX, 0);
-		gc.lineTo(0, 0);
-		gc.closePath();
-		gc.stroke();
+        gc.beginPath();
+        gc.moveTo(0, 0);
+        gc.lineTo(0, maxY);
+        gc.lineTo(maxX, maxY);
+        gc.lineTo(maxX, 0);
+        gc.lineTo(0, 0);
+        gc.closePath();
+        gc.stroke();
 
-		gc.restore();
-	}
+        gc.restore();
+    }
 
-	/**
-	 * Adds a {@code Sprite} and it's owner.
-	 *
-	 * @param owner
-	 *          the owner of the {@code Sprite}
-	 * @param sprite
-	 *          the {@code Sprite} to add
-	 */
-	public void setSprite(T owner, Sprite sprite) {
-		checkNotNull(owner, "Sprite owner must not be null");
-		checkNotNull(sprite, "Sprite must not be null");
+    /**
+     * Adds a {@code Sprite} and it's owner.
+     *
+     * @param owner
+     *          the owner of the {@code Sprite}
+     * @param sprite
+     *          the {@code Sprite} to add
+     */
+    public void setSprite(T owner, Sprite sprite) {
+        checkNotNull(owner, "Sprite owner must not be null");
+        checkNotNull(sprite, "Sprite must not be null");
 
-		sprites.put(owner, sprite);
-		draw();
-	}
+        sprites.put(owner, sprite);
+        draw();
+    }
 
-	/**
-	 * Creates the {@code Sprite} of the owner and adds them.
-	 *
-	 * @param owner
-	 *          the owner of the {@code Sprite} to add
-	 */
-	public void setSprite(T owner) {
-		checkNotNull(owner, "Sprite owner must not be null");
-		checkState(spritefactory != null, "Must provide a sprite or set a SpriteFactory");
+    /**
+     * Creates the {@code Sprite} of the owner and adds them.
+     *
+     * @param owner
+     *          the owner of the {@code Sprite} to add
+     */
+    public void setSprite(T owner) {
+        checkNotNull(owner, "Sprite owner must not be null");
+        checkState(spritefactory != null, "Must provide a sprite or set a SpriteFactory");
 
-		Sprite sprite = spritefactory.createSprite(owner);
-		setSprite(owner, sprite);
-	}
+        Sprite sprite = spritefactory.createSprite(owner);
+        setSprite(owner, sprite);
+    }
 
-	/**
-	 * Removes all {@code Sprite}s of an owner.
-	 *
-	 * @param owner
-	 *          the {@code SpriteOwner} for which all {@code Sprite}s will be removed
-	 */
-	public void removeSprite(T owner) {
-		if (sprites.remove(owner) != null)
-			draw();
-	}
+    /**
+     * Removes all {@code Sprite}s of an owner.
+     *
+     * @param owner
+     *          the {@code SpriteOwner} for which all {@code Sprite}s will be removed
+     */
+    public void removeSprite(T owner) {
+        if (sprites.remove(owner) != null)
+            draw();
+    }
 
-	/**
-	 * Gets the {@code SpriteFactory} of the {@code SpriteCanvas}.
-	 *
-	 * @return
-	 *          the {@code SpriteFactory} of the {@code SpriteCanvas}
-	 */
-	public SpriteFactory getSpriteFactory() {
-		return spritefactory;
-	}
+    /**
+     * Gets the {@code SpriteFactory} of the {@code SpriteCanvas}.
+     *
+     * @return
+     *          the {@code SpriteFactory} of the {@code SpriteCanvas}
+     */
+    public SpriteFactory getSpriteFactory() {
+        return spritefactory;
+    }
 
-	/**
-	 * Sets the {@code SpriteFactory} of the {@code SpriteCanvas}.
-	 *
-	 * @param spriteFactory
-	 *          the {@code SpriteFactory} to set
-	 */
-	public void setSpriteFactory(SpriteFactory spriteFactory) {
-		spritefactory = spriteFactory;
-	}
+    /**
+     * Sets the {@code SpriteFactory} of the {@code SpriteCanvas}.
+     *
+     * @param spriteFactory
+     *          the {@code SpriteFactory} to set
+     */
+    public void setSpriteFactory(SpriteFactory spriteFactory) {
+        spritefactory = spriteFactory;
+    }
 
-	/**
-	 * Gets the {@code RenderEnvironment} of the {@code SpriteCanvas}.
-	 *
-	 * @return
-	 *          the {@code RenderEnvironment} of the {@code SpriteCanvas}
-	 */
-	public RenderEnvironment getRenderEnvironment() {
-		return env;
-	}
+    /**
+     * Gets the {@code RenderEnvironment} of the {@code SpriteCanvas}.
+     *
+     * @return
+     *          the {@code RenderEnvironment} of the {@code SpriteCanvas}
+     */
+    public RenderEnvironment getRenderEnvironment() {
+        return env;
+    }
 
-	/**
-	 * Sets the {@code RenderEnvironment} of the {@code SpriteCanvas}.
-	 *
-	 * @param env
-	 *          the {@code RenderEnvironment} to set
-	 */
-	public void setEnvironment(RenderEnvironment env) {
-		this.env = env;
-	}
+    /**
+     * Sets the {@code RenderEnvironment} of the {@code SpriteCanvas}.
+     *
+     * @param env
+     *          the {@code RenderEnvironment} to set
+     */
+    public void setEnvironment(RenderEnvironment env) {
+        this.env = env;
+    }
 
-	/**
-	 * Gets the {@link FontMetrics} of a {@link Font}.
-	 *
-	 * @param font
-	 *          the {@code Font} for which the {@code FontMetrics} should be get
-	 * @return
-	 *          the {@code FontMetrics} of the {@code Font}
-	 */
-	public FontMetrics getFontMetrics(Font font) {
-		return Toolkit.getToolkit().getFontLoader().getFontMetrics(font);
-	}
+    /**
+     * Gets the {@link FontMetrics} of a {@link Font}.
+     *
+     * @param font
+     *          the {@code Font} for which the {@code FontMetrics} should be get
+     * @return
+     *          the {@code FontMetrics} of the {@code Font}
+     */
+    public FontMetrics getFontMetrics(Font font) {
+        return Toolkit.getToolkit().getFontLoader().getFontMetrics(font);
+    }
 
-	/**
-	 * Sets the width and height of the {@code SpriteCanvas}.
-	 *
-	 * @param width
-	 *          the new width
-	 * @param height
-	 *          the new height
-	 */
-	public void setSize(int width, int height) {
-		setWidth(width);
-		setHeight(height);
-	}
+    /**
+     * Sets the width and height of the {@code SpriteCanvas}.
+     *
+     * @param width
+     *          the new width
+     * @param height
+     *          the new height
+     */
+    public void setSize(int width, int height) {
+        setWidth(width);
+        setHeight(height);
+    }
 }

@@ -15,37 +15,37 @@ import java.util.List;
  */
 public class ListenerContainer<L> {
 
-	private List<L> listeners = new ArrayList<L>(2);
+    private List<L> listeners = new ArrayList<>(2);
 
-	/**
-	 * Adds the specified listener to the internal list if it is not already added
-	 *
-	 * @param listener
-	 *          the listener to register
-	 */
-	public void addListener(L listener) {
-		if (!listeners.contains(listener)) {
-			listeners.add(listener);
-		}
-	}
+    /**
+     * Adds the specified listener to the internal list if it is not already added
+     *
+     * @param listener
+     *          the listener to register
+     */
+    public void addListener(L listener) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
+    }
 
-	/**
-	 * Removes the specified listener from the internal list if it was added.
-	 *
-	 * @param listener
-	 *          the listener to remove
-	 */
-	public void removeListener(L listener) {
-		listeners.remove(listener);
-	}
+    /**
+     * Removes the specified listener from the internal list if it was added.
+     *
+     * @param listener
+     *          the listener to remove
+     */
+    public void removeListener(L listener) {
+        listeners.remove(listener);
+    }
 
-	/**
-	 * Gets the registered listeners.
-	 *
-	 * @return
-	 *          a list of the registered listeners
-	 */
-	protected List<L> getListeners() {
-		return listeners;
-	}
+    /**
+     * Gets the registered listeners.
+     *
+     * @return
+     *          a list of the registered listeners
+     */
+    protected List<L> getListeners() {
+        return listeners;
+    }
 }

@@ -11,24 +11,24 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
  */
 public class LabelShape extends TextRenderShape {
 
-	/**
-	 * Initializes the {@code LabelShape}.
-	 *
-	 * @param fontProvider
-	 *          the {@link FontMetricsProvider} used for font measuring
-	 */
-	public LabelShape(FontMetricsProvider fontProvider) {
-		super(fontProvider);
-	}
+    /**
+     * Initializes the {@code LabelShape}.
+     *
+     * @param fontProvider
+     *          the {@link FontMetricsProvider} used for font measuring
+     */
+    public LabelShape(FontMetricsProvider fontProvider) {
+        super(fontProvider);
+    }
 
-	@Override
-	public void updateShape(Component component) {
-		Label label = (Label) component;
-		component.setDimension(getStringDimension(label.getMessage()));
-	}
+    @Override
+    public void updateShape(Component component) {
+        Label label = (Label) component;
+        component.setDimension(getStringDimension(label.getMessage()));
+    }
 
-	@Override
-	public void layout(Component component) {
-
-	}
+    @Override
+    public void layout(Component component) {
+        // there is no need for this method for a LabelShape
+    }
 }

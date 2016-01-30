@@ -7,17 +7,17 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
  */
 public interface MuxInput {
 
-	/**
-	 * Gets the name of the {@code MuxInput}.
-	 *
-	 * @return
-	 *          the name of the {@code MuxInput}
-	 */
-	public String getName();
+    /**
+     * Gets the name of the {@code MuxInput}.
+     *
+     * @return
+     *          the name of the {@code MuxInput}
+     */
+    public String getName();
 
-	@Override
-	public boolean equals(Object o);
+    @Override
+    public boolean equals(Object o);
 
-	@Override
-	public int hashCode();
+    @Override
+    public int hashCode();
 }

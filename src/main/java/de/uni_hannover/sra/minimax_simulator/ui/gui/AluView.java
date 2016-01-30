@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -46,11 +45,11 @@ public class AluView {
     @FXML private Button btnRemove;
 
     @FXML private TableView<AluOpTableModel> tableAdded;
-    @FXML private TableColumn<AluOpTableModel, String> col_added_opcode;
-    @FXML private TableColumn<AluOpTableModel, String> col_added_op;
+    @FXML private TableColumn<AluOpTableModel, String> colAddedOpcode;
+    @FXML private TableColumn<AluOpTableModel, String> colAddedOp;
 
     @FXML private TableView<AluOpTableModel> tableAvailable;
-    @FXML private TableColumn<AluOpTableModel, String> col_available_op;
+    @FXML private TableColumn<AluOpTableModel, String> colAvailableOp;
 
     @FXML private Button btnMoveUp;
     @FXML private Button btnMoveDown;
@@ -103,20 +102,14 @@ public class AluView {
      * Initializes the {@link TableView} for the added {@link AluOperation}s.
      */
     private void initAddedTable() {
-        col_added_op.setCellValueFactory(new PropertyValueFactory<>("op"));
-        col_added_opcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
+        colAddedOp.setCellValueFactory(new PropertyValueFactory<>("op"));
+        colAddedOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
 
         // remove operation with double click
-        tableAdded.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        if (!tableAdded.getSelectionModel().getSelectedItems().isEmpty()) {
-                            removeOperation();
-                        }
-                    }
-                }
+        tableAdded.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2
+                    && !tableAdded.getSelectionModel().getSelectedItems().isEmpty()) {
+                removeOperation();
             }
         });
 
@@ -157,7 +150,7 @@ public class AluView {
 
         final int size = config.getAluOperations().size()-1;
 
-        data.forEach((model) -> {
+        data.forEach(model -> {
             int pos = config.getAluOperations().indexOf(model.getAluOP());
             model.setOpcode(Util.toBinaryAddress(pos, size));
         });
@@ -169,19 +162,13 @@ public class AluView {
      * Initializes the {@link TableView} for the available {@link AluOperation}s.
      */
     private void initAvailableTable() {
-        col_available_op.setCellValueFactory(new PropertyValueFactory<>("op"));
+        colAvailableOp.setCellValueFactory(new PropertyValueFactory<>("op"));
 
         // add operation with double click
-        tableAvailable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        if (!tableAvailable.getSelectionModel().getSelectedItems().isEmpty()) {
-                            addOperation();
-                        }
-                    }
-                }
+        tableAvailable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2
+                    && !tableAvailable.getSelectionModel().getSelectedItems().isEmpty()) {
+                addOperation();
             }
         });
 
@@ -277,7 +264,7 @@ public class AluView {
         }
 
         Object caller = ae.getSource();
-        int difference = 0;
+        int difference;
         if (caller.equals(btnMoveUp)) {
             difference = -1;
         }
@@ -333,30 +320,52 @@ public class AluView {
             this.op = new SimpleStringProperty(aluOP.getOperationName());
         }
 
+        /**
+         * Gets the ALU operation code of the {@code AluOperation}.
+         *
+         * @return
+         *          the ALU operation code
+         */
         public String getOpcode() {
             return opcode.get();
         }
 
-        public SimpleStringProperty opcodeProperty() {
-            return opcode;
-        }
-
+        /**
+         * Sets the ALU operation code of the {@code AluOperation} to the specified value.
+         *
+         * @param opcode
+         *          the new value
+         */
         public void setOpcode(String opcode) {
             this.opcode.set(opcode);
         }
 
+        /**
+         * Gets the name of the {@code AluOperation}.
+         *
+         * @return
+         *         the name of the {@code AluOperation}.
+         */
         public String getOp() {
             return op.get();
         }
 
-        public SimpleStringProperty opProperty() {
-            return op;
-        }
-
+        /**
+         * Sets the name of the {@code AluOperation} to the specified value.
+         *
+         * @param op
+         *          the new value
+         */
         public void setOp(String op) {
             this.op.set(op);
         }
 
+        /**
+         * Gets the {@code AluOperation}.
+         *
+         * @return
+         *          the {@code AluOperation}
+         */
         public AluOperation getAluOP() {
             return aluOP;
         }

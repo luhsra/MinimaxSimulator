@@ -7,9 +7,9 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout.constraint;
  */
 public enum AttributeAxis {
 
-	/** A horizontal axis. */
-	HORIZONTAL,
+    /** A horizontal axis. */
+    HORIZONTAL,
 
-	/** A vertical axis. */
-	VERTICAL
+    /** A vertical axis. */
+    VERTICAL
 }

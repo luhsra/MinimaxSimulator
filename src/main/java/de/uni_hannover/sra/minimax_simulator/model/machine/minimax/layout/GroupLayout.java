@@ -14,59 +14,59 @@ import java.util.Set;
  */
 public class GroupLayout implements Layout {
 
-	private static final Set<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.LEFT,
-															AttributeType.RIGHT,
-															AttributeType.TOP,
-															AttributeType.BOTTOM);
+    private static final Set<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.LEFT,
+                                                            AttributeType.RIGHT,
+                                                            AttributeType.TOP,
+                                                            AttributeType.BOTTOM);
 
-	private final Constraint top;
-	private final Constraint bottom;
-	private final Constraint left;
-	private final Constraint right;
+    private final Constraint top;
+    private final Constraint bottom;
+    private final Constraint left;
+    private final Constraint right;
 
-	/**
-	 * Constructs a new {@code GroupLayout} with the specified {@code Collection} of group members.
-	 *
-	 * @param groupMembers
-	 *          the members of the group the {@code GroupLayout} belongs to
-	 */
-	public GroupLayout(Collection<String> groupMembers) {
-		this(new HashSet<String>(groupMembers));
-	}
+    /**
+     * Constructs a new {@code GroupLayout} with the specified {@code Collection} of group members.
+     *
+     * @param groupMembers
+     *          the members of the group the {@code GroupLayout} belongs to
+     */
+    public GroupLayout(Collection<String> groupMembers) {
+        this(new HashSet<>(groupMembers));
+    }
 
-	/**
-	 * Constructs a new {@code GroupLayout} with the specified set of group members.
-	 *
-	 * @param groupMembers
-	 *          the members of the group the {@code GroupLayout} belongs to
-	 */
-	public GroupLayout(Set<String> groupMembers) {
-		top = new RelativeMinConstraint(groupMembers, AttributeType.TOP, 0);
-		bottom = new RelativeMaxConstraint(groupMembers, AttributeType.BOTTOM, 0);
-		left = new RelativeMinConstraint(groupMembers, AttributeType.LEFT, 0);
-		right = new RelativeMaxConstraint(groupMembers, AttributeType.RIGHT, 0);
-	}
+    /**
+     * Constructs a new {@code GroupLayout} with the specified set of group members.
+     *
+     * @param groupMembers
+     *          the members of the group the {@code GroupLayout} belongs to
+     */
+    public GroupLayout(Set<String> groupMembers) {
+        top = new RelativeMinConstraint(groupMembers, AttributeType.TOP, 0);
+        bottom = new RelativeMaxConstraint(groupMembers, AttributeType.BOTTOM, 0);
+        left = new RelativeMinConstraint(groupMembers, AttributeType.LEFT, 0);
+        right = new RelativeMaxConstraint(groupMembers, AttributeType.RIGHT, 0);
+    }
 
-	@Override
-	public Constraint getConstraint(AttributeType attribute) {
-		switch (attribute) {
-			case TOP:
-				return top;
-			case BOTTOM:
-				return bottom;
-			case LEFT:
-				return left;
-			case RIGHT:
-				return right;
+    @Override
+    public Constraint getConstraint(AttributeType attribute) {
+        switch (attribute) {
+            case TOP:
+                return top;
+            case BOTTOM:
+                return bottom;
+            case LEFT:
+                return left;
+            case RIGHT:
+                return right;
 
-			default:
-				// never happens
-				throw new AssertionError();
-		}
-	}
+            default:
+                // never happens
+                throw new AssertionError();
+        }
+    }
 
-	@Override
-	public Set<AttributeType> getConstrainedAttributes() {
-		return ATTRIBUTES;
-	}
+    @Override
+    public Set<AttributeType> getConstrainedAttributes() {
+        return ATTRIBUTES;
+    }
 }

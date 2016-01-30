@@ -12,58 +12,58 @@ import java.util.Set;
  */
 public class IngoingPin extends Pin {
 
-	private Wire wire;
-	private Set<? extends Circuit> thePart;
+    private Wire wire;
+    private Set<? extends Circuit> thePart;
 
-	/**
-	 * Constructs a new {@code IngoingPin} for the specified {@link Part}.
-	 *
-	 * @param part
-	 *          the {@code Part} the {@code IngoingPin} goes in
-	 */
-	public IngoingPin(Part part) {
-		super(part);
-		thePart = ImmutableSet.of(part);
-	}
+    /**
+     * Constructs a new {@code IngoingPin} for the specified {@link Part}.
+     *
+     * @param part
+     *          the {@code Part} the {@code IngoingPin} goes in
+     */
+    public IngoingPin(Part part) {
+        super(part);
+        thePart = ImmutableSet.of(part);
+    }
 
-	/**
-	 * Gets the {@link Wire} connected to the {@code IngoingPin}.
-	 *
-	 * @return
-	 *          the {@code Wire}
-	 */
-	public Wire getWire() {
-		return wire;
-	}
+    /**
+     * Gets the {@link Wire} connected to the {@code IngoingPin}.
+     *
+     * @return
+     *          the {@code Wire}
+     */
+    public Wire getWire() {
+        return wire;
+    }
 
-	/**
-	 * Sets the {@link Wire} connected to the {@code IngoingPin}.
-	 *
-	 * @param wire
-	 *          the {@code Wire}
-	 */
-	public void setWire(Wire wire) {
-		this.wire = wire;
-	}
+    /**
+     * Sets the {@link Wire} connected to the {@code IngoingPin}.
+     *
+     * @param wire
+     *          the {@code Wire}
+     */
+    public void setWire(Wire wire) {
+        this.wire = wire;
+    }
 
-	/**
-	 * Reads the value at the {@code IngoingPin}.
-	 *
-	 * @return
-	 *          the value of the {@code IngoingPin}
-	 */
-	public int read() {
-		return getValue();
-	}
+    /**
+     * Reads the value at the {@code IngoingPin}.
+     *
+     * @return
+     *          the value of the {@code IngoingPin}
+     */
+    public int read() {
+        return getValue();
+    }
 
-	/**
-	 * Gets the successors of the {@code IngoingPin}.<br>
-	 * Obviously the successor of an {@code IngoingPin} is the {@link Part} it goes in.
-	 *
-	 * @return
-	 *          a set of the successors of {@code IngoingPin}
-	 */
-	public Set<? extends Circuit> getSuccessors() {
-		return thePart;
-	}
+    /**
+     * Gets the successors of the {@code IngoingPin}.<br>
+     * Obviously the successor of an {@code IngoingPin} is the {@link Part} it goes in.
+     *
+     * @return
+     *          a set of the successors of {@code IngoingPin}
+     */
+    public Set<? extends Circuit> getSuccessors() {
+        return thePart;
+    }
 }

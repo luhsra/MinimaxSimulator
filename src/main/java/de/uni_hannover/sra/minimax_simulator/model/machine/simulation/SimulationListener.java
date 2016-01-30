@@ -5,13 +5,14 @@ package de.uni_hannover.sra.minimax_simulator.model.machine.simulation;
  *
  * @author Martin L&uuml;ck
  */
+@FunctionalInterface
 public interface SimulationListener {
 
-	/**
-	 * Notifies the listener about a change of the {@link SimulationState}.
-	 *
-	 * @param state
-	 *          the new {@code SimulationState}
-	 */
-	public void stateChanged(SimulationState state);
+    /**
+     * Notifies the listener about a change of the {@link SimulationState}.
+     *
+     * @param state
+     *          the new {@code SimulationState}
+     */
+    public void stateChanged(SimulationState state);
 }

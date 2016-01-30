@@ -18,267 +18,267 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public abstract class AbstractSimulation implements Simulation, MachineConfigListener, SignalTableListener, SignalConfigListener {
 
-	private final ArrayList<SimulationListener> listeners;
+    private final ArrayList<SimulationListener> listeners;
 
-	private SimulationState state;
-	private int cycleCount;
-	private boolean paused;
-	private boolean halted;
+    private SimulationState state;
+    private int cycleCount;
+    private boolean paused;
+    private boolean halted;
 
-	/**
-	 * Constructs a new {code AbstractSimulation} instance.
-	 */
-	protected AbstractSimulation() {
-		cycleCount = -1;
+    /**
+     * Constructs a new {code AbstractSimulation} instance.
+     */
+    protected AbstractSimulation() {
+        cycleCount = -1;
 
-		paused = false;
-		halted = false;
+        paused = false;
+        halted = false;
 
-		listeners = new ArrayList<SimulationListener>();
-		state = SimulationState.OFF;
-	}
+        listeners = new ArrayList<>();
+        state = SimulationState.OFF;
+    }
 
-	/**
-	 * Checks if the simulation is in state {@link SimulationState#IDLE}.
-	 */
-	private void checkIdleState() {
-		checkState(state == SimulationState.IDLE, "Simulation must be started");
-	}
+    /**
+     * Checks if the simulation is in state {@link SimulationState#IDLE}.
+     */
+    private void checkIdleState() {
+        checkState(state == SimulationState.IDLE, "Simulation must be started");
+    }
 
-	/**
-	 * Checks if the simulation is not in state {@link SimulationState#HALTED}.
-	 */
-	private void checkNotHalted() {
-		checkState(!halted, "Simulation already halted");
-	}
+    /**
+     * Checks if the simulation is not in state {@link SimulationState#HALTED}.
+     */
+    private void checkNotHalted() {
+        checkState(!halted, "Simulation already halted");
+    }
 
-	@Override
-	public void reset() {
-		checkIdleState();
+    @Override
+    public void reset() {
+        checkIdleState();
 
-		resetImpl();
+        resetImpl();
 
-		state = SimulationState.IDLE;
-		halted = false;
-		paused = false;
+        state = SimulationState.IDLE;
+        halted = false;
+        paused = false;
 
-		fireStateChanged();
-	}
+        fireStateChanged();
+    }
 
-	/**
-	 * Implementation dependant reset behaviour.
-	 */
-	protected abstract void resetImpl();
+    /**
+     * Implementation dependant reset behaviour.
+     */
+    protected abstract void resetImpl();
 
-	@Override
-	public void init() {
-		checkState(state == SimulationState.OFF);
+    @Override
+    public void init() {
+        checkState(state == SimulationState.OFF);
 
-		initImpl();
+        initImpl();
 
-		state = SimulationState.IDLE;
-		halted = false;
-		paused = false;
+        state = SimulationState.IDLE;
+        halted = false;
+        paused = false;
 
-		fireStateChanged();
-	}
+        fireStateChanged();
+    }
 
-	/**
-	 * Implementation dependant initialization behaviour.
-	 */
-	protected abstract void initImpl();
+    /**
+     * Implementation dependant initialization behaviour.
+     */
+    protected abstract void initImpl();
 
-	@Override
-	public void stop() {
-		checkIdleState();
+    @Override
+    public void stop() {
+        checkIdleState();
 
-		stopImpl();
+        stopImpl();
 
-		state = SimulationState.OFF;
-		halted = false;
-		paused = false;
+        state = SimulationState.OFF;
+        halted = false;
+        paused = false;
 
-		fireStateChanged();
-	}
+        fireStateChanged();
+    }
 
-	/**
-	 * Implementation dependant stop behavior.
-	 */
-	protected abstract void stopImpl();
+    /**
+     * Implementation dependant stop behavior.
+     */
+    protected abstract void stopImpl();
 
-	@Override
-	public void step() {
-		checkIdleState();
-		checkNotHalted();
+    @Override
+    public void step() {
+        checkIdleState();
+        checkNotHalted();
 
-		state = SimulationState.RUNNING;
-		fireStateChanged();
+        state = SimulationState.RUNNING;
+        fireStateChanged();
 
-		stepImpl();
+        stepImpl();
 
-		state = SimulationState.IDLE;
-		fireStateChanged();
-	}
+        state = SimulationState.IDLE;
+        fireStateChanged();
+    }
 
-	/**
-	 * Implementation dependant step behavior.
-	 */
-	protected abstract void stepImpl();
+    /**
+     * Implementation dependant step behavior.
+     */
+    protected abstract void stepImpl();
 
-	@Override
-	public void run() {
-		checkIdleState();
-		checkNotHalted();
+    @Override
+    public void run() {
+        checkIdleState();
+        checkNotHalted();
 
-		state = SimulationState.RUNNING;
-		fireStateChanged();
+        state = SimulationState.RUNNING;
+        fireStateChanged();
 
-		runImpl();
+        runImpl();
 
-		state = SimulationState.IDLE;
-		fireStateChanged();
-	}
+        state = SimulationState.IDLE;
+        fireStateChanged();
+    }
 
-	/**
-	 * Implementation dependant run behavior.
-	 */
-	protected abstract void runImpl();
+    /**
+     * Implementation dependant run behavior.
+     */
+    protected abstract void runImpl();
 
-	protected void halt() {
-		checkState(!halted, "Already halted");
+    protected void halt() {
+        checkState(!halted, "Already halted");
 
-		state = SimulationState.HALTED;
-		fireStateChanged();
+        state = SimulationState.HALTED;
+        fireStateChanged();
 
-		// the program ended
-		halted = true;
-	}
+        // the program ended
+        halted = true;
+    }
 
-	@Override
-	public void pause() {
-		paused = true;
-	}
+    @Override
+    public void pause() {
+        paused = true;
+    }
 
-	/**
-	 * Gets the value of the {@code paused} property.<br>
-	 * <br>
-	 * If {@code true} it toggles the value.
-	 *
-	 * @return
-	 *          {@code true} if the simulation is paused, {@code false} otherwise
-	 */
-	protected boolean paused() {
-		if (!paused) {
-			return false;
-		}
-		else {
-			paused = false;
-			return true;
-		}
-	}
+    /**
+     * Gets the value of the {@code paused} property.<br>
+     * <br>
+     * If {@code true} it toggles the value.
+     *
+     * @return
+     *          {@code true} if the simulation is paused, {@code false} otherwise
+     */
+    protected boolean paused() {
+        if (!paused) {
+            return false;
+        }
+        else {
+            paused = false;
+            return true;
+        }
+    }
 
-	/**
-	 * Notifies the {@link SimulationListener}s about a change of the {@link SimulationState}.
-	 */
-	protected void fireStateChanged() {
-		for (SimulationListener listener : listeners) {
-			listener.stateChanged(state);
-		}
-	}
+    /**
+     * Notifies the {@link SimulationListener}s about a change of the {@link SimulationState}.
+     */
+    protected void fireStateChanged() {
+        for (SimulationListener listener : listeners) {
+            listener.stateChanged(state);
+        }
+    }
 
-	@Override
-	public void addSimulationListener(SimulationListener listener) {
-		if (!listeners.contains(listener)) {
-			listeners.add(listener);
-		}
-	}
+    @Override
+    public void addSimulationListener(SimulationListener listener) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
+    }
 
-	@Override
-	public void removeSimulationListener(SimulationListener listener) {
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeSimulationListener(SimulationListener listener) {
+        listeners.remove(listener);
+    }
 
-	@Override
-	public SimulationState getState() {
-		return state;
-	}
+    @Override
+    public SimulationState getState() {
+        return state;
+    }
 
-	/**
-	 * Resets the cycle count to zero.
-	 */
-	protected void resetCycles() {
-		cycleCount = 0;
-	}
+    /**
+     * Resets the cycle count to zero.
+     */
+    protected void resetCycles() {
+        cycleCount = 0;
+    }
 
-	/**
-	 * Increments the cycle count and halts the simulation if the cycle count reaches
-	 * {@link Integer#MAX_VALUE}.
-	 */
-	protected void incrementCycles() {
-		cycleCount++;
-		if (cycleCount == Integer.MAX_VALUE) {
-			halt();
-		}
-	}
+    /**
+     * Increments the cycle count and halts the simulation if the cycle count reaches
+     * {@link Integer#MAX_VALUE}.
+     */
+    protected void incrementCycles() {
+        cycleCount++;
+        if (cycleCount == Integer.MAX_VALUE) {
+            halt();
+        }
+    }
 
-	@Override
-	public int getCyclesCount() {
-		return cycleCount;
-	}
+    @Override
+    public int getCyclesCount() {
+        return cycleCount;
+    }
 
-	@Override
-	public boolean isHalted() {
-		return halted;
-	}
+    @Override
+    public boolean isHalted() {
+        return halted;
+    }
 
-	/**
-	 * Stops the simulation if it is in state {@link SimulationState#RUNNING}.
-	 */
-	private void stopIfRunning() {
-		checkState(state != SimulationState.RUNNING, "machine modified while running");
+    /**
+     * Stops the simulation if it is in state {@link SimulationState#RUNNING}.
+     */
+    private void stopIfRunning() {
+        checkState(state != SimulationState.RUNNING, "machine modified while running");
 
-		if (state != SimulationState.OFF) {
-			stop();
-		}
-	}
+        if (state != SimulationState.OFF) {
+            stop();
+        }
+    }
 
-	@Override
-	public void processEvent(MachineConfigEvent event) {
-		stopIfRunning();
-	}
+    @Override
+    public void processEvent(MachineConfigEvent event) {
+        stopIfRunning();
+    }
 
-	@Override
-	public void onStructureChanged() {
-		stopIfRunning();
-	}
+    @Override
+    public void onStructureChanged() {
+        stopIfRunning();
+    }
 
-	@Override
-	public void onRowAdded(int index, SignalRow row) {
-		stopIfRunning();
-	}
+    @Override
+    public void onRowAdded(int index, SignalRow row) {
+        stopIfRunning();
+    }
 
-	@Override
-	public void onRowRemoved(int index) {
-		stopIfRunning();
-	}
+    @Override
+    public void onRowRemoved(int index) {
+        stopIfRunning();
+    }
 
-	@Override
-	public void onRowsExchanged(int index1, int index2) {
-		stopIfRunning();
-	}
+    @Override
+    public void onRowsExchanged(int index1, int index2) {
+        stopIfRunning();
+    }
 
-	@Override
-	public void onRowReplaced(int index, SignalRow row) {
-		stopIfRunning();
-	}
+    @Override
+    public void onRowReplaced(int index, SignalRow row) {
+        stopIfRunning();
+    }
 
-	@Override
-	public void onRowsUpdated(int fromIndex, int toIndex) {
-		stopIfRunning();
-	}
+    @Override
+    public void onRowsUpdated(int fromIndex, int toIndex) {
+        stopIfRunning();
+    }
 
-	@Override
-	public void signalStructureChanged() {
-		stopIfRunning();
-	}
+    @Override
+    public void signalStructureChanged() {
+        stopIfRunning();
+    }
 }

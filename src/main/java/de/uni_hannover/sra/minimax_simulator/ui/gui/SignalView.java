@@ -143,9 +143,6 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
             String lookUp = cols.get(j).getId();
             if (signalValues.containsKey(lookUp)) {
                 row.add(String.valueOf(signalValues.get(lookUp).intValue()));
-                if (j == 3) {
-                    //System.out.println("ALUSelectA: " + String.valueOf(signalValues.get(lookUp).intValue()));
-                }
             }
             else {
                 if ( (j >= 3 && j <= 5) || j == 7 || j == 8) {
@@ -218,7 +215,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
      * @return
      *          an unmodifiable list with all column IDs
      */
-    private List<String> getAllColumnIDs() {
+    private static List<String> getAllColumnIDs() {
         List<String> columnIDs = new ArrayList<>();
         columnIDs.add("BREAKPOINT");
         columnIDs.add("LABEL");
@@ -288,7 +285,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
         }
 
         Object caller = ae.getSource();
-        int difference = 0;
+        int difference;
         if (caller.equals(btnMoveUp)) {
             difference = -1;
         }

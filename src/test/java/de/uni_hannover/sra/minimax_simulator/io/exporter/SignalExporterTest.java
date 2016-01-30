@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class SignalExporterTest {
 
+    /** temporary folder */
     @Rule
     public TemporaryFolder tmpDir = new TemporaryFolder();
 

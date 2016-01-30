@@ -19,107 +19,68 @@ import java.util.ResourceBundle.Control;
  */
 public class PropertyResourceControl extends Control {
 
-	private final String basePath;
+    private final String basePath;
 
-	/**
-	 * Constructs a new {@code PropertyResourceControl} with the specified base path.
-	 *
-	 * @param basePath
-	 *          the base path
-	 */
-	public PropertyResourceControl(String basePath) {
-		if (!basePath.endsWith("/")) {
-			basePath = basePath + "/";
-		}
-		this.basePath = basePath;
-	}
+    /**
+     * Constructs a new {@code PropertyResourceControl} with the specified base path.
+     *
+     * @param basePath
+     *          the base path
+     */
+    public PropertyResourceControl(String basePath) {
+        if (!basePath.endsWith("/")) {
+            basePath = basePath + "/";
+        }
+        this.basePath = basePath;
+    }
 
-	/*
-	@Override
-	public String toBundleName(String baseName, Locale locale)
-	{
-		StringBuilder sb = new StringBuilder(basePath);
-		sb.append("/");
+    @Override
+    public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader,
+            boolean reload) throws IllegalAccessException, InstantiationException, IOException {
+        if (baseName == null || locale == null || format == null || loader == null) {
+            throw new NullPointerException();
+        }
 
-		if (locale == Locale.ROOT)
-		{
-			sb.append("root");
-			return sb.toString();
-		}
+        String bundleName = toBundleName("", locale);
+        if (bundleName.isEmpty()) {
+            bundleName = "_base";
+        }
 
-		String language = locale.getLanguage();
-		String country = locale.getCountry();
-		String variant = locale.getVariant();
+        String bundleFile = basePath + "loc" + bundleName + "/" + baseName + ".properties";
 
-		if (language.isEmpty() && country.isEmpty() && variant.isEmpty())
-		{
-			sb.append("root");
-			return sb.toString();
-		}
+        Map<String, Object> entries = new HashMap<>();
 
-		if (!variant.isEmpty())
-		{
-			sb.append(language).append('_').append(country).append('_').append(variant);
-		}
-		else if (!country.isEmpty())
-		{
-			sb.append(language).append('_').append(country);
-		}
-		else
-		{
-			sb.append(language);
-		}
-		return sb.toString();
-	}
-	*/
+        InputStream is = null;
+        try {
+            is = this.getClass().getClassLoader().getResourceAsStream(bundleFile);
+            if (is == null) {
+                throw new FileNotFoundException("Resource not found: " + (new File(bundleFile)).getAbsolutePath());
+            }
+            parsePropertiesFile(is, entries);
+        } finally {
+            IOUtils.closeQuietly(is);
+        }
 
-	@Override
-	public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader,
-			boolean reload) throws IllegalAccessException, InstantiationException, IOException {
-		if (baseName == null || locale == null || format == null || loader == null) {
-			throw new NullPointerException();
-		}
+        return new MapResourceBundle(entries);
+    }
 
-		String bundleName = toBundleName("", locale);
-		if (bundleName.isEmpty()) {
-			bundleName = "_base";
-		}
-
-		String bundleFile = basePath + "loc" + bundleName + "/" + baseName + ".properties";
-
-		Map<String, Object> entries = new HashMap<String, Object>();
-		
-		InputStream is = null;
-		try {
-			is = this.getClass().getClassLoader().getResourceAsStream(bundleFile);
-			if (is == null) {
-				throw new FileNotFoundException("Resource not found: " + (new File(bundleFile)).getAbsolutePath());
-			}
-			parsePropertiesFile(is, entries);
-		} finally {
-			IOUtils.closeQuietly(is);
-		}
-
-		return new MapResourceBundle(entries);
-	}
-
-	/**
-	 * Parses a properties file as {@link InputStream} and puts the parsed properties to the
-	 * specified map.
-	 *
-	 * @param is
-	 *          the properties file as {@code InputStream}
-	 * @param map
-	 *          the map to hold the parsed properties
-	 * @throws IOException
-	 *          thrown if there was an IO error during parsing
-	 */
-	protected static void parsePropertiesFile(InputStream is, Map<String, Object> map) throws IOException {
-		Properties prop = new Properties();
-		prop.load(is);
-		for (Entry<Object, Object> e : prop.entrySet()) {
-			map.put((String) e.getKey(), e.getValue());
-		}
-		prop.clear();
-	}
+    /**
+     * Parses a properties file as {@link InputStream} and puts the parsed properties to the
+     * specified map.
+     *
+     * @param is
+     *          the properties file as {@code InputStream}
+     * @param map
+     *          the map to hold the parsed properties
+     * @throws IOException
+     *          thrown if there was an IO error during parsing
+     */
+    protected static void parsePropertiesFile(InputStream is, Map<String, Object> map) throws IOException {
+        Properties prop = new Properties();
+        prop.load(is);
+        for (Entry<Object, Object> e : prop.entrySet()) {
+            map.put((String) e.getKey(), e.getValue());
+        }
+        prop.clear();
+    }
 }

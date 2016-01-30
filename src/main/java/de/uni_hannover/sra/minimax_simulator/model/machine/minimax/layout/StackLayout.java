@@ -12,41 +12,41 @@ import java.util.Set;
  */
 class StackLayout implements Layout {
 
-	private static final EnumSet<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.HORIZONTAL_CENTER,
-																AttributeType.BOTTOM);
+    private static final EnumSet<AttributeType> ATTRIBUTES = EnumSet.of(AttributeType.HORIZONTAL_CENTER,
+                                                                AttributeType.BOTTOM);
 
-	private final Constraint vertical;
-	private final Constraint horizontal;
+    private final Constraint vertical;
+    private final Constraint horizontal;
 
-	/**
-	 * Constructs a new {@code StackLayout} with the specified anchor and spacing.
-	 *
-	 * @param anchor
-	 *          the name of the anchor
-	 * @param spacing
-	 *          the spacing
-	 */
-	StackLayout(String anchor, int spacing) {
-		vertical = new RelativeConstraint(new Attribute(anchor, AttributeType.TOP), -spacing);
-		horizontal = new RelativeConstraint(new Attribute(anchor, AttributeType.HORIZONTAL_CENTER));
-	}
+    /**
+     * Constructs a new {@code StackLayout} with the specified anchor and spacing.
+     *
+     * @param anchor
+     *          the name of the anchor
+     * @param spacing
+     *          the spacing
+     */
+    StackLayout(String anchor, int spacing) {
+        vertical = new RelativeConstraint(new Attribute(anchor, AttributeType.TOP), -spacing);
+        horizontal = new RelativeConstraint(new Attribute(anchor, AttributeType.HORIZONTAL_CENTER));
+    }
 
-	@Override
-	public Constraint getConstraint(AttributeType attribute) {
-		switch (attribute) {
-			case HORIZONTAL_CENTER:
-				return horizontal;
-			case BOTTOM:
-				return vertical;
+    @Override
+    public Constraint getConstraint(AttributeType attribute) {
+        switch (attribute) {
+            case HORIZONTAL_CENTER:
+                return horizontal;
+            case BOTTOM:
+                return vertical;
 
-			default:
-				// never happens
-				throw new AssertionError();
-		}
-	}
+            default:
+                // never happens
+                throw new AssertionError();
+        }
+    }
 
-	@Override
-	public Set<AttributeType> getConstrainedAttributes() {
-		return ATTRIBUTES;
-	}
+    @Override
+    public Set<AttributeType> getConstrainedAttributes() {
+        return ATTRIBUTES;
+    }
 }

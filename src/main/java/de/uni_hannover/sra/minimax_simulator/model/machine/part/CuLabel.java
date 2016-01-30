@@ -12,15 +12,15 @@ import de.uni_hannover.sra.minimax_simulator.ui.schematics.render.Sprite;
  */
 public class CuLabel extends Label {
 
-	/**
-	 * Constructs a new instance of the {@code CuLabel}.
-	 */
-	public CuLabel() {
-		super("CU");
-	}
+    /**
+     * Constructs a new instance of the {@code CuLabel}.
+     */
+    public CuLabel() {
+        super("CU");
+    }
 
-	@Override
-	public Sprite createSprite() {
-		return new CuLabelSprite(this);
-	}
+    @Override
+    public Sprite createSprite() {
+        return new CuLabelSprite(this);
+    }
 }

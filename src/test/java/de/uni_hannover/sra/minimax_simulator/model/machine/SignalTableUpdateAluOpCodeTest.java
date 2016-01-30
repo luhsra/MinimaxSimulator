@@ -32,6 +32,9 @@ public class SignalTableUpdateAluOpCodeTest {
     private static MachineConfiguration machineConfig;
     private static final String OP = "ALU_CTRL";
 
+    /**
+     * Initializes the test setup.
+     */
     @BeforeClass
     public static void initialize() {
         Project project = new NewProjectBuilder().buildProject();

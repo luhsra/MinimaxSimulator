@@ -15,32 +15,32 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class WireSprite extends CircuitSprite {
 
-	private final Wire wire;
+    private final Wire wire;
 
-	/**
-	 * Initializes the {@code WireSprite}.
-	 *
-	 * @param wire
-	 *          the {@code Wire} this sprite will represent
-	 */
-	public WireSprite(Wire wire) {
-		this.wire = checkNotNull(wire);
-	}
+    /**
+     * Initializes the {@code WireSprite}.
+     *
+     * @param wire
+     *          the {@code Wire} this sprite will represent
+     */
+    public WireSprite(Wire wire) {
+        this.wire = checkNotNull(wire);
+    }
 
-	@Override
-	public void paint(GraphicsContext gc) {
-		Point[] points = wire.getPoints();
+    @Override
+    public void paint(GraphicsContext gc) {
+        Point[] points = wire.getPoints();
 
-		double lineWidth = gc.getLineWidth();
-		gc.setLineWidth(1.0);
-		int i = 1;
-		for (; i < points.length; i++) {
-			gc.strokeLine(points[i-1].x + 0.5, points[i-1].y + 0.5, points[i].x + 0.5, points[i].y + 0.5);
-		}
-		gc.setLineWidth(lineWidth);
+        double lineWidth = gc.getLineWidth();
+        gc.setLineWidth(1.0);
+        int i = 1;
+        for (; i < points.length; i++) {
+            gc.strokeLine(points[i-1].x + 0.5, points[i-1].y + 0.5, points[i].x + 0.5, points[i].y + 0.5);
+        }
+        gc.setLineWidth(lineWidth);
 
-		if (!(wire.getDrain() instanceof  Junction)) {
-			drawArrow(gc, points[i-2], points[i-1]);
-		}
-	}
+        if (!(wire.getDrain() instanceof  Junction)) {
+            drawArrow(gc, points[i-2], points[i-1]);
+        }
+    }
 }

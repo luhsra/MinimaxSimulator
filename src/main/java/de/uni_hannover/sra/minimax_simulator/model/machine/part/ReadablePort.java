@@ -13,49 +13,49 @@ import java.util.Set;
  */
 public class ReadablePort extends Part implements ResultPort {
 
-	private final IngoingPin in;
+    private final IngoingPin in;
 
-	private int value;
+    private int value;
 
-	/**
-	 * Constructs a new {@code ReadablePort}.
-	 */
-	public ReadablePort() {
-		in = new IngoingPin(this);
-	}
+    /**
+     * Constructs a new {@code ReadablePort}.
+     */
+    public ReadablePort() {
+        in = new IngoingPin(this);
+    }
 
-	@Override
-	public void update() {
-		value = in.read();
-	}
+    @Override
+    public void update() {
+        value = in.read();
+    }
 
-	/**
-	 * Gets the {@link IngoingPin} of the {@code ReadablePort}.
-	 *
-	 * @return
-	 *          the input pin
-	 */
-	public IngoingPin getIn() {
-		return in;
-	}
+    /**
+     * Gets the {@link IngoingPin} of the {@code ReadablePort}.
+     *
+     * @return
+     *          the input pin
+     */
+    public IngoingPin getIn() {
+        return in;
+    }
 
-	@Override
-	public Set<Circuit> getSuccessors() {
-		return Collections.emptySet();
-	}
+    @Override
+    public Set<Circuit> getSuccessors() {
+        return Collections.emptySet();
+    }
 
-	@Override
-	public int read() {
-		return value;
-	}
+    @Override
+    public int read() {
+        return value;
+    }
 
-	@Override
-	public void reset() {
-		value = 0;
-	}
+    @Override
+    public void reset() {
+        value = 0;
+    }
 
-	@Override
-	public String toString() {
-		return "ReadablePort[name=" + getName() + ", value=" + value + "]";
-	}
+    @Override
+    public String toString() {
+        return "ReadablePort[name=" + getName() + ", value=" + value + "]";
+    }
 }

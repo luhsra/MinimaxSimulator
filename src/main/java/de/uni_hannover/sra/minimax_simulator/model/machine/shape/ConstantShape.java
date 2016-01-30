@@ -11,26 +11,26 @@ import de.uni_hannover.sra.minimax_simulator.ui.layout.Component;
  */
 public class ConstantShape extends TextRenderShape {
 
-	/**
-	 * Initializes the {@code ConstantShape}.
-	 *
-	 * @param fontProvider
-	 *          the {@link FontMetricsProvider} used for font measuring
-	 */
-	public ConstantShape(FontMetricsProvider fontProvider) {
-		super(fontProvider);
-	}
+    /**
+     * Initializes the {@code ConstantShape}.
+     *
+     * @param fontProvider
+     *          the {@link FontMetricsProvider} used for font measuring
+     */
+    public ConstantShape(FontMetricsProvider fontProvider) {
+        super(fontProvider);
+    }
 
-	@Override
-	public void updateShape(Component component) {
-		Constant constant = (Constant) component;
+    @Override
+    public void updateShape(Component component) {
+        Constant constant = (Constant) component;
 
-		// likely to be cached
-		component.setDimension(getStringDimension(constant.getConstantStr()));
-	}
+        // likely to be cached
+        component.setDimension(getStringDimension(constant.getConstantStr()));
+    }
 
-	@Override
-	public void layout(Component component) {
-
-	}
+    @Override
+    public void layout(Component component) {
+        // there is no need for this method for a ConstantShape
+    }
 }

@@ -13,24 +13,24 @@ import org.junit.Test;
  */
 public class PagedArrayMemoryTest {
 
-	/**
-	 * Tests the paged array memory.
-	 */
-	@Test
-	public void checkPagedMemory() {
-		PagedArrayMemory mem = new PagedArrayMemory(24, 12);
+    /**
+     * Tests the paged array memory.
+     */
+    @Test
+    public void checkPagedMemory() {
+        PagedArrayMemory mem = new PagedArrayMemory(24, 12);
 
-		MemoryState state = mem.getMemoryState();
+        MemoryState state = mem.getMemoryState();
 
-		int val = state.getInt(1000);
-		assertEquals(0, val);
+        int val = state.getInt(1000);
+        assertEquals(0, val);
 
-		state.setInt(1000, 10001);
-		val = state.getInt(1000);
-		assertEquals(10001, val);
+        state.setInt(1000, 10001);
+        val = state.getInt(1000);
+        assertEquals(10001, val);
 
-		state.setInt(4096, 2);
-		val = state.getInt(4096);
-		assertEquals(2, val);
-	}
+        state.setInt(4096, 2);
+        val = state.getInt(4096);
+        assertEquals(2, val);
+    }
 }

@@ -15,25 +15,25 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class MapResourceBundle extends ResourceBundle {
 
-	private final Map<String, Object> map;
+    private final Map<String, Object> map;
 
-	/**
-	 * Constructs a new {@code MapResourceBundle} with the specified map of resources.
-	 *
-	 * @param map
-	 *          a map of resources
-	 */
-	public MapResourceBundle(Map<String, Object> map) {
-		this.map = checkNotNull(map);
-	}
+    /**
+     * Constructs a new {@code MapResourceBundle} with the specified map of resources.
+     *
+     * @param map
+     *          a map of resources
+     */
+    public MapResourceBundle(Map<String, Object> map) {
+        this.map = checkNotNull(map);
+    }
 
-	@Override
-	protected Object handleGetObject(String key) {
-		return map.get(key);
-	}
+    @Override
+    protected Object handleGetObject(String key) {
+        return map.get(key);
+    }
 
-	@Override
-	public Enumeration<String> getKeys() {
-		return new IteratorEnumeration<String>(map.keySet());
-	}
+    @Override
+    public Enumeration<String> getKeys() {
+        return new IteratorEnumeration<>(map.keySet());
+    }
 }
