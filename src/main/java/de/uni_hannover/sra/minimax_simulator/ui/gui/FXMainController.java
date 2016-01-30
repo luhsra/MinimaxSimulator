@@ -176,16 +176,16 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
-        TextResource res = Main.getTextResource("menu");
+        TextResource resMenu = Main.getTextResource("menu");
         // menu: project
-        menuProject.setText(res.get("project"));
+        menuProject.setText(resMenu.get("project"));
         final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, exitApplication,
                 viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout));
         for (MenuItem mi : projectMenu) {
             String id = mi.getId().replace("_", ".");
-            String mne = res.get(id + ".mne");
+            String mne = resMenu.get(id + ".mne");
 
-            String text = res.get(id);
+            String text = resMenu.get(id);
             if (!mne.isEmpty()) {
                 text = text.replaceFirst(mne, "_"+mne);
                 mi.setMnemonicParsing(true);
@@ -196,9 +196,9 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         final List<Menu> allMenus = new ArrayList<>(Arrays.asList(menuProject, menuView, menuHelp));
         for (Menu m : allMenus) {
             String id = m.getId().replace("_", ".");
-            String mne = res.get(id + ".mne");
+            String mne = resMenu.get(id + ".mne");
 
-            String text = res.get(id);
+            String text = resMenu.get(id);
             if (!mne.isEmpty()) {
                 text = text.replaceFirst(mne, "_"+mne);
                 m.setMnemonicParsing(true);
@@ -207,7 +207,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         }
 
         // menu: help
-        menuHelp.setText(res.get("help"));
+        menuHelp.setText(resMenu.get("help"));
 
         // tabs
         TextResource resProject = Main.getTextResource("project");

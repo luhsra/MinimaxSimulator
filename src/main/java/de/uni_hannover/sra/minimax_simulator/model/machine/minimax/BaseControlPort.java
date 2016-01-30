@@ -18,7 +18,7 @@ public enum BaseControlPort {
     MEM_RW,
     ALU_CTRL;
 
-    private final Port port;
+    private final transient Port port;
 
     /**
      * Sets the {@link Port} belonging to the {@code BaseControlPort}.

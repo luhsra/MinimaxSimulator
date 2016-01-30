@@ -146,7 +146,7 @@ class RegisterManager {
      * @return
      *          the built ID of the register
      */
-    private String buildRegisterId(String registerName) {
+    private static String buildRegisterId(String registerName) {
         return Parts.REGISTER_ + "<" + registerName + ">";
     }
 }

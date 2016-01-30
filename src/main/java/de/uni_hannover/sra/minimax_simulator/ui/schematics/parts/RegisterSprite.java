@@ -48,8 +48,8 @@ public class RegisterSprite extends CircuitSprite {
             gc.setFill(javafx.scene.paint.Color.BLACK);
         }
 
-        double xCenter = b.x + b.w / 2;
-        double yCenter = b.y + b.h / 2;
+        double xCenter = b.x + b.w / 2.0;
+        double yCenter = b.y + b.h / 2.0;
 
         gc.strokeRect(b.x + 0.5, b.y + 0.5, b.w, b.h);
         gc.fillText(name, xCenter - textWidth / 2, yCenter + textHeight / 4 + 1);

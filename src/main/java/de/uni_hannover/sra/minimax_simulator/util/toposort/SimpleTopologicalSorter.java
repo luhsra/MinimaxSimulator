@@ -146,7 +146,7 @@ public class SimpleTopologicalSorter implements TopologicalSorter {
      * @return
      *          a list of the resolved dependencies
      */
-    private <T> List<T> resolveDependencyMap(Map<T, Set<T>> dependencies) {
+    private static <T> List<T> resolveDependencyMap(Map<T, Set<T>> dependencies) {
         List<T> result = new ArrayList<>(dependencies.size());
         resolveDependencyMap(dependencies, result);
         return result;

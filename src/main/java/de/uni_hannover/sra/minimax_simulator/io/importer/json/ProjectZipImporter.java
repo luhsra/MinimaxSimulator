@@ -83,7 +83,7 @@ public class ProjectZipImporter implements ProjectImporter {
      * @throws ProjectImportException
      *            thrown if there is any other error during import
      */
-    private MachineConfiguration getMachineConfiguration(ZipFile zip) throws IOException, ProjectImportException {
+    private static MachineConfiguration getMachineConfiguration(ZipFile zip) throws IOException, ProjectImportException {
         ZipEntry machineEntry = zip.getEntry("machine.json");
         if (machineEntry == null) {
             throw new FileNotFoundException("Missing machine.json in project archive");
@@ -111,7 +111,7 @@ public class ProjectZipImporter implements ProjectImporter {
      * @throws ProjectImportException
      *            thrown if there is any other error during import
      */
-    private ProjectConfiguration getProjectConfiguration(ZipFile zip) throws IOException, ProjectImportException {
+    private static ProjectConfiguration getProjectConfiguration(ZipFile zip) throws IOException, ProjectImportException {
         ZipEntry userEntry = zip.getEntry("user.json");
         if (userEntry == null) {
             throw new FileNotFoundException("Missing user.json in project archive");
@@ -137,7 +137,7 @@ public class ProjectZipImporter implements ProjectImporter {
      * @throws JSONException
      *            thrown if there is an error during parsing the JSON string
      */
-    private SignalTable getSignalTable(ZipFile zip) throws IOException {
+    private static SignalTable getSignalTable(ZipFile zip) throws IOException {
         ZipEntry signalEntry = zip.getEntry("signal.json");
         if (signalEntry == null) {
             throw new FileNotFoundException("Missing signal.json in project archive");

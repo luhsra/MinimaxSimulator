@@ -47,8 +47,8 @@ public class AluSprite extends CircuitSprite {
     public void paint(GraphicsContext gc) {
         debugBounds(gc, alu.getBounds());
 
-        double xCenter = alu.getBounds().x + alu.getBounds().w / 2;
-        double yCenter = alu.getBounds().y + alu.getBounds().h / 2;
+        double xCenter = alu.getBounds().x + alu.getBounds().w / 2.0;
+        double yCenter = alu.getBounds().y + alu.getBounds().h / 2.0;
 
         gc.save();
         gc.setLineWidth(1);

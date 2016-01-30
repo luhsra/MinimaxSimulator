@@ -215,7 +215,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
      * @return
      *          an unmodifiable list with all column IDs
      */
-    private List<String> getAllColumnIDs() {
+    private static List<String> getAllColumnIDs() {
         List<String> columnIDs = new ArrayList<>();
         columnIDs.add("BREAKPOINT");
         columnIDs.add("LABEL");

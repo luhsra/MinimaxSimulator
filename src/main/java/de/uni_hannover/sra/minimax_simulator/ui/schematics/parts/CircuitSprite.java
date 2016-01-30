@@ -65,7 +65,7 @@ public abstract class CircuitSprite implements Sprite {
      *          the end point
      */
     public void drawArrow(GraphicsContext gc, Point point1, Point point2) {
-        double angle = Math.atan2(point2.y - point1.y, point2.x - point1.x);
+        double angle = Math.atan2( (double) point2.y - point1.y, (double) point2.x - point1.x);
         Affine tx = new Affine();
         tx.setToIdentity();
         tx.appendTranslation(point2.x, point2.y);

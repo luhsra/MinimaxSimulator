@@ -39,7 +39,7 @@ public class NewProjectBuilder implements ProjectBuilder {
      * @param table
      *          the machine's control table
      */
-    private void createDefaultProgram(SignalTable table) {
+    private static void createDefaultProgram(SignalTable table) {
         SignalRow[] rows = new SignalRow[4];
         for (int i = 0; i < rows.length; i++) {
             rows[i] = new SignalRow();
