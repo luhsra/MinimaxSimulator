@@ -35,7 +35,7 @@ public class MinimaxConfigurationBuilder implements MachineConfigurationBuilder 
         baseRegisters = new ArrayList<>();
         registerExtensions = new ArrayList<>();
         allowedMuxInputs = new ArrayList<>();
-        selectedMuxInputs = new HashMap<>();
+        selectedMuxInputs = new EnumMap<>(MuxType.class);
 
         for (MuxType m : MuxType.values()) {
             selectedMuxInputs.put(m, new ArrayList<>());

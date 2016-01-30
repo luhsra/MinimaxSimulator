@@ -45,7 +45,7 @@ class ConstantInputGroupManager implements MuxInputGroupManager {
 
         namesOfConstants = new HashSet<>();
 
-        inputEntries = new HashMap<>();
+        inputEntries = new EnumMap<>(MuxType.class);
         for (MuxType type : MuxType.values())
             inputEntries.put(type, new ArrayList<>());
 

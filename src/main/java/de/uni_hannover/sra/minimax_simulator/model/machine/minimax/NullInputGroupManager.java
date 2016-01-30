@@ -7,10 +7,7 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.MuxInputManag
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.Group;
 import de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group.MuxNullGroup;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A {@link MuxInputGroupManager} for {@link NullMuxInput}s.
@@ -32,7 +29,7 @@ class NullInputGroupManager implements MuxInputGroupManager {
     public NullInputGroupManager(GroupManager groupManager) {
         this.groupManager = groupManager;
 
-        inputEntries = new HashMap<>();
+        inputEntries = new EnumMap<>(MuxType.class);
         for (MuxType type : MuxType.values()) {
             inputEntries.put(type, new ArrayList<>());
         }
