@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - some GUI elements were not correctly reset after loading or creating a project
 - cancel action of waiting dialogs was not processed if the dialog was closed via pressing escape
+- machine schematics exported as JPG did not have a white background
 
 ## 1.0.1 - 2015-10-15
 ### Fixed

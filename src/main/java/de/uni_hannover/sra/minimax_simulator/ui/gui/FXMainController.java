@@ -25,16 +25,25 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 import javax.imageio.ImageIO;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -490,10 +499,22 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         UIUtil.executeWorker(() -> {
             // write the image to disk
             try {
-                // TODO: pure JavaFX
-                if (!ImageIO.write(SwingFXUtils.fromFXImage(image, null), ending, imageFile)) {
-                    ioError(imageFile.getPath());
-                    return;
+                if ("jpg".equals(ending)) {
+                    // remove alpha channel
+                    BufferedImage bImg = new BufferedImage( (int) image.getWidth(), (int) image.getHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics2D g = bImg.createGraphics();
+                    g.drawImage(SwingFXUtils.fromFXImage(image, null), 0, 0, java.awt.Color.WHITE, null);
+                    g.dispose();
+                    if (!ImageIO.write(bImg, ending, imageFile)) {
+                        ioError(imageFile.getPath());
+                        return;
+                    }
+                }
+                else {
+                    if (!ImageIO.write(SwingFXUtils.fromFXImage(image, null), ending, imageFile)) {
+                        ioError(imageFile.getPath());
+                        return;
+                    }
                 }
             } catch (IOException e1) {
                 // (almost) ignore
