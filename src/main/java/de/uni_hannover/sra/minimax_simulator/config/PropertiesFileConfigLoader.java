@@ -187,10 +187,8 @@ public class PropertiesFileConfigLoader implements ConfigurationLoader {
                         value = Parser.auto(textValue, fieldClass);
                     }
                     break;
-
                 default:
                     throw new IllegalArgumentException("Unsupported field type: " + fieldType);
-
             }
 
             try {
