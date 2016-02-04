@@ -14,6 +14,7 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 
@@ -50,7 +51,7 @@ public class SignalExporterTest {
     @Test
     public void testCsvExporter() throws IOException {
         String lineSeparator = System.getProperty("line.separator");
-        if (lineSeparator == null || lineSeparator.isEmpty()) {
+        if (lineSeparator.isEmpty()) {
             lineSeparator = "\n";
         }
 
@@ -69,6 +70,17 @@ public class SignalExporterTest {
         csvEx.exportSignalTable(table, config);
 
         String exported = IOUtils.readFile(file.getAbsolutePath());
+        assertEquals("signal table csv export", expected, exported);
+
+        // test line separator property being null
+        Properties p = new Properties(System.getProperties());
+        p.setProperty("line.separator", "");
+        System.setProperties(p);
+        assertEquals("line separator", true, System.getProperty("line.separator").isEmpty());
+
+        expected.replace(lineSeparator, "\n");
+        csvEx.exportSignalTable(table, config);
+        exported = IOUtils.readFile(file.getAbsolutePath());
         assertEquals("signal table csv export", expected, exported);
     }
 

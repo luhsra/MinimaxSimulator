@@ -28,7 +28,7 @@ public class SignalCsvExporter extends AbstractSignalExporter {
     @Override
     public void exportSignalTable(SignalTable table, SignalConfiguration config) throws IOException {
         String lineSeparator = System.getProperty("line.separator");
-        if (lineSeparator == null || lineSeparator.isEmpty()) {
+        if (lineSeparator.isEmpty()) {
             lineSeparator = "\n";
         }
 
