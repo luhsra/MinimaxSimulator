@@ -23,6 +23,10 @@ public class PartNameTest {
     @Test
     public void checkNames() throws IllegalAccessException {
         for (Field field : Parts.class.getDeclaredFields()) {
+            if (field.isSynthetic()) {
+                // e.g. JaCoCo coverage analysis
+                continue;
+            }
             assertEquals(field.getName(), field.get(null));
         }
     }
