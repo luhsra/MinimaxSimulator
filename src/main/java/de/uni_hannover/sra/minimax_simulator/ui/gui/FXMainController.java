@@ -35,7 +35,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -43,7 +42,6 @@ import javax.imageio.ImageIO;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.WritableRenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
