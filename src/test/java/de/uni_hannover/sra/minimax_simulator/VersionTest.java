@@ -31,6 +31,32 @@ public class VersionTest {
     }
 
     /**
+     * Tests the initialization of the version class.
+     */
+    @Test
+    public void testConstructor() {
+        Version nullVersion = new Version(null);
+        assertEquals(false, "".equals(String.valueOf(nullVersion.getJvmMajor())));
+        assertEquals(false, "".equals(String.valueOf(nullVersion.getJvmBuild())));
+        assertEquals(true, "".equals(nullVersion.getAuthorName()));
+        assertEquals(true, "".equals(nullVersion.getCompanyName()));
+        assertEquals(true, "".equals(nullVersion.getModuleName()));
+        assertEquals(true, "".equals(nullVersion.getBuildJdk()));
+        assertEquals(true, "".equals(nullVersion.getBuildTime()));
+        assertEquals(true, "".equals(nullVersion.getVersionNumber()));
+        assertEquals(true, "".equals(nullVersion.getRevisionNumber()));
+        assertEquals(false, nullVersion.isJar());
+
+        String[] shortDesc = nullVersion.getShortInfoStrings();
+        assertEquals(shortDesc[0], "[Module: ]");
+        assertEquals(shortDesc[1], "Version:  - Revision: ");
+
+        String[] fullDesc = nullVersion.getFullInfoStrings();
+        assertEquals(fullDesc[0], "[Module: ]");
+        assertEquals(fullDesc[1], "Version:  - Revision:  - Time:  - Build JDK: ");
+    }
+
+    /**
      * Tests the implementation of {@link Version#isJvmEqual(int, int, int, int)}.
      */
     @Test
