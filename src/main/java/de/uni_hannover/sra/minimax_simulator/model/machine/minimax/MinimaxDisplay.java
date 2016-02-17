@@ -102,7 +102,7 @@ class MinimaxDisplay implements MachineDisplay, FontMetricsProvider {
 
     @Override
     public void removeMachineDisplayListener(MachineDisplayListener l) {
-        listeners.add(l);
+        listeners.remove(l);
     }
 
     /**
