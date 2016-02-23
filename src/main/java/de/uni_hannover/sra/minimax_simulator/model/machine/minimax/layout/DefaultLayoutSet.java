@@ -27,7 +27,7 @@ public class DefaultLayoutSet implements LayoutSet {
     public void addLayout(String name, Layout layout) {
 
         if (layouts.containsKey(name)) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Duplicate layout: " + name);
         }
 
         layouts.put(name, layout);
