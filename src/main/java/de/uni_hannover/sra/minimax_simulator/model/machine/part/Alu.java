@@ -54,17 +54,13 @@ public class Alu extends Part implements SpriteOwner {
             AluOperation op = aluOperations.get(mode);
             result = op.execute(inA.read(), inB.read());
 
-            if (LOG.isLoggable(Level.FINER)) {
-                LOG.log(Level.FINER, "Applying ALU operation " + op + " to " + inA.read()
-                        + " and " + inB.read() + " with result " + result);
-            }
+            LOG.log(Level.FINER, "Applying ALU operation " + op + " to " + inA.read()
+                    + " and " + inB.read() + " with result " + result);
         }
         else {
             result = 0;
 
-            if (LOG.isLoggable(Level.FINER)) {
-                LOG.log(Level.FINER, "Unknown ALU operation: " + mode + ", writing 0");
-            }
+            LOG.log(Level.FINER, "Unknown ALU operation: " + mode + ", writing 0");
         }
 
         outZero.write(result == 0 ? 1 : 0);
