@@ -1,9 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine;
 
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests the arithmetic and logic of the ALU by testing the different ALU operations.
@@ -46,6 +46,12 @@ public class AluTest {
         assertEquals("b_div_a", -1, AluOperation.B_DIV_A.execute(c, d));
         assertEquals("a_mod_b", -2, AluOperation.A_MOD_B.execute(c, d));
         assertEquals("b_mod_a", 1, AluOperation.B_MOD_A.execute(c, d));
+
+        // division by zero etc.
+        assertEquals("a_div_b zero", 0, AluOperation.A_DIV_B.execute(c, 0));
+        assertEquals("b_div_a zero", 0, AluOperation.B_DIV_A.execute(0, d));
+        assertEquals("a_mod_b zero", 0, AluOperation.A_MOD_B.execute(d, 0));
+        assertEquals("b_mod_a zero", 0, AluOperation.B_MOD_A.execute(0, c));
     }
 
     /**
@@ -99,5 +105,4 @@ public class AluTest {
         assertEquals("b_rotr", 0xC0000000, AluOperation.B_ROTR.execute(d, c));
         assertEquals("b_rotr_a", 0x60000000, AluOperation.B_ROTR_A.execute(d, c));
     }
-
 }
