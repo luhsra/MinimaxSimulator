@@ -68,6 +68,10 @@ public class HexStringConverter extends StringConverter<Integer> {
         if (text == null || text.isEmpty())
             return null;
 
+        if (text.length() > 2 && "0x".equals(text.substring(0, 2))) {
+            text = text.substring(2);
+        }
+
         try {
             Long l = Long.valueOf(text, 16);
             int value = l.intValue();
