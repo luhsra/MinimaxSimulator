@@ -148,7 +148,8 @@ public class Main extends javafx.application.Application {
 
     /**
      * Gets the {@link ResourceBundleLoader} of the application.<br>
-     * If it does not already exist it will be initialized.
+     * If it does not already exist it will be initialized with the correct language.
+     * The language setting of the JVM will be set to the same language.
      *
      * @return
      *          the {@code ResourceBundleLoader} used by the application
@@ -162,6 +163,7 @@ public class Main extends javafx.application.Application {
             else {
                 try {
                     locale = new Locale(Config.LOCALE);
+                    Locale.setDefault(locale);
                 } catch (Exception e) {
                     // locale not supported
                     locale = Locale.getDefault();
