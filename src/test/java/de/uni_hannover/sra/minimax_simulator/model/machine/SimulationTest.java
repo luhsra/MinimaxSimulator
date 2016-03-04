@@ -36,6 +36,7 @@ public class SimulationTest {
         // initialize simulation
         Simulation simulation = project.getSimulation();
         simulation.init();
+        assertEquals("cycle count before start", 0, simulation.getCyclesCount());
         simulation.step();
         simulation.step();
 
@@ -49,6 +50,7 @@ public class SimulationTest {
             }
             assertEquals("Register " + name + " value first cycle", expected, simulation.getRegisterValue(name).get());
         });
+        assertEquals("cycle count after first cycle", 1, simulation.getCyclesCount());
 
         // check results after second cycle
         simulation.step();
@@ -200,6 +202,7 @@ public class SimulationTest {
         // cycle fourteen only checks PC == 0
         simulation.step();
         simulation.step();
+        assertEquals("cycle count", 14, simulation.getCyclesCount());
 
         // check result after fifteenth cycle
         simulation.step();
@@ -308,6 +311,7 @@ public class SimulationTest {
         // cycle twenty-three only checks PC == 0
         simulation.step();
         simulation.step();
+        assertEquals("cycle count", 23, simulation.getCyclesCount());
 
         // check result after twenty-fourth cycle
         simulation.step();
@@ -381,16 +385,23 @@ public class SimulationTest {
         // check result after thirtieth cycle
         simulation.step();
         simulation.step();
-        assertEquals("ALU result twenty-eighth cycle", (Integer) 2048, simulation.getAluResult().get());
+        assertEquals("ALU result thirtieth cycle", (Integer) 2048, simulation.getAluResult().get());
         registers.forEach((RegisterExtension register) -> {
             String name = register.getName();
             Integer expected = 0;
             if ("ACCU".equals(name) || "MDR".equals(name)) {
                 expected = 2048;
             }
-            assertEquals("Register " + name + " value twenty-eighth cycle", expected, simulation.getRegisterValue(name).get());
+            assertEquals("Register " + name + " value thirtieth cycle", expected, simulation.getRegisterValue(name).get());
         });
         assertEquals("written memory result", 2048, simulation.getMemoryState().getMemoryState().getInt(0));
+        assertEquals("cycle count after last cycle", 30, simulation.getCyclesCount());
+
+        // reset simulation
+        simulation.reset();
+
+        // run till end
+        simulation.run();
 
         // close the simulation
         simulation.stop();

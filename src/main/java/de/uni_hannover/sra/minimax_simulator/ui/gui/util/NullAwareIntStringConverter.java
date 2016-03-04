@@ -6,12 +6,12 @@ import javafx.util.StringConverter;
  * The {@code NullAwareIntStringConverter} is capable of generating a String representation of an Integer for different numeral systems e.g. unsigned hexadecimal and signed decimal.<br>
  * <br>
  * <b>Caution:</b><br>
- * Due to the use of the synchronous {@link javafx.scene.control.Spinner}s at {@link de.uni_hannover.sra.minimax_simulator.ui.gui.MuxView} the fromString method interprets every String as decimal input.
+ * Due to the use of the synchronous {@link javafx.scene.control.Spinner}s at {@link de.uni_hannover.sra.minimax_simulator.ui.gui.MuxView} the fromString method always returns a decimal value.
  *
  * @author Martin L&uuml;ck
  * @author Philipp Rohde
  */
-public class NullAwareIntStringConverter extends StringConverter {
+public class NullAwareIntStringConverter extends StringConverter<Integer> {
 
     private final int radix;
     private final boolean signed;
@@ -37,26 +37,25 @@ public class NullAwareIntStringConverter extends StringConverter {
     }
 
     @Override
-    public String toString(Object value) {
+    public String toString(Integer value) {
         if (value == null) {
             return "";
         }
 
-        int nr = (Integer) value;
         String str;
         if (!signed) {
             // for unsigned values
-            str = Long.toString(nr & 0xFFFFFFFFL, radix);
+            str = Long.toString(value & 0xFFFFFFFFL, radix);
         }
         else {
             // for signed values
-            str = Integer.toString(nr, radix);
+            str = Integer.toString(value, radix);
         }
         return radix <= 10 ? str : str.toUpperCase();
     }
 
     @Override
-    public Object fromString(String text) {
+    public Integer fromString(String text) {
         if (text == null || text.isEmpty()) {
             return null;
         }

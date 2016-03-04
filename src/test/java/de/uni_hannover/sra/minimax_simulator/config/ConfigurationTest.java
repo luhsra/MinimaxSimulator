@@ -116,6 +116,23 @@ public class ConfigurationTest {
         assertEquals("giga property", Long.parseLong("4294967296"), TestConfig.GIGA);
 
         assertEquals("size without unit property", 33, TestConfig.SIZE);
+
+        // invalid input
+        String value = "noNumbersHere";
+        try {
+            Parser.toFileSize(value);
+        } catch (IllegalArgumentException e) {
+            assertEquals("illegal size format", "Wrong format for file size for config: " + value, e.getMessage());
+        }
+
+        // invalid unit
+        String invalidUnit = "234TB";
+        try {
+            Parser.toFileSize(invalidUnit);
+            Assert.fail(EXPECTED_EXCEPTION);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Wrong format for file size for config: " + invalidUnit, e.getMessage());
+        }
     }
 
     /**
@@ -332,30 +349,6 @@ public class ConfigurationTest {
         }
 
         assertEquals(input, Parser.toStrings(input, ";")[0]);
-    }
-
-    /**
-     * Tests parts of {@link Parser#toFileSize(String)} not covered by other tests.
-     */
-    @Test
-    public void testToFileSizeInvalid() {
-        // invalid input
-        String value = "hjd3shj";
-        try {
-            Parser.toFileSize(value);
-            Assert.fail(EXPECTED_EXCEPTION);
-        } catch (IllegalArgumentException e) {
-            assertEquals("Wrong format for file size for config: " + value, e.getMessage());
-        }
-
-        // invalid unit
-        String invalidUnit = "234TB";
-        try {
-            Parser.toFileSize(invalidUnit);
-            Assert.fail(EXPECTED_EXCEPTION);
-        } catch (IllegalArgumentException e) {
-            assertEquals("Wrong format for file size for config: " + invalidUnit, e.getMessage());
-        }
     }
 
     /**
