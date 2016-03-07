@@ -97,7 +97,7 @@ public class MuxView implements MachineConfigListener {
     private void setLocalizedTexts() {
         paneMuxA.setText(res.format("table.title", "A"));
         paneMuxB.setText(res.format("table.title", "B"));
-        final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneSelectedConnection, radioRegister, radioConstant, lblDec, lblHex, btnSave));
+        final List<Labeled> controls = new ArrayList<>(Arrays.asList(paneSelectedConnection, radioRegister, radioConstant, lblDec, lblHex, btnSave, btnNewMuxA, btnRemoveMuxA, btnNewMuxB, btnRemoveMuxB));
         for (Labeled con : controls) {
             con.setText(res.get(con.getId().replace("_", ".")));
         }

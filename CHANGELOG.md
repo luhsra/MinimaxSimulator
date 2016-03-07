@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 - some GUI elements were not correctly reset after loading or creating a project
 - cancel action of waiting dialogs was not processed if the dialog was closed via pressing escape
 - machine schematics exported as JPG did not have a white background
+- button labels for adding and removing multiplexer connections were not localized
+- button icon for adding a register was not the correct one
 
 ## 1.0.1 - 2015-10-15
 ### Fixed
