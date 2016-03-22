@@ -37,7 +37,7 @@ You are welcome to submit a pull request with your fix afterwards.
 
 <a name="feature"></a> Requesting a Feature?
 --------------------------------------------
-If you are missing a feature within the simulator, feel free to ask us about it by adding a new request by opening up a new issue labelled `feature request`.
+If you are missing a feature within the simulator, feel free to ask us about it by adding a new request by opening up a new issue with the prefix `[feature request]`.
 
 Note that usually you can speed up the process by submitting a pull request providing the needed changes for your requested feature.
 
