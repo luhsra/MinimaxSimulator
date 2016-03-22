@@ -1,0 +1,55 @@
+# This is your sidebar TOC. The sidebar code loops through sections here and provides the appropriate formatting.
+
+# Sidebar
+entries:
+- title: Sidebar
+  subcategories:
+  - title: Overview
+    items:
+    - title: Introduction
+      url: /home.html
+      
+    - title: Changelog
+      url: /changelog.html
+      
+    - title: Sitemap
+      url: /sitemap.html
+      type: frontmatter
+      
+  - title: Getting started
+    items:
+    - title: Get started
+      url: /requirements.html
+
+      thirdlevel:
+      - title: Application Tabs
+        thirdlevelitems:
+        - title: Signal table
+          url: /mmsim_tab_signaltable.html
+
+        - title: Memory
+          url: /mmsim_tab_memory.html
+
+        - title: Debugger
+          url: /mmsim_tab_debugger.html
+          
+        - title: ALU Operations
+          url: /mmsim_tab_alu.html
+
+        - title: Multiplexer Connections
+          url: /mmsim_tab_mux.html
+
+        - title: Register Extensions
+          url: /mmsim_tab_reg.html
+          
+        - title: Overview
+          url: /mmsim_tab_overview.html
+          
+  - title: Contributing
+    items:
+    - title: Bugs, Issues and Feature Requests
+      url: /contribute_requests.html
+      
+    - title: Contribute
+      url: /contribute.html
+      

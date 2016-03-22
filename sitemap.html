@@ -1,0 +1,43 @@
+---
+title: Sitemap
+type: frontmatter
+search: exclude
+---
+
+<!-- new page -->
+<div id="navig">
+    {% include custom/variables.html %}
+
+    <ul id="mysidebar" class="nav">
+        {% for entry in sidebar %}
+            {% for subcategory in entry.subcategories %}
+                {% if subcategory.type != "frontmatter" %}
+                    <li class="sectionHead">{{ subcategory.title }}
+                        <ul>
+                            {% for item in subcategory.items %}
+                                {% if item.type != "frontmatter"%}
+                                    <li>
+                                        <a href="{{item.url | prepend: site.baseurl}}">{{item.title}}</a>
+                                        {% for thirdlevel in item.thirdlevel %}
+                                            {% if thirdlevel.type != "frontmatter" %}
+                                                <li style="font-size: 14px; line-height: 20px; padding: 4px 10px;">{{ thirdlevel.title }}
+                                                    <ul>
+                                                        {% for deeplevel in thirdlevel.thirdlevelitems%}
+                                                            {% if deeplevel.type != "frontmatter"%}
+                                                                <li><a href="{{deeplevel.url | prepend: site.baseurl}}">{{deeplevel.title}}</a></li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
