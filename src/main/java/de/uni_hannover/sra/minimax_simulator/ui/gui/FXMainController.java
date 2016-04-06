@@ -18,6 +18,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.AboutDial
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.ExceptionDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.UnsavedDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import javafx.application.Platform;
@@ -73,6 +74,8 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     @FXML private MenuItem projectClose;
     @FXML private MenuItem exitApplication;
     private List<MenuItem> disabledMenuItems = null;
+
+    private UndoManager undoManager = UndoManager.INSTANCE;
 
     @FXML private Menu menuView;
     @FXML private MenuItem viewOverview;
@@ -153,6 +156,9 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         this.disabledMenuItems = ImmutableList.<MenuItem>builder()
                 .add(projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, viewOverview, viewMemory, viewDebugger)
                 .build();
+
+        projectUndo.disableProperty().bind(undoManager.isUndoAvailableProperty().not());
+        projectRedo.disableProperty().bind(undoManager.isRedoAvailableProperty().not());
 
         setShortcuts();
         setLocalizedTexts();
@@ -412,17 +418,17 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     }
 
     /**
-     * Undo the latest change.
+     * Calls {@link UndoManager#undo()} in order to undo the latest change.
      */
     public void undo() {
-        // undo
+        undoManager.undo();
     }
 
     /**
-     * Redo the latest change.
+     * Calls {@link UndoManager#redo()} in order to redo the latest change.
      */
     public void redo() {
-        // redo
+        undoManager.redo();
     }
 
     /**
