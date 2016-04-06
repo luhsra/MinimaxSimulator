@@ -66,6 +66,8 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     @FXML private MenuItem projectOpen;
     @FXML private MenuItem projectSave;
     @FXML private MenuItem projectSaveAs;
+    @FXML private MenuItem projectUndo;
+    @FXML private MenuItem projectRedo;
     @FXML private MenuItem projectExportSchematics;
     @FXML private MenuItem projectExportSignal;
     @FXML private MenuItem projectClose;
@@ -164,6 +166,8 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         this.projectNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
         this.projectOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         this.projectSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
+        this.projectUndo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.SHORTCUT_DOWN));
+        this.projectRedo.setAccelerator(new KeyCodeCombination(KeyCode.Y, KeyCombination.SHORTCUT_DOWN));
         this.projectClose.setAccelerator(new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN));
         this.exitApplication.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.SHORTCUT_DOWN));
 
@@ -187,7 +191,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         // menu: project
         menuProject.setText(resMenu.get("project"));
         final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, exitApplication,
-                viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout));
+                viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout, projectUndo, projectRedo));
         for (MenuItem mi : projectMenu) {
             String id = mi.getId().replace("_", ".");
             String mne = resMenu.get(id + ".mne");
@@ -405,6 +409,20 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      */
     private void closeNonDefaultTabs() {
         tabpane.getTabs().removeAll(tabAlu, tabReg, tabMux);
+    }
+
+    /**
+     * Undo the latest change.
+     */
+    public void undo() {
+        // undo
+    }
+
+    /**
+     * Redo the latest change.
+     */
+    public void redo() {
+        // redo
     }
 
     /**

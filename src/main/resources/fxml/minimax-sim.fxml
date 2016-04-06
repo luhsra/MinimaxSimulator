@@ -48,6 +48,23 @@
                         <MenuItem id="project_saveas" fx:id="projectSaveAs" disable="true" mnemonicParsing="false"
                                   onAction="#saveProjectAs" text="Speichern unter"/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem id="project_undo" fx:id="projectUndo" disable="true" mnemonicParsing="false"
+                                  onAction="#undo" text="Undo">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="/images/fugue/arrow-return-180-left.png"/>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem id="project_redo" fx:id="projectRedo" disable="true" mnemonicParsing="false"
+                                  onAction="#redo" text="Redo">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="/images/fugue/arrow-return.png"/>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
                         <MenuItem id="project_export-schematics" fx:id="projectExportSchematics" disable="true"
                                   mnemonicParsing="false" onAction="#exportSchematics" text="Schema exportieren">
                             <graphic>
