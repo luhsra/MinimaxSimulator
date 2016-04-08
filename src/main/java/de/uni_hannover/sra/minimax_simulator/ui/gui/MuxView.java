@@ -1,9 +1,12 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigMuxEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.EventType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -390,18 +393,6 @@ public class MuxView implements MachineConfigListener {
 
         // Move one up
         config.exchangeMuxSources(mux, index1, index2);
-        Main.getWorkspace().setProjectUnsaved();
-
-        if (mux == MuxType.A) {
-            updateTableMuxA();
-            tableMuxA.getSelectionModel().select(index2);
-        }
-        else {
-            updateTableMuxB();
-            tableMuxB.getSelectionModel().select(index2);
-        }
-
-        updateSaveButton();
     }
 
     /**
@@ -442,26 +433,10 @@ public class MuxView implements MachineConfigListener {
         }
 
         config.removeMuxSource(mux, index);
-
-        if (mux == MuxType.A) {
-            updateTableMuxA();
-            if (!tableMuxA.getItems().isEmpty()) {
-                tableMuxA.getSelectionModel().select(Math.min(tableMuxA.getItems().size(), index-1));
-            }
-        }
-        else {
-            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
-            updateTableMuxB();
-            if (!tableMuxB.getItems().isEmpty()) {
-                tableMuxB.getSelectionModel().select(Math.min(tableMuxB.getItems().size(), index-1));
-            }
-        }
-
-        Main.getWorkspace().setProjectUnsaved();
     }
 
     /**
-     * Adds a new default source to mulitplexer A.
+     * Adds a new default source to multiplexer A.
      */
     public void addSourceToA() {
         addSource(MuxType.A);
@@ -482,15 +457,6 @@ public class MuxView implements MachineConfigListener {
      */
     private void addSource(MuxType mux) {
         config.addMuxSource(mux, createDefaultMuxSource());
-        if (mux == MuxType.A) {
-            tableMuxA.getSelectionModel().select(tableMuxA.getItems().size()-1);
-            updateTableMuxA();
-        }
-        else {
-            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
-            tableMuxB.getSelectionModel().select(tableMuxB.getItems().size()-1);
-            updateTableMuxB();
-        }
     }
 
     /**
@@ -527,34 +493,29 @@ public class MuxView implements MachineConfigListener {
         }
 
         MuxInput input;
-        if (radioConstant.isSelected())
-        {
-            Object i = spinnerDec.getValue();
-            if (i instanceof Integer)
-                input = new ConstantMuxInput((Integer) spinnerDec.getValue());
-            else
+        if (radioConstant.isSelected()) {
+            Integer i = spinnerDec.getValue();
+            if (i != null) {
+                input = new ConstantMuxInput(spinnerDec.getValue());
+            }
+            else {
                 return;
+            }
         }
-        else if (radioRegister.isSelected())
-        {
-            Object register = cbRegister.getSelectionModel().getSelectedItem();
-            if (register instanceof MuxInput)
-                input = (MuxInput) register;
-            else
+        else if (radioRegister.isSelected()) {
+            MuxInput register = cbRegister.getSelectionModel().getSelectedItem();
+            if (register != null) {
+                input = register;
+            }
+            else {
                 return;
-        }
-        else
-            return;
-
-        config.setMuxSource(mux, index, input);
-
-        if (mux == MuxType.A) {
-            updateTableMuxA();
+            }
         }
         else {
-            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
-            updateTableMuxB();
+            return;
         }
+
+        config.setMuxSource(mux, index, input);
     }
 
     /**
@@ -646,8 +607,40 @@ public class MuxView implements MachineConfigListener {
 
     @Override
     public void processEvent(MachineConfigEvent event) {
-        if (event instanceof MachineConfigListEvent.MachineConfigMuxEvent) {
+        if (event instanceof MachineConfigMuxEvent) {
+            MachineConfigMuxEvent e = (MachineConfigMuxEvent) event;
             updateRegisterComboBox();
+
+            TableView<MuxTableModel> table;
+            if (e.mux == MuxType.A) {
+                updateTableMuxA();
+                table = tableMuxA;
+            }
+            else {
+                // there are only the multiplexers A and B so it must be B here
+                updateTableMuxB();
+                table = tableMuxB;
+            }
+
+            switch (e.type) {
+                case ELEMENT_ADDED:
+                    table.getSelectionModel().select(table.getItems().size()-1);
+                    break;
+                case ELEMENT_REMOVED:
+                    int maxIndex = table.getItems().size() - 1;
+                    int index = (e.index > maxIndex) ? maxIndex : e.index;
+                    table.getSelectionModel().select(index);
+                    break;
+                case ELEMENTS_EXCHANGED:
+                    table.getSelectionModel().select(e.index2);
+                    updateSaveButton();
+                    break;
+                case ELEMENT_REPLACED:
+                    // if an MuxInput was modified only the table of the multiplexer has to be updated
+                    break;
+            }
+
+            Main.getWorkspace().setProjectUnsaved();
         }
     }
 
