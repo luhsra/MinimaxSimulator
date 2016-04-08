@@ -1,12 +1,9 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
-import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigMuxEvent;
-import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.EventType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -14,6 +11,8 @@ import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.HexSpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.NullAwareIntFormatter;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.*;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -228,6 +227,7 @@ public class MuxView implements MachineConfigListener {
                 else if (tableMuxA.getSelectionModel().getSelectedIndex() == tableMuxA.getItems().size()-1) {
                     btnMoveDownMuxA.setDisable(true);
                 }
+                updateSaveButton();
             }
         });
 
@@ -270,6 +270,7 @@ public class MuxView implements MachineConfigListener {
                 else if (tableMuxB.getSelectionModel().getSelectedIndex() == tableMuxB.getItems().size()-1) {
                     btnMoveDownMuxB.setDisable(true);
                 }
+                updateSaveButton();
             }
         });
 
@@ -391,8 +392,10 @@ public class MuxView implements MachineConfigListener {
             return;
         }
 
-        // Move one up
-        config.exchangeMuxSources(mux, index1, index2);
+        // move one up
+        Command command = new MuxInputMovedCommand(mux, index1, index2, config);
+        UndoManager.INSTANCE.addCommand(command);
+        command.execute();
     }
 
     /**
@@ -432,7 +435,9 @@ public class MuxView implements MachineConfigListener {
             return;
         }
 
-        config.removeMuxSource(mux, index);
+        Command command = new MuxInputRemovedCommand(mux, index, config);
+        UndoManager.INSTANCE.addCommand(command);
+        command.execute();
     }
 
     /**
@@ -456,18 +461,9 @@ public class MuxView implements MachineConfigListener {
      *          the multiplexer for which the source should be added
      */
     private void addSource(MuxType mux) {
-        config.addMuxSource(mux, createDefaultMuxSource());
-    }
-
-    /**
-     * Creates a default multiplexer source. The default is a {@link ConstantMuxInput} with value zero.
-     *
-     * @return
-     *          the default {@link MuxInput}
-     */
-    private static MuxInput createDefaultMuxSource()
-    {
-        return new ConstantMuxInput(0);
+        Command command = new MuxInputAddedCommand(mux, config);
+        UndoManager.INSTANCE.addCommand(command);
+        command.execute();
     }
 
     /**
@@ -515,7 +511,9 @@ public class MuxView implements MachineConfigListener {
             return;
         }
 
-        config.setMuxSource(mux, index, input);
+        Command command = new MuxInputModifiedCommand(mux, index, input, config);
+        UndoManager.INSTANCE.addCommand(command);
+        command.execute();
     }
 
     /**
@@ -633,10 +631,9 @@ public class MuxView implements MachineConfigListener {
                     break;
                 case ELEMENTS_EXCHANGED:
                     table.getSelectionModel().select(e.index2);
-                    updateSaveButton();
                     break;
                 case ELEMENT_REPLACED:
-                    // if an MuxInput was modified only the table of the multiplexer has to be updated
+                    table.getSelectionModel().select(e.index);
                     break;
             }
 
