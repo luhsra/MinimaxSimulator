@@ -43,6 +43,13 @@ public class UndoManager {
      *         the {@code Command} to add
      */
     public void addCommand(Command command) {
+        if (currentPosition < commands.size() - 1) {
+            redoAvailable.set(false);
+            for (int i = commands.size() - 1; i > currentPosition; i--) {
+                commands.remove(i);
+            }
+        }
+
         commands.add(command);
         currentPosition++;
         undoAvailable.set(true);
