@@ -37,7 +37,7 @@ public class UndoManager {
     }
 
     /**
-     * Adds the specified {@code Command} to the list of performed actions.
+     * Adds the specified {@code Command} to the list of performed actions and performs the action.
      *
      * @param command
      *         the {@code Command} to add
@@ -53,6 +53,8 @@ public class UndoManager {
         commands.add(command);
         currentPosition++;
         undoAvailable.set(true);
+
+        command.execute();
     }
 
     /**

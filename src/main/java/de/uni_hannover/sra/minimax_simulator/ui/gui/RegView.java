@@ -231,9 +231,7 @@ public class RegView implements MachineConfigListener {
      */
     public void addRegister() {
         RegisterExtension reg = createNewRegister();
-        RegisterAddedCommand command = new RegisterAddedCommand(reg, config);
-        UndoManager.INSTANCE.addCommand(command);
-        command.execute();
+        UndoManager.INSTANCE.addCommand(new RegisterAddedCommand(reg, config));
     }
 
     /**
@@ -276,9 +274,7 @@ public class RegView implements MachineConfigListener {
         RegisterExtension reg = tableExtendedReg.getSelectionModel().getSelectedItem().getRegister();
 
         if (new FXDialog(Alert.AlertType.CONFIRMATION, res.format("dialog.delete.message", reg.getName()), res.get("dialog.delete.title")).getChoice() == ButtonType.OK) {
-            RegisterDeletedCommand command = new RegisterDeletedCommand(reg, config);
-            UndoManager.INSTANCE.addCommand(command);
-            command.execute();
+            UndoManager.INSTANCE.addCommand(new RegisterDeletedCommand(reg, config));
         }
     }
 
@@ -314,9 +310,7 @@ public class RegView implements MachineConfigListener {
         }
 
         // move registers in model
-        RegisterMovedCommand command = new RegisterMovedCommand(index1, index2, config);
-        UndoManager.INSTANCE.addCommand(command);
-        command.execute();
+        UndoManager.INSTANCE.addCommand(new RegisterMovedCommand(index1, index2, config));
     }
 
     /**
@@ -401,9 +395,7 @@ public class RegView implements MachineConfigListener {
 
         RegisterExtension regNew = new RegisterExtension(txtName.getText().trim(), cbSize.getValue(), txtDescription.getText(), regOld.isExtended());
 
-        RegisterModifiedCommand command = new RegisterModifiedCommand(index, regOld, regNew, config);
-        UndoManager.INSTANCE.addCommand(command);
-        command.execute();
+        UndoManager.INSTANCE.addCommand(new RegisterModifiedCommand(index, regOld, regNew, config));
     }
 
     @Override

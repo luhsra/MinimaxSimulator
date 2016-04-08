@@ -12,7 +12,10 @@ import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.HexSpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.NullAwareIntFormatter;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.*;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.MuxInputAddedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.MuxInputModifiedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.MuxInputMovedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.MuxInputRemovedCommand;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -393,9 +396,7 @@ public class MuxView implements MachineConfigListener {
         }
 
         // move one up
-        Command command = new MuxInputMovedCommand(mux, index1, index2, config);
-        UndoManager.INSTANCE.addCommand(command);
-        command.execute();
+        UndoManager.INSTANCE.addCommand(new MuxInputMovedCommand(mux, index1, index2, config));
     }
 
     /**
@@ -435,9 +436,7 @@ public class MuxView implements MachineConfigListener {
             return;
         }
 
-        Command command = new MuxInputRemovedCommand(mux, index, config);
-        UndoManager.INSTANCE.addCommand(command);
-        command.execute();
+        UndoManager.INSTANCE.addCommand(new MuxInputRemovedCommand(mux, index, config));
     }
 
     /**
@@ -461,9 +460,7 @@ public class MuxView implements MachineConfigListener {
      *          the multiplexer for which the source should be added
      */
     private void addSource(MuxType mux) {
-        Command command = new MuxInputAddedCommand(mux, config);
-        UndoManager.INSTANCE.addCommand(command);
-        command.execute();
+        UndoManager.INSTANCE.addCommand(new MuxInputAddedCommand(mux, config));
     }
 
     /**
@@ -511,9 +508,7 @@ public class MuxView implements MachineConfigListener {
             return;
         }
 
-        Command command = new MuxInputModifiedCommand(mux, index, input, config);
-        UndoManager.INSTANCE.addCommand(command);
-        command.execute();
+        UndoManager.INSTANCE.addCommand(new MuxInputModifiedCommand(mux, index, input, config));
     }
 
     /**
