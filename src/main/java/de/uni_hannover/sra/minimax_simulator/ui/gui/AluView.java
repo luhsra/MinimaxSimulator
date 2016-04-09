@@ -8,6 +8,10 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineCo
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.AluOpAddedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.AluOpMovedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.AluOpRemovedCommand;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -216,7 +220,7 @@ public class AluView implements MachineConfigListener {
     public void addOperation() {
         AluOperation op = tableAvailable.getSelectionModel().getSelectedItem().getAluOP();
         if (op != null) {
-            config.addAluOperation(op);
+            UndoManager.INSTANCE.addCommand(new AluOpAddedCommand(op, config));
         }
     }
 
@@ -226,7 +230,7 @@ public class AluView implements MachineConfigListener {
     public void removeOperation() {
         AluOperation op = tableAdded.getSelectionModel().getSelectedItem().getAluOP();
         if (op != null) {
-            config.removeAluOperation(op);
+            UndoManager.INSTANCE.addCommand(new AluOpRemovedCommand(op, config));
         }
     }
 
@@ -261,8 +265,8 @@ public class AluView implements MachineConfigListener {
             return;
         }
 
-        // Move operations in model and adapt selection
-        config.exchangeAluOperations(index1, index2);
+        // move operations in model
+        UndoManager.INSTANCE.addCommand(new AluOpMovedCommand(index1, index2, config));
     }
 
     @Override
