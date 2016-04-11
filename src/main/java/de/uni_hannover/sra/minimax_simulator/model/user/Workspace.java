@@ -4,6 +4,7 @@ import de.uni_hannover.sra.minimax_simulator.io.exporter.ProjectExportException;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.json.ProjectZipExporter;
 import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImportException;
 import de.uni_hannover.sra.minimax_simulator.io.importer.json.ProjectZipImporter;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
 import de.uni_hannover.sra.minimax_simulator.util.ListenerContainer;
 
 import java.io.File;
@@ -81,6 +82,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
         Project oldProject = currentProject;
         currentProject = null;
         currentProjectFile = null;
+        UndoManager.INSTANCE.reset();
 
         if (oldProject == null) {
             return;

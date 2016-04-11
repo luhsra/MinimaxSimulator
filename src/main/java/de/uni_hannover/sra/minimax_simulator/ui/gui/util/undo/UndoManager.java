@@ -88,6 +88,17 @@ public class UndoManager {
     }
 
     /**
+     * Resets the {@code UndoManager} by clearing the undo and redo stacks.
+     */
+    public void reset() {
+        undos.clear();
+        undoAvailable.set(false);
+
+        redos.clear();
+        redoAvailable.set(false);
+    }
+
+    /**
      * Gets the {@code undoAvailableProperty}.
      *
      * @return
