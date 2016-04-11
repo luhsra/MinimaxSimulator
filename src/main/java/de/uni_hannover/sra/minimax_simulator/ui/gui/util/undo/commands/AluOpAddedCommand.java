@@ -8,7 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperatio
  *
  * @author Philipp Rohde
  */
-public class AluOpAddedCommand implements Command {
+public class AluOpAddedCommand extends Command {
 
     private final AluOperation op;
     private final MachineConfiguration config;

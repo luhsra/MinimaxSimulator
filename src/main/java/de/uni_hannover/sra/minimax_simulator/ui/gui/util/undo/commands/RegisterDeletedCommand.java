@@ -9,7 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
  * @author Philipp Rohde
  */
 // TODO: very naive implementation; does not revert the changes made to the MUX after the deletion
-public class RegisterDeletedCommand implements Command {
+public class RegisterDeletedCommand extends Command {
 
     private final RegisterExtension register;
     private final MachineConfiguration config;

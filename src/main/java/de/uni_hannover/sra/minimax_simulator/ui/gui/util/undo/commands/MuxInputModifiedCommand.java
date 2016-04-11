@@ -9,7 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
  *
  * @author Philipp Rohde
  */
-public class MuxInputModifiedCommand implements Command {
+public class MuxInputModifiedCommand extends Command {
 
     private final MuxType mux;
     private final int index;

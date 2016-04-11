@@ -111,6 +111,7 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
         currentProject.setIsSaved();
         currentProjectFile = file;
         lastProjectFolder = file.getParentFile();
+        UndoManager.INSTANCE.markSavedState();
 
         for (WorkspaceListener l : getListeners()) {
             l.onProjectSaved(currentProject);
@@ -153,6 +154,26 @@ public class Workspace extends ListenerContainer<WorkspaceListener> {
 
         for (WorkspaceListener l : getListeners()) {
             l.onProjectDirty(currentProject);
+        }
+    }
+
+    /**
+     * Marks the current opened project as saved and notifies all listeners.<br>
+     * <br>
+     * Does nothing if there is currently no open project or if it is already marked as saved.
+     */
+    public void setProjectSaved() {
+        if (currentProject == null) {
+            return;
+        }
+        else if (!currentProject.isUnsaved()) {
+            return;
+        }
+
+        currentProject.setIsSaved();
+
+        for (WorkspaceListener l : getListeners()) {
+            l.onProjectSaved(currentProject);
         }
     }
 

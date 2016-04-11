@@ -9,7 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperatio
  * @author Philipp Rohde
  */
 // TODO: very naive implementation; does not revert the changes made to the signal table after the deletion
-public class AluOpRemovedCommand implements Command {
+public class AluOpRemovedCommand extends Command {
 
     private final AluOperation op;
     private final MachineConfiguration config;

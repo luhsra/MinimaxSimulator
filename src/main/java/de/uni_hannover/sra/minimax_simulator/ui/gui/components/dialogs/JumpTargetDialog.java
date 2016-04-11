@@ -293,7 +293,6 @@ public class JumpTargetDialog extends FXDialog {
             newRow.setJump(newJump);
 
             UndoManager.INSTANCE.addCommand(new SignalRowModifiedCommand(this.rowIndex, this.row, newRow, this.table));
-            Main.getWorkspace().setProjectUnsaved();        // TODO: remove
         }
     }
 

@@ -8,7 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
  *
  * @author Philipp Rohde
  */
-public class RegisterAddedCommand implements Command {
+public class RegisterAddedCommand extends Command {
 
     private final RegisterExtension register;
     private final MachineConfiguration config;

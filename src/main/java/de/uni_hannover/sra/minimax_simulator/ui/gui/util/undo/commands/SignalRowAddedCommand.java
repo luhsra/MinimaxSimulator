@@ -8,7 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
  *
  * @author Philipp Rohde
  */
-public class SignalRowAddedCommand implements Command {
+public class SignalRowAddedCommand extends Command {
 
     private int index;
     private final SignalTable table;

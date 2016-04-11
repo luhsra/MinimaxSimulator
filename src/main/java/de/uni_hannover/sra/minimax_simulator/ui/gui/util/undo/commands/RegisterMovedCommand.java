@@ -7,7 +7,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfigur
  *
  * @author Philipp Rohde
  */
-public class RegisterMovedCommand implements Command {
+public class RegisterMovedCommand extends Command {
 
     private final int index1;
     private final int index2;

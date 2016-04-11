@@ -61,7 +61,6 @@ public class LabelColumn extends SignalTableColumn {
                             newRow.setLabel(txtLabel.getText());
                             txtLabel.cancelEdit();
                             UndoManager.INSTANCE.addCommand(new SignalRowModifiedCommand(cIndex, signalRow, newRow, table));
-                            Main.getWorkspace().setProjectUnsaved();    // TODO: remove
                         }
                         else if (KeyCode.ESCAPE == evt.getCode()) {
                             txtLabel.cancelEdit();

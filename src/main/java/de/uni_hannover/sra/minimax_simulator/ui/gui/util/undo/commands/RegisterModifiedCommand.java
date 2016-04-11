@@ -8,7 +8,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
  *
  * @author Philipp Rohde
  */
-public class RegisterModifiedCommand implements Command {
+public class RegisterModifiedCommand extends Command {
 
     private final int index;
     private final RegisterExtension oldValue;

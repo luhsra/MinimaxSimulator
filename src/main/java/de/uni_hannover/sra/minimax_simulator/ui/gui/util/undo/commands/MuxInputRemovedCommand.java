@@ -10,7 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
  * @author Philipp Rohde
  */
 // TODO: very naive implementation; does not revert the changes made to the signal table after the deletion
-public class MuxInputRemovedCommand implements Command {
+public class MuxInputRemovedCommand extends Command {
 
     private final MuxType mux;
     private int index;

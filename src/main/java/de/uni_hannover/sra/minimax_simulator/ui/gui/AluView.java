@@ -304,8 +304,6 @@ public class AluView implements MachineConfigListener {
                     // can not happen with ALU operations
                     break;
             }
-
-            Main.getWorkspace().setProjectUnsaved();
         }
     }
 

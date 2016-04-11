@@ -7,7 +7,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfigur
  *
  * @author Philipp Rohde
  */
-public class AluOpMovedCommand implements Command {
+public class AluOpMovedCommand extends Command {
 
     private final int index1;
     private final int index2;

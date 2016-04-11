@@ -208,6 +208,5 @@ public class SignalColumn extends SignalTableColumn {
      */
     private void fireUpdateTable() {
         UndoManager.INSTANCE.addCommand(new SignalRowModifiedCommand(rowIndex, oldRow, signalRow, signalTable));
-        Main.getWorkspace().setProjectUnsaved();
     }
 }

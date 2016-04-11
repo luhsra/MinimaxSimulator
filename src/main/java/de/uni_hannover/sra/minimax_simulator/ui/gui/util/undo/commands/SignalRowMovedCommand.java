@@ -7,7 +7,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
  *
  * @author Philipp Rohde
  */
-public class SignalRowMovedCommand implements Command {
+public class SignalRowMovedCommand extends Command {
 
     private final int index;
     private final int difference;

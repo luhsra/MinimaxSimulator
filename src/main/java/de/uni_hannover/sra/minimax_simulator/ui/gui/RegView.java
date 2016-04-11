@@ -404,8 +404,6 @@ public class RegView implements MachineConfigListener {
             MachineConfigRegisterEvent e = (MachineConfigRegisterEvent) event;
             updateExtendedTable();
 
-            Main.getWorkspace().setProjectUnsaved();
-
             if (e.type == MachineConfigListEvent.EventType.ELEMENT_ADDED) {
                 tableExtendedReg.getSelectionModel().select(e.index);
             }

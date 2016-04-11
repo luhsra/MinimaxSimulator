@@ -631,8 +631,6 @@ public class MuxView implements MachineConfigListener {
                     table.getSelectionModel().select(e.index);
                     break;
             }
-
-            Main.getWorkspace().setProjectUnsaved();
         }
     }
 

@@ -255,7 +255,6 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
         int index = signaltable.getSelectionModel().getSelectedIndex();
 
         UndoManager.INSTANCE.addCommand(new SignalRowAddedCommand(index, signal));
-        Main.getWorkspace().setProjectUnsaved();
     }
 
     /**
@@ -266,7 +265,6 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
 
         if (index != -1) {
             UndoManager.INSTANCE.addCommand(new SignalRowRemovedCommand(index, signal));
-            Main.getWorkspace().setProjectUnsaved();
         }
     }
 
@@ -301,7 +299,6 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
         UndoManager.INSTANCE.addCommand(new SignalRowMovedCommand(index1, difference, signal));
 
         signaltable.getSelectionModel().select(index1+difference);
-        Main.getWorkspace().setProjectUnsaved();
     }
 
     @Override

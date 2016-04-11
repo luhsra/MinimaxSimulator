@@ -9,7 +9,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
  * @author Philipp Rohde
  */
 // TODO: very naive implementation; does not revert the changes made to the signal table after the deletion
-public class SignalRowRemovedCommand implements Command {
+public class SignalRowRemovedCommand extends Command {
 
     private final int index;
     private final SignalTable table;
