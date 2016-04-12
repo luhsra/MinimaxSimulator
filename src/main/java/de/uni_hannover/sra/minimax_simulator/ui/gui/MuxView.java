@@ -660,7 +660,7 @@ public class MuxView implements MachineConfigListener {
          */
         private MuxTableModel(MuxInput muxInput, int index, int size) {
             this.muxInput = muxInput;
-            this.code = new SimpleStringProperty(Util.toBinaryAddress(index, size));
+            this.code = new SimpleStringProperty(Util.toBinaryAddress(index, size-1));
             this.source = new SimpleStringProperty(muxInput.getName());
             this.extended = new SimpleStringProperty(getExtendedSourceInfo());
         }
