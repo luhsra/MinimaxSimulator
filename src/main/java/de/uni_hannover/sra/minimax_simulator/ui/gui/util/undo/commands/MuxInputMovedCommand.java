@@ -44,9 +44,4 @@ public class MuxInputMovedCommand extends Command {
     public void undo() {
         config.exchangeMuxSources(mux, index2, index1);
     }
-
-    @Override
-    public void redo() {
-        this.execute();
-    }
 }

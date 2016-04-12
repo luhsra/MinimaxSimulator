@@ -20,9 +20,13 @@ public abstract class Command {
     public abstract void undo();
 
     /**
-     * Redoes the changes made by the command.
+     * Redoes the changes made by the command.<br>
+     * <br>
+     * The default is a call to {@link Command#execute()}.
      */
-    public abstract void redo();
+    public void redo() {
+        this.execute();
+    }
 
     /**
      * Marks the command.<br>

@@ -41,9 +41,4 @@ public class SignalRowAddedCommand extends Command {
     public void undo() {
         table.removeSignalRow(index);
     }
-
-    @Override
-    public void redo() {
-        this.execute();
-    }
 }

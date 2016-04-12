@@ -38,9 +38,4 @@ public class SignalRowMovedCommand extends Command {
     public void undo() {
         table.moveSignalRows(index + difference, index + difference, -difference);
     }
-
-    @Override
-    public void redo() {
-        this.execute();
-    }
 }

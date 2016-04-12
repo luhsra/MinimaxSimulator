@@ -35,9 +35,4 @@ public class RegisterAddedCommand extends Command {
     public void undo() {
         config.removeRegisterExtension(register);
     }
-
-    @Override
-    public void redo() {
-        config.addRegisterExtension(register);
-    }
 }

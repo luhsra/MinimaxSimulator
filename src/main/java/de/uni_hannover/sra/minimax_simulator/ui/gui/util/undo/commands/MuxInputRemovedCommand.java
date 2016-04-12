@@ -72,9 +72,4 @@ public class MuxInputRemovedCommand extends Command {
             signalTable.addSignalRow(row);
         }
     }
-
-    @Override
-    public void redo() {
-        this.execute();
-    }
 }

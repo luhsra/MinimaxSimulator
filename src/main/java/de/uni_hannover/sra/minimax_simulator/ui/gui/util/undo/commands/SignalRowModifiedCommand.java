@@ -43,9 +43,4 @@ public class SignalRowModifiedCommand extends Command {
     public void undo() {
         table.setSignalRow(index, oldValue);
     }
-
-    @Override
-    public void redo() {
-        this.execute();
-    }
 }

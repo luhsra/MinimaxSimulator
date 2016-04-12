@@ -73,9 +73,4 @@ public class RegisterRemovedCommand extends Command {
             config.setMuxSource(mux, k, muxB.get(k));
         }
     }
-
-    @Override
-    public void redo() {
-        this.execute();
-    }
 }

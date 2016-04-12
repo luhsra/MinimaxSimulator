@@ -38,9 +38,4 @@ public class RegisterMovedCommand extends Command {
     public void undo() {
         config.exchangeRegisterExtensions(index2, index1);
     }
-
-    @Override
-    public void redo() {
-        config.exchangeRegisterExtensions(index1, index2);
-    }
 }

@@ -49,9 +49,4 @@ public class SignalRowRemovedCommand extends Command {
             table.addSignalRow(rows.get(i));
         }
     }
-
-    @Override
-    public void redo() {
-        this.execute();
-    }
 }

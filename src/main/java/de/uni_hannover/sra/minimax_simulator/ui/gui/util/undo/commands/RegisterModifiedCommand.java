@@ -43,9 +43,4 @@ public class RegisterModifiedCommand extends Command {
     public void undo() {
         config.setRegisterExtension(index, oldValue);
     }
-
-    @Override
-    public void redo() {
-        config.setRegisterExtension(index, newValue);
-    }
 }
