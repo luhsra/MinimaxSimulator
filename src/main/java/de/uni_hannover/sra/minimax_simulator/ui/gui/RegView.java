@@ -14,7 +14,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.RegisterAddedCommand;
-import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.RegisterDeletedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.RegisterRemovedCommand;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.RegisterModifiedCommand;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.RegisterMovedCommand;
 import javafx.beans.property.SimpleStringProperty;
@@ -274,7 +274,7 @@ public class RegView implements MachineConfigListener {
         RegisterExtension reg = tableExtendedReg.getSelectionModel().getSelectedItem().getRegister();
 
         if (new FXDialog(Alert.AlertType.CONFIRMATION, res.format("dialog.delete.message", reg.getName()), res.get("dialog.delete.title")).getChoice() == ButtonType.OK) {
-            UndoManager.INSTANCE.addCommand(new RegisterDeletedCommand(reg, config));
+            UndoManager.INSTANCE.addCommand(new RegisterRemovedCommand(reg, config));
         }
     }
 
