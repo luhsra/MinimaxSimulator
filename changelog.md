@@ -1,6 +1,6 @@
 ---
 title: Changelog
-last_updated: Mar 16, 2016
+last_updated: Apr 12, 2016
 audience: field engineers, clients
 keywords: changelog, change log, changes, version history
 ---
@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
     <li>machine schematics exported as JPG did not have a white background</li>
     <li>button labels for adding and removing multiplexer connections were not localized</li>
     <li>button icon for adding a register was not the correct one</li>
+    <li>multiplexer selection code in MuxView was extended too early</li>
   </ul>
 </div>
 
