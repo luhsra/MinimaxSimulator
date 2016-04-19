@@ -42,7 +42,7 @@ public class Main extends javafx.application.Application {
 
     private static Stage primaryStage;
 
-    private static Workspace workspace;
+    private static Workspace workspace = new Workspace();   // initializes empty workspace (no project loaded)
     private static ResourceBundleLoader resourceLoader;
 
     private static Version version;
@@ -92,9 +92,6 @@ public class Main extends javafx.application.Application {
 
         // Initialize resource loader for clients (text boxes etc...)
         getResourceLoader();
-
-        // Initialize empty workspace (no project loaded)
-        workspace = new Workspace();
 
         LOG.info("Initializing UI...");
 
