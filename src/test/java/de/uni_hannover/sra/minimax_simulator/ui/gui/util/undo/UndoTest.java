@@ -3,6 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
@@ -32,6 +33,7 @@ public class UndoTest {
     private static UndoManager undoManager;
 
     private static final String ALU_CTRL = "ALU_CTRL";
+    private static final String ALU_SEL_A = "ALU_SELECT_A";
 
     /**
      * Initializes the test setup.
@@ -122,30 +124,21 @@ public class UndoTest {
         for (int i = 0; i < postconditionOps.size(); i++) {
             assertEquals("[AluOpMoved] order after execution; index: " + i, postconditionOps.get(i), mConfig.getAluOperation(i));
         }
-        for (int j = 0; j < postconditionAluCtrl.size(); j++) {
-            SignalRow row = signalTable.getRow(j);
-            assertEquals("[AluOpMoved] ALU OpCodes after execution; row index: " + j, (int) postconditionAluCtrl.get(j), row.getSignalValue(ALU_CTRL));
-        }
+        checkSignalValues("[AluOpMoved] ALU OpCodes after execution", postconditionAluCtrl, ALU_CTRL);
 
         // undo command
         undoManager.undo();
         for (int i = 0; i < preconditionOps.size(); i++) {
             assertEquals("[AluOpMoved] order after undo; index: " + i, preconditionOps.get(i), mConfig.getAluOperation(i));
         }
-        for (int j = 0; j < preconditionAluCtrl.size(); j++) {
-            SignalRow row = signalTable.getRow(j);
-            assertEquals("[AluOpMoved] ALU OpCodes after undo; row index: " + j, (int) preconditionAluCtrl.get(j), row.getSignalValue(ALU_CTRL));
-        }
+        checkSignalValues("[AluOpMoved] ALU OpCodes after undo", preconditionAluCtrl, ALU_CTRL);
 
         // redo command
         undoManager.redo();
         for (int i = 0; i < postconditionOps.size(); i++) {
             assertEquals("[AluOpMoved] order after redo; index: " + i, postconditionOps.get(i), mConfig.getAluOperation(i));
         }
-        for (int j = 0; j < postconditionAluCtrl.size(); j++) {
-            SignalRow row = signalTable.getRow(j);
-            assertEquals("[AluOpMoved] ALU OpCodes after redo; row index: " + j, (int) postconditionAluCtrl.get(j), row.getSignalValue(ALU_CTRL));
-        }
+        checkSignalValues("[AluOpMoved] ALU OpCodes after redo", postconditionAluCtrl, ALU_CTRL);
     }
 
     /**
@@ -171,29 +164,37 @@ public class UndoTest {
         for (int i = 0; i < postconditionOps.size(); i++) {
             assertEquals("[AluOpRemoved] order after execution; index: " + i, postconditionOps.get(i), mConfig.getAluOperation(i));
         }
-        for (int j = 0; j < postconditionAluCtrl.size(); j++) {
-            SignalRow row = signalTable.getRow(j);
-            assertEquals("[AluOpRemoved] ALU OpCodes after execution; row index: " + j, (int) postconditionAluCtrl.get(j), row.getSignalValue(ALU_CTRL));
-        }
+        checkSignalValues("[AluOpRemoved] ALU OpCodes after execution", postconditionAluCtrl, ALU_CTRL);
 
         // undo command
         undoManager.undo();
         for (int i = 0; i < preconditionOps.size(); i++) {
             assertEquals("[AluOpRemoved] order after undo; index: " + i, preconditionOps.get(i), mConfig.getAluOperation(i));
         }
-        for (int j = 0; j < preconditionAluCtrl.size(); j++) {
-            SignalRow row = signalTable.getRow(j);
-            assertEquals("[AluOpRemoved] ALU OpCodes after undo; row index: " + j, (int) preconditionAluCtrl.get(j), row.getSignalValue(ALU_CTRL));
-        }
+        checkSignalValues("[AluOpRemoved] ALU OpCodes after undo", preconditionAluCtrl, ALU_CTRL);
 
         // redo command
         undoManager.redo();
         for (int i = 0; i < postconditionOps.size(); i++) {
             assertEquals("[AluOpRemoved] order after redo; index: " + i, postconditionOps.get(i), mConfig.getAluOperation(i));
         }
-        for (int j = 0; j < postconditionAluCtrl.size(); j++) {
-            SignalRow row = signalTable.getRow(j);
-            assertEquals("[AluOpRemoved] ALU OpCodes after redo; row index: " + j, (int) postconditionAluCtrl.get(j), row.getSignalValue(ALU_CTRL));
+        checkSignalValues("[AluOpRemoved] ALU OpCodes after redo", postconditionAluCtrl, ALU_CTRL);
+    }
+
+    /**
+     * Checks whether the specified values are the current state of the values according to the specified signal name.
+     *
+     * @param assertText
+     *         the text for the {@code assertEquals} call
+     * @param expectedValues
+     *         the list of expected signal values
+     * @param signalName
+     *         the name of the signal to check
+     */
+    private void checkSignalValues(String assertText, List<Integer> expectedValues, String signalName) {
+        assertText += "; row index: ";
+        for (int i = 0; i < expectedValues.size(); i++) {
+            assertEquals(assertText + i, (int) expectedValues.get(i), signalTable.getRow(i).getSignalValue(signalName));
         }
     }
 
@@ -202,7 +203,26 @@ public class UndoTest {
      */
     @Test
     public void testMuxInputAdded() {
-        // TODO
+        MuxType mux = MuxType.A;
+        MuxInput in1 = new ConstantMuxInput(0);
+        MuxInput in2 = new ConstantMuxInput(1);
+        MuxInput in3 = new RegisterMuxInput("ACCU");
+        MuxInput in4 = new ConstantMuxInput(0);
+
+        List<MuxInput> precondition = new ArrayList<>(Arrays.asList(in1, in2, in3));
+        List<MuxInput> postcondition = new ArrayList<>(Arrays.asList(in1, in2, in3, in4));
+
+        // execute command
+        undoManager.addCommand(new MuxInputAddedCommand(mux, mConfig));
+        checkMuxInputs("[MuxInputAdded] order after execution", postcondition, mux);
+
+        // undo command
+        undoManager.undo();
+        checkMuxInputs("[MuxInputAdded] order after undo", precondition, mux);
+
+        // redo command
+        undoManager.redo();
+        checkMuxInputs("[MuxInputAdded] order after redo", postcondition, mux);
     }
 
     /**
@@ -210,7 +230,20 @@ public class UndoTest {
      */
     @Test
     public void testMuxInputModified() {
-        // TODO
+        // execute command
+        undoManager.addCommand(new MuxInputModifiedCommand(MuxType.A, 1, new RegisterMuxInput("MDR"), mConfig));
+        assertEquals("[MuxInputModified] type after execution", true, mConfig.getMuxSources(MuxType.A).get(1) instanceof RegisterMuxInput);
+        assertEquals("[MuxInputModified] value after execution", true, "MDR".equals(((RegisterMuxInput) mConfig.getMuxSources(MuxType.A).get(1)).getRegisterName()));
+
+        // undo command
+        undoManager.undo();
+        assertEquals("[MuxInputModified] type after undo", true, mConfig.getMuxSources(MuxType.A).get(1) instanceof ConstantMuxInput);
+        assertEquals("[MuxInputModified] value after undo", 1, ((ConstantMuxInput) mConfig.getMuxSources(MuxType.A).get(1)).getConstant());
+
+        // redo command
+        undoManager.redo();
+        assertEquals("[MuxInputModified] type after redo", true, mConfig.getMuxSources(MuxType.A).get(1) instanceof RegisterMuxInput);
+        assertEquals("[MuxInputModified] value after redo", true, "MDR".equals(((RegisterMuxInput) mConfig.getMuxSources(MuxType.A).get(1)).getRegisterName()));
     }
 
     /**
@@ -218,7 +251,31 @@ public class UndoTest {
      */
     @Test
     public void testMuxInputMoved() {
-        // TODO
+        MuxType mux = MuxType.A;
+        ConstantMuxInput in1 = new ConstantMuxInput(0);
+        ConstantMuxInput in2 = new ConstantMuxInput(1);
+        RegisterMuxInput in3 = new RegisterMuxInput("ACCU");
+
+        List<MuxInput> preconditionInput = new ArrayList<>(Arrays.asList(in1, in2, in3));
+        List<MuxInput> postconditionInput = new ArrayList<>(Arrays.asList(in1, in3, in2));
+
+        List<Integer> preconditionSelect = new ArrayList<>(Arrays.asList(1, 2, 2, 2, 0, 2, 1, 0));
+        List<Integer> postconditionSelect = new ArrayList<>(Arrays.asList(2, 1, 1, 1, 0, 1, 2, 0));
+
+        // execute command
+        undoManager.addCommand(new MuxInputMovedCommand(mux, 1, 2, mConfig));
+        checkMuxInputs("[MuxInputMoved] order after execution", postconditionInput, mux);
+        checkSignalValues("[MuxInputMoved] signal values after execution", postconditionSelect, ALU_SEL_A);
+
+        // undo command
+        undoManager.undo();
+        checkMuxInputs("[MuxInputMoved] order after undo", preconditionInput, mux);
+        checkSignalValues("[MuxInputMoved] signal values after undo", preconditionSelect, ALU_SEL_A);
+
+        // redo command
+        undoManager.redo();
+        checkMuxInputs("[MuxInputMoved] order after redo", postconditionInput, mux);
+        checkSignalValues("[MuxInputMoved] signal values after redo", postconditionSelect, ALU_SEL_A);
     }
 
     /**
@@ -226,7 +283,63 @@ public class UndoTest {
      */
     @Test
     public void testMuxInputRemoved() {
-        // TODO
+        MuxType mux = MuxType.A;
+        ConstantMuxInput in1 = new ConstantMuxInput(0);
+        ConstantMuxInput in2 = new ConstantMuxInput(1);
+        RegisterMuxInput in3 = new RegisterMuxInput("ACCU");
+
+        List<MuxInput> preconditionInput = new ArrayList<>(Arrays.asList(in1, in2, in3));
+        List<MuxInput> postconditionInput = new ArrayList<>(Arrays.asList(in1, in3));
+
+        List<Integer> preconditionSelect = new ArrayList<>(Arrays.asList(1, 2, 2, 2, 0, 2, 1, 0));
+        List<Integer> postconditionSelect = new ArrayList<>(Arrays.asList(0, 1, 1, 1, 0, 1, 0, 0));
+
+        // execute command
+        undoManager.addCommand(new MuxInputRemovedCommand(mux, 1, mConfig));
+        checkMuxInputs("[MuxInputRemoved] order after execution", postconditionInput, mux);
+        checkSignalValues("[MuxInputRemoved] signal values after execution", postconditionSelect, ALU_SEL_A);
+
+        // undo command
+        undoManager.undo();
+        checkMuxInputs("[MuxInputRemoved] order after undo", preconditionInput, mux);
+        checkSignalValues("[MuxInputRemoved] signal values after undo", preconditionSelect, ALU_SEL_A);
+
+        // redo command
+        undoManager.redo();
+        checkMuxInputs("[MuxInputRemoved] order after redo", postconditionInput, mux);
+        checkSignalValues("[MuxInputRemoved] signal values after redo", postconditionSelect, ALU_SEL_A);
+    }
+
+    /**
+     * Checks whether the specified list of {@code MuxInput}s is the current representation of the {@code MuxInput}s
+     * of the specified multiplexer.
+     *
+     * @param assertText
+     *         the text of the {@code assertEquals} call
+     * @param muxInputs
+     *         the list of the expected {@code MuxInput}s
+     * @param mux
+     *         the {@code MuxType} of the multiplexer
+     */
+    private void checkMuxInputs(String assertText, List<MuxInput> muxInputs, MuxType mux) {
+        assertText += "; index: ";
+        for (int i = 0; i < muxInputs.size(); i++) {
+            MuxInput expected = muxInputs.get(i);
+            MuxInput actual = mConfig.getMuxSources(mux).get(i);
+
+            if (expected instanceof ConstantMuxInput) {
+                assertEquals(assertText + i, true, (actual instanceof  ConstantMuxInput));
+                ConstantMuxInput expCMI = (ConstantMuxInput) expected;
+                ConstantMuxInput actCMI = (ConstantMuxInput) actual;
+                assertEquals(assertText + i, expCMI.getConstant(), actCMI.getConstant());
+            }
+            else if (expected instanceof RegisterMuxInput) {
+                assertEquals(assertText + i, true, (actual instanceof RegisterMuxInput));
+                RegisterMuxInput expRMI = (RegisterMuxInput) expected;
+                RegisterMuxInput actRMI = (RegisterMuxInput) actual;
+                assertEquals(assertText + i, true, expRMI.getRegisterName().equals(actRMI.getRegisterName()));
+            }
+        }
     }
 
     /**
