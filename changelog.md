@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
     <li>button labels for adding and removing multiplexer connections were not localized</li>
     <li>button icon for adding a register was not the correct one</li>
     <li>multiplexer selection code in MuxView was extended too early</li>
+    <li>machine configuration menu item was not localized</li>
   </ul>
 </div>
 
