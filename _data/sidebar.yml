@@ -47,6 +47,9 @@ entries:
      
     - title: Application Menus
       url: /mmsim_menus.html     
+      
+    - title: Shortcuts
+      url: /mmsim_shortcuts.html
           
   - title: Contributing
     items:
