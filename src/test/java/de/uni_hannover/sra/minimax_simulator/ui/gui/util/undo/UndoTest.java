@@ -605,6 +605,25 @@ public class UndoTest {
         // redo command
         undoManager.redo();
         checkSignalRows("[SignalRowAdded] redo", postcondition);
+
+        // now the whole thing again for adding the row to the end of the list
+        // test case setup
+        precondition = createSignalRowList();
+        signalTable.addSignalRow(new SignalRow());
+        postcondition = createSignalRowList();
+        signalTable.removeSignalRow(signalTable.getRowCount()-1);
+
+        // execute command
+        undoManager.addCommand(new SignalRowAddedCommand(-1, signalTable));
+        checkSignalRows("[SignalRowAdded] executed", postcondition);
+
+        // undo command
+        undoManager.undo();
+        checkSignalRows("[SignalRowAdded] undo", precondition);
+
+        // redo command
+        undoManager.redo();
+        checkSignalRows("[SignalRowAdded] redo", postcondition);
     }
 
     /**
@@ -706,6 +725,8 @@ public class UndoTest {
     private void checkSignalRows(String assertText, List<SignalRow> signalRows) {
         assertText += " ";
         String idx = "; row index: ";
+
+        assertEquals(assertText + "number of signal rows", signalRows.size(), signalTable.getRowCount());
         for (int i = 0; i < signalRows.size(); i++) {
             SignalRow expected = signalRows.get(i);
             SignalRow actual = signalTable.getRow(i);
