@@ -44,6 +44,9 @@ entries:
           
         - title: Overview
           url: /mmsim_tab_overview.html
+     
+    - title: Application Menus
+      url: /mmsim_menus.html     
           
   - title: Contributing
     items:
