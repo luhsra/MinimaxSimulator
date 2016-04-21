@@ -4,6 +4,8 @@ import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
@@ -15,6 +17,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -315,7 +318,7 @@ public class UndoTest {
      * of the specified multiplexer.
      *
      * @param assertText
-     *         the text of the {@code assertEquals} call
+     *         the text for the {@code assertEquals} call
      * @param muxInputs
      *         the list of the expected {@code MuxInput}s
      * @param mux
@@ -347,7 +350,28 @@ public class UndoTest {
      */
     @Test
     public void testRegisterAdded() {
-        // TODO
+        RegisterExtension reg1 = new RegisterExtension("REG1", RegisterSize.BITS_32, "desc reg1", true);
+        RegisterExtension reg2 = new RegisterExtension("REG2", RegisterSize.BITS_32, "desc reg2", true);
+        RegisterExtension reg3 = new RegisterExtension("REG3", RegisterSize.BITS_32, "desc reg3", true);
+
+        List<RegisterExtension> precondition = new ArrayList<>(Arrays.asList(reg1, reg2));
+        List<RegisterExtension> postcondition = new ArrayList<>(Arrays.asList(reg1, reg2, reg3));
+
+        // test case setup
+        mConfig.addRegisterExtension(reg1);
+        mConfig.addRegisterExtension(reg2);
+
+        // execute command
+        undoManager.addCommand(new RegisterAddedCommand(reg3, mConfig));
+        checkRegisters("[RegisterAdded] order after execution", postcondition);
+
+        // undo command
+        undoManager.undo();
+        checkRegisters("[RegisterAdded] order after undo", precondition);
+
+        // redo command
+        undoManager.redo();
+        checkRegisters("[RegisterAdded] order after redo", postcondition);
     }
 
     /**
@@ -355,7 +379,26 @@ public class UndoTest {
      */
     @Test
     public void testRegisterModified() {
-        // TODO
+        RegisterExtension oldOne = new RegisterExtension("TMP", RegisterSize.BITS_32, "desc", true);
+        RegisterExtension newOne = new RegisterExtension("TMP", RegisterSize.BITS_32, "register for temporary values", true);
+
+        List<RegisterExtension> precondition = Collections.singletonList(oldOne);
+        List<RegisterExtension> postcondition = Collections.singletonList(newOne);
+
+        // test case setup
+        mConfig.addRegisterExtension(oldOne);
+
+        // execute command
+        undoManager.addCommand(new RegisterModifiedCommand(0, oldOne, newOne, mConfig));
+        checkRegisters("[RegisterModified] values after execution", postcondition);
+
+        // undo command
+        undoManager.undo();
+        checkRegisters("[RegisterModified] values after undo", precondition);
+
+        // redo command
+        undoManager.redo();
+        checkRegisters("[RegisterModified] values after redo", postcondition);
     }
 
     /**
@@ -363,7 +406,33 @@ public class UndoTest {
      */
     @Test
     public void testRegisterMoved() {
-        // TODO
+        RegisterExtension reg1 = new RegisterExtension("REG1", RegisterSize.BITS_32, "desc reg1", true);
+        RegisterExtension reg2 = new RegisterExtension("REG2", RegisterSize.BITS_32, "desc reg2", true);
+        RegisterExtension reg3 = new RegisterExtension("REG3", RegisterSize.BITS_32, "desc reg3", true);
+        RegisterExtension reg4 = new RegisterExtension("REG4", RegisterSize.BITS_32, "desc reg4", true);
+        RegisterExtension reg5 = new RegisterExtension("REG5", RegisterSize.BITS_32, "desc reg5", true);
+
+        List<RegisterExtension> precondition = new ArrayList<>(Arrays.asList(reg1, reg2, reg3, reg4, reg5));
+        List<RegisterExtension> postcondition = new ArrayList<>(Arrays.asList(reg1, reg2, reg4, reg3, reg5));
+
+        // test case setup
+        mConfig.addRegisterExtension(reg1);
+        mConfig.addRegisterExtension(reg2);
+        mConfig.addRegisterExtension(reg3);
+        mConfig.addRegisterExtension(reg4);
+        mConfig.addRegisterExtension(reg5);
+
+        // execute command
+        undoManager.addCommand(new RegisterMovedCommand(2, 3, mConfig));
+        checkRegisters("[RegisterMoved] order after execution", postcondition);
+
+        // undo command
+        undoManager.undo();
+        checkRegisters("[RegisterMoved] order after undo", precondition);
+
+        // redo command
+        undoManager.redo();
+        checkRegisters("[RegisterMoved] order after redo", postcondition);
     }
 
     /**
@@ -371,7 +440,55 @@ public class UndoTest {
      */
     @Test
     public void testRegisterRemoved() {
-        // TODO
+        RegisterExtension reg1 = new RegisterExtension("REG1", RegisterSize.BITS_32, "desc reg1", true);
+        RegisterExtension reg2 = new RegisterExtension("REG2", RegisterSize.BITS_32, "desc reg2", true);
+        List<RegisterExtension> preconditionRegister = new ArrayList<>(Arrays.asList(reg1, reg2));
+        List<RegisterExtension> postconditionRegister = Collections.singletonList(reg2);
+
+        MuxType mux = MuxType.A;
+        ConstantMuxInput in1 = new ConstantMuxInput(0);
+        ConstantMuxInput in2 = new ConstantMuxInput(1);
+        RegisterMuxInput in3 = new RegisterMuxInput("ACCU");
+        RegisterMuxInput in4 = new RegisterMuxInput("REG1");
+        List<MuxInput> preconditionMuxInput = new ArrayList<>(Arrays.asList(in1, in2, in3, in4));
+        List<MuxInput> postconditionMuxInput = new ArrayList<>(Arrays.asList(in1, in2, in3, NullMuxInput.INSTANCE));
+
+        // test case setup
+        mConfig.addRegisterExtension(reg1);
+        mConfig.addRegisterExtension(reg2);
+        mConfig.addMuxSource(mux, in4);
+
+        // execute command
+        undoManager.addCommand(new RegisterRemovedCommand(reg1, mConfig));
+        checkRegisters("[RegisterRemoved] registers after execution", postconditionRegister);
+        checkMuxInputs("[RegisterRemoved] MUX inputs after execution", postconditionMuxInput, mux);
+
+        // undo command
+        undoManager.undo();
+        checkRegisters("[RegisterRemoved] registers after undo", preconditionRegister);
+        checkMuxInputs("[RegisterRemoved] MUX inputs after undo", preconditionMuxInput, mux);
+
+        // redo command
+        undoManager.redo();
+        checkRegisters("[RegisterRemoved] registers after redo", postconditionRegister);
+        checkMuxInputs("[RegisterRemoved] MUX inputs after redo", postconditionMuxInput, mux);
+    }
+
+    /**
+     * Checks whether the specified list represents the current list of {@code RegisterExtension}s.
+     *
+     * @param assertText
+     *         the text for the {@code assertEquals} call
+     * @param registers
+     *         the list of expected registers
+     */
+    private void checkRegisters(String assertText, List<RegisterExtension> registers) {
+        assertText += "; index: ";
+        for (int i = 0; i < registers.size(); i++) {
+            RegisterExtension expected = registers.get(i);
+            RegisterExtension actual = mConfig.getRegisterExtension(i);
+            assertEquals(assertText + i, true, expected.equals(actual));
+        }
     }
 
     /**
