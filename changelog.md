@@ -1,7 +1,6 @@
 ---
 title: Changelog
-last_updated: Apr 12, 2016
-audience: field engineers, clients
+last_updated: Apr 21, 2016
 keywords: changelog, change log, changes, version history
 ---
 
@@ -9,6 +8,11 @@ All notable changes to this project will be documented in this file.
 
 ## upcoming release
 <div style="margin-left: 20px">
+  <b>Added</b>
+  <ul>
+    <li>undo / redo feature</li>
+  </ul>
+
   <b>Changed</b>
   <ul>
     <li>HTML signal table exporter now uses template file and HTML5</li>
