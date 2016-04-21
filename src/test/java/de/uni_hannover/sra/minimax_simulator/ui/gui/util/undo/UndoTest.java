@@ -9,6 +9,11 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
+import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
+import de.uni_hannover.sra.minimax_simulator.model.signal.jump.DefaultJump;
+import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
+import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.*;
@@ -583,7 +588,23 @@ public class UndoTest {
      */
     @Test
     public void testSignalRowAdded() {
-        // TODO
+        // test case setup
+        List<SignalRow> precondition = createSignalRowList();
+        signalTable.addSignalRow(2, new SignalRow());
+        List<SignalRow> postcondition = createSignalRowList();
+        signalTable.removeSignalRow(2);
+
+        // execute command
+        undoManager.addCommand(new SignalRowAddedCommand(2, signalTable));
+        checkSignalRows("[SignalRowAdded] executed", postcondition);
+
+        // undo command
+        undoManager.undo();
+        checkSignalRows("[SignalRowAdded] undo", precondition);
+
+        // redo command
+        undoManager.redo();
+        checkSignalRows("[SignalRowAdded] redo", postcondition);
     }
 
     /**
@@ -591,7 +612,25 @@ public class UndoTest {
      */
     @Test
     public void testSignalRowModified() {
-        // TODO
+        // test case setup
+        List<SignalRow> precondition = createSignalRowList();
+        SignalRow oldRow = new SignalRow(signalTable.getRow(3));
+        signalTable.getRow(3).setBreakpoint(true);
+        List<SignalRow> postcondition = createSignalRowList();
+        SignalRow newRow = new SignalRow(signalTable.getRow(3));
+        signalTable.getRow(3).setBreakpoint(false);
+
+        // execute command
+        undoManager.addCommand(new SignalRowModifiedCommand(3, oldRow, newRow, signalTable));
+        checkSignalRows("[SignalRowModified] executed", postcondition);
+
+        // undo command
+        undoManager.undo();
+        checkSignalRows("[SignalRowModified] undo", precondition);
+
+        // redo command
+        undoManager.redo();
+        checkSignalRows("[SignalRowModified] redo", postcondition);
     }
 
     /**
@@ -599,7 +638,23 @@ public class UndoTest {
      */
     @Test
     public void testSignalRowMoved() {
-        // TODO
+        // test case setup
+        List<SignalRow> precondition = createSignalRowList();
+        signalTable.moveSignalRows(3, 3, 1);
+        List<SignalRow> postcondition = createSignalRowList();
+        signalTable.moveSignalRows(4, 4, -1);
+
+        // execute command
+        undoManager.addCommand(new SignalRowMovedCommand(3, 1, signalTable));
+        checkSignalRows("[SignalRowMoved] executed", postcondition);
+
+        // undo command
+        undoManager.undo();
+        checkSignalRows("[SignalRowMoved] undo", precondition);
+
+        // redo command
+        undoManager.redo();
+        checkSignalRows("[SignalRowMoved] redo", postcondition);
     }
 
     /**
@@ -607,7 +662,91 @@ public class UndoTest {
      */
     @Test
     public void testSignalRowRemoved() {
-        // TODO
+        // test case setup
+        List<SignalRow> precondition = createSignalRowList();
+        signalTable.removeSignalRow(5);
+        List<SignalRow> postcondition = createSignalRowList();
+        resetProject();
+
+        // execute command
+        undoManager.addCommand(new SignalRowRemovedCommand(5, signalTable));
+        checkSignalRows("[SignalRowReoved] executed", postcondition);
+
+        // undo command
+        undoManager.undo();
+        checkSignalRows("[SignalRowRemoved] undo", precondition);
+
+        // redo command
+        undoManager.redo();
+        checkSignalRows("[SignalRowRemoved] redo", postcondition);
     }
 
+    /**
+     * Creates a list of the current {@code SignalRow}s.
+     *
+     * @return
+     *         the list of the {@code SignalRows}
+     */
+    private List<SignalRow> createSignalRowList() {
+        List<SignalRow> rows = new ArrayList<>();
+        for (SignalRow row : signalTable.getRows()) {
+            rows.add(new SignalRow(row));
+        }
+        return rows;
+    }
+
+    /**
+     * Checks whether the specified list of {@code SignalRow}s is a representation of the current {@code SignalTable}.
+     *
+     * @param assertText
+     *         the text for the {@code assertEquals} call
+     * @param signalRows
+     *         the list of expected {@code SignalRow}s
+     */
+    private void checkSignalRows(String assertText, List<SignalRow> signalRows) {
+        assertText += " ";
+        String idx = "; row index: ";
+        for (int i = 0; i < signalRows.size(); i++) {
+            SignalRow expected = signalRows.get(i);
+            SignalRow actual = signalTable.getRow(i);
+
+            // check breakpoint
+            assertEquals(assertText + "breakpoint" + idx + i, expected.isBreakpoint(), actual.isBreakpoint());
+
+            // check label
+            if (expected.getLabel() != null) {
+                assertEquals(assertText + "label" + idx + i, true, expected.getLabel().equals(actual.getLabel()));
+            }
+
+            // check signal values
+            assertEquals(assertText + "signal value key set size" + idx + i, expected.getSignalValues().keySet().size(), actual.getSignalValues().keySet().size());
+            for (String key : expected.getSignalValues().keySet()) {
+                assertEquals(assertText + "contains key: " + key + idx + i, true, actual.getSignalValues().keySet().contains(key));
+                assertEquals(assertText + "value of key: " + key + idx + i, expected.getSignalValue(key), actual.getSignalValue(key));
+            }
+
+            // check jump
+            Jump jumpExpected = expected.getJump();
+            Jump jumpActual = actual.getJump();
+            if (jumpExpected instanceof DefaultJump) {
+                assertEquals(assertText + "default jump" + idx + i, true, (jumpActual instanceof DefaultJump));
+                DefaultJump djExp = (DefaultJump) jumpExpected;
+                DefaultJump djAct = (DefaultJump) jumpActual;
+                assertEquals(assertText + "jump target" + idx + i, djExp.getTargetRow(i, 0), djAct.getTargetRow(i, 0));
+            }
+            else if (jumpExpected instanceof UnconditionalJump) {
+                assertEquals(assertText + "unconditional jump" + idx + i, true, (jumpActual instanceof UnconditionalJump));
+                UnconditionalJump ujExp = (UnconditionalJump) jumpExpected;
+                UnconditionalJump ujAct = (UnconditionalJump) jumpActual;
+                assertEquals(assertText + "jump target" + idx + i, ujExp.getTargetRow(), ujAct.getTargetRow());
+            }
+            else if (jumpExpected instanceof ConditionalJump) {
+                assertEquals(assertText + "conditional jump" + idx + i, true, (jumpActual instanceof ConditionalJump));
+                ConditionalJump cjExp = (ConditionalJump) jumpExpected;
+                ConditionalJump cjAct = (ConditionalJump) jumpActual;
+                assertEquals(assertText + "jump target 0" + idx + i, cjExp.getTargetRow(0), cjAct.getTargetRow(0));
+                assertEquals(assertText + "jump target 1" + idx + i, cjExp.getTargetRow(1), cjAct.getTargetRow(1));
+            }
+        }
+    }
 }
