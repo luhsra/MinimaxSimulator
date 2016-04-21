@@ -53,7 +53,7 @@ public class MuxInputAddedCommand extends Command {
      * @return
      *          the default {@link MuxInput}
      */
-    private MuxInput createDefaultMuxSource() {
+    private static MuxInput createDefaultMuxSource() {
         return new ConstantMuxInput(0);
     }
 }
