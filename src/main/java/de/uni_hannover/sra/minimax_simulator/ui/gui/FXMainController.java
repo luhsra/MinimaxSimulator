@@ -196,9 +196,9 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         TextResource resMenu = Main.getTextResource("menu");
         // menu: project
         menuProject.setText(resMenu.get("project"));
-        final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, exitApplication,
-                viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout, projectUndo, projectRedo));
-        for (MenuItem mi : projectMenu) {
+        final List<MenuItem> menuElements = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, exitApplication,
+                viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout, projectUndo, projectRedo, menuProject, menuView, menuHelp, menuMachineConfiguration));
+        for (MenuItem mi : menuElements) {
             String id = mi.getId().replace("_", ".");
             String mne = resMenu.get(id + ".mne");
 
@@ -208,19 +208,6 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 mi.setMnemonicParsing(true);
             }
             mi.setText(text);
-        }
-
-        final List<Menu> allMenus = new ArrayList<>(Arrays.asList(menuProject, menuView, menuHelp));
-        for (Menu m : allMenus) {
-            String id = m.getId().replace("_", ".");
-            String mne = resMenu.get(id + ".mne");
-
-            String text = resMenu.get(id);
-            if (!mne.isEmpty()) {
-                text = text.replaceFirst(mne, "_"+mne);
-                m.setMnemonicParsing(true);
-            }
-            m.setText(text);
         }
 
         // menu: help
