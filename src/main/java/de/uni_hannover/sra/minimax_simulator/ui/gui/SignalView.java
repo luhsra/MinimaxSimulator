@@ -11,6 +11,10 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.tableview.*;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.SignalRowAddedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.SignalRowMovedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.SignalRowRemovedCommand;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,6 +37,7 @@ import java.util.Map;
  *
  * @author Philipp Rohde
  */
+// TODO: optimize event handling
 public class SignalView implements SignalTableListener, MachineConfigListener {
 
     private final TextResource res;
@@ -249,13 +254,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
     public void addRow() {
         int index = signaltable.getSelectionModel().getSelectedIndex();
 
-        if (index == -1) {
-            signal.addSignalRow(new SignalRow());
-        }
-        else {
-            signal.addSignalRow(index + 1, new SignalRow());
-        }
-        Main.getWorkspace().setProjectUnsaved();
+        UndoManager.INSTANCE.addCommand(new SignalRowAddedCommand(index, signal));
     }
 
     /**
@@ -265,9 +264,8 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
         int index = signaltable.getSelectionModel().getSelectedIndex();
 
         if (index != -1) {
-            signal.removeSignalRow(index);
+            UndoManager.INSTANCE.addCommand(new SignalRowRemovedCommand(index, signal));
         }
-        Main.getWorkspace().setProjectUnsaved();
     }
 
     /**
@@ -297,10 +295,10 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
         }
 
         int index1 = signaltable.getSelectionModel().getSelectedIndex();
-        signal.moveSignalRows(index1, index1, difference);
-        signaltable.getSelectionModel().select(index1+difference);
 
-        Main.getWorkspace().setProjectUnsaved();
+        UndoManager.INSTANCE.addCommand(new SignalRowMovedCommand(index1, difference, signal));
+
+        signaltable.getSelectionModel().select(index1+difference);
     }
 
     @Override

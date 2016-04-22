@@ -3,7 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
-import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigMuxEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.*;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
@@ -11,6 +11,11 @@ import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.HexSpinnerValueFactory;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.NullAwareIntFormatter;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.MuxInputAddedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.MuxInputModifiedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.MuxInputMovedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.MuxInputRemovedCommand;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -225,6 +230,7 @@ public class MuxView implements MachineConfigListener {
                 else if (tableMuxA.getSelectionModel().getSelectedIndex() == tableMuxA.getItems().size()-1) {
                     btnMoveDownMuxA.setDisable(true);
                 }
+                updateSaveButton();
             }
         });
 
@@ -267,6 +273,7 @@ public class MuxView implements MachineConfigListener {
                 else if (tableMuxB.getSelectionModel().getSelectedIndex() == tableMuxB.getItems().size()-1) {
                     btnMoveDownMuxB.setDisable(true);
                 }
+                updateSaveButton();
             }
         });
 
@@ -388,20 +395,8 @@ public class MuxView implements MachineConfigListener {
             return;
         }
 
-        // Move one up
-        config.exchangeMuxSources(mux, index1, index2);
-        Main.getWorkspace().setProjectUnsaved();
-
-        if (mux == MuxType.A) {
-            updateTableMuxA();
-            tableMuxA.getSelectionModel().select(index2);
-        }
-        else {
-            updateTableMuxB();
-            tableMuxB.getSelectionModel().select(index2);
-        }
-
-        updateSaveButton();
+        // move one up
+        UndoManager.INSTANCE.addCommand(new MuxInputMovedCommand(mux, index1, index2, config));
     }
 
     /**
@@ -441,27 +436,11 @@ public class MuxView implements MachineConfigListener {
             return;
         }
 
-        config.removeMuxSource(mux, index);
-
-        if (mux == MuxType.A) {
-            updateTableMuxA();
-            if (!tableMuxA.getItems().isEmpty()) {
-                tableMuxA.getSelectionModel().select(Math.min(tableMuxA.getItems().size(), index-1));
-            }
-        }
-        else {
-            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
-            updateTableMuxB();
-            if (!tableMuxB.getItems().isEmpty()) {
-                tableMuxB.getSelectionModel().select(Math.min(tableMuxB.getItems().size(), index-1));
-            }
-        }
-
-        Main.getWorkspace().setProjectUnsaved();
+        UndoManager.INSTANCE.addCommand(new MuxInputRemovedCommand(mux, index, config));
     }
 
     /**
-     * Adds a new default source to mulitplexer A.
+     * Adds a new default source to multiplexer A.
      */
     public void addSourceToA() {
         addSource(MuxType.A);
@@ -481,27 +460,7 @@ public class MuxView implements MachineConfigListener {
      *          the multiplexer for which the source should be added
      */
     private void addSource(MuxType mux) {
-        config.addMuxSource(mux, createDefaultMuxSource());
-        if (mux == MuxType.A) {
-            tableMuxA.getSelectionModel().select(tableMuxA.getItems().size()-1);
-            updateTableMuxA();
-        }
-        else {
-            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
-            tableMuxB.getSelectionModel().select(tableMuxB.getItems().size()-1);
-            updateTableMuxB();
-        }
-    }
-
-    /**
-     * Creates a default multiplexer source. The default is a {@link ConstantMuxInput} with value zero.
-     *
-     * @return
-     *          the default {@link MuxInput}
-     */
-    private static MuxInput createDefaultMuxSource()
-    {
-        return new ConstantMuxInput(0);
+        UndoManager.INSTANCE.addCommand(new MuxInputAddedCommand(mux, config));
     }
 
     /**
@@ -527,34 +486,29 @@ public class MuxView implements MachineConfigListener {
         }
 
         MuxInput input;
-        if (radioConstant.isSelected())
-        {
-            Object i = spinnerDec.getValue();
-            if (i instanceof Integer)
-                input = new ConstantMuxInput((Integer) spinnerDec.getValue());
-            else
+        if (radioConstant.isSelected()) {
+            Integer i = spinnerDec.getValue();
+            if (i != null) {
+                input = new ConstantMuxInput(spinnerDec.getValue());
+            }
+            else {
                 return;
+            }
         }
-        else if (radioRegister.isSelected())
-        {
-            Object register = cbRegister.getSelectionModel().getSelectedItem();
-            if (register instanceof MuxInput)
-                input = (MuxInput) register;
-            else
+        else if (radioRegister.isSelected()) {
+            MuxInput register = cbRegister.getSelectionModel().getSelectedItem();
+            if (register != null) {
+                input = register;
+            }
+            else {
                 return;
-        }
-        else
-            return;
-
-        config.setMuxSource(mux, index, input);
-
-        if (mux == MuxType.A) {
-            updateTableMuxA();
+            }
         }
         else {
-            // there are only MuxType.A and MuxType.B therefore it is MuxType.B here
-            updateTableMuxB();
+            return;
         }
+
+        UndoManager.INSTANCE.addCommand(new MuxInputModifiedCommand(mux, index, input, config));
     }
 
     /**
@@ -646,8 +600,37 @@ public class MuxView implements MachineConfigListener {
 
     @Override
     public void processEvent(MachineConfigEvent event) {
-        if (event instanceof MachineConfigListEvent.MachineConfigMuxEvent) {
+        if (event instanceof MachineConfigMuxEvent) {
+            MachineConfigMuxEvent e = (MachineConfigMuxEvent) event;
             updateRegisterComboBox();
+
+            TableView<MuxTableModel> table;
+            if (e.mux == MuxType.A) {
+                updateTableMuxA();
+                table = tableMuxA;
+            }
+            else {
+                // there are only the multiplexers A and B so it must be B here
+                updateTableMuxB();
+                table = tableMuxB;
+            }
+
+            switch (e.type) {
+                case ELEMENT_ADDED:
+                    table.getSelectionModel().select(table.getItems().size()-1);
+                    break;
+                case ELEMENT_REMOVED:
+                    int maxIndex = table.getItems().size() - 1;
+                    int index = (e.index > maxIndex) ? maxIndex : e.index;
+                    table.getSelectionModel().select(index);
+                    break;
+                case ELEMENTS_EXCHANGED:
+                    table.getSelectionModel().select(e.index2);
+                    break;
+                case ELEMENT_REPLACED:
+                    table.getSelectionModel().select(e.index);
+                    break;
+            }
         }
     }
 
@@ -677,7 +660,7 @@ public class MuxView implements MachineConfigListener {
          */
         private MuxTableModel(MuxInput muxInput, int index, int size) {
             this.muxInput = muxInput;
-            this.code = new SimpleStringProperty(Util.toBinaryAddress(index, size));
+            this.code = new SimpleStringProperty(Util.toBinaryAddress(index, size-1));
             this.source = new SimpleStringProperty(muxInput.getName());
             this.extended = new SimpleStringProperty(getExtendedSourceInfo());
         }

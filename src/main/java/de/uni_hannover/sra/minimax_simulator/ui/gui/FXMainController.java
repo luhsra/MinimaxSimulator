@@ -18,6 +18,7 @@ import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.AboutDial
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.ExceptionDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.UnsavedDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
 import javafx.application.Platform;
@@ -66,11 +67,15 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     @FXML private MenuItem projectOpen;
     @FXML private MenuItem projectSave;
     @FXML private MenuItem projectSaveAs;
+    @FXML private MenuItem projectUndo;
+    @FXML private MenuItem projectRedo;
     @FXML private MenuItem projectExportSchematics;
     @FXML private MenuItem projectExportSignal;
     @FXML private MenuItem projectClose;
     @FXML private MenuItem exitApplication;
     private List<MenuItem> disabledMenuItems = null;
+
+    private UndoManager undoManager = UndoManager.INSTANCE;
 
     @FXML private Menu menuView;
     @FXML private MenuItem viewOverview;
@@ -152,6 +157,9 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 .add(projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, viewOverview, viewMemory, viewDebugger)
                 .build();
 
+        projectUndo.disableProperty().bind(undoManager.isUndoAvailableProperty().not());
+        projectRedo.disableProperty().bind(undoManager.isRedoAvailableProperty().not());
+
         setShortcuts();
         setLocalizedTexts();
     }
@@ -164,6 +172,8 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         this.projectNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN));
         this.projectOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         this.projectSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN));
+        this.projectUndo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.SHORTCUT_DOWN));
+        this.projectRedo.setAccelerator(new KeyCodeCombination(KeyCode.Y, KeyCombination.SHORTCUT_DOWN));
         this.projectClose.setAccelerator(new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN));
         this.exitApplication.setAccelerator(new KeyCodeCombination(KeyCode.Q, KeyCombination.SHORTCUT_DOWN));
 
@@ -186,9 +196,9 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         TextResource resMenu = Main.getTextResource("menu");
         // menu: project
         menuProject.setText(resMenu.get("project"));
-        final List<MenuItem> projectMenu = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, exitApplication,
-                viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout));
-        for (MenuItem mi : projectMenu) {
+        final List<MenuItem> menuElements = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, exitApplication,
+                viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout, projectUndo, projectRedo, menuProject, menuView, menuHelp, menuMachineConfiguration));
+        for (MenuItem mi : menuElements) {
             String id = mi.getId().replace("_", ".");
             String mne = resMenu.get(id + ".mne");
 
@@ -198,19 +208,6 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
                 mi.setMnemonicParsing(true);
             }
             mi.setText(text);
-        }
-
-        final List<Menu> allMenus = new ArrayList<>(Arrays.asList(menuProject, menuView, menuHelp));
-        for (Menu m : allMenus) {
-            String id = m.getId().replace("_", ".");
-            String mne = resMenu.get(id + ".mne");
-
-            String text = resMenu.get(id);
-            if (!mne.isEmpty()) {
-                text = text.replaceFirst(mne, "_"+mne);
-                m.setMnemonicParsing(true);
-            }
-            m.setText(text);
         }
 
         // menu: help
@@ -405,6 +402,20 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      */
     private void closeNonDefaultTabs() {
         tabpane.getTabs().removeAll(tabAlu, tabReg, tabMux);
+    }
+
+    /**
+     * Calls {@link UndoManager#undo()} in order to undo the latest change.
+     */
+    public void undo() {
+        undoManager.undo();
+    }
+
+    /**
+     * Calls {@link UndoManager#redo()} in order to redo the latest change.
+     */
+    public void redo() {
+        undoManager.redo();
     }
 
     /**

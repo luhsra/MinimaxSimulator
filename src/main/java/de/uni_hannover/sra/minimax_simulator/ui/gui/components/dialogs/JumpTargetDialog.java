@@ -10,6 +10,8 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.NumberTextField;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.JumpLabelSelector;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.SignalRowModifiedCommand;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
@@ -287,9 +289,10 @@ public class JumpTargetDialog extends FXDialog {
                     return;
                 }
             }
-            this.row.setJump(newJump);
-            this.table.setSignalRow(this.rowIndex, this.row);
-            Main.getWorkspace().setProjectUnsaved();
+            SignalRow newRow = new SignalRow(this.row);
+            newRow.setJump(newJump);
+
+            UndoManager.INSTANCE.addCommand(new SignalRowModifiedCommand(this.rowIndex, this.row, newRow, this.table));
         }
     }
 

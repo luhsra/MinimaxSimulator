@@ -6,7 +6,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-
 <GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40"
           fx:controller="de.uni_hannover.sra.minimax_simulator.ui.gui.AluView">
     <columnConstraints>
@@ -106,10 +105,11 @@
                         </VBox>
                         <Button id="alu_button_add" fx:id="btnAdd" mnemonicParsing="false" onAction="#addOperation"
                                 text="hinzufügen" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                                GridPane.valignment="CENTER"/>
+                                GridPane.valignment="CENTER" disable="true"/>
                         <Button id="alu_button_remove" fx:id="btnRemove" mnemonicParsing="false"
                                 onAction="#removeOperation" text="entfernen" GridPane.columnIndex="1"
-                                GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER"/>
+                                GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER"
+                                disable="true"/>
                     </children>
                 </GridPane>
             </content>

@@ -3,6 +3,8 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui.components.tableview;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.SignalRowModifiedCommand;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -48,17 +50,17 @@ public class LabelColumn extends SignalTableColumn {
             cell.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
                 if (event.getClickCount() == 2) {
                     int cIndex = cell.getTableView().getSelectionModel().getSelectedIndex();
-                    SignalTable signalTable = Main.getWorkspace().getProject().getSignalTable();
-                    SignalRow signalRow = signalTable.getRow(cIndex);
+                    SignalTable table = Main.getWorkspace().getProject().getSignalTable();
+                    SignalRow signalRow = table.getRow(cIndex);
 
                     TextField txtLabel = new TextField(signalRow.getLabel());
 
                     txtLabel.setOnKeyReleased(evt -> {
                         if (KeyCode.ENTER == evt.getCode()) {
-                            signalRow.setLabel(txtLabel.getText());
+                            SignalRow newRow = new SignalRow(signalRow);
+                            newRow.setLabel(txtLabel.getText());
                             txtLabel.cancelEdit();
-                            signalTable.setSignalRow(cIndex, signalRow);
-                            Main.getWorkspace().setProjectUnsaved();
+                            UndoManager.INSTANCE.addCommand(new SignalRowModifiedCommand(cIndex, signalRow, newRow, table));
                         }
                         else if (KeyCode.ESCAPE == evt.getCode()) {
                             txtLabel.cancelEdit();
@@ -72,7 +74,6 @@ public class LabelColumn extends SignalTableColumn {
                             cell.setGraphic(new Label(signalRow.getLabel()));
                         }
                     });
-
 
                     cell.setGraphic(txtLabel);
                     txtLabel.requestFocus();

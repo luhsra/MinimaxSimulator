@@ -39,6 +39,23 @@ public final class SignalRow {
     }
 
     /**
+     * Creates a copy of the specified {@code SignalRow}.
+     *
+     * @param other
+     *         the {@code SignalRow} to copy
+     */
+    public SignalRow(SignalRow other) {
+        values = new HashMap<>();
+        for (Map.Entry<String, SignalValue> entry : other.getSignalValues().entrySet()) {
+            values.put(entry.getKey(), entry.getValue());
+        }
+
+        label = other.getLabel();
+        isBreakpoint = other.isBreakpoint();
+        jump = other.getJump();
+    }
+
+    /**
      * Gets the label of the {@code SignalRow}.
      *
      * @return

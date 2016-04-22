@@ -3,8 +3,15 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigAluEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.AluOpAddedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.AluOpMovedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.AluOpRemovedCommand;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -27,7 +34,7 @@ import java.util.List;
  *
  * @author Philipp Rohde
  */
-public class AluView {
+public class AluView implements MachineConfigListener {
 
     private final TextResource res;
     private final TextResource resAlu;
@@ -90,6 +97,7 @@ public class AluView {
      */
     public void initAluView() {
         config = Main.getWorkspace().getProject().getMachineConfiguration();
+        config.addMachineConfigListener(this);
 
         txtDescription.setText("");
         txtRT.setText("");
@@ -212,14 +220,7 @@ public class AluView {
     public void addOperation() {
         AluOperation op = tableAvailable.getSelectionModel().getSelectedItem().getAluOP();
         if (op != null) {
-            config.addAluOperation(op);
-            updateAvailableTable();
-            updateAddedTable();
-            int lastItem = tableAdded.getItems().size()-1;
-            tableAdded.getSelectionModel().select(lastItem);
-            tableAdded.getSelectionModel().focus(lastItem);
-
-            Main.getWorkspace().setProjectUnsaved();
+            UndoManager.INSTANCE.addCommand(new AluOpAddedCommand(op, config));
         }
     }
 
@@ -229,24 +230,7 @@ public class AluView {
     public void removeOperation() {
         AluOperation op = tableAdded.getSelectionModel().getSelectedItem().getAluOP();
         if (op != null) {
-            config.removeAluOperation(op);
-            updateAddedTable();
-            updateAvailableTable();
-
-            int index = -1;
-            // lookup the index of the removed operation at tableAvailable
-            List<AluOpTableModel> list = tableAvailable.getItems();
-            for (AluOpTableModel model : list) {
-                AluOperation operation = model.getAluOP();
-                if (op.equals(operation)) {
-                    index = list.indexOf(model);
-                }
-            }
-
-            tableAvailable.getSelectionModel().select(index);
-            tableAvailable.getSelectionModel().focus(index);
-
-            Main.getWorkspace().setProjectUnsaved();
+            UndoManager.INSTANCE.addCommand(new AluOpRemovedCommand(op, config));
         }
     }
 
@@ -281,12 +265,46 @@ public class AluView {
             return;
         }
 
-        // Move operations in model and adapt selection
-        config.exchangeAluOperations(index1, index2);
-        updateAddedTable();
-        tableAdded.getSelectionModel().select(index2);
+        // move operations in model
+        UndoManager.INSTANCE.addCommand(new AluOpMovedCommand(index1, index2, config));
+    }
 
-        Main.getWorkspace().setProjectUnsaved();
+    @Override
+    public void processEvent(MachineConfigEvent event) {
+        if (event instanceof MachineConfigAluEvent) {
+            MachineConfigAluEvent e = (MachineConfigAluEvent) event;
+            updateAddedTable();
+            updateAvailableTable();
+
+            switch (e.type) {
+                case ELEMENT_ADDED:
+                    int lastItem = tableAdded.getItems().size() - 1;
+                    tableAdded.getSelectionModel().select(lastItem);
+                    tableAdded.getSelectionModel().focus(lastItem);
+                    break;
+                case ELEMENT_REMOVED:
+                    int index = -1;
+                    AluOperation op = e.element;
+                    // lookup the index of the removed operation at tableAvailable
+                    List<AluOpTableModel> list = tableAvailable.getItems();
+                    for (AluOpTableModel model : list) {
+                        AluOperation operation = model.getAluOP();
+                        if (op.equals(operation)) {
+                            index = list.indexOf(model);
+                        }
+                    }
+
+                    tableAvailable.getSelectionModel().select(index);
+                    tableAvailable.getSelectionModel().focus(index);
+                    break;
+                case ELEMENTS_EXCHANGED:
+                    tableAdded.getSelectionModel().select(e.index2);
+                    break;
+                case ELEMENT_REPLACED:
+                    // can not happen with ALU operations
+                    break;
+            }
+        }
     }
 
     /**

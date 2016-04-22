@@ -3,11 +3,20 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui;
 import de.uni_hannover.sra.minimax_simulator.Config;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigRegisterEvent;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListener;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.RegisterAddedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.RegisterRemovedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.RegisterModifiedCommand;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.RegisterMovedCommand;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +37,7 @@ import java.util.List;
  *
  * @author Philipp Rohde
  */
-public class RegView {
+public class RegView implements MachineConfigListener {
 
     private final TextResource res;
 
@@ -117,6 +126,7 @@ public class RegView {
      */
     public void initRegView() {
         config = Main.getWorkspace().getProject().getMachineConfiguration();
+        config.addMachineConfigListener(this);
 
         txtDescription.setText("");
         txtName.setText("");
@@ -221,12 +231,7 @@ public class RegView {
      */
     public void addRegister() {
         RegisterExtension reg = createNewRegister();
-        config.addRegisterExtension(reg);
-        updateExtendedTable();
-        int index = tableExtendedReg.getItems().indexOf(reg);
-        tableExtendedReg.getSelectionModel().select(index);
-
-        Main.getWorkspace().setProjectUnsaved();
+        UndoManager.INSTANCE.addCommand(new RegisterAddedCommand(reg, config));
     }
 
     /**
@@ -269,19 +274,7 @@ public class RegView {
         RegisterExtension reg = tableExtendedReg.getSelectionModel().getSelectedItem().getRegister();
 
         if (new FXDialog(Alert.AlertType.CONFIRMATION, res.format("dialog.delete.message", reg.getName()), res.get("dialog.delete.title")).getChoice() == ButtonType.OK) {
-            config.removeRegisterExtension(reg);
-            Main.getWorkspace().setProjectUnsaved();
-
-            updateExtendedTable();
-
-            if (!tableExtendedReg.getItems().isEmpty()) {
-                int index = tableExtendedReg.getItems().size()-1;
-                tableExtendedReg.getSelectionModel().select(index);
-            }
-            else {
-                tableExtendedReg.getSelectionModel().clearSelection();
-                btnRemove.setDisable(true);
-            }
+            UndoManager.INSTANCE.addCommand(new RegisterRemovedCommand(reg, config));
         }
     }
 
@@ -316,12 +309,8 @@ public class RegView {
             return;
         }
 
-        // move registers in model and adapt selection
-        config.exchangeRegisterExtensions(index1, index2);
-        updateExtendedTable();
-        tableExtendedReg.getSelectionModel().select(index2);
-
-        Main.getWorkspace().setProjectUnsaved();
+        // move registers in model
+        UndoManager.INSTANCE.addCommand(new RegisterMovedCommand(index1, index2, config));
     }
 
     /**
@@ -401,14 +390,42 @@ public class RegView {
         if (tableExtendedReg.getSelectionModel().getSelectedItems().isEmpty()) {
             return;
         }
-        RegisterExtension reg = tableExtendedReg.getSelectionModel().getSelectedItem().getRegister();
+        RegisterExtension regOld = tableExtendedReg.getSelectionModel().getSelectedItem().getRegister();
         int index = tableExtendedReg.getSelectionModel().getSelectedIndex();
 
-        reg = new RegisterExtension(txtName.getText().trim(), cbSize.getValue(), txtDescription.getText(), reg.isExtended());
-        config.setRegisterExtension(index, reg);
-        updateExtendedTable();
-        updateButton();
-        Main.getWorkspace().setProjectUnsaved();
+        RegisterExtension regNew = new RegisterExtension(txtName.getText().trim(), cbSize.getValue(), txtDescription.getText(), regOld.isExtended());
+
+        UndoManager.INSTANCE.addCommand(new RegisterModifiedCommand(index, regOld, regNew, config));
+    }
+
+    @Override
+    public void processEvent(MachineConfigEvent event) {
+        if (event instanceof MachineConfigRegisterEvent) {
+            MachineConfigRegisterEvent e = (MachineConfigRegisterEvent) event;
+            updateExtendedTable();
+
+            if (e.type == MachineConfigListEvent.EventType.ELEMENT_ADDED) {
+                tableExtendedReg.getSelectionModel().select(e.index);
+            }
+            else if (e.type == MachineConfigListEvent.EventType.ELEMENT_REMOVED) {
+                if (!tableExtendedReg.getItems().isEmpty()) {
+                    int maxIndex = tableExtendedReg.getItems().size() - 1;
+                    int index = (e.index > maxIndex) ? maxIndex : e.index;
+                    tableExtendedReg.getSelectionModel().select(index);
+                }
+                else {
+                    tableExtendedReg.getSelectionModel().clearSelection();
+                    btnRemove.setDisable(true);
+                }
+            }
+            else if (e.type == MachineConfigListEvent.EventType.ELEMENTS_EXCHANGED) {
+                tableExtendedReg.getSelectionModel().select(e.index2);
+            }
+            else if (e.type == MachineConfigListEvent.EventType.ELEMENT_REPLACED) {
+                updateButton();
+                tableExtendedReg.getSelectionModel().select(e.index);
+            }
+        }
     }
 
 

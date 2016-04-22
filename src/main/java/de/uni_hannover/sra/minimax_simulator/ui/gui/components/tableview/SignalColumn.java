@@ -8,6 +8,8 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.signal.DescriptionFactory;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.SignalRowModifiedCommand;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +33,7 @@ public class SignalColumn extends SignalTableColumn {
     private SignalTable signalTable;
     private SignalRow signalRow;
     private int rowIndex;
+    private SignalRow oldRow;
 
     /**
      * Creates a {@link TableColumn} for the {@link de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue}s of a {@link SignalRow}.
@@ -79,6 +82,7 @@ public class SignalColumn extends SignalTableColumn {
                     rowIndex = cell.getTableView().getSelectionModel().getSelectedIndex();
                     signalTable = Main.getWorkspace().getProject().getSignalTable();
                     signalRow = signalTable.getRow(rowIndex);
+                    oldRow = new SignalRow(signalRow);
                     ComboBox<String> cbRegister = new ComboBox<>();
 
                     ObservableList<String> data = FXCollections.observableArrayList();
@@ -203,7 +207,6 @@ public class SignalColumn extends SignalTableColumn {
      * Exchanges a {@link SignalRow} of a {@link SignalTable} with itself for notification of {@link de.uni_hannover.sra.minimax_simulator.model.signal.SignalTableListener}s.
      */
     private void fireUpdateTable() {
-        signalTable.setSignalRow(rowIndex, signalRow);
-        Main.getWorkspace().setProjectUnsaved();
+        UndoManager.INSTANCE.addCommand(new SignalRowModifiedCommand(rowIndex, oldRow, signalRow, signalTable));
     }
 }
