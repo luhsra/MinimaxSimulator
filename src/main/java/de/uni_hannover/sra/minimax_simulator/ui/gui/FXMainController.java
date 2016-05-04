@@ -2,6 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import de.uni_hannover.sra.minimax_simulator.Config;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalCsvExporter;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalHtmlExporter;
@@ -90,6 +91,9 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
 
     @FXML private Menu menuHelp;
     @FXML private MenuItem helpAbout;
+    @FXML private Menu helpLanguage;
+    @FXML private MenuItem helpLanguageEnglish;
+    @FXML private MenuItem helpLanguageGerman;
 
     @FXML private TabPane tabpane;
     @FXML private Tab tabOverview;
@@ -196,8 +200,9 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         TextResource resMenu = Main.getTextResource("menu");
         // menu: project
         menuProject.setText(resMenu.get("project"));
-        final List<MenuItem> menuElements = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose, exitApplication,
-                viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout, projectUndo, projectRedo, menuProject, menuView, menuHelp, menuMachineConfiguration));
+        final List<MenuItem> menuElements = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose,
+                exitApplication, viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout, projectUndo, projectRedo, menuProject, menuView,
+                menuHelp, menuMachineConfiguration, helpLanguage, helpLanguageEnglish, helpLanguageGerman));
         for (MenuItem mi : menuElements) {
             String id = mi.getId().replace("_", ".");
             String mne = resMenu.get(id + ".mne");
@@ -689,6 +694,25 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      */
     public void openInfo() {
         new AboutDialog().showAndWait();
+    }
+
+    public void changeLanguage(ActionEvent ae) {
+
+        if (!(ae.getSource() instanceof MenuItem)) {
+            return;
+        }
+
+        MenuItem caller = (MenuItem) ae.getSource();
+        try {
+            if (caller.equals(helpLanguageEnglish)) {
+                Config.changeLanguage("base");
+            } else if (caller.equals(helpLanguageGerman)) {
+                Config.changeLanguage("de");
+            }
+        } catch (IOException e) {
+            new FXDialog(Alert.AlertType.ERROR, res.get("language.error.title"), res.get("language.error.message")).show();
+        }
+        new FXDialog(Alert.AlertType.INFORMATION, res.get("language.info.title"), res.get("language.info.message")).showAndWait();
     }
 
     /**

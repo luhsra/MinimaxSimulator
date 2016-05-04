@@ -177,7 +177,7 @@
                         <Menu id="help_language" fx:id="helpLanguage" mnemonicParsing="false"
                               text="Sprache ändern">
                             <MenuItem id="help_language_english" fx:id="helpLanguageEnglish" mnemonicParsing="false"
-                                      onAction="#openTab" text="Englisch">
+                                      onAction="#changeLanguage" text="Englisch">
                                 <graphic>
                                     <ImageView>
                                         <Image url="/images/us.png"/>
@@ -185,7 +185,7 @@
                                 </graphic>
                             </MenuItem>
                             <MenuItem id="help_language_german" fx:id="helpLanguageGerman" mnemonicParsing="false"
-                                      onAction="#openTab" text="Deutsch">
+                                      onAction="#changeLanguage" text="Deutsch">
                                 <graphic>
                                     <ImageView>
                                         <Image url="/images/de.png"/>
