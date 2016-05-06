@@ -170,7 +170,7 @@ public class PropertiesFileConfigLoaderTest {
     }
 
     /**
-     * This class is a modified version of {@link de.uni_hannover.sra.minimax_simulator.Config} for testing purposes.
+     * This class is a modified version of {@link Config} for testing purposes.
      */
     private static class TestConfiguration {
 
@@ -184,7 +184,7 @@ public class PropertiesFileConfigLoaderTest {
     }
 
     /**
-     * This class is a modified version of {@link de.uni_hannover.sra.minimax_simulator.Config} for testing purposes
+     * This class is a modified version of {@link Config} for testing purposes
      * with annotated configuration file.
      */
     @ConfigurationFile(file = "config.properties")
@@ -200,7 +200,7 @@ public class PropertiesFileConfigLoaderTest {
     }
 
     /**
-     * This class is a modified version of {@link de.uni_hannover.sra.minimax_simulator.Config} for testing purposes
+     * This class is a modified version of {@link Config} for testing purposes
      * with private fields.
      */
     private static class TestConfigurationPrivateField {
@@ -211,7 +211,7 @@ public class PropertiesFileConfigLoaderTest {
     }
 
     /**
-     * This class is a modified version of {@link de.uni_hannover.sra.minimax_simulator.Config} for testing purposes
+     * This class is a modified version of {@link Config} for testing purposes
      * with non-static fields.
      */
     private static class TestConfigurationNonStaticField {
@@ -222,7 +222,7 @@ public class PropertiesFileConfigLoaderTest {
     }
 
     /**
-     * This class is a modified version of {@link de.uni_hannover.sra.minimax_simulator.Config} for testing purposes
+     * This class is a modified version of {@link Config} for testing purposes
      * with final fields.
      */
     private static class TestConfigurationFinalField {
@@ -233,7 +233,7 @@ public class PropertiesFileConfigLoaderTest {
     }
 
     /**
-     * This class is a modified version of {@link de.uni_hannover.sra.minimax_simulator.Config} for testing purposes
+     * This class is a modified version of {@link Config} for testing purposes
      * of different field types.
      */
     private static class TestConfigurationDifferentFieldTypes {

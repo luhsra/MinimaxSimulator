@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * Indicates the name of the file holding the application's configuration.
  *
  * @see Configuration
- * @see de.uni_hannover.sra.minimax_simulator.Config
+ * @see Config
  * @author Martin L&uuml;ck
  */
 @Documented

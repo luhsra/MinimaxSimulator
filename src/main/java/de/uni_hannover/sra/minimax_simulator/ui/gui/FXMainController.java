@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import de.uni_hannover.sra.minimax_simulator.Config;
+import de.uni_hannover.sra.minimax_simulator.config.Config;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalCsvExporter;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalHtmlExporter;

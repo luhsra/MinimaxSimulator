@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
-import de.uni_hannover.sra.minimax_simulator.Config;
+import de.uni_hannover.sra.minimax_simulator.config.Config;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Pin;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Point;
@@ -87,7 +87,7 @@ public abstract class CircuitSprite implements Sprite {
      *          the {@code Bounds} to debug
      */
     public void debugBounds(GraphicsContext gc, Bounds bounds) {
-        if (Config.DEBUG_SCHEMATICS) {
+        if (Config.getIsDebugSchematics()) {
             gc.setStroke(RED);
             gc.strokeRect(bounds.x, bounds.y, bounds.w, bounds.h);
             gc.setStroke(Color.BLACK);
@@ -103,7 +103,7 @@ public abstract class CircuitSprite implements Sprite {
      *          the {@code Pin} to debug
      */
     public void debugPin(GraphicsContext gc, Pin pin) {
-        if (Config.DEBUG_SCHEMATICS) {
+        if (Config.getIsDebugSchematics()) {
             debugPosition(gc, pin.getBounds().x, pin.getBounds().y);
         }
     }
@@ -119,7 +119,7 @@ public abstract class CircuitSprite implements Sprite {
      *          the y coordinate of the point to debug
      */
     public void debugPosition(GraphicsContext gc, int x, int y) {
-        if (Config.DEBUG_SCHEMATICS) {
+        if (Config.getIsDebugSchematics()) {
             gc.setFill(RED);
             gc.fillOval(x - 2, y - 2, 5, 5);
             gc.setFill(Color.BLACK);

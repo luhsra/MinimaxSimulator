@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
-import de.uni_hannover.sra.minimax_simulator.Config;
+import de.uni_hannover.sra.minimax_simulator.config.Config;
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
@@ -99,7 +99,7 @@ public class RegView implements MachineConfigListener {
         txtName.textProperty().addListener((observable, oldValue, newValue) -> updateButton());
 
         txtName.lengthProperty().addListener((observable, oldValue, newValue) -> {
-            int limit = Config.EDITOR_MAX_REGISTER_LENGTH;
+            int limit = Config.getEditorMaxRegisterLength();
             if (txtName.getText().length() > limit) {
                 txtName.setText(txtName.getText(0, limit));
             }
