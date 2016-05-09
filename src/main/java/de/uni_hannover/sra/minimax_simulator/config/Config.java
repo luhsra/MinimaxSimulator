@@ -4,6 +4,8 @@ import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 
 import java.io.*;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static de.uni_hannover.sra.minimax_simulator.config.Parser.toBoolean;
 
@@ -16,6 +18,10 @@ public class Config {
 
     private static final Properties PROPERTIES = new Properties();
     private static final File PROPERTIES_FILE = new File("config.properties");
+
+    private static final String LOCALE = "locale";
+
+    private static final Logger LOG = Logger.getLogger("de.uni_hannover.sra.minimax_simulator");
 
     /** The singleton instance. */
     public static final Config INSTANCE = new Config();
@@ -36,11 +42,11 @@ public class Config {
 
             PROPERTIES.load(r);
 
-            //r.close();
+            r.close();
         } catch (FileNotFoundException e) {
-            // do nothing here because it is possible that no configuration file exists
+            LOG.log(Level.FINE, "Configuration file does not exist.", e);
         } catch (IOException e) {
-            // do nothing and use default values if the properties file was not readable or malformed
+            LOG.log(Level.FINE, "Could not read from configuration file.", e);
         }
     }
 
@@ -51,7 +57,7 @@ public class Config {
      *         the language code of the language to use
      */
     public static String getLocale() {
-        return PROPERTIES.getProperty("locale", null);
+        return PROPERTIES.getProperty(LOCALE, null);
     }
 
     /**
@@ -61,15 +67,14 @@ public class Config {
      * @param locale
      *         the new language code
      * @throws IOException
-     *         thrown if the changes could not be saved to PROPERTIES file
+     *         thrown if the changes could not be saved to properties file
      */
     public static void changeLanguage(String locale) throws IOException {
-        readPropertiesFile();
-        if (PROPERTIES.containsKey("locale")) {
-            PROPERTIES.replace("locale", locale);
+        if (PROPERTIES.containsKey(LOCALE)) {
+            PROPERTIES.replace(LOCALE, locale);
         }
         else {
-            PROPERTIES.put("locale", locale);
+            PROPERTIES.put(LOCALE, locale);
         }
         PROPERTIES.store(new FileWriter(PROPERTIES_FILE), null);
     }
@@ -92,7 +97,7 @@ public class Config {
      * Default value: false
      *
      * @return
-     *         {@code true} if schematics should be deugged, {@code false} otherwise
+     *         {@code true} if schematics should be debugged, {@code false} otherwise
      */
     public static boolean getIsDebugSchematics() {
         return PROPERTIES.containsKey("debug.schematics") && toBoolean(PROPERTIES.getProperty("debug.schematics"));
