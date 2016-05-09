@@ -696,6 +696,12 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         new AboutDialog().showAndWait();
     }
 
+    /**
+     * Changes the language corresponding to the {@link ActionEvent} calling the method.
+     *
+     * @param ae
+     *          the {@link ActionEvent} calling the method
+     */
     public void changeLanguage(ActionEvent ae) {
 
         if (!(ae.getSource() instanceof MenuItem)) {
