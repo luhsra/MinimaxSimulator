@@ -11,11 +11,13 @@ All notable changes to this project will be documented in this file.
   <b>Added</b>
   <ul>
     <li>undo / redo feature</li>
+    <li>language selection (English / German)</li>
   </ul>
 
   <b>Changed</b>
   <ul>
     <li>HTML signal table exporter now uses template file and HTML5</li>
+    <li>Now using Java's Properties class for application configuration</li>
   </ul>
   
   <b>Fixed</b>
