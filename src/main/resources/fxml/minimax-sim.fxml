@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-
 <GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
           prefHeight="705.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40"
           fx:controller="de.uni_hannover.sra.minimax_simulator.ui.gui.FXMainController">
@@ -175,6 +174,25 @@
                                 </ImageView>
                             </graphic>
                         </MenuItem>
+                        <Menu id="help_language" fx:id="helpLanguage" mnemonicParsing="false"
+                              text="Sprache ändern">
+                            <MenuItem id="help_language_english" fx:id="helpLanguageEnglish" mnemonicParsing="false"
+                                      onAction="#changeLanguage" text="Englisch">
+                                <graphic>
+                                    <ImageView>
+                                        <Image url="/images/us.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </MenuItem>
+                            <MenuItem id="help_language_german" fx:id="helpLanguageGerman" mnemonicParsing="false"
+                                      onAction="#changeLanguage" text="Deutsch">
+                                <graphic>
+                                    <ImageView>
+                                        <Image url="/images/de.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </MenuItem>
+                        </Menu>
                     </items>
                 </Menu>
             </menus>

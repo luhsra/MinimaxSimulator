@@ -368,7 +368,7 @@ public class ConfigurationTest {
     }
 
     /**
-     * This class is a modified version of {@link de.uni_hannover.sra.minimax_simulator.Config} for testing purposes.
+     * This class is a modified version of {@link Config} for testing purposes.
      */
     private static class TestConfig {
         /** a string config entry */

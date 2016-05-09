@@ -1,5 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator;
 
+import de.uni_hannover.sra.minimax_simulator.config.Config;
 import de.uni_hannover.sra.minimax_simulator.config.ConfigurationLoader;
 import de.uni_hannover.sra.minimax_simulator.config.PropertiesFileConfigLoader;
 import de.uni_hannover.sra.minimax_simulator.model.user.Workspace;
@@ -154,12 +155,12 @@ public class Main extends javafx.application.Application {
     public static ResourceBundleLoader getResourceLoader() {
         if (resourceLoader == null) {
             Locale locale;
-            if (Config.LOCALE == null || Config.LOCALE.isEmpty()) {
+            if (Config.getLocale() == null) {
                 locale = Locale.getDefault();
             }
             else {
                 try {
-                    locale = new Locale(Config.LOCALE);
+                    locale = new Locale(Config.getLocale());
                     Locale.setDefault(locale);
                 } catch (Exception e) {
                     // locale not supported
