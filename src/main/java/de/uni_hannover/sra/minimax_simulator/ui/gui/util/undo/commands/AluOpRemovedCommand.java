@@ -31,6 +31,7 @@ public class AluOpRemovedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public AluOpRemovedCommand(AluOperation op, MachineConfiguration config) {
+        super("alu.removed");
         this.op = op;
         this.config = config;
         this.aluOps = new ArrayList<>();

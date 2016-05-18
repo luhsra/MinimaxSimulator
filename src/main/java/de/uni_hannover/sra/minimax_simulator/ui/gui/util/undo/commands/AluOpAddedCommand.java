@@ -22,6 +22,7 @@ public class AluOpAddedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public AluOpAddedCommand(AluOperation op, MachineConfiguration config) {
+        super("alu.added");
         this.op = op;
         this.config = config;
     }

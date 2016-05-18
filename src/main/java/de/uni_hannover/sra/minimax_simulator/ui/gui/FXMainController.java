@@ -19,6 +19,8 @@ import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.AboutDial
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.ExceptionDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.UnsavedDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoEvent;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoListener;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.MachineSchematics;
 import de.uni_hannover.sra.minimax_simulator.ui.schematics.SpriteOwner;
@@ -61,7 +63,7 @@ import java.util.logging.Logger;
  *
  * @author Philipp Rohde
  */
-public class FXMainController implements WorkspaceListener, MachineDisplayListener {
+public class FXMainController implements WorkspaceListener, MachineDisplayListener, UndoListener {
 
     @FXML private Menu menuProject;
     @FXML private MenuItem projectNew;
@@ -118,6 +120,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     private MachineSchematics schematics;
 
     private final TextResource res;
+    private final TextResource resMenu;
 
     private Map<String, Tab> tabMap;
 
@@ -135,6 +138,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      */
     public FXMainController() {
         res = Main.getTextResource("application");
+        resMenu = Main.getTextResource("menu");
 
         extFilterSignal = new ExtensionFilter(res.get("project.signalfile.description"), "*.csv", "*.html");
         extFilterProject = new ExtensionFilter(res.get("project.filedescription"), "*.zip");
@@ -146,6 +150,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      */
     public void initialize() {
         WORKSPACE.addListener(this);
+        undoManager.addListener(this);
 
         this.tabMap = ImmutableMap.<String, Tab>builder()
                 .put("view_project_overview", tabOverview)
@@ -197,7 +202,6 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      * Sets localized texts from resource for the GUI elements.
      */
     private void setLocalizedTexts() {
-        TextResource resMenu = Main.getTextResource("menu");
         // menu: project
         menuProject.setText(resMenu.get("project"));
         final List<MenuItem> menuElements = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose,
@@ -816,5 +820,29 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     @Override
     public void onSpriteOwnerChanged(SpriteOwner spriteOwner) {
         // not needed here
+    }
+
+    @Override
+    public void onUndoAction(UndoEvent e) {
+        if (e.isSaved()) {
+            WORKSPACE.setProjectSaved();
+        }
+        else {
+            WORKSPACE.setProjectUnsaved();
+        }
+
+        String undo = resMenu.get("project.undo");
+        if (e.undoAvailable()) {
+            // add command description
+            undo += ": " + e.undoCommandName();
+        }
+        projectUndo.setText(undo);
+
+        String redo = resMenu.get("project.redo");
+        if (e.redoAvailable()) {
+            // add command description
+            redo += ": " + e.redoCommandName();
+        }
+        projectRedo.setText(redo);
     }
 }

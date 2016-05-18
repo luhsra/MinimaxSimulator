@@ -30,6 +30,7 @@ public class MuxInputModifiedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public MuxInputModifiedCommand(MuxType mux, int index, MuxInput newValue, MachineConfiguration config) {
+        super("mux.modified");
         this.mux = mux;
         this.index = index;
         this.oldValue = config.getMuxSources(mux).get(index);

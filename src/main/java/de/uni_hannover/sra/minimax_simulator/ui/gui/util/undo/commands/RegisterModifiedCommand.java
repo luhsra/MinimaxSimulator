@@ -28,6 +28,7 @@ public class RegisterModifiedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public RegisterModifiedCommand(int index, RegisterExtension oldValue, RegisterExtension newValue, MachineConfiguration config) {
+        super("register.modified");
         this.index = index;
         this.oldValue = oldValue;
         this.newValue = newValue;

@@ -26,6 +26,7 @@ public class SignalRowRemovedCommand extends Command {
      *         the {@code SignalTable} of the simulated machine
      */
     public SignalRowRemovedCommand(int index, SignalTable table) {
+        super("signal.removed");
         this.index = index;
         this.table = table;
 

@@ -29,6 +29,7 @@ public class MuxInputMovedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public MuxInputMovedCommand(MuxType mux, int index1, int index2, MachineConfiguration config) {
+        super("mux.moved");
         this.mux = mux;
         this.index1 = index1;
         this.index2 = index2;

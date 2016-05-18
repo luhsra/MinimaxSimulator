@@ -24,6 +24,7 @@ public class SignalRowMovedCommand extends Command {
      *         the {@code SignalTable} of the simulated machine
      */
     public SignalRowMovedCommand(int index, int difference, SignalTable table) {
+        super("signal.moved");
         this.index = index;
         this.difference = difference;
         this.table = table;

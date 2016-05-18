@@ -24,6 +24,7 @@ public class AluOpMovedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public AluOpMovedCommand(int index1, int index2, MachineConfiguration config) {
+        super("alu.moved");
         this.index1 = index1;
         this.index2 = index2;
         this.config = config;

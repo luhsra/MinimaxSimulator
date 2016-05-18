@@ -22,6 +22,7 @@ public class SignalRowAddedCommand extends Command {
      *         the {@code SignalTable} of the simulated machine
      */
     public SignalRowAddedCommand(int index, SignalTable table) {
+        super("signal.added");
         this.index = index;
         this.table = table;
     }

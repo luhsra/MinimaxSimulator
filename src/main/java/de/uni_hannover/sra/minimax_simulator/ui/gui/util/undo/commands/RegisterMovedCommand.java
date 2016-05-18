@@ -24,6 +24,7 @@ public class RegisterMovedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public RegisterMovedCommand(int index1, int index2, MachineConfiguration config) {
+        super("register.moved");
         this.index1 = index1;
         this.index2 = index2;
         this.config = config;

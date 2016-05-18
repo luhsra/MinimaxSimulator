@@ -35,6 +35,7 @@ public class MuxInputRemovedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public MuxInputRemovedCommand(MuxType mux, int index, MachineConfiguration config) {
+        super("mux.removed");
         this.mux = mux;
         this.index = index;
         this.config = config;
