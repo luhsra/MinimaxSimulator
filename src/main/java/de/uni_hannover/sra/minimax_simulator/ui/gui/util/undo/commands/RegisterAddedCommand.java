@@ -22,6 +22,7 @@ public class RegisterAddedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public RegisterAddedCommand(RegisterExtension register, MachineConfiguration config) {
+        super("register.added");
         this.register = register;
         this.config = config;
     }

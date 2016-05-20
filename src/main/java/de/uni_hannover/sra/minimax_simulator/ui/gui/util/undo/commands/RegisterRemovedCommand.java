@@ -30,6 +30,7 @@ public class RegisterRemovedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public RegisterRemovedCommand(RegisterExtension register, MachineConfiguration config) {
+        super("register.removed");
         this.register = register;
         this.config = config;
 

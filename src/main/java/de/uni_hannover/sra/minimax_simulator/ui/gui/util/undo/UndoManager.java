@@ -1,11 +1,13 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo;
 
-import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.Command;
 import javafx.beans.property.SimpleBooleanProperty;
 
+import java.io.File;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 /**
  * The {@code UndoManager} manages all {@link Command}s made by the user and calls their {@link Command#undo()} and
@@ -26,8 +28,13 @@ public class UndoManager {
     /** Whether the project was saved since it was opened or not. */
     private boolean saved = false;
 
+    /** Whether the project is currently in a saved state or not. */
+    private boolean isSaved = false;
+
     /** The singleton instance. */
     public static final UndoManager INSTANCE = new UndoManager();
+
+    private List<UndoListener> listeners;
 
     /**
      * Initializes the instance.
@@ -38,6 +45,32 @@ public class UndoManager {
 
         undoAvailable = new SimpleBooleanProperty(false);
         redoAvailable = new SimpleBooleanProperty(false);
+
+        listeners = new ArrayList<>();
+    }
+
+    /**
+     * Adds the specified {@code UndoListener} to the list of listeners.
+     *
+     * @param listener
+     *         the listener to add
+     */
+    public void  addListener(UndoListener listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Notifies all listeners about an action using an {@link UndoEvent}.
+     */
+    private void notifyOnAction() {
+        String undo = undos.isEmpty() ? "" : undos.peek().getCommandName();
+        String redo = redos.isEmpty() ? "" : redos.peek().getCommandName();
+
+        UndoEvent e = new UndoEvent(isSaved, undoAvailable.get(), redoAvailable.get(), undo, redo);
+
+        for (UndoListener l : listeners) {
+            l.onUndoAction(e);
+        }
     }
 
     /**
@@ -54,8 +87,10 @@ public class UndoManager {
 
         undos.push(command);
         command.execute();
-        Main.getWorkspace().setProjectUnsaved();
+        isSaved = false;
         undoAvailable.set(true);
+
+        notifyOnAction();
     }
 
     /**
@@ -75,6 +110,8 @@ public class UndoManager {
         if (undos.isEmpty()) {
             undoAvailable.set(false);
         }
+
+        notifyOnAction();
     }
 
     /**
@@ -94,6 +131,8 @@ public class UndoManager {
         if (redos.isEmpty()) {
             redoAvailable.set(false);
         }
+
+        notifyOnAction();
     }
 
     /**
@@ -107,10 +146,16 @@ public class UndoManager {
         redoAvailable.set(false);
 
         saved = false;
+        isSaved = true;
+
+        notifyOnAction();
     }
 
     /**
-     * Marks the head of the undo stack as saved.
+     * Marks the head of the undo stack as saved.<br>
+     * <br>
+     * This method is called from {@link de.uni_hannover.sra.minimax_simulator.model.user.Workspace#saveProject(File)}
+     * each time the project is saved.
      */
     public void markSavedState() {
         if (undos.isEmpty()) {
@@ -118,6 +163,7 @@ public class UndoManager {
         }
 
         saved = true;
+        isSaved = true;
         undos.forEach(command -> command.unmark());
         undos.peek().mark();
     }
@@ -129,19 +175,19 @@ public class UndoManager {
      */
     private void markProject() {
         if (undos.isEmpty() && !saved) {
-            Main.getWorkspace().setProjectSaved();
+            isSaved = true;
             return;
         }
         else if (undos.isEmpty()) {
-            Main.getWorkspace().setProjectUnsaved();
+            isSaved = false;
             return;
         }
 
         if (undos.peek().isMarked()) {
-            Main.getWorkspace().setProjectSaved();
+            isSaved = true;
         }
         else {
-            Main.getWorkspace().setProjectUnsaved();
+            isSaved = false;
         }
     }
 
@@ -163,6 +209,16 @@ public class UndoManager {
      */
     public SimpleBooleanProperty isRedoAvailableProperty() {
         return redoAvailable;
+    }
+
+    /**
+     * Gets the value of the {@code isProjectSaved} property.
+     *
+     * @return
+     *         {@code true} if the project is in a saved state, {@code false} otherwise
+     */
+    public boolean isProjectSaved() {
+        return isSaved;
     }
 
 }

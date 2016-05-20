@@ -26,6 +26,7 @@ public class MuxInputAddedCommand extends Command {
      *         the {@code MachineConfiguration} of the simulated machine
      */
     public MuxInputAddedCommand(MuxType mux, MachineConfiguration config) {
+        super("mux.added");
         this.mux = mux;
         this.input = createDefaultMuxSource();
         this.config = config;

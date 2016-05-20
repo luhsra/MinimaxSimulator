@@ -89,75 +89,75 @@ public class UndoTest {
 
         assertEquals("[UndoManager] clean start", false, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] clean start", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project saved at start", false, project.isUnsaved());
+        assertEquals("[UndoManager] project saved at start", true, undoManager.isProjectSaved());
 
         undoManager.addCommand(new MuxInputMovedCommand(MuxType.A, 0, 1, mConfig));
         assertEquals("[UndoManager] one executed command", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] one executed command", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after executed command", true, project.isUnsaved());
+        assertEquals("[UndoManager] project is unsaved after executed command", false, undoManager.isProjectSaved());
 
         undoManager.addCommand(new AluOpMovedCommand(0, 1, mConfig));
         assertEquals("[UndoManager] two executed commands", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] two executed commands", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after two executed commands", true, project.isUnsaved());
+        assertEquals("[UndoManager] project is unsaved after two executed commands", false, undoManager.isProjectSaved());
 
         undoManager.undo();
         assertEquals("[UndoManager] one executed and one undone command", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] one executed and one undone command", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after executed and undone command", true, project.isUnsaved());
+        assertEquals("[UndoManager] project is unsaved after executed and undone command", false, undoManager.isProjectSaved());
 
         undoManager.undo();
         assertEquals("[UndoManager] two undone commands", false, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] two undone commands", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is saved after two undone commands and no save", false, project.isUnsaved());
+        assertEquals("[UndoManager] project is saved after two undone commands and no save", true, undoManager.isProjectSaved());
 
         undoManager.redo();
         assertEquals("[UndoManager] one executed and one undone command", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] one executed and one undone command", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after executed and undone command", true, project.isUnsaved());
+        assertEquals("[UndoManager] project is unsaved after executed and undone command", false, undoManager.isProjectSaved());
 
         undoManager.redo();
         assertEquals("[UndoManager] two executed commands", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] two executed commands", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after two executed commands", true, project.isUnsaved());
+        assertEquals("[UndoManager] project is unsaved after two executed commands", false, undoManager.isProjectSaved());
 
         undoManager.undo();
         undoManager.addCommand(new RegisterAddedCommand(new RegisterExtension("TMP", RegisterSize.BITS_32, "desc", true), mConfig));
         assertEquals("[UndoManager] new command after undo", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] new command after undo", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after new command after undo", true, project.isUnsaved());
+        assertEquals("[UndoManager] project is unsaved after new command after undo", false, undoManager.isProjectSaved());
 
         undoManager.addCommand(new MuxInputMovedCommand(MuxType.B, 0, 1, mConfig));
         undoManager.addCommand(new MuxInputMovedCommand(MuxType.A, 0, 1, mConfig));
         undoManager.addCommand(new MuxInputMovedCommand(MuxType.B, 0, 1, mConfig));
         undoManager.undo();
         workspace.saveProject(file);
-        assertEquals("[UndoManager] project saved after saving", false, project.isUnsaved());
+        assertEquals("[UndoManager] project saved after saving", true, undoManager.isProjectSaved());
 
         undoManager.addCommand(new MuxInputMovedCommand(MuxType.A, 0, 1, mConfig));
         assertEquals("[UndoManager] executed command(s)", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] executed command(s)", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after executed command", true, project.isUnsaved());
+        assertEquals("[UndoManager] project is unsaved after executed command", false, undoManager.isProjectSaved());
 
         undoManager.undo();
         assertEquals("[UndoManager] executed command(s); one undone", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] executed command(s); one undone", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is saved due to no new changes", false, project.isUnsaved());
+        assertEquals("[UndoManager] project is saved due to no new changes", true, undoManager.isProjectSaved());
 
         undoManager.undo();
         assertEquals("[UndoManager] executed command(s); two undone", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] executed command(s); two undone", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after undone command", true, project.isUnsaved());
+        assertEquals("[UndoManager] project is unsaved after undone command", false, undoManager.isProjectSaved());
 
         undoManager.redo();
         assertEquals("[UndoManager] executed command(s); one undone", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] executed command(s); one undone", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is saved due to no new changes", false, project.isUnsaved());
+        assertEquals("[UndoManager] project is saved due to no new changes", true, undoManager.isProjectSaved());
 
         undoManager.redo();
         assertEquals("[UndoManager] executed command(s)", true, undoManager.isUndoAvailableProperty().get());
         assertEquals("[UndoManager] executed command(s)", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after redone command", true, project.isUnsaved());
+        assertEquals("[UndoManager] project is unsaved after redone command", false, undoManager.isProjectSaved());
     }
 
     /**

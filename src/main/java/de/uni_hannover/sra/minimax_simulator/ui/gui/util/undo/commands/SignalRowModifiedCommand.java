@@ -28,6 +28,7 @@ public class SignalRowModifiedCommand extends Command {
      *         the {@code SignalTable} of the simulated machine
      */
     public SignalRowModifiedCommand(int index, SignalRow oldValue, SignalRow newValue, SignalTable table) {
+        super("signal.modified");
         this.index = index;
         this.oldValue = oldValue;
         this.newValue = newValue;
