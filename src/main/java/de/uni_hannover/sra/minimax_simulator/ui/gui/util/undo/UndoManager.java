@@ -3,6 +3,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.Command;
 import javafx.beans.property.SimpleBooleanProperty;
 
+import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -145,12 +146,16 @@ public class UndoManager {
         redoAvailable.set(false);
 
         saved = false;
+        isSaved = true;
 
         notifyOnAction();
     }
 
     /**
-     * Marks the head of the undo stack as saved.
+     * Marks the head of the undo stack as saved.<br>
+     * <br>
+     * This method is called from {@link de.uni_hannover.sra.minimax_simulator.model.user.Workspace#saveProject(File)}
+     * each time the project is saved.
      */
     public void markSavedState() {
         if (undos.isEmpty()) {
@@ -158,6 +163,7 @@ public class UndoManager {
         }
 
         saved = true;
+        isSaved = true;
         undos.forEach(command -> command.unmark());
         undos.peek().mark();
     }
@@ -203,6 +209,16 @@ public class UndoManager {
      */
     public SimpleBooleanProperty isRedoAvailableProperty() {
         return redoAvailable;
+    }
+
+    /**
+     * Gets the value of the {@code isProjectSaved} property.
+     *
+     * @return
+     *         {@code true} if the project is in a saved state, {@code false} otherwise
+     */
+    public boolean isProjectSaved() {
+        return isSaved;
     }
 
 }
