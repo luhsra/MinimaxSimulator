@@ -35,24 +35,24 @@ import java.util.logging.Logger;
  *
  * @author Philipp Rohde
  */
-/* TODO: DebugMenu is isDebugging with
-         DebugException: throw new RuntimeException("Test exception")
-         DebugSprites: toggle Config.DEBUG_SCHEMATICS
-*/
 public class Main extends javafx.application.Application {
 
+    /** the primary {@link Stage} of the JavaFX application */
     private static Stage primaryStage;
 
-    private static Workspace workspace = new Workspace();   // initializes empty workspace (no project loaded)
+    /** the {@link Workspace} used - initializes an empty workspace (no project loaded) */
+    private static Workspace workspace = new Workspace();
+    /** object for loading resources */
     private static ResourceBundleLoader resourceLoader;
 
+    /** version information */
     private static Version version;
 
+    /** logger */
     private static final Logger LOG = setupLogger();
 
+    /** {@link HostServices} for opening files with system default application */
     private static HostServices hostServices;
-
-    private static boolean isDebugging;
 
     /**
      * Starts the JavaFX application.
@@ -67,8 +67,6 @@ public class Main extends javafx.application.Application {
 
         Main.primaryStage = primaryStage;
         version = new Version(this.getClass());
-
-        isDebugging = System.getProperty("application.debug") != null;
 
         hostServices = getHostServices();
 
@@ -183,10 +181,6 @@ public class Main extends javafx.application.Application {
      */
     public static TextResource getTextResource(String bundleName) {
         return resourceLoader.getTextResource(bundleName);
-    }
-
-    public static boolean isDebugging() {
-        return isDebugging;
     }
 
     /**
