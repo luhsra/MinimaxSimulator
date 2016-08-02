@@ -7,6 +7,7 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperatio
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
+import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalType;
@@ -42,6 +43,7 @@ public class ProjectImporterTest {
     @BeforeClass
     public static void initialize() {
         project = new NewProjectBuilder().buildProject();
+        project.getMachineConfiguration().addRegisterExtension(new RegisterExtension("tmp", RegisterSize.BITS_32, "temporary register", true));
     }
 
     /**
