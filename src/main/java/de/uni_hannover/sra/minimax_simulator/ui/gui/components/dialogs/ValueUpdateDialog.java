@@ -118,7 +118,6 @@ public abstract class ValueUpdateDialog extends FXDialog {
 
         modeLabel = new Label();
         updateLabelMode();
-        //TODO: do we need UIUtil.closeOnEscapePressed(this) ?
 
         GridPane pane = new GridPane();
         pane.setHgap(10);
