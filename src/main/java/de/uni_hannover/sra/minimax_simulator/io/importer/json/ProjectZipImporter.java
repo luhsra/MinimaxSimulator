@@ -7,7 +7,6 @@ import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImporter;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.MachineConfiguration;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import de.uni_hannover.sra.minimax_simulator.model.user.Project;
-import de.uni_hannover.sra.minimax_simulator.model.user.ProjectConfiguration;
 import org.json.JSONException;
 
 import java.io.File;
@@ -53,10 +52,9 @@ public class ProjectZipImporter implements ProjectImporter {
             zip = new ZipFile(file);
 
             MachineConfiguration machineConfiguration = getMachineConfiguration(zip);
-            ProjectConfiguration projectConfiguration = getProjectConfiguration(zip);
             SignalTable signalTable = getSignalTable(zip);
 
-            return new Project(machineConfiguration, projectConfiguration, signalTable);
+            return new Project(machineConfiguration, signalTable);
         } catch (ZipException e) {
             throw new ProjectImportException("Invalid zip file: " + file.getPath(), e);
         } catch (IOException e) {
@@ -94,34 +92,6 @@ public class ProjectZipImporter implements ProjectImporter {
             return new MachineJsonImporter().loadMachine(IOUtils.getStringFromInputStream(machineStream));
         } finally {
             IOUtils.closeQuietly(machineStream);
-        }
-    }
-
-    /**
-     * Gets the {@link ProjectConfiguration} from {@link UserJsonImporter}.
-     *
-     * @param zip
-     *            the ZIP containing the {@code user.json}
-     * @return
-     *            the imported {@code ProjectConfiguration}
-     * @throws IOException
-     *            thrown if the {@code user.json} can not be found
-     * @throws JSONException
-     *            thrown if there is an error during parsing the JSON string
-     * @throws ProjectImportException
-     *            thrown if there is any other error during import
-     */
-    private static ProjectConfiguration getProjectConfiguration(ZipFile zip) throws IOException, ProjectImportException {
-        ZipEntry userEntry = zip.getEntry("user.json");
-        if (userEntry == null) {
-            throw new FileNotFoundException("Missing user.json in project archive");
-        }
-
-        InputStream userStream = zip.getInputStream(userEntry);
-        try {
-            return new UserJsonImporter().loadProjectConfiguration(IOUtils.getStringFromInputStream(userStream));
-        } finally {
-            IOUtils.closeQuietly(userStream);
         }
     }
 

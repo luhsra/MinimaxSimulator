@@ -17,8 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The {@code Project} holds every information of the current machine, i.e. the {@link MachineConfiguration},
- * {@link ProjectConfiguration}, {@link SignalTable}, {@link ConfigurableMachine}, {@link SignalConfiguration} and
- * {@link Simulation}.
+ * {@link SignalTable}, {@link ConfigurableMachine}, {@link SignalConfiguration} and {@link Simulation}.
  *
  * @author Martin L&uuml;ck
  */
@@ -26,7 +25,6 @@ public class Project {
 
     // the part that is actually export-friendly
     private final MachineConfiguration machineConfiguration;
-    private final ProjectConfiguration projectConfiguration;
     private final SignalTable signalTable;
 
     // the simulated machine
@@ -37,20 +35,17 @@ public class Project {
     private boolean isUnsaved;
 
     /**
-     * Constructs a new {@code Project} with the specified {@link MachineConfiguration}, {@link ProjectConfiguration} and control table.
+     * Constructs a new {@code Project} with the specified {@link MachineConfiguration} and control table.
      *
      * @param machineConfig
      *          the machine's configuration
-     * @param projectConfig
-     *          the project configuration
      * @param signalTable
      *          the machine's control table
      */
-    public Project(MachineConfiguration machineConfig, ProjectConfiguration projectConfig, SignalTable signalTable) {
+    public Project(MachineConfiguration machineConfig, SignalTable signalTable) {
         isUnsaved = false;
 
         machineConfiguration = checkNotNull(machineConfig);
-        projectConfiguration = checkNotNull(projectConfig);
         signalConfiguration = new MinimaxSignalConfiguration(machineConfiguration);
         this.signalTable = new MachineSignalTable(signalTable, machineConfiguration, new MinimaxSignalDescription(machineConfiguration), signalConfiguration);
         MinimaxMachine minimax = new MinimaxMachine();
@@ -70,16 +65,6 @@ public class Project {
      */
     public MachineConfiguration getMachineConfiguration() {
         return machineConfiguration;
-    }
-
-    /**
-     * Gets the {@link ProjectConfiguration}.
-     *
-     * @return
-     *          the project configuration
-     */
-    public ProjectConfiguration getProjectConfiguration() {
-        return projectConfiguration;
     }
 
     /**
