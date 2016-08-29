@@ -30,7 +30,9 @@ public class PropertiesFileConfigLoader implements ConfigurationLoader {
         THROW
     }
 
+    /** determines what to do if a configuration value is missing */
     private final MissingConfigStrategy missingConfigStrategy;
+    /** properties file */
     private final File propertiesFile;
 
     /**
