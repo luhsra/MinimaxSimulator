@@ -3,7 +3,7 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
-## upcoming release
+## 1.1.0 - 2016-08-29
 ### Changed
 - HTML signal table exporter now uses template file and HTML5
 
