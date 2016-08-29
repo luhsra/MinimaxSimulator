@@ -4,8 +4,13 @@ Change Log
 All notable changes to this project will be documented in this file.
 
 ## 1.1.0 - 2016-08-29
+### Added
+- undo / redo feature
+- language selection (English / German)
+
 ### Changed
 - HTML signal table exporter now uses template file and HTML5
+- Now using Java's Properties class for application configuration
 
 ### Fixed
 - some GUI elements were not correctly reset after loading or creating a project
@@ -13,6 +18,8 @@ All notable changes to this project will be documented in this file.
 - machine schematics exported as JPG did not have a white background
 - button labels for adding and removing multiplexer connections were not localized
 - button icon for adding a register was not the correct one
+- multiplexer selection code in MuxView was extended too early
+- machine configuration menu item was not localized
 
 ## 1.0.1 - 2015-10-15
 ### Fixed
