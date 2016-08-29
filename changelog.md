@@ -6,7 +6,7 @@ keywords: changelog, change log, changes, version history
 
 All notable changes to this project will be documented in this file.
 
-## upcoming release
+## 1.1.0 - 2016-08-29
 <div style="margin-left: 20px">
   <b>Added</b>
   <ul>
