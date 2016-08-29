@@ -16,14 +16,18 @@ import static de.uni_hannover.sra.minimax_simulator.config.Parser.toBoolean;
  */
 public class Config {
 
+    /** application's properties */
     private static final Properties PROPERTIES = new Properties();
+    /** properties file */
     private static final File PROPERTIES_FILE = new File("config.properties");
 
+    /** string for getting the language property */
     private static final String LOCALE = "locale";
 
+    /** logger */
     private static final Logger LOG = Logger.getLogger("de.uni_hannover.sra.minimax_simulator");
 
-    /** The singleton instance. */
+    /** singleton instance */
     public static final Config INSTANCE = new Config();
 
     /**

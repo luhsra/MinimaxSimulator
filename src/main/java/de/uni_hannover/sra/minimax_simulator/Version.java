@@ -22,20 +22,33 @@ import java.util.regex.Pattern;
  */
 public class Version {
 
+    /** whether or not the application runs from a JAR file */
     private boolean isJar = false;
+    /** name of the application */
     private String moduleName = "";
+    /** revision number of the application */
     private String revisionNumber = "";
+    /** version number of the application */
     private String versionNumber = "";
+    /** Java version used for packaging */
     private String buildJdk = "";
+    /** date and time of application packaging */
     private String buildTime = "";
+    /** name of the application's author */
     private String authorName = "";
+    /** name of the application's company */
     private String companyName = "";
 
+    /** major version of the running JVM */
     private int jvmMajor;
+    /** feature version of the running JVM */
     private int jvmFeature;
+    /** update version of the running JVM */
     private int jvmUpdate;
+    /** build version of the running JVM */
     private int jvmBuild;
 
+    /** logger */
     private static final Logger LOG = Logger.getLogger("de.uni_hannover.sra.minimax_simulator");
 
     /**

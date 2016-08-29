@@ -61,7 +61,7 @@ public class ProjectZipExporter implements ProjectExporter {
 
     /**
      * Actually writes the specified {@link Project} to disk. The method creates an own {@code ZipEntry} for the
-     * {@code MachineConfiguration}, {@code ProjectConfiguration} and {@code SignalTable}.
+     * {@code MachineConfiguration} and {@code SignalTable}.
      *
      * @param zos
      *          the {@code ZipOutputStream} used for writing
@@ -75,18 +75,12 @@ public class ProjectZipExporter implements ProjectExporter {
             ZipEntry machineFile = new ZipEntry("machine.json");
             zos.putNextEntry(machineFile);
             new MachineJsonExporter().write(new OutputStreamWriter(zos, CHARSET), project.getMachineConfiguration());
-
-            zos.closeEntry();
-
-            ZipEntry userFile = new ZipEntry("user.json");
-            zos.putNextEntry(userFile);
-            new UserJsonExporter().write(new OutputStreamWriter(zos, CHARSET), project.getProjectConfiguration());
-
             zos.closeEntry();
 
             ZipEntry signalTableEntry = new ZipEntry("signal.json");
             zos.putNextEntry(signalTableEntry);
             new SignalJsonExporter().write(new OutputStreamWriter(zos, CHARSET), project.getSignalTable());
+            zos.closeEntry();
         } catch (IOException ioe) {
             throw new ProjectExportException("I/O Error while exporting project into file: " + file.getPath(), ioe);
         } finally {

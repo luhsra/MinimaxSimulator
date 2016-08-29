@@ -32,7 +32,7 @@ class Importer {
      */
     static <T extends Enum<T>> T get(Class<T> enumClass, String element) throws ProjectImportException {
         if (element == null) {
-            throw new ProjectImportException("Content " + element + " is null");
+            throw new ProjectImportException("Content is null");
         }
 
         try {
