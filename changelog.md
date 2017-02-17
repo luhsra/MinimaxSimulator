@@ -6,6 +6,14 @@ keywords: changelog, change log, changes, version history
 
 All notable changes to this project will be documented in this file.
 
+## 1.1.1 - 2017-02-17
+<div style="margin-left: 20px">
+  <b>Fixed</b>
+  <ul>
+    <li>MemoryTable update after memory write access did not work correctly</li>
+  </ul>
+</div>
+
 ## 1.1.0 - 2016-08-29
 <div style="margin-left: 20px">
   <b>Added</b>
