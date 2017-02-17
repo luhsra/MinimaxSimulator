@@ -271,6 +271,7 @@ public class MemoryTable implements MemoryAccessListener {
         // only update the affected table row
         MemoryTableModel entry = memTable.getItems().get(address % PAGE_SIZE);
         entry.setValue(value);
+        memTable.refresh();
     }
 
     @Override
