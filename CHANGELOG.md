@@ -3,6 +3,10 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+## 1.1.1 - 2017-02-17
+### Fixed
+- MemoryTable update after memory write access did not work correctly
+
 ## 1.1.0 - 2016-08-29
 ### Added
 - undo / redo feature
