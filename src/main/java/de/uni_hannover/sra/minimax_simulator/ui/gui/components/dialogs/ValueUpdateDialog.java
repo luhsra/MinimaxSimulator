@@ -31,8 +31,28 @@ public abstract class ValueUpdateDialog extends FXDialog {
             public Integer decode(String value) {
                 try {
                     long lon = Long.parseLong(value, 16);
-                    if (lon > 0xFFFFFFFFL)
+                    if (lon > 0xFFFFFFFFL) {
                         return null;
+                    }
+                    return (int) lon;
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+        },
+        BIN {
+            @Override
+            public String toString(ValueUpdateDialog instance, Integer value) {
+                return Util.to32BitBinary(value).replaceAll(" ", "");
+            }
+
+            @Override
+            public Integer decode(String value) {
+                try {
+                    if (!value.matches("[01]{1,32}")) {
+                        return null;
+                    }
+                    long lon = Long.parseLong(value, 2);
                     return (int) lon;
                 } catch (NumberFormatException e) {
                     return null;
@@ -76,6 +96,18 @@ public abstract class ValueUpdateDialog extends FXDialog {
          *          the decoded {@code Integer}
          */
         public abstract Integer decode(String value);
+
+        private static Mode[] vals = values();
+
+        /**
+         * Returns the next input mode.
+         *
+         * @return
+         *          the next input {@code Mode}
+         */
+        public Mode next() {
+            return vals[(this.ordinal() + 1) % vals.length];
+        }
     }
 
     protected final Label messageLabel;
@@ -105,6 +137,10 @@ public abstract class ValueUpdateDialog extends FXDialog {
         mode = Mode.DEC;
 
         field = new TextField();
+        double width = 285;
+        field.setMinWidth(width);
+        field.setMaxWidth(width);
+        field.setPrefWidth(width);
 
         field.setText(mode.toString(this, currentValue));
 
@@ -132,7 +168,8 @@ public abstract class ValueUpdateDialog extends FXDialog {
 
         swapMode.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                Mode newMode = mode == Mode.DEC ? Mode.HEX : Mode.DEC;
+                //Mode newMode = mode == Mode.DEC ? Mode.HEX : Mode.DEC;
+                Mode newMode = mode.next();
                 updateTextFieldMode(newMode);
                 updateLabelMode();
             }
@@ -195,13 +232,20 @@ public abstract class ValueUpdateDialog extends FXDialog {
      * Updates the text of the current mode {@code Label}.
      */
     private void updateLabelMode() {
-        String currentMode = res.get("mode.label") + " ";
-        if (mode == Mode.DEC) {
-            currentMode += res.get("mode.dec");
+        String currentMode = "";
+        switch (mode) {
+            case DEC:
+                currentMode = res.get("mode.dec");
+                break;
+            case HEX:
+                currentMode = res.get("mode.hex");
+                break;
+            case BIN:
+                currentMode = res.get("mode.bin");
+                break;
+            default:
+                break;
         }
-        else if (mode == Mode.HEX) {
-            currentMode += res.get("mode.hex");
-        }
-        modeLabel.setText(currentMode);
+        modeLabel.setText(res.get("mode.label") + " " + currentMode);
     }
 }
