@@ -44,6 +44,19 @@ public class Util {
     }
 
     /**
+     * Returns the specified {@code value} as a 32 bit binary string.
+     *
+     * @param value
+     *          the integer to convert
+     * @return
+     *          the 32 bit binary representation of {@code value}
+     */
+    public static String to32BitBinary(int value) {
+        String bin = toBinaryAddress(value, -1);       // returns binary string of 32 bit width
+        return bin.substring(0, 8) + " " + bin.substring(8, 16) + " " + bin.substring(16, 24) + " " + bin.substring(24, 32);
+    }
+
+    /**
      * Returns a format string for use with the {@link String#format(String, Object...)} method.<br>
      * <br>
      * The created format will accept a single {@code int} parameter which will be
