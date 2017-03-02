@@ -43,7 +43,7 @@ Note that usually you can speed up the process by submitting a pull request prov
 
 <a name="changelog"></a> Change Log
 ---------------------------------
-See [Change Log](CHANGELOG.md)
+See [Change Log](https://srahub.github.io/MinimaxSimulator/changelog.html)
 
 <a name="license"></a> License
 ------------------------------
