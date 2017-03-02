@@ -1,10 +1,19 @@
 ---
 title: Changelog
-last_updated: Apr 21, 2016
+last_updated: Mar 02, 2017
 keywords: changelog, change log, changes, version history
 ---
 
 All notable changes to this project will be documented in this file.
+
+## upcoming release
+<div style="margin-left: 20px">
+  <b>Added</b>
+  <ul>
+    <li>binary memory representation</li>
+    <li>binary value update mode for memory</li>
+  </ul>
+</div>
 
 ## 1.1.1 - 2017-02-17
 <div style="margin-left: 20px">
