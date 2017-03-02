@@ -78,7 +78,7 @@ public class SignalHtmlExporter extends AbstractSignalExporter {
                     targets = target1 + "<br>" + target0;
                 }
 
-                sb.append("<td>").append(cond).append("</td>").append(openingTag).append(targets).append("</td><td>");
+                sb.append("<td>").append(cond).append("</td>").append(openingTag).append(targets).append("</td><td class=\"description\">");
                 sb.append(row.getDescription().replaceAll("\n", "<br>"));
                 sb.append("</td></tr>");
             }
