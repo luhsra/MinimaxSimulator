@@ -17,6 +17,7 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0"/>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.5" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="75"/>
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="NEVER"/>
@@ -40,6 +41,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
+                <TextField fx:id="txtAddressField" GridPane.columnIndex="2"/>
                 <Button fx:id="btnNextPage" mnemonicParsing="false" onAction="#nextPage" text=""
                         GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <graphic>
@@ -56,23 +58,32 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <TextField fx:id="txtAddressField" GridPane.columnIndex="2"/>
+                <Button fx:id="btnHexBin" mnemonicParsing="false" onAction="#swapHexBin" text=""
+                        GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <graphic>
+                        <ImageView>
+                            <Image url="/images/fugue/arrow-circle-double.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
                 <TableView id="memtable" fx:id="memTable" minHeight="300.0" minWidth="200.0" prefHeight="316.0"
-                           prefWidth="561.0" GridPane.columnSpan="5" GridPane.halignment="CENTER"
+                           prefWidth="561.0" GridPane.columnSpan="6" GridPane.halignment="CENTER"
                            GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                     <columns>
-                        <PTableColumn id="memtable_address" fx:id="colMemAdr" percentageWidth="0.251"
+                        <PTableColumn id="memtable_address" fx:id="colMemAdr" percentageWidth="0.180"
                                       prefWidth="143.0" resizable="false" sortable="false" text="Adresse"/>
-                        <PTableColumn id="memtable_dec" fx:id="colMemDec" percentageWidth="0.337" prefWidth="189.0"
+                        <PTableColumn id="memtable_dec" fx:id="colMemDec" percentageWidth="0.326" prefWidth="189.0"
                                       resizable="false" sortable="false" text="Dezimal"/>
-                        <PTableColumn id="memtable_hex" fx:id="colMemHex" percentageWidth="0.408" prefWidth="229.0"
+                        <PTableColumn id="memtable_hex" fx:id="colMemHex" percentageWidth="0.490" prefWidth="229.0"
                                       resizable="false" sortable="false" text="Hexadezimal"/>
+                        <PTableColumn id="memtable_bin" fx:id="colMemBin" percentageWidth="0.490" prefWidth="229.0"
+                                      resizable="false" sortable="false" text="Binär" visible="false"/>
                     </columns>
                     <GridPane.margin>
                         <Insets bottom="10.0" top="10.0"/>
                     </GridPane.margin>
                 </TableView>
-                <Label fx:id="lblMemPage" text="page X of Y" GridPane.rowIndex="2" GridPane.columnSpan="5" GridPane.valignment="CENTER" GridPane.halignment="CENTER"/>
+                <Label fx:id="lblMemPage" text="page X of Y" GridPane.rowIndex="2" GridPane.columnSpan="6" GridPane.valignment="CENTER" GridPane.halignment="CENTER"/>
             </children>
             <padding>
                 <Insets bottom="10.0" left="20" right="20" top="10.0"/>

@@ -24,13 +24,13 @@ public class RegisterUpdateDialog extends ValueUpdateDialog {
      *          the {@link Traceable} value of the register
      */
     public RegisterUpdateDialog(String register, Traceable<Integer> value) {
-        super(value.get());
+        super(value.get(), false);
 
         this.value = value;
 
         TextResource res = Main.getTextResource("debugger").using("register.update");
 
-        messageLabel.setText(res.format("message", register));
+        messageText.setText(res.format("message", register));
     }
 
     /**

@@ -8,6 +8,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.FontSmoothingType;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBuilder;
 
 /**
  * The {@code ValueUpdateDialog} is a dialog for updating a value e.g. a value stored in memory.<br>
@@ -31,8 +37,28 @@ public abstract class ValueUpdateDialog extends FXDialog {
             public Integer decode(String value) {
                 try {
                     long lon = Long.parseLong(value, 16);
-                    if (lon > 0xFFFFFFFFL)
+                    if (lon > 0xFFFFFFFFL) {
                         return null;
+                    }
+                    return (int) lon;
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+        },
+        BIN {
+            @Override
+            public String toString(ValueUpdateDialog instance, Integer value) {
+                return Util.to32BitBinary(value).replaceAll(" ", "");
+            }
+
+            @Override
+            public Integer decode(String value) {
+                try {
+                    if (!value.matches("[01]{1,32}")) {
+                        return null;
+                    }
+                    long lon = Long.parseLong(value, 2);
                     return (int) lon;
                 } catch (NumberFormatException e) {
                     return null;
@@ -76,10 +102,23 @@ public abstract class ValueUpdateDialog extends FXDialog {
          *          the decoded {@code Integer}
          */
         public abstract Integer decode(String value);
+
+        private static Mode[] vals = values();
+
+        /**
+         * Returns the next input mode.
+         *
+         * @return
+         *          the next input {@code Mode}
+         */
+        public Mode next() {
+            return vals[(this.ordinal() + 1) % vals.length];
+        }
     }
 
-    protected final Label messageLabel;
-    protected final Label modeLabel;
+    protected final Text messageText;
+    protected final Text modeText;
+    protected final Text currentModeText;
     protected final Button swapMode;
     protected final Button okButton;
     protected final ButtonType okButtonType;
@@ -95,8 +134,10 @@ public abstract class ValueUpdateDialog extends FXDialog {
      *
      * @param currentValue
      *          the value at the moment of opening the dialog
+     * @param binaryInputAllowed
+     *          whether binary input is allowed or not
      */
-    protected ValueUpdateDialog(int currentValue) {
+    protected ValueUpdateDialog(int currentValue, boolean binaryInputAllowed) {
         super(AlertType.NONE, null, null);
 
         res = Main.getTextResource("project").using("memory.update");
@@ -105,6 +146,10 @@ public abstract class ValueUpdateDialog extends FXDialog {
         mode = Mode.DEC;
 
         field = new TextField();
+        double width = 285;
+        field.setMinWidth(width);
+        field.setMaxWidth(width);
+        field.setPrefWidth(width);
 
         field.setText(mode.toString(this, currentValue));
 
@@ -112,27 +157,38 @@ public abstract class ValueUpdateDialog extends FXDialog {
         swapMode.setTooltip(new Tooltip(res.get("swapmode.tooltip")));
         swapMode.setGraphic(new ImageView("images/" + res.get("swapmode.icon")));
 
-        messageLabel = new Label();
+        messageText = new Text();
+        messageText.setFontSmoothingType(FontSmoothingType.LCD);
 
         okButtonType = new ButtonType(res.get("ok"), ButtonBar.ButtonData.OK_DONE);
 
-        modeLabel = new Label();
+        modeText = new Text(res.get("mode.label"));
+        modeText.setFontSmoothingType(FontSmoothingType.LCD);
+        currentModeText = new Text(res.get("mode.dec"));
+        currentModeText.setId("boldred");                               // set text bold and red via CSS
+        currentModeText.setFontSmoothingType(FontSmoothingType.LCD);
+        HBox modeBox = new HBox(3);
+        modeBox.getChildren().addAll(modeText, currentModeText);
         updateLabelMode();
 
         GridPane pane = new GridPane();
         pane.setHgap(10);
         pane.setVgap(10);
-        pane.add(messageLabel, 0, 0, 2, 1);
+        pane.add(messageText, 0, 0, 2, 1);
         pane.add(field, 0, 2);
         pane.add(swapMode, 1, 2);
-        pane.add(modeLabel, 0, 1, 2, 1);
+        pane.add(modeBox, 0, 1, 2, 1);
 
         this.getDialogPane().setContent(pane);
         this.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
         swapMode.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                Mode newMode = mode == Mode.DEC ? Mode.HEX : Mode.DEC;
+                Mode newMode = mode.next();
+                // jump over to DEC if next mode would be BIN but binary input is not allowed
+                if (!binaryInputAllowed && (newMode == Mode.BIN)) {
+                    newMode = newMode.next();
+                }
                 updateTextFieldMode(newMode);
                 updateLabelMode();
             }
@@ -195,13 +251,20 @@ public abstract class ValueUpdateDialog extends FXDialog {
      * Updates the text of the current mode {@code Label}.
      */
     private void updateLabelMode() {
-        String currentMode = res.get("mode.label") + " ";
-        if (mode == Mode.DEC) {
-            currentMode += res.get("mode.dec");
+        String currentMode = "";
+        switch (mode) {
+            case DEC:
+                currentMode = res.get("mode.dec");
+                break;
+            case HEX:
+                currentMode = res.get("mode.hex");
+                break;
+            case BIN:
+                currentMode = res.get("mode.bin");
+                break;
+            default:
+                break;
         }
-        else if (mode == Mode.HEX) {
-            currentMode += res.get("mode.hex");
-        }
-        modeLabel.setText(currentMode);
+        currentModeText.setText(currentMode);
     }
 }

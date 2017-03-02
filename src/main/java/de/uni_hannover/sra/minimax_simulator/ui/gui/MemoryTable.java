@@ -52,6 +52,7 @@ public class MemoryTable implements MemoryAccessListener {
     @FXML private TableColumn<MemoryTableModel, String> colMemAdr;
     @FXML private TableColumn<MemoryTableModel, String> colMemDec;
     @FXML private TableColumn<MemoryTableModel, String> colMemHex;
+    @FXML private TableColumn<MemoryTableModel, String> colMemBin;
 
     @FXML private TextField txtAddressField;
     @FXML private Label lblMemPage;
@@ -60,6 +61,7 @@ public class MemoryTable implements MemoryAccessListener {
     @FXML Button btnPrevPage;
     @FXML Button btnFirstPage;
     @FXML Button btnLastPage;
+    @FXML Button btnHexBin;
 
     /**
      * Initializes the variables.
@@ -115,6 +117,7 @@ public class MemoryTable implements MemoryAccessListener {
         btnPrevPage.setTooltip(new Tooltip(res.get("memtable.previous.tip")));
         btnNextPage.setTooltip(new Tooltip(res.get("memtable.next.tip")));
         btnLastPage.setTooltip(new Tooltip(res.get("memtable.last.tip")));
+        btnHexBin.setTooltip(new Tooltip(res.get("memtable.swap.tip")));
 
         txtAddressField.setTooltip(new Tooltip(res.get("memtable.address.tip")));
     }
@@ -178,6 +181,7 @@ public class MemoryTable implements MemoryAccessListener {
         colMemAdr.setCellValueFactory(new PropertyValueFactory<>("address"));
         colMemDec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
         colMemHex.setCellValueFactory(new PropertyValueFactory<>("hex"));
+        colMemBin.setCellValueFactory(new PropertyValueFactory<>("bin"));
 
         updateMemTable();
 
@@ -261,6 +265,14 @@ public class MemoryTable implements MemoryAccessListener {
         updateMemPageLabel();
     }
 
+    /**
+     * Switches between hexadecimal and binary representation of the memory values.
+     */
+    public void swapHexBin() {
+        colMemHex.setVisible(!colMemHex.isVisible());
+        colMemBin.setVisible(!colMemBin.isVisible());
+    }
+
     @Override
     public void memoryReadAccess(int address, int value) {
         // there is nothing to do if the memory was read
@@ -298,6 +310,7 @@ public class MemoryTable implements MemoryAccessListener {
         private final SimpleStringProperty address;
         private final SimpleIntegerProperty decimal;
         private final SimpleStringProperty hex;
+        private final SimpleStringProperty bin;
 
         private static final String HEX_FORMAT_STRING = "0x%08X";
 
@@ -313,6 +326,8 @@ public class MemoryTable implements MemoryAccessListener {
             this.address = new SimpleStringProperty(address);
             this.decimal = new SimpleIntegerProperty(value);
             this.hex = new SimpleStringProperty(String.format(HEX_FORMAT_STRING, value));
+
+            this.bin = new SimpleStringProperty(Util.to32BitBinary(value));
         }
 
         /**
@@ -346,6 +361,16 @@ public class MemoryTable implements MemoryAccessListener {
         }
 
         /**
+         * Gets the binary value stored at the address.
+         *
+         * @return
+         *          the binary value
+         */
+        public String getBin() {
+            return bin.get();
+        }
+
+        /**
          * Sets the decimal and hexadecimal value to the specified decimal value.<br>
          * The hexadecimal value will be converted from decimal to hexadecimal.
          *
@@ -355,6 +380,7 @@ public class MemoryTable implements MemoryAccessListener {
         public void setValue(int value) {
             this.decimal.set(value);
             this.hex.set(String.format(HEX_FORMAT_STRING, value));
+            this.bin.set(Util.to32BitBinary(value));
         }
     }
 
