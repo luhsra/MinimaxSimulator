@@ -151,10 +151,9 @@ public final class IOUtils {
 
         String line;
         try {
-
             br = new BufferedReader(new InputStreamReader(is));
             while ((line = br.readLine()) != null) {
-                sb.append(line);
+                sb.append(line+"\n");
             }
         } catch (IOException e) {
             LOG.log(Level.WARNING, "could not read input stream", e);
