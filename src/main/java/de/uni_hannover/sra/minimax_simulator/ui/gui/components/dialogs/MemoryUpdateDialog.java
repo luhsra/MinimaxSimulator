@@ -23,7 +23,7 @@ public class MemoryUpdateDialog extends ValueUpdateDialog {
      *          the machine's memory
      */
     public MemoryUpdateDialog(int address, MachineMemory memory) {
-        super(memory.getMemoryState().getInt(address));
+        super(memory.getMemoryState().getInt(address), true);
 
         this.memory = memory;
         this.address = address;

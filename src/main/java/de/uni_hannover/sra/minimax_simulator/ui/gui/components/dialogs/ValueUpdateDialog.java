@@ -134,8 +134,10 @@ public abstract class ValueUpdateDialog extends FXDialog {
      *
      * @param currentValue
      *          the value at the moment of opening the dialog
+     * @param binaryInputAllowed
+     *          whether binary input is allowed or not
      */
-    protected ValueUpdateDialog(int currentValue) {
+    protected ValueUpdateDialog(int currentValue, boolean binaryInputAllowed) {
         super(AlertType.NONE, null, null);
 
         res = Main.getTextResource("project").using("memory.update");
@@ -183,6 +185,10 @@ public abstract class ValueUpdateDialog extends FXDialog {
         swapMode.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                 Mode newMode = mode.next();
+                // jump over to DEC if next mode would be BIN but binary input is not allowed
+                if (!binaryInputAllowed && (newMode == Mode.BIN)) {
+                    newMode = newMode.next();
+                }
                 updateTextFieldMode(newMode);
                 updateLabelMode();
             }
