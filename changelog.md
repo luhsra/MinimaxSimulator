@@ -1,10 +1,10 @@
 ---
 title: Changelog
-last_updated: Mar 02, 2017
+last_updated: Mar 07, 2017
 keywords: changelog, change log, changes, version history
 ---
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented here.
 
 ## upcoming release
 <div style="margin-left: 20px">
@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
   <ul>
     <li>binary memory representation</li>
     <li>binary value update mode for memory</li>
+  </ul>
+  <b>Changed</b>
+  <ul>
+    <li>increased readability of exported HTML signal table</li>
+    <li>export pretty formatted HTML instead of one single line</li>
   </ul>
 </div>
 
