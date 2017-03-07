@@ -36,31 +36,31 @@ public class SignalHtmlExporter extends AbstractSignalExporter {
 
             StringBuilder sb = new StringBuilder();
             // header line
-            sb.append("<table><tr><th>#</th><th>Label</th>");
+            sb.append("<table>\n      <tr>\n        <th>#</th>\n        <th>Label</th>\n");
             for (SignalType signal : config.getSignalTypes()) {
-                sb.append("<th>").append(signal.getId()).append("</th>");
+                sb.append("        <th>").append(signal.getId()).append("</th>\n");
             }
-            sb.append("<th>Alu == 0?</th><th>Jump</th><th>Description</th></tr>");
+            sb.append("        <th>Alu == 0?</th>\n        <th>Jump</th>\n        <th>Description</th>\n      </tr>\n");
 
             // value lines
             for (int i = 0, n = table.getRowCount(); i < n; i++) {
                 SignalRow row = table.getRow(i);
-                sb.append("<tr><td>").append(Integer.toString(i)).append("</td>");
+                sb.append("      <tr>\n        <td>").append(Integer.toString(i)).append("</td>\n");
                 if (row.getLabel() != null) {
-                    sb.append("<td>").append(row.getLabel()).append("</td>");
+                    sb.append("        <td class=\"label\">").append(row.getLabel()).append("</td>\n");
                 }
                 else {
-                    sb.append("<td></td>");
+                    sb.append("        <td></td>\n");
                 }
 
                 for (SignalType signal : config.getSignalTypes()) {
                     SignalValue value = row.getSignal(signal);
-                    sb.append("<td>").append(getShortDescription(value, signal)).append("</td>");
+                    sb.append("        <td>").append(getShortDescription(value, signal)).append("</td>\n");
                 }
 
                 String targets;
                 String cond;
-                String openingTag = "<td>";
+                String openingTag = "        <td>";
                 Jump j = row.getJump();
 
                 int target0 = j.getTargetRow(i, 0);
@@ -70,7 +70,7 @@ public class SignalHtmlExporter extends AbstractSignalExporter {
                     cond = "";
                     targets = Integer.toString(target0);
                     if (target0 == i + 1) {
-                        openingTag = "<td class=\"defaultJump\">";
+                        openingTag = "        <td class=\"defaultJump\">";
                     }
                 }
                 else {
@@ -78,11 +78,11 @@ public class SignalHtmlExporter extends AbstractSignalExporter {
                     targets = target1 + "<br>" + target0;
                 }
 
-                sb.append("<td>").append(cond).append("</td>").append(openingTag).append(targets).append("</td><td>");
+                sb.append("        <td>").append(cond).append("</td>\n").append(openingTag).append(targets).append("</td>\n        <td class=\"description\">");
                 sb.append(row.getDescription().replaceAll("\n", "<br>"));
-                sb.append("</td></tr>");
+                sb.append("</td>\n      </tr>\n");
             }
-            sb.append("</table></body></html>");
+            sb.append("    </table>");
             String signalTable = sb.toString();
 
             wr = IOUtils.toBufferedWriter(new FileWriter(file));
