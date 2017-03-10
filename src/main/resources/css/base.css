@@ -1,0 +1,61 @@
+.root {
+    -fx-focus-color: transparent;
+}
+
+.button {
+    -fx-background-radius: 8;
+}
+
+.button:focused {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0, 1, 2;
+}
+
+#memtable_dec, #memtable_hex, #memtable_bin, #memtable_address, #register_dec, #register_hex, #col_jumptarget, #col_condition, #col_address, #ADDRESS {
+    -fx-alignment: CENTER;
+}
+
+#alu_addedOP_code {
+    -fx-padding: 0 0 0 10;
+    -fx-font-family: monospace;
+}
+
+#alu_rt_notation {
+    -fx-font-family: monospace;
+    -fx-font-size: 14px;
+}
+
+#memtable .table-row-cell {
+    -fx-font-size: 12px;
+    -fx-cell-size: 18px;
+}
+
+#simtable .table-row-cell, #signaltable .table-row-cell {
+    -fx-font-size: 12px;
+}
+
+#simtable .column-header .label{
+    -fx-font-size: 12px;
+}
+
+.table-row-cell:empty {
+    -fx-background-color: white;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+#signaltable .column-header {
+    -fx-pref-height: 100px;
+    -fx-max-height: 100px;
+}
+
+#signaltable .column-header .label{
+    -fx-font-size: 12px;
+}
+
+#boldred {
+    -fx-fill: red;
+    -fx-font-weight: bold;
+}

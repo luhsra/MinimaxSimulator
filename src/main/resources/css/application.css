@@ -1,44 +1,23 @@
-.root {
-    -fx-focus-color: transparent;
-    /*-fx-faint-focus-color: transparent; */
-}
+@import 'base.css';
 
-.mnemonic-underline {
-    -fx-stroke: -fx-text-base-color;
-}
-
-.button {
-    -fx-background-radius: 8;
-}
-
-.button:focused {
-    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
-    -fx-background-insets: 0, 1, 2;
+* {
+    -menu-font-color: whitesmoke;
 }
 
 .menu-bar {
     -fx-background-color: linear-gradient(from 0px 0px to 0px 50px, gray, darkgray 50%, dimgray 99%, white);
 }
 
-.menu-bar .label {
-    -fx-text-fill: white;
-    -fx-opacity: 0.9;
-}
-
 .menu-button:openvertically .label {
-    -fx-text-fill: whitesmoke;
-}
-
-.menu:hover {
-    -fx-background-radius: 30px;
-}
-
-.menu:showing {
-    -fx-background-radius: 30px;
+    -fx-text-fill: -menu-font-color;
 }
 
 .menu-button:openvertically .label .mnemonic-underline {
-    -fx-stroke: whitesmoke;
+    -fx-stroke: -menu-font-color;
+}
+
+.menu:hover, .menu:showing {
+    -fx-background-radius: 30px;
 }
 
 .context-menu {
@@ -49,61 +28,4 @@
 .menu-item:focused {
     -fx-background-radius: 8;
     -fx-text-fill: -fx-text-base-color;
-}
-/*
-.menu-item:focused .label {
-    -fx-text-fill: whitesmoke;
-}
-
-.menu-item:focused .label .mnemonic-underline {
-    -fx-stroke: whitesmoke;
-}
-*/
-#memtable_dec, #memtable_hex, #memtable_bin, #memtable_address, #register_dec, #register_hex, #col_jumptarget, #col_condition, #col_address, #ADDRESS {
-    -fx-alignment: CENTER;
-}
-
-#alu_addedOP_code {
-    -fx-padding: 0 0 0 10;
-    -fx-font-family: monospace;
-}
-
-#alu_rt_notation {
-    -fx-font-family: monospace;
-    -fx-font-size: 14px;
-}
-
-#memtable .table-row-cell {
-    -fx-font-size: 12px;
-    -fx-cell-size: 18px;
-}
-
-#simtable .table-row-cell, #signaltable .table-row-cell {
-    -fx-font-size: 12px;
-}
-
-#simtable .column-header .label{
-    -fx-font-size: 12px;
-}
-
-.table-row-cell:empty {
-    -fx-background-color: white;
-}
-
-.table-row-cell:empty .table-cell {
-    -fx-border-width: 0px;
-}
-
-#signaltable .column-header {
-    -fx-pref-height: 100px;
-    -fx-max-height: 100px;
-}
-
-#signaltable .column-header .label{
-    -fx-font-size: 12px;
-}
-
-#boldred {
-    -fx-fill: red;
-    -fx-font-weight: bold;
 }
