@@ -11,6 +11,18 @@
     -fx-background-insets: 0, 1, 2;
 }
 
+.menu:hover, .menu:showing {
+    -fx-background-radius: 30;
+}
+
+.context-menu {
+    -fx-background-radius: 8;
+}
+
+.menu-item:focused {
+    -fx-background-radius: 8;
+}
+
 #memtable_dec, #memtable_hex, #memtable_bin, #memtable_address, #register_dec, #register_hex, #col_jumptarget, #col_condition, #col_address, #ADDRESS {
     -fx-alignment: CENTER;
 }
