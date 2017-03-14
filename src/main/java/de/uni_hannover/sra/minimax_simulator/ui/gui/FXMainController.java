@@ -96,6 +96,9 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     @FXML private Menu helpLanguage;
     @FXML private MenuItem helpLanguageEnglish;
     @FXML private MenuItem helpLanguageGerman;
+    @FXML private Menu helpTheme;
+    @FXML private MenuItem helpThemeDefault;
+    @FXML private MenuItem helpThemeJava;
 
     @FXML private TabPane tabpane;
     @FXML private Tab tabOverview;
@@ -723,6 +726,32 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
             new FXDialog(Alert.AlertType.ERROR, res.get("language.error.title"), res.get("language.error.message")).show();
         }
         new FXDialog(Alert.AlertType.INFORMATION, res.get("language.info.title"), res.get("language.info.message")).showAndWait();
+    }
+
+    /**
+     * Changes the theme corresponding to the {@link ActionEvent} calling the method.
+     *
+     * @param ae
+     *          the {@link ActionEvent} calling the method
+     */
+    public void changeTheme(ActionEvent ae) {
+
+        if (!(ae.getSource() instanceof MenuItem)) {
+            return;
+        }
+
+        MenuItem caller = (MenuItem) ae.getSource();
+        try {
+            if (caller.equals(helpThemeDefault)) {
+                Config.changeTheme("default");
+            }
+            else if (caller.equals(helpThemeJava)) {
+                Config.changeTheme("standard-java");
+            }
+        } catch (IOException e) {
+            new FXDialog(Alert.AlertType.ERROR, res.get("theme.error.title"), res.get("theme.error.message")).show();
+        }
+        new FXDialog(Alert.AlertType.INFORMATION, res.get("theme.info.title"), res.get("theme.info.message")).showAndWait();
     }
 
     /**
