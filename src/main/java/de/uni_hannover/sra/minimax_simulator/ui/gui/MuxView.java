@@ -10,6 +10,7 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.HexSpinnerValueFactory;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.HexStringConverter;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.NullAwareIntFormatter;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.UndoManager;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.undo.commands.MuxInputAddedCommand;
@@ -190,6 +191,8 @@ public class MuxView implements MachineConfigListener {
      * Sets up two synchronous {@link Spinner}s with different value representation.
      */
     private void initSpinners() {
+        HexStringConverter hexStringConverter = new HexStringConverter(Integer.MIN_VALUE, Integer.MAX_VALUE);
+
         SpinnerValueFactory.IntegerSpinnerValueFactory vFacDec = new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE);
         vFacDec.setWrapAround(true);
         spinnerDec.setValueFactory(vFacDec);
@@ -205,7 +208,7 @@ public class MuxView implements MachineConfigListener {
         spinnerHex.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.HEX));
         spinnerHex.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
             updateSaveButton();
-            spinnerDec.getValueFactory().setValue(Integer.valueOf(newValue, 16));
+            spinnerDec.getValueFactory().setValue(hexStringConverter.fromString(newValue));
         });
 
         vFacDec.setValue(0);

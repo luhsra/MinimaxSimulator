@@ -2,7 +2,6 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui.util;
 
 import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
-
 import java.util.function.UnaryOperator;
 
 /**
@@ -48,10 +47,10 @@ public class NullAwareIntFormatter extends TextFormatter {
                 return change -> {
                     if (change.isContentChange()) {
                         String newValue = change.getControlNewText();
-                        if (!newValue.matches("-?[0-9a-fA-F]+") || newValue.length() > 8) {
+                        if (!newValue.matches("[0-9a-fA-F]+") || newValue.length() > 8) {
                             return null;
                         }
-                        if (newValue.length() == 8 && newValue.compareTo("7FFFFFFF") > 0) {
+                        if (newValue.length() == 9) {
                             return null;
                         }
                     }
