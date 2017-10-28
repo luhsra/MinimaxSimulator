@@ -25,6 +25,9 @@ public class NullAwareIntFormatter extends TextFormatter {
             public UnaryOperator<TextFormatter.Change> getFilter() {
                 return change -> {
                     if (change.isContentChange()) {
+                        if (change.getControlNewText().equals("-")) {
+                            return change;
+                        }
                         try {
                             Integer.parseInt(change.getControlNewText());
                         } catch (NumberFormatException e) {

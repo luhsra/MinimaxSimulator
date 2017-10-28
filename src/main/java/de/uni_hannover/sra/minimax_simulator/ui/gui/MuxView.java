@@ -199,6 +199,9 @@ public class MuxView implements MachineConfigListener {
         spinnerDec.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.DEC));
         spinnerDec.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
             updateSaveButton();
+            if (newValue.equals("-")) {
+                return;
+            }
             spinnerHex.getValueFactory().setValue(Integer.valueOf(newValue));
         });
 
