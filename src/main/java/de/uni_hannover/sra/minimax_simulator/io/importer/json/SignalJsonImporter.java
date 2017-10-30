@@ -35,6 +35,10 @@ class SignalJsonImporter extends Importer {
         JSONObject root = new JSONObject(input);
         JSONObject signaltable = root.getJSONObject("signaltable");
         JSONArray rows = signaltable.getJSONArray("row");
+        if (rows.length() == 0) {
+            table.addSignalRow(new SignalRow());                // add empty row to signal table if no row was imported
+            return table;
+        }
         for (int i = 0; i < rows.length(); i++) {
             SignalRow row = new SignalRow();
 
