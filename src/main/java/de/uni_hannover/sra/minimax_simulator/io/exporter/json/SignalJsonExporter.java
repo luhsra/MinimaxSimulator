@@ -7,6 +7,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.UnconditionalJump;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -35,8 +36,14 @@ class SignalJsonExporter {
         JSONObject root = new JSONObject();
         JSONObject signaltable = new JSONObject();
 
-        for (int i = 0; i < table.getRowCount(); i++) {
-            signaltable.accumulate("row", createRowElement(table.getRow(i)));
+        int rowCount = table.getRowCount();
+        if (rowCount == 0) {
+            signaltable.put("row", new JSONArray());                // add empty JSONArray if there is no signal row
+        }
+        else {
+            for (int i = 0; i < rowCount; i++) {
+                signaltable.accumulate("row", createRowElement(table.getRow(i)));
+            }
         }
         root.put("signaltable", signaltable);
 
