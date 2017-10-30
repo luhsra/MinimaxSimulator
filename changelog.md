@@ -20,6 +20,20 @@ All notable changes to this project will be documented here.
   </ul>
 </div>
 
+## 1.1.2 - 2017-10-30
+<div style="margin-left: 20px">
+  <b>Added</b>
+  <ul>
+    <li>memory import and export spinner auto update on lost focus</li>
+  </ul>
+  
+  <b>Fixed</b>
+  <ul>
+    <li>register constants greater than 0x7FFFFFFF could not be entered</li>
+    <li>projects with empty SignalTables could not be imported</li>
+  </ul>
+</div>
+
 ## 1.1.1 - 2017-02-17
 <div style="margin-left: 20px">
   <b>Fixed</b>
