@@ -6,6 +6,8 @@ import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.*;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.*;
@@ -113,16 +115,34 @@ public class MemoryView{
         spinnerStartAddress.setValueFactory(new MemorySpinnerValueFactory(mMemory));
         spinnerStartAddress.getEditor().setTextFormatter(new AddressFormatter(mMemory));
         spinnerStartAddress.getValueFactory().setValue(mMemory.getMinAddress());
+        InvalidationListener importStart = observable -> {
+            String curText = spinnerStartAddress.getEditor().getCharacters().toString();
+            int newValue = Integer.parseInt(curText, 16);
+            spinnerStartAddress.getValueFactory().setValue(newValue);
+        };
+        spinnerStartAddress.focusedProperty().addListener(importStart);
 
         MemorySpinnerValueFactory expEndFactory = new MemorySpinnerValueFactory(mMemory);
         spinnerExportEndAddress.setValueFactory(expEndFactory);
         spinnerExportEndAddress.getEditor().setTextFormatter(new AddressFormatter(mMemory));
         spinnerExportEndAddress.getValueFactory().setValue(expEndFactory.getMax());
+        InvalidationListener exportEnd = observable -> {
+            String curText = spinnerExportEndAddress.getEditor().getCharacters().toString();
+            int newValue = Integer.parseInt(curText, 16);
+            spinnerExportEndAddress.getValueFactory().setValue(newValue);
+        };
+        spinnerExportEndAddress.focusedProperty().addListener(exportEnd);
 
         MemorySpinnerValueFactory startEndFactory = new MemorySpinnerValueFactory(mMemory);
         spinnerExportStartAddress.setValueFactory(startEndFactory);
         spinnerExportStartAddress.getEditor().setTextFormatter(new AddressFormatter(mMemory));
         spinnerExportStartAddress.getValueFactory().setValue(startEndFactory.getMin());
+        InvalidationListener exportStart = observable -> {
+            String curText = spinnerExportStartAddress.getEditor().getCharacters().toString();
+            int newValue = Integer.parseInt(curText, 16);
+            spinnerExportStartAddress.getValueFactory().setValue(newValue);
+        };
+        spinnerExportStartAddress.focusedProperty().addListener(exportStart);
 
         spinnerSize.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.DEC));
     }
