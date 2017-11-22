@@ -18,6 +18,10 @@ All notable changes to this project will be documented here.
     <li>increased readability of exported HTML signal table</li>
     <li>export pretty formatted HTML instead of one single line</li>
   </ul>
+  <b>Fixed</b>
+  <ul>
+    <li>save button activation for constant mux inputs did not work correctly</li>
+  </ul>
 </div>
 
 ## 1.1.2 - 2017-10-30
