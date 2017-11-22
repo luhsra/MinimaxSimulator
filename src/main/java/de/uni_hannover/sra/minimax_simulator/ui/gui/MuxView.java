@@ -198,11 +198,11 @@ public class MuxView implements MachineConfigListener {
         spinnerDec.setValueFactory(vFacDec);
         spinnerDec.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.DEC));
         spinnerDec.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-            updateSaveButton();
             if (newValue.equals("-")) {
                 return;
             }
             spinnerHex.getValueFactory().setValue(Integer.valueOf(newValue));
+            updateSaveButton();
         });
 
         HexSpinnerValueFactory vFacHex = new HexSpinnerValueFactory();
@@ -210,8 +210,8 @@ public class MuxView implements MachineConfigListener {
         spinnerHex.setValueFactory(vFacHex);
         spinnerHex.getEditor().setTextFormatter(new NullAwareIntFormatter(NullAwareIntFormatter.Mode.HEX));
         spinnerHex.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-            updateSaveButton();
             spinnerDec.getValueFactory().setValue(hexStringConverter.fromString(newValue));
+            updateSaveButton();
         });
 
         vFacDec.setValue(0);
