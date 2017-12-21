@@ -1,6 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui.util;
 
 import com.google.common.io.ByteStreams;
+import com.google.common.primitives.UnsignedBytes;
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemoryState;
@@ -128,14 +129,14 @@ public class MemoryImportWorker implements Runnable {
 //              value |= bytes[byteNum + 3];
 
             // treat 4 bytes as little-endian integer
-            int value = bytes[byteNum];
+            // & 0xFF is needed because Java handles all Bytes as signed
+            int value = bytes[byteNum] & 0xFF;
             if (byteNum + 1 < effectiveByteCount)
-                value |= bytes[byteNum + 1] << 8;
+                value |= (bytes[byteNum + 1] & 0xFF) << 8;
             if (byteNum + 2 < effectiveByteCount)
-                value |= bytes[byteNum + 2] << 16;
+                value |= (bytes[byteNum + 2] & 0xFF) << 16;
             if (byteNum + 3 < effectiveByteCount)
-                value |= bytes[byteNum + 3] << 24;
-
+                value |= (bytes[byteNum + 3] & 0xFF) << 24;
             state.setInt(a, value);
         }
 
