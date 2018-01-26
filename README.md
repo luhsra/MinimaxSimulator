@@ -49,4 +49,4 @@ See [Change Log](https://srahub.github.io/MinimaxSimulator/changelog.html)
 ------------------------------
 Distributed under [MIT license](http://opensource.org/licenses/MIT).
 
-Copyright (c) 2013-2017 Leibniz Universität Hannover, Institut für Systems Engineering, Fachgebiet System- und Rechnerarchitektur
+Copyright (c) 2013-2018 Leibniz Universität Hannover, Institut für Systems Engineering, Fachgebiet System- und Rechnerarchitektur
