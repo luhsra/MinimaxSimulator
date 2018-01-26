@@ -103,7 +103,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
         res = Main.getTextResource("debugger");
 
         simInit = new Tooltip(res.get("action.init.tip"));
-        simStop = new Tooltip(res.get("action.stop.tip"));
+        simStop = new Tooltip(res.get("action.reset.tip"));
 
         cyclesFormatHalted = res.createFormat("cycles.label");
         cyclesFormatRead = res.createFormat("cycles.read.label");
@@ -147,7 +147,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     private void setTooltips() {
         btnSimCycle.setTooltip(new Tooltip(res.get("action.step.tip")));
         btnSimRun.setTooltip(new Tooltip(res.get("action.run.tip")));
-        btnSimQuit.setTooltip(new Tooltip(res.get("action.reset.tip")));
+        btnSimQuit.setTooltip(new Tooltip(res.get("action.stop.tip")));
         btnSimInit.setTooltip(simInit);
     }
 
