@@ -1,6 +1,6 @@
 ---
 title: Changelog
-last_updated: Dec 21, 2017
+last_updated: Jan 26, 2018
 keywords: changelog, change log, changes, version history
 ---
 
@@ -22,6 +22,7 @@ All notable changes to this project will be documented here.
   <ul>
     <li>save button activation for constant mux inputs did not work correctly</li>
     <li>importing memory data with first bit of a byte set led to a sign error</li>
+    <li>tooltips of simulation reset and simulation quit were swapped</li>
   </ul>
 </div>
 
