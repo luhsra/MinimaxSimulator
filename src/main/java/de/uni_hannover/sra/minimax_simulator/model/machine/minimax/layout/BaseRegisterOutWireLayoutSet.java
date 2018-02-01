@@ -73,7 +73,7 @@ public class BaseRegisterOutWireLayoutSet extends DefaultLayoutSet {
         String pcOutJunction = Parts.PC + Parts._OUT_JUNCTION;
         String pcOutWire = Parts.PC + Parts._WIRE_DATA_OUT;
 
-        addLayout(pcOutJunction, cb.alignVertically(Parts.PC).left(Parts.GROUP_MUX_EXT_REGISTERS, 10));
+        addLayout(pcOutJunction, cb.alignVertically(Parts.PC).left(Parts.GROUP_MUX_EXT_REGISTERS, 20));
         addLayout(pcOutWire + ".0", cb.left(Parts.PC).alignVertically(Parts.PC));
         addLayout(pcOutWire + ".1", cb.align(pcOutJunction));
     }
