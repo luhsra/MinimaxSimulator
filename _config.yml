@@ -13,7 +13,7 @@ footer_image_location: /images/luh_ise_sra.png
 # variables
 sidebar_tagline: mmsim
 sidebar_image_location: /images/exe-icon.png
-sidebar_version: Version 1.1.1
+sidebar_version: Version 1.1.2
 theme_file: theme-blue.css
 
 exclude:
