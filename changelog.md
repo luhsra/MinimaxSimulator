@@ -21,10 +21,11 @@ All notable changes to this project will be documented here.
   </ul>
   <b>Fixed</b>
   <ul>
-    <li>save button activation for constant mux inputs did not work correctly</li>
-    <li>importing memory data with first bit of a byte set led to a sign error</li>
+    <li>save button activation for constant mux inputs did not work correctly (#28)</li>
+    <li>importing memory data with first bit of a byte set led to a sign error (#29)</li>
     <li>tooltips of 'simulation reset' and 'simulation quit' were swapped</li>
-    <li>PC and ACCU multiplexer connections were drawn on top of each other</li>
+    <li>PC and ACCU multiplexer connections were drawn on top of each other (#31)</li>
+    <li>MemoryUpdateDialog opened several times after opening a new project (#30)</li>
   </ul>
 </div>
 
@@ -32,13 +33,13 @@ All notable changes to this project will be documented here.
 <div style="margin-left: 20px">
   <b>Added</b>
   <ul>
-    <li>memory import and export spinner auto update on lost focus</li>
+    <li>memory import and export spinner auto update on lost focus (#18)</li>
   </ul>
   
   <b>Fixed</b>
   <ul>
-    <li>register constants greater than 0x7FFFFFFF could not be entered</li>
-    <li>projects with empty SignalTables could not be imported</li>
+    <li>register constants greater than 0x7FFFFFFF could not be entered (#20)</li>
+    <li>projects with empty SignalTables could not be imported (#21)</li>
   </ul>
 </div>
 
@@ -46,7 +47,7 @@ All notable changes to this project will be documented here.
 <div style="margin-left: 20px">
   <b>Fixed</b>
   <ul>
-    <li>MemoryTable update after memory write access did not work correctly</li>
+    <li>MemoryTable update after memory write access did not work correctly (#15)</li>
   </ul>
 </div>
 
@@ -54,7 +55,7 @@ All notable changes to this project will be documented here.
 <div style="margin-left: 20px">
   <b>Added</b>
   <ul>
-    <li>undo / redo feature</li>
+    <li>undo / redo feature (#10)</li>
     <li>language selection (English / German)</li>
   </ul>
 
@@ -68,7 +69,7 @@ All notable changes to this project will be documented here.
   <ul>
     <li>some GUI elements were not correctly reset after loading or creating a project</li>
     <li>cancel action of waiting dialogs was not processed if the dialog was closed via pressing escape</li>
-    <li>machine schematics exported as JPG did not have a white background</li>
+    <li>machine schematics exported as JPG did not have a white background (#7)</li>
     <li>button labels for adding and removing multiplexer connections were not localized</li>
     <li>button icon for adding a register was not the correct one</li>
     <li>multiplexer selection code in MuxView was extended too early</li>
