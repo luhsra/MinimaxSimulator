@@ -4,6 +4,7 @@ import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -38,6 +39,8 @@ public class Version {
     private String authorName = "";
     /** name of the application's company */
     private String companyName = "";
+    /** comma separated list of contributors */
+    private String contributors = "";
 
     /** major version of the running JVM */
     private int jvmMajor;
@@ -85,6 +88,7 @@ public class Version {
                 setModuleName(attrs);
                 setAuthor(attrs);
                 setCompany(attrs);
+                setContributors();
 
                 setIsJar(true);
             } finally {
@@ -245,6 +249,23 @@ public class Version {
     }
 
     /**
+     * Sets the comma separated list of contributors.
+     */
+    private void setContributors() {
+        InputStream contribStream = getClass().getResourceAsStream("/text/contributors.txt");
+        String contribFile = IOUtils.getStringFromInputStream(contribStream);
+
+        String[] contributors = contribFile.split("(\n)|(\r\n)");
+        String contribs = "";
+        for (String contrib : contributors) {
+            contribs += contrib;
+            contribs += ", ";
+        }
+
+        this.contributors = contribs.substring(0, contribs.length()-2);
+    }
+
+    /**
      * Sets the value of the {@code is JAR} property.
      *
      * @param isLoaded
@@ -322,6 +343,16 @@ public class Version {
      */
     public String getCompanyName() {
         return companyName;
+    }
+
+    /**
+     * Gets the comma separated list of contributors.
+     *
+     * @return
+     *          the contributors
+     */
+    public String getContributors() {
+        return contributors;
     }
 
     /**

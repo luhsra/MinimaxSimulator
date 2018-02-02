@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  * The {@code AboutDialog} is basically an {@link FXDialog} with customized content.<br>
@@ -59,17 +60,18 @@ public class AboutDialog extends FXDialog {
 
         // create application information labels
         VBox vb = new VBox();
-        vb.setPadding(new Insets(15, 0, 15, 0));
+        vb.setPadding(new Insets(15, 0, 20, 0));
         vb.setSpacing(5);
         Version ver = new Version(Main.class);              // works only with JAR
-        Label version = new Label("Version: " + ver.getVersionNumber());
-        Label build = new Label(res.format("build", ver.getBuildTime(), ver.getBuildJdk()));
-        Label authors = new Label(res.format("author", ver.getAuthorName()));
-        vb.getChildren().addAll(version, build, authors);
+        Text version = new Text("Version: " + ver.getVersionNumber());
+        Text build = new Text(res.format("build", ver.getBuildTime(), ver.getBuildJdk()));
+        Text authors = new Text(res.format("author", ver.getAuthorName()));
+        Text contributors = new Text("Contributors: " + ver.getContributors());
+        contributors.setWrappingWidth(660);
+        vb.getChildren().addAll(version, build, authors, contributors);
 
         // create university label
-        Label university = new Label("Leibniz Universität Hannover, Institut für Systems Engineering, FG System- und Rechnerarchitektur");
-        university.setPadding(new Insets(0, 15, 0, 0));
+        Text university = new Text("Leibniz Universität Hannover, Institut für Systems Engineering, FG System- und Rechnerarchitektur");
 
         // putting all together
         grid.add(sraIV, 0, 0);
@@ -81,5 +83,4 @@ public class AboutDialog extends FXDialog {
         grid.add(university, 0, 3, 2, 1);
         this.getDialogPane().setContent(grid);
     }
-
 }
