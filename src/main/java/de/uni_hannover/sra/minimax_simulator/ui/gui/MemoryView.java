@@ -2,9 +2,12 @@ package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
+import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
+import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationState;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.UIUtil;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.SimulationRunningDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.*;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -48,7 +51,7 @@ public class MemoryView{
     @FXML private Label lblToAddress;
     @FXML private TitledPane paneClear;
 
-    @FXML MemoryTable embeddedMemoryTableController;
+    @FXML private MemoryTable embeddedMemoryTableController;
 
     @FXML private Button btnClear;
     @FXML private TextField txtImport;
@@ -205,6 +208,18 @@ public class MemoryView{
      * Imports the data from the selected input file with all import options after confirmation.
      */
     public void importMemory() {
+        Simulation simulation = Main.getWorkspace().getProject().getSimulation();
+        if (simulation.getState() != SimulationState.OFF) {
+            SimulationRunningDialog srd = new SimulationRunningDialog();
+            ButtonType result = srd.getChoice();
+            if (result == ButtonType.YES) {
+                simulation.stop();
+            }
+            else if (result == ButtonType.CANCEL) {
+                return;
+            }
+        }
+
         FXDialog memoryOverride = new FXDialog(AlertType.CONFIRMATION, res.get("memory.import.confirm.title"), res.get("memory.import.confirm.message"));
         if (memoryOverride.getChoice() == ButtonType.OK) {
             int address = Integer.parseInt(spinnerStartAddress.getValue().toString());
