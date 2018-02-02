@@ -82,7 +82,7 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
     private final Tooltip simInit;
     private final Tooltip simStop;
 
-    @FXML MemoryTable embeddedMemoryTableController;
+    @FXML private MemoryTable embeddedMemoryTableController;
 
     private static final int NO_ROW_MARKED = -1;
     private static int lastExecutedRow = -1;
@@ -359,6 +359,13 @@ public class DebuggerView implements SimulationListener, MachineConfigListener, 
             if (lastExecutedRow != NO_ROW_MARKED) {
                 lastExecutedRow = NO_ROW_MARKED;
             }
+            btnSimQuit.setDisable(true);
+            btnSimCycle.setDisable(true);
+            btnSimRun.setDisable(true);
+            btnSimInit.setGraphic(new ImageView(INIT_SIM));
+            btnSimInit.setTooltip(simInit);
+            updateAllTables();
+            updateCyclesText();
         }
     }
 
