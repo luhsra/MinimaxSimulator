@@ -58,10 +58,10 @@ public class MemoryTable implements MemoryAccessListener {
     @FXML private Label lblMemPage;
 
     @FXML private Button btnNextPage;
-    @FXML Button btnPrevPage;
-    @FXML Button btnFirstPage;
-    @FXML Button btnLastPage;
-    @FXML Button btnHexBin;
+    @FXML private Button btnPrevPage;
+    @FXML private Button btnFirstPage;
+    @FXML private Button btnLastPage;
+    @FXML private Button btnHexBin;
 
     /**
      * Initializes the variables.
@@ -90,6 +90,25 @@ public class MemoryTable implements MemoryAccessListener {
                 selectAddress(value);
             } catch (NumberFormatException nfe) {
                 // ignore malformed input
+            }
+        });
+
+        // open edit dialog at double click
+        memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
+                int address = memTable.getSelectionModel().getSelectedIndex() + cachedPageStart;
+                // open edit dialog
+                new MemoryUpdateDialog(address, mMemory).show();
+            }
+        });
+
+        // set next/previous page at scroll
+        memTable.addEventFilter(ScrollEvent.ANY, scrollEvent -> {
+            double deltaY = scrollEvent.getDeltaY();
+            if (deltaY > 0) {
+                prevPage();
+            } else {
+                nextPage();
             }
         });
 
@@ -184,25 +203,6 @@ public class MemoryTable implements MemoryAccessListener {
         colMemBin.setCellValueFactory(new PropertyValueFactory<>("bin"));
 
         updateMemTable();
-
-        // open edit dialog at double click
-        memTable.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2) {
-                int address = memTable.getSelectionModel().getSelectedIndex() + cachedPageStart;
-                // open edit dialog
-                new MemoryUpdateDialog(address, mMemory).show();
-            }
-        });
-
-        // set next/previous page at scroll
-        memTable.addEventFilter(ScrollEvent.ANY, scrollEvent -> {
-            double deltaY = scrollEvent.getDeltaY();
-            if (deltaY > 0) {
-                prevPage();
-            } else {
-                nextPage();
-            }
-        });
     }
 
     /**
