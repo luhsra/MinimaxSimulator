@@ -1,6 +1,6 @@
 ---
 title: Changelog
-last_updated: Jan 26, 2018
+last_updated: Feb 02, 2018
 keywords: changelog, change log, changes, version history
 ---
 
@@ -12,6 +12,7 @@ All notable changes to this project will be documented here.
   <ul>
     <li>binary memory representation</li>
     <li>binary value update mode for memory</li>
+    <li>about dialog contains list of contributors</li>
   </ul>
   <b>Changed</b>
   <ul>
@@ -23,6 +24,7 @@ All notable changes to this project will be documented here.
     <li>save button activation for constant mux inputs did not work correctly</li>
     <li>importing memory data with first bit of a byte set led to a sign error</li>
     <li>tooltips of simulation reset and simulation quit were swapped</li>
+    <li>PC and ACCU multiplexer connections were drawn on top of each other</li>
   </ul>
 </div>
 
