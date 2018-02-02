@@ -13,6 +13,7 @@ All notable changes to this project will be documented here.
     <li>binary memory representation</li>
     <li>binary value update mode for memory</li>
     <li>about dialog contains list of contributors</li>
+    <li>RunningSimulationDialog to end a running simulation before making changes (#25)</li>
   </ul>
   <b>Changed</b>
   <ul>
@@ -26,6 +27,7 @@ All notable changes to this project will be documented here.
     <li>tooltips of 'simulation reset' and 'simulation quit' were swapped</li>
     <li>PC and ACCU multiplexer connections were drawn on top of each other (#31)</li>
     <li>MemoryUpdateDialog opened several times after opening a new project (#30)</li>
+    <li>changing the machine or SignalTable caused the debug mode to be unusable (#27)</li>
   </ul>
 </div>
 
