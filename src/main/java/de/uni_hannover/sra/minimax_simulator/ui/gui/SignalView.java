@@ -150,7 +150,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
                 row.add(String.valueOf(signalValues.get(lookUp).intValue()));
             }
             else {
-                if ( (j >= 3 && j <= 5) || j == 7 || j == 8) {
+                if ( (j <= 5) || j == 7 || j == 8) {
                     row.add("-");
                 }
                 else {

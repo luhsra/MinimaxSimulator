@@ -317,6 +317,9 @@ public class MachineSignalTable implements SignalTable, MachineConfigListener {
      *          the index of the removed muxInput
      */
     private void updateAluSelectCodesRemoved(MuxType mux, int index) {
+        if (mux == null) {
+            return;
+        }
         String lookUp = (mux == MuxType.A) ? "ALU_SELECT_A" : "ALU_SELECT_B";
 
         for (SignalRow signalRow : theTable.getRows()) {

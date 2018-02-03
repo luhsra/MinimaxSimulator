@@ -338,6 +338,7 @@ public abstract class MachineConfigListEvent<T> implements MachineConfigEvent {
          */
         public static MachineConfigRegisterEvent eventReplaced(RegisterExtension oldRegister, RegisterExtension newRegister, int index) {
             MachineConfigRegisterEvent e = new MachineConfigRegisterEvent();
+//            System.out.println("MachineConfingRegisterEvent.eventReplaced");
             return eventReplaced(oldRegister, newRegister, index, e);
         }
 

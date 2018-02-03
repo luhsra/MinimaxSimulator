@@ -258,7 +258,7 @@ public class RegView implements MachineConfigListener {
             }
 
             // new name
-            break NameSearch;
+            break;
         }
 
         return new RegisterExtension(newName, RegisterSize.BITS_32, "", true);
@@ -316,7 +316,7 @@ public class RegView implements MachineConfigListener {
     /**
      * Checks if the save {@link Button} should be enabled and updates the disableProperty.
      */
-    protected void updateButton() {
+    private void updateButton() {
         boolean isValid = isInputValid();
         boolean isUnsaved = isUnsaved();
 

@@ -48,6 +48,7 @@ public class Project {
         machineConfiguration = checkNotNull(machineConfig);
         signalConfiguration = new MinimaxSignalConfiguration(machineConfiguration);
         this.signalTable = new MachineSignalTable(signalTable, machineConfiguration, new MinimaxSignalDescription(machineConfiguration), signalConfiguration);
+        machineConfiguration.setSignalTable(this.signalTable);
         MinimaxMachine minimax = new MinimaxMachine();
         machine = minimax;
         machineConfiguration.addMachineConfigListener(new MachineConfigurator(machine, machineConfiguration));

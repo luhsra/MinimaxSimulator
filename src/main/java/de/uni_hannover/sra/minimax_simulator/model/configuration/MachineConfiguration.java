@@ -1,6 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.model.configuration;
 
 import com.google.common.collect.ImmutableList;
+import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigAluEvent;
@@ -12,6 +13,9 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.NullMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.RegisterMuxInput;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
 
 import java.util.*;
 
@@ -51,6 +55,8 @@ public final class MachineConfiguration {
 
     private final List<MuxInput> availableMuxSources;
     private final List<MuxInput> availableMuxSourcesView;
+
+    private SignalTable signalTable;
 
     MachineConfiguration(List<AluOperation> aluOperations, List<RegisterExtension> baseRegisters, List<RegisterExtension> extendedRegisters,
                          List<MuxInput> availableMuxInput, Map<MuxType, List<MuxInput>> selectedMuxInput) {
@@ -96,6 +102,16 @@ public final class MachineConfiguration {
         muxSourcesB = new ArrayList<>(sourcesB);
         muxSourcesAView = Collections.unmodifiableList(muxSourcesA);
         muxSourcesBView = Collections.unmodifiableList(muxSourcesB);
+    }
+
+    /**
+     * Adds an {@link SignalTable} to the machine's configuration.
+     *
+     * @param signalTable
+     *          the {@code SignalTable} to add
+     */
+    public void setSignalTable(SignalTable signalTable) {
+        this.signalTable = signalTable;
     }
 
     /**
@@ -334,6 +350,17 @@ public final class MachineConfiguration {
             throw new IllegalStateException("Already contains " + register);
         }
 
+        // get the indices of SignalRows where the writeEnabled signal was set
+        List<Integer> writeEnabled = new ArrayList<>();
+        String regName = oldRegister.getName();
+        int i = 0;
+        for (SignalRow row : signalTable.getRows()) {
+            if (row.getSignalValue(regName + ".W") == 1) {
+                writeEnabled.add(i);
+            }
+            i++;
+        }
+
         // fetch the indices of the mux inputs that currently use this register
         Map<MuxType, List<Integer>> indicesInUse = new EnumMap<>(MuxType.class);
         for (MuxType type : MuxType.values()) {
@@ -363,12 +390,19 @@ public final class MachineConfiguration {
         RegisterMuxInput newInput = new RegisterMuxInput(register.getName());
         for (MuxType type : MuxType.values()) {
             List<MuxInput> inputs = getMuxSourcesInternal(type);
-            for (Integer inputIndex : indicesInUse.get(type)) {
+            for (int inputIndex : indicesInUse.get(type)) {
                 MuxInput oldInput = inputs.get(inputIndex);
                 inputs.set(inputIndex, newInput);
                 postEvent(MachineConfigMuxEvent.eventReplaced(type, oldInput, newInput, inputIndex));
             }
         }
+        
+        // set writeEnabled signal for the new register
+        final String newRegName = register.getName();
+        writeEnabled.forEach((integer -> {
+            signalTable.getRow(integer).setSignal(newRegName + ".W", SignalValue.valueOf(1));
+        }));
+        postEvent(MachineConfigRegisterEvent.eventReplaced(oldRegister, register, index));
     }
 
     /**
