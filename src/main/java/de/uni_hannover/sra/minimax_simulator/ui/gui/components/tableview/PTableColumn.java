@@ -22,6 +22,7 @@ public class PTableColumn<S, T> extends javafx.scene.control.TableColumn<S, T> {
      * Constructs a new {@code PTableColumn}.
      */
     public PTableColumn() {
+        super();
         tableViewProperty().addListener((ov, t, t1) -> {
             if(PTableColumn.this.prefWidthProperty().isBound()) {
                 PTableColumn.this.prefWidthProperty().unbind();

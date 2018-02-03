@@ -7,7 +7,6 @@ import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MemorySta
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.MemoryUpdateDialog;
 import de.uni_hannover.sra.minimax_simulator.util.Util;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -112,6 +111,11 @@ public class MemoryTable implements MemoryAccessListener {
             }
         });
 
+        colMemAdr.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colMemDec.setCellValueFactory(cellData -> cellData.getValue().decimalProperty());
+        colMemHex.setCellValueFactory(cellData -> cellData.getValue().hexProperty());
+        colMemBin.setCellValueFactory(cellData -> cellData.getValue().binProperty());
+
         setLocalizedTexts();
         setTooltips();
     }
@@ -196,12 +200,6 @@ public class MemoryTable implements MemoryAccessListener {
         txtAddressField.setText("");
         firstPage();
         updateMemPageLabel();
-
-        colMemAdr.setCellValueFactory(new PropertyValueFactory<>("address"));
-        colMemDec.setCellValueFactory(new PropertyValueFactory<>("decimal"));
-        colMemHex.setCellValueFactory(new PropertyValueFactory<>("hex"));
-        colMemBin.setCellValueFactory(new PropertyValueFactory<>("bin"));
-
         updateMemTable();
     }
 
@@ -283,7 +281,7 @@ public class MemoryTable implements MemoryAccessListener {
         // only update the affected table row
         MemoryTableModel entry = memTable.getItems().get(address % PAGE_SIZE);
         entry.setValue(value);
-        memTable.refresh();
+        setPage(page);
     }
 
     @Override
@@ -308,7 +306,7 @@ public class MemoryTable implements MemoryAccessListener {
     public static class MemoryTableModel {
 
         private final SimpleStringProperty address;
-        private final SimpleIntegerProperty decimal;
+        private final SimpleStringProperty decimal;
         private final SimpleStringProperty hex;
         private final SimpleStringProperty bin;
 
@@ -324,7 +322,7 @@ public class MemoryTable implements MemoryAccessListener {
          */
         private MemoryTableModel(String address, int value) {
             this.address = new SimpleStringProperty(address);
-            this.decimal = new SimpleIntegerProperty(value);
+            this.decimal = new SimpleStringProperty(Integer.toString(value));
             this.hex = new SimpleStringProperty(String.format(HEX_FORMAT_STRING, value));
 
             this.bin = new SimpleStringProperty(Util.to32BitBinary(value));
@@ -347,7 +345,17 @@ public class MemoryTable implements MemoryAccessListener {
          *          the decimal value
          */
         public int getDecimal() {
-            return decimal.get();
+            return Integer.valueOf(decimal.get());
+        }
+
+        /**
+         * Gets the {@code SimpleStringProperty} for the decimal value.
+         *
+         * @return
+         *          the decimal value's {@code SimpleStringProperty}
+         */
+        SimpleStringProperty decimalProperty() {
+            return decimal;
         }
 
         /**
@@ -361,6 +369,16 @@ public class MemoryTable implements MemoryAccessListener {
         }
 
         /**
+         * Gets the {@code SimpleStringProperty} for the hexadecimal value.
+         *
+         * @return
+         *          the hexadecimal value's {@code SimpleStringProperty}
+         */
+        SimpleStringProperty hexProperty() {
+            return hex;
+        }
+
+        /**
          * Gets the binary value stored at the address.
          *
          * @return
@@ -371,6 +389,16 @@ public class MemoryTable implements MemoryAccessListener {
         }
 
         /**
+         * Gets the {@code SimpleStringProperty} for the binary value.
+         *
+         * @return
+         *          the binary value's {@code SimpleStringProperty}
+         */
+        SimpleStringProperty binProperty() {
+            return bin;
+        }
+
+        /**
          * Sets the decimal and hexadecimal value to the specified decimal value.<br>
          * The hexadecimal value will be converted from decimal to hexadecimal.
          *
@@ -378,7 +406,7 @@ public class MemoryTable implements MemoryAccessListener {
          *          the new value
          */
         public void setValue(int value) {
-            this.decimal.set(value);
+            this.decimal.set(Integer.toString(value));
             this.hex.set(String.format(HEX_FORMAT_STRING, value));
             this.bin.set(Util.to32BitBinary(value));
         }
