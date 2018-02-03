@@ -28,6 +28,7 @@ All notable changes to this project will be documented here.
     <li>PC and ACCU multiplexer connections were drawn on top of each other (#31)</li>
     <li>MemoryUpdateDialog opened several times after opening a new project (#30)</li>
     <li>changing the machine or SignalTable caused the debug mode to be unusable (#27)</li>
+    <li>changing a memory value showed up on the same row in both MemoryTables even if they were on different pages (#26)</li>
   </ul>
 </div>
 
