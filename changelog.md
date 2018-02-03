@@ -1,6 +1,6 @@
 ---
 title: Changelog
-last_updated: Feb 02, 2018
+last_updated: Feb 03, 2018
 keywords: changelog, change log, changes, version history
 ---
 
@@ -29,6 +29,7 @@ All notable changes to this project will be documented here.
     <li>MemoryUpdateDialog opened several times after opening a new project (#30)</li>
     <li>changing the machine or SignalTable caused the debug mode to be unusable (#27)</li>
     <li>changing a memory value showed up on the same row in both MemoryTables even if they were on different pages (#26)</li>
+    <li>deleting or renaming of a register caused strange behaviour in SignalTable (#32)</li>
   </ul>
 </div>
 
