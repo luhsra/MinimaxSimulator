@@ -1,0 +1,25 @@
+@import 'base.css';
+
+* {
+    -menu-font-color: whitesmoke;
+}
+
+.menu-bar {
+    -fx-background-color: linear-gradient(from 0px 0px to 0px 50px, gray, darkgray 50%, dimgray 99%, white);
+}
+
+.menu-button:openvertically .label {
+    -fx-text-fill: -menu-font-color;
+}
+
+.menu-button:openvertically .label .mnemonic-underline {
+    -fx-stroke: -menu-font-color;
+}
+
+.context-menu {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, gray, darkgray 50%, dimgray 99%, white);
+}
+
+.menu-item:focused {
+    -fx-text-fill: -fx-text-base-color;
+}

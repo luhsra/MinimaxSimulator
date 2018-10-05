@@ -105,6 +105,9 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
             else if (i == 1) {
                 col = new LabelColumn(columns.get(i), i);
             }
+            else if (i == 2) {
+                col = new DefaultColumn(columns.get(i), columnIDs.get(i), i, true);
+            }
             else if ( (i >= 3) && (i < columns.size()-3) ) {
                 col = new SignalColumn(columns.get(i), columnIDs.get(i), i);
             }
@@ -112,7 +115,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
                 col = new JumpTargetColumn(columns.get(i), columnIDs.get(i), i);
             }
             else {
-                col = new DefaultColumn(columns.get(i), columnIDs.get(i), i);
+                col = new DefaultColumn(columns.get(i), columnIDs.get(i), i, false);
             }
 
             signaltable.getColumns().add(col);

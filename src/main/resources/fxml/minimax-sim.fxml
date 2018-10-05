@@ -193,6 +193,11 @@
                                 </graphic>
                             </MenuItem>
                         </Menu>
+                        <Menu id="help_theme" fx:id="helpTheme" mnemonicParsing="false" text="Theme ändern">
+                            <MenuItem id="help_theme_default" fx:id="helpThemeDefault" mnemonicParsing="false" onAction="#changeTheme" text="default" />
+                            <MenuItem id="help_theme_dark" fx:id="helpThemeDark" mnemonicParsing="false" onAction="#changeTheme" text="dark" />
+                            <MenuItem id="help_theme_java" fx:id="helpThemeJava" mnemonicParsing="false" onAction="#changeTheme" text="Java" />
+                        </Menu>
                     </items>
                 </Menu>
             </menus>

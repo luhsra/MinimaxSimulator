@@ -24,6 +24,9 @@ public class Config {
     /** string for getting the language property */
     private static final String LOCALE = "locale";
 
+    /** string for getting the theme property */
+    private static final String THEME = "theme";
+
     /** logger */
     private static final Logger LOG = Logger.getLogger("de.uni_hannover.sra.minimax_simulator");
 
@@ -74,13 +77,30 @@ public class Config {
      *         thrown if the changes could not be saved to properties file
      */
     public static void changeLanguage(String locale) throws IOException {
-        if (PROPERTIES.containsKey(LOCALE)) {
-            PROPERTIES.replace(LOCALE, locale);
-        }
-        else {
-            PROPERTIES.put(LOCALE, locale);
-        }
-        PROPERTIES.store(new FileWriter(PROPERTIES_FILE), null);
+        changeProperty(LOCALE, locale);
+    }
+
+    /**
+     * Gets the name of the preferred theme.
+     *
+     * @return
+     *         the theme's name
+     */
+    public static String getTheme() {
+        return PROPERTIES.getProperty(THEME, "default");
+    }
+
+    /**
+     * Changes the preferred theme.<br>
+     * <b>Notice:</b> Changes take effect after restart.
+     *
+     * @param theme
+     *         the name of the theme
+     * @throws IOException
+     *         thrown if the changes could not be saved to properties file
+     */
+    public static void changeTheme(String theme) throws IOException {
+        changeProperty(THEME, theme);
     }
 
     /**
@@ -105,5 +125,25 @@ public class Config {
      */
     public static boolean getIsDebugSchematics() {
         return PROPERTIES.containsKey("debug.schematics") && toBoolean(PROPERTIES.getProperty("debug.schematics"));
+    }
+
+    /**
+     * Changes the value of specified property and saves the changes to the properties file.
+     *
+     * @param key
+     *         the name of the property to update
+     * @param value
+     *         the new value of the property
+     * @throws IOException
+     *         thrown if the changes could not be saved to the properties file
+     */
+    private static void changeProperty(String key, String value) throws IOException {
+        if (PROPERTIES.containsKey(key)) {
+            PROPERTIES.replace(key, value);
+        }
+        else {
+            PROPERTIES.put(key, value);
+        }
+        PROPERTIES.store(new FileWriter(PROPERTIES_FILE), null);
     }
 }

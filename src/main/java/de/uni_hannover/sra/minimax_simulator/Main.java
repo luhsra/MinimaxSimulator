@@ -101,7 +101,8 @@ public class Main extends javafx.application.Application {
 
         Parent root = fxmlLoader.load(location.openStream());
         Scene scene = new Scene(root, 1200, 705);
-        scene.getStylesheets().add("css/application.css");
+        //scene.getStylesheets().add("css/application.css");
+        scene.getStylesheets().add("css/" + Config.getTheme() + ".css");
         Main.primaryStage.setScene(scene);
 
         FXMainController mainController = fxmlLoader.getController();

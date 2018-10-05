@@ -159,11 +159,13 @@ public abstract class ValueUpdateDialog extends FXDialog {
 
         messageText = new Text();
         messageText.setFontSmoothingType(FontSmoothingType.LCD);
+        messageText.setId("dialog-label");
 
         okButtonType = new ButtonType(res.get("ok"), ButtonBar.ButtonData.OK_DONE);
 
         modeText = new Text(res.get("mode.label"));
         modeText.setFontSmoothingType(FontSmoothingType.LCD);
+        modeText.setId("dialog-label");
         currentModeText = new Text(res.get("mode.dec"));
         currentModeText.setId("boldred");                               // set text bold and red via CSS
         currentModeText.setFontSmoothingType(FontSmoothingType.LCD);
