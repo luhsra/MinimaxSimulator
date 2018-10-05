@@ -42,7 +42,7 @@ public class LabelColumn extends SignalTableColumn {
                     if (item == null) {
                         setGraphic(null);
                     } else {
-                        setGraphic(new CenteredCellPane(item));
+                        setGraphic(new CenteredCellPane(item, true));
                     }
                 }
             };

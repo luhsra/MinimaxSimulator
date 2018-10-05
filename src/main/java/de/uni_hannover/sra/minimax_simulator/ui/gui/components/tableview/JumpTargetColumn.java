@@ -44,10 +44,10 @@ public class JumpTargetColumn extends SignalTableColumn {
                     else {
                         if ( item.contains("-") && "JUMPTARGET".equals(id) ) {
                             // the JumpTarget is invalid
-                            setGraphic(new CenteredCellPane(item, INVALID_JUMP_STYLE));
+                            setGraphic(new CenteredCellPane(item, INVALID_JUMP_STYLE, true));
                         }
                         else {
-                            setGraphic(new CenteredCellPane(item));
+                            setGraphic(new CenteredCellPane(item, true));
                         }
                     }
                 }

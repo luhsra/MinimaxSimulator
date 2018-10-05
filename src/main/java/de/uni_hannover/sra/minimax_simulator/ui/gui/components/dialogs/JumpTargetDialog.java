@@ -131,8 +131,11 @@ public class JumpTargetDialog extends FXDialog {
         ButtonType cancelButtonType = new ButtonType(res.get("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
         rBtnNext = new RadioButton(res.get("default"));
+        rBtnNext.setId("dialog-label");
         rBtnUncond = new RadioButton(res.get("unconditional"));
+        rBtnUncond.setId("dialog-label");
         rBtnCond = new RadioButton(res.get("conditional"));
+        rBtnCond.setId("dialog-label");
 
         ToggleGroup tgrp = new ToggleGroup();
         rBtnNext.setToggleGroup(tgrp);

@@ -99,6 +99,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     @FXML private Menu helpTheme;
     @FXML private MenuItem helpThemeDefault;
     @FXML private MenuItem helpThemeJava;
+    @FXML private MenuItem helpThemeDark;
 
     @FXML private TabPane tabpane;
     @FXML private Tab tabOverview;
@@ -747,6 +748,9 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
             }
             else if (caller.equals(helpThemeJava)) {
                 Config.changeTheme("standard-java");
+            }
+            else if (caller.equals(helpThemeDark)) {
+                Config.changeTheme("dark");
             }
         } catch (IOException e) {
             new FXDialog(Alert.AlertType.ERROR, res.get("theme.error.title"), res.get("theme.error.message")).show();

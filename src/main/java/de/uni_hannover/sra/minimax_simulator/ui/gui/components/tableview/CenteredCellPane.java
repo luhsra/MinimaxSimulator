@@ -4,17 +4,14 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
 
 /**
  * The {@code CenteredCellPane} is a {@link GridPane} that is used to center a {@link Node} in a {@link javafx.scene.control.TableCell}.
  *
  * @author Philipp Rohde
  */
-public class CenteredCellPane extends GridPane {
+public class CenteredCellPane extends CellPane {
 
     private final Node child;
 
@@ -25,18 +22,9 @@ public class CenteredCellPane extends GridPane {
      *          the {@code Node} that should be centered
      */
     public CenteredCellPane(Node node) {
-        super();
+        super(node);
 
         child = node;
-        this.add(child, 0, 0);
-        ColumnConstraints columnConstraints = new ColumnConstraints();
-        columnConstraints.setFillWidth(true);
-        columnConstraints.setHgrow(Priority.ALWAYS);
-        this.getColumnConstraints().add(columnConstraints);
-        RowConstraints rowConstraints = new RowConstraints();
-        rowConstraints.setFillHeight(true);
-        rowConstraints.setVgrow(Priority.ALWAYS);
-        this.getRowConstraints().add(rowConstraints);
         this.setHalignment(child, HPos.CENTER);
         this.setValignment(child, VPos.CENTER);
     }
@@ -63,6 +51,35 @@ public class CenteredCellPane extends GridPane {
         this(label);
         if (style != null && !"".equals(style)) {
             child.setStyle(style);
+        }
+    }
+
+    /**
+     * Creates a {@code CenteredCellPane} with signal-label style class.
+     *
+     * @param label
+     *          the text of the {@code Label}
+     * @param signalLabel
+     *          whether or not the signal-label style class should be added
+     */
+    public CenteredCellPane(String label, boolean signalLabel) {
+        this(label, "", signalLabel);
+    }
+
+    /**
+     * Creates a {@code CenteredCellPane} with a styled {@link Label} with signal-label style class.
+     *
+     * @param label
+     *          the text of the {@code Label}
+     * @param style
+     *          the style of the {@code Label}
+     * @param signalLabel
+     *          whether or not the signal-label style class should be added
+     */
+    public CenteredCellPane(String label, String style, boolean signalLabel) {
+        this(label, style);
+        if (signalLabel) {
+            child.getStyleClass().add(0, "signal-label");
         }
     }
 }

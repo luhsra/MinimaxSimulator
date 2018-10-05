@@ -69,9 +69,9 @@ public class SignalColumn extends SignalTableColumn {
                         } else {
                             newText = item;
                         }
-                        setGraphic(new CenteredCellPane(newText));
+                        setGraphic(new CenteredCellPane(newText, true));
                     } else {
-                        setGraphic(new CenteredCellPane("-"));
+                        setGraphic(new CenteredCellPane("-", true));
                     }
                 }
 
