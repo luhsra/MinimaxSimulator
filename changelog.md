@@ -1,6 +1,6 @@
 ---
 title: Changelog
-last_updated: Feb 03, 2018
+last_updated: Oct 05, 2018
 keywords: changelog, change log, changes, version history
 ---
 
@@ -14,6 +14,7 @@ All notable changes to this project will be documented here.
     <li>binary value update mode for memory</li>
     <li>about dialog contains list of contributors</li>
     <li>RunningSimulationDialog to end a running simulation before making changes (#25)</li>
+    <li>UI theme compatibility</li>
   </ul>
   <b>Changed</b>
   <ul>
