@@ -210,7 +210,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         menuProject.setText(resMenu.get("project"));
         final List<MenuItem> menuElements = new ArrayList<>(Arrays.asList(projectNew, projectOpen, projectSave, projectSaveAs, projectExportSchematics, projectExportSignal, projectClose,
                 exitApplication, viewOverview, viewMemory, viewDebugger, viewConfAlu, viewConfMux, viewConfReg, viewConfSignal, helpAbout, projectUndo, projectRedo, menuProject, menuView,
-                menuHelp, menuMachineConfiguration, helpLanguage, helpLanguageEnglish, helpLanguageGerman));
+                menuHelp, menuMachineConfiguration, helpLanguage, helpLanguageEnglish, helpLanguageGerman, helpTheme));
         for (MenuItem mi : menuElements) {
             String id = mi.getId().replace("_", ".");
             String mne = resMenu.get(id + ".mne");
