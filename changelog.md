@@ -6,6 +6,14 @@ keywords: changelog, change log, changes, version history
 
 All notable changes to this project will be documented here.
 
+## 1.2.1 - 2018-10-06
+<div style="margin-left: 20px">
+  <b>Fixed</b>
+  <ul>
+    <li>localization of theme selector menu</li>
+  </ul>
+</div>
+
 ## 1.2.0 - 2018-10-06
 <div style="margin-left: 20px">
   <b>Added</b>
