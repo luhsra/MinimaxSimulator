@@ -1,12 +1,12 @@
 ---
 title: Changelog
-last_updated: Oct 05, 2018
+last_updated: Oct 06, 2018
 keywords: changelog, change log, changes, version history
 ---
 
 All notable changes to this project will be documented here.
 
-## upcoming release
+## 1.2.0 - 2018-10-06
 <div style="margin-left: 20px">
   <b>Added</b>
   <ul>

@@ -1,6 +1,6 @@
 ---
 title: Menus
-last_updated: May 09, 2016
+last_updated: Oct 06, 2018
 keywords: menu, menus, project, view, help
 ---
 
@@ -27,4 +27,4 @@ The _view_ menu gives you the opportunity to open the different tabs of the appl
   <img src="images/menu_help.png" />
 </p>
 
-The _help_ menu contains an item to open the _about us_ window as well as the _language selection_. The available languages are English and German.
+The _help_ menu contains an item to open the _about us_ window as well as the _language selection_ and _theme selection_. The available languages are English and German. Currently there are three themes (default, dark, Java standard).
