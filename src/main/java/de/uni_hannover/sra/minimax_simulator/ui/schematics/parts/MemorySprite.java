@@ -1,8 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
-import com.sun.javafx.tk.FontMetrics;
-import com.sun.javafx.tk.Toolkit;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Memory;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.FontMetrics;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -36,8 +35,7 @@ public class MemorySprite extends CircuitSprite {
 
         String name = "HS";
 
-        FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
-
+        FontMetrics fm = new FontMetrics(gc.getFont());
         double textWidth = fm.computeStringWidth(name);
         double textHeight = fm.getLineHeight();
 
