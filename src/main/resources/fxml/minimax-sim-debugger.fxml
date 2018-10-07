@@ -75,7 +75,7 @@
                                     <columns>
                                         <PTableColumn id="alu_dec" fx:id="colAluDec" percentageWidth="0.498"
                                                       resizable="false" sortable="false" text="Dezimal"/>
-                                        <PTableColumn id="alu_hex" fx:id="colAluHex" percentageWidth="0.498"
+                                        <PTableColumn id="alu_hex" fx:id="colAluHex" percentageWidth="0.497"
                                                       resizable="false" sortable="false" text="Hexadezimal"/>
                                     </columns>
                                 </TableView>
