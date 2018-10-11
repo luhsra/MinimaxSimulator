@@ -64,14 +64,19 @@ public class AboutDialog extends FXDialog {
         vb.setSpacing(5);
         Version ver = new Version(Main.class);              // works only with JAR
         Text version = new Text("Version: " + ver.getVersionNumber());
+        version.setId("dialog-label");
         Text build = new Text(res.format("build", ver.getBuildTime(), ver.getBuildJdk()));
+        build.setId("dialog-label");
         Text authors = new Text(res.format("author", ver.getAuthorName()));
+        authors.setId("dialog-label");
         Text contributors = new Text("Contributors: " + ver.getContributors());
+        contributors.setId("dialog-label");
         contributors.setWrappingWidth(660);
         vb.getChildren().addAll(version, build, authors, contributors);
 
         // create university label
         Text university = new Text("Leibniz Universität Hannover, Institut für Systems Engineering, FG System- und Rechnerarchitektur");
+        university.setId("dialog-label");
 
         // putting all together
         grid.add(sraIV, 0, 0);
