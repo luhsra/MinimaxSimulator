@@ -72,10 +72,10 @@ public class Main extends javafx.application.Application {
 
         LOG.info("Starting version " + version.getVersionNumber());
 
-        // check if Java 8u40 or higher is available
-        if (version.isJvmLower(1, 8, 0, 40)) {
-            String jvmVersion = version.getJvmMajor() + "." + version.getJvmFeature() + "." + version.getJvmUpdate() + "_" + version.getJvmBuild();
-            LOG.severe("Java 1.8.0_40 or higher needed but found " + jvmVersion);
+        // check if Java 10.0.2 or higher is available
+        if (version.isJvmLower(10, 0, 2, 0)) {
+            String jvmVersion = version.getJvmMajor() + "." + version.getJvmFeature() + "." + version.getJvmUpdate();
+            LOG.severe("Java 10.0.2 or higher needed but found " + jvmVersion);
             Platform.exit();        // shut down JavaFX application
             return;                 // prevent further initialization because shutdown needs some time
         }
