@@ -7,6 +7,8 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.mux.MuxType;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterExtension;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.MachineConfigurator;
+import de.uni_hannover.sra.minimax_simulator.model.signal.DefaultSignalTable;
+import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
@@ -54,7 +56,9 @@ public class MachineConfiguratorTest {
         assertEquals("only one register left", 1, registers.size());
         assertEquals("remaining register", true, reg.equals(registers.get(0)));
 
-        // replace register
+        // replace register; the configuration needs a SignalTable because setRegisterExtensions checks for it
+        SignalTable signals = new DefaultSignalTable();
+        configuration.setSignalTable(signals);
         configuration.setRegisterExtension(0, tmp);
         assertEquals("tmp should be at 0", true, tmp.equals(registers.get(0)));
 
