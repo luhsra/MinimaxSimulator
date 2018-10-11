@@ -81,6 +81,9 @@
                             <version>${plugin.version.surefire}</version>
                         </dependency>
                     </dependencies>
+                    <configuration>
+                        <forkCount>0</forkCount>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -259,6 +262,7 @@
                         <configuration>
                             <!-- Sets the VM argument line used when unit tests are run. -->
                             <argLine>${surefireArgLine}</argLine>
+                            <forkCount>0</forkCount>
                         </configuration>
                     </plugin>
                 </plugins>

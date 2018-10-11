@@ -1,4 +1,4 @@
-module de.uni_hannover.sra.minimax_simulator {
+module mmsim {
     requires java.desktop;
     requires java.logging;
     requires javafx.controls;
