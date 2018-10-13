@@ -20,3 +20,6 @@ hs_err_pid*
 
 #Error Logs
 error.log
+
+#Minimax Simulator Configuration File
+config.properties
