@@ -155,9 +155,9 @@
                                 <TableView id="simtable" fx:id="simTable" prefWidth="550.0" GridPane.halignment="CENTER"
                                            GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                                     <columns>
-                                        <TableColumn fx:id="colSim1" prefWidth="35.0" resizable="false"
+                                        <TableColumn fx:id="colSim1" prefWidth="34.0" resizable="false"
                                                      sortable="false"/>
-                                        <TableColumn fx:id="colSim2" prefWidth="35.0" resizable="false"
+                                        <TableColumn fx:id="colSim2" prefWidth="34.0" resizable="false"
                                                      sortable="false"/>
                                         <TableColumn id="col_label" fx:id="colSimLabel" prefWidth="95.0"
                                                      sortable="false" text="Label"/>
