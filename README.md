@@ -15,12 +15,12 @@ Minimax Simulator is a platform independent GUI-based Minimax simulator written 
 
 <a name="system-requirements"></a> System Requirements
 ------------------------------------------------------
-* JRE 10.0.2 or higher
+* JRE 11 or higher
 
 <a name="compiling-source"></a> Compiling from Source
 ------------------------------------------------------
 #### Prerequirements (newer version should also work)
-* JDK 10.0.2
+* JDK 11
 * Apache Maven 3.0.5
 
 #### Compilation
