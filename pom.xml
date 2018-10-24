@@ -43,13 +43,28 @@
     </developers>
 
     <properties>
-        <jdk.version>10</jdk.version>
+        <jdk.version>11</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <plugin.version.compiler>3.8.0</plugin.version.compiler>
         <plugin.version.surefire>2.22.0</plugin.version.surefire>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>11</version>
+        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -90,8 +105,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${plugin.version.compiler}</version>
                     <configuration>
-                        <source>${jdk.version}</source>
-                        <target>${jdk.version}</target>
+                            <release>${jdk.version}</release>
                     </configuration>
                     <dependencies>
                         <dependency>
@@ -125,8 +139,9 @@
                 </executions>
             </plugin>
             <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.1.0</version>
                 <configuration>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -134,7 +149,7 @@
                     <archive>
                         <index>true</index>
                         <manifest>
-                            <mainClass>de.uni_hannover.sra.minimax_simulator.Main</mainClass>
+                            <mainClass>de.uni_hannover.sra.minimax_simulator.MainWorkaround</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Implementation-Name>${project.name}</Implementation-Name>
@@ -199,8 +214,7 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>${plugin.version.compiler}</version>
                         <configuration>
-                            <source>${jdk.version}</source>
-                            <target>${jdk.version}</target>
+                            <release>${jdk.version}</release>
                             <encoding>${project.build.sourceEncoding}</encoding>
                         </configuration>
                     </plugin>
