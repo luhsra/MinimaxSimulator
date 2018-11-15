@@ -1,10 +1,20 @@
 ---
 title: Changelog
-last_updated: Oct 06, 2018
+last_updated: Nov 15, 2018
 keywords: changelog, change log, changes, version history
 ---
 
 All notable changes to this project will be documented here.
+
+## 1.2.2 - 2018-11-15
+<div style="margin-left: 20px">
+  <b>Fixed</b>
+  <ul>
+    <li>MEM_CS ComboBox selection index was wrong and caused unwanted behaviour</li>
+    <li>SignalTable export file was not forced to UTF-8 which caused problems for Windows users (#36)</li>
+    <li>MDR was not set to 24 bits during simulation which could lead to accessing non-existent memory cells (#35)</li>
+  </ul>
+</div>
 
 ## 1.2.1 - 2018-10-06
 <div style="margin-left: 20px">
