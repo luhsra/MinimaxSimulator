@@ -3,10 +3,8 @@ package de.uni_hannover.sra.minimax_simulator.io.exporter.csv;
 import de.uni_hannover.sra.minimax_simulator.io.IOUtils;
 import de.uni_hannover.sra.minimax_simulator.model.signal.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * The {@code SignalCsvExporter} exports the {@link SignalTable} to a csv file.
@@ -35,7 +33,7 @@ public class SignalCsvExporter extends AbstractSignalExporter {
         // write the table to disk
         Writer wr = null;
         try {
-            wr = IOUtils.toBufferedWriter(new FileWriter(file));
+            wr = IOUtils.toBufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
 
             // header line
             wr.append("#,Label");
