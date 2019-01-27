@@ -23,6 +23,7 @@ public class MinimaxSignalDescription implements DescriptionFactory {
 
     private final MachineConfiguration configuration;
     private final TextResource aluRes;
+    private static final String LEFTARROW = " \u2190 ";
 
     /**
      * Constructs a new {@code MinimaxSignalDescription} using the specified {@link MachineConfiguration}.
@@ -112,7 +113,7 @@ public class MinimaxSignalDescription implements DescriptionFactory {
         // check if the ALU result is written into registers.
         if (!registersWrittenByAlu.isEmpty()) {
             // there is an ALU operation, fetch the parameters
-            String aluOp = " \u2190 " + getAluOperation(row);
+            String aluOp = LEFTARROW + getAluOperation(row);
 
             for (String registerName : registersWrittenByAlu) {
                 if (sb.length() > 0) {
@@ -136,7 +137,7 @@ public class MinimaxSignalDescription implements DescriptionFactory {
                     sb.append('\n');
                 }
 
-                sb.append("M[MAR] \u2190 MDR");
+                sb.append("M[MAR]" + LEFTARROW + "MDR");
             }
             else if (row.getSignalValue(BaseControlPort.MDR_SEL.name()) == 1 && row.getSignalValue("MDR.W") == 1) {
                 // read
@@ -144,7 +145,7 @@ public class MinimaxSignalDescription implements DescriptionFactory {
                     sb.append('\n');
                 }
 
-                sb.append("MDR \u2190 M[MAR]");
+                sb.append("MDR" + LEFTARROW + "[MAR]");
             }
             else {
                 // CS is 1 and RW is 1, but MDR is not write enabled

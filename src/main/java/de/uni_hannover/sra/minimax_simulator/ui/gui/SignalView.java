@@ -157,7 +157,7 @@ public class SignalView implements SignalTableListener, MachineConfigListener {
                     row.add("-");
                 }
                 else {
-                    row.add("0 ");
+                    row.add("0");
                 }
 
             }

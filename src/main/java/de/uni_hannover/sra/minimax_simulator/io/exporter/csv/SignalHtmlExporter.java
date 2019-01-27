@@ -5,6 +5,7 @@ import de.uni_hannover.sra.minimax_simulator.model.signal.*;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * The {@code SignalHtmlExporter} exports the {@link SignalTable} to an HTML file.
@@ -85,7 +86,7 @@ public class SignalHtmlExporter extends AbstractSignalExporter {
             sb.append("    </table>");
             String signalTable = sb.toString();
 
-            wr = IOUtils.toBufferedWriter(new FileWriter(file));
+            wr = IOUtils.toBufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
             // replace placeholder with content
             wr.append(template.replace("$table", signalTable));
         } finally {

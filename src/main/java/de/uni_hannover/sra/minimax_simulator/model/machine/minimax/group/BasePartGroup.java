@@ -1,5 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.machine.minimax.group;
 
+import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.display.FontMetricsProvider;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.topology.MachineTopology;
@@ -44,7 +45,7 @@ public class BasePartGroup extends AbstractGroup {
         Multiplexer mdrSelect = new Multiplexer(2);
         mdrSelect.setName(Parts.MDR_SELECT);
 
-        Register mar = new Register(Parts.MAR);
+        Register mar = new Register(Parts.MAR, RegisterSize.BITS_24, false);
         mar.setName(Parts.MAR);
         Register mdr = new Register(Parts.MDR);
         mdr.setName(Parts.MDR);

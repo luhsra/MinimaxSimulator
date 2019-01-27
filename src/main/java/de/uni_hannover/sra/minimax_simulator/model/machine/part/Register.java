@@ -123,7 +123,7 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
     @Override
     public void nextCycle() {
         if (writeEnabled.read() != 0) {
-            value = dataIn.read();
+            setValue(dataIn.read());
             getDataOut().write(value);
         }
     }
@@ -170,6 +170,6 @@ public class Register extends SimplePart implements SynchronousCircuit, SpriteOw
 
     @Override
     public String toString() {
-        return "Register[name=" + getName() + ", value=" + value + "]";
+        return "Register[name=" + getName() + ", value=" + value + ", size=" + size + "]";
     }
 }

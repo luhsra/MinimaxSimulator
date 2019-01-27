@@ -138,14 +138,13 @@ public class SignalColumn extends SignalTableColumn {
                     int indexCurrentValue;
                     if (signalRow.getSignalValues().containsKey(cid)) {
                         indexCurrentValue = signalRow.getSignalValue(cid) + 1;
-                        if (Pattern.matches(".+\\.W", cid)) {
+                        if (Pattern.matches(".+\\.W", cid) || cid.equals("MEM_CS")) {
                             indexCurrentValue -= 1;
                         }
                     }
                     else {
                         indexCurrentValue = 0;
                     }
-
 
                     cbRegister.setItems(data);
                     cbRegister.getSelectionModel().select(indexCurrentValue);
