@@ -16,6 +16,7 @@ All notable changes to this project will be documented here.
     <ul>
       <li>migrated to Java 11</li>
     </ul>
+</div>
 
 ## 1.2.2 - 2018-11-15
 <div style="margin-left: 20px">
