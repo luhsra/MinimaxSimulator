@@ -92,30 +92,190 @@ public class SignalExporterTest {
      */
     @Test
     public void testHtmlExporter() throws IOException {
-        String expected = "<!doctype html><html><head><meta charset=\"utf-8\" content=\"text/html\">" +
-                "<style>td.defaultJump { color:#777777; }</style></head><body><table><tr><th>#</th><th>Label</th>" +
-                "<th>ALU_SELECT_A</th><th>ALU_SELECT_B</th><th>MDR_SEL</th><th>MEM_CS</th><th>MEM_RW</th>" +
-                "<th>ALU_CTRL</th><th>PC.W</th><th>IR.W</th><th>MDR.W</th><th>MAR.W</th><th>ACCU.W</th>" +
-                "<th>Alu == 0?</th><th>Jump</th><th>Description</th></tr><tr><td>0</td><td>start</td><td>01</td>" +
-                "<td>11</td><td>-</td><td>0</td><td>-</td><td>00</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td>" +
-                "<td></td><td class=\"defaultJump\">1</td><td>ACCU ← 1 + ACCU</td></tr><tr><td>1</td><td></td>" +
-                "<td>10</td><td>11</td><td>-</td><td>0</td><td>-</td><td>00</td><td>1</td><td>0</td><td>0</td>" +
-                "<td>0</td><td>1</td><td></td><td class=\"defaultJump\">2</td>" +
-                "<td>PC ← ACCU + ACCU<br>ACCU ← ACCU + ACCU</td></tr><tr><td>2</td><td></td><td>10</td><td>11</td>" +
-                "<td>-</td><td>0</td><td>-</td><td>00</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td></td>" +
-                "<td class=\"defaultJump\">3</td><td>PC ← ACCU + ACCU<br>ACCU ← ACCU + ACCU</td></tr><tr><td>3</td>" +
-                "<td></td><td>10</td><td>11</td><td>-</td><td>0</td><td>-</td><td>00</td><td>1</td><td>0</td><td>0</td>" +
-                "<td>0</td><td>1</td><td></td><td class=\"defaultJump\">4</td>" +
-                "<td>PC ← ACCU + ACCU<br>ACCU ← ACCU + ACCU</td></tr><tr><td>4</td><td></td><td>-</td><td>01</td>" +
-                "<td>-</td><td>0</td><td>-</td><td>11</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>" +
-                "<td>1<br>0</td><td>7<br>5</td><td>PC == 0?</td></tr><tr><td>5</td><td></td><td>10</td><td>11</td>" +
-                "<td>-</td><td>0</td><td>-</td><td>00</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>" +
-                "</td><td class=\"defaultJump\">6</td><td>MDR ← ACCU + ACCU<br>ACCU ← ACCU + ACCU</td></tr>" +
-                "<tr><td>6</td><td></td><td>01</td><td>01</td><td>-</td><td>0</td><td>-</td><td>01</td><td>1</td>" +
-                "<td>0</td><td>0</td><td>0</td><td>0</td><td></td><td>4</td><td>PC ← PC - 1</td></tr><tr><td>7</td>" +
-                "<td>store</td><td>-</td><td>-</td><td>-</td><td>1</td><td>0</td><td>-</td><td>0</td><td>0</td>" +
-                "<td>0</td><td>0</td><td>0</td><td></td><td class=\"defaultJump\">8</td><td>M[MAR] ← MDR</td></tr>" +
-                "</table></body></html></body></html>";
+        String expected = "<!doctype html>\n" +
+                "<html>\n" +
+                "  <head>\n" +
+                "    <meta charset=\"utf-8\" content=\"text/html\">\n" +
+                "    <style>\n" +
+                "      table { border-spacing: 0px 0; }\n" +
+                "      th { background-color: #dadada; }\n" +
+                "      tr:nth-child(even) { background-color: #f9f9f9; }\n" +
+                "      th, td {\n" +
+                "        text-align: center;\n" +
+                "        padding-left: 10px;\n" +
+                "        padding-right: 10px;\n" +
+                "      }\n" +
+                "      td.defaultJump { color: #777777; }\n" +
+                "      td.description, td.label { text-align: left; }\n" +
+                "    </style>\n" +
+                "  </head>\n" +
+                "  <body>\n" +
+                "    <table>\n" +
+                "      <tr>\n" +
+                "        <th>#</th>\n" +
+                "        <th>Label</th>\n" +
+                "        <th>ALU_SELECT_A</th>\n" +
+                "        <th>ALU_SELECT_B</th>\n" +
+                "        <th>MDR_SEL</th>\n" +
+                "        <th>MEM_CS</th>\n" +
+                "        <th>MEM_RW</th>\n" +
+                "        <th>ALU_CTRL</th>\n" +
+                "        <th>PC.W</th>\n" +
+                "        <th>IR.W</th>\n" +
+                "        <th>MDR.W</th>\n" +
+                "        <th>MAR.W</th>\n" +
+                "        <th>ACCU.W</th>\n" +
+                "        <th>Alu == 0?</th>\n" +
+                "        <th>Jump</th>\n" +
+                "        <th>Description</th>\n" +
+                "      </tr>\n" +
+                "      <tr>\n" +
+                "        <td>0</td>\n" +
+                "        <td class=\"label\">start</td>\n" +
+                "        <td>01</td>\n" +
+                "        <td>11</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>00</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td></td>\n" +
+                "        <td class=\"defaultJump\">1</td>\n" +
+                "        <td class=\"description\">ACCU ← 1 + ACCU</td>\n" +
+                "      </tr>\n" +
+                "      <tr>\n" +
+                "        <td>1</td>\n" +
+                "        <td></td>\n" +
+                "        <td>10</td>\n" +
+                "        <td>11</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>00</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td></td>\n" +
+                "        <td class=\"defaultJump\">2</td>\n" +
+                "        <td class=\"description\">PC ← ACCU + ACCU<br>ACCU ← ACCU + ACCU</td>\n" +
+                "      </tr>\n" +
+                "      <tr>\n" +
+                "        <td>2</td>\n" +
+                "        <td></td>\n" +
+                "        <td>10</td>\n" +
+                "        <td>11</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>00</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td></td>\n" +
+                "        <td class=\"defaultJump\">3</td>\n" +
+                "        <td class=\"description\">PC ← ACCU + ACCU<br>ACCU ← ACCU + ACCU</td>\n" +
+                "      </tr>\n" +
+                "      <tr>\n" +
+                "        <td>3</td>\n" +
+                "        <td></td>\n" +
+                "        <td>10</td>\n" +
+                "        <td>11</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>00</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td></td>\n" +
+                "        <td class=\"defaultJump\">4</td>\n" +
+                "        <td class=\"description\">PC ← ACCU + ACCU<br>ACCU ← ACCU + ACCU</td>\n" +
+                "      </tr>\n" +
+                "      <tr>\n" +
+                "        <td>4</td>\n" +
+                "        <td></td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>01</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>11</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>1<br>0</td>\n" +
+                "        <td>7<br>5</td>\n" +
+                "        <td class=\"description\">PC == 0?</td>\n" +
+                "      </tr>\n" +
+                "      <tr>\n" +
+                "        <td>5</td>\n" +
+                "        <td></td>\n" +
+                "        <td>10</td>\n" +
+                "        <td>11</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>00</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td></td>\n" +
+                "        <td class=\"defaultJump\">6</td>\n" +
+                "        <td class=\"description\">MDR ← ACCU + ACCU<br>ACCU ← ACCU + ACCU</td>\n" +
+                "      </tr>\n" +
+                "      <tr>\n" +
+                "        <td>6</td>\n" +
+                "        <td></td>\n" +
+                "        <td>01</td>\n" +
+                "        <td>01</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>01</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td></td>\n" +
+                "        <td>4</td>\n" +
+                "        <td class=\"description\">PC ← PC - 1</td>\n" +
+                "      </tr>\n" +
+                "      <tr>\n" +
+                "        <td>7</td>\n" +
+                "        <td class=\"label\">store</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>1</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>-</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td>0</td>\n" +
+                "        <td></td>\n" +
+                "        <td class=\"defaultJump\">8</td>\n" +
+                "        <td class=\"description\">M[MAR] ← MDR</td>\n" +
+                "      </tr>\n" +
+                "    </table>\n" +
+                "  </body>\n" +
+                "</html>\n";
 
         File file = tmpDir.newFile("signal.html");
         SignalHtmlExporter htmlEx = new SignalHtmlExporter(file);

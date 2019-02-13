@@ -82,7 +82,7 @@ public class VersionTest {
         assertEquals("isJvmLower: lower build", false, version.isJvmLower(major, feature, update, 0));
 
         // lower running version
-        assertEquals("isJvmLower: higher major", true, version.isJvmLower(3, feature, update, build));
+        assertEquals("isJvmLower: higher major", true, version.isJvmLower(Integer.MAX_VALUE, feature, update, build));
         assertEquals("isJvmLower: higher feature", true, version.isJvmLower(major, feature + 2, update, build));
         assertEquals("isJvmLower: higher update", true, version.isJvmLower(major, feature, update + 5, build));
         assertEquals("isJvmLower: higher build", true, version.isJvmLower(major, feature, update, build + 100));
@@ -99,10 +99,10 @@ public class VersionTest {
         assertEquals("isJvmLowerOrEqual: lower major", false, version.isJvmLowerOrEqual(0, feature, update, build));
         assertEquals("isJvmLowerOrEqual: lower feature", false, version.isJvmLowerOrEqual(major, feature - 2, update, build));
         assertEquals("isJvmLowerOrEqual: lower update", false, version.isJvmLowerOrEqual(major, feature, -5, build));
-        assertEquals("isJvmLowerOrEqual: lower build", false, version.isJvmLowerOrEqual(major, feature, update, 0));
+        assertEquals("isJvmLowerOrEqual: lower build", false, version.isJvmLowerOrEqual(major, feature, update, -1));
 
         // lower running version
-        assertEquals("isJvmLowerOrEqual: higher major", true, version.isJvmLowerOrEqual(3, feature, update, build));
+        assertEquals("isJvmLowerOrEqual: higher major", true, version.isJvmLowerOrEqual(Integer.MAX_VALUE, feature, update, build));
         assertEquals("isJvmLowerOrEqual: higher feature", true, version.isJvmLowerOrEqual(major, feature + 2, update, build));
         assertEquals("isJvmLowerOrEqual: higher update", true, version.isJvmLowerOrEqual(major, feature, update + 5, build));
         assertEquals("isJvmLowerOrEqual: higher build", true, version.isJvmLowerOrEqual(major, feature, update, build + 100));
@@ -119,10 +119,10 @@ public class VersionTest {
         assertEquals("isJvmHigher: lower major", true, version.isJvmHigher(0, feature, update, build));
         assertEquals("isJvmHigher: lower feature", true, version.isJvmHigher(major, feature - 2, update, build));
         assertEquals("isJvmHigher: lower update", true, version.isJvmHigher(major, feature, -5, build));
-        assertEquals("isJvmHigher: lower build", true, version.isJvmHigher(major, feature, update, 0));
+        assertEquals("isJvmHigher: lower build", true, version.isJvmHigher(major, feature, update, -1));
 
         // lower running version
-        assertEquals("isJvmHigher: higher major", false, version.isJvmHigher(3, feature, update, build));
+        assertEquals("isJvmHigher: higher major", false, version.isJvmHigher(Integer.MAX_VALUE, feature, update, build));
         assertEquals("isJvmHigher: higher feature", false, version.isJvmHigher(major, feature + 2, update, build));
         assertEquals("isJvmHigher: higher update", false, version.isJvmHigher(major, feature, update + 5, build));
         assertEquals("isJvmHigher: higher build", false, version.isJvmHigher(major, feature, update, build + 100));
@@ -142,7 +142,7 @@ public class VersionTest {
         assertEquals("isJvmHigherOrEqual: lower build", true, version.isJvmHigherOrEqual(major, feature, update, 0));
 
         // lower running version
-        assertEquals("isJvmHigherOrEqual: higher major", false, version.isJvmHigherOrEqual(3, feature, update, build));
+        assertEquals("isJvmHigherOrEqual: higher major", false, version.isJvmHigherOrEqual(Integer.MAX_VALUE, feature, update, build));
         assertEquals("isJvmHigherOrEqual: higher feature", false, version.isJvmHigherOrEqual(major, feature + 2, update, build));
         assertEquals("isJvmHigherOrEqual: higher update", false, version.isJvmHigherOrEqual(major, feature, update + 5, build));
         assertEquals("isJvmHigherOrEqual: higher build", false, version.isJvmHigherOrEqual(major, feature, update, build + 100));

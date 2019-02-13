@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.render;
 
-import com.sun.javafx.tk.FontMetrics;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.FontMetrics;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 

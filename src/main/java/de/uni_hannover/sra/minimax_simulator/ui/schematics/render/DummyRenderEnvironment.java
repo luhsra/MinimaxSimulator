@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.render;
 
-import com.sun.javafx.tk.FontMetrics;
-import com.sun.javafx.tk.Toolkit;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.FontMetrics;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -21,7 +20,7 @@ public class DummyRenderEnvironment implements RenderEnvironment {
      */
     public DummyRenderEnvironment() {
         font = new Font("SansSerif", 17);
-        fontMetrics = Toolkit.getToolkit().getFontLoader().getFontMetrics(font);
+        fontMetrics = new FontMetrics(font);
     }
 
     /**

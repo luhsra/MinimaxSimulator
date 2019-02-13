@@ -2,14 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <prerequisites>
-        <maven>3.0.5</maven>
-    </prerequisites>
-
-    <groupId>de.uni_hannover.sra.minimax_simulator</groupId>
+    <groupId>de.uni_hannover.sra</groupId>
     <artifactId>minimax_simulator</artifactId>
-    <version>1.2.2</version>
-    <packaging>jar</packaging>
+    <version>2.0.0-alpha</version>
     <name>Minimax Simulator</name>
 
     <description>GUI-based Minimax Simulator</description>
@@ -43,15 +38,32 @@
     </developers>
 
     <properties>
+        <jdk.version>11</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.build.timestamp.format>yyyy-MM-dd' 'HH:mm:ss</maven.build.timestamp.format>
+        <plugin.version.compiler>3.8.0</plugin.version.compiler>
+        <plugin.version.surefire>2.22.0</plugin.version.surefire>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>11</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <version>26.0-jre</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -61,7 +73,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20141113</version>
+            <version>20180813</version>
         </dependency>
     </dependencies>
 
@@ -71,49 +83,106 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${plugin.version.surefire}</version>
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.surefire</groupId>
                             <artifactId>surefire-junit47</artifactId>
-                            <version>2.19.1</version>
+                            <version>${plugin.version.surefire}</version>
                         </dependency>
                     </dependencies>
+                    <configuration>
+                        <forkCount>0</forkCount>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.5</version>
+                    <version>${plugin.version.compiler}</version>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                            <release>${jdk.version}</release>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>2.6</version>
-                    <configuration>
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
-                        <archive>
-                            <index>true</index>
-                            <manifest>
-                                <mainClass>de.uni_hannover.sra.minimax_simulator.Main</mainClass>
-                            </manifest>
-                            <manifestEntries>
-                                <Implementation-Name>${project.name}</Implementation-Name>
-                                <Implementation-Version>${project.version}</Implementation-Version>
-                                <Additional-Author>Martin Lück, Philipp Rohde</Additional-Author>
-                                <Additional-Company>${project.organization.name}</Additional-Company>
-                                <Built-By>${user.name}</Built-By>
-                                <Build-Jdk>${java.version}</Build-Jdk>
-                                <Build-Time>${maven.build.timestamp}</Build-Time>
-                            </manifestEntries>
-                        </archive>
-                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.ow2.asm</groupId>
+                            <artifactId>asm</artifactId>
+                            <version>6.2</version>  <!-- Use newer version of ASM -->
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <!-- set the time zone and format (needed in the JAR's manifest) -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.10</version>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>build.time</name>
+                            <pattern>yyyy-MM-dd' 'HH:mm:ss</pattern>
+                            <locale>de_DE</locale>
+                            <timeZone>Europe/Berlin</timeZone>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <mainClass>de.uni_hannover.sra.minimax_simulator.MainWorkaround</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-Name>${project.name}</Implementation-Name>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Additional-Author>Martin Lück, Philipp Rohde</Additional-Author>
+                            <Additional-Company>${project.organization.name}</Additional-Company>
+                            <Built-By>${user.name}</Built-By>
+                            <Build-Jdk>${java.version}</Build-Jdk>
+                            <Build-Time>${build.time}</Build-Time>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- disable the jar plugin because we need the assembly plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>never</phase>
+                        <configuration>
+                            <finalName>unwanted</finalName>
+                            <classifier>unwanted</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -130,7 +199,6 @@
             <properties>
                 <!-- Used to locate the profile specific configuration file. -->
                 <jacoco.ut.execution.data.file>${project.build.directory}/jacoco.exec</jacoco.ut.execution.data.file>
-                <jdk.version>1.8</jdk.version>
                 <!-- Only unit tests are run by default. -->
                 <skip.unit.tests>false</skip.unit.tests>
             </properties>
@@ -140,17 +208,16 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.1</version>
+                        <version>${plugin.version.compiler}</version>
                         <configuration>
-                            <source>${jdk.version}</source>
-                            <target>${jdk.version}</target>
+                            <release>${jdk.version}</release>
                             <encoding>${project.build.sourceEncoding}</encoding>
                         </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.7.5.201505241946</version>
+                        <version>0.8.2</version>
                         <executions>
                             <!--
                                 Prepares the property pointing to the JaCoCo runtime agent which
@@ -194,17 +261,18 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.19.1</version>
+                        <version>${plugin.version.surefire}</version>
                         <dependencies>
                             <dependency>
                                 <groupId>org.apache.maven.surefire</groupId>
                                 <artifactId>surefire-junit47</artifactId>
-                                <version>2.19.1</version>
+                                <version>${plugin.version.surefire}</version>
                             </dependency>
                         </dependencies>
                         <configuration>
                             <!-- Sets the VM argument line used when unit tests are run. -->
                             <argLine>${surefireArgLine}</argLine>
+                            <forkCount>0</forkCount>
                         </configuration>
                     </plugin>
                 </plugins>

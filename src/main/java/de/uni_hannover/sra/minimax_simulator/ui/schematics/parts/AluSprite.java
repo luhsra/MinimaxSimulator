@@ -1,8 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
-import com.sun.javafx.tk.FontMetrics;
-import com.sun.javafx.tk.Toolkit;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.Alu;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.FontMetrics;
 import javafx.scene.canvas.GraphicsContext;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -57,8 +56,7 @@ public class AluSprite extends CircuitSprite {
         }
         gc.restore();
 
-        FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
-
+        FontMetrics fm = new FontMetrics(gc.getFont());
         double xTextAlu = xCenter - fm.computeStringWidth(NAME) / 2 + 16;
         double yTextAlu = yCenter + fm.getLineHeight() / 4;
 

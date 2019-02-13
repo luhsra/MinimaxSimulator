@@ -1,0 +1,11 @@
+﻿Nuvola icon pack:
+By David Vignoni (http://www.icon-king.com/)
+License: LGPL (http://www.gnu.org/licenses/lgpl.html)
+
+Shapes4free icons:
+By Oksana Khristenko (http://www.shapes4free.com)
+License: free for personal or commercial use (http://www.shapes4free.com/license/)
+
+Fugue icon pack:
+By Yusuke Kamiyamane (http://p.yusukekamiyamane.com/)
+License: CC BY 3.0 (http://creativecommons.org/licenses/by/3.0/)

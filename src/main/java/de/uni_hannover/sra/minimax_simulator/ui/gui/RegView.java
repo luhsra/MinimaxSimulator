@@ -81,17 +81,6 @@ public class RegView implements MachineConfigListener {
         txtDescription.setWrapText(true);
 
         cbSize.getItems().addAll(RegisterSize.BITS_32, RegisterSize.BITS_24);
-        cbSize.setConverter(new StringConverter<RegisterSize>() {
-            @Override
-            public String toString(RegisterSize object) {
-                return object.getName();
-            }
-
-            @Override
-            public RegisterSize fromString(String string) {
-                return null;
-            }
-        });
 
         // ComboBox and TextFields check if the save button will be enabled
         cbSize.valueProperty().addListener((observable, oldValue, newValue) -> updateButton());
@@ -450,7 +439,7 @@ public class RegView implements MachineConfigListener {
          */
         private RegisterTableModel(RegisterExtension register) {
             this.name = new SimpleStringProperty(register.getName());
-            this.size = new SimpleStringProperty(register.getSize().getName());
+            this.size = new SimpleStringProperty(register.getSize().toString());
             this.register = register;
         }
 

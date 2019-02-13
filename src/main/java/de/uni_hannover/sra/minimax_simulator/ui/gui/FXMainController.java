@@ -719,7 +719,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
         MenuItem caller = (MenuItem) ae.getSource();
         try {
             if (caller.equals(helpLanguageEnglish)) {
-                Config.changeLanguage("base");
+                Config.changeLanguage("en");
             } else if (caller.equals(helpLanguageGerman)) {
                 Config.changeLanguage("de");
             }

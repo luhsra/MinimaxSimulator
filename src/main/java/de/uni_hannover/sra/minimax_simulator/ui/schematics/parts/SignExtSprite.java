@@ -1,8 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.parts;
 
-import com.sun.javafx.tk.FontMetrics;
-import com.sun.javafx.tk.Toolkit;
 import de.uni_hannover.sra.minimax_simulator.model.machine.part.SignExtension;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.FontMetrics;
 import de.uni_hannover.sra.minimax_simulator.ui.layout.Bounds;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -36,7 +35,7 @@ public class SignExtSprite extends CircuitSprite {
         gc.strokeOval(b.x + 0.5, b.y + 0.5, b.w, b.h);
 
         String name = signExt.getLabel();
-        FontMetrics fm = Toolkit.getToolkit().getFontLoader().getFontMetrics(gc.getFont());
+        FontMetrics fm = new FontMetrics(gc.getFont());
         double textWidth = fm.computeStringWidth(name);
         double textHeight = fm.getLineHeight();
 

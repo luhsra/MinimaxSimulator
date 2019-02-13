@@ -3,16 +3,11 @@ dist: trusty
 
 language: java
 
-jdk: oraclejdk8
+jdk: openjdk11
 
 install:
-  - sudo add-apt-repository -y ppa:webupd8team/java
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq -y oracle-java8-installer
-#  - sudo rm -r /usr/lib/jvm/java-8-oracle-amd64
-#  - sudo mv -f /usr/lib/jvm/java-8-oracle /usr/lib/jvm/java-8-oracle-amd64
   - java -version
   
 script:
-  - mvn clean compile assembly:single
+  - mvn clean package -DskipTests
   

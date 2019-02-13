@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.schematics.render;
 
-import com.sun.javafx.tk.FontMetrics;
-import com.sun.javafx.tk.Toolkit;
+import de.uni_hannover.sra.minimax_simulator.ui.gui.util.FontMetrics;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.Font;
@@ -178,7 +177,7 @@ public class SpriteCanvas<T> extends Canvas {
      *          the {@code FontMetrics} of the {@code Font}
      */
     public FontMetrics getFontMetrics(Font font) {
-        return Toolkit.getToolkit().getFontLoader().getFontMetrics(font);
+        return new FontMetrics(font);
     }
 
     /**
