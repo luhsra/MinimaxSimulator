@@ -1,10 +1,21 @@
 ---
 title: Changelog
-last_updated: Nov 15, 2018
+last_updated: Feb 13, 2019
 keywords: changelog, change log, changes, version history
 ---
 
 All notable changes to this project will be documented here.
+
+## 2.0.0 - 2019-02-13
+<div style="margin-left: 20px">
+  <b>Fixed</b>
+    <ul>
+      <li>About dialog was not readable with dark theme</li>
+    </ul>
+  <b>Changed</b>
+    <ul>
+      <li>migrated to Java 11</li>
+    </ul>
 
 ## 1.2.2 - 2018-11-15
 <div style="margin-left: 20px">
