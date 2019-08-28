@@ -8,6 +8,7 @@ Minimax Simulator is a platform independent GUI-based Minimax simulator written 
 **Content:**
 - [System Requirements](#system-requirements)
 - [Compiling from Source](#compiling-source)
+- [Starting the Simulator](#executing)
 - [Found an Issue or Bug?](#bug)
 - [Requesting a Feature?](#feature)
 - [Change Log](#changelog)
@@ -16,10 +17,11 @@ Minimax Simulator is a platform independent GUI-based Minimax simulator written 
 <a name="system-requirements"></a> System Requirements
 ------------------------------------------------------
 * JRE 11 or higher
+* (optional for smoother GUI: libcanberra-gtk-module)
 
 <a name="compiling-source"></a> Compiling from Source
 ------------------------------------------------------
-#### Prerequirements (newer version should also work)
+#### Prerequirements
 * JDK 11
 * Apache Maven 3.0.5
 
@@ -39,20 +41,25 @@ The best way to create a new JAR file is therefore:
 ```bash
 mvn clean package
 ```
-\
-If you want to skip the tests run:
-```bash
-mvn package -DskipTests
-```
 
 #### JUnitTests
 To run the UnitTests enter:
 ```bash
 mvn test
 ```
-or if you want to create a code coverage report use:
+
+<a name="executing"></a> Starting the Simulator 
+------------------------------------------------------
+To start the simulator enter:
 ```bash
-mvn test -P test-coverage
+java -jar target/minimax_simulator-2.0.0-jar-with-dependencies.jar
+```
+
+If you get an error like
+``gdk_x11_display_set_window_scale: assertion 'GDK_IS_X11_DISPLAY (display)' failed``
+, try:
+```bash
+java -Djdk.gtk.version=2 -jar target/minimax_simulator-2.0.0-jar-with-dependencies.jar
 ```
 
 <a name="bug"></a> Found an Issue or Bug?
@@ -75,4 +82,4 @@ See [Change Log](https://srahub.github.io/MinimaxSimulator/changelog.html)
 ------------------------------
 Distributed under [MIT license](http://opensource.org/licenses/MIT).
 
-Copyright (c) 2013-2018 Leibniz Universität Hannover, Institut für Systems Engineering, Fachgebiet System- und Rechnerarchitektur
+Copyright (c) 2013-2019 Leibniz Universität Hannover, Institut für Systems Engineering, Fachgebiet System- und Rechnerarchitektur
