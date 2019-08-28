@@ -9,6 +9,7 @@ Minimax Simulator is a platform independent GUI-based Minimax simulator written 
 - [System Requirements](#system-requirements)
 - [Compiling from Source](#compiling-source)
 - [Starting the Simulator](#executing)
+- [How the Simulator works](#documentation)
 - [Found an Issue or Bug?](#bug)
 - [Requesting a Feature?](#feature)
 - [Change Log](#changelog)
@@ -61,6 +62,9 @@ If you get an error like
 ```bash
 java -Djdk.gtk.version=2 -jar target/minimax_simulator-2.0.0-jar-with-dependencies.jar
 ```
+<a name="documentation"></a> How the Simulator works 
+------------------------------------------------------
+See https://luhsra.github.io/MinimaxSimulator/
 
 <a name="bug"></a> Found an Issue or Bug?
 -----------------------------------------
