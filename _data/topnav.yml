@@ -12,7 +12,7 @@ topnav:
 #      output: web
 
     - title: GitHub Repo
-      external_url: https://github.com/SRAhub/MinimaxSimulator
+      external_url: https://github.com/luhsra/MinimaxSimulator
       audience: writers, designers
       platform: all
       product: all
