@@ -1,6 +1,6 @@
 ---
 title: Contribute
-last_updated: Mar 22, 2016
+last_updated: Dec 07, 2020
 keywords: contribute, contribution
 ---
 
@@ -8,7 +8,7 @@ keywords: contribute, contribution
 
 If you want to contribute follow these steps:
 
-1. fork the [GitHub repository](https://github.com/SRAhub/MinimaxSimulator)
+1. fork the [GitHub repository](https://github.com/luhsra/MinimaxSimulator)
 2. create a branch for your new feature
 3. follow the [Oracle Code Conventions](http://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
 4. adapt to our code style for better maintainability
