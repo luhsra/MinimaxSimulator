@@ -73,6 +73,7 @@ class SignalJsonExporter {
             rowObj.put("breakpoint", true);
         }
 
+        rowObj.put("signal", new JSONArray());                // add empty JSONArray as base for row signals
         for (Entry<String, SignalValue> entry : row.getSignalValues().entrySet()) {
             SignalValue value = entry.getValue();
 
