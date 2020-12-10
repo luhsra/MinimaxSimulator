@@ -1,7 +1,7 @@
 Minimax Simulator
 =================
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/SRAhub/MinimaxSimulator/blob/develop/LICENSE.txt) &nbsp; [![Latest release](http://img.shields.io/github/release/SRAhub/MinimaxSimulator.svg)](https://github.com/SRAhub/MinimaxSimulator/releases)	&nbsp; [![Travis CI Build Status](https://travis-ci.org/SRAhub/MinimaxSimulator.png?branch=master)](https://travis-ci.org/SRAhub/MinimaxSimulator) &nbsp; 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/luhsra/MinimaxSimulator/blob/develop/LICENSE.txt) &nbsp; [![Latest release](http://img.shields.io/github/release/luhsra/MinimaxSimulator.svg)](https://github.com/luhsra/MinimaxSimulator/releases)	&nbsp; [![Travis CI Build Status](https://travis-ci.org/luhsra/MinimaxSimulator.png?branch=master)](https://travis-ci.org/luhsra/MinimaxSimulator) &nbsp; 
 
 Minimax Simulator is a platform independent GUI-based Minimax simulator written in Java.
 
@@ -80,7 +80,7 @@ Note that usually you can speed up the process by submitting a pull request prov
 
 <a name="changelog"></a> Change Log
 ---------------------------------
-See [Change Log](https://srahub.github.io/MinimaxSimulator/changelog.html)
+See [Change Log](https://luhsra.github.io/MinimaxSimulator/changelog.html)
 
 <a name="license"></a> License
 ------------------------------
