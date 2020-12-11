@@ -1,7 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.model.configuration;
 
 import com.google.common.collect.ImmutableList;
-import de.uni_hannover.sra.minimax_simulator.Main;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.alu.AluOperation;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigEvent;
 import de.uni_hannover.sra.minimax_simulator.model.configuration.event.MachineConfigListEvent.MachineConfigAluEvent;
@@ -402,7 +401,6 @@ public final class MachineConfiguration {
         writeEnabled.forEach((integer -> {
             signalTable.getRow(integer).setSignal(newRegName + ".W", SignalValue.valueOf(1));
         }));
-        postEvent(MachineConfigRegisterEvent.eventReplaced(oldRegister, register, index));
     }
 
     /**
