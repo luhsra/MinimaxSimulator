@@ -6,4 +6,3 @@
 
 Anmerkungen WS 14/15
 - Die GUI nutzt verschiedene Bildschirmgrößen nicht gut aus. Für Widescreen-Displays sollte die Anordnung der Elemente z.B. anders sein, um nicht nur einen schmalen Bereich in der Mitte nutzen zu können, in dem dafür übermäßig viel gescrollt werden muss.
-- Der Speicher wird derzeit nur dezimal und hexadezimal angezeigt. Eine binäre Anzeige wurde zur besseren Vergleichbarkeit mit der Aufgabenstellung gefordert.
