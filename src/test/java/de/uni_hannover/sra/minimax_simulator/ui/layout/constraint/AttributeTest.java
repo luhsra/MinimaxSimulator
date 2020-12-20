@@ -2,8 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout.constraint;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link Attribute}.
@@ -40,11 +39,11 @@ public class AttributeTest {
     @Test
     public void testEquals() {
         Attribute a1 = new Attribute("owner", AttributeType.BOTTOM);
-        assertEquals("self comparison", true, a1.equals(a1));
-        assertEquals("null comparison", false, a1.equals(null));
-        assertEquals("other class comparison", false, a1.equals(AttributeType.BOTTOM));
-        assertEquals("different owner", false, a1.equals(new Attribute("other", AttributeType.BOTTOM)));
-        assertEquals("different type", false, a1.equals(new Attribute("owner", AttributeType.TOP)));
-        assertEquals("same values", true, a1.equals(new Attribute("owner", AttributeType.BOTTOM)));
+        assertTrue("self comparison", a1.equals(a1));
+        assertFalse("null comparison", a1.equals(null));
+        assertFalse("other class comparison", a1.equals(AttributeType.BOTTOM));
+        assertFalse("different owner", a1.equals(new Attribute("other", AttributeType.BOTTOM)));
+        assertFalse("different type", a1.equals(new Attribute("owner", AttributeType.TOP)));
+        assertTrue("same values", a1.equals(new Attribute("owner", AttributeType.BOTTOM)));
     }
 }

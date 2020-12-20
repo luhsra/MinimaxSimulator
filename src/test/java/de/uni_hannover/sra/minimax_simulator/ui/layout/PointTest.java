@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link Point}.
@@ -28,12 +28,12 @@ public class PointTest {
         assertEquals("string of p2", "[0,0]", p2.toString());
         assertEquals("string of p3", "[10,20]", p3.toString());
 
-        assertEquals("self comparison", true, p1.equals(p1));
-        assertEquals("null comparison", false, p1.equals(null));
-        assertEquals("other class comparison", false, p2.equals(new Dimension(0, 0)));
-        assertEquals("different x", false, p1.equals(new Point(0, -1)));
-        assertEquals("different y", false, p2.equals(new Point(0, 3)));
-        assertEquals("same values", true, p3.equals(new Point(10, 20)));
+        assertTrue("self comparison", p1.equals(p1));
+        assertFalse("null comparison", p1.equals(null));
+        assertFalse("other class comparison", p2.equals(new Dimension(0, 0)));
+        assertFalse("different x", p1.equals(new Point(0, -1)));
+        assertFalse("different y", p2.equals(new Point(0, 3)));
+        assertTrue("same values", p3.equals(new Point(10, 20)));
     }
 
     /**

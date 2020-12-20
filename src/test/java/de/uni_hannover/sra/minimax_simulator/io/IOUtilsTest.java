@@ -7,6 +7,7 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
 
@@ -68,8 +69,6 @@ public class IOUtilsTest {
     public void testToBufferedInputStream() throws FileNotFoundException {
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(zip));
         assertEquals(bis, IOUtils.toBufferedStream(bis));
-
-        assertEquals(true, (IOUtils.toBufferedStream(new FileInputStream(zip)) != null));   // redundant to test instanceof
     }
 
     /**
@@ -82,8 +81,6 @@ public class IOUtilsTest {
     public void testToBufferedOutputStream() throws FileNotFoundException {
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(zip));
         assertEquals(bos, IOUtils.toBufferedStream(bos));
-
-        assertEquals(true, (IOUtils.toBufferedStream(new FileOutputStream(zip)) != null));  // redundant to test instanceof
     }
 
     /**
@@ -103,6 +100,6 @@ public class IOUtilsTest {
         fw.close();
 
         assertEquals(expected, IOUtils.readFile(file.getAbsolutePath()));
-        assertEquals(expected, IOUtils.readFile(file.getAbsolutePath(), Charset.forName("UTF-8")));
+        assertEquals(expected, IOUtils.readFile(file.getAbsolutePath(), StandardCharsets.UTF_8));
     }
 }

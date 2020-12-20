@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.register;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of a register.
@@ -29,24 +29,24 @@ public class RegisterExtensionTest {
         RegisterExtension mdr = new RegisterExtension(MDR, SIZE24, MDR_DESC, false);
 
         // test equals
-        assertEquals("equals: self comparison", true, accu.equals(accu));
+        assertTrue("equals: self comparison", accu.equals(accu));
         RegisterExtension equal = new RegisterExtension(ACCU, SIZE32, ACCU_DESC, false);
-        assertEquals("equals: same register", true, accu.equals(equal));
+        assertTrue("equals: same register", accu.equals(equal));
 
-        assertEquals("equals: different registers", false, accu.equals(mdr));
+        assertFalse("equals: different registers", accu.equals(mdr));
 
-        assertEquals("equals: null comparison", false, accu.equals(null));
+        assertFalse("equals: null comparison", accu.equals(null));
 
         RegisterExtension diffName = new RegisterExtension(MDR, SIZE32, ACCU_DESC, false);
-        assertEquals("equals: different names", false, accu.equals(diffName));
+        assertFalse("equals: different names", accu.equals(diffName));
 
         RegisterExtension diffSize = new RegisterExtension(ACCU, SIZE24, ACCU_DESC, false);
-        assertEquals("equals: different sizes", false, accu.equals(diffSize));
+        assertFalse("equals: different sizes", accu.equals(diffSize));
 
         RegisterExtension diffDesc = new RegisterExtension(ACCU, SIZE32, MDR_DESC, false);
-        assertEquals("equals: different descriptions", false, accu.equals(diffDesc));
+        assertFalse("equals: different descriptions", accu.equals(diffDesc));
 
         RegisterExtension diffExtended = new RegisterExtension(ACCU, SIZE32, ACCU_DESC, true);
-        assertEquals("equals: different extended value", false, accu.equals(diffExtended));
+        assertFalse("equals: different extended value", accu.equals(diffExtended));
     }
 }

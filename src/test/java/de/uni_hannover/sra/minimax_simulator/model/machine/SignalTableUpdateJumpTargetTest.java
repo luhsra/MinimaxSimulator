@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SignalTableUpdateJumpTargetTest {
 
-    private static SignalTable signalTable = new NewProjectBuilder().buildProject().getSignalTable();
+    private static final SignalTable signalTable = new NewProjectBuilder().buildProject().getSignalTable();
 
     /**
      * Tests updating of jump targets of {@link ConditionalJump}s after adding a {@code SignalRow}.

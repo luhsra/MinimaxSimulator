@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class AbstractAttributeOwnerTest {
 
     private static final String EXPECTED_EXCEPTION = "expected to throw exception";
-    private static AbstractAttributeOwner aao = new ConstrainedArea("aao");
+    private static final AbstractAttributeOwner aao = new ConstrainedArea("aao");
     private static final Constraint CONSTRAINT = new RelativeConstraint(new Attribute("this", AttributeType.LEFT), 10);
 
     /**
@@ -50,8 +50,8 @@ public class AbstractAttributeOwnerTest {
         // add attribute
         aao.set(attribute, 0);
         aao.set(AttributeType.BOTTOM, 2);
-        assertEquals(true, aao.hasSet(attribute));
-        assertEquals(true, aao.hasSet(AttributeType.BOTTOM));
+        assertTrue(aao.hasSet(attribute));
+        assertTrue(aao.hasSet(AttributeType.BOTTOM));
 
         // set null attribute
         try {
@@ -75,8 +75,8 @@ public class AbstractAttributeOwnerTest {
      */
     @Test
     public void test02hasSet() {
-        assertEquals("existing attribute: BOTTOM", true, aao.hasSet(AttributeType.BOTTOM));
-        assertEquals("non-existing attribute: HEIGHT", false, aao.hasSet(AttributeType.HEIGHT));
+        assertTrue("existing attribute: BOTTOM", aao.hasSet(AttributeType.BOTTOM));
+        assertFalse("non-existing attribute: HEIGHT", aao.hasSet(AttributeType.HEIGHT));
 
         // null attribute
         try {
@@ -157,7 +157,7 @@ public class AbstractAttributeOwnerTest {
         assertEquals("existing attribute", CONSTRAINT, aao.getAttributeConstraint(AttributeType.LEFT));
 
         // non-existing attribute
-        assertEquals("non-existing attribute", null, aao.getAttributeConstraint(AttributeType.TOP));
+        assertNull("non-existing attribute", aao.getAttributeConstraint(AttributeType.TOP));
 
         // null attribute
         try {
@@ -174,9 +174,9 @@ public class AbstractAttributeOwnerTest {
     @Test
     public void test06removeAttributeConstraint() {
         aao.removeAttributeConstraint(AttributeType.WIDTH);
-        assertEquals(null, aao.getAttributeConstraint(AttributeType.WIDTH));
+        assertNull(aao.getAttributeConstraint(AttributeType.WIDTH));
         aao.removeAttributeConstraint(AttributeType.RIGHT);
-        assertEquals(null, aao.getAttributeConstraint(AttributeType.RIGHT));
+        assertNull(aao.getAttributeConstraint(AttributeType.RIGHT));
 
         try {
             aao.removeAttributeConstraint(null);

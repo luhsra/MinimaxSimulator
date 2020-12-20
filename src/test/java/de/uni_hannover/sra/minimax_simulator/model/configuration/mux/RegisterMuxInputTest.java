@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of a register multiplexer input.
@@ -31,11 +31,11 @@ public class RegisterMuxInputTest {
         assertEquals("display name", AT, ir.getName());
 
         // test equals
-        assertEquals("equals: self comparison", true, rmi.equals(rmi));
+        assertTrue("equals: self comparison", rmi.equals(rmi));
         RegisterMuxInput equal = new RegisterMuxInput(PC);
-        assertEquals("equals: same register", true, rmi.equals(equal));
-        assertEquals("equals: different registers", false, rmi.equals(ir));
-        assertEquals("equals: null comparison", false, rmi.equals(null));
-        assertEquals("equals: different classes", false, rmi.equals(NullMuxInput.INSTANCE));
+        assertTrue("equals: same register", rmi.equals(equal));
+        assertFalse("equals: different registers", rmi.equals(ir));
+        assertFalse("equals: null comparison", rmi.equals(null));
+        assertFalse("equals: different classes", rmi.equals(NullMuxInput.INSTANCE));
     }
 }

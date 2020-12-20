@@ -3,7 +3,7 @@ package de.uni_hannover.sra.minimax_simulator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the version comparison of {@link Version}.
@@ -36,16 +36,16 @@ public class VersionTest {
     @Test
     public void testConstructor() {
         Version nullVersion = new Version(null);
-        assertEquals(false, "".equals(String.valueOf(nullVersion.getJvmMajor())));
-        assertEquals(false, "".equals(String.valueOf(nullVersion.getJvmBuild())));
-        assertEquals(true, "".equals(nullVersion.getAuthorName()));
-        assertEquals(true, "".equals(nullVersion.getCompanyName()));
-        assertEquals(true, "".equals(nullVersion.getModuleName()));
-        assertEquals(true, "".equals(nullVersion.getBuildJdk()));
-        assertEquals(true, "".equals(nullVersion.getBuildTime()));
-        assertEquals(true, "".equals(nullVersion.getVersionNumber()));
-        assertEquals(true, "".equals(nullVersion.getRevisionNumber()));
-        assertEquals(false, nullVersion.isJar());
+        assertNotEquals("", String.valueOf(nullVersion.getJvmMajor()));
+        assertNotEquals("", String.valueOf(nullVersion.getJvmBuild()));
+        assertEquals("", nullVersion.getAuthorName());
+        assertEquals("", nullVersion.getCompanyName());
+        assertEquals("", nullVersion.getModuleName());
+        assertEquals("", nullVersion.getBuildJdk());
+        assertEquals("", nullVersion.getBuildTime());
+        assertEquals("", nullVersion.getVersionNumber());
+        assertEquals("", nullVersion.getRevisionNumber());
+        assertFalse(nullVersion.isJar());
 
         String[] shortDesc = nullVersion.getShortInfoStrings();
         assertEquals(shortDesc[0], "[Module: ]");
@@ -61,11 +61,11 @@ public class VersionTest {
      */
     @Test
     public void testIsJvmEqual() {
-        assertEquals("isJvmEqual: same version", true, version.isJvmEqual(major, feature, update, build));
-        assertEquals("isJvmEqual: different major", false, version.isJvmEqual(0, feature, update, build));
-        assertEquals("isJvmEqual: different feature", false, version.isJvmEqual(major, feature - 2, update, build));
-        assertEquals("isJvmEqual: different update", false, version.isJvmEqual(major, feature, update + 5, build));
-        assertEquals("isJvmEqual: different build", false, version.isJvmEqual(major, feature, update, build + 100));
+        assertTrue("isJvmEqual: same version", version.isJvmEqual(major, feature, update, build));
+        assertFalse("isJvmEqual: different major", version.isJvmEqual(0, feature, update, build));
+        assertFalse("isJvmEqual: different feature", version.isJvmEqual(major, feature - 2, update, build));
+        assertFalse("isJvmEqual: different update", version.isJvmEqual(major, feature, update + 5, build));
+        assertFalse("isJvmEqual: different build", version.isJvmEqual(major, feature, update, build + 100));
     }
 
     /**
@@ -73,19 +73,19 @@ public class VersionTest {
      */
     @Test
     public void testIsJvmLower() {
-        assertEquals("isJvmLower: same version", false, version.isJvmLower(major, feature, update, build));
+        assertFalse("isJvmLower: same version", version.isJvmLower(major, feature, update, build));
 
         // higher running version
-        assertEquals("isJvmLower: lower major", false, version.isJvmLower(0, feature, update, build));
-        assertEquals("isJvmLower: lower feature", false, version.isJvmLower(major, feature - 2, update, build));
-        assertEquals("isJvmLower: lower update", false, version.isJvmLower(major, feature, -5, build));
-        assertEquals("isJvmLower: lower build", false, version.isJvmLower(major, feature, update, 0));
+        assertFalse("isJvmLower: lower major", version.isJvmLower(0, feature, update, build));
+        assertFalse("isJvmLower: lower feature", version.isJvmLower(major, feature - 2, update, build));
+        assertFalse("isJvmLower: lower update", version.isJvmLower(major, feature, -5, build));
+        assertFalse("isJvmLower: lower build", version.isJvmLower(major, feature, update, 0));
 
         // lower running version
-        assertEquals("isJvmLower: higher major", true, version.isJvmLower(Integer.MAX_VALUE, feature, update, build));
-        assertEquals("isJvmLower: higher feature", true, version.isJvmLower(major, feature + 2, update, build));
-        assertEquals("isJvmLower: higher update", true, version.isJvmLower(major, feature, update + 5, build));
-        assertEquals("isJvmLower: higher build", true, version.isJvmLower(major, feature, update, build + 100));
+        assertTrue("isJvmLower: higher major", version.isJvmLower(Integer.MAX_VALUE, feature, update, build));
+        assertTrue("isJvmLower: higher feature", version.isJvmLower(major, feature + 2, update, build));
+        assertTrue("isJvmLower: higher update", version.isJvmLower(major, feature, update + 5, build));
+        assertTrue("isJvmLower: higher build", version.isJvmLower(major, feature, update, build + 100));
     }
 
     /**
@@ -93,19 +93,19 @@ public class VersionTest {
      */
     @Test
     public void testIsJvmLowerOrEqual() {
-        assertEquals("isJvmLowerOrEqual: same version", true, version.isJvmLowerOrEqual(major, feature, update, build));
+        assertTrue("isJvmLowerOrEqual: same version", version.isJvmLowerOrEqual(major, feature, update, build));
 
         // higher running version
-        assertEquals("isJvmLowerOrEqual: lower major", false, version.isJvmLowerOrEqual(0, feature, update, build));
-        assertEquals("isJvmLowerOrEqual: lower feature", false, version.isJvmLowerOrEqual(major, feature - 2, update, build));
-        assertEquals("isJvmLowerOrEqual: lower update", false, version.isJvmLowerOrEqual(major, feature, -5, build));
-        assertEquals("isJvmLowerOrEqual: lower build", false, version.isJvmLowerOrEqual(major, feature, update, -1));
+        assertFalse("isJvmLowerOrEqual: lower major", version.isJvmLowerOrEqual(0, feature, update, build));
+        assertFalse("isJvmLowerOrEqual: lower feature", version.isJvmLowerOrEqual(major, feature - 2, update, build));
+        assertFalse("isJvmLowerOrEqual: lower update", version.isJvmLowerOrEqual(major, feature, -5, build));
+        assertFalse("isJvmLowerOrEqual: lower build", version.isJvmLowerOrEqual(major, feature, update, -1));
 
         // lower running version
-        assertEquals("isJvmLowerOrEqual: higher major", true, version.isJvmLowerOrEqual(Integer.MAX_VALUE, feature, update, build));
-        assertEquals("isJvmLowerOrEqual: higher feature", true, version.isJvmLowerOrEqual(major, feature + 2, update, build));
-        assertEquals("isJvmLowerOrEqual: higher update", true, version.isJvmLowerOrEqual(major, feature, update + 5, build));
-        assertEquals("isJvmLowerOrEqual: higher build", true, version.isJvmLowerOrEqual(major, feature, update, build + 100));
+        assertTrue("isJvmLowerOrEqual: higher major", version.isJvmLowerOrEqual(Integer.MAX_VALUE, feature, update, build));
+        assertTrue("isJvmLowerOrEqual: higher feature", version.isJvmLowerOrEqual(major, feature + 2, update, build));
+        assertTrue("isJvmLowerOrEqual: higher update", version.isJvmLowerOrEqual(major, feature, update + 5, build));
+        assertTrue("isJvmLowerOrEqual: higher build", version.isJvmLowerOrEqual(major, feature, update, build + 100));
     }
 
     /**
@@ -113,19 +113,19 @@ public class VersionTest {
      */
     @Test
     public void testIsJvmHigher() {
-        assertEquals("isJvmHigher: same version", false, version.isJvmHigher(major, feature, update, build));
+        assertFalse("isJvmHigher: same version", version.isJvmHigher(major, feature, update, build));
 
         // higher running version
-        assertEquals("isJvmHigher: lower major", true, version.isJvmHigher(0, feature, update, build));
-        assertEquals("isJvmHigher: lower feature", true, version.isJvmHigher(major, feature - 2, update, build));
-        assertEquals("isJvmHigher: lower update", true, version.isJvmHigher(major, feature, -5, build));
-        assertEquals("isJvmHigher: lower build", true, version.isJvmHigher(major, feature, update, -1));
+        assertTrue("isJvmHigher: lower major", version.isJvmHigher(0, feature, update, build));
+        assertTrue("isJvmHigher: lower feature", version.isJvmHigher(major, feature - 2, update, build));
+        assertTrue("isJvmHigher: lower update", version.isJvmHigher(major, feature, -5, build));
+        assertTrue("isJvmHigher: lower build", version.isJvmHigher(major, feature, update, -1));
 
         // lower running version
-        assertEquals("isJvmHigher: higher major", false, version.isJvmHigher(Integer.MAX_VALUE, feature, update, build));
-        assertEquals("isJvmHigher: higher feature", false, version.isJvmHigher(major, feature + 2, update, build));
-        assertEquals("isJvmHigher: higher update", false, version.isJvmHigher(major, feature, update + 5, build));
-        assertEquals("isJvmHigher: higher build", false, version.isJvmHigher(major, feature, update, build + 100));
+        assertFalse("isJvmHigher: higher major", version.isJvmHigher(Integer.MAX_VALUE, feature, update, build));
+        assertFalse("isJvmHigher: higher feature", version.isJvmHigher(major, feature + 2, update, build));
+        assertFalse("isJvmHigher: higher update", version.isJvmHigher(major, feature, update + 5, build));
+        assertFalse("isJvmHigher: higher build", version.isJvmHigher(major, feature, update, build + 100));
     }
 
     /**
@@ -133,18 +133,18 @@ public class VersionTest {
      */
     @Test
     public void testIsJvmHigherOrEqual() {
-        assertEquals("isJvmHigherOrEqual: same version", true, version.isJvmHigherOrEqual(major, feature, update, build));
+        assertTrue("isJvmHigherOrEqual: same version", version.isJvmHigherOrEqual(major, feature, update, build));
 
         // higher running version
-        assertEquals("isJvmHigherOrEqual: lower major", true, version.isJvmHigherOrEqual(0, feature, update, build));
-        assertEquals("isJvmHigherOrEqual: lower feature", true, version.isJvmHigherOrEqual(major, feature - 2, update, build));
-        assertEquals("isJvmHigherOrEqual: lower update", true, version.isJvmHigherOrEqual(major, feature, -5, build));
-        assertEquals("isJvmHigherOrEqual: lower build", true, version.isJvmHigherOrEqual(major, feature, update, 0));
+        assertTrue("isJvmHigherOrEqual: lower major", version.isJvmHigherOrEqual(0, feature, update, build));
+        assertTrue("isJvmHigherOrEqual: lower feature", version.isJvmHigherOrEqual(major, feature - 2, update, build));
+        assertTrue("isJvmHigherOrEqual: lower update", version.isJvmHigherOrEqual(major, feature, -5, build));
+        assertTrue("isJvmHigherOrEqual: lower build", version.isJvmHigherOrEqual(major, feature, update, 0));
 
         // lower running version
-        assertEquals("isJvmHigherOrEqual: higher major", false, version.isJvmHigherOrEqual(Integer.MAX_VALUE, feature, update, build));
-        assertEquals("isJvmHigherOrEqual: higher feature", false, version.isJvmHigherOrEqual(major, feature + 2, update, build));
-        assertEquals("isJvmHigherOrEqual: higher update", false, version.isJvmHigherOrEqual(major, feature, update + 5, build));
-        assertEquals("isJvmHigherOrEqual: higher build", false, version.isJvmHigherOrEqual(major, feature, update, build + 100));
+        assertFalse("isJvmHigherOrEqual: higher major", version.isJvmHigherOrEqual(Integer.MAX_VALUE, feature, update, build));
+        assertFalse("isJvmHigherOrEqual: higher feature", version.isJvmHigherOrEqual(major, feature + 2, update, build));
+        assertFalse("isJvmHigherOrEqual: higher update", version.isJvmHigherOrEqual(major, feature, update + 5, build));
+        assertFalse("isJvmHigherOrEqual: higher build", version.isJvmHigherOrEqual(major, feature, update, build + 100));
     }
 }

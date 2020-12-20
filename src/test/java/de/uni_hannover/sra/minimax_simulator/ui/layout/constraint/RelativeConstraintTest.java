@@ -41,14 +41,14 @@ public class RelativeConstraintTest {
      */
     @Test
     public void testEquals() {
-        assertEquals("self comparison", true, REL_ONE.equals(REL_ONE));
-        assertEquals("null comparison", false, REL_ONE.equals(null));
-        assertEquals("other class comparison", false, REL_ONE.equals(new ConstrainedArea("Area")));
-        assertEquals("different anchor name", false, REL_ONE.equals(new RelativeConstraint("OTHER", AttributeType.HEIGHT)));
-        assertEquals("different anchor attribute type", false, REL_ONE.equals(new RelativeConstraint("THIS", AttributeType.WIDTH)));
-        assertEquals("different anchor", false, REL_ONE.equals(new RelativeConstraint("OTHER", AttributeType.WIDTH)));
-        assertEquals("different offset", false, REL_ONE.equals(new RelativeConstraint("THIS", AttributeType.HEIGHT, 10)));
-        assertEquals("same values", true, REL_ONE.equals(new RelativeConstraint("THIS", AttributeType.HEIGHT)));
+        assertTrue("self comparison", REL_ONE.equals(REL_ONE));
+        assertFalse("null comparison", REL_ONE.equals(null));
+        assertFalse("other class comparison", REL_ONE.equals(new ConstrainedArea("Area")));
+        assertFalse("different anchor name", REL_ONE.equals(new RelativeConstraint("OTHER", AttributeType.HEIGHT)));
+        assertFalse("different anchor attribute type", REL_ONE.equals(new RelativeConstraint("THIS", AttributeType.WIDTH)));
+        assertFalse("different anchor", REL_ONE.equals(new RelativeConstraint("OTHER", AttributeType.WIDTH)));
+        assertFalse("different offset", REL_ONE.equals(new RelativeConstraint("THIS", AttributeType.HEIGHT, 10)));
+        assertTrue("same values", REL_ONE.equals(new RelativeConstraint("THIS", AttributeType.HEIGHT)));
     }
 }
 

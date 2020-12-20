@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of a constant multiplexer input.
@@ -27,12 +27,12 @@ public class ConstantMuxInputTest {
         assertEquals("Constant Mux Input Name", "12", cmi.getName());
 
         // test equals
-        assertEquals("equals: self comparison", true, cmi.equals(cmi));
+        assertTrue("equals: self comparison", cmi.equals(cmi));
         ConstantMuxInput equal = new ConstantMuxInput(TWELVE);
-        assertEquals("equals: same constant value", true, cmi.equals(equal));
+        assertTrue("equals: same constant value", cmi.equals(equal));
         ConstantMuxInput notEqual = new ConstantMuxInput(THIRTEEN);
-        assertEquals("equals: different constant values", false, cmi.equals(notEqual));
-        assertEquals("equals: null comparison", false, cmi.equals(null));
-        assertEquals("equals: different classes", false, cmi.equals(NullMuxInput.INSTANCE));
+        assertFalse("equals: different constant values", cmi.equals(notEqual));
+        assertFalse("equals: null comparison", cmi.equals(null));
+        assertFalse("equals: different classes", cmi.equals(NullMuxInput.INSTANCE));
     }
 }

@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.signal.jump;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link ConditionalJump}.
@@ -21,7 +21,7 @@ public class ConditionalJumpTest {
      */
     @Test
     public void testEqualsSelf() {
-        assertEquals("equals: self comparison", true, zero5one6.equals(zero5one6));
+        assertTrue("equals: self comparison", zero5one6.equals(zero5one6));
     }
 
     /**
@@ -30,7 +30,7 @@ public class ConditionalJumpTest {
     @Test
     public void testEqualsSame() {
         Jump jmp = new ConditionalJump(5, 6);
-        assertEquals("equals: same values", true, zero5one6.equals(jmp));
+        assertTrue("equals: same values", zero5one6.equals(jmp));
     }
 
     /**
@@ -38,7 +38,7 @@ public class ConditionalJumpTest {
      */
     @Test
     public void testEqualsDiffZero() {
-        assertEquals("equals: different condition zero target", false, zero5one6.equals(zero9one6));
+        assertFalse("equals: different condition zero target", zero5one6.equals(zero9one6));
     }
 
     /**
@@ -46,7 +46,7 @@ public class ConditionalJumpTest {
      */
     @Test
     public void testEqualsDiffOne()  {
-        assertEquals("equals: different condition one target", false, zero5one6.equals(zero5one8));
+        assertFalse("equals: different condition one target", zero5one6.equals(zero5one8));
     }
 
     /**
@@ -54,7 +54,7 @@ public class ConditionalJumpTest {
      */
     @Test
     public void testEqualsDiffBoth() {
-        assertEquals("equals: completely different", false, zero5one6.equals(zero3one4));
+        assertFalse("equals: completely different", zero5one6.equals(zero3one4));
     }
 
     /**
@@ -62,7 +62,7 @@ public class ConditionalJumpTest {
      */
     @Test
     public void testEqualsNull() {
-        assertEquals("equals: null comparison", false, zero5one6.equals(null));
+        assertFalse("equals: null comparison", zero5one6.equals(null));
     }
 
     /**
@@ -72,7 +72,7 @@ public class ConditionalJumpTest {
     public void testEqualsDiffClass() {
         Jump uj = new UnconditionalJump(5);
         Jump dj = DefaultJump.INSTANCE;
-        assertEquals("equals: comparison with UnconditionalJump", false, zero5one6.equals(uj));
-        assertEquals("equals: comparison with DefaultJump", false, zero5one6.equals(dj));
+        assertFalse("equals: comparison with UnconditionalJump", zero5one6.equals(uj));
+        assertFalse("equals: comparison with DefaultJump", zero5one6.equals(dj));
     }
 }

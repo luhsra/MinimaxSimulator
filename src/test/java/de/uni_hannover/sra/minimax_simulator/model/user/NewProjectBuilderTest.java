@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link NewProjectBuilder}.
@@ -97,7 +97,7 @@ public class NewProjectBuilderTest {
         }
 
         // no extended registers
-        assertEquals("no extended registers", true, config.getRegisterExtensions().isEmpty());
+        assertTrue("no extended registers", config.getRegisterExtensions().isEmpty());
 
         // ALU operations
         List<AluOperation> aluOps = new ArrayList<>(Arrays.asList(AluOperation.A_ADD_B, AluOperation.B_SUB_A, AluOperation.TRANS_A, AluOperation.TRANS_B));
@@ -168,7 +168,7 @@ public class NewProjectBuilderTest {
             assertEquals("has ALUSel.B of row " + i, hasAluSelB[i], row.getSignalValues().containsKey(ALU_SEL_B));
             assertEquals("ALUSel.B of row " + i, expectedAluSelB[i], row.getSignalValue(ALU_SEL_B));
 
-            assertEquals("has MDR.SEL of row " + i, false, row.getSignalValues().containsKey("MDR_SEL"));
+            assertFalse("has MDR.SEL of row " + i, row.getSignalValues().containsKey("MDR_SEL"));
 
             assertEquals("has MEM.CS of row " + i, hasMemCs[i], row.getSignalValues().containsKey(MEM_CS));
             assertEquals("MEM.CS of row " + i, expectedMemCs[i], row.getSignalValue(MEM_CS));

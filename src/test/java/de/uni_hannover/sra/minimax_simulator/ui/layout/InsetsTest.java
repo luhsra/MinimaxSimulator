@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link Insets}.
@@ -23,15 +23,15 @@ public class InsetsTest {
      */
     @Test
     public void testEquals() {
-        assertEquals("self comparison", true, IN_1.equals(IN_1));
-        assertEquals("null comparison", false, IN_1.equals(null));
-        assertEquals("other class comparison", false, IN_1.equals(new Bounds(10, 10, 10, 10)));
+        assertTrue("self comparison", IN_1.equals(IN_1));
+        assertFalse("null comparison", IN_1.equals(null));
+        assertFalse("other class comparison", IN_1.equals(new Bounds(10, 10, 10, 10)));
 
-        assertEquals("different top", false, IN_1.equals(new Insets(0, 10, 10, 10)));
-        assertEquals("different bottom", false, IN_2.equals(new Insets(0, 30, 12, 12)));
-        assertEquals("different left", false, IN_3.equals(new Insets(2, 0, 10, 10)));
-        assertEquals("different right", false, IN_4.equals(new Insets(4, 8, 0, 32)));
-        assertEquals("same values", true, IN_5.equals(new Insets(3, 9, 27, 0)));
+        assertFalse("different top", IN_1.equals(new Insets(0, 10, 10, 10)));
+        assertFalse("different bottom", IN_2.equals(new Insets(0, 30, 12, 12)));
+        assertFalse("different left", IN_3.equals(new Insets(2, 0, 10, 10)));
+        assertFalse("different right", IN_4.equals(new Insets(4, 8, 0, 32)));
+        assertTrue("same values", IN_5.equals(new Insets(3, 9, 27, 0)));
     }
 
     /**

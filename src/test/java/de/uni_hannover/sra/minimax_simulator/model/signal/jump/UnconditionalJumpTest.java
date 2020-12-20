@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.signal.jump;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link UnconditionalJump}.
@@ -19,7 +19,7 @@ public class UnconditionalJumpTest {
      */
     @Test
     public void testEqualsSelf() {
-        assertEquals("equals: self comparison", true, j5.equals(j5));
+        assertTrue("equals: self comparison", j5.equals(j5));
     }
 
     /**
@@ -28,7 +28,7 @@ public class UnconditionalJumpTest {
     @Test
     public void testEqualsSame() {
         Jump jmp = new UnconditionalJump(5);
-        assertEquals("equals: same values", true, j5.equals(jmp));
+        assertTrue("equals: same values", j5.equals(jmp));
     }
 
     /**
@@ -36,7 +36,7 @@ public class UnconditionalJumpTest {
      */
     @Test
     public void testEqualsDiff() {
-        assertEquals("equals: different targets", false, j5.equals(j9));
+        assertFalse("equals: different targets", j5.equals(j9));
     }
 
     /**
@@ -44,7 +44,7 @@ public class UnconditionalJumpTest {
      */
     @Test
     public void testEqualsNull() {
-        assertEquals("equals: null comparison", false, j5.equals(null));
+        assertFalse("equals: null comparison", j5.equals(null));
     }
 
     /**
@@ -54,7 +54,7 @@ public class UnconditionalJumpTest {
     public void testEqualsDiffClass() {
         Jump cj = new ConditionalJump(5, 6);
         Jump dj = DefaultJump.INSTANCE;
-        assertEquals("equals: comparison with ConditionalJump", false, j5.equals(cj));
-        assertEquals("equals: comparison with DefaultJump", false, j5.equals(dj));
+        assertFalse("equals: comparison with ConditionalJump", j5.equals(cj));
+        assertFalse("equals: comparison with DefaultJump", j5.equals(dj));
     }
 }

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests the implementation of the {@code SignalTable} exporter.
@@ -76,9 +77,9 @@ public class SignalExporterTest {
         Properties p = new Properties(System.getProperties());
         p.setProperty("line.separator", "");
         System.setProperties(p);
-        assertEquals("line separator", true, System.getProperty("line.separator").isEmpty());
+        assertTrue("line separator", System.getProperty("line.separator").isEmpty());
 
-        expected.replace(lineSeparator, "\n");
+        expected = expected.replace(lineSeparator, "\n");
         csvEx.exportSignalTable(table, config);
         exported = IOUtils.readFile(file.getAbsolutePath());
         assertEquals("signal table csv export", expected, exported);

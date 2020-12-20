@@ -6,8 +6,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link EnumerationIterator}.
@@ -26,20 +25,20 @@ public class EnumerationIteratorTest {
         Enumeration<String> enumeration = new TestEnumeration();
         EnumerationIterator<String> enumIter = new EnumerationIterator<>(enumeration);
 
-        assertEquals("has more elements", true, enumIter.hasNext());
+        assertTrue("has more elements", enumIter.hasNext());
         assertEquals("first element", "one", enumIter.next());
-        assertEquals("has more elements", true, enumIter.hasNext());
+        assertTrue("has more elements", enumIter.hasNext());
         assertEquals("second element", "two", enumIter.next());
-        assertEquals("has more elements", true, enumIter.hasNext());
+        assertTrue("has more elements", enumIter.hasNext());
         assertEquals("third element", "three", enumIter.next());
-        assertEquals("has no more elements", false, enumIter.hasNext());
+        assertFalse("has no more elements", enumIter.hasNext());
 
         // try to get more elements than there actually are
         try {
-            String next = enumIter.next();
+            enumIter.next();
             fail(EXPECTED_EXCEPTION);
         } catch (Exception e) {
-            assertEquals("NoSuchElementException", true, e instanceof NoSuchElementException);
+            assertTrue("NoSuchElementException", e instanceof NoSuchElementException);
         }
 
         // null enumeration
@@ -55,7 +54,7 @@ public class EnumerationIteratorTest {
             enumIter.remove();
             fail(EXPECTED_EXCEPTION);
         } catch (Exception e) {
-            assertEquals("UnsupportedOperationException", true, e instanceof UnsupportedOperationException);
+            assertTrue("UnsupportedOperationException", e instanceof UnsupportedOperationException);
         }
     }
 
@@ -66,22 +65,22 @@ public class EnumerationIteratorTest {
     public void testIterate() {
         Enumeration<String> enumeration = new TestEnumeration();
         Iterable<String> iterable = EnumerationIterator.iterate(enumeration);
-        Iterator iter = iterable.iterator();
+        Iterator<String> iter = iterable.iterator();
 
-        assertEquals("has more elements", true, iter.hasNext());
+        assertTrue("has more elements", iter.hasNext());
         assertEquals("first element", "one", iter.next());
-        assertEquals("has more elements", true, iter.hasNext());
+        assertTrue("has more elements", iter.hasNext());
         assertEquals("second element", "two", iter.next());
-        assertEquals("has more elements", true, iter.hasNext());
+        assertTrue("has more elements", iter.hasNext());
         assertEquals("third element", "three", iter.next());
-        assertEquals("has no more elements", false, iter.hasNext());
+        assertFalse("has no more elements", iter.hasNext());
 
         // try to get more elements than there actually are
         try {
-            String next = (String) iter.next();
+            iter.next();
             fail(EXPECTED_EXCEPTION);
         } catch (Exception e) {
-            assertEquals("NoSuchElementException", true, e instanceof NoSuchElementException);
+            assertTrue("NoSuchElementException", e instanceof NoSuchElementException);
         }
 
         // try to call remove
@@ -89,14 +88,14 @@ public class EnumerationIteratorTest {
             iter.remove();
             fail(EXPECTED_EXCEPTION);
         } catch (Exception e) {
-            assertEquals("UnsupportedOperationException", true, e instanceof UnsupportedOperationException);
+            assertTrue("UnsupportedOperationException", e instanceof UnsupportedOperationException);
         }
     }
 
     /**
      * Lightweight {@link Enumeration} for testing purposes.
      */
-    private class TestEnumeration implements Enumeration<String> {
+    private static class TestEnumeration implements Enumeration<String> {
 
         private final String[] elements = {"one", "two", "three"};
         private int current = 0;

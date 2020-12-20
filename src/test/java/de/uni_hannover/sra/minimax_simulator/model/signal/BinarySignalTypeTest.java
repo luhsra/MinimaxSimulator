@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.signal;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link BinarySignalType}.
@@ -22,7 +22,7 @@ public class BinarySignalTypeTest {
         assertEquals("bit width", 1, signalType.getBitWidth());
         for (int i = 0; i < signalType.getValues().size(); i++) {
             assertEquals("signal value", i, signalType.getValues().get(i).intValue());
-            assertEquals("is don't care", false, signalType.getValues().get(i).isDontCare());
+            assertFalse("is don't care", signalType.getValues().get(i).isDontCare());
         }
     }
 
@@ -34,10 +34,10 @@ public class BinarySignalTypeTest {
         SignalType signalType = new BinarySignalType("dont", "don't care", true);
         assertEquals("bit width", 1, signalType.getBitWidth());
         assertEquals("signal value", 0, signalType.getValues().get(0).intValue());
-        assertEquals("is don't care", true, signalType.getValues().get(0).isDontCare());
+        assertTrue("is don't care", signalType.getValues().get(0).isDontCare());
         for (int i = 1; i < signalType.getValues().size(); i++) {
             assertEquals("signal value", i-1, signalType.getValues().get(i).intValue());
-            assertEquals("is don't care", false, signalType.getValues().get(i).isDontCare());
+            assertFalse("is don't care", signalType.getValues().get(i).isDontCare());
         }
     }
 }

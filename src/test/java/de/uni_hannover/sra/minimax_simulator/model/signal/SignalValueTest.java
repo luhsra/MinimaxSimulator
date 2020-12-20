@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.signal;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link SignalValue}.
@@ -20,8 +20,8 @@ public class SignalValueTest {
      */
     @Test
     public void testEqualsSelf() {
-        assertEquals("equals: self comparison", true, v4.equals(v4));
-        assertEquals("equals: self comparison", true, dont.equals(dont));
+        assertTrue("equals: self comparison", v4.equals(v4));
+        assertTrue("equals: self comparison", dont.equals(dont));
     }
 
     /**
@@ -30,10 +30,10 @@ public class SignalValueTest {
     @Test
     public void testEqualsSame() {
         SignalValue sv = SignalValue.valueOf(4);
-        assertEquals("equals: same value", true, v4.equals(sv));
+        assertTrue("equals: same value", v4.equals(sv));
 
         SignalValue dc = SignalValue.DONT_CARE;
-        assertEquals("equals: same don't care", true, dont.equals(dc));
+        assertTrue("equals: same don't care", dont.equals(dc));
     }
 
     /**
@@ -41,7 +41,7 @@ public class SignalValueTest {
      */
     @Test
     public void testEqualsDiffDontCare() {
-        assertEquals("equals: different don't care", false, v0.equals(dont));
+        assertFalse("equals: different don't care", v0.equals(dont));
     }
 
     /**
@@ -49,7 +49,7 @@ public class SignalValueTest {
      */
     @Test
     public void testEqualsDiffValue() {
-        assertEquals("equals: different value", false, v4.equals(v0));
+        assertFalse("equals: different value", v4.equals(v0));
     }
 
     /**
@@ -57,7 +57,7 @@ public class SignalValueTest {
      */
     @Test
     public void testEqualsDiff() {
-        assertEquals("equals: completely different", false, v4.equals(dont));
+        assertFalse("equals: completely different", v4.equals(dont));
     }
 
     /**
@@ -65,7 +65,7 @@ public class SignalValueTest {
      */
     @Test
     public void testEqualsNull() {
-        assertEquals("equals: null comparison", false, v4.equals(null));
+        assertFalse("equals: null comparison", v4.equals(null));
     }
 
 }

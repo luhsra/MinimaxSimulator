@@ -2,8 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link Dimension}.
@@ -82,11 +81,11 @@ public class DimensionTest {
     @Test
     public void testEquals() {
         Dimension d1 = new Dimension(10, 10);
-        assertEquals("self comparison", true, d1.equals(d1));
-        assertEquals("null comparison", false, d1.equals(null));
-        assertEquals("other class comparison", false, d1.equals(new Bounds(10, 10, 10, 10)));
-        assertEquals("different height", false, d1.equals(new Dimension(10, 11)));
-        assertEquals("different width", false, d1.equals(new Dimension(11, 10)));
-        assertEquals("same values", true, d1.equals(new Dimension(10, 10)));
+        assertTrue("self comparison", d1.equals(d1));
+        assertFalse("null comparison", d1.equals(null));
+        assertFalse("other class comparison", d1.equals(new Bounds(10, 10, 10, 10)));
+        assertFalse("different height", d1.equals(new Dimension(10, 11)));
+        assertFalse("different width", d1.equals(new Dimension(11, 10)));
+        assertTrue("same values", d1.equals(new Dimension(10, 10)));
     }
 }

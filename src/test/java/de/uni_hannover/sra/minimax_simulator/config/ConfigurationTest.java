@@ -9,12 +9,12 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of the classes for loading and setting the configurations.
@@ -68,7 +68,7 @@ public class ConfigurationTest {
                 "mega=3MB",
                 "giga=4GB",
                 "size=33");
-        Files.write(configFile.toPath(), lines, Charset.forName("UTF-8"));
+        Files.write(configFile.toPath(), lines, StandardCharsets.UTF_8);
     }
 
     /**
@@ -78,31 +78,31 @@ public class ConfigurationTest {
     public void testAuto() {
         assertEquals("string property", "de", TestConfig.STRING);
 
-        assertEquals("boolean property", true, TestConfig.BOOL_PRIM);
+        assertTrue("boolean property", TestConfig.BOOL_PRIM);
         assertEquals("Boolean property", Boolean.TRUE, TestConfig.BOOL);
 
         assertEquals("integer property", 128, TestConfig.INTEGER_PRIM);
-        assertEquals("Integer property", new Integer(128), TestConfig.INTEGER);
+        assertEquals("Integer property", Integer.valueOf(128), TestConfig.INTEGER);
 
         assertEquals("long property", 248, TestConfig.LONG_PRIM);
-        assertEquals("Long property", new Long(248), TestConfig.LONG);
+        assertEquals("Long property", Long.valueOf(248), TestConfig.LONG);
 
         assertEquals("short property", 2048, TestConfig.SHORT_PRIM);
-        assertEquals("Short property", new Short("2048"), TestConfig.SHORT);
+        assertEquals("Short property", Short.valueOf("2048"), TestConfig.SHORT);
 
         assertEquals("byte property", Byte.parseByte("110"), TestConfig.BYTE_PRIM);
-        assertEquals("Byte property", new Byte("110"), TestConfig.BYTE);
+        assertEquals("Byte property", Byte.valueOf("110"), TestConfig.BYTE);
 
         assertEquals("char property", "c".charAt(0), TestConfig.CHAR_PRIM);
         assertEquals("Char property", (Character) "c".charAt(0), TestConfig.CHAR);
 
         assertEquals("float property", 0.0001f, TestConfig.FLOAT_PRIM, 0.00000000001);
-        assertEquals("Float property", new Float("0.0001"), TestConfig.FLOAT, 0.00000000001);
+        assertEquals("Float property", Float.parseFloat("0.0001"), TestConfig.FLOAT, 0.00000000001);
 
         assertEquals("double property", 1.01, TestConfig.DOUBLE_PRIM, 0.00000000001);
-        assertEquals("Double property", new Double("1.01"), TestConfig.DOUBLE, 0.00000000001);
+        assertEquals("Double property", Double.parseDouble("1.01"), TestConfig.DOUBLE, 0.00000000001);
 
-        assertEquals("object property", null, TestConfig.OBJ);
+        assertNull("object property", TestConfig.OBJ);
     }
 
     /**
@@ -319,13 +319,13 @@ public class ConfigurationTest {
         }
 
         // 1 || yes
-        assertEquals("toBoolean(1)", true, Parser.toBoolean("1"));
-        assertEquals("toBoolean(yes)", true, Parser.toBoolean("yes"));
+        assertTrue("toBoolean(1)", Parser.toBoolean("1"));
+        assertTrue("toBoolean(yes)", Parser.toBoolean("yes"));
 
         // false || 0 || no
-        assertEquals("toBoolean(false)", false, Parser.toBoolean("false"));
-        assertEquals("toBoolean(0)", false, Parser.toBoolean("0"));
-        assertEquals("toBoolean(no)", false, Parser.toBoolean("no"));
+        assertFalse("toBoolean(false)", Parser.toBoolean("false"));
+        assertFalse("toBoolean(0)", Parser.toBoolean("0"));
+        assertFalse("toBoolean(no)", Parser.toBoolean("no"));
     }
 
     /**

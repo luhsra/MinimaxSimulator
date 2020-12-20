@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests the implementation of {@link NullAwareIntStringConverter}.
@@ -24,9 +25,9 @@ public class NullAwareIntStringConverterTest {
     @RunWith(Parameterized.class)
     public static class ParameterizedTest {
 
-        private Integer dec;
-        private String hex;
-        private String bin;
+        private final Integer dec;
+        private final String hex;
+        private final String bin;
 
         /**
          * Initializes the test instance.
@@ -108,9 +109,9 @@ public class NullAwareIntStringConverterTest {
         public void testErrorHandling() {
             NullAwareIntStringConverter converter = new NullAwareIntStringConverter();
             assertEquals("null value", "", converter.toString(null));
-            assertEquals("null text", null, converter.fromString(null));
-            assertEquals("empty text", null, converter.fromString(""));
-            assertEquals("NumberFormatException", null, converter.fromString("MyNameIs..."));
+            assertNull("null text", converter.fromString(null));
+            assertNull("empty text", converter.fromString(""));
+            assertNull("NumberFormatException", converter.fromString("MyNameIs..."));
         }
     }
 }
