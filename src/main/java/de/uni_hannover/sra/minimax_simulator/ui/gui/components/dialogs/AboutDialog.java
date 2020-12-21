@@ -1,6 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.MainGUI;
 import de.uni_hannover.sra.minimax_simulator.Version;
 import de.uni_hannover.sra.minimax_simulator.resources.TextResource;
 import javafx.geometry.HPos;
@@ -62,7 +63,7 @@ public class AboutDialog extends FXDialog {
         VBox vb = new VBox();
         vb.setPadding(new Insets(15, 0, 20, 0));
         vb.setSpacing(5);
-        Version ver = new Version(Main.class);              // works only with JAR
+        Version ver = new Version(MainGUI.class);              // works only with JAR
         Text version = new Text("Version: " + ver.getVersionNumber());
         version.setId("dialog-label");
         Text build = new Text(res.format("build", ver.getBuildTime(), ver.getBuildJdk()));

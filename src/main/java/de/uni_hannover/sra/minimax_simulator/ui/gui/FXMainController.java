@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import de.uni_hannover.sra.minimax_simulator.config.Config;
 import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.MainGUI;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalCsvExporter;
 import de.uni_hannover.sra.minimax_simulator.io.exporter.csv.SignalHtmlExporter;
 import de.uni_hannover.sra.minimax_simulator.io.importer.ProjectImportException;
@@ -343,7 +344,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
             fc.setInitialDirectory(lastFolder);
         }
 
-        File file = fc.showOpenDialog(Main.getPrimaryStage());
+        File file = fc.showOpenDialog(MainGUI.getPrimaryStage());
 
         if (file == null) {
             return;
@@ -450,7 +451,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     public boolean saveProjectAs() {
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterProject);
-        File file = fc.showSaveDialog(Main.getPrimaryStage());
+        File file = fc.showSaveDialog(MainGUI.getPrimaryStage());
         return saveProjectToFile(file);
     }
 
@@ -490,7 +491,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     public void exportSchematics() {
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterSchematics);
-        File file = fc.showSaveDialog(Main.getPrimaryStage());
+        File file = fc.showSaveDialog(MainGUI.getPrimaryStage());
 
         exportSchematicsToFile(file);
     }
@@ -546,7 +547,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
             }
             // open the image
             try {
-                Main.getHostServicesStatic().showDocument(imageFile.getAbsolutePath());
+                MainGUI.getHostServicesStatic().showDocument(imageFile.getAbsolutePath());
             } catch (Exception e) {
                 // (almost) ignore
                 LOG.log(Level.WARNING, "can not open the schematics", e);
@@ -560,7 +561,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
     public void exportSignal() {
         fc.getExtensionFilters().clear();
         fc.getExtensionFilters().add(extFilterSignal);
-        File file = fc.showSaveDialog(Main.getPrimaryStage());
+        File file = fc.showSaveDialog(MainGUI.getPrimaryStage());
 
         exportSignalToFile(file);
     }
@@ -779,7 +780,7 @@ public class FXMainController implements WorkspaceListener, MachineDisplayListen
      *              the title to set
      */
     private void setApplicationTitle(String newTitle) {
-        UIUtil.invokeInFAT(() -> Main.getPrimaryStage().setTitle(newTitle));
+        UIUtil.invokeInFAT(() -> MainGUI.getPrimaryStage().setTitle(newTitle));
     }
 
     /**

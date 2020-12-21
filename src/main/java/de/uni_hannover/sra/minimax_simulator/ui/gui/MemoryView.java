@@ -1,6 +1,7 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui;
 
 import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.MainGUI;
 import de.uni_hannover.sra.minimax_simulator.model.machine.base.memory.MachineMemory;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.Simulation;
 import de.uni_hannover.sra.minimax_simulator.model.machine.simulation.SimulationState;
@@ -10,7 +11,6 @@ import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.FXDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs.SimulationRunningDialog;
 import de.uni_hannover.sra.minimax_simulator.ui.gui.util.*;
 import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.*;
@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author Philipp Rohde
  */
-public class MemoryView{
+public class MemoryView {
 
     private static MachineMemory mMemory;
 
@@ -172,7 +172,7 @@ public class MemoryView{
             fc.setInitialDirectory(currentExportFile.getParentFile());
         }
 
-        File selFile = fc.showOpenDialog(Main.getPrimaryStage());
+        File selFile = fc.showOpenDialog(MainGUI.getPrimaryStage());
 
         if (selFile == null) {
             return;
@@ -241,7 +241,7 @@ public class MemoryView{
             fc.setInitialDirectory(currentImportFile.getParentFile());
         }
 
-        File selFile = fc.showSaveDialog(Main.getPrimaryStage());
+        File selFile = fc.showSaveDialog(MainGUI.getPrimaryStage());
 
         if (selFile == null) {
             return;

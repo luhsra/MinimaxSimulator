@@ -6,4 +6,5 @@ module mmsim {
     requires javafx.swing;
     requires org.json;
     requires com.google.common;
+    requires info.picocli;
 }

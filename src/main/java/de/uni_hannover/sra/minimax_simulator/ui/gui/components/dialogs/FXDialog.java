@@ -1,6 +1,6 @@
 package de.uni_hannover.sra.minimax_simulator.ui.gui.components.dialogs;
 
-import de.uni_hannover.sra.minimax_simulator.Main;
+import de.uni_hannover.sra.minimax_simulator.MainGUI;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -32,7 +32,7 @@ public class FXDialog extends Alert {
         this.setContentText(message);
 
         // for setting the icon of the application to the dialog
-        this.initOwner(Main.getPrimaryStage());
+        this.initOwner(MainGUI.getPrimaryStage());
     }
 
     /**
