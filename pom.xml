@@ -75,6 +75,11 @@
             <artifactId>json</artifactId>
             <version>20180813</version>
         </dependency>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>4.5.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -100,7 +105,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${plugin.version.compiler}</version>
                     <configuration>
-                            <release>${jdk.version}</release>
+                        <release>${jdk.version}</release>
                     </configuration>
                     <dependencies>
                         <dependency>
@@ -144,7 +149,7 @@
                     <archive>
                         <index>true</index>
                         <manifest>
-                            <mainClass>de.uni_hannover.sra.minimax_simulator.MainWorkaround</mainClass>
+                            <mainClass>de.uni_hannover.sra.minimax_simulator.Main</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Implementation-Name>${project.name}</Implementation-Name>

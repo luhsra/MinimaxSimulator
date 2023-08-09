@@ -9,11 +9,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-//import javafx.scene.paint.Color;
-//import javafx.scene.paint.Paint;
 import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.Text;
-//import javafx.scene.text.TextBuilder;
 
 /**
  * The {@code ValueUpdateDialog} is a dialog for updating a value e.g. a value stored in memory.<br>
