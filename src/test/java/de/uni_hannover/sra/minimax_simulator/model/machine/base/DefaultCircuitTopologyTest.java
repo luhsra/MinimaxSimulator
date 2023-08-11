@@ -9,8 +9,7 @@ import org.junit.runners.MethodSorters;
 
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link DefaultCircuitTopology} that is not covered by other tests.
@@ -20,10 +19,10 @@ import static org.junit.Assert.fail;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DefaultCircuitTopologyTest {
 
-    private static DefaultCircuitTopology top = new DefaultCircuitTopology();
+    private static final DefaultCircuitTopology top = new DefaultCircuitTopology();
     private static final String EXCEPTION_EXPECTED = "expected to throw exception";
-    private static Alu alu = new Alu();
-    private static Port port = new Port("port");
+    private static final Alu alu = new Alu();
+    private static final Port port = new Port("port");
 
     /**
      * Tests the implementation of {@link DefaultCircuitTopology#addCircuit(Class, String, Circuit)}.
@@ -90,8 +89,8 @@ public class DefaultCircuitTopologyTest {
     public void test04getAllCircuits() {
         Set<Circuit> circuits = top.getAllCircuits();
         assertEquals("size", 2, circuits.size());
-        assertEquals("contains alu", true, circuits.contains(alu));
-        assertEquals("contains port", true, circuits.contains(port));
+        assertTrue("contains alu", circuits.contains(alu));
+        assertTrue("contains port", circuits.contains(port));
     }
 
     /**
@@ -100,7 +99,7 @@ public class DefaultCircuitTopologyTest {
     @Test
     public void test05removeCircuit() {
         top.removeCircuit("alu");
-        assertEquals("alu removed", false, top.getAllCircuits().contains(alu));
+        assertFalse("alu removed", top.getAllCircuits().contains(alu));
         assertEquals("new number of circuits", 1, top.getAllCircuits().size());
 
         // remove non-existing circuit

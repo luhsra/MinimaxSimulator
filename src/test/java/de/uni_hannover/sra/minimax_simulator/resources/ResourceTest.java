@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of all resource related classes.
@@ -48,11 +48,11 @@ public class ResourceTest {
     public void testBundle() {
         ResourceBundle signalBundle = bundleENG.getBundle("signal");
 
-        assertEquals("contains col.label", true, signalBundle.containsKey("col.label"));
-        assertEquals("contains col.aluselA", true, signalBundle.containsKey("col.aluselA"));
-        assertEquals("contains col.breakpoint", true, signalBundle.containsKey("col.breakpoint"));
-        assertEquals("contains col.condition", true, signalBundle.containsKey("col.condition"));
-        assertEquals("does not contain register.name", false, signalBundle.containsKey("register.name"));
+        assertTrue("contains col.label", signalBundle.containsKey("col.label"));
+        assertTrue("contains col.aluselA", signalBundle.containsKey("col.aluselA"));
+        assertTrue("contains col.breakpoint", signalBundle.containsKey("col.breakpoint"));
+        assertTrue("contains col.condition", signalBundle.containsKey("col.condition"));
+        assertFalse("does not contain register.name", signalBundle.containsKey("register.name"));
     }
 
     /**

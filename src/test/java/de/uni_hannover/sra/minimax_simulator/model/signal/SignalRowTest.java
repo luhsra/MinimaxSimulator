@@ -4,7 +4,7 @@ import de.uni_hannover.sra.minimax_simulator.model.user.NewProjectBuilder;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link SignalRow}.
@@ -29,11 +29,11 @@ public class SignalRowTest {
     @Test
     public void testValue() {
         // value of not existing signal
-        assertEquals("MDR.Sel", false, row.getSignalValues().containsKey("MDR_SEL"));
+        assertFalse("MDR.Sel", row.getSignalValues().containsKey("MDR_SEL"));
         assertEquals("MDR.Sel value", 0, row.getSignalValue("MDR_SEL"));
 
         // value of existing signal
-        assertEquals("ALU_SELECT_B", true, row.getSignalValues().containsKey("ALU_SELECT_B"));
+        assertTrue("ALU_SELECT_B", row.getSignalValues().containsKey("ALU_SELECT_B"));
         assertEquals("ALU_SELECT_B value", 3, row.getSignalValue("ALU_SELECT_B"));
     }
 
@@ -43,11 +43,11 @@ public class SignalRowTest {
     @Test
     public void testSignal() {
         // value of not existing signal
-        assertEquals("MDR.Sel", false, row.getSignalValues().containsKey("MDR_SEL"));
+        assertFalse("MDR.Sel", row.getSignalValues().containsKey("MDR_SEL"));
         assertEquals("MDR.Sel value", SignalValue.valueOf(5), row.getSignal("MDR_SEL", SignalValue.valueOf(5)));
 
         // value of existing signal
-        assertEquals("ALU_SELECT_B", true, row.getSignalValues().containsKey("ALU_SELECT_B"));
+        assertTrue("ALU_SELECT_B", row.getSignalValues().containsKey("ALU_SELECT_B"));
         assertEquals("ALU_SELECT_B value", SignalValue.valueOf(3), row.getSignal("ALU_SELECT_B", SignalValue.valueOf(5)));
     }
 

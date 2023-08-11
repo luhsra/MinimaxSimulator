@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link IteratorEnumeration}.
@@ -24,16 +24,16 @@ public class IteratorEnumerationTest {
         map.put("key C", "value C");
 
         final IteratorEnumeration<String> iterEnum = new IteratorEnumeration<>(map.keySet());
-        assertEquals("has more elements", true, iterEnum.hasMoreElements());
+        assertTrue("has more elements", iterEnum.hasMoreElements());
         assertEquals("first element", "key A", iterEnum.nextElement());
 
-        assertEquals("has more elements", true, iterEnum.hasMoreElements());
+        assertTrue("has more elements", iterEnum.hasMoreElements());
         assertEquals("second element", "key B", iterEnum.nextElement());
 
-        assertEquals("has more elements", true, iterEnum.hasMoreElements());
+        assertTrue("has more elements", iterEnum.hasMoreElements());
         assertEquals("third element", "key C", iterEnum.nextElement());
 
-        assertEquals("has no more elements", false, iterEnum.hasMoreElements());
+        assertFalse("has no more elements", iterEnum.hasMoreElements());
     }
 
     /**
@@ -45,15 +45,15 @@ public class IteratorEnumerationTest {
         Collections.addAll(set, "key A", "key B", "key C");
 
         final IteratorEnumeration<String> iterEnum = new IteratorEnumeration<>(set.iterator());
-        assertEquals("has more elements", true, iterEnum.hasMoreElements());
+        assertTrue("has more elements", iterEnum.hasMoreElements());
         assertEquals("first element", "key A", iterEnum.nextElement());
 
-        assertEquals("has more elements", true, iterEnum.hasMoreElements());
+        assertTrue("has more elements", iterEnum.hasMoreElements());
         assertEquals("second element", "key B", iterEnum.nextElement());
 
-        assertEquals("has more elements", true, iterEnum.hasMoreElements());
+        assertTrue("has more elements", iterEnum.hasMoreElements());
         assertEquals("third element", "key C", iterEnum.nextElement());
 
-        assertEquals("has no more elements", false, iterEnum.hasMoreElements());
+        assertFalse("has no more elements", iterEnum.hasMoreElements());
     }
 }

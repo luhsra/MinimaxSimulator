@@ -92,7 +92,10 @@
                         </dependency>
                     </dependencies>
                     <configuration>
+                        <useSystemClassLoader>false</useSystemClassLoader>
                         <forkCount>0</forkCount>
+                        <parallel>classes</parallel>
+                        <threadCount>10</threadCount>
                     </configuration>
                 </plugin>
                 <plugin>

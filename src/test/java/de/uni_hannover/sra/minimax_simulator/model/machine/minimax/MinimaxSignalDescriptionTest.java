@@ -22,11 +22,10 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class MinimaxSignalDescriptionTest {
 
-    private static Project project;
     private static MinimaxSignalDescription signalDescription;
     private static SignalTable signalTable;
-    private int row;
-    private String expected;
+    private final int row;
+    private final String expected;
 
     /**
      * Initializes the test instance.
@@ -46,7 +45,7 @@ public class MinimaxSignalDescriptionTest {
      */
     @BeforeClass
     public static void initialize() {
-        project = new NewProjectBuilder().buildProject();
+        Project project = new NewProjectBuilder().buildProject();
         signalDescription = new MinimaxSignalDescription(project.getMachineConfiguration());
         signalTable = project.getSignalTable();
         signalTable.addSignalRow(new SignalRow());

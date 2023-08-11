@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.ui.layout.constraint;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of {@link AbsoluteConstraint}.
@@ -20,11 +20,11 @@ public class AbsoluteConstraintTest {
      */
     @Test
     public void testEquals() {
-        assertEquals("self comparison", true, AC1.equals(AC1));
-        assertEquals("null comparison", false, AC1.equals(null));
-        assertEquals("other class comparison", false, AC1.equals(new ConstrainedArea("AC1")));
-        assertEquals("different value", false, AC1.equals(AC2));
-        assertEquals("same vallue", true, AC1.equals(new AbsoluteConstraint(-5)));
+        assertTrue("self comparison", AC1.equals(AC1));
+        assertFalse("null comparison", AC1.equals(null));
+        assertFalse("other class comparison", AC1.equals(new ConstrainedArea("AC1")));
+        assertFalse("different value", AC1.equals(AC2));
+        assertTrue("same vallue", AC1.equals(new AbsoluteConstraint(-5)));
     }
 
     /**

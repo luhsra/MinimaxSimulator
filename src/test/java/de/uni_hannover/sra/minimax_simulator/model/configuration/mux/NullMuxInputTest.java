@@ -2,7 +2,7 @@ package de.uni_hannover.sra.minimax_simulator.model.configuration.mux;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of a null multiplexer input.
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class NullMuxInputTest {
 
-    private static MuxInput nmi = NullMuxInput.INSTANCE;
+    private static final MuxInput nmi = NullMuxInput.INSTANCE;
 
     /**
      * Tests {@link NullMuxInput#getName()}.
@@ -28,10 +28,10 @@ public class NullMuxInputTest {
      */
     @Test
     public void testEquals() {
-        assertEquals("equals self", true, nmi.equals(nmi));
-        assertEquals("equals instance", true, nmi.equals(NullMuxInput.INSTANCE));
-        assertEquals("equals constant mux input", false, nmi.equals(new ConstantMuxInput(42)));
-        assertEquals("equals register mux input", false, nmi.equals(new RegisterMuxInput("ACCU")));
+        assertTrue("equals self", nmi.equals(nmi));
+        assertTrue("equals instance", nmi.equals(NullMuxInput.INSTANCE));
+        assertFalse("equals constant mux input", nmi.equals(new ConstantMuxInput(42)));
+        assertFalse("equals register mux input", nmi.equals(new RegisterMuxInput("ACCU")));
     }
 
     /**

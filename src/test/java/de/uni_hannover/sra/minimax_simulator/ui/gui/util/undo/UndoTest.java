@@ -9,7 +9,6 @@ import de.uni_hannover.sra.minimax_simulator.model.configuration.register.Regist
 import de.uni_hannover.sra.minimax_simulator.model.configuration.register.RegisterSize;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalRow;
 import de.uni_hannover.sra.minimax_simulator.model.signal.SignalTable;
-import de.uni_hannover.sra.minimax_simulator.model.signal.SignalValue;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.ConditionalJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.DefaultJump;
 import de.uni_hannover.sra.minimax_simulator.model.signal.jump.Jump;
@@ -30,7 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the complete undo/redo system of the application.
@@ -44,7 +43,6 @@ public class UndoTest {
     public TemporaryFolder tmpDir = new TemporaryFolder();
 
     private static Workspace workspace;
-    private static Project project;
     private static MachineConfiguration mConfig;
     private static SignalTable signalTable;
     private static UndoManager undoManager;
@@ -67,7 +65,7 @@ public class UndoTest {
     @Before
     public void resetProject() {
         workspace.newProject();
-        project = workspace.getProject();
+        Project project = workspace.getProject();
         mConfig = project.getMachineConfiguration();
         signalTable = project.getSignalTable();
         undoManager.reset();
@@ -87,77 +85,77 @@ public class UndoTest {
     public void testUndoManager() throws IOException, ProjectExportException {
         File file = tmpDir.newFile("test.zip");
 
-        assertEquals("[UndoManager] clean start", false, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] clean start", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project saved at start", true, undoManager.isProjectSaved());
+        assertFalse("[UndoManager] clean start", undoManager.isUndoAvailableProperty().get());
+        assertFalse("[UndoManager] clean start", undoManager.isRedoAvailableProperty().get());
+        assertTrue("[UndoManager] project saved at start", undoManager.isProjectSaved());
 
         undoManager.addCommand(new MuxInputMovedCommand(MuxType.A, 0, 1, mConfig));
-        assertEquals("[UndoManager] one executed command", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] one executed command", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after executed command", false, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] one executed command", undoManager.isUndoAvailableProperty().get());
+        assertFalse("[UndoManager] one executed command", undoManager.isRedoAvailableProperty().get());
+        assertFalse("[UndoManager] project is unsaved after executed command", undoManager.isProjectSaved());
 
         undoManager.addCommand(new AluOpMovedCommand(0, 1, mConfig));
-        assertEquals("[UndoManager] two executed commands", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] two executed commands", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after two executed commands", false, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] two executed commands", undoManager.isUndoAvailableProperty().get());
+        assertFalse("[UndoManager] two executed commands", undoManager.isRedoAvailableProperty().get());
+        assertFalse("[UndoManager] project is unsaved after two executed commands", undoManager.isProjectSaved());
 
         undoManager.undo();
-        assertEquals("[UndoManager] one executed and one undone command", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] one executed and one undone command", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after executed and undone command", false, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] one executed and one undone command", undoManager.isUndoAvailableProperty().get());
+        assertTrue("[UndoManager] one executed and one undone command", undoManager.isRedoAvailableProperty().get());
+        assertFalse("[UndoManager] project is unsaved after executed and undone command", undoManager.isProjectSaved());
 
         undoManager.undo();
-        assertEquals("[UndoManager] two undone commands", false, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] two undone commands", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is saved after two undone commands and no save", true, undoManager.isProjectSaved());
+        assertFalse("[UndoManager] two undone commands", undoManager.isUndoAvailableProperty().get());
+        assertTrue("[UndoManager] two undone commands", undoManager.isRedoAvailableProperty().get());
+        assertTrue("[UndoManager] project is saved after two undone commands and no save", undoManager.isProjectSaved());
 
         undoManager.redo();
-        assertEquals("[UndoManager] one executed and one undone command", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] one executed and one undone command", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after executed and undone command", false, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] one executed and one undone command", undoManager.isUndoAvailableProperty().get());
+        assertTrue("[UndoManager] one executed and one undone command", undoManager.isRedoAvailableProperty().get());
+        assertFalse("[UndoManager] project is unsaved after executed and undone command", undoManager.isProjectSaved());
 
         undoManager.redo();
-        assertEquals("[UndoManager] two executed commands", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] two executed commands", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after two executed commands", false, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] two executed commands", undoManager.isUndoAvailableProperty().get());
+        assertFalse("[UndoManager] two executed commands", undoManager.isRedoAvailableProperty().get());
+        assertFalse("[UndoManager] project is unsaved after two executed commands", undoManager.isProjectSaved());
 
         undoManager.undo();
         undoManager.addCommand(new RegisterAddedCommand(new RegisterExtension("TMP", RegisterSize.BITS_32, "desc", true), mConfig));
-        assertEquals("[UndoManager] new command after undo", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] new command after undo", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after new command after undo", false, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] new command after undo", undoManager.isUndoAvailableProperty().get());
+        assertFalse("[UndoManager] new command after undo", undoManager.isRedoAvailableProperty().get());
+        assertFalse("[UndoManager] project is unsaved after new command after undo", undoManager.isProjectSaved());
 
         undoManager.addCommand(new MuxInputMovedCommand(MuxType.B, 0, 1, mConfig));
         undoManager.addCommand(new MuxInputMovedCommand(MuxType.A, 0, 1, mConfig));
         undoManager.addCommand(new MuxInputMovedCommand(MuxType.B, 0, 1, mConfig));
         undoManager.undo();
         workspace.saveProject(file);
-        assertEquals("[UndoManager] project saved after saving", true, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] project saved after saving", undoManager.isProjectSaved());
 
         undoManager.addCommand(new MuxInputMovedCommand(MuxType.A, 0, 1, mConfig));
-        assertEquals("[UndoManager] executed command(s)", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] executed command(s)", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after executed command", false, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] executed command(s)", undoManager.isUndoAvailableProperty().get());
+        assertFalse("[UndoManager] executed command(s)", undoManager.isRedoAvailableProperty().get());
+        assertFalse("[UndoManager] project is unsaved after executed command", undoManager.isProjectSaved());
 
         undoManager.undo();
-        assertEquals("[UndoManager] executed command(s); one undone", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] executed command(s); one undone", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is saved due to no new changes", true, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] executed command(s); one undone", undoManager.isUndoAvailableProperty().get());
+        assertTrue("[UndoManager] executed command(s); one undone", undoManager.isRedoAvailableProperty().get());
+        assertTrue("[UndoManager] project is saved due to no new changes", undoManager.isProjectSaved());
 
         undoManager.undo();
-        assertEquals("[UndoManager] executed command(s); two undone", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] executed command(s); two undone", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after undone command", false, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] executed command(s); two undone", undoManager.isUndoAvailableProperty().get());
+        assertTrue("[UndoManager] executed command(s); two undone", undoManager.isRedoAvailableProperty().get());
+        assertFalse("[UndoManager] project is unsaved after undone command", undoManager.isProjectSaved());
 
         undoManager.redo();
-        assertEquals("[UndoManager] executed command(s); one undone", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] executed command(s); one undone", true, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is saved due to no new changes", true, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] executed command(s); one undone", undoManager.isUndoAvailableProperty().get());
+        assertTrue("[UndoManager] executed command(s); one undone", undoManager.isRedoAvailableProperty().get());
+        assertTrue("[UndoManager] project is saved due to no new changes", undoManager.isProjectSaved());
 
         undoManager.redo();
-        assertEquals("[UndoManager] executed command(s)", true, undoManager.isUndoAvailableProperty().get());
-        assertEquals("[UndoManager] executed command(s)", false, undoManager.isRedoAvailableProperty().get());
-        assertEquals("[UndoManager] project is unsaved after redone command", false, undoManager.isProjectSaved());
+        assertTrue("[UndoManager] executed command(s)", undoManager.isUndoAvailableProperty().get());
+        assertFalse("[UndoManager] executed command(s)", undoManager.isRedoAvailableProperty().get());
+        assertFalse("[UndoManager] project is unsaved after redone command", undoManager.isProjectSaved());
     }
 
     /**
@@ -327,18 +325,18 @@ public class UndoTest {
     public void testMuxInputModified() {
         // execute command
         undoManager.addCommand(new MuxInputModifiedCommand(MuxType.A, 1, new RegisterMuxInput("MDR"), mConfig));
-        assertEquals("[MuxInputModified] type after execution", true, mConfig.getMuxSources(MuxType.A).get(1) instanceof RegisterMuxInput);
-        assertEquals("[MuxInputModified] value after execution", true, "MDR".equals(((RegisterMuxInput) mConfig.getMuxSources(MuxType.A).get(1)).getRegisterName()));
+        assertTrue("[MuxInputModified] type after execution", mConfig.getMuxSources(MuxType.A).get(1) instanceof RegisterMuxInput);
+        assertTrue("[MuxInputModified] value after execution", "MDR".equals(((RegisterMuxInput) mConfig.getMuxSources(MuxType.A).get(1)).getRegisterName()));
 
         // undo command
         undoManager.undo();
-        assertEquals("[MuxInputModified] type after undo", true, mConfig.getMuxSources(MuxType.A).get(1) instanceof ConstantMuxInput);
+        assertTrue("[MuxInputModified] type after undo", mConfig.getMuxSources(MuxType.A).get(1) instanceof ConstantMuxInput);
         assertEquals("[MuxInputModified] value after undo", 1, ((ConstantMuxInput) mConfig.getMuxSources(MuxType.A).get(1)).getConstant());
 
         // redo command
         undoManager.redo();
-        assertEquals("[MuxInputModified] type after redo", true, mConfig.getMuxSources(MuxType.A).get(1) instanceof RegisterMuxInput);
-        assertEquals("[MuxInputModified] value after redo", true, "MDR".equals(((RegisterMuxInput) mConfig.getMuxSources(MuxType.A).get(1)).getRegisterName()));
+        assertTrue("[MuxInputModified] type after redo", mConfig.getMuxSources(MuxType.A).get(1) instanceof RegisterMuxInput);
+        assertTrue("[MuxInputModified] value after redo", "MDR".equals(((RegisterMuxInput) mConfig.getMuxSources(MuxType.A).get(1)).getRegisterName()));
     }
 
     /**
@@ -423,16 +421,16 @@ public class UndoTest {
             MuxInput actual = mConfig.getMuxSources(mux).get(i);
 
             if (expected instanceof ConstantMuxInput) {
-                assertEquals(assertText + i, true, (actual instanceof  ConstantMuxInput));
+                assertTrue(assertText + i, (actual instanceof ConstantMuxInput));
                 ConstantMuxInput expCMI = (ConstantMuxInput) expected;
                 ConstantMuxInput actCMI = (ConstantMuxInput) actual;
                 assertEquals(assertText + i, expCMI.getConstant(), actCMI.getConstant());
             }
             else if (expected instanceof RegisterMuxInput) {
-                assertEquals(assertText + i, true, (actual instanceof RegisterMuxInput));
+                assertTrue(assertText + i, (actual instanceof RegisterMuxInput));
                 RegisterMuxInput expRMI = (RegisterMuxInput) expected;
                 RegisterMuxInput actRMI = (RegisterMuxInput) actual;
-                assertEquals(assertText + i, true, expRMI.getRegisterName().equals(actRMI.getRegisterName()));
+                assertTrue(assertText + i, expRMI.getRegisterName().equals(actRMI.getRegisterName()));
             }
         }
     }
@@ -579,7 +577,7 @@ public class UndoTest {
         for (int i = 0; i < registers.size(); i++) {
             RegisterExtension expected = registers.get(i);
             RegisterExtension actual = mConfig.getRegisterExtension(i);
-            assertEquals(assertText + i, true, expected.equals(actual));
+            assertTrue(assertText + i, expected.equals(actual));
         }
     }
 
@@ -736,13 +734,13 @@ public class UndoTest {
 
             // check label
             if (expected.getLabel() != null) {
-                assertEquals(assertText + "label" + idx + i, true, expected.getLabel().equals(actual.getLabel()));
+                assertTrue(assertText + "label" + idx + i, expected.getLabel().equals(actual.getLabel()));
             }
 
             // check signal values
             assertEquals(assertText + "signal value key set size" + idx + i, expected.getSignalValues().keySet().size(), actual.getSignalValues().keySet().size());
             for (String key : expected.getSignalValues().keySet()) {
-                assertEquals(assertText + "contains key: " + key + idx + i, true, actual.getSignalValues().keySet().contains(key));
+                assertTrue(assertText + "contains key: " + key + idx + i, actual.getSignalValues().keySet().contains(key));
                 assertEquals(assertText + "value of key: " + key + idx + i, expected.getSignalValue(key), actual.getSignalValue(key));
             }
 
@@ -750,19 +748,19 @@ public class UndoTest {
             Jump jumpExpected = expected.getJump();
             Jump jumpActual = actual.getJump();
             if (jumpExpected instanceof DefaultJump) {
-                assertEquals(assertText + "default jump" + idx + i, true, (jumpActual instanceof DefaultJump));
+                assertTrue(assertText + "default jump" + idx + i, (jumpActual instanceof DefaultJump));
                 DefaultJump djExp = (DefaultJump) jumpExpected;
                 DefaultJump djAct = (DefaultJump) jumpActual;
                 assertEquals(assertText + "jump target" + idx + i, djExp.getTargetRow(i, 0), djAct.getTargetRow(i, 0));
             }
             else if (jumpExpected instanceof UnconditionalJump) {
-                assertEquals(assertText + "unconditional jump" + idx + i, true, (jumpActual instanceof UnconditionalJump));
+                assertTrue(assertText + "unconditional jump" + idx + i, (jumpActual instanceof UnconditionalJump));
                 UnconditionalJump ujExp = (UnconditionalJump) jumpExpected;
                 UnconditionalJump ujAct = (UnconditionalJump) jumpActual;
                 assertEquals(assertText + "jump target" + idx + i, ujExp.getTargetRow(), ujAct.getTargetRow());
             }
             else if (jumpExpected instanceof ConditionalJump) {
-                assertEquals(assertText + "conditional jump" + idx + i, true, (jumpActual instanceof ConditionalJump));
+                assertTrue(assertText + "conditional jump" + idx + i, (jumpActual instanceof ConditionalJump));
                 ConditionalJump cjExp = (ConditionalJump) jumpExpected;
                 ConditionalJump cjAct = (ConditionalJump) jumpActual;
                 assertEquals(assertText + "jump target 0" + idx + i, cjExp.getTargetRow(0), cjAct.getTargetRow(0));

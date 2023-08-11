@@ -17,9 +17,9 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class ConstantTest {
 
-    private int value;
-    private String expected;
-    private Constant constant;
+    private final int value;
+    private final String expected;
+    private final Constant constant;
 
     /**
      * Initializes the test instance.

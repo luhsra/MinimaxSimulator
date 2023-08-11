@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests the implementation of the {@link AluExtensionList}.
@@ -29,17 +29,17 @@ public class AluExtensionListTest {
         list.add(AluOperation.A_ADD_B);
         list.add(AluOperation.A_AND_B);
 
-        List aluList = alu.getAluOperations();
-        assertEquals("adding ALU operations: A_ADD_B", true, aluList.contains(AluOperation.A_ADD_B));
-        assertEquals("adding ALU operations: A_AND_B", true, aluList.contains(AluOperation.A_AND_B));
+        List<AluOperation> aluList = alu.getAluOperations();
+        assertTrue("adding ALU operations: A_ADD_B", aluList.contains(AluOperation.A_ADD_B));
+        assertTrue("adding ALU operations: A_AND_B", aluList.contains(AluOperation.A_AND_B));
 
         // add all
         List<AluOperation> ops = new ArrayList<>(Arrays.asList(AluOperation.B_DIV_A, AluOperation.B_DEC));
         list.addAll(ops);
 
         aluList = alu.getAluOperations();
-        assertEquals("adding all ALU operations", true, aluList.contains(AluOperation.B_DIV_A));
-        assertEquals("adding all ALU operations", true, aluList.contains(AluOperation.B_DEC));
+        assertTrue("adding all ALU operations", aluList.contains(AluOperation.B_DIV_A));
+        assertTrue("adding all ALU operations", aluList.contains(AluOperation.B_DEC));
 
         // remove
         // currently the following operations are added to the ALU
@@ -49,11 +49,11 @@ public class AluExtensionListTest {
         // index 3: AluOperation.B_DEC
         list.remove(3);
         aluList = alu.getAluOperations();
-        assertEquals("removing ALU operation: B DEC", false, aluList.contains(AluOperation.B_DEC));
+        assertFalse("removing ALU operation: B DEC", aluList.contains(AluOperation.B_DEC));
 
         list.remove(0);
         aluList = alu.getAluOperations();
-        assertEquals("removing ALU operation: A ADD B", false, aluList.contains(AluOperation.A_ADD_B));
+        assertFalse("removing ALU operation: A ADD B", aluList.contains(AluOperation.A_ADD_B));
 
         // swap
         // currently the following operations are added to the ALU

@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests uncovered parts of the implementation of {@link MachineConfigurator}.
@@ -41,35 +42,35 @@ public class MachineConfiguratorTest {
         // add register
         RegisterExtension reg = new RegisterExtension("reg", RegisterSize.BITS_32, "reg description", true);
         configuration.addRegisterExtension(reg);
-        assertEquals("register was added", true, registers.contains(reg));
+        assertTrue("register was added", registers.contains(reg));
 
         RegisterExtension tmp = new RegisterExtension("tmp", RegisterSize.BITS_32, "temp register", true);
         configuration.addRegisterExtension(tmp);
 
         // exchange registers
         configuration.exchangeRegisterExtensions(0, 1);
-        assertEquals(true, tmp.equals(registers.get(0)));
-        assertEquals(true, reg.equals(registers.get(1)));
+        assertTrue(tmp.equals(registers.get(0)));
+        assertTrue(reg.equals(registers.get(1)));
 
         // remove tmp register
         configuration.removeRegisterExtension(tmp);
         assertEquals("only one register left", 1, registers.size());
-        assertEquals("remaining register", true, reg.equals(registers.get(0)));
+        assertTrue("remaining register", reg.equals(registers.get(0)));
 
         // replace register; the configuration needs a SignalTable because setRegisterExtensions checks for it
         SignalTable signals = new DefaultSignalTable();
         configuration.setSignalTable(signals);
         configuration.setRegisterExtension(0, tmp);
-        assertEquals("tmp should be at 0", true, tmp.equals(registers.get(0)));
+        assertTrue("tmp should be at 0", tmp.equals(registers.get(0)));
 
         // replace mux input
         List<MuxInputManager.InputEntry> muxInputs = getMuxInputList(machine, MuxType.A);
         ConstantMuxInput cmiOne = new ConstantMuxInput(1);
         ConstantMuxInput cmiTwo = new ConstantMuxInput(2);
         configuration.addMuxSource(MuxType.A, cmiOne);
-        assertEquals("added mux input", true, cmiOne.equals(muxInputs.get(0).input));
+        assertTrue("added mux input", cmiOne.equals(muxInputs.get(0).input));
         configuration.setMuxSource(MuxType.A, 0, cmiTwo);
-        assertEquals("mux input replaced", true, cmiTwo.equals(muxInputs.get(0).input));
+        assertTrue("mux input replaced", cmiTwo.equals(muxInputs.get(0).input));
     }
 
     /**

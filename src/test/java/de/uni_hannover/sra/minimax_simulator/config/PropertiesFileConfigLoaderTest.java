@@ -10,12 +10,13 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests the implementation of the {@link PropertiesFileConfigLoader}.
@@ -40,7 +41,7 @@ public class PropertiesFileConfigLoaderTest {
     public static void initialize() throws IOException {
         configFile = TMP_DIR.newFile("config.properties");
         List<String> lines = Arrays.asList("locale=en", "timezone=GMT");
-        Files.write(configFile.toPath(), lines, Charset.forName("UTF-8"));
+        Files.write(configFile.toPath(), lines, StandardCharsets.UTF_8);
     }
 
     /**
@@ -53,7 +54,7 @@ public class PropertiesFileConfigLoaderTest {
     public void testConstructorWithoutParameters() throws ConfigurationException {
         new PropertiesFileConfigLoader().configure(TestConfiguration.class);
         assertEquals("constructor without parameters: locale", "", TestConfiguration.LOCALE);
-        assertEquals("constructor without parameters: unset", true, TestConfiguration.UNSET);
+        assertTrue("constructor without parameters: unset", TestConfiguration.UNSET);
     }
 
     /**
@@ -67,7 +68,7 @@ public class PropertiesFileConfigLoaderTest {
     public void testConstructorMissingConfigStrategy() throws ConfigurationException {
         new PropertiesFileConfigLoader(PropertiesFileConfigLoader.MissingConfigStrategy.USE_DEFAULT).configure(TestConfiguration.class);
         assertEquals("constructor missing config strategy: locale", "", TestConfiguration.LOCALE);
-        assertEquals("constructor missing config strategy: unset", true, TestConfiguration.UNSET);
+        assertTrue("constructor missing config strategy: unset", TestConfiguration.UNSET);
     }
 
     /**
@@ -92,7 +93,7 @@ public class PropertiesFileConfigLoaderTest {
     public void testAnnotatedConfigFile() throws ConfigurationException {
         new PropertiesFileConfigLoader().configure(TestConfigurationAnnotatedFile.class);
         assertEquals("annotated config file: locale", "", TestConfiguration.LOCALE);
-        assertEquals("annotated config file: unset", true, TestConfiguration.UNSET);
+        assertTrue("annotated config file: unset", TestConfiguration.UNSET);
     }
 
     /**
@@ -103,7 +104,7 @@ public class PropertiesFileConfigLoaderTest {
      */
     @Test
     public void testNotReadableConfigFile() throws ConfigurationException {
-        assertEquals(true, configFile.setReadable(false));
+        assertTrue(configFile.setReadable(false));
         try {
             new PropertiesFileConfigLoader(configFile, PropertiesFileConfigLoader.MissingConfigStrategy.THROW).configure(TestConfiguration.class);
             Assert.fail("expected to throw an exception");
@@ -113,7 +114,7 @@ public class PropertiesFileConfigLoaderTest {
 
         new PropertiesFileConfigLoader(configFile).configure(TestConfiguration.class);
         assertEquals("not readable config file: locale", "", TestConfiguration.LOCALE);
-        assertEquals("not readable config file: unset", true, TestConfiguration.UNSET);
+        assertTrue("not readable config file: unset", TestConfiguration.UNSET);
     }
 
     /**

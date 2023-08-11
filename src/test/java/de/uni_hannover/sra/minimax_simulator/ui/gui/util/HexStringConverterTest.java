@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests the implementation of {@link HexStringConverter}.
@@ -25,10 +26,10 @@ public class HexStringConverterTest {
     @RunWith(Parameterized.class)
     public static class ParameterizedTest {
 
-        private Integer dec;
-        private String hex;
-        private String format;
-        private String formattedHex;
+        private final Integer dec;
+        private final String hex;
+        private final String format;
+        private final String formattedHex;
 
         /**
          * Initializes the test instance
@@ -101,14 +102,13 @@ public class HexStringConverterTest {
         public void testErrorHandling() {
             HexStringConverter converter = new HexStringConverter(0, 100);
             assertEquals("null value", "", converter.toString(null));
-            assertEquals("null text", null, converter.fromString(null));
-            assertEquals("empty text", null, converter.fromString(""));
-            assertEquals("NumberFormatException", null, converter.fromString("MyNameIs..."));
+            assertNull("null text", converter.fromString(null));
+            assertNull("empty text", converter.fromString(""));
+            assertNull("NumberFormatException", converter.fromString("MyNameIs..."));
 
             // input out of bounds
-            assertEquals("value lower than min", new Integer(0), converter.fromString("-3"));
-            assertEquals("value higher than max", new Integer(100), converter.fromString("235"));
+            assertEquals("value lower than min", Integer.valueOf(0), converter.fromString("-3"));
+            assertEquals("value higher than max", Integer.valueOf(100), converter.fromString("235"));
         }
     }
-
 }
